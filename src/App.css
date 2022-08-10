@@ -87,18 +87,40 @@ table.custom-table > tbody > tr:hover td {
   position: relative;
 }
 
-.calendar-fader {
+.calendar-fader-left {
   content: "";
   position: absolute;
-  width: 100%;
+  width: 20%;
   left: 0;
+  /* right: 0; */
+  top: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    to right,
+    #ffffff,
+    rgba(255, 255, 255, 0.243) 200px
+  );
+  /* ,
+    linear-gradient(to left, #ffffff, rgba(0, 128, 128, 0) 200px); */
+}
+
+.calendar-fader-right {
+  content: "";
+  position: absolute;
+  width: 20%;
+  /* left: 0; */
   right: 0;
   top: 0;
   bottom: 0;
   background-image: linear-gradient(
-      to right,
-      #881515,
-      rgba(255, 255, 255, 0.243) 400px
-    ),
-    linear-gradient(to left, #c41a1a, rgba(0, 128, 128, 0) 400px);
+    to left,
+    #ffffff,
+    rgba(0, 128, 128, 0) 200px
+  );
+}
+
+/* .calender-carousel >  */
+.slick-current {
+  font-weight: 600;
+  color: black;
 }
