@@ -1,71 +1,90 @@
-import {
-  DashboardOutlined,
-  DollarOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu } from "antd";
-import React, { useState } from "react";
-const { Header, Footer, Sider } = Layout;
+import React from "react";
+import QQLogo from "../../assets/Images/QQ.png";
+import Icons from "./Icons";
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+const Sidebar = ({ active, setActive, Items, Items2 }) => {
+  // const [active, setActive] = useState();
 
   return (
-    <Layout
+    <div
+      className="bg-white"
       style={{
-        minHeight: "100vh",
+        width: "277px",
       }}
     >
-      <Sider
-        className="bg-white"
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div className="logo" />
-        <Menu
-          theme="light"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          onSelect={(e) => console.log(e.item.props.link)}
-          items={[
-            {
-              key: "1",
-              icon: <DashboardOutlined />,
-              label: "Dashboard",
-              link: "/dashboard",
-            },
-            {
-              key: "2",
-              icon: <DollarOutlined />,
-              label: "Payment Status",
-              link: "/payment-status",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "Analytics",
-              link: "/analytics",
-            },
-          ]}
-        />
-      </Sider>
-      <Layout className="site-layout">
-        <Header
-          className="site-layout-background"
-          style={{
-            padding: 0,
-          }}
-        />
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
-      </Layout>
-    </Layout>
+      <div className="ml-10">
+        <div className="pb-4 pt-12">
+          <img src={QQLogo} alt="" />
+        </div>
+        <div className="border-r pt-8 pb-4">
+          <div>
+            {Items.map((item) => (
+              <div
+                key={item.key}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === item.name ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive(item.name)}
+              >
+                {item.icon}
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  {item.label}
+                </span>
+                {item.count > 0 && (
+                  <div className="flex justify-center items-center">
+                    <div
+                      className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                      style={{
+                        background: "#FF3B30",
+                      }}
+                    >
+                      {item.count}
+                    </div>
+                  </div>
+                )}
+                {active === item.name && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-36 pt-1.5">
+            {Items2.map((item) => (
+              <div
+                key={item.key}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === item.name ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive(item.name)}
+              >
+                {item.icon}
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  {item.label}
+                </span>
+                {active === item.name && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </div>
+            ))}
+
+            <div
+              className="flex items-center text-base cursor-pointer my-4 py-1.5"
+              style={{
+                color: "#FF3B30",
+              }}
+            >
+              <Icons.LogOut />
+              <span className="ml-4 leading-6 font-medium font-poppins">
+                Log out
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

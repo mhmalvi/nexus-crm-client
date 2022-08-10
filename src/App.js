@@ -1,11 +1,14 @@
-import "./App.css";
 import "antd/dist/antd.css";
-import Sidebar from "./Components/Shared/Sidebar";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import LandingPage from "./Pages/LandingPage";
 
 function App() {
   return (
     <div>
-      <Sidebar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
     </div>
   );
 }
