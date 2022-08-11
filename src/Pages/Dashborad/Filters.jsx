@@ -65,6 +65,8 @@ const Filters = () => {
           ))}
         </div>
       </div>
+      
+      {/* Search Option */}
       <div>
         <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
           Search Lead

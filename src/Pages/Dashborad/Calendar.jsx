@@ -77,107 +77,109 @@ const Calendar = () => {
   ];
 
   return (
-    <div>
+    <div className="flex justify-between items-center">
       <div>
-        <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
-          {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month} 2022
-        </h1>
-      </div>
-      <div
-        className="flex justify-center items-center"
-        style={{
-          width: "46rem",
-        }}
-      >
-        <div className="flex items-center rounded-full bg-gray-100 mb-5">
-          <div
-            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
-              activeSection === "day" ? "bg-black" : "text-black"
-            } rounded-full text-white cursor-pointer`}
-            onClick={() => setActiveSection("day")}
-          >
-            Day
-          </div>
-          <div
-            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
-              activeSection === "month" ? "bg-black" : "text-black"
-            } rounded-full text-white cursor-pointer mx-2`}
-            onClick={() => setActiveSection("month")}
-          >
-            Month
-          </div>
-          <div
-            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
-              activeSection === "year" ? "bg-black" : "text-black"
-            } rounded-full text-white cursor-pointer`}
-            onClick={() => setActiveSection("year")}
-          >
-            Year
+        <div>
+          <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
+            {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month}{" "}
+            2022
+          </h1>
+        </div>
+        <div
+          className="flex justify-center items-center"
+          style={{
+            width: "46rem",
+          }}
+        >
+          <div className="flex items-center rounded-full bg-gray-100 mb-5">
+            <div
+              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+                activeSection === "day" ? "bg-black" : "text-black"
+              } rounded-full text-white cursor-pointer`}
+              onClick={() => setActiveSection("day")}
+            >
+              Day
+            </div>
+            <div
+              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+                activeSection === "month" ? "bg-black" : "text-black"
+              } rounded-full text-white cursor-pointer mx-2`}
+              onClick={() => setActiveSection("month")}
+            >
+              Month
+            </div>
+            <div
+              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+                activeSection === "year" ? "bg-black" : "text-black"
+              } rounded-full text-white cursor-pointer`}
+              onClick={() => setActiveSection("year")}
+            >
+              Year
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className="relative calender-carousel"
-        style={{
-          width: "46rem",
-        }}
-      >
-        <Slider {...settings} ref={slideMonthRef}>
-          {datesInMonth.map((date) => (
-            <div
-              key={date.key}
-              className="py-5 cursor-pointer text-base font-normal leading-6 font-poppins "
-              onClick={() => handleMonths(date.key)}
-            >
-              <h1 className="mb-0 text-center">{date.month}</h1>
-            </div>
-          ))}
-        </Slider>
-        <div className="calendar-fader-left"></div>
-        <div className="calendar-fader-right"></div>
-      </div>
-      <div
-        className="relative"
-        style={{
-          width: "48rem",
-        }}
-      >
-        <div className="ml-14 mb-5">
-          <div className=" flex justify-between items-center">
-            {dates.map((i) => (
-              <div key={i} className="flex flex-col items-center">
-                <div
-                  onClick={() => handleDates(i)}
-                  className={`w-8 h-8 flex justify-center items-center rounded-full cursor-pointer ${
-                    currentDate === i ? "bg-black" : "bg-gray-100"
-                  }`}
-                >
-                  <h1
-                    className={`text-base text-center leading-6 font-poppins font-normal mb-0 ${
-                      currentDate === i && "text-white rounded-full"
-                    }`}
-                  >
-                    {i + 1}
-                  </h1>
-                </div>
-                <div className="mt-3">
-                  <h1
-                    className="leading-4 font-normal font-poppins"
-                    style={{
-                      fontSize: "10px",
-                    }}
-                  >
-                    {weekDays[`${dayjs()?.day(i + 1)?.$W}`].slice(0, 3)}
-                  </h1>
-                </div>
+        <div
+          className="relative calender-carousel"
+          style={{
+            width: "46rem",
+          }}
+        >
+          <Slider {...settings} ref={slideMonthRef}>
+            {datesInMonth.map((date) => (
+              <div
+                key={date.key}
+                className="py-5 cursor-pointer text-base font-normal leading-6 font-poppins "
+                onClick={() => handleMonths(date.key)}
+              >
+                <h1 className="mb-0 text-center">{date.month}</h1>
               </div>
             ))}
-          </div>
+          </Slider>
+          <div className="calendar-fader-left"></div>
+          <div className="calendar-fader-right"></div>
+        </div>
+        <div
+          className="relative"
+          style={{
+            width: "48rem",
+          }}
+        >
+          <div className="ml-14 mb-5">
+            <div className=" flex justify-between items-center">
+              {dates.map((i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div
+                    onClick={() => handleDates(i)}
+                    className={`w-8 h-8 flex justify-center items-center rounded-full cursor-pointer ${
+                      currentDate === i ? "bg-black" : "bg-gray-100"
+                    }`}
+                  >
+                    <h1
+                      className={`text-base text-center leading-6 font-poppins font-normal mb-0 ${
+                        currentDate === i && "text-white rounded-full"
+                      }`}
+                    >
+                      {i + 1}
+                    </h1>
+                  </div>
+                  <div className="mt-3">
+                    <h1
+                      className="leading-4 font-normal font-poppins"
+                      style={{
+                        fontSize: "10px",
+                      }}
+                    >
+                      {weekDays[`${dayjs()?.day(i + 1)?.$W}`].slice(0, 3)}
+                    </h1>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-          {/* <Slider {...dateSettings} ref={slideDateRef}> */}
-          {/* Creating the dates aray to map */}
-          {/* <div className="grid grid-cols-12"> */}
-          {/* {Array.from(Array(datesInMonth[currentMonth - 1]?.dates).keys()).map(
+            {/* <Slider {...dateSettings} ref={slideDateRef}> */}
+            {/* Creating the dates aray to map */}
+            {/* <div className="grid grid-cols-12"> */}
+            {/* {Array.from(Array(datesInMonth[currentMonth - 1]?.dates).keys()).map(
             (i) => (
               <div
                 key={i}
@@ -205,12 +207,30 @@ const Calendar = () => {
               </div>
             )
           )} */}
-        </div>
+          </div>
 
-        <div className="calendar-fader-right"></div>
-        <div className="calendar-fader-left"></div>
+          <div className="calendar-fader-right"></div>
+          <div className="calendar-fader-left"></div>
+        </div>
       </div>
-      {/* </div> */}
+
+      <div
+        className="w-84 h-52 mx-0.5 py-2.5 px-6 border"
+        style={{
+          borderRadius: "20px",
+        }}
+      >
+        <div className="py-2.5 border-b">
+          <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
+            Notice Board
+          </h1>
+        </div>
+        <div>
+          <p className="mt-4 text-base leading-6 font-medium font-poppins">
+            ll months have 30 or 31 days, except for February which has 28 days
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
