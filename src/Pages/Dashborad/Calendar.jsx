@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 
 const Calendar = () => {
-  const [currentMonth, setCurrentMonth] = useState();
-  const februaryDate = dayjs().$y % 4 === 0 ? "29" : "28";
+  const [activeSection, setActiveSection] = useState("day");
+  const [currentDate, setCurrentDate] = useState();
+  const slideMonthRef = useRef();
+
+  const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
   const datesInMonth = [
     { key: 1, month: "Januyary", dates: 31 },
     { key: 2, month: "February", dates: februaryDate },
@@ -23,106 +24,193 @@ const Calendar = () => {
   ];
 
   useEffect(() => {
-    setCurrentMonth(dayjs().month());
+    slideMonthRef.current.slickGoTo(dayjs().month());
+    setCurrentDate(dayjs().date() - 1);
   }, []);
 
-  //   var d = new Date(2018, 8, 18);
-  //   var day = dayjs(d);
+  const dates = [
+    dayjs().date() - 8,
+    dayjs().date() - 7,
+    dayjs().date() - 6,
+    dayjs().date() - 5,
+    dayjs().date() - 4,
+    dayjs().date() - 3,
+    dayjs().date() - 2,
+    dayjs().date() - 1,
+    dayjs().date(),
+    dayjs().date() + 1,
+    dayjs().date() + 2,
+    dayjs().date() + 3,
+    dayjs().date() + 4,
+    dayjs().date() + 5,
+    dayjs().date() + 6,
+    dayjs().date() + 7,
+    dayjs().date() + 8,
+  ];
 
-  const d = new Date();
-  d.getMonth();
-  d.getDate();
-  d.getFullYear();
-
-  //   console.log(dayjs().startOf("month").day());
-  // console.log(dayjs().$y);
-  // console.log(dayjs().month());
-
-  console.log(currentMonth);
   const settings = {
-    // className: "center",
     centerMode: true,
     infinite: true,
-    // centerPadding: "60px",
-    slidesToShow: 4,
+    slidesToShow: 5,
     speed: 600,
     arrows: false,
   };
 
-  const dateSettings = {
-    // className: "center",
-    centerMode: true,
-    infinite: true,
-    // centerPadding: "60px",
-    slidesToShow: 1,
-    speed: 500,
-    arrows: false,
+  // handeled changing months
+  const handleMonths = (id) => {
+    slideMonthRef.current.slickGoTo(id - 1);
   };
+
+  // handeled date click
+  const handleDates = (id) => {
+    setCurrentDate(id);
+  };
+
+  const weekDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   return (
     <div>
-      <h1>Calendar</h1>
-      {/* <div className='calendar-wrapper flex items-center'> */}
-      <div className='relative calender-carousel w-6/12'>
-        <Slider {...settings}>
+      <div>
+        <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
+          {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month} 2022
+        </h1>
+      </div>
+      <div
+        className="flex justify-center items-center"
+        style={{
+          width: "46rem",
+        }}
+      >
+        <div className="flex items-center rounded-full bg-gray-100 mb-5">
+          <div
+            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+              activeSection === "day" ? "bg-black" : "text-black"
+            } rounded-full text-white cursor-pointer`}
+            onClick={() => setActiveSection("day")}
+          >
+            Day
+          </div>
+          <div
+            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+              activeSection === "month" ? "bg-black" : "text-black"
+            } rounded-full text-white cursor-pointer mx-2`}
+            onClick={() => setActiveSection("month")}
+          >
+            Month
+          </div>
+          <div
+            className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+              activeSection === "year" ? "bg-black" : "text-black"
+            } rounded-full text-white cursor-pointer`}
+            onClick={() => setActiveSection("year")}
+          >
+            Year
+          </div>
+        </div>
+      </div>
+      <div
+        className="relative calender-carousel"
+        style={{
+          width: "46rem",
+        }}
+      >
+        <Slider {...settings} ref={slideMonthRef}>
           {datesInMonth.map((date) => (
             <div
               key={date.key}
-              className={`itemss mr-7.5 cursor-pointer leading-6 font-poppins ${
-                currentMonth == date.key &&
-                "slick-slide slick-active slick-center slick-current"
-              }`}
-              // dataIndex={`${currentMonth == date.key && "0"}`}
-              onClick={() => setCurrentMonth(date.key)}
+              className="py-5 cursor-pointer text-base font-normal leading-6 font-poppins "
+              onClick={() => handleMonths(date.key)}
             >
-              {date.month}
+              <h1 className="mb-0 text-center">{date.month}</h1>
             </div>
           ))}
         </Slider>
-        <div className='calendar-fader-left'></div>
-        <div className='calendar-fader-right'></div>
+        <div className="calendar-fader-left"></div>
+        <div className="calendar-fader-right"></div>
       </div>
-      <div>
-        <Slider {...dateSettings}>
-          {datesInMonth.map((date) => (
-            <div key={date.key} className='mr-7.5 cursor-pointer'>
-              <div className='flex items-center justify-between'>
-                {(() => {
-                  let td = [];
-                  for (let i = 1; i <= date.dates; i++) {
-                    td.push(
-                      <h1
-                        className='text-base leading-6 font-poppins font-normal felx items-center'
-                        key={i}
-                      >
-                        {i}
-                      </h1>
-                    );
-                  }
-                  return td;
-                })()}
+      <div
+        className="relative"
+        style={{
+          width: "48rem",
+        }}
+      >
+        <div className="ml-14 mb-5">
+          <div className=" flex justify-between items-center">
+            {dates.map((i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div
+                  onClick={() => handleDates(i)}
+                  className={`w-8 h-8 flex justify-center items-center rounded-full cursor-pointer ${
+                    currentDate === i ? "bg-black" : "bg-gray-100"
+                  }`}
+                >
+                  <h1
+                    className={`text-base text-center leading-6 font-poppins font-normal mb-0 ${
+                      currentDate === i && "text-white rounded-full"
+                    }`}
+                  >
+                    {i + 1}
+                  </h1>
+                </div>
+                <div className="mt-3">
+                  <h1
+                    className="leading-4 font-normal font-poppins"
+                    style={{
+                      fontSize: "10px",
+                    }}
+                  >
+                    {weekDays[`${dayjs()?.day(i + 1)?.$W}`].slice(0, 3)}
+                  </h1>
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </div>
+
+          {/* <Slider {...dateSettings} ref={slideDateRef}> */}
+          {/* Creating the dates aray to map */}
+          {/* <div className="grid grid-cols-12"> */}
+          {/* {Array.from(Array(datesInMonth[currentMonth - 1]?.dates).keys()).map(
+            (i) => (
+              <div
+                key={i}
+                onClick={() => handleDates(i)}
+                className="cursor-pointer"
+              >
+                <div
+                  onClick={() => handleDates(i)}
+                  className={`w-8 h-8 rounded-full ${
+                    currentDate === i ? "bg-black" : "bg-gray-100"
+                  }`}
+                >
+                  <h1
+                    // key={i}
+                    className={`text-base leading-6 font-poppins font-normal mb-0 ${
+                      currentDate === i && "text-white rounded-full"
+                    }`}
+                  >
+                    {i + 1}
+                  </h1>
+                </div>
+                <div>
+                  <h1>{dayjs().day()}</h1>
+                </div>
+              </div>
+            )
+          )} */}
+        </div>
+
+        <div className="calendar-fader-right"></div>
+        <div className="calendar-fader-left"></div>
       </div>
       {/* </div> */}
-      {/* <div className='calendar-wrapper flex items-center'>
-        {datesInMonth.map((date) => (
-          <div className='mr-7.5 cursor-pointer'>
-            <h1 className='text-base leading-6 font-poppins font-normal'>
-              {(() => {
-                let td = [];
-                for (let i = 1; i <= date.dates; i++) {
-                  td.push(<td key={i}>{i}</td>);
-                }
-                return td;
-              })()}
-            </h1>
-          </div>
-        ))}
-        <div className='calendar-fader'></div>
-      </div> */}
     </div>
   );
 };

@@ -92,7 +92,6 @@ table.custom-table > tbody > tr:hover td {
   position: absolute;
   width: 20%;
   left: 0;
-  /* right: 0; */
   top: 0;
   bottom: 0;
   background-image: linear-gradient(
@@ -100,15 +99,12 @@ table.custom-table > tbody > tr:hover td {
     #ffffff,
     rgba(255, 255, 255, 0.243) 200px
   );
-  /* ,
-    linear-gradient(to left, #ffffff, rgba(0, 128, 128, 0) 200px); */
 }
 
 .calendar-fader-right {
   content: "";
   position: absolute;
   width: 20%;
-  /* left: 0; */
   right: 0;
   top: 0;
   bottom: 0;
@@ -119,7 +115,6 @@ table.custom-table > tbody > tr:hover td {
   );
 }
 
-/* .calender-carousel >  */
 .slick-current {
   font-weight: 600;
   color: black;
