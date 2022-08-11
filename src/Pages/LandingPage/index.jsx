@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
 import Dashboard from "../Dashborad";
+import Messages from "../Messages";
 import PaymentStatus from "../PaymentStatus";
 
 const LandingPage = () => {
@@ -29,7 +30,7 @@ const LandingPage = () => {
       name: "massage",
       icon: <Icons.Message />,
       label: "Massage",
-      component: <Dashboard />,
+      component: <Messages />,
       count: 2,
     },
     {
