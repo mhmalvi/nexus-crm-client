@@ -119,3 +119,18 @@ table.custom-table > tbody > tr:hover td {
   font-weight: 600;
   color: black;
 }
+
+.ant-picker-input > input {
+  display: none;
+}
+
+.anticon-close-circle {
+  display: none !important;
+}
+.custom-picker::after {
+  /* display: none; */
+  background: white !important;
+  content: "" !important;
+  color: white !important;
+  cursor: pointer;
+}

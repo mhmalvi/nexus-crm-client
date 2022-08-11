@@ -1,3 +1,4 @@
+import { DatePicker, Dropdown, Menu, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
@@ -5,6 +6,10 @@ import Slider from "react-slick";
 const Calendar = () => {
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
+  // const [dayPicker, setDayPicker] = useState(false);
+  const [monthPicker, setMonthPicker] = useState(false);
+  const [yearPicker, setYearPicker] = useState(false);
+
   const slideMonthRef = useRef();
 
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
@@ -76,8 +81,27 @@ const Calendar = () => {
     "Saturday",
   ];
 
+  let dayPickerDays = [];
+
+  for (let i = 0; i < 31; i++) {
+    dayPickerDays.push({
+      label: i + 1,
+      key: i,
+    });
+  }
+
+  const dayMenu = (
+    <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
+  );
+
   return (
-    <div className="flex justify-between items-center">
+    <div
+      className="flex justify-between items-center"
+      onClick={() => {
+        setMonthPicker(false);
+        setYearPicker(false);
+      }}
+    >
       <div>
         <div>
           <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
@@ -92,29 +116,76 @@ const Calendar = () => {
           }}
         >
           <div className="flex items-center rounded-full bg-gray-100 mb-5">
+            <Dropdown overlay={dayMenu} trigger={["click"]}>
+              <div
+                className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+                  activeSection === "day" ? "bg-black" : "text-black"
+                } rounded-full text-white cursor-pointer`}
+                onClick={() => setActiveSection("day")}
+              >
+                {/* <a onClick={(e) => e.preventDefault()}> */}
+                <Space>
+                  Day
+                  {/* <DownOutlined /> */}
+                </Space>
+                {/* </a> */}
+              </div>
+            </Dropdown>
             <div
-              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
-                activeSection === "day" ? "bg-black" : "text-black"
-              } rounded-full text-white cursor-pointer`}
-              onClick={() => setActiveSection("day")}
+              className={`relative w-17 px-3 py-2 text-xs leading-4 font-light font-poppins ${
+                activeSection === "month" ? "bg-black text-white" : "text-black"
+              } rounded-full cursor-pointer mx-2`}
+              onClick={(e) => {
+                setActiveSection("month");
+                setYearPicker(false);
+                setMonthPicker(!monthPicker);
+                e.stopPropagation();
+              }}
             >
-              Day
+              <div className="absolute top-0.5 left-0 w-17 h-full flex justify-center items-center">
+                <h1
+                  className={`text-white ${
+                    activeSection === "month" ? " text-white" : "text-black"
+                  }`}
+                >
+                  Month
+                </h1>
+              </div>
+              <DatePicker
+                suffixIcon=""
+                className="custom-picker text-white"
+                picker="month"
+                open={monthPicker}
+                bordered={false}
+              />
             </div>
             <div
-              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
-                activeSection === "month" ? "bg-black" : "text-black"
-              } rounded-full text-white cursor-pointer mx-2`}
-              onClick={() => setActiveSection("month")}
-            >
-              Month
-            </div>
-            <div
-              className={`px-3 py-2 text-xs leading-4 font-light font-poppins ${
+              className={`relative px-3 py-2 text-xs leading-4 font-light font-poppins ${
                 activeSection === "year" ? "bg-black" : "text-black"
               } rounded-full text-white cursor-pointer`}
-              onClick={() => setActiveSection("year")}
+              onClick={(e) => {
+                setActiveSection("year");
+                setMonthPicker(false);
+                setYearPicker(!yearPicker);
+                e.stopPropagation();
+              }}
             >
-              Year
+              <div className="absolute top-0.5 -left-2.5 w-17 h-full flex justify-center items-center">
+                <h1
+                  className={`text-white ${
+                    activeSection === "year" ? " text-white" : "text-black"
+                  }`}
+                >
+                  Year
+                </h1>
+              </div>
+              <DatePicker
+                suffixIcon=""
+                className="text-white"
+                picker="year"
+                open={yearPicker}
+                bordered={false}
+              />
             </div>
           </div>
         </div>
