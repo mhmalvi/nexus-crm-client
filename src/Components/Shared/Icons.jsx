@@ -11,6 +11,8 @@ import { ReactComponent as PeopleRounded } from "../../assets/Icons/people-round
 import { ReactComponent as MessageRounded } from "../../assets/Icons/message-rounded.svg";
 import { ReactComponent as Info } from "../../assets/Icons/info.svg";
 import { ReactComponent as LogOut } from "../../assets/Icons/logout.svg";
+import { ReactComponent as Search } from "../../assets/Icons/Search-Icon.svg";
+import { ReactComponent as Send } from "../../assets/Icons/Send.svg";
 
 const Icons = {
   CompanyLogo,
@@ -26,6 +28,8 @@ const Icons = {
   MessageRounded,
   Info,
   LogOut,
+  Search,
+  Send,
 };
 
 export default Icons;
