@@ -13,6 +13,7 @@ import { ReactComponent as Info } from "../../assets/Icons/info.svg";
 import { ReactComponent as LogOut } from "../../assets/Icons/logout.svg";
 import { ReactComponent as Search } from "../../assets/Icons/Search-Icon.svg";
 import { ReactComponent as Send } from "../../assets/Icons/Send.svg";
+import { ReactComponent as Read } from "../../assets/Icons/read-icon.svg";
 
 const Icons = {
   CompanyLogo,
@@ -30,6 +31,7 @@ const Icons = {
   LogOut,
   Search,
   Send,
+  Read,
 };
 
 export default Icons;

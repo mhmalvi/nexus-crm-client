@@ -6,7 +6,7 @@ import Calendar from "./Calendar";
 
 const Dashboard = () => {
   return (
-    <div className="lg:mx-4 2xl:ml-10 2xl:mr-16 py-24">
+    <div className='lg:mx-6 2xl:ml-12 2xl:mr-16 py-24'>
       <Calendar />
       <Filters />
       <Table data={data} />

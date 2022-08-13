@@ -7,6 +7,7 @@ import PaymentStatus from "../PaymentStatus";
 
 const LandingPage = () => {
   const [active, setActive] = useState("dashboard");
+  const [toggleMessage, setToggleMessage] = useState(false);
 
   const Items = [
     {
@@ -25,14 +26,14 @@ const LandingPage = () => {
       component: <PaymentStatus />,
       count: 0,
     },
-    {
-      key: "3",
-      name: "massage",
-      icon: <Icons.Message />,
-      label: "Massage",
-      component: <Messages />,
-      count: 2,
-    },
+    // {
+    //   key: "3",
+    //   name: "",
+    //   icon: <Icons.Message />,
+    //   label: "Massage",
+    //   component: <></>,
+    //   count: 2,
+    // },
     {
       key: "4",
       name: "payment",
@@ -95,17 +96,22 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="flex justify-start items-start">
-      <div className="fixed top-0 left-0">
+    <div
+      className='flex justify-start items-start'
+      onClick={() => setToggleMessage(false)}
+    >
+      <div className='fixed top-0 left-0'>
         <Sidebar
           Items={Items}
           Items2={Items2}
           active={active}
           setActive={setActive}
+          toggleMessage={toggleMessage}
+          setToggleMessage={setToggleMessage}
         />
       </div>
       <div
-        className="ml-auto"
+        className='relative ml-auto'
         style={{
           width: "calc(100vw - 277px)",
         }}
@@ -114,6 +120,12 @@ const LandingPage = () => {
           <div key={c.key}>{c.component}</div>
         ))}
       </div>
+      {toggleMessage && (
+        <Messages
+          toggleMessage={toggleMessage}
+          setToggleMessage={setToggleMessage}
+        />
+      )}
     </div>
   );
 };
