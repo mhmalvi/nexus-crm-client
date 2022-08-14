@@ -1,10 +1,10 @@
 import "antd/dist/antd.css";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import LandingPage from "./Pages/LandingPage";
+import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
+import LandingPage from "./Pages/LandingPage";
 
 function App() {
   return (

@@ -4,6 +4,7 @@ import Sidebar from "../../Components/Shared/Sidebar";
 import Dashboard from "../Dashborad";
 import Messages from "../Messages";
 import PaymentStatus from "../PaymentStatus";
+import Campaigns from "../Campaigns";
 
 const LandingPage = () => {
   const [active, setActive] = useState("dashboard");
@@ -39,7 +40,7 @@ const LandingPage = () => {
       name: "campaigns",
       icon: <Icons.Campaigns />,
       label: "Campaigns",
-      component: <Dashboard />,
+      component: <Campaigns />,
       count: 0,
     },
     {

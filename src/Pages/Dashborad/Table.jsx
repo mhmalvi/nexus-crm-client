@@ -85,8 +85,8 @@ const Table = ({ title, tableHeaders, data }) => {
           <table cellPadding="0" cellSpacing="0" border="0">
             <thead>
               <tr>
-                {tableHeaders.map((hedaer) => (
-                  <th>{hedaer}</th>
+                {tableHeaders.map((hedaer, i) => (
+                  <th key={i}>{hedaer}</th>
                 ))}
               </tr>
             </thead>
