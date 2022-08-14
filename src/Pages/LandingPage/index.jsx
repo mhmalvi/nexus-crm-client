@@ -26,20 +26,12 @@ const LandingPage = () => {
       component: <PaymentStatus />,
       count: 0,
     },
-    // {
-    //   key: "3",
-    //   name: "",
-    //   icon: <Icons.Message />,
-    //   label: "Massage",
-    //   component: <></>,
-    //   count: 2,
-    // },
     {
       key: "4",
       name: "payment",
       icon: <Icons.Payment />,
       label: "Payment",
-      component: <Dashboard />,
+      component: <PaymentStatus />,
       count: 0,
     },
     {
@@ -97,10 +89,10 @@ const LandingPage = () => {
 
   return (
     <div
-      className='flex justify-start items-start'
+      className="flex justify-start items-start"
       onClick={() => setToggleMessage(false)}
     >
-      <div className='fixed top-0 left-0'>
+      <div className="fixed top-0 left-0">
         <Sidebar
           Items={Items}
           Items2={Items2}
@@ -111,7 +103,7 @@ const LandingPage = () => {
         />
       </div>
       <div
-        className='relative ml-auto'
+        className="relative ml-auto"
         style={{
           width: "calc(100vw - 277px)",
         }}

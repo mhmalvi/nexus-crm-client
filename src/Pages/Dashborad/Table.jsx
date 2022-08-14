@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 
-const Table = ({ data }) => {
+const Table = ({ title, tableHeaders, data }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id) => {
@@ -64,7 +64,7 @@ const Table = ({ data }) => {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-xl leading-7 font-poppins font-semibold">
-              Lead List
+              {title}
             </h1>
           </div>
           <div className="mr-12">
@@ -85,13 +85,15 @@ const Table = ({ data }) => {
           <table cellPadding="0" cellSpacing="0" border="0">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Date</th>
+                {tableHeaders.map((hedaer) => (
+                  <th>{hedaer}</th>
+                ))}
+                {/* <th>Date</th>
                 <th>Coustomer Name</th>
                 <th>Course Code</th>
                 <th>Location</th>
                 <th>Amount</th>
-                <th>Order Status</th>
+                <th>Order Status</th> */}
               </tr>
             </thead>
           </table>
@@ -104,32 +106,38 @@ const Table = ({ data }) => {
             border="0"
           >
             <tbody>
-              {data.map((lead) => (
+              {data.map((list) => (
                 <tr
-                  key={lead.lead_id}
-                  onClick={() => handleNavigate(lead.lead_id)}
+                  key={list.lead_id}
+                  onClick={() => handleNavigate(list.lead_id)}
                 >
-                  <td>{lead.lead_id}</td>
-                  <td>{lead.date}</td>
-                  <td>{lead.coustomer_name}</td>
-                  <td>{lead.course_code}</td>
-                  <td>{lead.location}</td>
-                  <td>{lead.amount}</td>
-                  <td>
-                    {statusColor
-                      .filter((status) => status.title === lead.order_status)
-                      .map((lead_status, index) => (
-                        <div
-                          key={index}
-                          className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                        >
+                  <td>{list.lead_id}</td>
+                  <td>{list.date}</td>
+                  <td>{list.coustomer_name}</td>
+                  <td>{list.course_code}</td>
+                  <td>{list.location}</td>
+                  <td>{list.amount}</td>
+                  {statusColor.find(
+                    (status) => status.title === list.order_status
+                  ) ? (
+                    <td>
+                      {statusColor
+                        .filter((status) => status.title === list.order_status)
+                        .map((lead_status, index) => (
                           <div
-                            className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                          ></div>
-                          <div className="ml-1">{lead_status.title}</div>
-                        </div>
-                      ))}
-                  </td>
+                            key={index}
+                            className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                          >
+                            <div
+                              className={`w-2 h-2 ${lead_status.color} rounded-full`}
+                            ></div>
+                            <div className="ml-1">{lead_status.title}</div>
+                          </div>
+                        ))}
+                    </td>
+                  ) : (
+                    <td>{list.payment_via}</td>
+                  )}
                 </tr>
               ))}
             </tbody>

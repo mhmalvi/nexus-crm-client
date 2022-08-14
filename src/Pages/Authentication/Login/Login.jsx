@@ -1,7 +1,7 @@
 import { Input } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import brandLogo from "../../../assets/Images/QQ.png";
+import Icons from "../../../Components/Shared/Icons";
 
 const Login = () => {
   // const [data, setData] = useState({
@@ -17,7 +17,8 @@ const Login = () => {
           <div className="flex flex-col items-center">
             {/* <h1 className="text-lg">Welcome to</h1> */}
             {/* <span className="text-2xl">Quadque Technologies Limited</span> */}
-            <img src={brandLogo} alt="" />
+            {/* <img className="w-32" src={brandLogo} alt="" /> */}
+            <Icons.CompanyLogo className="w-40" />
           </div>
         </div>
         <div className="text-center my-6">

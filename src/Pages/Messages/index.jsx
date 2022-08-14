@@ -5,10 +5,11 @@ import messages from "./messages.json";
 const Message = () => {
   return (
     <div
-      className="fixed top-28 -mt-2  pt-13 pb-4 shadow bg-white"
+      className="fixed top-28 -mt-2  pt-13 pb-4 bg-white"
       style={{
         width: "341px",
         left: "300px",
+        boxShadow: "4px 0px 10px rgba(112, 55, 255, 0.05)",
       }}
       onClick={(e) => e.stopPropagation()}
     >

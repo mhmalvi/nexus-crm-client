@@ -5,11 +5,21 @@ import Filters from "./Filters";
 import Calendar from "./Calendar";
 
 const Dashboard = () => {
+  const tableHeaders = [
+    "ID",
+    "Date",
+    "Coustomer Name",
+    "Course Code",
+    "Location",
+    "Amount",
+    "Order Status",
+  ];
+
   return (
-    <div className='lg:mx-6 2xl:ml-12 2xl:mr-16 py-24'>
+    <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-24">
       <Calendar />
       <Filters />
-      <Table data={data} />
+      <Table title="Lead List" tableHeaders={tableHeaders} data={data} />
     </div>
   );
 };
