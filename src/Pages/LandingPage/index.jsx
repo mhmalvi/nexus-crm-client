@@ -5,14 +5,21 @@ import Dashboard from "../Dashborad";
 import Messages from "../Messages";
 import PaymentStatus from "../PaymentStatus";
 import Campaigns from "../Campaigns";
+import { Route, Routes } from "react-router-dom";
+import LeadDetails from "../Dashborad/LeadDetails";
+import { useEffect } from "react";
 
 const LandingPage = () => {
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
 
+  useEffect(() => {
+    setActive(window.location.pathname.toString().slice(1));
+  }, []);
+
   const Items = [
     {
-      key: "1",
+      key: "dashboard",
       name: "dashboard",
       icon: <Icons.Dashboard />,
       label: "Dashboard",
@@ -20,7 +27,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "2",
+      key: "overview",
       name: "overview",
       icon: <Icons.Chart />,
       label: "Overview",
@@ -28,7 +35,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "4",
+      key: "payments",
       name: "payment",
       icon: <Icons.Payment />,
       label: "Payment",
@@ -36,7 +43,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "5",
+      key: "campaigns",
       name: "campaigns",
       icon: <Icons.Campaigns />,
       label: "Campaigns",
@@ -44,7 +51,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "6",
+      key: "export-excel",
       name: "export-excel",
       icon: <Icons.Payment />,
       label: "Export Excel",
@@ -52,18 +59,26 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "7",
+      key: "settings",
       name: "settings",
       icon: <Icons.Settings />,
       label: "Settings",
       component: <Dashboard />,
       count: 0,
     },
+    {
+      key: "lead/:id",
+      name: "settings",
+      icon: <Icons.Settings />,
+      label: "Settings",
+      component: <LeadDetails />,
+      count: 0,
+    },
   ];
 
   const Items2 = [
     {
-      key: "8",
+      key: "profile",
       name: "profile",
       icon: <Icons.PeopleRounded />,
       label: "Profile",
@@ -71,7 +86,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "9",
+      key: "team-contact",
       name: "team-contact",
       icon: <Icons.MessageRounded />,
       label: "Team Contact",
@@ -79,7 +94,7 @@ const LandingPage = () => {
       count: 0,
     },
     {
-      key: "10",
+      key: "help-centre",
       name: "help-centre",
       icon: <Icons.Info />,
       label: "Help Centre",
@@ -109,9 +124,19 @@ const LandingPage = () => {
           width: "calc(100vw - 277px)",
         }}
       >
-        {Items.filter((item) => item.name === active).map((c) => (
-          <div key={c.key}>{c.component}</div>
+        <Routes>
+          <Route path={"lead/:id"} element={<LeadDetails />} />
+        </Routes>
+
+        {Items.filter((item) => item.key === active).map((c) => (
+          <Routes>
+            <Route key={c.key} path={`${c.key}`} element={c.component} />
+          </Routes>
         ))}
+
+        {/* {Items.filter((item) => item.name === active).map((c) => (
+          <div key={c.key}>{c.component}</div>
+        ))} */}
       </div>
       {toggleMessage && (
         <Messages

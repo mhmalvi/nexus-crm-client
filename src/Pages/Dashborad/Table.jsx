@@ -7,7 +7,7 @@ const Table = ({ title, tableHeaders, data }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id) => {
-    navigate("/");
+    navigate(`/lead/${id}`);
   };
 
   const statusColor = [

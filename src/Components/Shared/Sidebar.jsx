@@ -1,5 +1,6 @@
 import React from "react";
 import Icons from "./Icons";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({
   active,
@@ -85,7 +86,8 @@ const Sidebar = ({
         </div>
         <div className="border-r pt-8 pb-4">
           <div>
-            <div
+            <NavLink
+              to={"/dashboard"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
                 color: `${active === "dashboard" ? "#7037FF" : "#7C8DB5"}`,
@@ -99,10 +101,11 @@ const Sidebar = ({
               {active === "dashboard" && (
                 <div className="ml-auto active-option">|</div>
               )}
-            </div>
+            </NavLink>
           </div>
           <div>
-            <div
+            <NavLink
+              to={"/overview"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
                 color: `${active === "overview" ? "#7037FF" : "#7C8DB5"}`,
@@ -116,7 +119,7 @@ const Sidebar = ({
               {active === "overview" && (
                 <div className="ml-auto active-option">|</div>
               )}
-            </div>
+            </NavLink>
           </div>
 
           <div>
@@ -150,25 +153,27 @@ const Sidebar = ({
           </div>
 
           <div>
-            <div
+            <NavLink
+              to={"/payments"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
-                color: `${active === "payment" ? "#7037FF" : "#7C8DB5"}`,
+                color: `${active === "payments" ? "#7037FF" : "#7C8DB5"}`,
               }}
-              onClick={() => setActive("payment")}
+              onClick={() => setActive("payments")}
             >
               <Icons.Payment />
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Payment
               </span>
-              {active === "payment" && (
+              {active === "payments" && (
                 <div className="ml-auto active-option">|</div>
               )}
-            </div>
+            </NavLink>
           </div>
 
           <div>
-            <div
+            <NavLink
+              to={"/campaigns"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
                 color: `${active === "campaigns" ? "#7037FF" : "#7C8DB5"}`,
@@ -182,7 +187,7 @@ const Sidebar = ({
               {active === "campaigns" && (
                 <div className="ml-auto active-option">|</div>
               )}
-            </div>
+            </NavLink>
           </div>
 
           <div>
