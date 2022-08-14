@@ -7,7 +7,6 @@ const Table = ({ data }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id) => {
-    console.log(id);
     navigate("/");
   };
 

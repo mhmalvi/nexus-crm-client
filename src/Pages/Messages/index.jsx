@@ -2,7 +2,7 @@ import React from "react";
 import Icons from "../../Components/Shared/Icons";
 import messages from "./messages.json";
 
-const Message = ({ toggleMessage, setToggleMessage }) => {
+const Message = () => {
   return (
     <div
       className="fixed top-28 -mt-2  pt-13 pb-4 shadow bg-white"
