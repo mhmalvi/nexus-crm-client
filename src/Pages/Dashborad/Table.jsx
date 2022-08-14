@@ -88,12 +88,6 @@ const Table = ({ title, tableHeaders, data }) => {
                 {tableHeaders.map((hedaer) => (
                   <th>{hedaer}</th>
                 ))}
-                {/* <th>Date</th>
-                <th>Coustomer Name</th>
-                <th>Course Code</th>
-                <th>Location</th>
-                <th>Amount</th>
-                <th>Order Status</th> */}
               </tr>
             </thead>
           </table>

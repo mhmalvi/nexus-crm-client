@@ -20,13 +20,13 @@ const Message = () => {
       </div>
 
       <div
-        className="mt-7.5 overflow-y-auto px-4"
+        className="mt-7.5 overflow-y-auto "
         style={{
           height: "65vh",
         }}
       >
         {messages.map((message) => (
-          <div className="mt-5 pt-0.5 cursor-pointer">
+          <div className="mt-5 pt-0.5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200">
             <div className="flex justify-between items-start">
               <h1 className="text-lg leading-7 font-poppins font-semibold">
                 {message.user}
