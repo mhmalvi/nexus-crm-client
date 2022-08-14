@@ -7,7 +7,6 @@ const Message = ({ toggleMessage, setToggleMessage }) => {
     <div
       className="fixed top-28 -mt-2  pt-13 pb-4 shadow bg-white"
       style={{
-        // height: "65vh",
         width: "341px",
         left: "300px",
       }}
