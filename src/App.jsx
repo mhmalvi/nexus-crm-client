@@ -6,7 +6,7 @@ import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
 import Campaigns from "./Pages/Campaigns";
 import Dashboard from "./Pages/Dashborad";
-import LeadDetails from "./Pages/Dashborad/LeadDetails";
+import LeadDetails from "./Pages/LeadDetails";
 import LandingPage from "./Pages/LandingPage";
 import PaymentStatus from "./Pages/PaymentStatus";
 

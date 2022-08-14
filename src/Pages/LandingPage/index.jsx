@@ -6,7 +6,7 @@ import Messages from "../Messages";
 import PaymentStatus from "../PaymentStatus";
 import Campaigns from "../Campaigns";
 import { Route, Routes } from "react-router-dom";
-import LeadDetails from "../Dashborad/LeadDetails";
+import LeadDetails from "../LeadDetails";
 import { useEffect } from "react";
 
 const LandingPage = () => {
@@ -128,9 +128,13 @@ const LandingPage = () => {
           <Route path={"lead/:id"} element={<LeadDetails />} />
         </Routes>
 
-        {Items.filter((item) => item.key === active).map((c) => (
-          <Routes>
-            <Route key={c.key} path={`${c.key}`} element={c.component} />
+        {Items.filter((item) => item.key === active).map((navItem, i) => (
+          <Routes key={i}>
+            <Route
+              key={navItem.key}
+              path={`${navItem.key}`}
+              element={navItem.component}
+            />
           </Routes>
         ))}
 
