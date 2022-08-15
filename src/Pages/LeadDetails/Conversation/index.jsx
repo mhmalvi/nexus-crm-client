@@ -44,7 +44,7 @@ const Conversation = () => {
 
   return (
     <div
-      className="min-h-full px-4 border-r"
+      className="min-h-full px-6 border-r"
       onClick={() => {
         setMonthPicker(false);
         setYearPicker(false);
