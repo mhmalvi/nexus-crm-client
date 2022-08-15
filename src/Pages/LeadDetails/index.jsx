@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Conversation from "./Conversation";
 import LeadStatus from "./LeadStatus";
+import UserDetails from "./UserDetails";
 
 const LeadDetails = () => {
   const { id } = useParams();
@@ -24,6 +25,9 @@ const LeadDetails = () => {
         </div>
         <div>
           <Conversation />
+        </div>
+        <div>
+          <UserDetails />
         </div>
       </div>
     </div>
