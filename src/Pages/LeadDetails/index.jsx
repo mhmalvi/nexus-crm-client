@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import Conversation from "./Conversation";
 import LeadStatus from "./LeadStatus";
 
 const LeadDetails = () => {
@@ -16,9 +17,14 @@ const LeadDetails = () => {
   };
 
   return (
-    <div className="lg:mx-2 2xl:mx-6 mt-25 pt-1">
-      <div>
-        <LeadStatus leadStatus={leadStatus} />
+    <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1">
+      <div className="grid grid-cols-3">
+        <div>
+          <LeadStatus leadStatus={leadStatus} />
+        </div>
+        <div>
+          <Conversation />
+        </div>
       </div>
     </div>
   );

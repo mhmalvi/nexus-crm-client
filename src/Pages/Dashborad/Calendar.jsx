@@ -6,7 +6,6 @@ import Slider from "react-slick";
 const Calendar = () => {
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
-  // const [dayPicker, setDayPicker] = useState(false);
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
 
@@ -91,12 +90,12 @@ const Calendar = () => {
   }
 
   const dayMenu = (
-    <Menu className='grid grid-cols-4 gap-2' items={dayPickerDays} />
+    <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
   );
 
   return (
     <div
-      className='flex justify-between items-center'
+      className="flex justify-between items-center"
       onClick={() => {
         setMonthPicker(false);
         setYearPicker(false);
@@ -104,31 +103,29 @@ const Calendar = () => {
     >
       <div>
         <div>
-          <h1 className='text-xl font-semibold mb-7 leading-8 font-poppins'>
+          <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
             {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month}{" "}
-            2022
+            {dayjs().year()}
           </h1>
         </div>
         <div
-          className='flex justify-center items-center'
+          className="flex justify-center items-center"
           style={{
             width: "46rem",
           }}
         >
-          <div className='flex items-center rounded-full bg-gray-100 mb-5'>
+          <div className="flex items-center rounded-full bg-gray-100 mb-5">
             <Dropdown overlay={dayMenu} trigger={["click"]}>
               <div
                 className={`px-3 py-2 text-xs leading-4 font-medium font-poppins ${
                   activeSection === "day" ? "bg-black text-white" : "text-black"
                 } rounded-full cursor-pointer`}
-                onClick={() => setActiveSection("day")}
+                onClick={() => {
+                  setActiveSection("day");
+                  setMonthPicker(false);
+                }}
               >
-                {/* <a onClick={(e) => e.preventDefault()}> */}
-                <Space>
-                  Day
-                  {/* <DownOutlined /> */}
-                </Space>
-                {/* </a> */}
+                <Space>Day</Space>
               </div>
             </Dropdown>
             <div
@@ -142,7 +139,7 @@ const Calendar = () => {
                 e.stopPropagation();
               }}
             >
-              <div className='absolute top-0.5 left-0 w-17 h-full flex justify-center items-center'>
+              <div className="absolute top-0.5 left-0 w-17 h-full flex justify-center items-center">
                 <h1
                   className={`${
                     activeSection === "month"
@@ -154,9 +151,9 @@ const Calendar = () => {
                 </h1>
               </div>
               <DatePicker
-                suffixIcon=''
-                className='custom-picker text-white'
-                picker='month'
+                suffixIcon=""
+                className="custom-picker text-white"
+                picker="month"
                 open={monthPicker}
                 bordered={false}
               />
@@ -172,7 +169,7 @@ const Calendar = () => {
                 e.stopPropagation();
               }}
             >
-              <div className='absolute top-0.5 -left-2.5 w-17 h-full flex justify-center items-center'>
+              <div className="absolute top-0.5 -left-2.5 w-17 h-full flex justify-center items-center">
                 <h1
                   className={`${
                     activeSection === "year" ? " text-white" : "text-black"
@@ -182,9 +179,9 @@ const Calendar = () => {
                 </h1>
               </div>
               <DatePicker
-                suffixIcon=''
-                className='text-white'
-                picker='year'
+                suffixIcon=""
+                className="text-white"
+                picker="year"
                 open={yearPicker}
                 bordered={false}
               />
@@ -192,7 +189,7 @@ const Calendar = () => {
           </div>
         </div>
         <div
-          className='relative calender-carousel'
+          className="relative calender-carousel"
           style={{
             width: "46rem",
           }}
@@ -201,26 +198,26 @@ const Calendar = () => {
             {datesInMonth.map((date) => (
               <div
                 key={date.key}
-                className='py-5 cursor-pointer text-base font-normal leading-6 font-poppins '
+                className="py-5 cursor-pointer text-base font-normal leading-6 font-poppins "
                 onClick={() => handleMonths(date.key)}
               >
-                <h1 className='mb-0 text-center'>{date.month}</h1>
+                <h1 className="mb-0 text-center">{date.month}</h1>
               </div>
             ))}
           </Slider>
-          <div className='calendar-fader-left'></div>
-          <div className='calendar-fader-right'></div>
+          <div className="calendar-fader-left"></div>
+          <div className="calendar-fader-right"></div>
         </div>
         <div
-          className='relative'
+          className="relative"
           style={{
             width: "48rem",
           }}
         >
-          <div className='ml-14 mb-5'>
-            <div className=' flex justify-between items-center'>
+          <div className="ml-14 mb-5">
+            <div className=" flex justify-between items-center">
               {dates.map((i) => (
-                <div key={i} className='flex flex-col items-center'>
+                <div key={i} className="flex flex-col items-center">
                   <div
                     onClick={() => handleDates(i)}
                     className={`w-8 h-8 flex justify-center items-center rounded-full cursor-pointer ${
@@ -235,9 +232,9 @@ const Calendar = () => {
                       {i + 1}
                     </h1>
                   </div>
-                  <div className='mt-3'>
+                  <div className="mt-3">
                     <h1
-                      className='leading-4 font-normal font-poppins'
+                      className="leading-4 font-normal font-poppins"
                       style={{
                         fontSize: "10px",
                       }}
@@ -282,24 +279,24 @@ const Calendar = () => {
           )} */}
           </div>
 
-          <div className='calendar-fader-right'></div>
-          <div className='calendar-fader-left'></div>
+          <div className="calendar-fader-right"></div>
+          <div className="calendar-fader-left"></div>
         </div>
       </div>
 
       <div
-        className='w-84 h-52 mx-0.5 py-2.5 px-6 border'
+        className="w-84 h-52 mx-0.5 py-2.5 px-6 border"
         style={{
           borderRadius: "20px",
         }}
       >
-        <div className='py-2.5 border-b'>
-          <h1 className='text-xl text-center font-semibold leading-8 font-poppins'>
+        <div className="py-2.5 border-b">
+          <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
             Notice Board
           </h1>
         </div>
         <div>
-          <p className='mt-4 text-base leading-6 font-medium font-poppins'>
+          <p className="mt-4 text-base leading-6 font-medium font-poppins">
             ll months have 30 or 31 days, except for February which has 28 days
           </p>
         </div>

@@ -15,6 +15,7 @@ import { ReactComponent as Search } from "../../assets/Icons/Search-Icon.svg";
 import { ReactComponent as Send } from "../../assets/Icons/Send.svg";
 import { ReactComponent as Read } from "../../assets/Icons/read-icon.svg";
 import { ReactComponent as PDF } from "../../assets/Icons/pdf.svg";
+import { ReactComponent as Clip } from "../../assets/Icons/clip.svg";
 
 const Icons = {
   CompanyLogo,
@@ -34,6 +35,7 @@ const Icons = {
   Send,
   Read,
   PDF,
+  Clip,
 };
 
 export default Icons;

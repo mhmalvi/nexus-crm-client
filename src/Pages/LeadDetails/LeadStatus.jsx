@@ -88,12 +88,7 @@ const LeadStatus = ({ leadStatus }) => {
   };
 
   return (
-    <div
-      className="pr-6 border-r"
-      style={{
-        width: "22.82rem",
-      }}
-    >
+    <div className="min-h-full pr-6 border-r">
       <div>
         <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
           User Activity Timeline
@@ -136,8 +131,8 @@ const LeadStatus = ({ leadStatus }) => {
             value={subStatus}
             onChange={onSecondCityChange}
           >
-            {status.map((city) => (
-              <Option key={city}>{city}</Option>
+            {status.map((status) => (
+              <Option key={status}>{status}</Option>
             ))}
           </Select>
         )}
