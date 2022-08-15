@@ -1,27 +1,91 @@
-import { Dropdown, Menu, Space } from "antd";
-import React from "react";
+import { Select } from "antd";
+import { Option } from "antd/lib/mentions";
+import React, { useEffect, useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 
+// ---Default Values----
+const statusData = [
+  "New Lead",
+  "Skilled",
+  "Called",
+  "Paid",
+  "Verified",
+  "Completed",
+];
+
+const subStatusData = {
+  "New Lead": [],
+  Skilled: [],
+  Called: ["1st", "2nd", "3rd"],
+  Paid: ["30%", "70%", "100%"],
+  Verified: [],
+  Completed: [],
+};
+
 const LeadStatus = ({ leadStatus }) => {
-  const menu = (
-    <Menu
-      className="w-9"
-      items={[
-        {
-          label: <div>2</div>,
-          key: "1",
-        },
-        {
-          label: <div>3</div>,
-          key: "3",
-        },
-        {
-          label: <div>4</div>,
-          key: "4",
-        },
-      ]}
-    />
+  const [status, setStatus] = useState(
+    subStatusData[
+      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
+    ]
   );
+  const [leadStatusColor, setLeadStatusColor] = useState("color-green");
+  const [subStatus, setSubStatus] = useState(subStatusData[statusData[0]][0]);
+
+  const statusColor = [
+    {
+      lable: "New Lead",
+      color: "#34C759",
+      class: "color-green",
+    },
+    {
+      lable: "Skilled",
+      color: "#FF9500",
+      class: "color-orange",
+    },
+    {
+      lable: "Called",
+      color: "#4F8DEA",
+      class: "color-blue",
+    },
+    {
+      lable: "Paid",
+      color: "#17CDD9",
+      class: "color-teal",
+    },
+    {
+      lable: "Verified",
+      color: "#7037FF",
+      class: "color-violet",
+    },
+    {
+      lable: "Completed",
+      color: "#FF0000",
+      class: "color-red",
+    },
+  ];
+
+  useEffect(() => {
+    setLeadStatusColor(
+      statusColor.find(
+        (i) =>
+          i.lable ===
+          statusData[
+            Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
+          ]
+      ).class
+    );
+  }, []);
+
+  const handleProvinceChange = (value) => {
+    setStatus(subStatusData[value]);
+    setSubStatus(subStatusData[value][0]);
+    setLeadStatusColor(statusColor.find((i) => i.lable === value)?.class);
+    leadStatus[value] = true;
+  };
+
+  const onSecondCityChange = (value) => {
+    setSubStatus(value);
+  };
 
   return (
     <div
@@ -36,23 +100,47 @@ const LeadStatus = ({ leadStatus }) => {
         </h1>
       </div>
       <div className="flex items-center mt-5">
-        <button
-          className="py-1 bg-blue-500 text-white rounded-md text-base leading-6 font-semibold font-poppins"
+        <Select
+          className={`lead_status ${leadStatusColor}`}
+          defaultValue={
+            statusData[
+              Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
+            ]
+          }
           style={{
             width: "114px",
           }}
+          onChange={handleProvinceChange}
         >
-          Called
-        </button>
-        <div>
-          <Dropdown
-            className="w-9 flex justify-center items-center cursor-pointer py-1.5 ml-2 bg-black text-white rounded-lg shadow-md"
-            overlay={menu}
-            trigger={["click"]}
+          {statusData.map((province) => (
+            <Option
+              style={{
+                backgroundColor: statusColor.find((i) => i.lable === province)
+                  ?.color,
+                color: "#ffffff",
+                padding: "8px 16px",
+              }}
+              key={province}
+            >
+              {province}
+            </Option>
+          ))}
+        </Select>
+
+        {status?.length > 0 && (
+          <Select
+            className="sub_lead_status"
+            style={{
+              width: 50,
+            }}
+            value={subStatus}
+            onChange={onSecondCityChange}
           >
-            <Space>1</Space>
-          </Dropdown>
-        </div>
+            {status.map((city) => (
+              <Option key={city}>{city}</Option>
+            ))}
+          </Select>
+        )}
       </div>
       <div className="flex flex-col items-start justify-center mt-8 ">
         <div className="w-full flex justify-between">
@@ -65,7 +153,7 @@ const LeadStatus = ({ leadStatus }) => {
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.New_Lead
+                    leadStatus["New Lead"]
                       ? "bg-green-500"
                       : "bg-gray-300 animate-custom-ping"
                   }`}
@@ -94,12 +182,12 @@ const LeadStatus = ({ leadStatus }) => {
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.Skilled ? "bg-orange-400" : "bg-gray-300"
+                  leadStatus["Skilled"] ? "bg-orange-400" : "bg-gray-300"
                 } bg-opacity-20 flex justify-center items-center`}
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.Skilled
+                    leadStatus["Skilled"]
                       ? "bg-orange-400"
                       : "bg-gray-300 animate-custom-ping"
                   }`}
@@ -127,12 +215,12 @@ const LeadStatus = ({ leadStatus }) => {
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.Called ? "bg-blue-400" : "bg-gray-300"
+                  leadStatus["Called"] ? "bg-blue-400" : "bg-gray-300"
                 } bg-opacity-20 flex justify-center items-center`}
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.Called
+                    leadStatus["Called"]
                       ? "bg-blue-400"
                       : "bg-gray-300 animate-custom-ping"
                   }`}
@@ -160,12 +248,14 @@ const LeadStatus = ({ leadStatus }) => {
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.Paid ? "bg-teal-400" : "bg-gray-300"
+                  leadStatus["Paid"] ? "bg-teal-400" : "bg-gray-300"
                 } bg-opacity-20 flex justify-center items-center`}
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.Paid ? "bg-teal-400" : "bg-gray-300"
+                    leadStatus["Paid"]
+                      ? "bg-teal-400"
+                      : "bg-gray-300 animate-custom-ping"
                   }`}
                 ></div>
               </div>
@@ -194,12 +284,12 @@ const LeadStatus = ({ leadStatus }) => {
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.Verified ? "bg-violet-500" : "bg-gray-300"
+                  leadStatus["Verified"] ? "bg-violet-500" : "bg-gray-300"
                 } bg-opacity-20 flex justify-center items-center`}
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.Verified
+                    leadStatus["Verified"]
                       ? "bg-violet-500"
                       : "bg-gray-300 animate-custom-ping"
                   }`}
@@ -233,12 +323,12 @@ const LeadStatus = ({ leadStatus }) => {
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.Completed ? "bg-red-500" : "bg-gray-300"
+                  leadStatus["Completed"] ? "bg-red-500" : "bg-gray-300"
                 } bg-opacity-20 flex justify-center items-center`}
               >
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    leadStatus.Completed
+                    leadStatus["Completed"]
                       ? "bg-red-500"
                       : "bg-gray-300 animate-custom-ping"
                   }`}

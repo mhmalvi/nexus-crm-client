@@ -4,14 +4,15 @@ import LeadStatus from "./LeadStatus";
 
 const LeadDetails = () => {
   const { id } = useParams();
+  console.log(id);
 
   const leadStatus = {
-    New_Lead: false,
+    "New Lead": true,
     Skilled: true,
-    Called: true,
-    Paid: true,
-    Verified: true,
-    Completed: true,
+    Called: false,
+    Paid: false,
+    Verified: false,
+    Completed: false,
   };
 
   return (

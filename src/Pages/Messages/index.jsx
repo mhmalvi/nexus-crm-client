@@ -1,8 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import messages from "./messages.json";
 
 const Message = () => {
+  const navigate = useNavigate();
+  const handleMessageNavigation = () => {
+    navigate("/lead/112");
+  };
+
   return (
     <div
       className="fixed top-28 -mt-2  pt-13 pb-4 bg-white"
@@ -27,6 +33,7 @@ const Message = () => {
       >
         {messages.map((message, i) => (
           <div
+            onClick={handleMessageNavigation}
             key={i}
             className="mt-5 pt-0.5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >

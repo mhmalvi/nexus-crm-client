@@ -135,10 +135,85 @@ table.custom-table > tbody > tr:hover td {
   cursor: pointer;
 }
 
+.ant-select-arrow {
+  display: none;
+}
+
+.lead_status > .ant-select-selector {
+  border-radius: 5px !important;
+  /* padding: 6px; */
+  height: 38px !important;
+  margin: auto !important;
+}
+
+.lead_status .ant-select-selection-item {
+  padding: 0 !important;
+  margin: auto !important;
+}
+
+
+.sub_lead_status > .ant-select-selector {
+  height: 40px !important;
+  background-color: #000000 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0 6px !important;
+  border-radius: 5px !important;
+  margin-left: 5px !important;
+}
+
+.color-green > .ant-select-selector {
+  background-color: #34c759 !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.color-orange > .ant-select-selector {
+  background-color: #ff9500 !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.color-blue > .ant-select-selector {
+  background-color: #4f8dea !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.color-teal > .ant-select-selector {
+  background-color: #17cdd9 !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.color-violet > .ant-select-selector {
+  background-color: #7037ff !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.color-red > .ant-select-selector {
+  background-color: #ff0000 !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.sub_lead_status .ant-select-selection-item {
+  padding: 0 !important;
+  margin: auto !important;
+}
+
+/* ------------- Animations------------ */
 @keyframes ping {
   75%,
   100% {
-    transform: scale(1.5);
+    transform: scale(0.7);
     opacity: 0;
   }
 }
