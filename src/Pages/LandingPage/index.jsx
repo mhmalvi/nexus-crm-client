@@ -35,7 +35,7 @@ const LandingPage = () => {
       name: "overview",
       icon: <Icons.Chart />,
       label: "Overview",
-      component: <PaymentStatus />,
+      component: <Dashboard />,
       count: 0,
     },
     {

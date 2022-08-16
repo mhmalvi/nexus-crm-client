@@ -6,8 +6,8 @@ import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
 import Campaigns from "./Pages/Campaigns";
 import Dashboard from "./Pages/Dashborad";
-import LeadDetails from "./Pages/LeadDetails";
 import LandingPage from "./Pages/LandingPage";
+import LeadDetails from "./Pages/LeadDetails";
 import PaymentStatus from "./Pages/PaymentStatus";
 
 function App() {
@@ -21,7 +21,6 @@ function App() {
           <Route path="overview" element={<Dashboard />} />
           <Route path="campaigns" element={<Campaigns />} />
         </Route>
-        {/* <Route path="/lead/:id" element={<LeadDetails />} /> */}
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

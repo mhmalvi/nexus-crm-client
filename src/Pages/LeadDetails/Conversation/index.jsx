@@ -146,13 +146,18 @@ const Conversation = () => {
         </div>
 
         {/* --------------- Conversion Section -------------- */}
-        <div className="mt-5">
+        <div
+          className="mt-5"
+          style={{
+            height: "450px",
+          }}
+        >
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
             Conversion
           </h1>
           {/* --------------- Messages --------------- */}
-          <div className="relative mr-auto mb-2 border p-5 rounded-2xl font-poppins h-91 flex flex-col justify-between">
-            <div>
+          <div className="h-96 relative mr-auto mb-2 border p-5 rounded-2xl font-poppins flex flex-col justify-between">
+            <div className="overflow-y-scroll px-4">
               <div className="text-xs mb-2.5">
                 <p className="rounded-md font-normal mb-1">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
@@ -163,6 +168,10 @@ const Conversation = () => {
                   <span className="text-gray-400 ml-2">02.08.22</span>
                 </div>
               </div>
+              <Replay />
+              <Replay />
+              <Replay />
+              <Replay />
               <Replay />
               <div className="text-xs mb-2.5">
                 <p className="rounded-md font-normal mb-1">
@@ -175,7 +184,7 @@ const Conversation = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl">
+            <div className="w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
               <input
                 className="outline-none font-light bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
                 placeholder="Write a massage"
