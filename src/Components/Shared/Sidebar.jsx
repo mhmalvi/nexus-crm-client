@@ -163,7 +163,7 @@ const Sidebar = ({
             >
               <Icons.Payment />
               <span className="ml-4 leading-6 font-medium font-poppins">
-                Payment
+                Payments
               </span>
               {active === "payments" && (
                 <div className="ml-auto active-option">|</div>

@@ -42,7 +42,7 @@ const LandingPage = () => {
       key: "payments",
       name: "payment",
       icon: <Icons.Payment />,
-      label: "Payment",
+      label: "Payments",
       component: <PaymentStatus />,
       count: 0,
     },
