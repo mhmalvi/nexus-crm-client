@@ -1,7 +1,13 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
 
-const Filters = ({ activeFilter, setActiveFilter }) => {
+const Filters = ({
+  activeFilter,
+  setActiveFilter,
+  layout,
+  activeStars,
+  setActiveStars,
+}) => {
   const filterOptions = [
     {
       id: 0,
@@ -37,31 +43,59 @@ const Filters = ({ activeFilter, setActiveFilter }) => {
     },
   ];
 
+  const ratings = [5, 4, 3, 2, 1];
+
   return (
     <div className="flex justify-between items-center">
       <div>
         <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
           Filters
         </h1>
-        <div className="flex items-center">
-          {/* Filters */}
-          {filterOptions.map((option) => (
-            <div key={option.id} onClick={() => setActiveFilter(option.title)}>
-              <h1
-                className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
-                  activeFilter === option.title
-                    ? "text-white bg-black"
-                    : "text-black bg-white"
-                }  rounded-full`}
-                style={{
-                  border: "1px solid rgba(124, 141, 181, 0.5)",
-                }}
-              >
-                {option.title}
-              </h1>
+        {layout !== "Payment" && (
+          <>
+            <div className="flex items-center">
+              {/* Status Filters */}
+              {filterOptions.map((option) => (
+                <div
+                  key={option.id}
+                  onClick={() => setActiveFilter(option.title)}
+                >
+                  <h1
+                    className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                      activeFilter === option.title
+                        ? "text-white bg-black"
+                        : "text-black bg-white"
+                    }  rounded-full`}
+                    style={{
+                      border: "1px solid rgba(124, 141, 181, 0.5)",
+                    }}
+                  >
+                    {option.title}
+                  </h1>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="flex items-center mt-2">
+              {/* Star Filters */}
+              {ratings.map((rate) => (
+                <div key={rate} onClick={() => setActiveStars(rate)}>
+                  <h1
+                    className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                      activeStars === rate
+                        ? "text-white bg-black"
+                        : "text-black bg-white"
+                    }  rounded-full`}
+                    style={{
+                      border: "1px solid rgba(124, 141, 181, 0.5)",
+                    }}
+                  >
+                    {rate} {rate > 1 ? "Stars" : "Star"}
+                  </h1>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Search Option */}

@@ -126,7 +126,7 @@ const LeadStatus = ({ leadStatus }) => {
           <Select
             className="sub_lead_status"
             style={{
-              width: 50,
+              width: 60,
             }}
             value={subStatus}
             onChange={onSecondCityChange}
@@ -299,7 +299,7 @@ const LeadStatus = ({ leadStatus }) => {
                 Verified
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Verified / Un-verified
+                eligible / Non-eligible
               </h6>
               <div className="flex mt-1">
                 <Icons.PDF />

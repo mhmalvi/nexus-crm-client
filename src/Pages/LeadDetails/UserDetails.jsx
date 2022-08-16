@@ -1,9 +1,11 @@
 import { Modal } from "antd";
 import React, { useState } from "react";
+import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
 
 const UserDetails = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [rating, setRating] = useState();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -11,6 +13,10 @@ const UserDetails = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
   };
 
   return (
@@ -22,6 +28,19 @@ const UserDetails = () => {
         <h1 className="text-xl leading-8 font-poppins font-semibold">
           #659652
         </h1>
+      </div>
+      <div>
+        <ReactStars
+          count={5}
+          onChange={ratingChanged}
+          size={24}
+          // isHalf={true}
+          emptyIcon={<Icons.Star />}
+          half={false}
+          fullIcon={<Icons.Star />}
+          color1="#E9E9E9"
+          color2="#8C64D2"
+        />
       </div>
 
       {/* User info */}

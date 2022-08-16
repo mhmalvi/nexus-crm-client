@@ -6,6 +6,7 @@ import Calendar from "./Calendar";
 
 const Dashboard = () => {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [activeStars, setActiveStars] = useState();
   const [leadData, setLeadData] = useState([]);
 
   const tableHeaders = [
@@ -31,7 +32,13 @@ const Dashboard = () => {
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-24">
       <Calendar />
-      <Filters activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+      <Filters
+        layout="Dashboard"
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        activeStars={activeStars}
+        setActiveStars={setActiveStars}
+      />
       <Table title="Lead List" tableHeaders={tableHeaders} data={leadData} />
     </div>
   );
