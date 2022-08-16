@@ -70,6 +70,7 @@ const UserDetails = () => {
               onCancel={handleCancel}
             >
               <img
+                className="w-7/12 mx-auto py-18"
                 src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
                 alt=""
               />
