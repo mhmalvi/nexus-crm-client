@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Icons from "../../Components/Shared/Icons";
 
-const Filters = () => {
-  const [activeFilter, setActiveFilter] = useState(0);
-
+const Filters = ({ activeFilter, setActiveFilter }) => {
   const filterOptions = [
     {
       id: 0,
@@ -11,7 +9,7 @@ const Filters = () => {
     },
     {
       id: 1,
-      title: "Today Task",
+      title: "Today's Task",
     },
     {
       id: 2,
@@ -35,7 +33,7 @@ const Filters = () => {
     },
     {
       id: 7,
-      title: "Comleted",
+      title: "Completed",
     },
   ];
 
@@ -48,10 +46,10 @@ const Filters = () => {
         <div className="flex items-center">
           {/* Filters */}
           {filterOptions.map((option) => (
-            <div key={option.id} onClick={() => setActiveFilter(option.id)}>
+            <div key={option.id} onClick={() => setActiveFilter(option.title)}>
               <h1
                 className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
-                  activeFilter === option.id
+                  activeFilter === option.title
                     ? "text-white bg-black"
                     : "text-black bg-white"
                 }  rounded-full`}
@@ -65,7 +63,7 @@ const Filters = () => {
           ))}
         </div>
       </div>
-      
+
       {/* Search Option */}
       <div>
         <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">

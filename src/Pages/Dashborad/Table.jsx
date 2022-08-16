@@ -14,12 +14,12 @@ const Table = ({ title, tableHeaders, data }) => {
     {
       id: 0,
       title: "New Lead",
-      color: "bg-orange-500",
+      color: "bg-green-500",
     },
     {
       id: 1,
       title: "Skilled",
-      color: "bg-green-500",
+      color: "bg-orange-500",
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const Table = ({ title, tableHeaders, data }) => {
     {
       id: 5,
       title: "Completed",
-      color: "bg-purple-500",
+      color: "bg-red-500",
     },
   ];
 

@@ -16,6 +16,8 @@ import { ReactComponent as Send } from "../../assets/Icons/Send.svg";
 import { ReactComponent as Read } from "../../assets/Icons/read-icon.svg";
 import { ReactComponent as PDF } from "../../assets/Icons/pdf.svg";
 import { ReactComponent as Clip } from "../../assets/Icons/clip.svg";
+import { ReactComponent as QR } from "../../assets/Icons/qr-code.svg";
+import { ReactComponent as PenUnderLine } from "../../assets/Icons/pen-underline.svg";
 
 const Icons = {
   CompanyLogo,
@@ -36,6 +38,8 @@ const Icons = {
   Read,
   PDF,
   Clip,
+  QR,
+  PenUnderLine,
 };
 
 export default Icons;

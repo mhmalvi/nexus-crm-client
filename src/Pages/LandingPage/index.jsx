@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
+import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
+import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import PaymentStatus from "../PaymentStatus";
-import Campaigns from "../Campaigns";
-import { Route, Routes } from "react-router-dom";
-import LeadDetails from "../LeadDetails";
-import { useEffect } from "react";
 
 const LandingPage = () => {
+  const navite = useNavigate();
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
 
   useEffect(() => {
-    setActive(window.location.pathname.toString().slice(1));
+    if (window.location.pathname.length <= 1) {
+      navite("/dashboard");
+    } else {
+      setActive(window.location.pathname.toString().slice(1));
+    }
   }, []);
 
   const Items = [
@@ -137,10 +141,6 @@ const LandingPage = () => {
             />
           </Routes>
         ))}
-
-        {/* {Items.filter((item) => item.name === active).map((c) => (
-          <div key={c.key}>{c.component}</div>
-        ))} */}
       </div>
       {toggleMessage && (
         <Messages
