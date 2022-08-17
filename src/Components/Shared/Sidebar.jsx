@@ -9,7 +9,6 @@ const Sidebar = ({
   toggleMessage,
   setToggleMessage,
 }) => {
-
   return (
     <div
       className="bg-white"

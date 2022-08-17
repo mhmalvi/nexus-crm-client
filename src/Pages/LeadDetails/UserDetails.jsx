@@ -6,6 +6,7 @@ import Icons from "../../Components/Shared/Icons";
 const UserDetails = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [addSealsman, setAddSealsman] = useState(false);
+  const [toggleChcekList, setToggleChcekList] = useState(false);
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
 
@@ -19,10 +20,12 @@ const UserDetails = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setToggleChcekList(false);
   };
 
   const ratingChanged = (newRating) => {
     setRating(newRating);
+    console.log(rating);
   };
 
   return (
@@ -159,6 +162,59 @@ const UserDetails = () => {
           <button className="w-32 px-1.5 py-2 border border-red-500 text-red-500 ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
             Suspend
           </button>
+        </div>
+
+        {/* --------------- If user wants to Pay------------- */}
+        <div className="mt-7.5">
+          <div>
+            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+              Application Form
+            </h1>
+          </div>
+          <div className="ml-4 mt-5">
+            <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+              View
+            </button>
+            <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
+              Edit
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-7.5">
+          <div>
+            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+              Payment
+            </h1>
+          </div>
+          <div className="ml-4 mt-5">
+            <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+              Pay
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-7.5">
+          <div>
+            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+              Chek list
+            </h1>
+          </div>
+          <Modal
+            visible={toggleChcekList}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <div>Check List</div>
+          </Modal>
+          <div className="ml-4 mt-5">
+            <button
+              className="w-32 px-1.5 py-2 border border-black text-black text-xs font-medium leading-4 font-poppins rounded-md"
+              onClick={() => setToggleChcekList(true)}
+            >
+              Edit
+            </button>
+          </div>
         </div>
       </div>
 

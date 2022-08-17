@@ -22,6 +22,7 @@ function App() {
           <Route path="pay" element={<Payment />} />
           <Route path="overview" element={<Dashboard />} />
           <Route path="campaigns" element={<Campaigns />} />
+          {/* <Route path="settings" element={<Settings />} /> */}
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
