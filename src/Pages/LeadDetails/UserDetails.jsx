@@ -5,10 +5,16 @@ import Icons from "../../Components/Shared/Icons";
 
 const UserDetails = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [addSealsman, setAddSealsman] = useState(false);
+  const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
 
   const showModal = () => {
     setIsModalVisible(true);
+  };
+
+  const handleAddSealsman = () => {
+    setAddSealsman(false);
   };
 
   const handleCancel = () => {
@@ -22,10 +28,67 @@ const UserDetails = () => {
   return (
     <div className="mx-6">
       <div>
-        <h1 className="text-xl leading-8 font-poppins font-semibold">
-          Davidov Artur
-        </h1>
-        <h1 className="text-xl leading-8 font-poppins font-semibold">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
+            Davidov Artur
+          </h1>
+          <div className="relative">
+            <Icons.People
+              className="cursor-pointer"
+              onClick={() => {
+                !closeSealsman && setAddSealsman(true);
+              }}
+            />
+            {closeSealsman && (
+              <span
+                className="absolute cursor-pointer -top-2 -right-2.5 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0"
+                onClick={() => {
+                  setCloseSealsman(!closeSealsman);
+                }}
+              >
+                x
+              </span>
+            )}
+          </div>
+          <Modal
+            visible={addSealsman}
+            footer={null}
+            onCancel={handleAddSealsman}
+          >
+            <div>
+              <h1 className="font-poppins text-xl font-extrabold">
+                Seals Team
+              </h1>
+            </div>
+            <div className="flex flex-col justify-center items-center py-6">
+              <div className="flex items-center my-2 cursor-pointer">
+                <Icons.PeopleRounded />
+                <div className="ml-2 text-lg font-poppins font-semibold">
+                  Samin Hasan
+                </div>
+              </div>
+              <div className="flex items-center my-2 cursor-pointer">
+                <Icons.PeopleRounded />
+                <div className="ml-2 text-lg font-poppins font-semibold">
+                  Samin Hasan
+                </div>
+              </div>
+              <div className="flex items-center my-2 cursor-pointer">
+                <Icons.PeopleRounded />
+                <div className="ml-2 text-lg font-poppins font-semibold">
+                  Samin Hasan
+                </div>
+              </div>
+              <div className="flex items-center my-2 cursor-pointer">
+                <Icons.PeopleRounded />
+                <div className="ml-2 text-lg font-poppins font-semibold">
+                  Samin Hasan
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+        <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
           #659652
         </h1>
       </div>

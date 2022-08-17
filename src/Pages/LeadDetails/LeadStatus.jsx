@@ -197,7 +197,7 @@ const LeadStatus = ({ leadStatus }) => {
                 Skilled
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Skilled / Un-skilled
+                Eligible / Non-eligible
               </h6>
             </div>
           </div>
@@ -299,7 +299,7 @@ const LeadStatus = ({ leadStatus }) => {
                 Verified
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                eligible / Non-eligible
+                Verified / Un-verified
               </h6>
               <div className="flex mt-1">
                 <Icons.PDF />
