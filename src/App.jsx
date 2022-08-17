@@ -8,7 +8,8 @@ import Campaigns from "./Pages/Campaigns";
 import Dashboard from "./Pages/Dashborad";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
-import PaymentStatus from "./Pages/PaymentStatus";
+import Payment from "./Pages/Payment";
+import PaymentStatus from "./Pages/Payment";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
+          <Route path="pay" element={<Payment />} />
           <Route path="overview" element={<Dashboard />} />
           <Route path="campaigns" element={<Campaigns />} />
         </Route>

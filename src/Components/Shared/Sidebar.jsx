@@ -9,64 +9,6 @@ const Sidebar = ({
   toggleMessage,
   setToggleMessage,
 }) => {
-  // const Itemss = [
-  //   {
-  //     key: "1",
-  //     name: "dashboard",
-  //     icon: <Icons.Dashboard />,
-  //     label: "Dashboard",
-  //     //component: <Dashboard />,
-  //     count: 0,
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "overview",
-  //     icon: <Icons.Chart />,
-  //     label: "Overview",
-  //     //component: <PaymentStatus />,
-  //     count: 0,
-  //   },
-  //   {
-  //     key: "3",
-  //     name: "massage",
-  //     icon: <Icons.Message />,
-  //     label: "Massage",
-  //     //component: <></>,
-  //     count: 2,
-  //   },
-  //   {
-  //     key: "4",
-  //     name: "payment",
-  //     icon: <Icons.Payment />,
-  //     label: "Payment",
-  //     //component: <Dashboard />,
-  //     count: 0,
-  //   },
-  //   {
-  //     key: "5",
-  //     name: "campaigns",
-  //     icon: <Icons.Campaigns />,
-  //     label: "Campaigns",
-  //     //component: <Dashboard />,
-  //     count: 0,
-  //   },
-  //   {
-  //     key: "6",
-  //     name: "export-excel",
-  //     icon: <Icons.Payment />,
-  //     label: "Export Excel",
-  //     //component: <Dashboard />,
-  //     count: 0,
-  //   },
-  //   {
-  //     key: "7",
-  //     name: "settings",
-  //     icon: <Icons.Settings />,
-  //     label: "Settings",
-  //     //component: <Dashboard />,
-  //     count: 0,
-  //   },
-  // ];
 
   return (
     <div

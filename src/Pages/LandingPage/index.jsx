@@ -6,7 +6,7 @@ import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
-import PaymentStatus from "../PaymentStatus";
+import PaymentStatus from "../Payment";
 
 const LandingPage = () => {
   const navite = useNavigate();
