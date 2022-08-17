@@ -7,6 +7,7 @@ import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import PaymentStatus from "../Payment";
+import Settings from "../Settings";
 
 const LandingPage = () => {
   const navite = useNavigate();
@@ -67,7 +68,7 @@ const LandingPage = () => {
       name: "settings",
       icon: <Icons.Settings />,
       label: "Settings",
-      component: <Dashboard />,
+      component: <Settings />,
       count: 0,
     },
     {

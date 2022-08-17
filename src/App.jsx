@@ -10,6 +10,7 @@ import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Payment from "./Pages/Payment";
 import PaymentStatus from "./Pages/Payment";
+import Settings from "./Pages/Settings";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="pay" element={<Payment />} />
           <Route path="overview" element={<Dashboard />} />
           <Route path="campaigns" element={<Campaigns />} />
-          {/* <Route path="settings" element={<Settings />} /> */}
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>

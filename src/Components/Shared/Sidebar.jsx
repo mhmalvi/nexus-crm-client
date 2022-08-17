@@ -150,7 +150,8 @@ const Sidebar = ({
           </div>
 
           <div>
-            <div
+            <NavLink
+              to={"/settings"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
                 color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
@@ -164,7 +165,7 @@ const Sidebar = ({
               {active === "settings" && (
                 <div className="ml-auto active-option">|</div>
               )}
-            </div>
+            </NavLink>
           </div>
 
           <div className="mt-36 pt-1.5">
