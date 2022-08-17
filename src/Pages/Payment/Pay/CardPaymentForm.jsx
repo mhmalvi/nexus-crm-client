@@ -1,8 +1,16 @@
 import React from "react";
+import visa from "../../../assets/Images/visa.png";
+import master from "../../../assets/Images/master.png";
+import amex from "../../../assets/Images/amex.png";
 
 const CardPaymentForm = () => {
   return (
     <div>
+      <div className="flex items-center mx-auto">
+        <img className="w-10" src={visa} alt="" />
+        <img className="w-10 mx-4" src={master} alt="" />
+        <img className="w-10" src={amex} alt="" />
+      </div>
       <div className="flex justify-between">
         <div className="mt-4">
           <p className="font-poppins font-light text-black mb-1 ml-6">

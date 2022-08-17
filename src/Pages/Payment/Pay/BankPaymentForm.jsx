@@ -1,8 +1,12 @@
 import React from "react";
+import bankLogo from "../../../assets/Images/bank.png";
 
 const BankPaymentForm = () => {
   return (
     <div>
+      <div>
+        <img className="w-8" src={bankLogo} alt="" />
+      </div>
       <div className="mt-4">
         <p className="font-poppins font-light text-black mb-1 ml-6">Pay to</p>
         <div>
