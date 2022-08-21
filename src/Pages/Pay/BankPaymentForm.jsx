@@ -1,5 +1,5 @@
 import React from "react";
-import bankLogo from "../../../assets/Images/bank.png";
+import bankLogo from "../../assets/Images/bank.png";
 
 const BankPaymentForm = () => {
   return (

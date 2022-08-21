@@ -32,57 +32,19 @@ const Companies = () => {
       </div>
 
       <div className="grid grid-cols-4 2xl:grid-cols-5 gap-8">
-        <Link
-          to={"company/itec"}
-          className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer"
-        >
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </Link>
-        <div className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer">
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </div>
-        <div className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer">
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </div>
-        <div className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer">
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </div>
-        <div className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer">
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </div>
-        <div className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer">
-          <div className=" my-4">
-            <img className="mx-auto" src={companyLogo} alt="" />
-          </div>
-          <div className="ml-4">
-            <h1 className="font-semibold text-xl text-center">ITECH</h1>
-          </div>
-        </div>
+        {Array.from({ length: 6 }, () => Math.random()).map(() => (
+          <Link
+            to={"company/itec"}
+            className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer"
+          >
+            <div className=" my-4">
+              <img className="mx-auto" src={companyLogo} alt="" />
+            </div>
+            <div className="ml-4">
+              <h1 className="font-semibold text-xl text-center">ITECH</h1>
+            </div>
+          </Link>
+        ))}
       </div>
 
       {/* Add company modal */}

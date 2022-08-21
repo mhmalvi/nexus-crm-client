@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
 
@@ -205,9 +206,11 @@ const UserDetails = () => {
             </h1>
           </div>
           <div className="ml-4 mt-5">
-            <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
-              Pay
-            </button>
+            <Link to={"/pay/16541"}>
+              <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+                Pay
+              </button>
+            </Link>
           </div>
         </div>
 

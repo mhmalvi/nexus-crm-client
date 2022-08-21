@@ -9,7 +9,8 @@ import Dashboard from "./Pages/Dashborad";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
-import { default as Payment, default as PaymentStatus } from "./Pages/Payment";
+import Pay from "./Pages/Pay";
+import PaymentStatus from "./Pages/Payments";
 import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
 
@@ -21,7 +22,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
-          <Route path="pay" element={<Payment />} />
+          <Route path="pay/:id" element={<Pay />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="settings/company/:name" element={<CompanySettings />} />

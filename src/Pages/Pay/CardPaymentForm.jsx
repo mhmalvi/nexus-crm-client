@@ -1,7 +1,7 @@
 import React from "react";
-import visa from "../../../assets/Images/visa.png";
-import master from "../../../assets/Images/master.png";
-import amex from "../../../assets/Images/amex.png";
+import visa from "../../assets/Images/visa.png";
+import master from "../../assets/Images/master.png";
+import amex from "../../assets/Images/amex.png";
 
 const CardPaymentForm = () => {
   return (

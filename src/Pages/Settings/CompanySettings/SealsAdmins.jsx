@@ -59,7 +59,7 @@ const SealsAdmins = ({ admin }) => {
             </div>
             <div className="ml-4">
               <h1 className="font-semibold text-xl leading-5 text-gray-600">
-                Nishad Ahmed
+                Nishat Ahmed
               </h1>
               <p className="font-medium text-sm leading-5 mb-0 text-gray-600 text-opacity-75">
                 CEO
@@ -75,7 +75,7 @@ const SealsAdmins = ({ admin }) => {
             </div>
             <div className="ml-4">
               <h1 className="font-semibold text-xl leading-5 text-gray-600">
-                Nishad Ahmed
+                Nishat Ahmed
               </h1>
               <p className="font-medium text-sm leading-5 mb-0 text-gray-600 text-opacity-75">
                 CEO
@@ -140,7 +140,7 @@ const SealsAdmins = ({ admin }) => {
               </div>
               <div className="w-64 2xl:w-72 ml-4 flex justify-between items-center">
                 <h1 className="font-semibold text-sm leading-5 mb-0 text-gray-600">
-                  Nishad Ahmed
+                  Nishat Ahmed
                 </h1>
                 <button className="px-1 border border-red-600 text-red-600 text-xs font-semibold leading-6 font-poppins rounded-md">
                   Remove

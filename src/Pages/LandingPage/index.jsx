@@ -7,7 +7,8 @@ import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import Overview from "../Overview";
-import PaymentStatus from "../Payment";
+import PaymentStatus from "../Payments";
+import Pay from "../Pay";
 import Settings from "../Settings";
 import CompanySettings from "../Settings/CompanySettings";
 
@@ -73,22 +74,22 @@ const LandingPage = () => {
       component: <Settings />,
       count: 0,
     },
-    {
-      key: "lead/:id",
-      name: "lead-details",
-      icon: <Icons.Settings />,
-      label: "Lead Details",
-      component: <LeadDetails />,
-      count: 0,
-    },
-    {
-      key: "settings/company/",
-      name: "company-details",
-      icon: <Icons.Settings />,
-      label: "Company Details",
-      component: <CompanySettings />,
-      count: 0,
-    },
+    // {
+    //   key: "lead/:id",
+    //   name: "lead-details",
+    //   icon: <Icons.Settings />,
+    //   label: "Lead Details",
+    //   component: <LeadDetails />,
+    //   count: 0,
+    // },
+    // {
+    //   key: "settings/company/",
+    //   name: "company-details",
+    //   icon: <Icons.Settings />,
+    //   label: "Company Details",
+    //   component: <CompanySettings />,
+    //   count: 0,
+    // },
   ];
 
   const Items2 = [
@@ -141,6 +142,7 @@ const LandingPage = () => {
       >
         <Routes>
           <Route path={"lead/:id"} element={<LeadDetails />} />
+          <Route path={"pay/:id"} element={<Pay />} />
           <Route
             path={"settings/company/:name"}
             element={<CompanySettings admin={true} />}
