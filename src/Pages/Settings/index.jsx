@@ -1,10 +1,10 @@
 import React from "react";
-import CompanyDetails from "./CompanyDetails";
+import CompanySettings from "./CompanySettings";
 
 const Settings = () => {
   return (
     <div className="py-12">
-      <CompanyDetails />
+      <CompanySettings />
     </div>
   );
 };
