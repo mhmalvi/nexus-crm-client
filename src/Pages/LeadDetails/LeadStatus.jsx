@@ -137,7 +137,7 @@ const LeadStatus = ({ leadStatus }) => {
           </Select>
         )}
 
-        {leadStatus["Paid"] && (
+        {leadStatus["Called"] && (
           <div className=" ml-3 px-1.5 py-1 bg-gray-100 rounded-md flex items-center">
             <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
               $

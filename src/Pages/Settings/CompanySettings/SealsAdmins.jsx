@@ -133,32 +133,21 @@ const SealsAdmins = ({ admin }) => {
           <hr />
         </div>
         <div className="mt-5 grid grid-cols-2 gap-6 px-4">
-          <div className="flex">
-            <div className="w-7.5 h-7.5 border border-black border-opacity-30 rounded-full flex justify-center items-center font-semibold text-lg leading-7">
-              1
+          {Array.from({ length: 8 }, () => Math.random()).map((arr, i) => (
+            <div className="flex">
+              <div className="w-7.5 h-7.5 border border-black border-opacity-30 rounded-full flex justify-center items-center font-semibold text-lg leading-7">
+                {i + 1}
+              </div>
+              <div className="w-64 2xl:w-72 ml-4 flex justify-between items-center">
+                <h1 className="font-semibold text-sm leading-5 mb-0 text-gray-600">
+                  Nishad Ahmed
+                </h1>
+                <button className="px-1 border border-red-600 text-red-600 text-xs font-semibold leading-6 font-poppins rounded-md">
+                  Remove
+                </button>
+              </div>
             </div>
-            <div className="w-64 2xl:w-72 ml-4 flex justify-between items-center">
-              <h1 className="font-semibold text-sm leading-5 mb-0 text-gray-600">
-                Nishad Ahmed
-              </h1>
-              <button className="px-1 border border-red-600 text-red-600 text-xs font-semibold leading-6 font-poppins rounded-md">
-                Remove
-              </button>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="w-7.5 h-7.5 border border-black border-opacity-30 rounded-full flex justify-center items-center font-semibold text-lg leading-7">
-              2
-            </div>
-            <div className="w-64 2xl:w-72 ml-4 flex justify-between items-center">
-              <h1 className="font-semibold text-sm leading-5 mb-0 text-gray-600">
-                Nishad Ahmed
-              </h1>
-              <button className="px-1 border border-red-600 text-red-600 text-xs font-semibold leading-6 font-poppins rounded-md">
-                Remove
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

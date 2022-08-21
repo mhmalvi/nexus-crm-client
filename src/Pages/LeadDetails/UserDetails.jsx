@@ -119,16 +119,21 @@ const UserDetails = () => {
         <div className="flex pt-4 pb-2">
           <div className="mt-1">
             <img
-              className="w-24"
-              src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
+              className="w-16"
+              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${"+8801756414858"}&backcolor=%23ffffff`}
               alt=""
             />
-            <div className="font-poppins text-xs my-2 text-center font-medium">
+            <div
+              className="font-poppins my-2 text-center font-medium"
+              style={{
+                fontSize: "10px",
+              }}
+            >
               Scan To Call
             </div>
           </div>
           <div className="ml-5">
-            <div className="font-normal text-base leading-6 font-poppins">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
               <span>Contact:&nbsp;</span>
               <span>01756414858</span>
             </div>
@@ -153,21 +158,21 @@ const UserDetails = () => {
                 </Modal>
               </div> */}
             {/* </div> */}
-            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Email:&nbsp;</span>
               <span>art89@google.com</span>
             </div>
-            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Courses:&nbsp;</span>
-              <span>Fashion Designing</span>
+              <span className="whitespace-nowrap">Fashion Designing</span>
             </div>
-            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Country:&nbsp;</span>
               <span>Russia</span>
             </div>
           </div>
         </div>
-        <div className="ml-4 mt-5">
+        <div className="xl:ml-4 mt-5 flex">
           <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
             Edit
           </button>
@@ -183,7 +188,7 @@ const UserDetails = () => {
               Application Form
             </h1>
           </div>
-          <div className="ml-4 mt-5">
+          <div className="xl:ml-4 mt-5 flex">
             <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
               View
             </button>
@@ -238,7 +243,7 @@ const UserDetails = () => {
           </h1>
           <Icons.PenUnderLine className="cursor-pointer" />
         </div>
-        <div className="w-80 mt-5">
+        <div className="2xl:w-84 mt-5 ">
           <h1 className="text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
             Welcome to OnlineConversion com. Convert just about anything to
             anything else. Thousands of units, and millions of conversions.
