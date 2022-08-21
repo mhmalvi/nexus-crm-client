@@ -1,5 +1,5 @@
 import React from "react";
-import Icons from "../../Components/Shared/Icons";
+import Icons from "../../../Components/Shared/Icons";
 
 const Filters = ({
   activeFilter,

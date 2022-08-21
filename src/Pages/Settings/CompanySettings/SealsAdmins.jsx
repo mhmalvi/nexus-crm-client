@@ -134,7 +134,7 @@ const SealsAdmins = ({ admin }) => {
         </div>
         <div className="mt-5 grid grid-cols-2 gap-6 px-4">
           {Array.from({ length: 8 }, () => Math.random()).map((arr, i) => (
-            <div className="flex">
+            <div key={i} className="flex">
               <div className="w-7.5 h-7.5 border border-black border-opacity-30 rounded-full flex justify-center items-center font-semibold text-lg leading-7">
                 {i + 1}
               </div>
