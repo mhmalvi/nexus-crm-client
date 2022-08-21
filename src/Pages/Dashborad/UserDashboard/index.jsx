@@ -3,7 +3,7 @@ import AppliedCampaign from "./AppliedCampaign";
 
 const UserDashboard = () => {
   return (
-    <div className="font-poppins">
+    <div className="font-poppins mb-20">
       <div>
         <h4 className="text-xl leading-6 font-poppins font-semibold text-black text-opacity-80">
           Applied
