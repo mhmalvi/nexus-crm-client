@@ -1,7 +1,6 @@
 import React from "react";
 
 const CompanyDetails = () => {
-
   return (
     <div className="font-poppins">
       <div>
@@ -13,7 +12,6 @@ const CompanyDetails = () => {
           Culpa.
         </p>
       </div>
-      
     </div>
   );
 };

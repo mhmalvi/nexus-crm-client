@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SealsAdmins = () => {
+const SealsAdmins = ({ admin }) => {
   const [activeAddSeals, setActiveAddSeals] = useState(false);
 
   return (
@@ -8,11 +8,50 @@ const SealsAdmins = () => {
       <div className="2xl:mr-32">
         <div>
           <hr />
-          <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
-            Admins
-          </h1>
+          <div className="flex items-center">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
+              Admins
+            </h1>
+            <div>
+              {activeAddSeals && admin ? (
+                <div className="flex items-center ml-29">
+                  <input
+                    className="outline-none py-1.5 px-3 bg-gray-100 rounded-md"
+                    type="email"
+                    name=""
+                    placeholder="User email"
+                    id=""
+                  />
+                  <button
+                    className="py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white ml-3"
+                    style={{
+                      width: "75px",
+                    }}
+                    onClick={() => setActiveAddSeals(false)}
+                  >
+                    Send
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  {admin && (
+                    <button
+                      className="py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white ml-29"
+                      style={{
+                        width: "75px",
+                      }}
+                      onClick={() => setActiveAddSeals(true)}
+                    >
+                      Add
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
           <hr />
         </div>
+
         <div className="ml-10 px-4 mt-5">
           <div className="flex mb-6">
             <div className="w-7.5 h-7.5 border border-black border-opacity-30 rounded-full flex justify-center items-center font-semibold text-lg leading-7">
@@ -56,7 +95,7 @@ const SealsAdmins = () => {
               Seals Admins
             </h1>
 
-            {activeAddSeals ? (
+            {activeAddSeals && !admin ? (
               <div className="flex items-center ml-29">
                 <input
                   className="outline-none py-1.5 px-3 bg-gray-100 rounded-md"
@@ -76,15 +115,19 @@ const SealsAdmins = () => {
                 </button>
               </div>
             ) : (
-              <button
-                className="py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white ml-29"
-                style={{
-                  width: "75px",
-                }}
-                onClick={() => setActiveAddSeals(true)}
-              >
-                Add
-              </button>
+              <div>
+                {!admin && (
+                  <button
+                    className="py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white ml-29"
+                    style={{
+                      width: "75px",
+                    }}
+                    onClick={() => setActiveAddSeals(true)}
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <hr />

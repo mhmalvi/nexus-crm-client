@@ -8,9 +8,10 @@ import Campaigns from "./Pages/Campaigns";
 import Dashboard from "./Pages/Dashborad";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
-import Payment from "./Pages/Payment";
-import PaymentStatus from "./Pages/Payment";
+import Overview from "./Pages/Overview";
+import { default as Payment, default as PaymentStatus } from "./Pages/Payment";
 import Settings from "./Pages/Settings";
+import CompanySettings from "./Pages/Settings/CompanySettings";
 
 function App() {
   return (
@@ -21,8 +22,9 @@ function App() {
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay" element={<Payment />} />
-          <Route path="overview" element={<Dashboard />} />
+          <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
+          <Route path="settings/company/:name" element={<CompanySettings />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />

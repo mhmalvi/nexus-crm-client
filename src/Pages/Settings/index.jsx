@@ -1,9 +1,11 @@
 import React from "react";
+import AdminSettings from "./AdminSettings";
 import CompanySettings from "./CompanySettings";
 
 const Settings = () => {
   return (
-    <div className="py-12">
+    <div>
+      <AdminSettings />
       <CompanySettings />
     </div>
   );

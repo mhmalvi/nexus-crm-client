@@ -6,8 +6,10 @@ import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
+import Overview from "../Overview";
 import PaymentStatus from "../Payment";
 import Settings from "../Settings";
+import CompanySettings from "../Settings/CompanySettings";
 
 const LandingPage = () => {
   const navite = useNavigate();
@@ -36,7 +38,7 @@ const LandingPage = () => {
       name: "overview",
       icon: <Icons.Chart />,
       label: "Overview",
-      component: <Dashboard />,
+      component: <Overview />,
       count: 0,
     },
     {
@@ -73,10 +75,18 @@ const LandingPage = () => {
     },
     {
       key: "lead/:id",
-      name: "settings",
+      name: "lead-details",
       icon: <Icons.Settings />,
-      label: "Settings",
+      label: "Lead Details",
       component: <LeadDetails />,
+      count: 0,
+    },
+    {
+      key: "settings/company/",
+      name: "company-details",
+      icon: <Icons.Settings />,
+      label: "Company Details",
+      component: <CompanySettings />,
       count: 0,
     },
   ];
@@ -131,6 +141,10 @@ const LandingPage = () => {
       >
         <Routes>
           <Route path={"lead/:id"} element={<LeadDetails />} />
+          <Route
+            path={"settings/company/:name"}
+            element={<CompanySettings admin={true} />}
+          />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
