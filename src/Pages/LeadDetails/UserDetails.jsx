@@ -4,28 +4,27 @@ import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
 
 const UserDetails = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
   const [addSealsman, setAddSealsman] = useState(false);
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  // const showModal = () => {
+  //   setIsModalVisible(true);
+  // };
 
   const handleAddSealsman = () => {
     setAddSealsman(false);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    // setIsModalVisible(false);
     setToggleChcekList(false);
   };
 
   const ratingChanged = (newRating) => {
     setRating(newRating);
-    console.log(rating);
   };
 
   return (
@@ -117,43 +116,56 @@ const UserDetails = () => {
           </h4>
           <hr />
         </div>
-        <div className="font-normal text-base leading-6 font-poppins flex items-center mt-3.5">
-          <div>
-            <span>Contact:&nbsp;</span>
-            <span>01756414858</span>
-          </div>
-
-          {/* QR Generator */}
-          <div className="ml-2">
-            <Icons.QR
-              className="w-4 cursor-pointer"
-              onClick={showModal}
-              title="Open QR Code"
+        <div className="flex pt-4 pb-2">
+          <div className="mt-1">
+            <img
+              className="w-24"
+              src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
+              alt=""
             />
-            <Modal
-              visible={isModalVisible}
-              footer={null}
-              onCancel={handleCancel}
-            >
-              <img
-                className="w-7/12 mx-auto py-18"
-                src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
-                alt=""
-              />
-            </Modal>
+            <div className="font-poppins text-xs my-2 text-center font-medium">
+              Scan To Call
+            </div>
           </div>
-        </div>
-        <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
-          <span>Email:&nbsp;</span>
-          <span>art89@google.com</span>
-        </div>
-        <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
-          <span>Courses:&nbsp;</span>
-          <span>Fashion Designing</span>
-        </div>
-        <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
-          <span>Country:&nbsp;</span>
-          <span>Russia</span>
+          <div className="ml-5">
+            <div className="font-normal text-base leading-6 font-poppins">
+              <span>Contact:&nbsp;</span>
+              <span>01756414858</span>
+            </div>
+
+            {/* QR Generator */}
+            {/* <div className="ml-2">
+                <Icons.QR
+                  className="w-4 cursor-pointer"
+                  onClick={showModal}
+                  title="Open QR Code"
+                />
+                <Modal
+                  visible={isModalVisible}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    className="w-7/12 mx-auto py-18"
+                    src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
+                    alt=""
+                  />
+                </Modal>
+              </div> */}
+            {/* </div> */}
+            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+              <span>Email:&nbsp;</span>
+              <span>art89@google.com</span>
+            </div>
+            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+              <span>Courses:&nbsp;</span>
+              <span>Fashion Designing</span>
+            </div>
+            <div className="font-normal text-base leading-6 font-poppins flex items-center mt-2">
+              <span>Country:&nbsp;</span>
+              <span>Russia</span>
+            </div>
+          </div>
         </div>
         <div className="ml-4 mt-5">
           <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
@@ -212,7 +224,7 @@ const UserDetails = () => {
               className="w-32 px-1.5 py-2 border border-black text-black text-xs font-medium leading-4 font-poppins rounded-md"
               onClick={() => setToggleChcekList(true)}
             >
-              Edit
+              View
             </button>
           </div>
         </div>

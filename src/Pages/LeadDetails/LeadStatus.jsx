@@ -136,6 +136,21 @@ const LeadStatus = ({ leadStatus }) => {
             ))}
           </Select>
         )}
+
+        {leadStatus["Paid"] && (
+          <div className=" ml-3 px-1.5 py-1 bg-gray-100 rounded-md flex items-center">
+            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
+              $
+            </span>
+            <input
+              className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
+              type="email"
+              name=""
+              placeholder="Amount"
+              id=""
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-col items-start justify-center mt-8 ">
         <div className="w-full flex justify-between">

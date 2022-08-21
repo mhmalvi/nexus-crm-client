@@ -27,7 +27,6 @@ const Dashboard = () => {
     }
   }, [activeFilter]);
 
-  console.log(leadData);
 
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-24">
