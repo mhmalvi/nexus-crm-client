@@ -1,10 +1,11 @@
 import { message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
+import paypalLogo from "../../assets/Images/paypal.png";
 
 const key = "updatable";
 
 export default function PayPalPaymentForm() {
-  const paypal = useRef();
+  const paypalRef = useRef();
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
@@ -42,12 +43,16 @@ export default function PayPalPaymentForm() {
         console.error(err);
       },
     });
-    window.myButton.render(paypal.current);
+    window.myButton.render(paypalRef.current);
   }, [amount]);
 
   return (
     <div>
+      <div className="mb-6">
+        <img className="w-10" src={paypalLogo} alt="" />
+      </div>
       <div>
+        <p className="font-poppins font-light text-black mb-1 ml-6">Amount</p>
         <input
           className="w-full mb-4 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
           type="text"
@@ -57,7 +62,7 @@ export default function PayPalPaymentForm() {
           onChange={(e) => setAmount(e.target.value)}
         />
       </div>
-      <div ref={paypal}></div>
+      <div ref={paypalRef}></div>
     </div>
   );
 }
