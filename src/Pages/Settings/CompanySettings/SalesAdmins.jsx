@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SealsAdmins = ({ admin }) => {
+const SalesAdmins = ({ admin }) => {
   const [activeAddSeals, setActiveAddSeals] = useState(false);
 
   return (
@@ -92,7 +92,7 @@ const SealsAdmins = ({ admin }) => {
           <hr />
           <div className="flex items-center">
             <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
-              Seals Admins
+              Sales Admins
             </h1>
 
             {activeAddSeals && !admin ? (
@@ -154,4 +154,4 @@ const SealsAdmins = ({ admin }) => {
   );
 };
 
-export default SealsAdmins;
+export default SalesAdmins;

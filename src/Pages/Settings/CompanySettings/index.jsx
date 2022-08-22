@@ -1,6 +1,6 @@
 import React from "react";
 import CompanyDetails from "./CompanyDetails";
-import SealsAdmins from "./SealsAdmins";
+import SalesAdmins from "./SalesAdmins";
 import { useParams } from "react-router-dom";
 
 const CompanySettings = ({ admin }) => {
@@ -9,7 +9,7 @@ const CompanySettings = ({ admin }) => {
   return (
     <div className="mx-6 py-12">
       <CompanyDetails />
-      <SealsAdmins admin={admin} />
+      <SalesAdmins admin={admin} />
     </div>
   );
 };
