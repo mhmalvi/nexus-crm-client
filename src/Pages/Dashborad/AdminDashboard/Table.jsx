@@ -1,9 +1,10 @@
+import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space } from "antd";
 import React from "react";
+import { CSVLink } from "react-csv";
 import { useNavigate } from "react-router-dom";
-import { DownOutlined } from "@ant-design/icons";
 
-const Table = ({ title, tableHeaders, data }) => {
+const Table = ({ title, tableHeaders, data, activeFilter }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id) => {
@@ -47,11 +48,11 @@ const Table = ({ title, tableHeaders, data }) => {
     <Menu
       items={[
         {
-          label: <a href="https://www.antgroup.com">First</a>,
+          label: <a href="https://www.antgroup.com">7 Days</a>,
           key: "0",
         },
         {
-          label: <a href="https://www.aliyun.com">Middle</a>,
+          label: <a href="https://www.aliyun.com">30 Days</a>,
           key: "1",
         },
       ]}
@@ -62,10 +63,23 @@ const Table = ({ title, tableHeaders, data }) => {
     <div className="mt-0.5">
       <div className="border rounded-xl px-10 py-7.5 mt-5">
         <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-xl leading-7 font-poppins font-semibold">
-              {title}
-            </h1>
+          <div className="flex items-start">
+            <div>
+              <h1 className="text-xl leading-7 font-poppins font-semibold">
+                {title}
+              </h1>
+            </div>
+            <div className="ml-6">
+              <CSVLink
+                data={data}
+                target="_blank"
+                filename={`${activeFilter}.csv`}
+              >
+                <h1 className="cursor-pointer px-3 py-1 rounded-lg shadow-md text-sm font-semibold">
+                  Export Excel
+                </h1>
+              </CSVLink>
+            </div>
           </div>
           <div className="mr-12">
             <Dropdown
@@ -74,7 +88,7 @@ const Table = ({ title, tableHeaders, data }) => {
               trigger={["click"]}
             >
               <Space>
-                Last
+                Latest
                 <DownOutlined />
               </Space>
             </Dropdown>

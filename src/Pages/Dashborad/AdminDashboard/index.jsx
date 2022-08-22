@@ -37,7 +37,12 @@ const AdminDashboard = () => {
         activeStars={activeStars}
         setActiveStars={setActiveStars}
       />
-      <Table title="Lead List" tableHeaders={tableHeaders} data={leadData} />
+      <Table
+        title="Lead List"
+        tableHeaders={tableHeaders}
+        data={leadData}
+        activeFilter={activeFilter}
+      />
     </div>
   );
 };
