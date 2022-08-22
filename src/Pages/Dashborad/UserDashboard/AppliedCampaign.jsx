@@ -17,7 +17,7 @@ const AppliedCampaign = () => {
           Provide cardiopulmonary resuscitation
         </h1>
         <span
-          className="text-white text-center mt-1 font-semibold"
+          className="text-white text-center mt-1 font-light"
           style={{
             fontSize: "10px",
           }}

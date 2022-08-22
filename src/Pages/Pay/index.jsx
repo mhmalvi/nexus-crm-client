@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
+import PayPalPaymentForm from "./PayPalPaymentForm";
 
 const Pay = () => {
   const [transactionsMethod, setTransactionsMethod] = useState(0);
@@ -14,8 +15,8 @@ const Pay = () => {
     },
     {
       id: 1,
-      title: "After Pay",
-      component: <CardPaymentForm />,
+      title: "PayPal",
+      component: <PayPalPaymentForm />,
     },
     {
       id: 2,
@@ -55,39 +56,38 @@ const Pay = () => {
                 </h2>
               </div>
             </div>
-            <form action="/">
-              <div className="flex items-center mb-8">
-                {/* Payment Methods */}
-                {paymentOptions.map((option) => (
-                  <div
-                    key={option.id}
-                    onClick={() => setTransactionsMethod(option.id)}
+            <div className="flex items-center mb-8">
+              {/* Payment Methods */}
+              {paymentOptions.map((option) => (
+                <div
+                  key={option.id}
+                  onClick={() => setTransactionsMethod(option.id)}
+                >
+                  <h1
+                    className={`text-base leading-4 font-medium font-poppins px-6 p-4 cursor-pointer mr-6 ${
+                      transactionsMethod === option.id
+                        ? "text-white bg-black"
+                        : "text-black bg-white"
+                    }  rounded-full`}
+                    style={{
+                      border: "1px solid rgba(124, 141, 181, 0.5)",
+                    }}
                   >
-                    <h1
-                      className={`text-base leading-4 font-medium font-poppins px-6 p-4 cursor-pointer mr-6 ${
-                        transactionsMethod === option.id
-                          ? "text-white bg-black"
-                          : "text-black bg-white"
-                      }  rounded-full`}
-                      style={{
-                        border: "1px solid rgba(124, 141, 181, 0.5)",
-                      }}
-                    >
-                      {option.title}
-                    </h1>
-                  </div>
+                    {option.title}
+                  </h1>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              {paymentOptions
+                .filter((item) => item.id === transactionsMethod)
+                .map((form) => (
+                  <div key={form.id}>{form.component}</div>
                 ))}
-              </div>
+            </div>
 
-              <div>
-                {paymentOptions
-                  .filter((item) => item.id === transactionsMethod)
-                  .map((form) => (
-                    <div key={form.id}>{form.component}</div>
-                  ))}
-              </div>
-
-              {/* {transactionsMethod === "Credit/Debit Card" ? (
+            {/* {transactionsMethod === "Credit/Debit Card" ? (
                 <div className="mt-6">
                   <p className="font-poppins font-light text-black mb-1">
                     Card number
@@ -119,7 +119,7 @@ const Pay = () => {
                 </div>
               )} */}
 
-              {/* <div className="mt-6">
+            {/* <div className="mt-6">
                 <p className="font-poppins font-light text-black mb-1">
                   Amount
                 </p>
@@ -133,15 +133,6 @@ const Pay = () => {
                   />
                 </div>
               </div> */}
-              <div className="flex justify-center items-center mt-8">
-                <button
-                  type="submit"
-                  className="mx-auto w-68 text-black bg-white px-8 py-3 rounded-full cursor-pointer font-semibold font-poppins border border-black"
-                >
-                  Confirm
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       </div>
