@@ -75,8 +75,13 @@ const Table = ({ title, tableHeaders, data, activeFilter }) => {
                 target="_blank"
                 filename={`${activeFilter}.csv`}
               >
-                <h1 className="cursor-pointer px-3 py-1 rounded-lg shadow-md text-sm font-semibold">
-                  Export Excel
+                <h1
+                  className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
+                  style={{
+                    fontSize:"10px"
+                  }}
+                >
+                  Export CSV
                 </h1>
               </CSVLink>
             </div>
