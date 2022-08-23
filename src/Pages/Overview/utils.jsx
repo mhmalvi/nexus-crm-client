@@ -50,7 +50,7 @@ export const LeadStatusCustomizedLabel = (props) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
+        {payload.status}
       </text>
       <Sector
         cx={cx}
@@ -81,7 +81,7 @@ export const LeadStatusCustomizedLabel = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Total ${value}`}</text>
+      >{`${payload.status} ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -95,4 +95,12 @@ export const LeadStatusCustomizedLabel = (props) => {
   );
 };
 
+export const CustomizedLabel = (props) => {
+  const { x, y, stroke, value } = props;
 
+  return (
+    <text x={x} y={y} dy={-7} fill={stroke} fontSize={12} textAnchor="middle">
+      {value}
+    </text>
+  );
+};

@@ -140,45 +140,58 @@ const ManagementAnalytics = () => {
       <div className="mt-10 flex items-start">
         {/* Lead Convertion Ratio */}
         <div className="w-1/2 mr-10">
-          <h1 className="text-xl font-semibold -mb-7 leading-8 font-poppins">
-            Lead Convertion Ratio
-          </h1>
-          <rcElement.ResponsiveContainer
-            className="-ml-6"
-            width="100%"
-            height={450}
-          >
-            <rcElement.BarChart
-              width={500}
-              height={200}
-              data={chartData.LeadConvertionData}
-              margin={{
-                top: 50,
-                right: 30,
-                left: 0,
-                bottom: 5,
-              }}
+          <div>
+            <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
+              Lead Convertion Ratio
+            </h1>
+          </div>
+          <div>
+            <p className="mr-14 float-right font-light mt-7 -mb-10">
+              Last 30 days
+            </p>
+            <rcElement.ResponsiveContainer
+              className="-ml-6"
+              width="100%"
+              height={450}
             >
-              <rcElement.CartesianGrid strokeDasharray="3 3" />
-              <rcElement.XAxis dataKey="name" />
-              <rcElement.YAxis domain={[0, 100]} />
-              <rcElement.Tooltip />
-              <rcElement.Legend />
-              <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
-                <rcElement.LabelList
-                  dataKey="rate"
-                  content={chartUtils.LeadConvertionCustomizedLabel}
-                />
-              </rcElement.Bar>
-            </rcElement.BarChart>
-          </rcElement.ResponsiveContainer>
+              <rcElement.BarChart
+                width={500}
+                height={200}
+                data={chartData.LeadConvertionData}
+                margin={{
+                  top: 50,
+                  right: 30,
+                  left: 0,
+                  bottom: 5,
+                }}
+              >
+                <rcElement.CartesianGrid strokeDasharray="3 3" />
+                <rcElement.XAxis dataKey="campaign" />
+                <rcElement.YAxis domain={[0, 100]} />
+                <rcElement.Tooltip />
+                <rcElement.Legend />
+                <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
+                  <rcElement.LabelList
+                    dataKey="rate"
+                    content={chartUtils.LeadConvertionCustomizedLabel}
+                  />
+                </rcElement.Bar>
+              </rcElement.BarChart>
+            </rcElement.ResponsiveContainer>
+          </div>
         </div>
 
         {/* Lead Status Summary */}
         <div className="w-1/2">
-          <h1 className="text-xl font-semibold -mb-7 leading-8 font-poppins">
-            Lead Status Summary
-          </h1>
+          <div>
+            <h1 className="text-xl font-semibold -mb-7 leading-8 font-poppins">
+              Lead Status Summary
+            </h1>
+            <p className="mr-7.5 -mb-14 mt-7 float-right font-light">
+              Last 30 days
+            </p>
+          </div>
+
           <rcElement.ResponsiveContainer
             className="-ml-6"
             width="100%"
