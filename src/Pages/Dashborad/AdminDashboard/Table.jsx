@@ -48,11 +48,11 @@ const Table = ({ title, tableHeaders, data, activeFilter }) => {
     <Menu
       items={[
         {
-          label: <a href="https://www.antgroup.com">7 Days</a>,
+          label: "7 Days",
           key: "0",
         },
         {
-          label: <a href="https://www.aliyun.com">30 Days</a>,
+          label: "30 Days",
           key: "1",
         },
       ]}
@@ -73,12 +73,14 @@ const Table = ({ title, tableHeaders, data, activeFilter }) => {
               <CSVLink
                 data={data}
                 target="_blank"
-                filename={`${activeFilter}.csv`}
+                filename={
+                  activeFilter ? `${activeFilter}.csv` : "Payment-lists.csv"
+                }
               >
                 <h1
                   className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                   style={{
-                    fontSize:"10px"
+                    fontSize: "10px",
                   }}
                 >
                   Export CSV

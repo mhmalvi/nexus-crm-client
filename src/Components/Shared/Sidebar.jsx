@@ -136,7 +136,7 @@ const Sidebar = ({
             </NavLink>
           </div>
 
-          <div>
+          {/* <div>
             <div
               className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
@@ -152,7 +152,7 @@ const Sidebar = ({
                 <div className='ml-auto active-option'>|</div>
               )}
             </div>
-          </div>
+          </div> */}
 
           <div>
             <NavLink

@@ -93,14 +93,14 @@ const LandingPage = () => {
   ];
 
   const Items2 = [
-    {
-      key: "profile",
-      name: "profile",
-      icon: <Icons.PeopleRounded />,
-      label: "Profile",
-      component: <Dashboard />,
-      count: 0,
-    },
+    // {
+    //   key: "profile",
+    //   name: "profile",
+    //   icon: <Icons.PeopleRounded />,
+    //   label: "Profile",
+    //   component: <Dashboard />,
+    //   count: 0,
+    // },
     {
       key: "team-contact",
       name: "team-contact",

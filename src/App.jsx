@@ -1,3 +1,4 @@
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import "antd/dist/antd.css";
 import { Route, Routes } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,9 +14,6 @@ import Pay from "./Pages/Pay";
 import PaymentStatus from "./Pages/Payments";
 import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-
-console.log(process.env.REACT_APP_PAYPAL_CLIENT_ID);
 
 function App() {
   return (
