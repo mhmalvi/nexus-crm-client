@@ -21,6 +21,13 @@ import { ReactComponent as PenUnderLine } from "../../assets/Icons/pen-underline
 import { ReactComponent as Star } from "../../assets/Icons/star.svg";
 import { ReactComponent as People } from "../../assets/Icons/people.svg";
 import { ReactComponent as ThreeDots } from "../../assets/Icons/three-dots.svg";
+import { ReactComponent as Briefcase } from "../../assets/Icons/briefcase.svg";
+import { ReactComponent as Wallet } from "../../assets/Icons/wallet.svg";
+import { ReactComponent as LineChart } from "../../assets/Icons/chart-line-solid.svg";
+import { ReactComponent as PeopleGroup } from "../../assets/Icons/people-group-solid.svg";
+import { ReactComponent as CalendarWeek } from "../../assets/Icons/calendar-week-solid.svg";
+import { ReactComponent as CalendarMonth } from "../../assets/Icons/calendar-days-solid.svg";
+import { ReactComponent as MoneyCheck } from "../../assets/Icons/money-check-solid.svg";
 
 const Icons = {
   CompanyLogo,
@@ -46,6 +53,13 @@ const Icons = {
   Star,
   People,
   ThreeDots,
+  Briefcase,
+  Wallet,
+  LineChart,
+  PeopleGroup,
+  CalendarWeek,
+  CalendarMonth,
+  MoneyCheck,
 };
 
 export default Icons;
