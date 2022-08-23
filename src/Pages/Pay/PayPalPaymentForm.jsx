@@ -37,10 +37,18 @@ export default function PayPalPaymentForm() {
             });
           }, 3000);
         }
-        console.log(order);
       },
       onError: (err) => {
-        console.error(err);
+        if (err) {
+          message.loading({ content: "Paying...", key });
+          setTimeout(() => {
+            message.warning({
+              content: `Something went wrong check your PayPal account`,
+              key,
+              duration: 2,
+            });
+          }, 3000);
+        }
       },
     });
     window.myButton.render(paypalRef.current);
