@@ -1,26 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import * as rcElement from "recharts";
 import Icons from "../../Components/Shared/Icons";
 import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
 const ManagementAnalytics = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const COLORS = [
-    "#34C759",
-    "#FF9500",
-    "#4F8DEA",
-    "#17CDD9",
-    "#7037FF",
-    "#ff1c24",
-  ];
-
-  const onPieEnter = useCallback(
-    (_, index) => {
-      setActiveIndex(index);
-    },
-    [setActiveIndex]
-  );
+ 
   return (
     <div>
       <div className="flex items-start">
@@ -137,83 +122,52 @@ const ManagementAnalytics = () => {
         </div>
       </div>
 
-      <div className="mt-10 flex items-start">
-        {/* Lead Convertion Ratio */}
-        <div className="w-1/2 mr-10">
-          <div>
-            <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
-              Lead Convertion Ratio
-            </h1>
-          </div>
-          <div>
-            <p className="mr-14 float-right font-light mt-7 -mb-10">
-              Last 30 days
-            </p>
-            <rcElement.ResponsiveContainer
-              className="-ml-6"
-              width="100%"
-              height={450}
-            >
-              <rcElement.BarChart
-                width={500}
-                height={200}
-                data={chartData.LeadConvertionData}
-                margin={{
-                  top: 50,
-                  right: 30,
-                  left: 0,
-                  bottom: 5,
-                }}
-              >
-                <rcElement.CartesianGrid strokeDasharray="3 3" />
-                <rcElement.XAxis dataKey="campaign" />
-                <rcElement.YAxis domain={[0, 100]} />
-                <rcElement.Tooltip />
-                <rcElement.Legend />
-                <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
-                  <rcElement.LabelList
-                    dataKey="rate"
-                    content={chartUtils.LeadConvertionCustomizedLabel}
-                  />
-                </rcElement.Bar>
-              </rcElement.BarChart>
-            </rcElement.ResponsiveContainer>
-          </div>
+      {/* <div className="mt-10 flex items-start"> */}
+      {/* Lead Convertion Ratio */}
+      <div className="">
+        <div>
+          <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
+            Lead Convertion Ratio
+          </h1>
         </div>
-
-        {/* Lead Status Summary */}
-        <div className="w-1/2">
-          <div>
-            <h1 className="text-xl font-semibold -mb-7 leading-8 font-poppins">
-              Lead Status Summary
-            </h1>
-            <p className="mr-7.5 -mb-14 mt-7 float-right font-light">
-              Last 30 days
-            </p>
-          </div>
-
+        <div>
+          <p className="mr-14 float-right font-light mt-7 -mb-10">
+            Last 30 days
+          </p>
           <rcElement.ResponsiveContainer
             className="-ml-6"
             width="100%"
             height={450}
           >
-            <rcElement.PieChart width={500} height={500}>
-              <rcElement.Pie
-                activeIndex={activeIndex}
-                activeShape={chartUtils.LeadStatusCustomizedLabel}
-                data={chartData.LeadStatusSummaryData}
-                cx="50%"
-                cy="50%"
-                innerRadius={55}
-                outerRadius={80}
-                fill={COLORS[activeIndex]}
-                dataKey="value"
-                onMouseEnter={onPieEnter}
-              />
-            </rcElement.PieChart>
+            <rcElement.BarChart
+              width={500}
+              height={200}
+              data={chartData.LeadConvertionData}
+              margin={{
+                top: 50,
+                right: 30,
+                left: 0,
+                bottom: 5,
+              }}
+            >
+              <rcElement.CartesianGrid strokeDasharray="3 3" />
+              <rcElement.XAxis dataKey="campaign" />
+              <rcElement.YAxis domain={[0, 100]} />
+              <rcElement.Tooltip />
+              <rcElement.Legend />
+              <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
+                <rcElement.LabelList
+                  dataKey="rate"
+                  content={chartUtils.LeadConvertionCustomizedLabel}
+                />
+              </rcElement.Bar>
+            </rcElement.BarChart>
           </rcElement.ResponsiveContainer>
         </div>
       </div>
+
+      {/*         
+      </div> */}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import CampaignAnalitics from "./CampaignAnalitics";
+import CampaignAnalytics from "./CampaignAnalytics";
 import ManagementAnalytics from "./ManagementAnalytics";
 
 const Overview = () => {
@@ -20,7 +20,8 @@ const Overview = () => {
         <ManagementAnalytics />
 
         {/* Campaign Analitics */}
-        <CampaignAnalitics />
+        <CampaignAnalytics />
+
         {/* Sales Analitics */}
       </div>
     </div>
