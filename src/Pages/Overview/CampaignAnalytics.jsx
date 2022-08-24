@@ -103,13 +103,14 @@ const CampaignAnalytics = () => {
               <rcElement.XAxis dataKey="campaign" />
               <rcElement.YAxis />
               <rcElement.Tooltip />
+              <rcElement.Legend />
               <rcElement.Line
                 connectNulls
                 type="monotone"
                 dataKey="revenue"
                 stroke="#8884d8"
                 fill="#8884d8"
-                label={<chartUtils.CustomizedLabel />}
+                label={<chartUtils.CampaignRevenueCustomizedLabel />}
               />
             </rcElement.LineChart>
           </rcElement.ResponsiveContainer>
@@ -142,6 +143,7 @@ const CampaignAnalytics = () => {
               <rcElement.XAxis dataKey="campaign" />
               <rcElement.YAxis domain={[0, 100]} />
               <rcElement.Tooltip />
+              <rcElement.Legend />
               <rcElement.Line
                 connectNulls
                 type="monotone"
@@ -238,7 +240,9 @@ const CampaignAnalytics = () => {
                 fill={COLORS[activeIndex]}
                 dataKey="value"
                 onMouseEnter={onPieEnter}
-              />
+              >
+                <rcElement.Legend />
+              </rcElement.Pie>
             </rcElement.PieChart>
           </rcElement.ResponsiveContainer>
         </div>

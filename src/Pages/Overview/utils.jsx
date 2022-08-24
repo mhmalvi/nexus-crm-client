@@ -1,7 +1,5 @@
 import { Sector } from "recharts";
 
-// ----------------------- Management Overall Analytics -----------------------
-
 // For Lead Convertion Ratio
 export const LeadConvertionCustomizedLabel = (props) => {
   const { x, y, width, value } = props;
@@ -95,12 +93,38 @@ export const LeadStatusCustomizedLabel = (props) => {
   );
 };
 
-export const CustomizedLabel = (props) => {
+export const CampaignRevenueCustomizedLabel = (props) => {
   const { x, y, stroke, value } = props;
 
   return (
     <text x={x} y={y} dy={-7} fill={stroke} fontSize={12} textAnchor="middle">
       {value}
+    </text>
+  );
+};
+
+export const getPath = (x, y, width, height) => {
+  return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${
+    y + height / 3
+  } 
+  ${x + width / 2}, ${y}
+  C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${
+    x + width
+  }, ${y + height}
+  Z`;
+};
+
+export const TriangleBar = (props) => {
+  const { fill, x, y, width, height } = props;
+
+  return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
+};
+
+export const SalesTeamDetailsCustomizedLabel = (props) => {
+  const { x, y, value } = props;
+  return (
+    <text x={x + 15} y={y} fontSize={12} textAnchor="right">
+      {value}$
     </text>
   );
 };

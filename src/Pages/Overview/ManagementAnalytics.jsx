@@ -5,7 +5,6 @@ import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
 const ManagementAnalytics = () => {
- 
   return (
     <div>
       <div className="flex items-start">
@@ -109,6 +108,7 @@ const ManagementAnalytics = () => {
                 <rcElement.XAxis dataKey="month" />
                 <rcElement.YAxis />
                 <rcElement.Tooltip />
+                <rcElement.Legend />
                 <rcElement.Line
                   connectNulls
                   type="monotone"
@@ -122,9 +122,8 @@ const ManagementAnalytics = () => {
         </div>
       </div>
 
-      {/* <div className="mt-10 flex items-start"> */}
       {/* Lead Convertion Ratio */}
-      <div className="">
+      <div className="mt-10">
         <div>
           <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
             Lead Convertion Ratio
@@ -165,9 +164,6 @@ const ManagementAnalytics = () => {
           </rcElement.ResponsiveContainer>
         </div>
       </div>
-
-      {/*         
-      </div> */}
     </div>
   );
 };

@@ -1,5 +1,7 @@
-// For Overall Analytic
+// For Company Revenue Details 
 
+
+// For Overall Analytic
 export const MonthlyRevenueData = [
   {
     month: "Jan",
@@ -382,4 +384,21 @@ export const AreawiseResponseData = [
     percentage: 10,
     fill: "#a4de6c",
   },
+];
+
+export const SalesTeamDetails = [
+  { name: "Samin Hasan", amount: 400 },
+  { name: "Ahsan Habib", amount: 650 },
+  { name: "Robiul Pranto", amount: 300 },
+  { name: "Atika Yunus", amount: 289 },
+  { name: "Sourav Sen", amount: 340 },
+  { name: "Tanvir Hasnan", amount: 829 },
+  { name: "Tasnim Shova", amount: 400 },
+  { name: "Samin Hasan", amount: 400 },
+  { name: "Ahsan Habib", amount: 650 },
+  { name: "Robiul Pranto", amount: 300 },
+  { name: "Atika Yunus", amount: 289 },
+  { name: "Sourav Sen", amount: 340 },
+  { name: "Tanvir Hasnan", amount: 829 },
+  { name: "Tasnim Shova", amount: 400 },
 ];
