@@ -4,8 +4,9 @@ import bankLogo from "../../assets/Images/bank.png";
 const BankPaymentForm = () => {
   return (
     <div>
-      <div>
+      <div className="relative">
         <img className="w-8" src={bankLogo} alt="" />
+        <div className="absolute w-full h-full top-0"></div>
       </div>
       <form action="">
         <div className="mt-4">

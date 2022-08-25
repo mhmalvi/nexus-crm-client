@@ -56,8 +56,9 @@ export default function PayPalPaymentForm() {
 
   return (
     <div>
-      <div className="mb-6">
+      <div className="relative mb-6">
         <img className="w-10" src={paypalLogo} alt="" />
+        <div className="absolute w-full h-full top-0"></div>
       </div>
       <div>
         <p className="font-poppins font-light text-black mb-1 ml-6">Amount</p>
@@ -65,12 +66,24 @@ export default function PayPalPaymentForm() {
           className="w-full mb-4 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
           type="text"
           name="amount"
+          required
           id=""
           placeholder="Amount"
           onChange={(e) => setAmount(e.target.value)}
         />
       </div>
-      <div ref={paypalRef}></div>
+      <div>
+        {amount > 0 ? (
+          <div ref={paypalRef} className="z-0"></div>
+        ) : (
+          <div>
+            <h1 className="font-poppins text-xs text-black text-opacity-80 font-medium">
+              <span className="text-red-600">*</span> Enter your payment amount
+              at first.
+            </h1>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
