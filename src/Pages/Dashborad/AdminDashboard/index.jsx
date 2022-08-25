@@ -8,6 +8,7 @@ const AdminDashboard = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeStars, setActiveStars] = useState();
   const [leadData, setLeadData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   const tableHeaders = [
     "ID",
@@ -25,7 +26,13 @@ const AdminDashboard = () => {
     } else {
       setLeadData(data.filter((lead) => lead.order_status === activeFilter));
     }
-  }, [activeFilter]);
+
+    if (!searchInput.length) {
+      setLeadData(data);
+    } else {
+      setLeadData(data.filter((lead) => lead.lead_id.includes(searchInput)));
+    }
+  }, [activeFilter, searchInput]);
 
   return (
     <div>
@@ -36,6 +43,7 @@ const AdminDashboard = () => {
         setActiveFilter={setActiveFilter}
         activeStars={activeStars}
         setActiveStars={setActiveStars}
+        setSearchInput={setSearchInput}
       />
       <Table
         title="Lead List"

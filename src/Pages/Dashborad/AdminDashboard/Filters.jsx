@@ -7,6 +7,7 @@ const Filters = ({
   layout,
   activeStars,
   setActiveStars,
+  setSearchInput,
 }) => {
   const filterOptions = [
     {
@@ -118,6 +119,7 @@ const Filters = ({
               type="text"
               name="search-code"
               id=""
+              onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search Code"
             />
           </div>

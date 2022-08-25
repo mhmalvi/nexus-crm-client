@@ -1,4 +1,3 @@
-import { Elements } from "@stripe/react-stripe-js";
 import React from "react";
 import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
