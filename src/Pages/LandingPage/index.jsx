@@ -101,14 +101,14 @@ const LandingPage = () => {
     //   component: <Dashboard />,
     //   count: 0,
     // },
-    {
-      key: "team-contact",
-      name: "team-contact",
-      icon: <Icons.MessageRounded />,
-      label: "Team Contact",
-      component: <PaymentStatus />,
-      count: 0,
-    },
+    // {
+    //   key: "team-contact",
+    //   name: "team-contact",
+    //   icon: <Icons.MessageRounded />,
+    //   label: "Team Contact",
+    //   component: <PaymentStatus />,
+    //   count: 0,
+    // },
     {
       key: "help-centre",
       name: "help-centre",
