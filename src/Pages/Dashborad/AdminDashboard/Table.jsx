@@ -1,11 +1,20 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useNavigate } from "react-router-dom";
 
-const Table = ({ title, tableHeaders, data, activeFilter }) => {
+const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
   const navigate = useNavigate();
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    if (!searchInput?.length) {
+      setList(data);
+    } else {
+      setList(data.filter((lead) => lead.lead_id.includes(searchInput)));
+    }
+  }, [data, searchInput]);
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
@@ -121,7 +130,7 @@ const Table = ({ title, tableHeaders, data, activeFilter }) => {
             border="0"
           >
             <tbody>
-              {data.map((list) => (
+              {list.map((list) => (
                 <tr
                   key={list.lead_id}
                   onClick={() => handleNavigate(list.lead_id)}

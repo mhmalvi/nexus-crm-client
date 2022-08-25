@@ -26,13 +26,9 @@ const AdminDashboard = () => {
     } else {
       setLeadData(data.filter((lead) => lead.order_status === activeFilter));
     }
+  }, [activeFilter]);
 
-    if (!searchInput.length) {
-      setLeadData(data);
-    } else {
-      setLeadData(data.filter((lead) => lead.lead_id.includes(searchInput)));
-    }
-  }, [activeFilter, searchInput]);
+  console.log(leadData);
 
   return (
     <div>
@@ -50,6 +46,7 @@ const AdminDashboard = () => {
         tableHeaders={tableHeaders}
         data={leadData}
         activeFilter={activeFilter}
+        searchInput={searchInput}
       />
     </div>
   );

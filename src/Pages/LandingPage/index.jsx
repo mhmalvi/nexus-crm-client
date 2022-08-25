@@ -23,7 +23,7 @@ const LandingPage = () => {
     } else {
       setActive(window.location.pathname.toString().slice(1));
     }
-  }, []);
+  }, [navite]);
 
   const Items = [
     {
