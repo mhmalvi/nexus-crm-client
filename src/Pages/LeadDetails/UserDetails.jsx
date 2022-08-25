@@ -11,16 +11,11 @@ const UserDetails = () => {
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
 
-  // const showModal = () => {
-  //   setIsModalVisible(true);
-  // };
-
   const handleAddSealsman = () => {
     setAddSealsman(false);
   };
 
   const handleCancel = () => {
-    // setIsModalVisible(false);
     setToggleChcekList(false);
   };
 
@@ -100,7 +95,7 @@ const UserDetails = () => {
           count={5}
           onChange={ratingChanged}
           size={24}
-          // isHalf={true}
+          value={rating}
           emptyIcon={<Icons.Star />}
           half={false}
           fullIcon={<Icons.Star />}
