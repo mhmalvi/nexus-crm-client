@@ -27,9 +27,9 @@ const Payment = () => {
   ];
 
   return (
-    <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-24">
+    <div className="mx-6 2xl:ml-12 2xl:mr-16 py-24">
       <Calendar />
-      <Filters layout="Payment" setSearchInput={setSearchInput}/>
+      <Filters layout="Payment" setSearchInput={setSearchInput} />
       <Table
         title="Payment List"
         tableHeaders={tableHeaders}

@@ -9,7 +9,7 @@ const Campaigns = () => {
   const [searchCampaign, setSearchCampaign] = useState("");
 
   useEffect(() => {
-    if (searchCampaign.length === 0) {
+    if (!searchCampaign.length) {
       if (activeFilter === 0) {
         setCampaignList(campaignData);
       } else if (activeFilter === 1) {
@@ -32,7 +32,7 @@ const Campaigns = () => {
   }, [activeFilter, searchCampaign]);
 
   return (
-    <div className="px-4 py-10">
+    <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
       <div>
         <Filter
           activeFilter={activeFilter}
@@ -42,7 +42,7 @@ const Campaigns = () => {
         />
       </div>
       <div>
-        <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6">
           {campaignList.map((campaign, i) => (
             <Campaign key={i} campaign={campaign} />
           ))}

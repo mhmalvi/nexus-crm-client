@@ -15,7 +15,6 @@ const Overview = () => {
       dayjs().date() === 1 &&
       localStorage.getItem("monthly_report") !== `${dayjs().$D}-${dayjs().$M}`
     ) {
-      console.log("Here");
       setTimeout(() => {
         getImage();
       }, 10000);

@@ -4,9 +4,6 @@ import master from "../../assets/Images/master.png";
 import visa from "../../assets/Images/visa.png";
 
 const CardPaymentForm = () => {
-  // var cardNumberElement = Elements.create("cardNumber");
-  // console.log(cardNumberElement);
-
   return (
     <div>
       <div className="relative flex items-center mx-auto">

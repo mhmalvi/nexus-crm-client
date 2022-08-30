@@ -111,7 +111,7 @@ const Calendar = () => {
         <div
           className="flex justify-center items-center"
           style={{
-            width: "46rem",
+            width: "46vw",
           }}
         >
           <div className="flex items-center rounded-full bg-gray-100 mb-5">
@@ -191,7 +191,7 @@ const Calendar = () => {
         <div
           className="relative calender-carousel"
           style={{
-            width: "46rem",
+            width: "46vw",
           }}
         >
           <Slider {...settings} ref={slideMonthRef}>
@@ -211,7 +211,7 @@ const Calendar = () => {
         <div
           className="relative"
           style={{
-            width: "48rem",
+            width: "46vw",
           }}
         >
           <div className="ml-14 mb-5">
@@ -285,7 +285,7 @@ const Calendar = () => {
       </div>
 
       <div
-        className="w-84 h-52 mx-0.5 py-2.5 px-6 border"
+        className="lg:w-60 2lg:w-68 xl:w-84 h-52 mx-0.5 py-2.5 px-6 border"
         style={{
           borderRadius: "20px",
         }}

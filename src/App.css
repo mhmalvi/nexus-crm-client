@@ -105,7 +105,7 @@ table.custom-table > tbody > tr:hover td {
   content: "";
   position: absolute;
   width: 20%;
-  right: 0;
+  right: -20px;
   top: 0;
   bottom: 0;
   background-image: linear-gradient(

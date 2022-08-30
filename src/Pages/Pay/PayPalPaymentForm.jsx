@@ -12,7 +12,6 @@ export default function PayPalPaymentForm() {
     if (window.myButton) window.myButton.close();
     window.myButton = window.paypal.Buttons({
       createOrder: (data, actions) => {
-        console.log(amount);
         return actions.order.create({
           purchase_units: [
             {
