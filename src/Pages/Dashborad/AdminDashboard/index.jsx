@@ -28,7 +28,6 @@ const AdminDashboard = () => {
     }
   }, [activeFilter]);
 
-
   return (
     <div>
       <Calendar />

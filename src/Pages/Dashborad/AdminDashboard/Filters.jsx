@@ -47,14 +47,19 @@ const Filters = ({
   const ratings = [5, 4, 3, 2, 1];
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between ">
       <div>
-        <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-          Filters
-        </h1>
         {layout !== "Payment" && (
-          <>
-            <div className="flex items-center">
+          <div
+            className="border py-3 px-7 mt-5"
+            style={{
+              borderRadius: "20px",
+            }}
+          >
+            <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+              Filters
+            </h1>
+            <div className="flex flex-wrap items-center">
               {/* Status Filters */}
               {filterOptions.map((option) => (
                 <div
@@ -62,7 +67,7 @@ const Filters = ({
                   onClick={() => setActiveFilter(option.title)}
                 >
                   <h1
-                    className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                    className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 whitespace-nowrap ${
                       activeFilter === option.title
                         ? "text-white bg-black"
                         : "text-black bg-white"
@@ -95,12 +100,17 @@ const Filters = ({
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
 
       {/* Search Option */}
-      <div>
+      <div
+        className="border px-7 py-8 mt-5 ml-6"
+        style={{
+          borderRadius: "20px",
+        }}
+      >
         <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
           Search Lead
         </h1>

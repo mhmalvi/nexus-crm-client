@@ -4,7 +4,7 @@ import UserDashboard from "./UserDashboard";
 
 const Dashboard = () => {
   return (
-    <div className="w-full lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
+    <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
       <UserDashboard />
       <AdminDashboard />
     </div>

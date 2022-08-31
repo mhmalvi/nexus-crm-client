@@ -33,7 +33,7 @@ const Calendar = () => {
   }, []);
 
   const dates = [
-    dayjs().date() - 8,
+    // dayjs().date() - 8,
     dayjs().date() - 7,
     dayjs().date() - 6,
     dayjs().date() - 5,
@@ -48,8 +48,8 @@ const Calendar = () => {
     dayjs().date() + 4,
     dayjs().date() + 5,
     dayjs().date() + 6,
-    dayjs().date() + 7,
-    dayjs().date() + 8,
+    // dayjs().date() + 7,
+    // dayjs().date() + 8,
   ];
 
   const settings = {
@@ -95,23 +95,29 @@ const Calendar = () => {
 
   return (
     <div
-      className="flex justify-between items-center"
+      className="flex justify-between"
       onClick={() => {
         setMonthPicker(false);
         setYearPicker(false);
       }}
     >
-      <div>
+      <div
+        className="border py-3 px-7 mt-4"
+        style={{
+          borderRadius: "20px",
+        }}
+      >
         <div>
           <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
             {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month}{" "}
             {dayjs().year()}
           </h1>
         </div>
+
         <div
           className="flex justify-center items-center"
           style={{
-            width: "46vw",
+            width: "42vw",
           }}
         >
           <div className="flex items-center rounded-full bg-gray-100 mb-5">
@@ -188,10 +194,11 @@ const Calendar = () => {
             </div>
           </div>
         </div>
+
         <div
           className="relative calender-carousel"
           style={{
-            width: "46vw",
+            width: "42vw",
           }}
         >
           <Slider {...settings} ref={slideMonthRef}>
@@ -211,7 +218,7 @@ const Calendar = () => {
         <div
           className="relative"
           style={{
-            width: "46vw",
+            width: "42vw",
           }}
         >
           <div className="ml-14 mb-5">
@@ -285,7 +292,7 @@ const Calendar = () => {
       </div>
 
       <div
-        className="lg:w-60 2lg:w-68 xl:w-84 h-52 mx-0.5 py-2.5 px-6 border"
+        className="lg:w-64 xl:w-84 h-52 mx-0.5 py-2.5 px-6 border mt-6"
         style={{
           borderRadius: "20px",
         }}
