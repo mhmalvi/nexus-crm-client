@@ -34,12 +34,13 @@ const Message = () => {
           <div
             onClick={handleMessageNavigation}
             key={i}
-            className="mt-5 pt-0.5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
+            className="pt-5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >
             <div className="flex justify-between items-start">
               <h1 className="text-lg leading-7 font-poppins font-semibold">
                 {message.user}
               </h1>
+
               {/* Date & Time */}
               <div>
                 <span
@@ -76,7 +77,7 @@ const Message = () => {
                 />
               </div>
             </div>
-            <hr />
+            <hr onClick={(e) => e.stopPropagation()} />
           </div>
         ))}
       </div>
