@@ -11,11 +11,11 @@ const Message = () => {
 
   return (
     <div
-      className="fixed top-28 -mt-2 pb-6 bg-white"
+      className="fixed top-28 -ml-2 -mt-2 pb-6 bg-white border rounded-md"
       style={{
         width: "341px",
         left: "300px",
-        boxShadow: "4px 0px 10px rgba(112, 55, 255, 0.05)",
+        boxShadow: "4px 2px 10px rgba(112, 55, 255, 0.05)",
       }}
     >
       <div className="px-4 pt-13" onClick={(e) => e.stopPropagation()}>

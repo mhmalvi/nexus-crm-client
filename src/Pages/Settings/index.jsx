@@ -4,7 +4,7 @@ import CompanySettings from "./CompanySettings";
 
 const Settings = () => {
   return (
-    <div>
+    <div className="pt-1 pb-10">
       <AdminSettings />
       <CompanySettings />
     </div>

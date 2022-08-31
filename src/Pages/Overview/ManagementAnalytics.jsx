@@ -14,8 +14,8 @@ const ManagementAnalytics = () => {
           <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
             Summary
           </h1>
-          <div className="grid grid-cols-3 gap-6">
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+          <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">$ 22,880.8</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
@@ -26,7 +26,7 @@ const ManagementAnalytics = () => {
                 <Icons.Briefcase className="w-5 text-purple-900 text-opacity-80" />
               </div>
             </div>
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">$ 6099.5</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
@@ -37,7 +37,7 @@ const ManagementAnalytics = () => {
                 <Icons.CalendarMonth className="w-5 text-rose-600 text-opacity-60" />
               </div>
             </div>
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">$ 1009.5</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
@@ -48,7 +48,7 @@ const ManagementAnalytics = () => {
                 <Icons.CalendarWeek className="w-5 text-blue-600 text-opacity-60" />
               </div>
             </div>
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">778</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
@@ -59,7 +59,7 @@ const ManagementAnalytics = () => {
                 <Icons.Campaigns className="w-5 text-yellow-500" />
               </div>
             </div>
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">$ 2,880.8</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
@@ -71,7 +71,7 @@ const ManagementAnalytics = () => {
               </div>
             </div>
 
-            <div className="w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
+            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
                 <h1 className="text-lg font-semibold ">15</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">

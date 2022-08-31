@@ -50,14 +50,19 @@ const Conversation = () => {
         setYearPicker(false);
       }}
     >
-      <div className="px-0.5">
-        <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
-          Add Reminder
-        </h1>
-      </div>
+      <div
+        className="border py-3 px-7 mb-4"
+        style={{
+          borderRadius: "20px",
+        }}
+      >
+        <div className="px-0.5">
+          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
+            Add Reminder
+          </h1>
+        </div>
 
-      {/* --------------- Add Reminder Section ------------------ */}
-      <div>
+        {/* --------------- Add Reminder Section ------------------ */}
         <div className="w-44 flex justify-start items-center rounded-full bg-gray-100 mb-5">
           <Dropdown overlay={dayMenu} trigger={["click"]}>
             <div
@@ -144,7 +149,8 @@ const Conversation = () => {
             Save
           </button>
         </div>
-
+      </div>
+      <div>
         {/* --------------- Conversion Section -------------- */}
         <div
           className="mt-5"

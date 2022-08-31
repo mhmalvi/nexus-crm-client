@@ -18,7 +18,7 @@ const LeadDetails = () => {
   };
 
   return (
-    <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1">
+    <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
       <div className="grid grid-cols-3">
         <div>
           <LeadStatus leadStatus={leadStatus} />

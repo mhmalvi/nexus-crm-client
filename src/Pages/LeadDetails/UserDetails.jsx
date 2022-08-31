@@ -234,7 +234,12 @@ const UserDetails = () => {
       </div>
 
       {/* Comments */}
-      <div className="mt-12 pt-0.5">
+      <div
+        className="mt-12 border py-3 px-7"
+        style={{
+          borderRadius: "20px",
+        }}
+      >
         <div className="border-b mb-0 flex justify-between items-center">
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
             Comment
