@@ -11,15 +11,14 @@ const Message = () => {
 
   return (
     <div
-      className="fixed top-28 -mt-2  pt-13 pb-4 bg-white"
+      className="fixed top-28 -mt-2 pb-6 bg-white"
       style={{
         width: "341px",
         left: "300px",
         boxShadow: "4px 0px 10px rgba(112, 55, 255, 0.05)",
       }}
-      onClick={(e) => e.stopPropagation()}
     >
-      <div className="px-4">
+      <div className="px-4 pt-13" onClick={(e) => e.stopPropagation()}>
         <h1 className="text-xl leading-8 font-poppins font-semibold">
           Massages
         </h1>
