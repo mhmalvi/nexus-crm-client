@@ -192,7 +192,7 @@ const Conversation = () => {
             </div>
             <div className="w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
               <input
-                className="outline-none font-light bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
+                className="w-full outline-none font-normal bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
                 placeholder="Write a massage"
                 type="text"
                 name=""

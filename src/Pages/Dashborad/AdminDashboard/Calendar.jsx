@@ -34,13 +34,27 @@ const Calendar = () => {
 
   const dates = [
     // dayjs().date() - 8,
-    dayjs().date() - 7,
-    dayjs().date() - 6,
-    dayjs().date() - 5,
-    dayjs().date() - 4,
-    dayjs().date() - 3,
-    dayjs().date() - 2,
-    dayjs().date() - 1,
+    dayjs().date() - 7 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 6
+      : dayjs().date() - 7,
+    dayjs().date() - 6 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 5
+      : dayjs().date() - 6,
+    dayjs().date() - 5 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 4
+      : dayjs().date() - 5,
+    dayjs().date() - 4 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 3
+      : dayjs().date() - 4,
+    dayjs().date() - 3 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 2
+      : dayjs().date() - 3,
+    dayjs().date() - 2 < 0
+      ? datesInMonth[dayjs().month() + 1].dates - 1
+      : dayjs().date() - 2,
+    dayjs().date() - 1 < 0
+      ? datesInMonth[dayjs().month() + 1].dates
+      : dayjs().date() - 1,
     dayjs().date(),
     dayjs().date() + 1,
     dayjs().date() + 2,

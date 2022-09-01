@@ -13,23 +13,12 @@ const statusData = [
   "Completed",
 ];
 
-const subStatusData = {
-  "New Lead": [],
-  Skilled: [],
-  Called: ["1st", "2nd", "3rd"],
-  Paid: ["30%", "70%", "100%"],
-  Verified: [],
-  Completed: [],
-};
-
 const LeadStatus = ({ leadStatus }) => {
-  const [status, setStatus] = useState(
-    subStatusData[
-      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
-    ]
+  const [activeStatus, setActiveStatus] = useState(
+    Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   );
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
-  const [subStatus, setSubStatus] = useState(subStatusData[statusData[0]][0]);
+  const [callCount, setCallCount] = useState(0);
 
   const statusColor = [
     {
@@ -74,17 +63,15 @@ const LeadStatus = ({ leadStatus }) => {
           ]
       ).class
     );
+    setActiveStatus(
+      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
+    );
   }, []);
 
   const handleProvinceChange = (value) => {
-    setStatus(subStatusData[value]);
-    setSubStatus(subStatusData[value][0]);
     setLeadStatusColor(statusColor.find((i) => i.lable === value)?.class);
     leadStatus[value] = true;
-  };
-
-  const onSecondCityChange = (value) => {
-    setSubStatus(value);
+    setActiveStatus(value);
   };
 
   return (
@@ -110,9 +97,7 @@ const LeadStatus = ({ leadStatus }) => {
           {statusData.map((province) => (
             <Option
               style={{
-                backgroundColor: statusColor.find((i) => i.lable === province)
-                  ?.color,
-                color: "#ffffff",
+                color: statusColor.find((i) => i.lable === province)?.color,
                 padding: "8px 16px",
               }}
               key={province}
@@ -122,29 +107,47 @@ const LeadStatus = ({ leadStatus }) => {
           ))}
         </Select>
 
-        {status?.length > 0 && (
-          <Select
-            className="sub_lead_status"
-            style={{
-              width: 60,
-            }}
-            value={subStatus}
-            onChange={onSecondCityChange}
-          >
-            {status.map((status) => (
-              <Option key={status}>{status}</Option>
-            ))}
-          </Select>
+        {activeStatus === "Called" && (
+          <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+            <div>
+              <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                {callCount}
+              </h1>
+            </div>
+            <div className="ml-3 mb-0 flex justify-center items-center">
+              <button
+                className="px-1.5 py-0.5 rounded-md bg-black text-white"
+                onClick={() => setCallCount(callCount + 1)}
+              >
+                <Icons.PhoneVolume className="w-3 text-white py-1" />
+              </button>
+            </div>
+          </div>
         )}
 
-        {leadStatus["Called"] && (
-          <div className=" ml-3 px-1.5 py-1 bg-gray-100 rounded-md flex items-center">
+        {activeStatus === "Paid" && (
+          <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
+            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
+              %
+            </span>
+            <input
+              className="w-16 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
+              type="text"
+              name=""
+              placeholder="Discount"
+              id=""
+            />
+          </div>
+        )}
+
+        {(activeStatus === "Called" || activeStatus === "Paid") && (
+          <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
             <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
               $
             </span>
             <input
               className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
-              type="email"
+              type="text"
               name=""
               placeholder="Amount"
               id=""
@@ -152,6 +155,7 @@ const LeadStatus = ({ leadStatus }) => {
           </div>
         )}
       </div>
+
       <div className="flex flex-col items-start justify-center mt-8 ">
         <div className="w-full flex justify-between">
           <div className="flex">

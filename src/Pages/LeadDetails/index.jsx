@@ -11,7 +11,7 @@ const LeadDetails = () => {
   const leadStatus = {
     "New Lead": true,
     Skilled: true,
-    Called: false,
+    Called: true,
     Paid: false,
     Verified: false,
     Completed: false,
