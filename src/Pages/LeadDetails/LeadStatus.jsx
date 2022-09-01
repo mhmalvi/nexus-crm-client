@@ -18,7 +18,7 @@ const LeadStatus = ({ leadStatus }) => {
     Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   );
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
-  const [callCount, setCallCount] = useState(0);
+  const [callCount, setCallCount] = useState(1);
 
   const statusColor = [
     {
@@ -216,7 +216,11 @@ const LeadStatus = ({ leadStatus }) => {
                 Skilled
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Eligible / Non-eligible
+                {leadStatus["Skilled"] ? (
+                  <span>Eligible</span>
+                ) : (
+                  <span>Non-eligible</span>
+                )}
               </h6>
             </div>
           </div>
@@ -249,7 +253,7 @@ const LeadStatus = ({ leadStatus }) => {
                 Called
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                2nd Call
+                No. of Calls: {callCount}
               </h6>
             </div>
           </div>
@@ -318,7 +322,11 @@ const LeadStatus = ({ leadStatus }) => {
                 Verified
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Verified / Un-verified
+                {leadStatus["Verified"] ? (
+                  <span>Verified</span>
+                ) : (
+                  <span>Un-verified</span>
+                )}
               </h6>
               <div className="flex mt-1">
                 <Icons.PDF />
@@ -357,7 +365,7 @@ const LeadStatus = ({ leadStatus }) => {
                 Completed
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Certificate provide
+                Certificate Provided
               </h6>
               <div className="flex mt-1">
                 <Icons.PDF />

@@ -57,27 +57,35 @@ const UserDetails = () => {
               <h1 className="font-poppins text-xl font-extrabold">
                 Seals Team
               </h1>
+              <span className="font-poppins text-xs">
+                <span className="text-red-600">*</span> Select a sales person to
+                handle this lead
+              </span>
             </div>
-            <div className="flex flex-col justify-center items-center py-6">
-              <div className="flex items-center my-2 cursor-pointer">
+            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
+            <div className="grid grid-cols-2 justify-center items-center py-6 ">
+              <div className="flex justify-center items-center my-2 cursor-pointer">
                 <Icons.PeopleRounded />
                 <div className="ml-2 text-lg font-poppins font-semibold">
                   Samin Hasan
                 </div>
               </div>
-              <div className="flex items-center my-2 cursor-pointer">
+
+              <div className="flex justify-center items-center my-2 cursor-pointer">
                 <Icons.PeopleRounded />
                 <div className="ml-2 text-lg font-poppins font-semibold">
                   Samin Hasan
                 </div>
               </div>
-              <div className="flex items-center my-2 cursor-pointer">
+
+              <div className="flex justify-center items-center my-2 cursor-pointer">
                 <Icons.PeopleRounded />
                 <div className="ml-2 text-lg font-poppins font-semibold">
                   Samin Hasan
                 </div>
               </div>
-              <div className="flex items-center my-2 cursor-pointer">
+
+              <div className="flex justify-center items-center my-2 cursor-pointer">
                 <Icons.PeopleRounded />
                 <div className="ml-2 text-lg font-poppins font-semibold">
                   Samin Hasan
@@ -133,27 +141,6 @@ const UserDetails = () => {
               <span>Contact:&nbsp;</span>
               <span>01756414858</span>
             </div>
-
-            {/* QR Generator */}
-            {/* <div className="ml-2">
-                <Icons.QR
-                  className="w-4 cursor-pointer"
-                  onClick={showModal}
-                  title="Open QR Code"
-                />
-                <Modal
-                  visible={isModalVisible}
-                  footer={null}
-                  onCancel={handleCancel}
-                >
-                  <img
-                    className="w-7/12 mx-auto py-18"
-                    src="https://qrcode.tec-it.com/API/QRCode?data=tel%3a+8801756414858&backcolor=%23ffffff"
-                    alt=""
-                  />
-                </Modal>
-              </div> */}
-            {/* </div> */}
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Email:&nbsp;</span>
               <span>art89@google.com</span>
