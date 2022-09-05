@@ -1,5 +1,7 @@
 import { DatePicker, Dropdown, Menu, Space, Upload } from "antd";
 import React, { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import Replay from "./Reply";
 
@@ -9,6 +11,14 @@ const Conversation = () => {
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   let dayPickerDays = [];
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollToBottom, []);
 
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
@@ -164,7 +174,7 @@ const Conversation = () => {
           {/* --------------- Messages --------------- */}
           <div className="h-96 relative mr-auto mb-2 border p-5 rounded-2xl font-poppins flex flex-col justify-between">
             <div className="overflow-y-scroll px-4">
-              <div className="text-xs mb-2.5">
+              <div className="w-84 text-xs mb-2.5">
                 <p className="rounded-md font-normal mb-1">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
                   mollis leo proin turpis.
@@ -179,7 +189,7 @@ const Conversation = () => {
               <Replay />
               <Replay />
               <Replay />
-              <div className="text-xs mb-2.5">
+              <div className="w-84 text-xs mb-2.5">
                 <p className="rounded-md font-normal mb-1">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
                   mollis leo proin turpis.
@@ -189,6 +199,7 @@ const Conversation = () => {
                   <span className="text-gray-400 ml-2">02.08.22</span>
                 </div>
               </div>
+              <div ref={messagesEndRef}></div>
             </div>
             <div className="w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
               <input

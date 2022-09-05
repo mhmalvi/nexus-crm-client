@@ -80,7 +80,7 @@ const Calendar = () => {
     centerMode: true,
     infinite: true,
     slidesToShow: 10,
-    speed: 600,
+    speed: 900,
     arrows: false,
   };
 

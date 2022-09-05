@@ -3,8 +3,8 @@ import React from "react";
 const Replay = () => {
   return (
     <>
-      <div className="flex ml-auto justify-end mb-2.5">
-        <div className="text-xs ml-10">
+      <div className="w-84 flex ml-auto justify-end mb-2.5">
+        <div className="text-xs">
           <p className="rounded-md font-normal mb-1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
             mollis leo proin turpis.
