@@ -41,18 +41,34 @@ const CardPaymentForm = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6">
-          <p className="font-poppins font-light text-black mb-1 ml-6">
-            Name on card
-          </p>
-          <div>
-            <input
-              className="w-66 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
-              type="text"
-              name="tran_id"
-              id=""
-              placeholder="Name on card"
-            />
+        <div className="flex items-center justify-between">
+          <div className="mt-6">
+            <p className="font-poppins font-light text-black mb-1 ml-6">
+              Name on card
+            </p>
+            <div>
+              <input
+                className="w-66 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
+                type="text"
+                name="tran_id"
+                id=""
+                placeholder="Name on card"
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <p className="font-poppins font-light text-black mb-1 ml-6">
+              Amount
+            </p>
+            <div>
+              <input
+                className="w-44 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
+                type="text"
+                name="amount"
+                id=""
+                placeholder="Amount"
+              />
+            </div>
           </div>
         </div>
         <div className="mt-6">

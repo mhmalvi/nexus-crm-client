@@ -19,6 +19,7 @@ const LeadStatus = ({ leadStatus }) => {
   );
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
   const [callCount, setCallCount] = useState(1);
+  const [amount, setAmount] = useState();
 
   const statusColor = [
     {
@@ -125,7 +126,7 @@ const LeadStatus = ({ leadStatus }) => {
           </div>
         )}
 
-        {activeStatus === "Paid" && (
+        {/* {activeStatus === "Paid" && (
           <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
             <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
               %
@@ -138,7 +139,7 @@ const LeadStatus = ({ leadStatus }) => {
               id=""
             />
           </div>
-        )}
+        )} */}
 
         {(activeStatus === "Called" || activeStatus === "Paid") && (
           <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
@@ -149,9 +150,21 @@ const LeadStatus = ({ leadStatus }) => {
               className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
               type="text"
               name=""
+              onChange={(e) => setAmount(e.target.value)}
               placeholder="Amount"
               id=""
             />
+          </div>
+        )}
+
+        {activeStatus === "Called" && (
+          <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
+            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
+              Payable :
+            </span>
+            <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
+              $ {amount}
+            </span>
           </div>
         )}
       </div>
@@ -281,12 +294,12 @@ const LeadStatus = ({ leadStatus }) => {
                 <hr className="rotate-90 w-17 mt-10" />
               </div>
             </div>
-            <div className="ml-3">
+            <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
                 Paid
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                30% paid
+                0% paid
               </h6>
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
                 Bank
@@ -317,7 +330,7 @@ const LeadStatus = ({ leadStatus }) => {
                 <hr className="rotate-90 w-17 mt-10" />
               </div>
             </div>
-            <div className="ml-3">
+            <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
                 Verified
               </h6>
@@ -360,7 +373,7 @@ const LeadStatus = ({ leadStatus }) => {
                 <hr className="rotate-90 w-17 mt-10" />
               </div>
             </div>
-            <div className="ml-3">
+            <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
                 Completed
               </h6>

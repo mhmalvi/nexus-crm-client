@@ -32,7 +32,7 @@ const Pay = () => {
           <div className="px-8 py-10 rounded-2xl border border-gray-400">
             <div>
               <div>
-                <div className="mb-14 flex items-start justify-between">
+                <div className="mb-10 flex items-start justify-between">
                   <div className="font-semibold text-base leading-6 font-poppins">
                     <div>
                       <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
@@ -44,9 +44,17 @@ const Pay = () => {
                       <span>art89@google.com</span>
                     </div>
                   </div>
-                  <div className="text-xl leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
-                    {/* <span>Courses:&nbsp;</span> */}
-                    <span>Fashion Designing</span>
+                  <div>
+                    <div className="text-xl leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
+                      {/* <span>Courses:&nbsp;</span> */}
+                      <span>Fashion Designing</span>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-base leading-8 text-black text-center pb-6">
+                        Total Payable:{" "}
+                        <span className="text-red-600">$1500</span>
+                      </h4>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -86,53 +94,6 @@ const Pay = () => {
                   <div key={form.id}>{form.component}</div>
                 ))}
             </div>
-
-            {/* {transactionsMethod === "Credit/Debit Card" ? (
-                <div className="mt-6">
-                  <p className="font-poppins font-light text-black mb-1">
-                    Card number
-                  </p>
-                  <div>
-                    <input
-                      className="w-66 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
-                      type="text"
-                      name="tran_id"
-                      id=""
-                      defaultValue="fkgjdriofhsdfhg"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="mt-6">
-                  <p className="font-poppins font-light text-black mb-1">
-                    Password
-                  </p>
-                  <div>
-                    <input
-                      className="w-66 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
-                      type="text"
-                      name="tran_id"
-                      id=""
-                      defaultValue="562566"
-                    />
-                  </div>
-                </div>
-              )} */}
-
-            {/* <div className="mt-6">
-                <p className="font-poppins font-light text-black mb-1">
-                  Amount
-                </p>
-                <div>
-                  <input
-                    className="w-44 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
-                    type="text"
-                    name="acc_number"
-                    id=""
-                    defaultValue="400"
-                  />
-                </div>
-              </div> */}
           </div>
         </div>
       </div>

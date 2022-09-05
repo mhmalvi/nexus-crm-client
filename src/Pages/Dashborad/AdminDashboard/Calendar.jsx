@@ -6,10 +6,14 @@ import Slider from "react-slick";
 const Calendar = () => {
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
 
   const slideMonthRef = useRef();
+  const slideDateRef = useRef();
+
+  // https://www.youtube.com/watch?v=9ySmMd5Cjc0
 
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
   const datesInMonth = [
@@ -29,6 +33,7 @@ const Calendar = () => {
 
   useEffect(() => {
     slideMonthRef.current.slickGoTo(dayjs().month());
+    slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
   }, []);
 
@@ -74,6 +79,14 @@ const Calendar = () => {
     arrows: false,
   };
 
+  const dateSettings = {
+    centerMode: true,
+    infinite: true,
+    slidesToShow: 10,
+    speed: 600,
+    arrows: false,
+  };
+
   // handeled changing months
   const handleMonths = (id) => {
     slideMonthRef.current.slickGoTo(id - 1);
@@ -106,6 +119,8 @@ const Calendar = () => {
   const dayMenu = (
     <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
   );
+
+  // console.log(dayjs()?.day(1));
 
   return (
     <div
@@ -219,16 +234,24 @@ const Calendar = () => {
             {datesInMonth.map((date) => (
               <div
                 key={date.key}
-                className="py-5 cursor-pointer text-base font-normal leading-6 font-poppins "
+                className="py-5 cursor-pointer text-base leading-6 font-poppins"
                 onClick={() => handleMonths(date.key)}
               >
-                <h1 className="mb-0 text-center">{date.month}</h1>
+                <h1
+                  className={`mb-0 text-sm xl:text-base text-center ${
+                    currentMonth === date.key ? "font-semibold" : "font-normal"
+                  }`}
+                  onClick={() => setCurrentMonth(date.key)}
+                >
+                  {date.month}
+                </h1>
               </div>
             ))}
           </Slider>
           <div className="calendar-fader-left"></div>
           <div className="calendar-fader-right"></div>
         </div>
+
         <div
           className="relative"
           style={{
@@ -236,7 +259,7 @@ const Calendar = () => {
           }}
         >
           <div className="ml-14 mb-5">
-            <div className=" flex justify-between items-center">
+            {/* <div className=" flex justify-between items-center">
               {dates.map((i) => (
                 <div key={i} className="flex flex-col items-center">
                   <div
@@ -265,43 +288,52 @@ const Calendar = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
 
-            {/* <Slider {...dateSettings} ref={slideDateRef}> */}
             {/* Creating the dates aray to map */}
             {/* <div className="grid grid-cols-12"> */}
-            {/* {Array.from(Array(datesInMonth[currentMonth - 1]?.dates).keys()).map(
-            (i) => (
-              <div
-                key={i}
-                onClick={() => handleDates(i)}
-                className="cursor-pointer"
-              >
+            <Slider {...dateSettings} ref={slideDateRef}>
+              {Array.from(
+                Array(datesInMonth[currentMonth - 1]?.dates).keys()
+              ).map((i) => (
                 <div
+                  key={i}
                   onClick={() => handleDates(i)}
-                  className={`w-8 h-8 rounded-full ${
-                    currentDate === i ? "bg-black" : "bg-gray-100"
-                  }`}
+                  className="cursor-pointer flex  justify-center items-center"
                 >
-                  <h1
-                    // key={i}
-                    className={`text-base leading-6 font-poppins font-normal mb-0 ${
-                      currentDate === i && "text-white rounded-full"
+                  <div
+                    onClick={() => handleDates(i)}
+                    className={`w-8 h-8 mx-auto flex justify-center items-center rounded-full ${
+                      currentDate === i ? "bg-black" : "bg-gray-100"
                     }`}
                   >
-                    {i + 1}
-                  </h1>
+                    <h1
+                      // key={i}
+                      className={`text-base  leading-6 font-poppins font-normal mb-0 ${
+                        currentDate === i && "text-white rounded-full"
+                      }`}
+                    >
+                      {i + 1}
+                    </h1>
+                  </div>
+                  <div className="mt-3">
+                    <h1
+                      className="leading-4 text-center font-normal font-poppins"
+                      style={{
+                        fontSize: "10px",
+                      }}
+                    >
+                      {weekDays[`${dayjs()?.day(i + 4)?.$W}`].slice(0, 3)}
+                    </h1>
+                  </div>
                 </div>
-                <div>
-                  <h1>{dayjs().day()}</h1>
-                </div>
-              </div>
-            )
-          )} */}
-          </div>
+              ))}
+            </Slider>
+            {/* </div> */}
 
-          <div className="calendar-fader-right"></div>
-          <div className="calendar-fader-left"></div>
+            <div className="calendar-fader-right"></div>
+            <div className="calendar-fader-left"></div>
+          </div>
         </div>
       </div>
 
