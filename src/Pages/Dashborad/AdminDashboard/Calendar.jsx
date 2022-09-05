@@ -91,6 +91,7 @@ const Calendar = () => {
 
   // handeled date click
   const handleDates = (id) => {
+    slideDateRef.current.slickGoTo(id + 1);
     setCurrentDate(id);
   };
 
@@ -231,7 +232,7 @@ const Calendar = () => {
             {datesInMonth.map((date) => (
               <div
                 key={date.key}
-                className="py-5 cursor-pointer text-base leading-6 font-poppins"
+                className="py-5 -ml-2 cursor-pointer text-base leading-6 font-poppins"
                 onClick={() => handleMonths(date.key)}
               >
                 <h1
