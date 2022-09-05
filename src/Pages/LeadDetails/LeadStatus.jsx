@@ -163,7 +163,7 @@ const LeadStatus = ({ leadStatus }) => {
               Payable :
             </span>
             <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-              $ {amount}
+              $ {amount ? amount : "Not Fixed Yet"}
             </span>
           </div>
         )}
