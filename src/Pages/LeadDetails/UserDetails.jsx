@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
+import CheckList from "./CheckList";
 
 const UserDetails = () => {
   // const [isModalVisible, setIsModalVisible] = useState(false);
@@ -207,7 +208,7 @@ const UserDetails = () => {
             footer={null}
             onCancel={handleCancel}
           >
-            <div>Check List</div>
+            <CheckList />
           </Modal>
           <div className="ml-4 mt-5">
             <button
