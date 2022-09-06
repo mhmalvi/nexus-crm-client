@@ -1,15 +1,19 @@
-import { DatePicker, Dropdown, Menu, Space, Upload } from "antd";
-import React, { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { DatePicker, message, Space, Upload } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import Replay from "./Reply";
 
 const Conversation = () => {
-  const [activeSection, setActiveSection] = useState("day");
+  // const [activeSection, setActiveSection] = useState("day");
+  const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
-  const [monthPicker, setMonthPicker] = useState(false);
-  const [yearPicker, setYearPicker] = useState(false);
+  const [reminders, setReminders] = useState(
+    JSON.parse(localStorage.getItem("reminder"))
+  );
+  const [reminderMessage, setReminderMessage] = useState("");
+
+  // const [monthPicker, setMonthPicker] = useState(false);
+  // const [yearPicker, setYearPicker] = useState(false);
   let dayPickerDays = [];
 
   const messagesEndRef = useRef(null);
@@ -20,6 +24,11 @@ const Conversation = () => {
 
   useEffect(scrollToBottom, []);
 
+  useEffect(() => {
+    if (reminders?.length)
+      localStorage.setItem("reminder", JSON.stringify(reminders));
+  }, [reminders]);
+
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
       label: i + 1,
@@ -27,9 +36,9 @@ const Conversation = () => {
     });
   }
 
-  const dayMenu = (
-    <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
-  );
+  // const dayMenu = (
+  //   <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
+  // );
 
   const handleChange = (info) => {
     let newFileList = [...info.fileList];
@@ -52,13 +61,45 @@ const Conversation = () => {
     multiple: true,
   };
 
+  const onOk = (value) => {
+    setDateTime(value._d.toString().slice(4, 21));
+  };
+
+  const handleAddReminder = () => {
+    console.log(dateTime, reminderMessage);
+    if (dateTime?.length && reminderMessage?.length) {
+      if (reminders?.length) {
+        setReminders([
+          ...reminders,
+          {
+            lead: "12345",
+            time: dateTime,
+            message: reminderMessage,
+          },
+        ]);
+      } else {
+        setReminders([
+          {
+            lead: "12345",
+            time: dateTime,
+            message: reminderMessage,
+          },
+        ]);
+      }
+      setDateTime("");
+      setReminderMessage("");
+    } else {
+      message.error("Add date, time and message");
+    }
+  };
+
   return (
     <div
       className="min-h-full px-6 border-r"
-      onClick={() => {
-        setMonthPicker(false);
-        setYearPicker(false);
-      }}
+      // onClick={() => {
+      //   setMonthPicker(false);
+      //   setYearPicker(false);
+      // }}
     >
       <div
         className="border py-3 px-7 mb-4"
@@ -73,7 +114,22 @@ const Conversation = () => {
         </div>
 
         {/* --------------- Add Reminder Section ------------------ */}
-        <div className="w-44 flex justify-start items-center rounded-full bg-gray-100 mb-5">
+
+        <Space
+          className="border rounded-full text-base text-center px-1 py-1.5 bg-black text-white cursor-pointer font-poppins"
+          direction="vertical"
+          size={12}
+        >
+          <DatePicker
+            className="date-time-picker"
+            suffixIcon={dateTime ? dateTime : "Select Date and Time"}
+            bordered={false}
+            showTime
+            onOk={onOk}
+          />
+        </Space>
+
+        {/* <div className="w-44 flex justify-start items-center rounded-full bg-gray-100 mb-5">
           <Dropdown overlay={dayMenu} trigger={["click"]}>
             <div
               className={`px-3 py-2 text-xs leading-4 font-medium font-poppins ${
@@ -146,16 +202,37 @@ const Conversation = () => {
               bordered={false}
             />
           </div>
-        </div>
+        </div> */}
+
+        {/* <div className="flex bg-gray-50">
+          <h1
+            className={`${
+              activeSection === "time" ? " text-white" : "text-black"
+            }`}
+          >
+            Time
+          </h1>
+          <TimePicker
+            suffixIcon=""
+            className="text-transparent outline-none border-none"
+            onChange={onChange}
+          />
+        </div> */}
+
         <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
           <input
             className="w-full font-poppins outline-none"
             type="text"
             placeholder="Write Start"
-            name=""
-            id=""
+            name="reminder message"
+            id="reminder_message"
+            value={reminderMessage}
+            onChange={(e) => setReminderMessage(e.target.value)}
           />
-          <button className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4">
+          <button
+            className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4"
+            onClick={handleAddReminder}
+          >
             Save
           </button>
         </div>

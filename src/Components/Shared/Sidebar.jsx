@@ -14,6 +14,7 @@ const Sidebar = ({
       className="bg-white"
       style={{
         width: "277px",
+        overflowX: "hidden",
       }}
     >
       <div className="ml-10">
@@ -28,7 +29,8 @@ const Sidebar = ({
         <div
           className="border-r 2xl:pt-8 pb-4 overflow-y-scroll"
           style={{
-            height: `calc(100vh - 100px)`,
+            height: `100vh`,
+            // height: `calc(100vh - 100px)`,
           }}
         >
           <div>

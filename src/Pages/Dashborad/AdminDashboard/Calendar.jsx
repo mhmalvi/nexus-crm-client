@@ -12,9 +12,7 @@ const Calendar = () => {
 
   const slideMonthRef = useRef();
   const slideDateRef = useRef();
-
-  // https://www.youtube.com/watch?v=9ySmMd5Cjc0
-
+  
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
   const datesInMonth = [
     { key: 1, month: "Januyary", dates: 31 },

@@ -29,6 +29,7 @@ import { ReactComponent as CalendarWeek } from "../../assets/Icons/calendar-week
 import { ReactComponent as CalendarMonth } from "../../assets/Icons/calendar-days-solid.svg";
 import { ReactComponent as MoneyCheck } from "../../assets/Icons/money-check-solid.svg";
 import { ReactComponent as PhoneVolume } from "../../assets/Icons/phone-volume.svg";
+import { ReactComponent as Alert } from "../../assets/Icons/alert.svg";
 
 const Icons = {
   CompanyLogo,
@@ -62,6 +63,7 @@ const Icons = {
   CalendarMonth,
   MoneyCheck,
   PhoneVolume,
+  Alert,
 };
 
 export default Icons;

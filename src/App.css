@@ -214,6 +214,11 @@ table.custom-table > tbody > tr:hover td {
   margin: auto !important;
 }
 
+.date-time-picker > .ant-picker-input > .ant-picker-suffix {
+  color: #ffffff !important;
+  font-size: 12px ;
+}
+
 /* ------------- Animations------------ */
 @keyframes ping {
   75%,

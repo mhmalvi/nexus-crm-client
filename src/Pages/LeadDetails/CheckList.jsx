@@ -1,6 +1,5 @@
-import { Modal, Upload } from "antd";
-import React from "react";
-import { useState } from "react";
+import { Upload } from "antd";
+import React, { useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 
 const CheckList = ({ toggleChcekList, handleCancel }) => {
@@ -38,7 +37,7 @@ const CheckList = ({ toggleChcekList, handleCancel }) => {
         <h1 className="text-xl font-medium mb-6">Certificates :</h1>
       </div>
       {checkLists.map((certificate, i) => (
-        <div className="flex items-center text-sm mb-4 ml-6">
+        <div key={i} className="flex items-center text-sm mb-4 ml-6">
           <span>{i + 1}.</span>
           <span className="mx-2">{certificate} : </span>
           <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
