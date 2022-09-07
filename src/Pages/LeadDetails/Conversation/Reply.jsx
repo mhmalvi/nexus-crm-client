@@ -3,7 +3,12 @@ import React from "react";
 const Replay = () => {
   return (
     <>
-      <div className="w-84 flex ml-auto justify-end mb-2.5">
+      <div
+        className="flex ml-auto justify-end mb-2.5"
+        style={{
+          maxWidth: "85%",
+        }}
+      >
         <div className="text-xs">
           <p className="rounded-md font-normal mb-1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor

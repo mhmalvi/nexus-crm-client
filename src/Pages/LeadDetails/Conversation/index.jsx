@@ -116,7 +116,7 @@ const Conversation = () => {
         {/* --------------- Add Reminder Section ------------------ */}
 
         <Space
-          className="border rounded-full text-base text-center px-1 py-1.5 bg-black text-white cursor-pointer font-poppins"
+          className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
           direction="vertical"
           size={12}
         >
@@ -249,11 +249,16 @@ const Conversation = () => {
             Conversion
           </h1>
           {/* --------------- Messages --------------- */}
-          <div className="h-96 relative mr-auto mb-2 border p-5 rounded-2xl font-poppins flex flex-col justify-between">
+          <div className="h-100 relative mr-auto mb-2 border p-5 rounded-2xl font-poppins flex flex-col justify-between">
             <div className="overflow-y-scroll px-4">
-              <div className="w-84 text-xs mb-2.5">
+              <div
+                className="text-xs mb-2.5"
+                style={{
+                  maxWidth: "85%",
+                }}
+              >
                 <p className="rounded-md font-normal mb-1">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
+                  Lorem ipsum dolor sit amet, consect adipiscing elit. Dolor
                   mollis leo proin turpis.
                 </p>
                 <div className="mt-1.5">
@@ -266,7 +271,12 @@ const Conversation = () => {
               <Replay />
               <Replay />
               <Replay />
-              <div className="w-84 text-xs mb-2.5">
+              <div
+                className="text-xs mb-2.5"
+                style={{
+                  maxWidth: "85%",
+                }}
+              >
                 <p className="rounded-md font-normal mb-1">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
                   mollis leo proin turpis.
