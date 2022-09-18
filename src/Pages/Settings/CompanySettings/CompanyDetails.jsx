@@ -5,7 +5,7 @@ const CompanyDetails = () => {
     <div
       className="font-poppins border py-6 px-8 mx-auto mb-28"
       style={{
-        width: "60%",
+        width: "80%",
         borderRadius: "20px",
       }}
     >
@@ -19,7 +19,10 @@ const CompanyDetails = () => {
             repellendus nulla! Culpa. Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Blanditiis nisi qui doloremque placeat ipsum!
             Velit modi in earum, ducimus accusantium quae quas nostrum. Facilis
-            rerum hic, illum repellat vel atque? lorem200
+            rerum hic, illum repellat vel atque? Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Hic, reiciendis? Lorem ipsum dolor sit
+            amet consectetur, adipisicing elit. Laudantium, magni? Lorem ipsum
+            dolor sit amet. Lorem ipsum dolor sit amet.
           </p>
         </div>
         <div className="w-1/2 pb-16 mb-20">
