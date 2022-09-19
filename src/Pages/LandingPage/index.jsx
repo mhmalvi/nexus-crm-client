@@ -39,12 +39,12 @@ const LandingPage = () => {
     setAllReminder(JSON.parse(localStorage.getItem("reminder")));
   }, []);
 
-  setInterval(() => {
-    const filteredTasks = allReminder.filter(
-      (task) => task.time === dayjs().$d.toString().slice(4, 21)
-    );
-    setCurrentTasks(filteredTasks);
-  }, 5000);
+  // setInterval(() => {
+  //   const filteredTasks = allReminder.filter(
+  //     (task) => task.time === dayjs().$d.toString().slice(4, 21)
+  //   );
+  //   setCurrentTasks(filteredTasks);
+  // }, 5000);
 
   return (
     <div

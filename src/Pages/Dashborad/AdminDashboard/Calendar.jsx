@@ -14,20 +14,20 @@ const Calendar = () => {
   const slideDateRef = useRef();
   
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
-  const datesInMonth = [
-    { key: 1, month: "Januyary", dates: 31 },
-    { key: 2, month: "February", dates: februaryDate },
-    { key: 3, month: "March", dates: 31 },
-    { key: 4, month: "April", dates: 30 },
-    { key: 5, month: "May", dates: 31 },
-    { key: 6, month: "June", dates: 30 },
-    { key: 7, month: "July", dates: 31 },
-    { key: 8, month: "August", dates: 31 },
-    { key: 9, month: "September", dates: 30 },
-    { key: 10, month: "October", dates: 31 },
-    { key: 11, month: "November", dates: 30 },
-    { key: 12, month: "December", dates: 31 },
-  ];
+    const datesInMonth = [
+      { key: 1, month: "Januyary", dates: 31 },
+      { key: 2, month: "February", dates: februaryDate },
+      { key: 3, month: "March", dates: 31 },
+      { key: 4, month: "April", dates: 30 },
+      { key: 5, month: "May", dates: 31 },
+      { key: 6, month: "June", dates: 30 },
+      { key: 7, month: "July", dates: 31 },
+      { key: 8, month: "August", dates: 31 },
+      { key: 9, month: "September", dates: 30 },
+      { key: 10, month: "October", dates: 31 },
+      { key: 11, month: "November", dates: 30 },
+      { key: 12, month: "December", dates: 31 },
+    ];
 
   useEffect(() => {
     slideMonthRef.current.slickGoTo(dayjs().month());

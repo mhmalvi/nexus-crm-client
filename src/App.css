@@ -216,7 +216,18 @@ table.custom-table > tbody > tr:hover td {
 
 .date-time-picker > .ant-picker-input > .ant-picker-suffix {
   color: #ffffff !important;
-  font-size: 12px ;
+  font-size: 12px;
+}
+
+.message-container {
+  width: 100%;
+  /* height: 100%; */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.message-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* ------------- Animations------------ */
