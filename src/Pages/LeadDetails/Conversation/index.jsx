@@ -1,39 +1,44 @@
 import { DatePicker, Space, Upload } from "antd";
+import axios from "axios";
+import Filter from "bad-words";
 import dayjs from "dayjs";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
-import Filter from "bad-words";
-import axios from "axios";
+import { PlusOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
+import "antd/dist/antd.css";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Conversation = () => {
   const filter = new Filter();
   let dayPickerDays = [];
-  // const messagesEndRef = useRef(null);
 
   const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
+  // To load current typing text
   const [currentMessage, setCurrentMessage] = useState("");
+  // for storing all messages
   const [messageList, setMessageList] = useState([]);
-  const [checkNewMessage, setCheckNewMessage] = useState(false);
-
-  // const [reminders, setReminders] = useState(
-  //   JSON.parse(localStorage.getItem("reminder"))
-  // );
+  // This state is a type of flag to sync message in again according to needs
+  const [sync, setSync] = useState(false);
   const [reminderMessage, setReminderMessage] = useState("");
-
-  // const scrollToBottom = () => {
-  //   messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
-  // };
-
-  // useEffect(scrollToBottom, []);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  // const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
     socket.emit("join_room", 123);
   }, []);
+
+  // useEffect(() => {
+  //   socket.on("history", (messages) => {
+  //     setMessageList(messages);
+  //   });
+  // }, [messageList]);
 
   useEffect(() => {
     axios
@@ -44,13 +49,10 @@ const Conversation = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [checkNewMessage]);
-
-  console.log("Hitting");
+  }, [sync]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      if (!currentMessage && data) setCheckNewMessage(!checkNewMessage);
       setMessageList(() => [...messageList, data]);
     });
   }, [messageList]);
@@ -61,33 +63,28 @@ const Conversation = () => {
       key: i,
     });
   }
+  const handleCancel = () => setPreviewOpen(false);
 
-  const handleChange = (info) => {
-    let newFileList = [...info.fileList];
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
 
-    newFileList = fileList.slice(-2);
-
-    newFileList = fileList.map((file) => {
-      if (file.response) {
-        file.url = file.response.url;
-      }
-
-      return file;
-    });
-    setFileList(newFileList);
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
   };
 
-  const props = {
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange: handleChange,
-    multiple: true,
-  };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
   const onOk = (value) => {
     setDateTime(value._d.toString().slice(4, 21));
   };
 
-  const sendMessage = async (e) => {
+  // handeling send message to API
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (currentMessage !== "") {
       const messageData = {
@@ -100,36 +97,76 @@ const Conversation = () => {
       await socket.emit("send_message", messageData);
       setMessageList(() => [...messageList, messageData]);
       setCurrentMessage("");
+      setSync(!sync);
     }
   };
 
-  // const handleAddReminder = () => {
-  //   console.log(dateTime, reminderMessage);
-  //   if (dateTime?.length && reminderMessage?.length) {
-  //     if (reminders?.length) {
-  //       setReminders([
-  //         ...reminders,
-  //         {
-  //           lead: "12345",
-  //           time: dateTime,
-  //           message: reminderMessage,
-  //         },
-  //       ]);
-  //     } else {
-  //       setReminders([
-  //         {
-  //           lead: "12345",
-  //           time: dateTime,
-  //           message: reminderMessage,
-  //         },
-  //       ]);
-  //     }
-  //     setDateTime("");
-  //     setReminderMessage("");
-  //   } else {
-  //     message.error("Add date, time and message");
-  //   }
-  // };
+  // To convert written text to lisk
+  const linkify = (text) => {
+    var urlRegex =
+      // eslint-disable-next-line no-useless-escape
+      /(\b(https ?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    return text.replace(urlRegex, function (url) {
+      return '<a href="' + url + '">' + url + "</a>";
+    });
+  };
+
+  // For deleting message
+  const handleDeleteMessage = (msgId) => {
+    console.log(msgId);
+    axios
+      .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/delete-message/${msgId}`)
+      .then(function (response) {
+        if (response?.data === "Deleted") {
+          setSync(!sync);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleUploadFile = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = (e) => {
+      console.log(e.target.result);
+      axios
+        .post(
+          `${process.env?.REACT_APP_CHAT_SERVER_URL}/message/uploadfile`,
+          e.target.result
+        )
+        .then(function (response) {
+          setMessageList(response?.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+  };
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => resolve(reader.result);
+
+      reader.onerror = (error) => reject(error);
+    });
 
   return (
     <div className="min-h-full px-6 border-r">
@@ -189,48 +226,10 @@ const Conversation = () => {
           </h1>
           {/* --------------- Messages --------------- */}
           <form
-            onSubmit={(e) => sendMessage(e)}
+            enctype="multipart/form-data"
+            onSubmit={(e) => handleSendMessage(e)}
             className="h-100 relative mr-auto mb-2 border py-5 px-2 rounded-2xl font-poppins flex flex-col justify-between"
           >
-            {/* <div className="overflow-y-scroll px-4">
-              <div
-                className="text-xs mb-2.5"
-                style={{
-                  maxWidth: "85%",
-                }}
-              >
-                <p className="rounded-md font-normal mb-1">
-                  Lorem ipsum dolor sit amet, consect adipiscing elit. Dolor
-                  mollis leo proin turpis.
-                </p>
-                <div className="mt-1.5">
-                  <span className="text-gray-400">10:15 pm</span>
-                  <span className="text-gray-400 ml-2">02.08.22</span>
-                </div>
-              </div>
-              <Replay />
-              <Replay />
-              <Replay />
-              <Replay />
-              <Replay />
-              <div
-                className="text-xs mb-2.5"
-                style={{
-                  maxWidth: "85%",
-                }}
-              >
-                <p className="rounded-md font-normal mb-1">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor
-                  mollis leo proin turpis.
-                </p>
-                <div className="mt-1.5">
-                  <span className="text-gray-400">10:15 pm</span>
-                  <span className="text-gray-400 ml-2">02.08.22</span>
-                </div>
-              </div>
-              <div ref={messagesEndRef}></div>
-            </div> */}
-
             <ScrollToBottom className="message-container">
               {!messageList?.length && (
                 <div className="text-2xl text-center mt-16">
@@ -240,7 +239,7 @@ const Conversation = () => {
               {messageList?.map((message, i) => (
                 <div className="px-4" key={i}>
                   {parseInt(localStorage.getItem("userId")) ===
-                  message.sender_id ? (
+                  message?.sender_id ? (
                     <>
                       <div
                         className="flex ml-auto justify-end mb-2.5"
@@ -249,9 +248,26 @@ const Conversation = () => {
                         }}
                       >
                         <div className="text-xs">
-                          <p className="rounded-md font-normal mb-1 text-sm">
+                          {/* <p className="rounded-md font-normal mb-1 text-sm">
                             {filter.clean(message?.message)}
-                          </p>
+                          </p> */}
+                          <div className="flex justify-between items-start">
+                            <div
+                              className="rounded-md font-normal mb-1 text-sm"
+                              dangerouslySetInnerHTML={{
+                                __html: linkify(filter.clean(message?.message)),
+                              }}
+                            />
+                            <div
+                              className="ml-3.5 text-sm font-semibold bg-gray-100 border p-0.5 cursor-pointer rounded-full flex items-center justify-center"
+                              onClick={() => handleDeleteMessage(message?.id)}
+                            >
+                              <span>
+                                <Icons.Cross className="w-2.5 h-2.5 text-red-500" />
+                              </span>
+                            </div>
+                          </div>
+
                           <div className="float-right">
                             <span className="text-gray-400 text-xs">
                               {message.date_time}
@@ -268,9 +284,12 @@ const Conversation = () => {
                           maxWidth: "85%",
                         }}
                       >
-                        <p className="rounded-md font-normal mb-0.5 text-sm">
-                          {filter.clean(message?.message)}
-                        </p>
+                        <div
+                          className="rounded-md font-normal mb-1 text-sm"
+                          dangerouslySetInnerHTML={{
+                            __html: linkify(filter.clean(message?.message)),
+                          }}
+                        />
                         <div>
                           <span className="text-gray-400 text-xs">
                             {message.date_time}
@@ -283,7 +302,7 @@ const Conversation = () => {
               ))}
             </ScrollToBottom>
 
-            <div className="w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
+            <div className="relative w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
               <input
                 className="w-full outline-none font-normal bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
                 placeholder="Write a massage"
@@ -293,10 +312,52 @@ const Conversation = () => {
                 value={currentMessage}
                 onChange={(e) => setCurrentMessage(e.target.value)}
               />
-              <div className="ml-2 flex items-center">
-                <Upload {...props} fileList={fileList}>
-                  <Icons.Clip className="mr-2.5" />
-                </Upload>
+              <div
+                className="ml-2 flex items-center overflow-x-auto"
+                style={{
+                  minWidth: "100px",
+                }}
+              >
+                {/* <Upload {...props} fileList={fileList}> */}
+                {/* <Icons.Clip className="mr-2.5" /> */}
+                {/* </Upload> */}
+
+                <>
+                  <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture"
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    onChange={handleChange}
+                    className="flex items-center mr-2"
+                  >
+                    {/* <div className="flex items-center"> */}
+                    {fileList.length >= 8 ? null : <Icons.Clip />}
+                    {/* </div> */}
+                  </Upload>
+                  <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
+                  >
+                    <img
+                      alt="example"
+                      style={{
+                        width: "100%",
+                      }}
+                      src={previewImage}
+                    />
+                  </Modal>
+                </>
+
+                {/* <input
+                  type="file"
+                  name="file"
+                  id=""
+                  onChange={(e) => handleUploadFile(e)}
+                /> */}
+
                 <button
                   className="px-2.5 py-0.5 font-poppins font-semibold text-xs leading-5 text-black border border-black rounded-md"
                   type="submit"

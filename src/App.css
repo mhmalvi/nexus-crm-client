@@ -226,6 +226,21 @@ table.custom-table > tbody > tr:hover td {
   overflow-x: hidden;
 }
 
+.ant-upload-list-picture {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px;
+  align-items: center;
+  margin-right: auto;
+  position: absolute;
+  left: -10px;
+  background-color: white;
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+  padding: 0px 6px 6px 6px;
+  /* border: 1px solid rgb(122, 122, 122); */
+  top: 50px;
+}
+
 .message-container::-webkit-scrollbar {
   display: none;
 }
