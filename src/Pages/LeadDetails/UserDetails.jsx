@@ -1,12 +1,14 @@
 import { Modal } from "antd";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
 import CheckList from "./CheckList";
 
 const UserDetails = () => {
-  // const [isModalVisible, setIsModalVisible] = useState(false);
+  const userDetails = useSelector((state) => state?.user);
+
   const [addSealsman, setAddSealsman] = useState(false);
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [closeSealsman, setCloseSealsman] = useState(true);
@@ -32,12 +34,26 @@ const UserDetails = () => {
             Davidov Artur
           </h1>
           <div className="relative">
-            <Icons.People
-              className="cursor-pointer"
-              onClick={() => {
-                !closeSealsman && setAddSealsman(true);
-              }}
-            />
+            {userDetails?.userInfo?.role === "sales_employee" &&
+            closeSealsman ? (
+              <img
+                title={
+                  userDetails?.userInfo?.firstName +
+                  " " +
+                  userDetails?.userInfo?.lastName
+                }
+                className="w-10 rounded-full cursor-pointer"
+                src={userDetails?.userInfo?.avatar}
+                alt=""
+              />
+            ) : (
+              <Icons.People
+                className="cursor-pointer"
+                onClick={() => {
+                  !closeSealsman && setAddSealsman(true);
+                }}
+              />
+            )}
             {closeSealsman && (
               <span
                 className="absolute cursor-pointer -top-2 -right-2.5 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0"

@@ -4,6 +4,7 @@ import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
@@ -13,6 +14,8 @@ const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 const Conversation = () => {
   const filter = new Filter();
   let dayPickerDays = [];
+  const userDetails = useSelector((state) => state?.user);
+  console.log(userDetails);
 
   const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
