@@ -1,4 +1,5 @@
 import { DatePicker, Space, Upload } from "antd";
+import "antd/dist/antd.css";
 import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
@@ -6,9 +7,6 @@ import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
-import { PlusOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
-import "antd/dist/antd.css";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -18,17 +16,15 @@ const Conversation = () => {
 
   const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
-  // To load current typing text
-  const [currentMessage, setCurrentMessage] = useState("");
   // for storing all messages
   const [messageList, setMessageList] = useState([]);
   // This state is a type of flag to sync message in again according to needs
   const [sync, setSync] = useState(false);
   const [reminderMessage, setReminderMessage] = useState("");
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  // const [fileList, setFileList] = useState([]);
+
+  // const [previewOpen, setPreviewOpen] = useState(false);
+  // const [previewImage, setPreviewImage] = useState("");
+  // const [previewTitle, setPreviewTitle] = useState("");
 
   useEffect(() => {
     socket.emit("join_room", 123);
@@ -63,21 +59,18 @@ const Conversation = () => {
       key: i,
     });
   }
-  const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
+  // const handlePreview = async (file) => {
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj);
+  //   }
 
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
-  };
-
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  //   setPreviewImage(file.url || file.preview);
+  //   setPreviewOpen(true);
+  //   setPreviewTitle(
+  //     file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+  //   );
+  // };
 
   const onOk = (value) => {
     setDateTime(value._d.toString().slice(4, 21));
@@ -86,34 +79,100 @@ const Conversation = () => {
   // handeling send message to API
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (currentMessage !== "") {
+    if (e.target[0]?.value !== "") {
       const messageData = {
         room: 123,
         sender_id: parseInt(localStorage.getItem("userId")),
         recever_id: parseInt(localStorage.getItem("receverId")),
-        message: currentMessage,
+        message: e.target[0]?.value,
         date_time: dayjs().$d.toString().slice(4, 21),
       };
       await socket.emit("send_message", messageData);
       setMessageList(() => [...messageList, messageData]);
-      setCurrentMessage("");
+      document.getElementById("message").value = "";
       setSync(!sync);
     }
   };
 
   // To convert written text to lisk
-  const linkify = (text) => {
-    var urlRegex =
-      // eslint-disable-next-line no-useless-escape
-      /(\b(https ?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    return text.replace(urlRegex, function (url) {
-      return '<a href="' + url + '">' + url + "</a>";
-    });
+  const messageConvertion = (text) => {
+    // Checking filetype and display according to the type
+    if (
+      text.includes(".jpg") ||
+      text.includes(".jpeg") ||
+      text.includes(".png") ||
+      text.includes(".tiff") ||
+      text.includes(".webp") ||
+      text.includes(".gif") ||
+      text.includes(".bmp")
+    ) {
+      return (
+        '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+        text +
+        '">' +
+        '<img style="max-width:200px; height:auto;" src="' +
+        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+        text +
+        '"/>' +
+        "</a>"
+      );
+    } else if (
+      text.includes(".mp4") ||
+      text.includes(".mp4a") ||
+      text.includes(".avc1") ||
+      text.includes(".mov") ||
+      text.includes(".wmv") ||
+      text.includes(".avi") ||
+      text.includes(".avchd") ||
+      text.includes(".webm") ||
+      text.includes(".mkv")
+    ) {
+      return (
+        '<video width="250" controls> <source type="video/mp4" src="' +
+        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+        text +
+        '">' +
+        "</video>"
+      );
+    } else if (
+      text.includes(".txt") ||
+      text.includes(".doc") ||
+      text.includes(".pdf") ||
+      text.includes(".svg") ||
+      text.includes(".csv") ||
+      text.includes(".excel") ||
+      text.includes(".xlsx") ||
+      text.includes(".xlx") ||
+      text.includes(".ppt") ||
+      text.includes(".pptx")
+    ) {
+      return (
+        '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+        text +
+        '">' +
+        text +
+        "</a>"
+      );
+    } else {
+      var urlRegex =
+        // eslint-disable-next-line no-useless-escape
+        /(\b(https ?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+      return text.replace(urlRegex, function (url) {
+        return (
+          '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+          url +
+          '">' +
+          url +
+          "</a>"
+        );
+      });
+    }
   };
 
   // For deleting message
   const handleDeleteMessage = (msgId) => {
-    console.log(msgId);
     axios
       .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/delete-message/${msgId}`)
       .then(function (response) {
@@ -126,47 +185,57 @@ const Conversation = () => {
       });
   };
 
-  const handleUploadFile = (e) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = (e) => {
-      console.log(e.target.result);
-      axios
-        .post(
-          `${process.env?.REACT_APP_CHAT_SERVER_URL}/message/uploadfile`,
-          e.target.result
-        )
-        .then(function (response) {
-          setMessageList(response?.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    };
+  // const handleSelectFiles = (e) => {
+  //   setFileList(e.target.files);
+  // };
+
+  const handleUploadFile = async (event) => {
+    event.preventDefault();
+    const url = `${process.env.REACT_APP_CHAT_SERVER_URL}/message/uploadfile`;
+    const formData = new FormData();
+
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append("files", fileList[i]);
+    }
+    formData.append("room", 123);
+    formData.append("sender_id", parseInt(localStorage.getItem("userId")));
+    formData.append("recever_id", parseInt(localStorage.getItem("receverId")));
+    formData.append("date_time", dayjs().$d.toString().slice(4, 21));
+
+    try {
+      const result = await axios.post(url, formData);
+      if (result?.data) {
+        setSync(!sync);
+        setFileList([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+  // const getBase64 = (file) =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
 
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
 
-      reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
 
-      reader.onerror = (error) => reject(error);
-    });
+  const props = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
 
   return (
     <div className="min-h-full px-6 border-r">
@@ -183,7 +252,6 @@ const Conversation = () => {
         </div>
 
         {/* --------------- Add Reminder Section ------------------ */}
-
         <Space
           className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
           direction="vertical"
@@ -213,12 +281,13 @@ const Conversation = () => {
           </button>
         </div>
       </div>
+
       <div>
         {/* --------------- Conversion Section -------------- */}
         <div
           className="mt-5"
           style={{
-            height: "450px",
+            height: "500px",
           }}
         >
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
@@ -226,9 +295,16 @@ const Conversation = () => {
           </h1>
           {/* --------------- Messages --------------- */}
           <form
-            enctype="multipart/form-data"
-            onSubmit={(e) => handleSendMessage(e)}
-            className="h-100 relative mr-auto mb-2 border py-5 px-2 rounded-2xl font-poppins flex flex-col justify-between"
+            encType="multipart/form-data"
+            onSubmit={(e) => {
+              fileList.length === 0
+                ? handleSendMessage(e)
+                : handleUploadFile(e);
+            }}
+            className=" relative mr-auto mb-2 border py-5 px-2 rounded-2xl font-poppins flex flex-col justify-between"
+            style={{
+              height: "480px",
+            }}
           >
             <ScrollToBottom className="message-container">
               {!messageList?.length && (
@@ -248,14 +324,13 @@ const Conversation = () => {
                         }}
                       >
                         <div className="text-xs">
-                          {/* <p className="rounded-md font-normal mb-1 text-sm">
-                            {filter.clean(message?.message)}
-                          </p> */}
                           <div className="flex justify-between items-start">
                             <div
-                              className="rounded-md font-normal mb-1 text-sm"
+                              className="inline-block rounded-md font-normal mb-1 text-sm"
                               dangerouslySetInnerHTML={{
-                                __html: linkify(filter.clean(message?.message)),
+                                __html: messageConvertion(
+                                  filter.clean(message?.message)
+                                ),
                               }}
                             />
                             <div
@@ -287,7 +362,9 @@ const Conversation = () => {
                         <div
                           className="rounded-md font-normal mb-1 text-sm"
                           dangerouslySetInnerHTML={{
-                            __html: linkify(filter.clean(message?.message)),
+                            __html: messageConvertion(
+                              filter.clean(message?.message)
+                            ),
                           }}
                         />
                         <div>
@@ -308,55 +385,34 @@ const Conversation = () => {
                 placeholder="Write a massage"
                 type="text"
                 name=""
-                id=""
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
+                id="message"
               />
-              <div
-                className="ml-2 flex items-center overflow-x-auto"
-                style={{
-                  minWidth: "100px",
-                }}
-              >
-                {/* <Upload {...props} fileList={fileList}> */}
-                {/* <Icons.Clip className="mr-2.5" /> */}
-                {/* </Upload> */}
+              <div className="ml-2 flex items-center">
+                {/* <div className="mr-2 cursor-pointer">
+                  <label htmlFor="file" className="cursor-pointer">
+                    <Icons.Clip />
+                  </label>
+                  <input
+                    className="hidden"
+                    type="file"
+                    name="file"
+                    id="file"
+                    multiple
+                    onChange={(e) => {
+                      handleSelectFiles(e);
+                    }}
+                  />
+                </div> */}
 
-                <>
-                  <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture"
-                    fileList={fileList}
-                    onPreview={handlePreview}
-                    onChange={handleChange}
-                    className="flex items-center mr-2"
-                  >
-                    {/* <div className="flex items-center"> */}
-                    {fileList.length >= 8 ? null : <Icons.Clip />}
-                    {/* </div> */}
-                  </Upload>
-                  <Modal
-                    open={previewOpen}
-                    title={previewTitle}
-                    footer={null}
-                    onCancel={handleCancel}
-                  >
-                    <img
-                      alt="example"
-                      style={{
-                        width: "100%",
-                      }}
-                      src={previewImage}
-                    />
-                  </Modal>
-                </>
-
-                {/* <input
-                  type="file"
-                  name="file"
-                  id=""
-                  onChange={(e) => handleUploadFile(e)}
-                /> */}
+                <Upload
+                  {...props}
+                  defaultFileList={[...fileList]}
+                  listType="text"
+                  fileList={fileList}
+                  className="mr-2.5 mt-0.5"
+                >
+                  <Icons.Clip />
+                </Upload>
 
                 <button
                   className="px-2.5 py-0.5 font-poppins font-semibold text-xs leading-5 text-black border border-black rounded-md"

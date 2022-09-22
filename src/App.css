@@ -221,14 +221,18 @@ table.custom-table > tbody > tr:hover td {
 
 .message-container {
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-.ant-upload-list-picture {
-  display: grid;
-  grid-template-columns: auto auto;
+.message-container::-webkit-scrollbar {
+  display: none;
+}
+
+.ant-upload-list-picture .ant-upload-list-text::before {
+  /* display: grid;
+  grid-template-columns: auto auto; */
   gap: 8px;
   align-items: center;
   margin-right: auto;
@@ -241,8 +245,13 @@ table.custom-table > tbody > tr:hover td {
   top: 50px;
 }
 
-.message-container::-webkit-scrollbar {
-  display: none;
+.ant-upload-list {
+  position: absolute;
+  top: 7vh;
+  left: 1vh;
+  display: flex !important;
+  flex-wrap: wrap;
+  /* grid-template-columns: auto auto !important; */
 }
 
 /* ------------- Animations------------ */
