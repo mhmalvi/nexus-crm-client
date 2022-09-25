@@ -11,7 +11,7 @@ const initialState = {
     avatar:
       "https://png.pngtree.com/png-clipart/20190924/original/pngtree-businessman-user-avatar-free-vector-png-image_4827807.jpg",
     userId: parseInt(localStorage.getItem("userId")),
-    room: localStorage.getItem("room"),
+    room: parseInt(localStorage.getItem("room")),
   },
 
   userToken: null,
@@ -24,7 +24,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUserDetails: (state) => {
-      state.value += 1;
+      console.log(state);
     },
     updateUserDetails: (state) => {
       state.value -= 1;

@@ -1,13 +1,45 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Icons from "../../Components/Shared/Icons";
-import messages from "./messages.json";
+import io from "socket.io-client";
+import Message from "./Message";
 
-const Message = () => {
+const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+
+const Messages = () => {
   const navigate = useNavigate();
-  const handleMessageNavigation = () => {
+  const userDetails = useSelector((state) => state?.user);
+
+  const [messages, setMessages] = useState([]);
+
+  const handleMessageNavigation = async (message) => {
+    console.log("userDetails", message.receiver_id);
+    console.log("userDetails.userInfo.userId", userDetails.userInfo.userId);
+
+    if (message.receiver_id !== userDetails.userInfo.userId) {
+      await socket.emit("read_message", message.id);
+    }
+
     navigate("/lead/112");
   };
+
+  useEffect(() => {
+    console.log(userDetails?.userInfo?.userId);
+    axios
+      .get(
+        `${process.env?.REACT_APP_CHAT_SERVER_URL}/messages/${userDetails?.userInfo?.userId}`
+      )
+      .then(function (response) {
+        console.log(response?.data);
+        setMessages(response?.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [userDetails?.userInfo?.userId]);
+
+  console.log(messages);
 
   return (
     <div
@@ -24,65 +56,12 @@ const Message = () => {
         </h1>
       </div>
 
-      <div
-        className="mt-7.5 overflow-y-auto "
-        style={{
-          height: "65vh",
-        }}
-      >
-        {messages.map((message, i) => (
-          <div
-            onClick={handleMessageNavigation}
-            key={i}
-            className="pt-5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
-          >
-            <div className="flex justify-between items-start">
-              <h1 className="text-lg leading-7 font-poppins font-semibold">
-                {message.user}
-              </h1>
-
-              {/* Date & Time */}
-              <div>
-                <span
-                  className="font-medium text-opacity-50 leading-4 mr-1.5"
-                  style={{
-                    fontSize: "10px",
-                  }}
-                >
-                  {message.time}
-                </span>
-                <span
-                  className="font-medium text-opacity-50 leading-4"
-                  style={{
-                    fontSize: "10px",
-                  }}
-                >
-                  {message.date}
-                </span>
-              </div>
-            </div>
-            <div className="flex justify-between items-start mb-5">
-              <div>
-                <p className="text-sm leading-6 font-medium font-poppins mb-0">
-                  {message.message}
-                </p>
-              </div>
-              <div>
-                <Icons.Read
-                  className={`${
-                    message.read
-                      ? "text-brand-color"
-                      : "text-black text-opacity-25"
-                  }`}
-                />
-              </div>
-            </div>
-            <hr onClick={(e) => e.stopPropagation()} />
-          </div>
-        ))}
-      </div>
+      <Message
+        messages={messages}
+        handleMessageNavigation={handleMessageNavigation}
+      />
     </div>
   );
 };
 
-export default Message;
+export default Messages;

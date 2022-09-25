@@ -86,7 +86,7 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Message
               </span>
-              <div className="flex justify-center items-center">
+              {/* <div className="flex justify-center items-center">
                 <div
                   className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
                   style={{
@@ -95,7 +95,7 @@ const Sidebar = ({
                 >
                   2
                 </div>
-              </div>
+              </div> */}
               {toggleMessage && <div className="ml-auto active-option">|</div>}
             </div>
           </div>

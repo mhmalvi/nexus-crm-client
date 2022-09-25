@@ -1,6 +1,6 @@
 import { Alert } from "antd";
-import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
@@ -16,6 +16,8 @@ import CompanySettings from "../Settings/CompanySettings";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [reminderVisible, setReminderVisible] = useState(false);

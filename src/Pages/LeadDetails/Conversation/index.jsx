@@ -4,7 +4,7 @@ import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
@@ -14,15 +14,18 @@ const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 const Conversation = () => {
   const filter = new Filter();
   let dayPickerDays = [];
+
   const userDetails = useSelector((state) => state?.user);
-  console.log(userDetails);
 
   const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
   // for storing all messages
   const [messageList, setMessageList] = useState([]);
+  // for messages from users
+  // const [allMessageList, setAllMessageList] = useState([]);
   // This state is a type of flag to sync message in again according to needs
   const [sync, setSync] = useState(false);
+
   const [reminderMessage, setReminderMessage] = useState("");
 
   // const [previewOpen, setPreviewOpen] = useState(false);
@@ -53,8 +56,9 @@ const Conversation = () => {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList(() => [...messageList, data]);
+      setSync(!sync);
     });
-  }, [messageList]);
+  }, [messageList, sync]);
 
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
@@ -86,7 +90,10 @@ const Conversation = () => {
       const messageData = {
         room: 123,
         sender_id: parseInt(localStorage.getItem("userId")),
+        sender_name:
+          userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
         recever_id: parseInt(localStorage.getItem("receverId")),
+        recever_name: "Davidov Artur",
         message: e.target[0]?.value,
         date_time: dayjs().$d.toString().slice(4, 21),
       };

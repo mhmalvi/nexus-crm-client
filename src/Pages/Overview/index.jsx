@@ -20,6 +20,7 @@ const Overview = () => {
       }, 10000);
       localStorage.setItem("monthly_report", `${dayjs().$D}-${dayjs().$M}`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const download = (
