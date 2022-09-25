@@ -1,6 +1,6 @@
-import notification from "../../../assets/Sounds/notification.wav";
+import messageNotification from "../../../assets/Sounds/Message-notification.wav";
 
-const notificationAudio = new Audio(notification);
+const notificationAudio = new Audio(messageNotification);
 
 export const handlesignUpSuccessfullAudio = () => {
   notificationAudio.play();

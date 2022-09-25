@@ -4,10 +4,11 @@ import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
+import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -21,8 +22,6 @@ const Conversation = () => {
   const [fileList, setFileList] = useState([]);
   // for storing all messages
   const [messageList, setMessageList] = useState([]);
-  // for messages from users
-  // const [allMessageList, setAllMessageList] = useState([]);
   // This state is a type of flag to sync message in again according to needs
   const [sync, setSync] = useState(false);
 
@@ -55,6 +54,9 @@ const Conversation = () => {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
+      if (data) {
+        handlesignUpSuccessfullAudio();
+      }
       setMessageList(() => [...messageList, data]);
       setSync(!sync);
     });
@@ -182,17 +184,21 @@ const Conversation = () => {
   };
 
   // For deleting message
-  const handleDeleteMessage = (msgId) => {
-    axios
-      .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/delete-message/${msgId}`)
-      .then(function (response) {
-        if (response?.data === "Deleted") {
-          setSync(!sync);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const handleDeleteMessage = async (msgId) => {
+    await socket.emit("delete_message", msgId);
+    setMessageList(messageList.filter((message) => message.id !== msgId));
+    setSync(!sync);
+
+    // axios
+    //   .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/delete-message/${msgId}`)
+    //   .then(function (response) {
+    //     if (response?.data === "Deleted") {
+    //       setSync(!sync);
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   // const handleSelectFiles = (e) => {
@@ -246,6 +252,8 @@ const Conversation = () => {
     },
     fileList,
   };
+
+  console.log(messageList);
 
   return (
     <div className="min-h-full px-6 border-r">
@@ -335,22 +343,32 @@ const Conversation = () => {
                       >
                         <div className="text-xs">
                           <div className="flex justify-between items-start">
-                            <div
-                              className="inline-block rounded-md font-normal mb-1 text-sm"
-                              dangerouslySetInnerHTML={{
-                                __html: messageConvertion(
-                                  filter.clean(message?.message)
-                                ),
-                              }}
-                            />
-                            <div
-                              className="ml-3.5 text-sm font-semibold bg-gray-100 border p-0.5 cursor-pointer rounded-full flex items-center justify-center"
-                              onClick={() => handleDeleteMessage(message?.id)}
-                            >
-                              <span>
-                                <Icons.Cross className="w-2.5 h-2.5 text-red-500" />
-                              </span>
-                            </div>
+                            {message.message.toString() ===
+                            "msg_dlt_by_user" ? (
+                              <div className="bg-gray-200 py-0.5 px-2 rounded-full italic font-light w-44">
+                                This message was deleted
+                              </div>
+                            ) : (
+                              <div
+                                className="inline-block rounded-md font-normal mb-1 text-sm"
+                                dangerouslySetInnerHTML={{
+                                  __html: messageConvertion(
+                                    filter?.clean(message?.message)
+                                  ),
+                                }}
+                              />
+                            )}
+                            {message.message.toString() !==
+                              "msg_dlt_by_user" && (
+                              <div
+                                className="ml-3.5 text-sm font-semibold bg-gray-100 border p-0.5 cursor-pointer rounded-full flex items-center justify-center"
+                                onClick={() => handleDeleteMessage(message?.id)}
+                              >
+                                <span>
+                                  <Icons.Cross className="w-2.5 h-2.5 text-red-500" />
+                                </span>
+                              </div>
+                            )}
                           </div>
 
                           <div className="float-right">
@@ -369,14 +387,20 @@ const Conversation = () => {
                           maxWidth: "85%",
                         }}
                       >
-                        <div
-                          className="rounded-md font-normal mb-1 text-sm"
-                          dangerouslySetInnerHTML={{
-                            __html: messageConvertion(
-                              filter.clean(message?.message)
-                            ),
-                          }}
-                        />
+                        {message.message.toString() === "msg_dlt_by_user" ? (
+                          <div className="bg-gray-200 py-0.5 px-2 rounded-full italic font-light w-44">
+                            This message was deleted
+                          </div>
+                        ) : (
+                          <div
+                            className="rounded-md font-normal mb-1 text-sm"
+                            dangerouslySetInnerHTML={{
+                              __html: messageConvertion(
+                                filter?.clean(message?.message)
+                              ),
+                            }}
+                          />
+                        )}
                         <div>
                           <span className="text-gray-400 text-xs">
                             {message.date_time}
