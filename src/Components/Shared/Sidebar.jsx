@@ -8,6 +8,8 @@ const Sidebar = ({
   Items2,
   toggleMessage,
   setToggleMessage,
+  toggleNotification,
+  setToggleNotification,
 }) => {
   return (
     <div
@@ -77,7 +79,7 @@ const Sidebar = ({
                 color: `${toggleMessage ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={(e) => {
-                // setActive("");
+                setToggleNotification(false);
                 setToggleMessage(!toggleMessage);
                 e.stopPropagation();
               }}
@@ -97,6 +99,38 @@ const Sidebar = ({
                 </div>
               </div> */}
               {toggleMessage && <div className="ml-auto active-option">|</div>}
+            </div>
+          </div>
+
+          <div>
+            <div
+              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              style={{
+                color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
+              }}
+              onClick={(e) => {
+                setToggleMessage(false);
+                setToggleNotification(!toggleNotification);
+                e.stopPropagation();
+              }}
+            >
+              <Icons.Bell className="w-4" />
+              <span className="ml-4 leading-6 font-medium font-poppins">
+                Notification
+              </span>
+              {/* <div className="flex justify-center items-center">
+                <div
+                  className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                  style={{
+                    background: "#FF3B30",
+                  }}
+                >
+                  2
+                </div>
+              </div> */}
+              {toggleNotification && (
+                <div className="ml-auto active-option">|</div>
+              )}
             </div>
           </div>
 

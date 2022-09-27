@@ -1,6 +1,4 @@
-import { Alert } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
@@ -8,6 +6,7 @@ import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
+import Notifications from "../Notifications";
 import Overview from "../Overview";
 import Pay from "../Pay";
 import PaymentStatus from "../Payments";
@@ -16,14 +15,15 @@ import CompanySettings from "../Settings/CompanySettings";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  const [reminderVisible, setReminderVisible] = useState(false);
+  const [toggleNotification, setToggleNotification] = useState(false);
+  // const [reminderVisible, setReminderVisible] = useState(false);
 
-  const [currentTasks, setCurrentTasks] = useState([]);
-  const [allReminder, setAllReminder] = useState([]);
+  // const [currentTasks, setCurrentTasks] = useState([]);
+  // const [allReminder, setAllReminder] = useState([]);
 
   useEffect(() => {
     if (window.location.pathname.length <= 1) {
@@ -33,13 +33,13 @@ const LandingPage = () => {
     }
   }, [navigate]);
 
-  const handleClose = () => {
-    setReminderVisible(false);
-  };
+  // const handleClose = () => {
+  //   setReminderVisible(false);
+  // };
 
-  useEffect(() => {
-    setAllReminder(JSON.parse(localStorage.getItem("reminder")));
-  }, []);
+  // useEffect(() => {
+  //   setAllReminder(JSON.parse(localStorage.getItem("reminder")));
+  // }, []);
 
   // setInterval(() => {
   //   const filteredTasks = allReminder.filter(
@@ -61,6 +61,8 @@ const LandingPage = () => {
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
+          toggleNotification={toggleNotification}
+          setToggleNotification={setToggleNotification}
         />
       </div>
       <div
@@ -69,7 +71,7 @@ const LandingPage = () => {
           width: "calc(100vw - 277px)",
         }}
       >
-        <div className="fixed right-16 bottom-16">
+        {/* <div className="fixed right-16 bottom-16">
           {currentTasks.map((reminder, i) => (
             <div key={i} className="mb-4">
               <Alert
@@ -118,7 +120,7 @@ const LandingPage = () => {
             //   </div>
             // </div>
           ))}
-        </div>
+        </div> */}
 
         <Routes>
           <Route path={"lead/:id"} element={<LeadDetails />} />
@@ -143,6 +145,14 @@ const LandingPage = () => {
         <Messages
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
+        />
+      )}
+
+      {/* ----------- For notification pop up ------------- */}
+      {toggleNotification && (
+        <Notifications
+          toggleNotification={toggleNotification}
+          setToggleNotification={setToggleNotification}
         />
       )}
     </div>
