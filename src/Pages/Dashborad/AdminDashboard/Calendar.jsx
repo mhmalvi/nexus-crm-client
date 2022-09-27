@@ -1,6 +1,7 @@
 import { DatePicker, Dropdown, Menu, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const Calendar = () => {
@@ -9,25 +10,37 @@ const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  const userDetails = useSelector((state) => state?.user?.userInfo);
+  useEffect(() => {
+    const textAreaInput = document.getElementById("notice_input");
+    if (userDetails.role !== "admin") {
+      textAreaInput.setAttribute("disabled", "");
+      textAreaInput.placeholder = "No Notice Yet";
+    } else {
+      textAreaInput.placeholder = "Write notice here";
+    }
+  }, [userDetails]);
 
   const slideMonthRef = useRef();
   const slideDateRef = useRef();
-  
+
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
-    const datesInMonth = [
-      { key: 1, month: "Januyary", dates: 31 },
-      { key: 2, month: "February", dates: februaryDate },
-      { key: 3, month: "March", dates: 31 },
-      { key: 4, month: "April", dates: 30 },
-      { key: 5, month: "May", dates: 31 },
-      { key: 6, month: "June", dates: 30 },
-      { key: 7, month: "July", dates: 31 },
-      { key: 8, month: "August", dates: 31 },
-      { key: 9, month: "September", dates: 30 },
-      { key: 10, month: "October", dates: 31 },
-      { key: 11, month: "November", dates: 30 },
-      { key: 12, month: "December", dates: 31 },
-    ];
+  const datesInMonth = [
+    { key: 1, month: "Januyary", dates: 31 },
+    { key: 2, month: "February", dates: februaryDate },
+    { key: 3, month: "March", dates: 31 },
+    { key: 4, month: "April", dates: 30 },
+    { key: 5, month: "May", dates: 31 },
+    { key: 6, month: "June", dates: 30 },
+    { key: 7, month: "July", dates: 31 },
+    { key: 8, month: "August", dates: 31 },
+    { key: 9, month: "September", dates: 30 },
+    { key: 10, month: "October", dates: 31 },
+    { key: 11, month: "November", dates: 30 },
+    { key: 12, month: "December", dates: 31 },
+  ];
 
   useEffect(() => {
     slideMonthRef.current.slickGoTo(dayjs().month());
@@ -334,7 +347,7 @@ const Calendar = () => {
       </div>
 
       <div
-        className="lg:w-64 xl:w-84 h-52 mx-0.5 py-2.5 px-6 border mt-6"
+        className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
         style={{
           borderRadius: "20px",
         }}
@@ -345,9 +358,24 @@ const Calendar = () => {
           </h1>
         </div>
         <div>
-          <p className="mt-4 text-base leading-6 font-medium font-poppins">
-            ll months have 30 or 31 days, except for February which has 28 days
-          </p>
+          <form className="flex items-end flex-col">
+            <textarea
+              className="w-full outline-none px-2 py-1 rounded-md bg-transparent"
+              name=""
+              style={{ resize: "none" }}
+              id="notice_input"
+              value={notice}
+              onChange={(e) => setNotice(e.target.value)}
+              rows="7"
+            ></textarea>
+            {userDetails.role === "admin" && (
+              <input
+                className="px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md"
+                type="submit"
+                value="Send"
+              />
+            )}
+          </form>
         </div>
       </div>
     </div>

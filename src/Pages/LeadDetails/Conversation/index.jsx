@@ -188,22 +188,7 @@ const Conversation = () => {
     await socket.emit("delete_message", msgId);
     setMessageList(messageList.filter((message) => message.id !== msgId));
     setSync(!sync);
-
-    // axios
-    //   .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/delete-message/${msgId}`)
-    //   .then(function (response) {
-    //     if (response?.data === "Deleted") {
-    //       setSync(!sync);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   };
-
-  // const handleSelectFiles = (e) => {
-  //   setFileList(e.target.files);
-  // };
 
   const handleUploadFile = async (event) => {
     event.preventDefault();
@@ -229,16 +214,6 @@ const Conversation = () => {
     }
   };
 
-  // const getBase64 = (file) =>
-  //   new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-
-  //     reader.onload = () => resolve(reader.result);
-
-  //     reader.onerror = (error) => reject(error);
-  //   });
-
   const props = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
@@ -253,7 +228,6 @@ const Conversation = () => {
     fileList,
   };
 
-  console.log(messageList);
 
   return (
     <div className="min-h-full px-6 border-r">
