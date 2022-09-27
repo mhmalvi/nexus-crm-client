@@ -53,6 +53,7 @@ const Sidebar = ({
               )}
             </NavLink>
           </div>
+
           <div>
             <NavLink
               to={"/overview"}
@@ -88,7 +89,7 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Message
               </span>
-              {/* <div className="flex justify-center items-center">
+              <div className="relative -right-5 flex justify-center items-center">
                 <div
                   className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
                   style={{
@@ -97,7 +98,7 @@ const Sidebar = ({
                 >
                   2
                 </div>
-              </div> */}
+              </div>
               {toggleMessage && <div className="ml-auto active-option">|</div>}
             </div>
           </div>
@@ -118,7 +119,7 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Notification
               </span>
-              {/* <div className="flex justify-center items-center">
+              <div className="relative right-0 flex justify-center items-center">
                 <div
                   className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
                   style={{
@@ -127,7 +128,7 @@ const Sidebar = ({
                 >
                   2
                 </div>
-              </div> */}
+              </div>
               {toggleNotification && (
                 <div className="ml-auto active-option">|</div>
               )}

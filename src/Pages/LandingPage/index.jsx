@@ -51,7 +51,10 @@ const LandingPage = () => {
   return (
     <div
       className="flex justify-start items-start font-poppins overflow-x-hidden"
-      onClick={() => setToggleMessage(false)}
+      onClick={() => {
+        setToggleMessage(false);
+        setToggleNotification(false);
+      }}
     >
       <div className="fixed top-0 left-0 overflow-x-hidden">
         <Sidebar
