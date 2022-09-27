@@ -129,8 +129,6 @@ const Calendar = () => {
     <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
   );
 
-  // console.log(dayjs()?.day(1));
-
   return (
     <div
       className="flex justify-between"
@@ -332,7 +330,10 @@ const Calendar = () => {
                         fontSize: "10px",
                       }}
                     >
-                      {weekDays[`${dayjs()?.day(i + 4)?.$W}`].slice(0, 3)}
+                      {/* {weekDays[`${dayjs()?.day(i + 4)?.$W}`].slice(0, 3)} */}
+                      {weekDays[
+                        dayjs(`${dayjs().$y}-${currentMonth}-${i + 1}`).$W
+                      ]?.slice(0, 3)}
                     </h1>
                   </div>
                 </div>
