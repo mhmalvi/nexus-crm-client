@@ -3,6 +3,10 @@ import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
+import { io } from "socket.io-client";
+import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
+
+const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Calendar = () => {
   const [activeSection, setActiveSection] = useState("day");
@@ -11,8 +15,11 @@ const Calendar = () => {
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   const [notice, setNotice] = useState("");
+  const [notifications, setNotifications] = useState([]);
+  const [syncNotifications, setSyncNotifications] = useState(false);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
+
   useEffect(() => {
     const textAreaInput = document.getElementById("notice_input");
     if (userDetails.role !== "admin") {
@@ -47,6 +54,38 @@ const Calendar = () => {
     slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
   }, []);
+
+  useEffect(() => {
+    socket.on("receive_notification", (data) => {
+      if (data) {
+        console.log(data);
+        handlesignUpSuccessfullAudio();
+        setNotifications(data);
+      }
+    });
+  }, [syncNotifications]);
+
+  console.log(notifications);
+
+  const handleSendNotice = async (e) => {
+    e.preventDefault();
+    if (notice !== "") {
+      const notificationData = {
+        user_id: 1,
+        client_id: 2,
+        lead_id: "",
+        email: "",
+        contact: "",
+        details: notice,
+        trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
+        notification_type: "notice",
+        status: 0,
+      };
+      await socket.emit("send_notification", notificationData);
+      console.log("Sent!!!");
+      setSyncNotifications(!syncNotifications);
+    }
+  };
 
   // const dates = [
   //   dayjs().date() - 7 < 0
@@ -359,7 +398,10 @@ const Calendar = () => {
           </h1>
         </div>
         <div>
-          <form className="flex items-end flex-col">
+          <form
+            onSubmit={(e) => handleSendNotice(e)}
+            className="flex items-end flex-col"
+          >
             <textarea
               className="w-full outline-none px-2 py-1 rounded-md bg-transparent"
               name=""

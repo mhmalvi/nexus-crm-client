@@ -228,7 +228,6 @@ const Conversation = () => {
     fileList,
   };
 
-
   return (
     <div className="min-h-full px-6 border-r">
       <div
@@ -317,8 +316,7 @@ const Conversation = () => {
                       >
                         <div className="text-xs">
                           <div className="flex justify-between items-start">
-                            {message.message.toString() ===
-                            "msg_dlt_by_user" ? (
+                            {message.delete_message === 1 ? (
                               <div className="bg-gray-200 py-0.5 px-2 rounded-full italic font-light w-44">
                                 This message was deleted
                               </div>
@@ -332,8 +330,7 @@ const Conversation = () => {
                                 }}
                               />
                             )}
-                            {message.message.toString() !==
-                              "msg_dlt_by_user" && (
+                            {message.delete_message === 0 && (
                               <div
                                 className="ml-3.5 text-sm font-semibold bg-gray-100 border p-0.5 cursor-pointer rounded-full flex items-center justify-center"
                                 onClick={() => handleDeleteMessage(message?.id)}
@@ -361,7 +358,7 @@ const Conversation = () => {
                           maxWidth: "85%",
                         }}
                       >
-                        {message.message.toString() === "msg_dlt_by_user" ? (
+                        {message.delete_message === 1 ? (
                           <div className="bg-gray-200 py-0.5 px-2 rounded-full italic font-light w-44">
                             This message was deleted
                           </div>
