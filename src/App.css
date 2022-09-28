@@ -254,6 +254,21 @@ table.custom-table > tbody > tr:hover td {
   /* grid-template-columns: auto auto !important; */
 }
 
+.eway-button {
+  background-color: transparent !important;
+  border: 1px solid black !important;
+  padding: 8px 10px !important;
+  border-radius: 9999px !important;
+  margin-top: 1rem;
+}
+
+.eway-button span {
+  background-color: transparent !important;
+  color: #000000 !important;
+  font-weight: 500 !important;
+  content: "Pay Now" !important;
+}
+
 /* ------------- Animations------------ */
 @keyframes ping {
   75%,

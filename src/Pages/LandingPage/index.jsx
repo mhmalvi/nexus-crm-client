@@ -9,6 +9,7 @@ import Messages from "../Messages";
 import Notifications from "../Notifications";
 import Overview from "../Overview";
 import Pay from "../Pay";
+import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
 import Settings from "../Settings";
 import CompanySettings from "../Settings/CompanySettings";
@@ -126,6 +127,7 @@ const LandingPage = () => {
         </div> */}
 
         <Routes>
+          <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
           <Route

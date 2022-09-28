@@ -429,6 +429,13 @@ const Conversation = () => {
             </div>
           </form>
         </div>
+        <script
+          src="https://secure.ewaypayments.com/scripts/eCrypt.js"
+          class="eway-paynow-button"
+          data-publicapikey="epk-5C39F555-79BF-4DF3-A805-0260D31CF07B"
+          data-amount="10000"
+          data-currency="AUD"
+        ></script>
       </div>
     </div>
   );

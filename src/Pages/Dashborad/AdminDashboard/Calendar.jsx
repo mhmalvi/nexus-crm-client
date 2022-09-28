@@ -1,14 +1,17 @@
 import { DatePicker, Dropdown, Menu, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { io } from "socket.io-client";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
+import { addNotifications } from "../../../features/user/notificationSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Calendar = () => {
+  const dispatch = useDispatch();
+
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
@@ -60,10 +63,11 @@ const Calendar = () => {
       if (data) {
         console.log(data);
         handlesignUpSuccessfullAudio();
+        dispatch(() => addNotifications(data));
         setNotifications(data);
       }
     });
-  }, [syncNotifications]);
+  }, [dispatch, syncNotifications]);
 
   console.log(notifications);
 

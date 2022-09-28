@@ -1,9 +1,31 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
 import visa from "../../assets/Images/visa.png";
 
 const CardPaymentForm = () => {
+  const [amount, setAmount] = useState("");
+
+  useEffect(() => {
+    const scriptContainer = document.getElementById("e-way");
+    scriptContainer.innerHTML = "";
+    const script = document.createElement("script");
+    script.src = "https://secure.ewaypayments.com/scripts/eCrypt.js";
+    script.className = "eway-paynow-button";
+    script.setAttribute(
+      "data-publicapikey",
+      "epk-5C39F555-79BF-4DF3-A805-0260D31CF07B"
+    );
+    script.setAttribute("data-amount", `${amount * 100}`);
+    script.setAttribute("data-currency", "AUD");
+    script.setAttribute("data-submitform", "yes");
+    script.setAttribute("data-resulturl", "http://localhost:3000/pay/16541");
+
+    script.async = true;
+    scriptContainer.appendChild(script);
+  }, [amount]);
+
   return (
     <div>
       <div className="relative flex items-center mx-auto">
@@ -12,7 +34,26 @@ const CardPaymentForm = () => {
         <img className="w-10" src={amex} alt="" />
         <div className="absolute w-full h-full"></div>
       </div>
-      <form action="">
+
+      <div className="mt-4">
+        <p className="font-poppins font-light text-black mb-1 ml-6">
+          Enter Payment Amount
+        </p>
+        <div>
+          <input
+            className="w-66 px-6 py-2.5 text-base font-normal leading-6 font-poppins bg-gray-100 rounded-2xl outline-none border-none text-black"
+            type="text"
+            name="card_number"
+            onChange={(e) => setAmount(e.target.value)}
+            id=""
+            placeholder="$amount"
+          />
+        </div>
+      </div>
+
+      <button id="e-way"></button>
+
+      {/* <form action="">
         <div className="flex justify-between">
           <div className="mt-4">
             <p className="font-poppins font-light text-black mb-1 ml-6">
@@ -93,7 +134,7 @@ const CardPaymentForm = () => {
             Confirm
           </button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

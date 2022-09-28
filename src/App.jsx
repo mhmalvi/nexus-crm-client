@@ -10,6 +10,7 @@ import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
 import Pay from "./Pages/Pay";
+import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
 import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
@@ -23,6 +24,7 @@ function App() {
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
+          <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="settings/company/:name" element={<CompanySettings />} />
