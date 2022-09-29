@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = { messages: [] };
 
@@ -6,8 +6,10 @@ export const messagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
-    addMessages: (state) => {
-      console.log(state);
+    addMessages: (state, actions) => {
+      console.log("current(state)", current(state));
+      state.messages = actions.payload;
+      console.log(state.messages);
     },
   },
 });

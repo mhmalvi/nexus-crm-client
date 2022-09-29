@@ -16,6 +16,10 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
     }
   }, [data, searchInput]);
 
+  console.log(searchInput);
+  console.log(data);
+  console.log(list);
+
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
   };
@@ -23,31 +27,36 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
   const statusColor = [
     {
       id: 0,
+      title: "Suspend",
+      color: "bg-black",
+    },
+    {
+      id: 1,
       title: "New Lead",
       color: "bg-green-500",
     },
     {
-      id: 1,
+      id: 2,
       title: "Skilled",
       color: "bg-orange-500",
     },
     {
-      id: 2,
+      id: 3,
       title: "Called",
       color: "bg-blue-500",
     },
     {
-      id: 3,
+      id: 4,
       title: "Verified",
       color: "bg-teal-500",
     },
     {
-      id: 4,
+      id: 5,
       title: "Paid",
       color: "bg-violet-500",
     },
     {
-      id: 5,
+      id: 6,
       title: "Completed",
       color: "bg-red-500",
     },
@@ -136,17 +145,16 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                   onClick={() => handleNavigate(list.lead_id)}
                 >
                   <td>{list.lead_id}</td>
-                  <td>{list.date}</td>
-                  <td>{list.coustomer_name}</td>
+                  <td>{list.lead_apply_date}</td>
+                  <td>{list.full_name}</td>
                   <td>{list.course_code}</td>
-                  <td>{list.location}</td>
-                  <td>{list.amount}</td>
-                  {statusColor.find(
-                    (status) => status.title === list.order_status
-                  ) ? (
+                  <td>{list.work_location}</td>
+                  <td>{list.lead_apply_date}</td>
+
+                  {statusColor.find((status) => status.id === list.status) ? (
                     <td>
                       {statusColor
-                        .filter((status) => status.title === list.order_status)
+                        .filter((status) => status.id === list.status)
                         .map((lead_status, index) => (
                           <div
                             key={index}

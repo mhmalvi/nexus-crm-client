@@ -1,22 +1,22 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { handlefetchMessages } from "../../Components/services/auth";
+import { addMessages } from "../../features/user/messagesSlice";
 import Message from "./Message";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Messages = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state?.user);
-
-  const [messages, setMessages] = useState([]);
 
   const handleMessageNavigation = async (message) => {
     console.log("userDetails", message.receiver_id);
     console.log("userDetails.userInfo.userId", userDetails.userInfo.userId);
-
+    
     if (message.receiver_id !== userDetails.userInfo.userId) {
       await socket.emit("read_message", message.id);
     }
@@ -26,20 +26,28 @@ const Messages = () => {
 
   useEffect(() => {
     console.log(userDetails?.userInfo?.userId);
-    axios
-      .get(
-        `${process.env?.REACT_APP_CHAT_SERVER_URL}/messages/${userDetails?.userInfo?.userId}`
-      )
-      .then(function (response) {
-        console.log(response?.data);
-        setMessages(response?.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [userDetails?.userInfo?.userId]);
+    // API Request
+    const fetchData = async () => {
+      const response = await handlefetchMessages(userDetails?.userInfo?.userId);
+      console.log(response);
+      dispatch(addMessages(response));
+    };
 
-  console.log(messages);
+    fetchData();
+
+    // axios
+    //   .get(
+    //     `${process.env?.REACT_APP_CHAT_SERVER_URL}/messages/${userDetails?.userInfo?.userId}`
+    //   )
+    //   .then(function (response) {
+    //     console.log(response?.data);
+    //     dispatch(addMessages(response.data));
+    //     setMessages(response?.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+  }, [dispatch, userDetails?.userInfo?.userId]);
 
   return (
     <div
@@ -57,7 +65,6 @@ const Messages = () => {
       </div>
 
       <Message
-        messages={messages}
         handleMessageNavigation={handleMessageNavigation}
       />
     </div>

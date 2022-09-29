@@ -17,7 +17,7 @@ export default function PayPalPaymentForm() {
             {
               description: "RLP Course",
               amount: {
-                currency_code: "USD",
+                currency_code: "AUD",
                 value: amount,
               },
             },
@@ -26,6 +26,8 @@ export default function PayPalPaymentForm() {
       },
       onApprove: async (data, actions) => {
         const order = await actions.order.capture();
+        console.log(data);
+        console.log(order);
         if (order) {
           message.loading({ content: "Paying...", key });
           setTimeout(() => {

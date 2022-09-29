@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
 
-const Message = ({ messages, handleMessageNavigation }) => {
+const Message = ({ handleMessageNavigation }) => {
+  const messages = useSelector((state) => state.messages.messages);
+
   return (
     <div>
       <div
@@ -10,12 +13,12 @@ const Message = ({ messages, handleMessageNavigation }) => {
           maxHeight: "65vh",
         }}
       >
-        {!messages.length && (
+        {!messages?.length && (
           <div className="text-lg font-poppins text-center my-6">
             No Message Yet
           </div>
         )}
-        {messages.map((message, i) => (
+        {messages?.map((message, i) => (
           <div
             onClick={() =>
               handleMessageNavigation({

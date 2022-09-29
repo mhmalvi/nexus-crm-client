@@ -28,6 +28,8 @@ const AdminDashboard = () => {
     }
   }, [activeFilter]);
 
+  console.log(leadData);
+
   return (
     <div>
       <Calendar />
