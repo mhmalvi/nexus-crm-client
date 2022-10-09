@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Table from "./Table";
-import data from "./leadData.json";
-import Filters from "./Filters";
+import { useDispatch } from "react-redux";
+import { addLeads } from "../../../features/Leads/leadsSlice";
 import Calendar from "./Calendar";
+import Filters from "./Filters";
+import data from "./leadData.json";
+import Table from "./Table";
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeStars, setActiveStars] = useState();
   const [leadData, setLeadData] = useState([]);
@@ -22,11 +26,12 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (activeFilter === "All" || activeFilter === "Today's Task") {
+      dispatch(addLeads(data));
       setLeadData(data);
     } else {
       setLeadData(data.filter((lead) => lead.order_status === activeFilter));
     }
-  }, [activeFilter]);
+  }, [activeFilter, dispatch]);
 
   console.log(leadData);
 

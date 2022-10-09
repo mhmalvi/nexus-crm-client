@@ -14,11 +14,6 @@ const Sidebar = ({
 }) => {
   const userMessages = useSelector((state) => state.messages);
 
-  // console.log(userMessages);
-  console.log(
-    userMessages?.messages?.filter((message) => message.status === 0).length
-  );
-
   return (
     <div
       className="bg-white"

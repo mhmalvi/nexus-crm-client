@@ -3,22 +3,21 @@ import { Dropdown, Menu, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
+  const leads = useSelector((state) => state?.leads)?.leads;
   const navigate = useNavigate();
+
   const [list, setList] = useState([]);
 
   useEffect(() => {
     if (!searchInput?.length) {
-      setList(data);
+      setList(leads);
     } else {
-      setList(data.filter((lead) => lead.lead_id.includes(searchInput)));
+      setList(leads.filter((lead) => lead?.lead_id?.includes(searchInput)));
     }
-  }, [data, searchInput]);
-
-  // console.log(searchInput);
-  // console.log(data);
-  // console.log(list);
+  }, [data, leads, searchInput]);
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
@@ -89,7 +88,7 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
             </div>
             <div className="ml-6">
               <CSVLink
-                data={data}
+                data={leads}
                 target="_blank"
                 filename={
                   activeFilter ? `${activeFilter}.csv` : "Payment-lists.csv"
@@ -139,39 +138,44 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
             border="0"
           >
             <tbody>
-              {list.map((list) => (
-                <tr
-                  key={list.lead_id}
-                  onClick={() => handleNavigate(list.lead_id)}
-                >
-                  <td>{list.lead_id}</td>
-                  <td>{list.lead_apply_date}</td>
-                  <td>{list.full_name}</td>
-                  <td>{list.course_code}</td>
-                  <td>{list.work_location}</td>
-                  <td>{list.lead_apply_date}</td>
+              {list.map(
+                (list) =>
+                  list?.sales_user_id === 0 && (
+                    <tr
+                      key={list.lead_id}
+                      onClick={() => handleNavigate(list.lead_id)}
+                    >
+                      <td>{list.lead_id}</td>
+                      <td>{list.lead_apply_date}</td>
+                      <td>{list.full_name}</td>
+                      <td>{list.course_code}</td>
+                      <td>{list.work_location}</td>
+                      <td>{list.lead_apply_date}</td>
 
-                  {statusColor.find((status) => status.id === list.status) ? (
-                    <td>
-                      {statusColor
-                        .filter((status) => status.id === list.status)
-                        .map((lead_status, index) => (
-                          <div
-                            key={index}
-                            className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                          >
-                            <div
-                              className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                            ></div>
-                            <div className="ml-1">{lead_status.title}</div>
-                          </div>
-                        ))}
-                    </td>
-                  ) : (
-                    <td>{list.payment_via}</td>
-                  )}
-                </tr>
-              ))}
+                      {statusColor.find(
+                        (status) => status.id === list?.status
+                      ) ? (
+                        <td>
+                          {statusColor
+                            .filter((status) => status.id === list?.status)
+                            .map((lead_status, index) => (
+                              <div
+                                key={index}
+                                className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                              >
+                                <div
+                                  className={`w-2 h-2 ${lead_status.color} rounded-full`}
+                                ></div>
+                                <div className="ml-1">{lead_status.title}</div>
+                              </div>
+                            ))}
+                        </td>
+                      ) : (
+                        <td>{list?.payment_via}</td>
+                      )}
+                    </tr>
+                  )
+              )}
             </tbody>
           </table>
         </div>

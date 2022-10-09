@@ -6,20 +6,19 @@ import ReactStars from "react-stars";
 import Icons from "../../Components/Shared/Icons";
 import CheckList from "./CheckList";
 
-const UserDetails = () => {
+const UserDetails = ({ leadDetails }) => {
   const userDetails = useSelector((state) => state?.user);
 
   const [addSealsman, setAddSealsman] = useState(false);
   const [toggleChcekList, setToggleChcekList] = useState(false);
+  const [toggleApplication, setToggleApplication] = useState(false);
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
 
-  const handleAddSealsman = () => {
-    setAddSealsman(false);
-  };
-
   const handleCancel = () => {
     setToggleChcekList(false);
+    setToggleApplication(false);
+    setAddSealsman(false);
   };
 
   const ratingChanged = (newRating) => {
@@ -31,7 +30,7 @@ const UserDetails = () => {
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
-            Davidov Artur
+            {leadDetails?.full_name}
           </h1>
           <div className="relative">
             {userDetails?.userInfo?.role === "sales_employee" &&
@@ -65,11 +64,10 @@ const UserDetails = () => {
               </span>
             )}
           </div>
-          <Modal
-            visible={addSealsman}
-            footer={null}
-            onCancel={handleAddSealsman}
-          >
+
+          {/* Sales Team List Modal */}
+
+          <Modal visible={addSealsman} footer={null} onCancel={handleCancel}>
             <div>
               <h1 className="font-poppins text-xl font-extrabold">
                 Seals Team
@@ -110,9 +108,34 @@ const UserDetails = () => {
               </div>
             </div>
           </Modal>
+
+          {/* Application Form Modal */}
+
+          <Modal
+            visible={toggleApplication}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <div>
+              <h1 className="font-poppins text-xl font-extrabold">
+                Answer of all Questions
+              </h1>
+            </div>
+            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
+            <div className="py-6">
+              {/* {JSON.parse(leadDetails?.form_data).map((question) => ( */}
+              <div className="my-2">
+                <li className="list-disc ml-2 text-lg font-poppins font-semibold">
+                  question?.name
+                </li>
+                <p>- {JSON.stringify(leadDetails?.form_data)}</p>
+              </div>
+              {/* // ))} */}
+            </div>
+          </Modal>
         </div>
         <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
-          #659652
+          #{leadDetails?.lead_id}
         </h1>
       </div>
       <div>
@@ -141,7 +164,7 @@ const UserDetails = () => {
           <div className="mt-1">
             <img
               className="w-16"
-              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${"+8801756414858"}&backcolor=%23ffffff`}
+              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.phone_number}&backcolor=%23ffffff`}
               alt=""
             />
             <div
@@ -155,20 +178,20 @@ const UserDetails = () => {
           </div>
           <div className="ml-5">
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
-              <span>Contact:&nbsp;</span>
-              <span>01756414858</span>
+              <span>Contact:&nbsp;&nbsp;</span>
+              <span> {leadDetails?.phone_number}</span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-              <span>Email:&nbsp;</span>
-              <span>art89@google.com</span>
+              <span>Email:&nbsp;&nbsp;</span>
+              <span>{leadDetails?.student_email}</span>
+            </div>
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex mt-2">
+              <span>Courses:&nbsp;&nbsp;</span>
+              <span>{leadDetails?.course_title}</span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-              <span>Courses:&nbsp;</span>
-              <span className="whitespace-nowrap">Fashion Designing</span>
-            </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-              <span>Country:&nbsp;</span>
-              <span>Russia</span>
+              <span>Location:&nbsp;&nbsp;</span>
+              <span>{leadDetails?.work_location}</span>
             </div>
           </div>
         </div>
@@ -189,7 +212,10 @@ const UserDetails = () => {
             </h1>
           </div>
           <div className="xl:ml-4 mt-5 flex">
-            <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+            <button
+              className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md"
+              onClick={() => setToggleApplication(!toggleApplication)}
+            >
               View
             </button>
             <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
