@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
+import Filter from "bad-words";
 
 const Message = ({ handleMessageNavigation }) => {
   const messages = useSelector((state) => state.messages.messages);
+  const filter = new Filter();
 
   return (
     <div>
@@ -57,7 +59,7 @@ const Message = ({ handleMessageNavigation }) => {
             <div className="flex justify-between items-start mb-5">
               <div>
                 <p className="text-sm leading-6 font-medium font-poppins mb-0">
-                  {message.message}
+                  {filter?.clean(message?.message)}
                 </p>
               </div>
               <div>

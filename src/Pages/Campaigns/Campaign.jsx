@@ -1,4 +1,5 @@
 import React from "react";
+import fbCampaignCover from "../../assets/Images/facebook-campaign.jpg";
 
 const Campaign = ({ campaign }) => {
   return (
@@ -10,9 +11,9 @@ const Campaign = ({ campaign }) => {
     >
       <div className="relative">
         <img
-          src="https://i.pcmag.com/imagery/articles/04HUXgEu0I3mdCOejOjQpNE-5.fit_lim.v1620748900.jpg"
+          src={fbCampaignCover}
           className="min-w-full h-48 rounded-tl rounded-tr mb-2"
-          alt=""
+          alt="Cover_Image"
         />
         <div
           className={`absolute -top-2.5 -left-11 w-29 flex justify-center items-center ${

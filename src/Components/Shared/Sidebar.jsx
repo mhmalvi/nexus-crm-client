@@ -1,6 +1,7 @@
 import React from "react";
 import Icons from "./Icons";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({
   active,
@@ -11,6 +12,13 @@ const Sidebar = ({
   toggleNotification,
   setToggleNotification,
 }) => {
+  const userMessages = useSelector((state) => state.messages);
+
+  // console.log(userMessages);
+  console.log(
+    userMessages?.messages?.filter((message) => message.status === 0).length
+  );
+
   return (
     <div
       className="bg-white"
@@ -89,16 +97,24 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Message
               </span>
-              <div className="relative -right-5 flex justify-center items-center">
-                <div
-                  className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                  style={{
-                    background: "#FF3B30",
-                  }}
-                >
-                  2
+              {userMessages?.messages?.filter((message) => message.status === 0)
+                ?.length !== 0 && (
+                <div className="relative -right-5 flex justify-center items-center">
+                  <div
+                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                    style={{
+                      background: "#FF3B30",
+                    }}
+                  >
+                    {/* Count of unread messages */}
+                    {
+                      userMessages?.messages?.filter(
+                        (message) => message.status === 0
+                      )?.length
+                    }
+                  </div>
                 </div>
-              </div>
+              )}
               {toggleMessage && <div className="ml-auto active-option">|</div>}
             </div>
           </div>

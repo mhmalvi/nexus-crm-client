@@ -92,8 +92,10 @@ const Conversation = () => {
       const messageData = {
         room: 123,
         sender_id: parseInt(localStorage.getItem("userId")),
-        sender_name:
-          userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
+        // sender_id: userDetails.userId,
+        sender_name: localStorage.getItem("username"),
+        // sender_name:
+        //   userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
         recever_id: parseInt(localStorage.getItem("receverId")),
         recever_name: "Davidov Artur",
         message: e.target[0]?.value,

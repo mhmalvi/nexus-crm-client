@@ -16,9 +16,9 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
     }
   }, [data, searchInput]);
 
-  console.log(searchInput);
-  console.log(data);
-  console.log(list);
+  // console.log(searchInput);
+  // console.log(data);
+  // console.log(list);
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
