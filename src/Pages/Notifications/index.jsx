@@ -1,44 +1,52 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { handlesignUpSuccessfullAudio } from "../../Components/Shared/utils/sounds";
+import { addNotifications } from "../../features/user/notificationSlice";
 import Notification from "./Notification";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Notifications = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [syncNotification, setSyncNotification] = useState(false);
   const userDetails = useSelector((state) => state?.user);
+  const userNotifications = useSelector(
+    (state) => state?.notifications
+  ).notifications;
 
-  const [notifications, setNotifications] = useState([]);
+  // const [notifications, setNotifications] = useState([]);
 
-  const handleMessageNavigation = async (message) => {
-    console.log("userDetails", message.receiver_id);
+  const handleNotificationNavigation = async (notification) => {
+    console.log("userDetails", notification.receiver_id);
     console.log("userDetails.userInfo.userId", userDetails.userInfo.userId);
 
-    if (message.receiver_id !== userDetails.userInfo.userId) {
-      await socket.emit("read_message", message.id);
-    }
+    await socket.emit("read_notification", notification.id);
+    socket.on("updated_notification", (data) => {
+      if (data) {
+        console.log(data);
+        dispatch(addNotifications(data));
+      }
+    });
+    // setSyncNotification(!syncNotification);
 
-    navigate("/lead/112");
+    if (notification.type === "notice") navigate("/dashboard");
   };
 
   useEffect(() => {
-    axios
-      .get(
-        `${process.env?.REACT_APP_CHAT_SERVER_URL}/notifications/${userDetails?.userInfo?.userId}`
-      )
-      .then(function (response) {
-        console.log(response?.data);
-        setNotifications(response?.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [userDetails?.userInfo?.userId]);
+    socket.on("receive_notification", (data) => {
+      if (data) {
+        console.log(data);
+        handlesignUpSuccessfullAudio();
+        dispatch(addNotifications(data));
+      }
+    });
+  }, [dispatch, syncNotification]);
 
-  console.log(notifications);
+  // console.log(notifications);
 
   return (
     <div
@@ -56,8 +64,8 @@ const Notifications = () => {
       </div>
 
       <Notification
-        notifications={notifications}
-        handleMessageNavigation={handleMessageNavigation}
+        notifications={userNotifications}
+        handleNotificationNavigation={handleNotificationNavigation}
       />
     </div>
   );

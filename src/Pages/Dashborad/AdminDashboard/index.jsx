@@ -20,8 +20,8 @@ const AdminDashboard = () => {
     "Coustomer Name",
     "Course Code",
     "Location",
-    "Amount",
-    "Order Status",
+    "Campaign ID",
+    "Lead Status",
   ];
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
     }
   }, [activeFilter, dispatch]);
 
-  console.log(leadData);
+  // console.log(leadData);
 
   return (
     <div>

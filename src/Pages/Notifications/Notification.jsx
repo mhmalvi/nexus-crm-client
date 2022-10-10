@@ -1,7 +1,7 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
 
-const Notification = ({ notifications, handleMessageNavigation }) => {
+const Notification = ({ notifications, handleNotificationNavigation }) => {
   return (
     <div>
       <div
@@ -18,17 +18,18 @@ const Notification = ({ notifications, handleMessageNavigation }) => {
         {notifications?.map((notification, i) => (
           <div
             onClick={() =>
-              handleMessageNavigation({
+              handleNotificationNavigation({
                 id: notification.id,
                 receiver_id: notification.receiver_id,
+                type: notification.notification_type,
               })
             }
             key={i}
             className="pt-5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >
             <div className="flex justify-between items-start">
-              <h1 className="text-lg leading-7 font-poppins font-semibold">
-                {notification.sender_name}
+              <h1 className="text-lg leading-7 font-poppins font-semibold uppercase">
+                {notification.notification_type}
               </h1>
 
               {/* Date & Time */}
@@ -39,22 +40,14 @@ const Notification = ({ notifications, handleMessageNavigation }) => {
                     fontSize: "10px",
                   }}
                 >
-                  {notification.date_time}
-                </span>
-                <span
-                  className="font-medium text-opacity-50 leading-4"
-                  style={{
-                    fontSize: "10px",
-                  }}
-                >
-                  {notification.date}
+                  {notification.trigg_time}
                 </span>
               </div>
             </div>
             <div className="flex justify-between items-start mb-5">
               <div>
                 <p className="text-sm leading-6 font-medium font-poppins mb-0">
-                  {notification.message}
+                  {notification.details}
                 </p>
               </div>
               <div>

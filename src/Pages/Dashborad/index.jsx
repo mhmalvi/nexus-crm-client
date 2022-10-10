@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handlefetchMessages } from "../../Components/services/auth";
+import {
+  handlefetchMessages,
+  handlefetchNotifications,
+} from "../../Components/services/auth";
 import { addMessages } from "../../features/user/messagesSlice";
+import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";
 import UserDashboard from "./UserDashboard";
 
@@ -11,19 +15,25 @@ const Dashboard = () => {
 
   useEffect(() => {
     console.log(userDetails?.userInfo?.userId);
-    // API Request
-    const fetchData = async () => {
+
+    // API Request for fetching messages
+    (async () => {
       const response = await handlefetchMessages(userDetails?.userInfo?.userId);
-      const finteredMessage = response.filter(
+      const filteredMessage = response.filter(
         (element, index) =>
           response.findIndex((obj) => obj.sender_id === element.sender_id) ===
           index
       );
+      dispatch(addMessages(filteredMessage));
+    })();
 
-      dispatch(addMessages(finteredMessage));
-    };
-
-    fetchData();
+    // API Request for fetching notifiaction
+    (async () => {
+      const response = await handlefetchNotifications(
+        userDetails?.userInfo?.userId
+      );
+      dispatch(addNotifications(response));
+    })();
   }, [dispatch, userDetails?.userInfo?.userId]);
 
   return (

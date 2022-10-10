@@ -6,8 +6,8 @@ export const notificationsSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    addNotifications: (state) => {
-      console.log(state);
+    addNotifications: (state, actions) => {
+      state.notifications = actions.payload;
     },
   },
 });

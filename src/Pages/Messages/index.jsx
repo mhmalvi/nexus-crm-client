@@ -1,12 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { addNotifications } from "../../features/user/notificationSlice";
 import Message from "./Message";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Messages = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state?.user);
 
@@ -16,6 +18,12 @@ const Messages = () => {
 
     if (message.receiver_id === userDetails.userInfo.userId) {
       await socket.emit("read_message", message.id);
+      socket.on("updated_messages", (data) => {
+        if (data) {
+          console.log(data);
+          dispatch(addNotifications(data));
+        }
+      });
     }
 
     navigate("/lead/112");

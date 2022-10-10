@@ -86,8 +86,8 @@ const Calendar = () => {
         status: 0,
       };
       await socket.emit("send_notification", notificationData);
-      console.log("Sent!!!");
       setSyncNotifications(!syncNotifications);
+      setNotice("");
     }
   };
 

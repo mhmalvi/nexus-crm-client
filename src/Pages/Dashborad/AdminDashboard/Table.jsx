@@ -15,7 +15,11 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
     if (!searchInput?.length) {
       setList(leads);
     } else {
-      setList(leads.filter((lead) => lead?.lead_id?.includes(searchInput)));
+      setList(
+        leads.filter((lead) =>
+          (lead?.lead_id).toString().includes(searchInput.toString())
+        )
+      );
     }
   }, [data, leads, searchInput]);
 
@@ -150,7 +154,7 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                       <td>{list.full_name}</td>
                       <td>{list.course_code}</td>
                       <td>{list.work_location}</td>
-                      <td>{list.lead_apply_date}</td>
+                      <td>{list.campaign_id}</td>
 
                       {statusColor.find(
                         (status) => status.id === list?.status

@@ -13,6 +13,7 @@ const Sidebar = ({
   setToggleNotification,
 }) => {
   const userMessages = useSelector((state) => state.messages);
+  const userNotification = useSelector((state) => state.notifications);
 
   return (
     <div
@@ -130,16 +131,24 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Notification
               </span>
-              <div className="relative right-0 flex justify-center items-center">
-                <div
-                  className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                  style={{
-                    background: "#FF3B30",
-                  }}
-                >
-                  2
+              {userNotification?.notifications?.filter(
+                (notification) => notification.status === 0
+              )?.length !== 0 && (
+                <div className="relative right-0 flex justify-center items-center">
+                  <div
+                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                    style={{
+                      background: "#FF3B30",
+                    }}
+                  >
+                    {
+                      userNotification?.notifications?.filter(
+                        (notification) => notification.status === 0
+                      )?.length
+                    }
+                  </div>
                 </div>
-              </div>
+              )}
               {toggleNotification && (
                 <div className="ml-auto active-option">|</div>
               )}

@@ -4,14 +4,17 @@ import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import Icons from "../../../Components/Shared/Icons";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
+import { addMessages } from "../../../features/user/messagesSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Conversation = () => {
+  const dispatch = useDispatch();
   const filter = new Filter();
   let dayPickerDays = [];
 
@@ -59,7 +62,11 @@ const Conversation = () => {
       setMessageList(() => [...messageList, data]);
       setSync(!sync);
     });
-  }, [messageList, sync]);
+    socket.on("updated_messages", (data) => {
+      console.log(data);
+      dispatch(addMessages(data));
+    });
+  }, [dispatch, messageList, sync]);
 
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
