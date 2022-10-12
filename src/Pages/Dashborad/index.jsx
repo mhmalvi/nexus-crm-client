@@ -43,20 +43,6 @@ const Dashboard = () => {
         }
       });
     })();
-
-    // socket.on("receive_reminders", (data) => {
-    //   if (data) {
-    //     console.log(data);
-    //     if (
-    //       userNotifications?.filter((notific) => notific.id !== data.id)
-    //         .length === 0
-    //     ) {
-    //       dispatch(addNotifications(data));
-    //     }
-    //     dispatch(addNotifications(data));
-    //     handleReminderAudio();
-    //   }
-    // });
   }, [dispatch, userDetails?.userInfo?.userId, userNotifications]);
 
   return (

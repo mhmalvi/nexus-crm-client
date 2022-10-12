@@ -153,7 +153,7 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                       <td>{list.lead_apply_date}</td>
                       <td>{list.full_name}</td>
                       <td>{list.course_code}</td>
-                      <td>{list.work_location}</td>
+                      <td className="uppercase">{list.work_location}</td>
                       <td>{list.campaign_id}</td>
 
                       {statusColor.find(

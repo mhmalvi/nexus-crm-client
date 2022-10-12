@@ -191,7 +191,7 @@ const UserDetails = ({ leadDetails }) => {
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Location:&nbsp;&nbsp;</span>
-              <span>{leadDetails?.work_location}</span>
+              <span className="uppercase">{leadDetails?.work_location}</span>
             </div>
           </div>
         </div>
