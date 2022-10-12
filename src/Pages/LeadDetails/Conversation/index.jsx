@@ -7,13 +7,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
+import { handleSetReminder } from "../../../Components/services";
 import Icons from "../../../Components/Shared/Icons";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
-const Conversation = () => {
+const Conversation = ({ id }) => {
   const dispatch = useDispatch();
   const filter = new Filter();
   let dayPickerDays = [];
@@ -42,6 +43,8 @@ const Conversation = () => {
   //     setMessageList(messages);
   //   });
   // }, [messageList]);
+
+  console.log(dateTime);
 
   useEffect(() => {
     axios
@@ -88,7 +91,7 @@ const Conversation = () => {
   // };
 
   const onOk = (value) => {
-    setDateTime(value._d.toString().slice(4, 21));
+    setDateTime(value._d.toString().slice(4, 24));
   };
 
   // handeling send message to API
@@ -222,6 +225,20 @@ const Conversation = () => {
     }
   };
 
+  const handleAddReminder = () => {
+    const reminderDetails = {
+      user_id: 1,
+      client_id: 2,
+      lead_id: id,
+      email: "",
+      details: reminderMessage,
+      trigg_time: dateTime,
+      notification_type: "reminder",
+      status: 0,
+    };
+    handleSetReminder(reminderDetails);
+  };
+
   const props = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
@@ -251,33 +268,38 @@ const Conversation = () => {
         </div>
 
         {/* --------------- Add Reminder Section ------------------ */}
-        <Space
-          className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-          direction="vertical"
-          size={12}
-        >
-          <DatePicker
-            className="date-time-picker"
-            suffixIcon={dateTime ? dateTime : "Select Date and Time"}
-            bordered={false}
-            showTime
-            onOk={onOk}
-          />
-        </Space>
+        <div>
+          <Space
+            className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+            direction="vertical"
+            size={12}
+          >
+            <DatePicker
+              className="date-time-picker"
+              suffixIcon={dateTime ? dateTime : "Select Date and Time"}
+              bordered={false}
+              showTime
+              onOk={onOk}
+            />
+          </Space>
 
-        <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
-          <input
-            className="w-full font-poppins outline-none"
-            type="text"
-            placeholder="Write Start"
-            name="reminder message"
-            id="reminder_message"
-            value={reminderMessage}
-            onChange={(e) => setReminderMessage(e.target.value)}
-          />
-          <button className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4">
-            Save
-          </button>
+          <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+            <input
+              className="w-full font-poppins outline-none"
+              type="text"
+              placeholder="Write Start"
+              name="reminder message"
+              id="reminder_message"
+              value={reminderMessage}
+              onChange={(e) => setReminderMessage(e.target.value)}
+            />
+            <button
+              className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4"
+              onClick={handleAddReminder}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,10 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
+import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
 import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
@@ -14,17 +17,24 @@ import PaymentStatus from "../Payments";
 import Settings from "../Settings";
 import CompanySettings from "../Settings/CompanySettings";
 
+const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+
 const LandingPage = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
-  // const [reminderVisible, setReminderVisible] = useState(false);
 
-  // const [currentTasks, setCurrentTasks] = useState([]);
-  // const [allReminder, setAllReminder] = useState([]);
+  useEffect(() => {
+    socket.on("receive_reminder", (data) => {
+      openNotification("topRight", data);
+      handleReminderAudio();
+    });
+    // unbind the event handler when the component gets unmounted
+    return () => {
+      socket.off("receive_reminder");
+    };
+  }, []);
 
   useEffect(() => {
     if (window.location.pathname.length <= 1) {
@@ -33,6 +43,28 @@ const LandingPage = () => {
       setActive(window.location.pathname.toString().slice(1));
     }
   }, [navigate]);
+
+  const openNotification = (placement, details) => {
+    notification.warn({
+      message: "Reminder",
+      duration: 0,
+      description: (
+        <div>
+          <h4 className="text-sm font-normal">
+            {details?.details} on Lead id {details?.lead_id}
+          </h4>
+          <a
+            className="text-brand-color font-medium"
+            href={`/lead/${details?.lead_id}`}
+            target="__blank"
+          >
+            Click Here
+          </a>
+        </div>
+      ),
+      placement,
+    });
+  };
 
   // const handleClose = () => {
   //   setReminderVisible(false);

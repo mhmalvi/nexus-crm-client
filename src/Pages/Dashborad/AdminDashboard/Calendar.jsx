@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { io } from "socket.io-client";
+import { handleAddNotification } from "../../../Components/services";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../../features/user/notificationSlice";
 
@@ -18,7 +19,7 @@ const Calendar = () => {
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   const [notice, setNotice] = useState("");
-  const [notifications, setNotifications] = useState([]);
+  // const [notifications, setNotifications] = useState([]);
   const [syncNotifications, setSyncNotifications] = useState(false);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
@@ -64,12 +65,10 @@ const Calendar = () => {
         console.log(data);
         handlesignUpSuccessfullAudio();
         dispatch(() => addNotifications(data));
-        setNotifications(data);
+        // setNotifications(data);
       }
     });
   }, [dispatch, syncNotifications]);
-
-  console.log(notifications);
 
   const handleSendNotice = async (e) => {
     e.preventDefault();
@@ -85,7 +84,8 @@ const Calendar = () => {
         notification_type: "notice",
         status: 0,
       };
-      await socket.emit("send_notification", notificationData);
+      handleAddNotification(notificationData);
+      // await socket.emit("send_notification", notificationData);
       setSyncNotifications(!syncNotifications);
       setNotice("");
     }

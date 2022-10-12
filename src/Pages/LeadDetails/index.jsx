@@ -37,7 +37,7 @@ const LeadDetails = () => {
           <LeadStatus leadStatus={leadStatus} />
         </div>
         <div>
-          <Conversation />
+          <Conversation id={id} />
         </div>
         <div>
           <UserDetails leadDetails={leadDetails} />

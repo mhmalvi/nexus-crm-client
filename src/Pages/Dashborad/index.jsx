@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handlefetchMessages,
   handlefetchNotifications,
-} from "../../Components/services/auth";
+} from "../../Components/services";
 import { addMessages } from "../../features/user/messagesSlice";
 import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";
@@ -12,16 +12,17 @@ import UserDashboard from "./UserDashboard";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
+  const userNotifications = useSelector(
+    (state) => state?.notifications
+  ).notifications;
 
   useEffect(() => {
-    console.log(userDetails?.userInfo?.userId);
-
     // API Request for fetching messages
     (async () => {
-      const response = await handlefetchMessages(userDetails?.userInfo?.userId);
-      const filteredMessage = response.filter(
+      const mesages = await handlefetchMessages(userDetails?.userInfo?.userId);
+      const filteredMessage = mesages?.filter(
         (element, index) =>
-          response.findIndex((obj) => obj.sender_id === element.sender_id) ===
+          mesages.findIndex((obj) => obj.sender_id === element.sender_id) ===
           index
       );
       dispatch(addMessages(filteredMessage));
@@ -32,9 +33,31 @@ const Dashboard = () => {
       const response = await handlefetchNotifications(
         userDetails?.userInfo?.userId
       );
-      dispatch(addNotifications(response));
+
+      response?.forEach((notification) => {
+        if (
+          userNotifications?.filter((notific) => notific.id !== notification.id)
+            .length === 0
+        ) {
+          dispatch(addNotifications(notification));
+        }
+      });
     })();
-  }, [dispatch, userDetails?.userInfo?.userId]);
+
+    // socket.on("receive_reminders", (data) => {
+    //   if (data) {
+    //     console.log(data);
+    //     if (
+    //       userNotifications?.filter((notific) => notific.id !== data.id)
+    //         .length === 0
+    //     ) {
+    //       dispatch(addNotifications(data));
+    //     }
+    //     dispatch(addNotifications(data));
+    //     handleReminderAudio();
+    //   }
+    // });
+  }, [dispatch, userDetails?.userInfo?.userId, userNotifications]);
 
   return (
     <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">

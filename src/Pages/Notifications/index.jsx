@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
@@ -12,7 +11,7 @@ const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 const Notifications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [syncNotification, setSyncNotification] = useState(false);
+  // const [syncNotification, setSyncNotification] = useState(false);
   const userDetails = useSelector((state) => state?.user);
   const userNotifications = useSelector(
     (state) => state?.notifications
@@ -44,9 +43,7 @@ const Notifications = () => {
         dispatch(addNotifications(data));
       }
     });
-  }, [dispatch, syncNotification]);
-
-  // console.log(notifications);
+  }, [dispatch]);
 
   return (
     <div
