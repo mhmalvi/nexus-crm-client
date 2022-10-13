@@ -7,6 +7,7 @@ const initialState = {
     firstName: "Sourav",
     lastName: "Sen",
     email: "a@gmail.com",
+    client_id: 2,
     contact: "01756414858",
     avatar:
       "https://png.pngtree.com/png-clipart/20190924/original/pngtree-businessman-user-avatar-free-vector-png-image_4827807.jpg",

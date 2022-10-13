@@ -4,13 +4,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { io } from "socket.io-client";
-import { handleAddNotification } from "../../../Components/services";
+import { handleAddNotification } from "../../../Components/services/auth";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../../features/user/notificationSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
-const Calendar = () => {
+const Calendar = ({
+  filterDate,
+  setFilterDate,
+  selectedDay,
+  setSelectedDay,
+  selectedMonth,
+  setSelectedMonth,
+  setSelectedYear,
+  selectedYear,
+}) => {
   const dispatch = useDispatch();
 
   const [activeSection, setActiveSection] = useState("day");
@@ -19,6 +28,9 @@ const Calendar = () => {
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   const [notice, setNotice] = useState("");
+  // const [selectedDay, setSelectedDay] = useState("");
+  // const [selectedMonth, setSelectedMonth] = useState("");
+  // const [selectedYear, setSelectedYear] = useState("");
   // const [notifications, setNotifications] = useState([]);
   const [syncNotifications, setSyncNotifications] = useState(false);
 
@@ -62,7 +74,6 @@ const Calendar = () => {
   useEffect(() => {
     socket.on("receive_notification", (data) => {
       if (data) {
-        console.log(data);
         handlesignUpSuccessfullAudio();
         dispatch(() => addNotifications(data));
         // setNotifications(data);
@@ -140,11 +151,22 @@ const Calendar = () => {
 
   // handeled changing months
   const handleMonths = (id) => {
+    setFilterDate(
+      `${dayjs()?.$y}-${id < 10 ? "0" + id : id}-${
+        currentDate + 1 < 10 ? "0" + (currentDate + 1) : currentDate + 1
+      }`
+    );
     slideMonthRef.current.slickGoTo(id - 1);
+    setCurrentMonth(id);
   };
 
   // handeled date click
   const handleDates = (id) => {
+    setFilterDate(
+      `${dayjs()?.$y}-${
+        currentMonth < 10 ? "0" + currentMonth : currentMonth
+      }-${id + 1 < 10 ? "0" + parseInt(id + 1) : id + 1}`
+    );
     slideDateRef.current.slickGoTo(id + 1);
     setCurrentDate(id);
   };
@@ -169,8 +191,41 @@ const Calendar = () => {
   }
 
   const dayMenu = (
-    <Menu className="grid grid-cols-4 gap-2" items={dayPickerDays} />
+    <Menu
+      className="grid grid-cols-4 gap-2"
+      onClick={(e) => onDayChange(e)}
+      items={dayPickerDays}
+    />
   );
+
+  const onDayChange = (e) => {
+    const date = parseInt(e?.key) + 1;
+    setSelectedDay(date < 10 ? `0` + date : date);
+  };
+
+  const onYearChange = (date, dateString) => {
+    console.log(dateString);
+    setSelectedYear(dateString);
+  };
+
+  const onMonthChange = (date, dateString) => {
+    console.log(dateString.slice(5));
+    setSelectedMonth(dateString.slice(5));
+  };
+
+  const handleClearDate = () => {
+    setFilterDate("");
+    setSelectedDay("");
+    setSelectedMonth("");
+    setSelectedYear("");
+    slideMonthRef.current.slickGoTo(dayjs().month());
+    slideDateRef.current.slickGoTo(dayjs().date());
+    setCurrentDate(dayjs().date() - 1);
+  };
+
+  console.log(selectedDay);
+  console.log(selectedMonth);
+  console.log(selectedYear);
 
   return (
     <div
@@ -194,7 +249,7 @@ const Calendar = () => {
         </div>
 
         <div
-          className="flex justify-center items-center"
+          className="relative flex justify-center items-center"
           style={{
             width: "42vw",
           }}
@@ -210,7 +265,7 @@ const Calendar = () => {
                   setMonthPicker(false);
                 }}
               >
-                <Space>Day</Space>
+                <Space>{selectedDay ? selectedDay : "Day"}</Space>
               </div>
             </Dropdown>
             <div
@@ -232,7 +287,9 @@ const Calendar = () => {
                       : "text-black"
                   }`}
                 >
-                  Month
+                  {selectedMonth
+                    ? datesInMonth[parseInt(selectedMonth) - 1]?.month
+                    : "Month"}
                 </h1>
               </div>
               <DatePicker
@@ -241,6 +298,7 @@ const Calendar = () => {
                 picker="month"
                 open={monthPicker}
                 bordered={false}
+                onChange={onMonthChange}
               />
             </div>
             <div
@@ -260,7 +318,7 @@ const Calendar = () => {
                     activeSection === "year" ? " text-white" : "text-black"
                   }`}
                 >
-                  Year
+                  {selectedYear ? selectedYear : "Year"}
                 </h1>
               </div>
               <DatePicker
@@ -269,8 +327,22 @@ const Calendar = () => {
                 picker="year"
                 open={yearPicker}
                 bordered={false}
+                onChange={onYearChange}
               />
             </div>
+          </div>
+          <div className="absolute right-0 bottom-4">
+            {(filterDate?.length ||
+              (selectedDay?.length &&
+                selectedMonth?.length &&
+                selectedYear?.length) > 0) && (
+              <h1
+                className="text-brand-color font-semibold text-base cursor-pointer p-0.5"
+                onClick={handleClearDate}
+              >
+                Clear
+              </h1>
+            )}
           </div>
         </div>
 
@@ -341,7 +413,6 @@ const Calendar = () => {
             </div> */}
 
             {/* Creating the dates aray to map */}
-            {/* <div className="grid grid-cols-12"> */}
             <Slider {...dateSettings} ref={slideDateRef}>
               {Array.from(
                 Array(datesInMonth[currentMonth - 1]?.dates).keys()
@@ -351,21 +422,20 @@ const Calendar = () => {
                   onClick={() => handleDates(i)}
                   className="cursor-pointer flex  justify-center items-center"
                 >
-                  <div
+                  {/* <div
                     onClick={() => handleDates(i)}
                     className={`w-8 h-8 mx-auto flex justify-center items-center rounded-full ${
-                      currentDate === i ? "bg-black" : "bg-gray-100"
+                      currentDate === i ? "border border-black" : "bg-gray-100"
+                    }`}
+                  > */}
+                  <h1
+                    className={`w-8 h-8 mb-0 mx-auto flex justify-center items-center rounded-full ${
+                      currentDate === i ? "bg-black text-white" : "bg-gray-100"
                     }`}
                   >
-                    <h1
-                      // key={i}
-                      className={`text-base  leading-6 font-poppins font-normal mb-0 ${
-                        currentDate === i && "text-white rounded-full"
-                      }`}
-                    >
-                      {i + 1}
-                    </h1>
-                  </div>
+                    {i + 1}
+                  </h1>
+                  {/* </div> */}
                   <div className="mt-3">
                     <h1
                       className="leading-4 text-center font-normal font-poppins"
@@ -373,7 +443,6 @@ const Calendar = () => {
                         fontSize: "10px",
                       }}
                     >
-                      {/* {weekDays[`${dayjs()?.day(i + 4)?.$W}`].slice(0, 3)} */}
                       {weekDays[
                         dayjs(`${dayjs().$y}-${currentMonth}-${i + 1}`).$W
                       ]?.slice(0, 3)}
@@ -382,7 +451,6 @@ const Calendar = () => {
                 </div>
               ))}
             </Slider>
-            {/* </div> */}
 
             <div className="calendar-fader-right"></div>
             <div className="calendar-fader-left"></div>

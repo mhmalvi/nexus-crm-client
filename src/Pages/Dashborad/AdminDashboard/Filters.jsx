@@ -3,49 +3,14 @@ import Icons from "../../../Components/Shared/Icons";
 
 const Filters = ({
   activeFilter,
-  setActiveFilter,
+  filterOptions,
+  ratings,
   layout,
   activeStars,
-  setActiveStars,
   setSearchInput,
+  handleFilterLeadList,
+  handleStaredLeadsFilter,
 }) => {
-  const filterOptions = [
-    {
-      id: 0,
-      title: "All",
-    },
-    {
-      id: 1,
-      title: "Today's Task",
-    },
-    {
-      id: 2,
-      title: "New Lead",
-    },
-    {
-      id: 3,
-      title: "Called",
-    },
-    {
-      id: 4,
-      title: "Skilled",
-    },
-    {
-      id: 5,
-      title: "Verified",
-    },
-    {
-      id: 6,
-      title: "Paid",
-    },
-    {
-      id: 7,
-      title: "Completed",
-    },
-  ];
-
-  const ratings = [5, 4, 3, 2, 1];
-
   return (
     <div className="flex justify-between ">
       <div>
@@ -64,11 +29,11 @@ const Filters = ({
               {filterOptions.map((option) => (
                 <div
                   key={option.id}
-                  onClick={() => setActiveFilter(option.title)}
+                  onClick={() => handleFilterLeadList(option.id)}
                 >
                   <h1
                     className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 whitespace-nowrap ${
-                      activeFilter === option.title
+                      activeFilter === option.id
                         ? "text-white bg-black"
                         : "text-black bg-white"
                     }  rounded-full`}
@@ -84,10 +49,13 @@ const Filters = ({
             <div className="flex items-center mt-2">
               {/* Star Filters */}
               {ratings.map((rate) => (
-                <div key={rate} onClick={() => setActiveStars(rate)}>
+                <div
+                  key={rate?.id}
+                  onClick={() => handleStaredLeadsFilter(rate?.id)}
+                >
                   <h1
                     className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
-                      activeStars === rate
+                      activeFilter === rate?.id
                         ? "text-white bg-black"
                         : "text-black bg-white"
                     }  rounded-full`}
@@ -95,7 +63,7 @@ const Filters = ({
                       border: "1px solid rgba(124, 141, 181, 0.5)",
                     }}
                   >
-                    {rate} {rate > 1 ? "Stars" : "Star"}
+                    {rate?.title}
                   </h1>
                 </div>
               ))}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handlefetchMessages,
   handlefetchNotifications,
-} from "../../Components/services";
+} from "../../Components/services/auth";
 import { addMessages } from "../../features/user/messagesSlice";
 import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";

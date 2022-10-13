@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
-import { handleSetReminder } from "../../../Components/services";
+import { handleSetReminder } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
 import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";

@@ -5,7 +5,14 @@ import { CSVLink } from "react-csv";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
+const Table = ({
+  title,
+  tableHeaders,
+  data,
+  activeFilter,
+  searchInput,
+  filterOptions,
+}) => {
   const leads = useSelector((state) => state?.leads)?.leads;
   const navigate = useNavigate();
 
@@ -13,72 +20,21 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
 
   useEffect(() => {
     if (!searchInput?.length) {
-      setList(leads);
+      setList(data);
     } else {
       setList(
-        leads.filter((lead) =>
+        data.filter((lead) =>
           (lead?.lead_id).toString().includes(searchInput.toString())
         )
       );
     }
-  }, [data, leads, searchInput]);
+  }, [data, leads, searchInput, activeFilter]);
+
+  // console.log("list...........", list);
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
   };
-
-  const statusColor = [
-    {
-      id: 0,
-      title: "Suspend",
-      color: "bg-black",
-    },
-    {
-      id: 1,
-      title: "New Lead",
-      color: "bg-green-500",
-    },
-    {
-      id: 2,
-      title: "Skilled",
-      color: "bg-orange-500",
-    },
-    {
-      id: 3,
-      title: "Called",
-      color: "bg-blue-500",
-    },
-    {
-      id: 4,
-      title: "Verified",
-      color: "bg-teal-500",
-    },
-    {
-      id: 5,
-      title: "Paid",
-      color: "bg-violet-500",
-    },
-    {
-      id: 6,
-      title: "Completed",
-      color: "bg-red-500",
-    },
-  ];
-
-  const menu = (
-    <Menu
-      items={[
-        {
-          label: "7 Days",
-          key: "0",
-        },
-        {
-          label: "30 Days",
-          key: "1",
-        },
-      ]}
-    />
-  );
 
   return (
     <div className="mt-0.5">
@@ -95,7 +51,9 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                 data={leads}
                 target="_blank"
                 filename={
-                  activeFilter ? `${activeFilter}.csv` : "Payment-lists.csv"
+                  typeof activeFilter === "number"
+                    ? `${filterOptions[activeFilter]?.title}.csv`
+                    : "Payment-lists.csv"
                 }
               >
                 <h1
@@ -135,16 +93,17 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
           </table>
         </div>
         <div className="tbl-content">
-          <table
-            className="custom-table"
-            cellPadding="0"
-            cellSpacing="0"
-            border="0"
-          >
-            <tbody>
-              {list.map(
-                (list) =>
-                  list?.sales_user_id === 0 && (
+          {data.length ? (
+            <table
+              className="custom-table"
+              cellPadding="0"
+              cellSpacing="0"
+              border="0"
+            >
+              <tbody>
+                {list.map(
+                  (list) => (
+                    // list?.sales_user_id !== 0 && (
                     <tr
                       key={list.lead_id}
                       onClick={() => handleNavigate(list.lead_id)}
@@ -161,7 +120,10 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                       ) ? (
                         <td>
                           {statusColor
-                            .filter((status) => status.id === list?.status)
+                            .filter(
+                              (status) =>
+                                status.id === list?.lead_details_status
+                            )
                             .map((lead_status, index) => (
                               <div
                                 key={index}
@@ -179,9 +141,15 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
                       )}
                     </tr>
                   )
-              )}
-            </tbody>
-          </table>
+                  // )
+                )}
+              </tbody>
+            </table>
+          ) : (
+            <div className="py-20 flex justify-center items-center">
+              <h1 className="text-xl font-light">No Leads</h1>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -189,3 +157,56 @@ const Table = ({ title, tableHeaders, data, activeFilter, searchInput }) => {
 };
 
 export default Table;
+
+const statusColor = [
+  {
+    id: 0,
+    title: "Suspend",
+    color: "bg-black",
+  },
+  {
+    id: 1,
+    title: "New Lead",
+    color: "bg-green-500",
+  },
+  {
+    id: 2,
+    title: "Skilled",
+    color: "bg-orange-500",
+  },
+  {
+    id: 3,
+    title: "Called",
+    color: "bg-blue-500",
+  },
+  {
+    id: 4,
+    title: "Verified",
+    color: "bg-teal-500",
+  },
+  {
+    id: 5,
+    title: "Paid",
+    color: "bg-violet-500",
+  },
+  {
+    id: 6,
+    title: "Completed",
+    color: "bg-red-500",
+  },
+];
+
+const menu = (
+  <Menu
+    items={[
+      {
+        label: "7 Days",
+        key: "0",
+      },
+      {
+        label: "30 Days",
+        key: "1",
+      },
+    ]}
+  />
+);
