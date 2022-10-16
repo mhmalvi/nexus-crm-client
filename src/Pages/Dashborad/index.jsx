@@ -19,13 +19,22 @@ const Dashboard = () => {
   useEffect(() => {
     // API Request for fetching messages
     (async () => {
-      const mesages = await handlefetchMessages(userDetails?.userInfo?.userId);
-      const filteredMessage = mesages?.filter(
-        (element, index) =>
-          mesages.findIndex((obj) => obj.sender_id === element.sender_id) ===
-          index
+      const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
+      console.log("messages ------- ", messages);
+      console.log(
+        messages?.filter(
+          (element, index) =>
+            messages.findIndex((obj) => obj.room === element.room) === index
+        )
       );
-      dispatch(addMessages(filteredMessage));
+      dispatch(
+        addMessages(
+          messages?.filter(
+            (element, index) =>
+              messages.findIndex((obj) => obj.room === element.room) === index
+          )
+        )
+      );
     })();
 
     // API Request for fetching notifiaction

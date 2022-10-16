@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { io } from "socket.io-client";
 import { handleAddNotification } from "../../../Components/services/auth";
-import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
+import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../../features/user/notificationSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
@@ -74,7 +74,7 @@ const Calendar = ({
   useEffect(() => {
     socket.on("receive_notification", (data) => {
       if (data) {
-        handlesignUpSuccessfullAudio();
+        handleMessageAudio();
         dispatch(() => addNotifications(data));
         // setNotifications(data);
       }
@@ -204,12 +204,10 @@ const Calendar = ({
   };
 
   const onYearChange = (date, dateString) => {
-    console.log(dateString);
     setSelectedYear(dateString);
   };
 
   const onMonthChange = (date, dateString) => {
-    console.log(dateString.slice(5));
     setSelectedMonth(dateString.slice(5));
   };
 
@@ -222,10 +220,6 @@ const Calendar = ({
     slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
   };
-
-  console.log(selectedDay);
-  console.log(selectedMonth);
-  console.log(selectedYear);
 
   return (
     <div
@@ -332,16 +326,18 @@ const Calendar = ({
             </div>
           </div>
           <div className="absolute right-0 bottom-4">
-            {(filterDate?.length ||
-              (selectedDay?.length &&
-                selectedMonth?.length &&
-                selectedYear?.length) > 0) && (
+            {filterDate?.length |
+            selectedDay?.length |
+            selectedMonth?.length |
+            selectedYear?.length ? (
               <h1
                 className="text-brand-color font-semibold text-base cursor-pointer p-0.5"
                 onClick={handleClearDate}
               >
                 Clear
               </h1>
+            ) : (
+              <h1> </h1>
             )}
           </div>
         </div>

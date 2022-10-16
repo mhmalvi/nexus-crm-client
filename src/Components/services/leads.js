@@ -11,3 +11,65 @@ export const handleFetchLeads = async (clientId) => {
     return error.response;
   }
 };
+
+export const handleLeadDetails = async (leadId) => {
+  console.log(leadId);
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/details`,
+      { lead_id: leadId }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleLeadStatusUpdate = async (
+  leadId,
+  newStatus,
+  salesUserId
+) => {
+  console.log(leadId);
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
+      { lead_id: leadId, lead_status: newStatus, sales_user_id: salesUserId }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/quality/update`,
+      {
+        lead_id: leadId,
+        star_review: parseInt(rating),
+        sales_user_id: salesUserId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleLeadCommentUpdate = async (leadId, salesUserId, remarks) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/quality/update`,
+      {
+        lead_id: leadId,
+        lead_remarks: remarks,
+        sales_user_id: salesUserId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

@@ -139,12 +139,25 @@ table.custom-table > tbody > tr:hover td {
   display: none;
 }
 
-.lead_status > .ant-select-selector {
+/* .lead_status > .ant-select-selector { */
+/* .lead_status > .ant-space-item { */
+.lead_status .ant-space {
+  color: white;
+  white-space: nowrap;
   border-radius: 5px !important;
-  height: 38px !important;
+  height: 2.3rem !important;
+  width: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-family: "Poppins";
+  font-size: 14px;
   margin: auto !important;
+  /* background-color: #17cdd9 !important; */
 }
 
+/* .lead_status .ant-select-selection-item { */
 .lead_status .ant-select-selection-item {
   padding: 0 !important;
   margin: auto !important;
@@ -154,7 +167,13 @@ table.custom-table > tbody > tr:hover td {
   text-align: center;
 }
 
-.sub_lead_status > .ant-select-selector {
+.ant-dropdown-menu-title-content {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3px;
+}
+
+/* .sub_lead_status > .ant-select-selector {
   height: 40px !important;
   background-color: #000000 !important;
   color: white !important;
@@ -165,44 +184,44 @@ table.custom-table > tbody > tr:hover td {
   font-family: "Poppins";
   font-size: 16px;
   text-align: center;
-}
+} */
 
-.color-green > .ant-select-selector {
+.color-green > .ant-space {
   background-color: #34c759 !important;
   color: white !important;
   outline: none !important;
   border: none !important;
 }
 
-.color-orange > .ant-select-selector {
+.color-orange > .ant-space {
   background-color: #ff9500 !important;
   color: white !important;
   outline: none !important;
   border: none !important;
 }
 
-.color-blue > .ant-select-selector {
+.color-blue > .ant-space {
   background-color: #4f8dea !important;
   color: white !important;
   outline: none !important;
   border: none !important;
 }
 
-.color-teal > .ant-select-selector {
+.color-teal > .ant-space {
   background-color: #17cdd9 !important;
   color: white !important;
   outline: none !important;
   border: none !important;
 }
 
-.color-violet > .ant-select-selector {
+.color-violet > .ant-space {
   background-color: #7037ff !important;
   color: white !important;
   outline: none !important;
   border: none !important;
 }
 
-.color-red > .ant-select-selector {
+.color-red > .ant-space {
   background-color: #ff0000 !important;
   color: white !important;
   outline: none !important;

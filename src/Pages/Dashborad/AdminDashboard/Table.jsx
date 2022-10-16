@@ -28,6 +28,7 @@ const Table = ({
         )
       );
     }
+    console.log(data);
   }, [data, leads, searchInput, activeFilter]);
 
   // console.log("list...........", list);
@@ -48,11 +49,15 @@ const Table = ({
             </div>
             <div className="ml-6">
               <CSVLink
-                data={leads}
+                data={list}
                 target="_blank"
                 filename={
                   typeof activeFilter === "number"
-                    ? `${filterOptions[activeFilter]?.title}.csv`
+                    ? `${
+                        filterOptions?.find(
+                          (option) => option.id === activeFilter
+                        )?.title
+                      }.csv`
                     : "Payment-lists.csv"
                 }
               >
@@ -93,7 +98,7 @@ const Table = ({
           </table>
         </div>
         <div className="tbl-content">
-          {data.length ? (
+          {data?.length ? (
             <table
               className="custom-table"
               cellPadding="0"
@@ -116,7 +121,7 @@ const Table = ({
                       <td>{list.campaign_id}</td>
 
                       {statusColor.find(
-                        (status) => status.id === list?.status
+                        (status) => status.id === list?.lead_details_status
                       ) ? (
                         <td>
                           {statusColor
@@ -181,12 +186,12 @@ const statusColor = [
   },
   {
     id: 4,
-    title: "Verified",
+    title: "Paid",
     color: "bg-teal-500",
   },
   {
     id: 5,
-    title: "Paid",
+    title: "Verified",
     color: "bg-violet-500",
   },
   {

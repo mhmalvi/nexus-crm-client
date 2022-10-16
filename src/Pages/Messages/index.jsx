@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { addMessages } from "../../features/user/messagesSlice";
 import { addNotifications } from "../../features/user/notificationSlice";
 import Message from "./Message";
 
@@ -21,12 +22,20 @@ const Messages = () => {
       socket.on("updated_messages", (data) => {
         if (data) {
           console.log(data);
-          dispatch(addNotifications(data));
+          // dispatch(addNotifications(data));
+          dispatch(
+            addMessages(
+              data.filter(
+                (element, index) =>
+                  data.findIndex((obj) => obj.room === element.room) === index
+              )
+            )
+          );
         }
       });
     }
 
-    navigate("/lead/112");
+    navigate(`/lead/${message?.room_id}`);
   };
 
   // useEffect(() => {

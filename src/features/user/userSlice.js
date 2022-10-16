@@ -4,8 +4,8 @@ const initialState = {
   loading: false,
   userInfo: {
     role: localStorage.getItem("role"),
-    firstName: "Sourav",
-    lastName: "Sen",
+    firstName: localStorage.getItem("firstName"),
+    lastName: localStorage.getItem("lastName"),
     email: "a@gmail.com",
     client_id: 2,
     contact: "01756414858",

@@ -4,12 +4,15 @@ import axios from "axios";
 import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
-import { handleSetReminder } from "../../../Components/services/auth";
+import {
+  handlefetchMessages,
+  handleSetReminder,
+} from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
-import { handlesignUpSuccessfullAudio } from "../../../Components/Shared/utils/sounds";
+import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
@@ -19,7 +22,7 @@ const Conversation = ({ id }) => {
   const filter = new Filter();
   let dayPickerDays = [];
 
-  // const userDetails = useSelector((state) => state?.user);
+  const userDetails = useSelector((state) => state?.user);
 
   const [dateTime, setDateTime] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -34,9 +37,11 @@ const Conversation = ({ id }) => {
   // const [previewImage, setPreviewImage] = useState("");
   // const [previewTitle, setPreviewTitle] = useState("");
 
+  console.log("id", id);
+
   useEffect(() => {
-    socket.emit("join_room", 123);
-  }, []);
+    socket.emit("join_room", id);
+  }, [id]);
 
   // useEffect(() => {
   //   socket.on("history", (messages) => {
@@ -47,27 +52,53 @@ const Conversation = ({ id }) => {
   console.log(dateTime);
 
   useEffect(() => {
+    (async () => {
+      const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
+      console.log("messages ------- ", messages);
+      console.log(
+        messages?.filter(
+          (element, index) =>
+            messages.findIndex((obj) => obj.room === element.room) === index
+        )
+      );
+      dispatch(
+        addMessages(
+          messages?.filter(
+            (element, index) =>
+              messages.findIndex((obj) => obj.room === element.room) === index
+          )
+        )
+      );
+    })();
+
     axios
-      .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/get-message/123`)
+      .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/get-message/${id}`)
       .then(function (response) {
         setMessageList(response?.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [sync]);
+  }, [dispatch, id, sync, userDetails?.userInfo?.userId]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       if (data) {
-        handlesignUpSuccessfullAudio();
+        handleMessageAudio();
+        setMessageList(() => [...messageList, data]);
+        setSync(!sync);
       }
-      setMessageList(() => [...messageList, data]);
-      setSync(!sync);
     });
     socket.on("updated_messages", (data) => {
-      console.log(data);
-      dispatch(addMessages(data));
+      console.log("Message data", data);
+      dispatch(
+        addMessages(
+          data?.filter(
+            (element, index) =>
+              data.findIndex((obj) => obj.room === element.room) === index
+          )
+        )
+      );
     });
   }, [dispatch, messageList, sync]);
 
@@ -99,14 +130,14 @@ const Conversation = ({ id }) => {
     e.preventDefault();
     if (e.target[0]?.value !== "") {
       const messageData = {
-        room: 123,
-        sender_id: parseInt(localStorage.getItem("userId")),
-        // sender_id: userDetails.userId,
-        sender_name: localStorage.getItem("username"),
-        // sender_name:
-        //   userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
+        room: id,
+        // sender_id: parseInt(localStorage.getItem("userId")),
+        // sender_name: localStorage.getItem("username"),
+        sender_id: userDetails?.userInfo?.userId,
+        sender_name:
+          userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
         recever_id: parseInt(localStorage.getItem("receverId")),
-        recever_name: "Davidov Artur",
+        recever_name: localStorage.getItem("reveicerName"),
         message: e.target[0]?.value,
         date_time: dayjs().$d.toString().slice(4, 21),
       };

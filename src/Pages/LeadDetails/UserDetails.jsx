@@ -1,8 +1,13 @@
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
+import {
+  handleLeadCommentUpdate,
+  handleLeadReviewUpdate,
+} from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 import CheckList from "./CheckList";
 
@@ -14,6 +19,14 @@ const UserDetails = ({ leadDetails }) => {
   const [toggleApplication, setToggleApplication] = useState(false);
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
+  const [comment, setComment] = useState("");
+
+  console.log(leadDetails);
+
+  useEffect(() => {
+    setRating(leadDetails?.star_review);
+    setComment(leadDetails?.lead_remarks);
+  }, [leadDetails]);
 
   const handleCancel = () => {
     setToggleChcekList(false);
@@ -21,8 +34,38 @@ const UserDetails = ({ leadDetails }) => {
     setAddSealsman(false);
   };
 
-  const ratingChanged = (newRating) => {
+  const ratingChanged = async (newRating) => {
+    const reviewResponse = await handleLeadReviewUpdate(
+      leadDetails?.lead_id,
+      newRating,
+      userDetails?.userInfo?.userId
+    );
+
+    if (reviewResponse?.status) {
+      message.success("Rating Added Successfully");
+    }
+
     setRating(newRating);
+  };
+
+  const handleUpdateComment = async (e) => {
+    e.preventDefault();
+
+    const commentUpdateResponse = await handleLeadCommentUpdate(
+      leadDetails?.lead_id,
+      userDetails?.userInfo?.userId,
+      comment
+    );
+
+    if (commentUpdateResponse?.status) {
+      message.success("Comment Added Successfully");
+      document.getElementById("lead_comment").style.caretColor = "transparent";
+    }
+  };
+
+  const handleCommentChange = (e) => {
+    setComment(e?.target?.value);
+    document.getElementById("lead_comment").style.caretColor = "black";
   };
 
   return (
@@ -125,10 +168,20 @@ const UserDetails = ({ leadDetails }) => {
             <div className="py-6">
               {/* {JSON.parse(leadDetails?.form_data).map((question) => ( */}
               <div className="my-2">
-                <li className="list-disc ml-2 text-lg font-poppins font-semibold">
-                  question?.name
-                </li>
-                <p>- {JSON.stringify(leadDetails?.form_data)}</p>
+                {leadDetails?.form_data?.map((question, i) => (
+                  <div key={i} className="ml-2 font-poppins">
+                    <li className="text-base list-disc font-semibold">
+                      {/* for removing underscores and capitalize the first letter of the Question */}
+                      {(question?.name).charAt(0).toUpperCase() +
+                        (question?.name).replaceAll("_", " ").slice(1)}
+                    </li>
+                    <p className="ml-6 mt-2 font-normal">
+                      -{" "}
+                      {(question?.values[0]).charAt(0).toUpperCase() +
+                        (question?.values[0]).replaceAll("_", " ").slice(1)}
+                    </p>
+                  </div>
+                ))}
               </div>
               {/* // ))} */}
             </div>
@@ -270,18 +323,38 @@ const UserDetails = ({ leadDetails }) => {
           borderRadius: "20px",
         }}
       >
-        <div className="border-b mb-0 flex justify-between items-center">
+        <div className="border-b mb-0">
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
             Comment
           </h1>
-          <Icons.PenUnderLine className="cursor-pointer" />
+          {/* <Icons.PenUnderLine className="cursor-pointer" /> */}
         </div>
-        <div className="2xl:w-84 mt-5 ">
-          <h1 className="text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-            Welcome to OnlineConversion com. Convert just about anything to
-            anything else. Thousands of units, and millions of conversions.
-          </h1>
-        </div>
+        <form
+          onSubmit={(e) => handleUpdateComment(e)}
+          className="2xl:w-84 mt-5 "
+        >
+          {userDetails?.userInfo?.role === "student" ? (
+            <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
+              {leadDetails?.lead_remarks
+                ? leadDetails?.lead_remarks
+                : "No Comments Yet"}
+            </h1>
+          ) : (
+            <>
+              <input
+                id="lead_comment"
+                className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75"
+                onChange={(e) => handleCommentChange(e)}
+                value={comment ? comment : "No Comments Yet"}
+              />
+              <input
+                type="submit"
+                className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer"
+                value="Save"
+              ></input>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );

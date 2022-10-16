@@ -1,10 +1,13 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import { handlefetchMessages } from "../../Components/services/auth";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
 import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
+import { addMessages } from "../../features/user/messagesSlice";
 import Campaigns from "../Campaigns";
 import Dashboard from "../Dashborad";
 import LeadDetails from "../LeadDetails";
@@ -21,6 +24,8 @@ const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state?.user);
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
@@ -43,6 +48,8 @@ const LandingPage = () => {
       setActive(window.location.pathname.toString().slice(1));
     }
   }, [navigate]);
+
+  
 
   const openNotification = (placement, details) => {
     notification.warn({

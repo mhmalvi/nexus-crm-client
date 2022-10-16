@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Icons from "./Icons";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { handlefetchMessages } from "../services/auth";
+import { addMessages } from "../../features/user/messagesSlice";
 
 const Sidebar = ({
   active,
@@ -14,6 +16,34 @@ const Sidebar = ({
 }) => {
   const userMessages = useSelector((state) => state.messages);
   const userNotification = useSelector((state) => state.notifications);
+
+
+  const userDetails = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
+  //     console.log("messages ------- ", messages);
+  //     console.log(
+  //       messages?.filter(
+  //         (element, index) =>
+  //           messages.findIndex((obj) => obj.room === element.room) === index
+  //       )
+  //     );
+      
+  //     dispatch(
+  //       addMessages(
+  //         messages?.filter(
+  //           (element, index) =>
+  //             messages.findIndex((obj) => obj.room === element.room) === index
+  //         )
+  //       )
+  //     );
+  //   })();
+  // }, [dispatch, userDetails?.userInfo?.userId]);
+
+  console.log("userMessages ?????????? ", userMessages);
 
   return (
     <div

@@ -16,6 +16,8 @@ import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
 
 function App() {
+  
+
   return (
     <div>
       <Routes>

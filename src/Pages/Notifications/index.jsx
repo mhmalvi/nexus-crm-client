@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
-import { handlesignUpSuccessfullAudio } from "../../Components/Shared/utils/sounds";
+import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../features/user/notificationSlice";
 import Notification from "./Notification";
 
@@ -39,7 +39,7 @@ const Notifications = () => {
     socket.on("receive_notification", (data) => {
       if (data) {
         console.log(data);
-        handlesignUpSuccessfullAudio();
+        handleMessageAudio();
         dispatch(addNotifications(data));
       }
     });

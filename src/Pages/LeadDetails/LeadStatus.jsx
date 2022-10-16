@@ -1,22 +1,32 @@
-import { Select } from "antd";
-import { Option } from "antd/lib/mentions";
+import { Dropdown, Menu, message, Space } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { handleLeadStatusUpdate } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 
-// ---Default Values----
-const statusData = [
-  "New Lead",
-  "Skilled",
-  "Called",
-  "Paid",
-  "Verified",
-  "Completed",
-];
+// ----Default Values----
+const LeadStatus = ({
+  leadStatus,
+  leadDetails,
+  statusDetails,
+  syncDetails,
+  setSyncDetails,
+}) => {
+  const statusData = [
+    "New Lead",
+    "Skilled",
+    "Called",
+    "Paid",
+    "Verified",
+    "Completed",
+  ];
 
-const LeadStatus = ({ leadStatus }) => {
+  const userDetails = useSelector((state) => state?.user);
+
   const [activeStatus, setActiveStatus] = useState(
     Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   );
+  const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
   const [callCount, setCallCount] = useState(1);
   const [amount, setAmount] = useState();
@@ -55,6 +65,16 @@ const LeadStatus = ({ leadStatus }) => {
   ];
 
   useEffect(() => {
+    // if (Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1===1)
+    // document.getElementsByClassName(
+    //   "ant-select-selection-placeholder"
+    // ).innerText =
+    //   statusData[
+    //     Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
+    //   ];
+    setActiveStatusTitle(
+      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
+    );
     setLeadStatusColor(
       statusColor.find(
         (i) =>
@@ -67,13 +87,87 @@ const LeadStatus = ({ leadStatus }) => {
     setActiveStatus(
       statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
     );
-  }, []);
+  }, [leadStatus]);
 
-  const handleProvinceChange = (value) => {
-    setLeadStatusColor(statusColor.find((i) => i.lable === value)?.class);
-    leadStatus[value] = true;
-    setActiveStatus(value);
+  // const handleProvinceChange = (value) => {
+  //   setLeadStatusColor(statusColor.find((i) => i.lable === value)?.class);
+  //   leadStatus[value] = true;
+  //   setActiveStatus(value);
+  // };
+
+  const onStatusChange = async ({ key }) => {
+    // console.log(statusData[key]);
+    leadStatus[statusData[key]] = true;
+    setActiveStatusTitle(statusData[key]);
+    setLeadStatusColor(
+      statusColor.find((i) => i.lable === statusData[key])?.class
+    );
+
+    const statusUpdateResponse = await handleLeadStatusUpdate(
+      leadDetails?.lead_id,
+      parseInt(key) + 1,
+      userDetails?.userInfo?.userId
+    );
+
+    if (statusUpdateResponse?.status) {
+      message.success("Status Updated Successfully");
+      setSyncDetails(!syncDetails);
+    }
   };
+
+  const handleStatusUpdateTime = (statusId) => {
+    const status = statusDetails?.find(
+      (status) => status?.lead_status === statusId
+    )?.updated_at;
+
+    if (status) {
+      const customizedTime = status?.replace("T", " ")?.slice(0, 19);
+      // setSyncDetails(!syncDetails);
+      return customizedTime;
+    } else {
+      // setSyncDetails(!syncDetails);
+      return "No Yet";
+    }
+  };
+
+  // console.log("StatusDetails", statusDetails);
+  // console.log(
+  //   "leadStatusDetails",
+  //   statusDetails?.find((status) => status?.lead_status === 5)?.updated_at
+  // );
+
+  const menu = (
+    <Menu
+      className="text-center text-base font-semibold"
+      onClick={onStatusChange}
+      items={[
+        {
+          label: "New Lead",
+          key: 0,
+        },
+        {
+          label: "Skilled",
+          key: 1,
+        },
+        {
+          label: "Called",
+          key: 2,
+        },
+        {
+          label: "Paid",
+          key: 3,
+        },
+        {
+          label: "Verified",
+          key: 4,
+        },
+        {
+          label: "Completed",
+          key: 5,
+        },
+      ]}
+    />
+  );
 
   return (
     <div className="min-h-full pr-6 border-r">
@@ -82,13 +176,16 @@ const LeadStatus = ({ leadStatus }) => {
           User Activity Timeline
         </h1>
       </div>
-      <div className="flex items-center mt-5">
-        <Select
+      <div className="lead_status flex items-center mt-5">
+        {/* <Select
+          id="status_title"
           className={`lead_status ${leadStatusColor}`}
           defaultValue={
-            statusData[
-              Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-            ]
+            `${
+              statusData[
+                Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
+              ]
+            }`
           }
           style={{
             width: "114px",
@@ -106,9 +203,19 @@ const LeadStatus = ({ leadStatus }) => {
               {province}
             </Option>
           ))}
-        </Select>
+        </Select> */}
 
-        {activeStatus === "Called" && (
+        <Dropdown
+          className={`cursor-pointer ${leadStatusColor}`}
+          overlay={menu}
+          trigger="click"
+        >
+          <div onClick={(e) => e.preventDefault()}>
+            <Space>{activeStatusTitle}</Space>
+          </div>
+        </Dropdown>
+
+        {activeStatusTitle === "Called" && (
           <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
             <div>
               <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
@@ -141,7 +248,8 @@ const LeadStatus = ({ leadStatus }) => {
           </div>
         )} */}
 
-        {(activeStatus === "Called" || activeStatus === "Paid") && (
+        {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
+        {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
           <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
             <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
               $
@@ -157,7 +265,7 @@ const LeadStatus = ({ leadStatus }) => {
           </div>
         )}
 
-        {activeStatus === "Called" && (
+        {activeStatusTitle === "Called" && (
           <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
             <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
               Payable :
@@ -195,12 +303,12 @@ const LeadStatus = ({ leadStatus }) => {
                 New Lead
               </h6>
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6 mt-4">
-                #course code
+                # {leadDetails?.course_code}
               </h6>
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(1)}</p>
           </div>
         </div>
 
@@ -238,7 +346,7 @@ const LeadStatus = ({ leadStatus }) => {
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(2)}</p>
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -271,7 +379,7 @@ const LeadStatus = ({ leadStatus }) => {
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(3)}</p>
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -307,7 +415,7 @@ const LeadStatus = ({ leadStatus }) => {
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(4)}</p>
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -350,7 +458,7 @@ const LeadStatus = ({ leadStatus }) => {
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(5)}</p>
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -389,7 +497,7 @@ const LeadStatus = ({ leadStatus }) => {
             </div>
           </div>
           <div>
-            <p>02.08.22</p>
+            <p>{handleStatusUpdateTime(6)}</p>
           </div>
         </div>
       </div>

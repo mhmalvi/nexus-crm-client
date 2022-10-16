@@ -158,11 +158,11 @@ const filterOptions = [
   },
   {
     id: 4,
-    title: "Verified",
+    title: "Paid",
   },
   {
     id: 5,
-    title: "Paid",
+    title: "Verified",
   },
   {
     id: 6,

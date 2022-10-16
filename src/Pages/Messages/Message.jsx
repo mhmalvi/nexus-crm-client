@@ -5,6 +5,7 @@ import Filter from "bad-words";
 
 const Message = ({ handleMessageNavigation }) => {
   const messages = useSelector((state) => state.messages.messages);
+  const userDetails = useSelector((state) => state.user.userInfo);
   const filter = new Filter();
 
   return (
@@ -25,6 +26,7 @@ const Message = ({ handleMessageNavigation }) => {
             onClick={() =>
               handleMessageNavigation({
                 id: message.id,
+                room_id: message.room,
                 receiver_id: message.receiver_id,
               })
             }
@@ -32,8 +34,12 @@ const Message = ({ handleMessageNavigation }) => {
             className="pt-5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >
             <div className="flex justify-between items-start">
-              <h1 className="text-lg leading-7 font-poppins font-semibold">
-                {message.sender_name}
+              <h1 className="text-base leading-7 font-poppins font-semibold">
+                {/* {message.receiver_name ===
+                userDetails.firstName + userDetails.lastName
+                  ? message.receiver_name
+                  : message.sender_name} */}
+                Lead {message.room}
               </h1>
 
               {/* Date & Time */}
