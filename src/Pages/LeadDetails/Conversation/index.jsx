@@ -43,24 +43,16 @@ const Conversation = ({ id }) => {
     socket.emit("join_room", id);
   }, [id]);
 
-  // useEffect(() => {
-  //   socket.on("history", (messages) => {
-  //     setMessageList(messages);
-  //   });
-  // }, [messageList]);
-
-  console.log(dateTime);
-
   useEffect(() => {
     (async () => {
       const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
-      console.log("messages ------- ", messages);
-      console.log(
-        messages?.filter(
-          (element, index) =>
-            messages.findIndex((obj) => obj.room === element.room) === index
-        )
-      );
+      // console.log("messages ------- ", messages);
+      // console.log(
+      //   messages?.filter(
+      //     (element, index) =>
+      //       messages.findIndex((obj) => obj.room === element.room) === index
+      //   )
+      // );
       dispatch(
         addMessages(
           messages?.filter(
@@ -71,6 +63,7 @@ const Conversation = ({ id }) => {
       );
     })();
 
+    // For accessing roomwise messages
     axios
       .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/get-message/${id}`)
       .then(function (response) {
@@ -318,7 +311,7 @@ const Conversation = ({ id }) => {
             <input
               className="w-full font-poppins outline-none"
               type="text"
-              placeholder="Write Start"
+              placeholder="Write Message"
               name="reminder message"
               id="reminder_message"
               value={reminderMessage}

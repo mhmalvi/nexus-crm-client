@@ -109,7 +109,6 @@ const UserDetails = ({ leadDetails }) => {
           </div>
 
           {/* Sales Team List Modal */}
-
           <Modal visible={addSealsman} footer={null} onCancel={handleCancel}>
             <div>
               <h1 className="font-poppins text-xl font-extrabold">
@@ -153,7 +152,6 @@ const UserDetails = ({ leadDetails }) => {
           </Modal>
 
           {/* Application Form Modal */}
-
           <Modal
             visible={toggleApplication}
             footer={null}
@@ -187,6 +185,7 @@ const UserDetails = ({ leadDetails }) => {
             </div>
           </Modal>
         </div>
+
         <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
           #{leadDetails?.lead_id}
         </h1>

@@ -32,6 +32,7 @@ import { ReactComponent as PhoneVolume } from "../../assets/Icons/phone-volume.s
 import { ReactComponent as Alert } from "../../assets/Icons/alert.svg";
 import { ReactComponent as Cross } from "../../assets/Icons/cross.svg";
 import { ReactComponent as Bell } from "../../assets/Icons/bell.svg";
+import { ReactComponent as History } from "../../assets/Icons/history_icon.svg";
 
 const Icons = {
   CompanyLogo,
@@ -68,6 +69,7 @@ const Icons = {
   Alert,
   Cross,
   Bell,
+  History,
 };
 
 export default Icons;

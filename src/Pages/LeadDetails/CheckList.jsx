@@ -1,5 +1,5 @@
 import { Upload } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 
 const CheckList = ({ toggleChcekList, handleCancel }) => {
@@ -20,6 +20,11 @@ const CheckList = ({ toggleChcekList, handleCancel }) => {
     setFileList(newFileList);
   };
 
+  useEffect(() => {
+
+    
+  }, []);
+
   const props = {
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
     onChange: handleChange,
@@ -34,7 +39,7 @@ const CheckList = ({ toggleChcekList, handleCancel }) => {
       }}
     >
       <div>
-        <h1 className="text-xl font-medium mb-6">Certificates :</h1>
+        <h1 className="text-xl font-medium mb-6">Documents :</h1>
       </div>
       {checkLists.map((certificate, i) => (
         <div key={i} className="flex items-center text-sm mb-4 ml-6">

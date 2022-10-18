@@ -17,6 +17,9 @@ const Sidebar = ({
   const userMessages = useSelector((state) => state.messages);
   const userNotification = useSelector((state) => state.notifications);
 
+  useEffect(() => {
+    console.log("From Sidebar");
+  }, [userMessages]);
 
   const userDetails = useSelector((state) => state?.user);
   const dispatch = useDispatch();
@@ -31,7 +34,7 @@ const Sidebar = ({
   //           messages.findIndex((obj) => obj.room === element.room) === index
   //       )
   //     );
-      
+
   //     dispatch(
   //       addMessages(
   //         messages?.filter(

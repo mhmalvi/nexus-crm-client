@@ -20,13 +20,13 @@ const Dashboard = () => {
     // API Request for fetching messages
     (async () => {
       const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
-      console.log("messages ------- ", messages);
-      console.log(
-        messages?.filter(
-          (element, index) =>
-            messages.findIndex((obj) => obj.room === element.room) === index
-        )
-      );
+      // console.log("messages ------- ", messages);
+      // console.log(
+      //   messages?.filter(
+      //     (element, index) =>
+      //       messages.findIndex((obj) => obj.room === element.room) === index
+      //   )
+      // );
       dispatch(
         addMessages(
           messages?.filter(

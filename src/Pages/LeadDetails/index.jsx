@@ -9,7 +9,7 @@ const LeadDetails = () => {
   const { id } = useParams();
 
   const [leadDetails, setleadDetails] = useState();
-  const [statusDetails, setStatusDetails] = useState();
+  // const [statusDetails, setStatusDetails] = useState([]);
   const [syncDetails, setSyncDetails] = useState(false);
   const [leadStatusDetails, setLeadStatusDetails] = useState({
     "New Lead": true,
@@ -20,16 +20,20 @@ const LeadDetails = () => {
     Completed: false,
   });
 
+  const [statusDateTime, setStatusDateTime] = useState({
+    "New Lead": "Not Yet",
+    Skilled: "Not Yet",
+    Called: "Not Yet",
+    Paid: "Not Yet",
+    Verified: "Not Yet",
+    Completed: "Not Yet",
+  });
+
   useEffect(() => {
     (async () => {
       const response = await handleLeadDetails(id);
-
-      console.log("response...", response);
-
       if (response) {
-        setleadDetails(response?.leadDetails);
-        setStatusDetails(response?.leadAllStatus);
-
+        setleadDetails(response);
         const status = {
           "New Lead": false,
           Skilled: false,
@@ -38,38 +42,32 @@ const LeadDetails = () => {
           Verified: false,
           Completed: false,
         };
-
-        // console.log("response?.leadAllStatus", response?.leadAllStatus);
+        const statusTimeDate = {
+          "New Lead": "Not Yet",
+          Skilled: "Not Yet",
+          Called: "Not Yet",
+          Paid: "Not Yet",
+          Verified: "Not Yet",
+          Completed: "Not Yet",
+        };
 
         (response?.leadAllStatus).forEach((leadStatus) => {
-          // console.log(leadStatus?.lead_status);
           status[
             `${Object.keys(status)[parseInt(leadStatus?.lead_status) - 1]}`
           ] = true;
+
+          statusTimeDate[
+            `${
+              Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status) - 1]
+            }`
+          ] = `${leadStatus?.updated_at?.replace("T", " ")?.slice(0, 19)}`;
         });
-        // console.log("status >>>", status);
+
         setLeadStatusDetails(status);
+        setStatusDateTime(statusTimeDate);
       }
     })();
-    // setleadDetails(leads?.find((lead) => lead?.lead_id === parseInt(id)));
   }, [id, syncDetails]);
-
-  // console.log(leadDetails);
-
-  // useEffect(() => {
-  //   leadDetails.
-  // }, []);
-
-  // const leadStatus = {
-  //   "New Lead": true,
-  //   Skilled: false,
-  //   Called: false,
-  //   Paid: false,
-  //   Verified: false,
-  //   Completed: false,
-  // };
-
-  // console.log("leadDetails?.leadAllStatus", leadDetails?.leadAllStatus);
 
   return (
     <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
@@ -78,7 +76,7 @@ const LeadDetails = () => {
           <LeadStatus
             leadStatus={leadStatusDetails}
             leadDetails={leadDetails}
-            statusDetails={statusDetails}
+            statusDateTime={statusDateTime}
             syncDetails={syncDetails}
             setSyncDetails={setSyncDetails}
           />
@@ -87,7 +85,7 @@ const LeadDetails = () => {
           <Conversation id={id} />
         </div>
         <div>
-          <UserDetails leadDetails={leadDetails} />
+          <UserDetails leadDetails={leadDetails?.leadDetails} />
         </div>
       </div>
     </div>

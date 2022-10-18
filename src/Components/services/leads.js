@@ -73,3 +73,49 @@ export const handleLeadCommentUpdate = async (leadId, salesUserId, remarks) => {
     return error.response;
   }
 };
+
+export const handleAddCall = async (leadId, startTime, endTime, remark) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/add/call`,
+      {
+        lead_id: leadId,
+        call_start_time: startTime,
+        call_end_time: endTime,
+        call_remark: remark,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleAddAmount = async (leadId, amount) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/add/amount`,
+      {
+        lead_id: leadId,
+        amount: amount,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchChecklist = async (courseId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist`,
+      {
+        course_id: courseId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

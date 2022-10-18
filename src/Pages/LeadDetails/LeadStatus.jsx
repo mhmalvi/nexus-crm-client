@@ -1,16 +1,23 @@
-import { Dropdown, Menu, message, Space } from "antd";
+import { Dropdown, Menu, message, Space, DatePicker, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { handleLeadStatusUpdate } from "../../Components/services/leads";
+import {
+  handleAddAmount,
+  handleAddCall,
+  handleLeadStatusUpdate,
+} from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
+import moment from "moment";
+
+const { RangePicker } = DatePicker;
 
 // ----Default Values----
 const LeadStatus = ({
   leadStatus,
   leadDetails,
-  statusDetails,
   syncDetails,
   setSyncDetails,
+  statusDateTime,
 }) => {
   const statusData = [
     "New Lead",
@@ -23,13 +30,21 @@ const LeadStatus = ({
 
   const userDetails = useSelector((state) => state?.user);
 
-  const [activeStatus, setActiveStatus] = useState(
-    Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-  );
+  // const [activeStatus, setActiveStatus] = useState(
+  //   Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
+  // );
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
-  const [callCount, setCallCount] = useState(1);
-  const [amount, setAmount] = useState();
+  // const [callCount, setCallCount] = useState(0);
+  // const [leadCallHistory, setLeadCallHistory] = useState([]);
+  const [callStart, setCallStart] = useState("Start Time");
+  const [callEnd, setCallEnd] = useState("End Time");
+  const [callRemark, setCallRemark] = useState("");
+  const [amount, setAmount] = useState("");
+  const [isCallDetailsOpen, setIsCallDetailsOpen] = useState(false);
+  const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
+  const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(true);
 
   const statusColor = [
     {
@@ -65,13 +80,6 @@ const LeadStatus = ({
   ];
 
   useEffect(() => {
-    // if (Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1===1)
-    // document.getElementsByClassName(
-    //   "ant-select-selection-placeholder"
-    // ).innerText =
-    //   statusData[
-    //     Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-    //   ];
     setActiveStatusTitle(
       statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
     );
@@ -84,19 +92,17 @@ const LeadStatus = ({
           ]
       ).class
     );
-    setActiveStatus(
-      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
-    );
-  }, [leadStatus]);
 
-  // const handleProvinceChange = (value) => {
-  //   setLeadStatusColor(statusColor.find((i) => i.lable === value)?.class);
-  //   leadStatus[value] = true;
-  //   setActiveStatus(value);
-  // };
+    // setAmount(
+    //   leadDetails?.leadAmountHistory.length > 0
+    //     ? leadDetails?.leadAmountHistory[
+    //         leadDetails?.leadAmountHistory?.length - 1
+    //       ]?.amount
+    //     : ""
+    // );
+  }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
-    // console.log(statusData[key]);
     leadStatus[statusData[key]] = true;
     setActiveStatusTitle(statusData[key]);
     setLeadStatusColor(
@@ -104,7 +110,7 @@ const LeadStatus = ({
     );
 
     const statusUpdateResponse = await handleLeadStatusUpdate(
-      leadDetails?.lead_id,
+      leadDetails?.leadDetails?.lead_id,
       parseInt(key) + 1,
       userDetails?.userInfo?.userId
     );
@@ -114,27 +120,6 @@ const LeadStatus = ({
       setSyncDetails(!syncDetails);
     }
   };
-
-  const handleStatusUpdateTime = (statusId) => {
-    const status = statusDetails?.find(
-      (status) => status?.lead_status === statusId
-    )?.updated_at;
-
-    if (status) {
-      const customizedTime = status?.replace("T", " ")?.slice(0, 19);
-      // setSyncDetails(!syncDetails);
-      return customizedTime;
-    } else {
-      // setSyncDetails(!syncDetails);
-      return "No Yet";
-    }
-  };
-
-  // console.log("StatusDetails", statusDetails);
-  // console.log(
-  //   "leadStatusDetails",
-  //   statusDetails?.find((status) => status?.lead_status === 5)?.updated_at
-  // );
 
   const menu = (
     <Menu
@@ -169,6 +154,66 @@ const LeadStatus = ({
     />
   );
 
+  // Handeling Call Start and End functionality
+  const onCallStartChange = (value, dateString) => {
+    setCallStart(dateString);
+  };
+
+  const onCallStart = (value) => {
+    setCallStart(value._d.toString().slice(4, 24));
+  };
+
+  const onCallEndChange = (value, dateString) => {
+    setCallEnd(dateString);
+  };
+
+  const onCallEnd = (value) => {
+    setCallEnd(value._d.toString().slice(4, 24));
+  };
+
+  const showCallDetailsModal = () => {
+    setIsCallDetailsOpen(true);
+  };
+
+  const handleCallDetails = async () => {
+    const response = await handleAddCall(
+      leadDetails?.leadDetails?.lead_id,
+      callStart,
+      callEnd,
+      callRemark
+    );
+    if (response) {
+      setCallStart("Start Time");
+      setCallEnd("End Time");
+      setCallRemark("");
+      setSyncDetails(!syncDetails);
+      message.success("Call Details Added Successfully");
+    }
+    setIsCallDetailsOpen(false);
+  };
+
+  const handleAddLeadAmount = async (e) => {
+    e.preventDefault();
+
+    if (amount.length) {
+      const response = await handleAddAmount(
+        leadDetails?.leadDetails?.lead_id,
+        parseInt(amount)
+      );
+      if (response) {
+        setAmount("");
+        setSyncDetails(!syncDetails);
+        message.success("Amount Details Added Successfully");
+      }
+    }
+  };
+
+  console.log(leadDetails);
+
+  const handleCancel = () => {
+    setIsCallDetailsOpen(false);
+  };
+
   return (
     <div className="min-h-full pr-6 border-r">
       <div>
@@ -176,35 +221,7 @@ const LeadStatus = ({
           User Activity Timeline
         </h1>
       </div>
-      <div className="lead_status flex items-center mt-5">
-        {/* <Select
-          id="status_title"
-          className={`lead_status ${leadStatusColor}`}
-          defaultValue={
-            `${
-              statusData[
-                Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-              ]
-            }`
-          }
-          style={{
-            width: "114px",
-          }}
-          onChange={handleProvinceChange}
-        >
-          {statusData.map((province) => (
-            <Option
-              style={{
-                color: statusColor.find((i) => i.lable === province)?.color,
-                padding: "8px 16px",
-              }}
-              key={province}
-            >
-              {province}
-            </Option>
-          ))}
-        </Select> */}
-
+      <div className="lead_status flex flex-wrap items-center gap-y-3 mt-5">
         <Dropdown
           className={`cursor-pointer ${leadStatusColor}`}
           overlay={menu}
@@ -216,54 +233,240 @@ const LeadStatus = ({
         </Dropdown>
 
         {activeStatusTitle === "Called" && (
-          <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
-            <div>
-              <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
-                {callCount}
-              </h1>
+          <div className="flex items-center">
+            <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+              <div>
+                <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                  {leadDetails?.leadCallHistory?.length}
+                </h1>
+              </div>
+              <div className="ml-3 mb-0 flex justify-center items-center">
+                <button
+                  className="px-1.5 py-0.5 rounded-md bg-black text-white"
+                  onClick={showCallDetailsModal}
+                >
+                  <Icons.PhoneVolume className="w-3 text-white py-1" />
+                </button>
+              </div>
             </div>
-            <div className="ml-3 mb-0 flex justify-center items-center">
-              <button
-                className="px-1.5 py-0.5 rounded-md bg-black text-white"
-                onClick={() => setCallCount(callCount + 1)}
-              >
-                <Icons.PhoneVolume className="w-3 text-white py-1" />
-              </button>
+            <div>
+              <Icons.History
+                className="w-5 mx-2 cursor-pointer"
+                onClick={() => setIsCallHistoryOpen(true)}
+              />
             </div>
           </div>
         )}
 
-        {/* {activeStatus === "Paid" && (
-          <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
-            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
-              %
-            </span>
-            <input
-              className="w-16 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
-              type="text"
-              name=""
-              placeholder="Discount"
-              id=""
-            />
+        {/* Call Details Form */}
+        <Modal
+          visible={isCallDetailsOpen}
+          onOk={handleCallDetails}
+          onCancel={handleCancel}
+          okText="Save"
+        >
+          <div>
+            <div className="">
+              <div className="font-poppins text-base font-semibold mb-6">
+                Call Details
+              </div>
+
+              <div className="flex items-end mb-4">
+                <div className="mr-4">
+                  <h1 className="text-sm font-poppins">Duration:</h1>
+                </div>
+                <div className="flex items-start">
+                  <Space
+                    className=" border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                    direction="vertical"
+                    // size={12}
+                    style={{
+                      width: "10rem",
+                    }}
+                  >
+                    <DatePicker
+                      className="date-time-picker"
+                      suffixIcon={callStart}
+                      bordered={false}
+                      showTime
+                      onOk={onCallStart}
+                      onChange={onCallStartChange}
+                    />
+                  </Space>
+
+                  <div>
+                    <span className="text-3xl font-semibold px-1 text-center">
+                      -
+                    </span>
+                  </div>
+
+                  <Space
+                    className="border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                    direction="vertical"
+                    size={12}
+                    style={{
+                      width: "10rem",
+                    }}
+                  >
+                    <DatePicker
+                      className="date-time-picker"
+                      suffixIcon={callEnd}
+                      bordered={false}
+                      showTime
+                      onOk={onCallEnd}
+                      onChange={onCallEndChange}
+                    />
+                  </Space>
+                </div>
+              </div>
+
+              <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+                <input
+                  className="w-full font-poppins outline-none"
+                  type="text"
+                  placeholder="Write Remark"
+                  name="remark"
+                  id="remark"
+                  value={callRemark}
+                  onChange={(e) => setCallRemark(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
-        )} */}
+        </Modal>
+
+        {/* Call History Details */}
+        <Modal
+          visible={isCallHistoryOpen}
+          onCancel={() => setIsCallHistoryOpen(false)}
+          footer={false}
+        >
+          <div>
+            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              Call History
+            </h1>
+          </div>
+          <div className="tbl-header">
+            <table cellPadding="0" cellSpacing="0" border="0">
+              <thead>
+                <tr>
+                  <th className="w-16">No.</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Remark</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div className="">
+            {leadDetails?.leadCallHistory?.length > 0 ? (
+              <table
+                className="custom-table"
+                cellPadding="0"
+                cellSpacing="0"
+                border="0"
+              >
+                <tbody>
+                  {leadDetails?.leadCallHistory.map((history, i) => (
+                    <tr key={i}>
+                      <td className="w-16">{i + 1}</td>
+                      <td>{history.call_start_time}</td>
+                      <td>{history.call_end_time}</td>
+                      <td>{history.call_remark}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="py-20 flex justify-center items-center">
+                <h1 className="text-xl font-light">No Call History</h1>
+              </div>
+            )}
+          </div>
+        </Modal>
 
         {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
         {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
-          <div className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border">
-            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
-              $
-            </span>
-            <input
-              className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
-              type="text"
-              name=""
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Amount"
-              id=""
-            />
+          <div className="flex items-center">
+            <form
+              onSubmit={(e) => handleAddLeadAmount(e)}
+              className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border"
+            >
+              <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
+                $
+              </span>
+              <input
+                className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
+                type="text"
+                name=""
+                defaultValue={
+                  leadDetails?.leadAmountHistory[
+                    leadDetails?.leadAmountHistory?.length - 1
+                  ]?.amount
+                }
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="Amount"
+                id=""
+              />
+            </form>
+            <div>
+              <Icons.History
+                className="w-5 mx-2 cursor-pointer"
+                onClick={() => setIsAmountHistoryOpen(true)}
+              />
+            </div>
           </div>
         )}
+
+        {/* Amount History Details */}
+        <Modal
+          visible={isAmountHistoryOpen}
+          onCancel={() => setIsAmountHistoryOpen(false)}
+          footer={false}
+        >
+          <div>
+            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              Amount History
+            </h1>
+          </div>
+          <div className="tbl-header">
+            <table cellPadding="0" cellSpacing="0" border="0">
+              <thead>
+                <tr>
+                  <th className="w-16">No.</th>
+                  <th>Date</th>
+                  <th className="w-32">Amount</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div className="">
+            {leadDetails?.leadAmountHistory?.length > 0 ? (
+              <table
+                className="custom-table"
+                cellPadding="0"
+                cellSpacing="0"
+                border="0"
+              >
+                <tbody>
+                  {leadDetails?.leadAmountHistory?.map((history, i) => (
+                    <tr key={i}>
+                      <td className="w-16">{i + 1}</td>
+                      <td>
+                        {history.created_at.replace("T", " ").slice(0, 19)}
+                      </td>
+                      <td className="w-32">${history.amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="py-20 flex justify-center items-center">
+                <h1 className="text-xl font-light">No Amount History</h1>
+              </div>
+            )}
+          </div>
+        </Modal>
 
         {activeStatusTitle === "Called" && (
           <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
@@ -271,7 +474,12 @@ const LeadStatus = ({
               Payable :
             </span>
             <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-              $ {amount > 0 ? amount : "Not Fixed Yet"}
+              $
+              {
+                leadDetails?.leadAmountHistory[
+                  leadDetails?.leadAmountHistory?.length - 1
+                ]?.amount
+              }
             </span>
           </div>
         )}
@@ -303,12 +511,16 @@ const LeadStatus = ({
                 New Lead
               </h6>
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6 mt-4">
-                # {leadDetails?.course_code}
+                # {leadDetails?.leadDetails?.course_code}
               </h6>
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(1)}</p>
+            {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
+              ? new Date(leadDetails?.leadDetails?.lead_apply_date)
+                  .toString()
+                  .slice(0, 31)
+              : "Not Yet"}
           </div>
         </div>
 
@@ -346,7 +558,9 @@ const LeadStatus = ({
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(2)}</p>
+            {statusDateTime["Skilled"] !== "Not Yet"
+              ? new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
+              : "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -374,12 +588,14 @@ const LeadStatus = ({
                 Called
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                No. of Calls: {callCount}
+                No. of Calls: {leadDetails?.leadCallHistory?.length}
               </h6>
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(3)}</p>
+            {statusDateTime["Called"] !== "Not Yet"
+              ? new Date(statusDateTime["Called"]).toString().slice(0, 31)
+              : "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -415,7 +631,9 @@ const LeadStatus = ({
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(4)}</p>
+            {statusDateTime["Paid"] !== "Not Yet"
+              ? new Date(statusDateTime["Paid"]).toString().slice(0, 31)
+              : "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -458,7 +676,11 @@ const LeadStatus = ({
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(5)}</p>
+            <p>
+              {statusDateTime["Verified"] !== "Not Yet"
+                ? new Date(statusDateTime["Verified"]).toString().slice(0, 31)
+                : "Not Yet"}
+            </p>
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -497,7 +719,11 @@ const LeadStatus = ({
             </div>
           </div>
           <div>
-            <p>{handleStatusUpdateTime(6)}</p>
+            <p>
+              {statusDateTime["Completed"] !== "Not Yet"
+                ? new Date(statusDateTime["Completed"]).toString().slice(0, 31)
+                : "Not Yet"}
+            </p>
           </div>
         </div>
       </div>
