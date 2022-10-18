@@ -7,9 +7,6 @@ import {
   handleLeadStatusUpdate,
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
-import moment from "moment";
-
-const { RangePicker } = DatePicker;
 
 // ----Default Values----
 const LeadStatus = ({
@@ -100,6 +97,7 @@ const LeadStatus = ({
     //       ]?.amount
     //     : ""
     // );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {

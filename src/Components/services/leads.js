@@ -119,3 +119,15 @@ export const handleFetchChecklist = async (courseId) => {
     return error.response;
   }
 };
+
+export const handleChecklistDocumentUpload = async (documentDetails) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/update`,
+      documentDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

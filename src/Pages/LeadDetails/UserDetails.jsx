@@ -297,13 +297,16 @@ const UserDetails = ({ leadDetails }) => {
               Chek list
             </h1>
           </div>
+
+          {/* Checklist Modal */}
           <Modal
             visible={toggleChcekList}
             footer={null}
             onCancel={handleCancel}
           >
-            <CheckList />
+            <CheckList leadDetails={leadDetails} />
           </Modal>
+
           <div className="ml-4 mt-5">
             <button
               className="w-32 px-1.5 py-2 border border-black text-black text-xs font-medium leading-4 font-poppins rounded-md"
