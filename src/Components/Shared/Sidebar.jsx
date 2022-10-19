@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import Icons from "./Icons";
-import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { handlefetchMessages } from "../services/auth";
-import { addMessages } from "../../features/user/messagesSlice";
+import { NavLink } from "react-router-dom";
+import Icons from "./Icons";
 
 const Sidebar = ({
   active,

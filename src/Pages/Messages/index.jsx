@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { addMessages } from "../../features/user/messagesSlice";
-import { addNotifications } from "../../features/user/notificationSlice";
 import Message from "./Message";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);

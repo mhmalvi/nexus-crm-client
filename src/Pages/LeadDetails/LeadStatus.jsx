@@ -206,7 +206,7 @@ const LeadStatus = ({
     }
   };
 
-  console.log(leadDetails);
+  // console.log(leadDetails);
 
   const handleCancel = () => {
     setIsCallDetailsOpen(false);

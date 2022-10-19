@@ -5,7 +5,7 @@ import Filter from "bad-words";
 
 const Message = ({ handleMessageNavigation }) => {
   const messages = useSelector((state) => state.messages.messages);
-  const userDetails = useSelector((state) => state.user.userInfo);
+  // const userDetails = useSelector((state) => state.user.userInfo);
   const filter = new Filter();
 
   return (

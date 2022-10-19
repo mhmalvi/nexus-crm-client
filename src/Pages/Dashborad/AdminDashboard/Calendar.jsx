@@ -1,12 +1,18 @@
-import { DatePicker, Dropdown, Menu, Space } from "antd";
+import { DatePicker, Dropdown, Menu, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { io } from "socket.io-client";
 import { handleAddNotification } from "../../../Components/services/auth";
+import {
+  handleAddNotice,
+  handleDeleteNotices,
+  handleFetchNotices
+} from "../../../Components/services/company";
 import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../../features/user/notificationSlice";
+import Notice from "./Notice";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -28,24 +34,39 @@ const Calendar = ({
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
-  const [notice, setNotice] = useState("");
   const [syncNotifications, setSyncNotifications] = useState(false);
   // const [selectedDay, setSelectedDay] = useState("");
   // const [selectedMonth, setSelectedMonth] = useState("");
   // const [selectedYear, setSelectedYear] = useState("");
   // const [notifications, setNotifications] = useState([]);
+  const [noticeTitle, setNoticeTitle] = useState("");
+  const [noticeDescription, setNoticeDescription] = useState("");
+  const [notices, setNotices] = useState([]);
+  const [showNotices, setShowNotices] = useState(false);
+  const [syncNotices, setSyncNotices] = useState(true);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
   useEffect(() => {
-    const textAreaInput = document.getElementById("notice_input");
-    if (userDetails.role !== "admin") {
-      textAreaInput.setAttribute("disabled", "");
-      textAreaInput.placeholder = "No Notice Yet";
-    } else {
-      textAreaInput.placeholder = "Write notice here";
-    }
-  }, [userDetails]);
+    //   if (userDetails.role !== "admin") {
+    //     const textAreaInput = document.getElementById("notice_input");
+    //     textAreaInput.setAttribute("disabled", "");
+    //     textAreaInput.placeholder = "No Notice Yet";
+    //   } else {
+    //     const textAreaInput = document.getElementById("notice_input");
+    //     textAreaInput.placeholder = "Write notice here";
+    //   }
+
+    console.log(userDetails?.client_id);
+
+    (async () => {
+      const response = await handleFetchNotices(userDetails?.client_id);
+      console.log(response.data);
+      if (response?.data) {
+        setNotices(response?.data?.filter((notice) => notice.status));
+      }
+    })();
+  }, [userDetails, syncNotices]);
 
   const slideMonthRef = useRef();
   const slideDateRef = useRef();
@@ -81,27 +102,6 @@ const Calendar = ({
       }
     });
   }, [dispatch, syncNotifications]);
-
-  const handleSendNotice = async (e) => {
-    e.preventDefault();
-    if (notice !== "") {
-      const notificationData = {
-        user_id: 1,
-        client_id: 2,
-        lead_id: "",
-        email: "",
-        contact: "",
-        details: notice,
-        trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
-        notification_type: "notice",
-        status: 0,
-      };
-      handleAddNotification(notificationData);
-      // await socket.emit("send_notification", notificationData);
-      setSyncNotifications(!syncNotifications);
-      setNotice("");
-    }
-  };
 
   // const dates = [
   //   dayjs().date() - 7 < 0
@@ -212,6 +212,38 @@ const Calendar = ({
     setSelectedMonth(dateString.slice(5));
   };
 
+  const handleSendNotice = async (e) => {
+    e.preventDefault();
+    if (noticeDescription !== "") {
+      const notificationData = {
+        user_id: 1,
+        client_id: 2,
+        lead_id: "",
+        email: "",
+        contact: "",
+        details: noticeDescription,
+        trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
+        notification_type: "notice",
+        status: 0,
+      };
+      handleAddNotification(notificationData);
+
+      const handleAddNotile = await handleAddNotice(
+        userDetails?.client_id,
+        noticeTitle,
+        noticeDescription
+      );
+
+      if (handleAddNotile?.status) {
+        setSyncNotices(!syncNotices);
+      }
+      // await socket.emit("send_notification", notificationData);
+      setSyncNotifications(!syncNotifications);
+      setNoticeTitle("");
+      setNoticeDescription("");
+    }
+  };
+
   const handleClearDate = () => {
     setFilterDate("");
     setSelectedDay("");
@@ -220,6 +252,11 @@ const Calendar = ({
     slideMonthRef.current.slickGoTo(dayjs().month());
     slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
+  };
+
+  const handleDeleteNoticeReq = async (id) => {
+    const response = await handleDeleteNotices(id);
+    if (response?.status) setSyncNotices(!syncNotices);
   };
 
   return (
@@ -455,41 +492,108 @@ const Calendar = ({
         </div>
       </div>
 
-      <div
-        className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
-        style={{
-          borderRadius: "20px",
-        }}
+      <Modal
+        visible={showNotices}
+        onCancel={() => setShowNotices(false)}
+        footer={null}
       >
-        <div className="py-2.5 border-b">
-          <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
-            Notice Board
-          </h1>
+        <div className="">
+          <div className="font-poppins text-base font-semibold mb-6">
+            Notices
+          </div>
+          {notices.length ? (
+            <div>
+              {notices?.map((notice) => (
+                <Notice
+                  key={notice.id}
+                  notice={notice}
+                  handleDeleteNoticeReq={handleDeleteNoticeReq}
+                />
+              ))}
+            </div>
+          ) : (
+            <h1 className="font-poppins text-center">No Notices</h1>
+          )}
         </div>
-        <div>
-          <form
-            onSubmit={(e) => handleSendNotice(e)}
-            className="flex items-end flex-col"
-          >
-            <textarea
-              className="w-full outline-none px-2 py-1 rounded-md bg-transparent"
-              name=""
-              style={{ resize: "none" }}
-              id="notice_input"
-              value={notice}
-              onChange={(e) => setNotice(e.target.value)}
-              rows="7"
-            ></textarea>
-            {userDetails.role === "admin" && (
+      </Modal>
+
+      {userDetails.role === "admin" ? (
+        <div
+          className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
+          style={{
+            borderRadius: "20px",
+          }}
+        >
+          <div className="py-2.5 border-b flex flex-col justify-center items-center">
+            <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
+              Notice Board
+            </h1>
+            <button
+              onClick={() => {
+                setShowNotices(true);
+                console.log(showNotices);
+              }}
+              className="bg-black px-4 py-2 text-white rounded-lg"
+            >
+              Preview Notices
+            </button>
+          </div>
+          <div>
+            <form
+              onSubmit={(e) => handleSendNotice(e)}
+              className="flex items-start flex-col"
+            >
+              <input
+                className="w-full px-2 py-1 rounded-md bg-transparent outline-none border mb-3"
+                type="text"
+                placeholder="Notice Title"
+                value={noticeTitle}
+                onChange={(e) => setNoticeTitle(e.target.value)}
+              />
+              <span className="text-xs font-normal font-poppins mb-0.5 ml-1.5">
+                Notice Details
+              </span>
+              <textarea
+                className="w-full outline-none border px-2 py-1 rounded-md bg-transparent"
+                name=""
+                style={{ resize: "none" }}
+                id="notice_input"
+                value={noticeDescription}
+                onChange={(e) => setNoticeDescription(e.target.value)}
+                rows="3"
+              ></textarea>
               <input
                 className="px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md"
                 type="submit"
                 value="Send"
               />
-            )}
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <div
+            className="lg:w-64 h-60 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
+            style={{
+              borderRadius: "20px",
+            }}
+          >
+            <div className="py-2.5 border-b">
+              <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
+                Notice Board
+              </h1>
+            </div>
+            <div className="mt-14 flex items-center justify-center">
+              <button
+                onClick={() => setShowNotices(true)}
+                className="bg-black px-4 py-2 text-white rounded-lg"
+              >
+                Preview Notices
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
