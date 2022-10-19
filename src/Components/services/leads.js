@@ -131,3 +131,16 @@ export const handleChecklistDocumentUpload = async (documentDetails) => {
     return error.response;
   }
 };
+
+export const handleFetchCampaigns = async (clientId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/campaign/list`,
+      { client_id: clientId }
+    );
+    console.log(result.data);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

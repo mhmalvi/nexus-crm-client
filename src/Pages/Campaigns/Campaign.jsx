@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import fbCampaignCover from "../../assets/Images/facebook-campaign.jpg";
 
 const Campaign = ({ campaign }) => {
+  // console.log(campaign);
   return (
-    <div
-      className="mx-auto w-64 h-81 flex flex-col items-center bg-white shadow cursor-pointer overflow-hidden"
+    <Link
+      to={`${campaign?.campaign_id}`}
+      className="mx-auto w-64 h-81 flex flex-col items-center bg-white shadow cursor-pointer overflow-hidden text-black hover:text-black"
       style={{
         borderRadius: "10px",
       }}
@@ -44,7 +47,7 @@ const Campaign = ({ campaign }) => {
           {campaign.details}
         </h2>
       </div>
-    </div>
+    </Link>
   );
 };
 

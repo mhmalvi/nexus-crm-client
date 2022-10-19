@@ -19,6 +19,7 @@ const Calendar = ({
   setSelectedMonth,
   setSelectedYear,
   selectedYear,
+  // layout,
 }) => {
   const dispatch = useDispatch();
 
@@ -28,11 +29,11 @@ const Calendar = ({
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   const [notice, setNotice] = useState("");
+  const [syncNotifications, setSyncNotifications] = useState(false);
   // const [selectedDay, setSelectedDay] = useState("");
   // const [selectedMonth, setSelectedMonth] = useState("");
   // const [selectedYear, setSelectedYear] = useState("");
   // const [notifications, setNotifications] = useState([]);
-  const [syncNotifications, setSyncNotifications] = useState(false);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
 

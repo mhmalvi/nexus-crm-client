@@ -27,7 +27,7 @@ const Pay = () => {
 
   return (
     <div className="bg-white mt-18 2xl:mt-25 pt-1">
-      <div className="mx-auto  2xl:pb-0">
+      <div className="mx-auto 2xl:pb-0">
         <div className="rounded-2xl flex justify-center items-end">
           <div className="px-8 py-10 rounded-2xl border border-gray-400">
             <div>

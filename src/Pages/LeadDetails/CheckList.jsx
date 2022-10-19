@@ -2,8 +2,7 @@ import { Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
-  handleChecklistDocumentUpload,
-  handleFetchChecklist,
+  handleFetchChecklist
 } from "../../Components/services/leads";
 import { handleUploadFile } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";

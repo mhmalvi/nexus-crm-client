@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
 import Campaigns from "./Pages/Campaigns";
+import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
@@ -16,8 +17,6 @@ import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
 
 function App() {
-  
-
   return (
     <div>
       <Routes>
@@ -26,6 +25,7 @@ function App() {
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
+          <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
