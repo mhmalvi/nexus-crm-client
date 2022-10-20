@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Icons from "./Icons";
+import { Storage } from "./utils/store";
 
 const Sidebar = ({
   active,
@@ -12,6 +13,7 @@ const Sidebar = ({
   toggleNotification,
   setToggleNotification,
 }) => {
+  const navigate = useNavigate();
   const userMessages = useSelector((state) => state.messages);
   const userNotification = useSelector((state) => state.notifications);
 
@@ -44,7 +46,10 @@ const Sidebar = ({
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
 
-  console.log("userMessages ?????????? ", userMessages);
+  const handleLogout = () => {
+    Storage.removeItem("auth_tok");
+    navigate("/login");
+  };
 
   return (
     <div
@@ -291,6 +296,7 @@ const Sidebar = ({
               style={{
                 color: "#FF3B30",
               }}
+              onClick={handleLogout}
             >
               <Icons.LogOut />
               <span className="ml-4 leading-6 font-medium font-poppins">

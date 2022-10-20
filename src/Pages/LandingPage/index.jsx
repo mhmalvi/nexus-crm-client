@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import Icons from "../../Components/Shared/Icons";
 import Sidebar from "../../Components/Shared/Sidebar";
 import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
+import { Storage } from "../../Components/Shared/utils/store";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
 import Dashboard from "../Dashborad";
@@ -41,7 +42,11 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (window.location.pathname.length <= 1) {
-      navigate("/login");
+      if (Storage.getItem("auth_tok")) {
+        navigate("/dashboard");
+      } else {
+        navigate("/login");
+      }
     } else {
       setActive(window.location.pathname.toString().slice(1));
     }

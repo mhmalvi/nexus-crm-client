@@ -1,5 +1,6 @@
 import { Input, message } from "antd";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
@@ -7,7 +8,6 @@ import { Storage } from "../../../Components/Shared/utils/store";
 
 const Login = () => {
   document.title = "CRM -Log In";
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -15,29 +15,27 @@ const Login = () => {
     password: "",
   });
 
+
+  useEffect(() => {
+    if(Storage.getItem("auth_tok")){
+      navigate("/dashboard")
+    }
+  }, [navigate]);
+
   const userData = (e) => {
     const userdata = { ...data };
     userdata[e.target.id] = e.target.value;
     setData(userdata);
   };
 
-  console.log(data);
-  console.log(data.email);
-  console.log(data.password);
-
   const handleLoginReq = async (e) => {
     e.preventDefault();
-
-    console.log();
-
     const loginFormData = new FormData();
     loginFormData.append("email", data.email);
     loginFormData.append("password", data.password);
 
     const loginResponse = await handleLogin(loginFormData);
 
-    console.log(loginResponse);
-    console.log(loginResponse?.data?.token);
     if (loginResponse?.status === 200) {
       message.success("Successfully Logged In");
       navigate("/dashboard");
