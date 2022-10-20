@@ -14,6 +14,7 @@ const Sidebar = ({
   setToggleNotification,
 }) => {
   const navigate = useNavigate();
+  const userDetails = useSelector((state) => state.user);
   const userMessages = useSelector((state) => state.messages);
   const userNotification = useSelector((state) => state.notifications);
 
@@ -94,24 +95,26 @@ const Sidebar = ({
             </NavLink>
           </div>
 
-          <div>
-            <NavLink
-              to={"/overview"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
-              style={{
-                color: `${active === "overview" ? "#7037FF" : "#7C8DB5"}`,
-              }}
-              onClick={() => setActive("overview")}
-            >
-              <Icons.Chart />
-              <span className="ml-4 leading-6 font-medium font-poppins">
-                Overview
-              </span>
-              {active === "overview" && (
-                <div className="ml-auto active-option">|</div>
-              )}
-            </NavLink>
-          </div>
+          {userDetails?.userInfo?.role_id !== 6 && (
+            <div>
+              <NavLink
+                to={"/overview"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "overview" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("overview")}
+              >
+                <Icons.Chart />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Overview
+                </span>
+                {active === "overview" && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </NavLink>
+            </div>
+          )}
 
           <div>
             <div
@@ -210,24 +213,26 @@ const Sidebar = ({
             </NavLink>
           </div>
 
-          <div>
-            <NavLink
-              to={"/campaigns"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
-              style={{
-                color: `${active === "campaigns" ? "#7037FF" : "#7C8DB5"}`,
-              }}
-              onClick={() => setActive("campaigns")}
-            >
-              <Icons.Campaigns />
-              <span className="ml-4 leading-6 font-medium font-poppins">
-                Campaigns
-              </span>
-              {active === "campaigns" && (
-                <div className="ml-auto active-option">|</div>
-              )}
-            </NavLink>
-          </div>
+          {userDetails?.userInfo?.role_id !== 6 && (
+            <div>
+              <NavLink
+                to={"/campaigns"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "campaigns" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("campaigns")}
+              >
+                <Icons.Campaigns />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Campaigns
+                </span>
+                {active === "campaigns" && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </NavLink>
+            </div>
+          )}
 
           {/* <div>
             <div

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCampaigns } from "../../Components/services/leads";
+import Loading from "../../Components/Shared/Loader";
 import { addCampaigns } from "../../features/Leads/campaignSlice";
+import { setLoader } from "../../features/user/userSlice";
 import Campaign from "./Campaign";
 import campaignData from "./campaignsData.json";
 import Filter from "./Filter";
@@ -15,15 +17,20 @@ const Campaigns = () => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.user);
+  const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoader(true));
+
       const response = await handleFetchCampaigns(
         userDetails?.userInfo?.client_id
       );
-      console.log(response.data);
+
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
+        dispatch(setLoader(false));
+
         setCampaignList(response?.data);
       } else {
         setCampaignList(campaignData);
@@ -48,7 +55,9 @@ const Campaigns = () => {
       }
     } else {
       const campaign = campaignData.filter((campaign) =>
-        campaign.title.toLowerCase().includes(searchCampaign.toLowerCase())
+        campaign.campaign_name
+          .toLowerCase()
+          .includes(searchCampaign.toLowerCase())
       );
       setCampaignList(campaign);
     }
@@ -64,13 +73,19 @@ const Campaigns = () => {
           setSearchCampaign={setSearchCampaign}
         />
       </div>
-      <div>
-        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
-          {campaignList?.map((campaign, i) => (
-            <Campaign key={i} campaign={campaign} />
-          ))}
+      {loadingDetails ? (
+        <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
         </div>
-      </div>
+      ) : (
+        <div>
+          <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
+            {campaignList?.map((campaign, i) => (
+              <Campaign key={i} campaign={campaign} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

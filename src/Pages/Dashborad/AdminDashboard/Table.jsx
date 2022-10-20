@@ -3,7 +3,9 @@ import { Dropdown, Menu, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../../features/user/userSlice";
+import Loading from "../../../Components/Shared/Loader";
 
 const Table = ({
   title,
@@ -14,9 +16,23 @@ const Table = ({
   filterOptions,
 }) => {
   const leads = useSelector((state) => state?.leads)?.leads;
+  const loadingDetails = useSelector((state) => state?.user)?.loading;
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [list, setList] = useState([]);
+
+  useEffect(() => {
+    dispatch(setLoader(true));
+    if (data.length === 0) {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 3000);
+    } else {
+      dispatch(setLoader(false));
+    }
+  }, [data, data.length, dispatch]);
 
   useEffect(() => {
     if (!searchInput?.length) {
@@ -49,7 +65,7 @@ const Table = ({
             </div>
             <div className="ml-6">
               <CSVLink
-                data={list}
+                data={list ? list : "Empty"}
                 target="_blank"
                 filename={
                   typeof activeFilter === "number"
@@ -97,65 +113,74 @@ const Table = ({
             </thead>
           </table>
         </div>
-        <div className="tbl-content">
-          {data?.length ? (
-            <table
-              className="custom-table"
-              cellPadding="0"
-              cellSpacing="0"
-              border="0"
-            >
-              <tbody>
-                {list.map(
-                  (list) => (
-                    // list?.sales_user_id !== 0 && (
-                    <tr
-                      key={list.lead_id}
-                      onClick={() => handleNavigate(list.lead_id)}
-                    >
-                      <td>{list.lead_id}</td>
-                      <td>{list.lead_apply_date}</td>
-                      <td>{list.full_name}</td>
-                      <td>{list.course_code}</td>
-                      <td className="uppercase">{list.work_location}</td>
-                      <td>{list.campaign_id}</td>
 
-                      {statusColor.find(
-                        (status) => status.id === list?.lead_details_status
-                      ) ? (
-                        <td>
-                          {statusColor
-                            .filter(
-                              (status) =>
-                                status.id === list?.lead_details_status
-                            )
-                            .map((lead_status, index) => (
-                              <div
-                                key={index}
-                                className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                              >
+        {loadingDetails ? (
+          <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+            <Loading />
+          </div>
+        ) : (
+          <div className="tbl-content">
+            {data?.length ? (
+              <table
+                className="custom-table"
+                cellPadding="0"
+                cellSpacing="0"
+                border="0"
+              >
+                <tbody>
+                  {list.map(
+                    (list) => (
+                      // list?.sales_user_id !== 0 && (
+                      <tr
+                        key={list.lead_id}
+                        onClick={() => handleNavigate(list.lead_id)}
+                      >
+                        <td>{list.lead_id}</td>
+                        <td>{list.lead_apply_date}</td>
+                        <td>{list.full_name}</td>
+                        <td>{list.course_code}</td>
+                        <td className="uppercase">{list.work_location}</td>
+                        <td>{list.campaign_id}</td>
+
+                        {statusColor.find(
+                          (status) => status.id === list?.lead_details_status
+                        ) ? (
+                          <td>
+                            {statusColor
+                              .filter(
+                                (status) =>
+                                  status.id === list?.lead_details_status
+                              )
+                              .map((lead_status, index) => (
                                 <div
-                                  className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                                ></div>
-                                <div className="ml-1">{lead_status.title}</div>
-                              </div>
-                            ))}
-                        </td>
-                      ) : (
-                        <td>{list?.payment_via}</td>
-                      )}
-                    </tr>
-                  )
-                  // )
-                )}
-              </tbody>
-            </table>
-          ) : (
-            <div className="py-20 flex justify-center items-center">
-              <h1 className="text-xl font-light">No Leads</h1>
-            </div>
-          )}
-        </div>
+                                  key={index}
+                                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                                >
+                                  <div
+                                    className={`w-2 h-2 ${lead_status.color} rounded-full`}
+                                  ></div>
+                                  <div className="ml-1">
+                                    {lead_status.title}
+                                  </div>
+                                </div>
+                              ))}
+                          </td>
+                        ) : (
+                          <td>{list?.payment_via}</td>
+                        )}
+                      </tr>
+                    )
+                    // )
+                  )}
+                </tbody>
+              </table>
+            ) : (
+              <div className="py-20 flex justify-center items-center">
+                <h1 className="text-xl font-light">No Leads</h1>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

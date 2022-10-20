@@ -17,16 +17,11 @@ const Dashboard = () => {
   ).notifications;
 
   useEffect(() => {
+    // dispatch(addUserDetails(Storage.getItem("user_info")));
+
     // API Request for fetching messages
     (async () => {
       const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
-      // console.log("messages ------- ", messages);
-      // console.log(
-      //   messages?.filter(
-      //     (element, index) =>
-      //       messages.findIndex((obj) => obj.room === element.room) === index
-      //   )
-      // );
       dispatch(
         addMessages(
           messages?.filter(
@@ -56,8 +51,11 @@ const Dashboard = () => {
 
   return (
     <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
-      <UserDashboard />
-      <AdminDashboard />
+      {userDetails?.userInfo?.role_id === 6 ? (
+        <UserDashboard />
+      ) : (
+        <AdminDashboard />
+      )}
     </div>
   );
 };

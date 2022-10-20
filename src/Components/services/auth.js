@@ -10,7 +10,7 @@ export const handleRegistration = async (registrationDetails) => {
       `${process.env?.REACT_APP_AUTH_URL}/api/user/register`,
       registrationDetails
     );
-    return result;
+    return result?.data;
   } catch (error) {
     return error.response;
   }
