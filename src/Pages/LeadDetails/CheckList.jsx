@@ -1,8 +1,10 @@
-import { Upload } from "antd";
+import { message, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
-  handleFetchChecklist
+  handleChecklistDocumentUpload,
+  handleFetchChecklist,
+  handleFetchLeadCheckListDocuments,
 } from "../../Components/services/leads";
 import { handleUploadFile } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
@@ -10,52 +12,93 @@ import Icons from "../../Components/Shared/Icons";
 const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
   const [fileList, setFileList] = useState([]);
   const [documentList, setDocumentList] = useState([]);
+  const [userDocumentList, setUserDocumentList] = useState([]); //for accessstudent's submited document list
   const [syncDocumentList, setSyncDocumentList] = useState(false);
 
   const userDetails = useSelector((state) => state?.user);
 
-  const handleChange = async (e, info) => {
-    console.log(e);
-    console.log(info);
+  const handleChange = async (e, checklistId) => {
+    console.log(checklistId);
+    console.log(e?.file?.originFileObj);
 
     const fileFormData = new FormData();
     fileFormData.append("user_id", userDetails?.userInfo?.userId);
     fileFormData.append("client_id", leadDetails.client_id);
-    fileFormData.append("document_name", info?.file?.originFileObj);
-    fileFormData.append("document_details", info?.file?.originFileObj?.name);
+    fileFormData.append("document_name", e?.file?.originFileObj);
+    fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
     const uploadFile = await handleUploadFile(fileFormData);
 
     if (uploadFile?.message?.data.length) {
       setSyncDocumentList(!syncDocumentList);
     }
+
     console.log("uploadFile", uploadFile?.message?.data[0]?.id);
 
-    // const saveDocumentDetails = await handleChecklistDocumentUpload({
-    //   document_id: uploadFile?.message?.data[0]?.id,
-    //   lead_id: leadDetails?.lead_id,
-    //   course_id: leadDetails?.course_id,
-    // title: courseId,
-    // id: courseId,
-    // });
+    const saveDocumentDetails = await handleChecklistDocumentUpload({
+      checklist_id: checklistId,
+      lead_id: leadDetails?.lead_id,
+      document_id: uploadFile?.message?.data[0]?.id,
+      student_id: userDetails?.userInfo?.userId,
+    });
+
+    if (saveDocumentDetails?.status) {
+      message.success("Document Updated Successfully");
+    }
   };
 
   useEffect(() => {
     (async () => {
       const response = await handleFetchChecklist(leadDetails?.course_id);
-      if (response) {
+
+      if (response?.status) {
         setDocumentList(response?.data);
+        const checkList = [];
+        if (documentList) {
+          (response?.data).map((doc) => {
+            checkList.push(doc?.id);
+          });
+        }
+        console.log(checkList);
+
+        if (checkList.length) {
+          (async () => {
+            const studentDocumentsresponse =
+              await handleFetchLeadCheckListDocuments(
+                leadDetails?.lead_id,
+                JSON.stringify(checkList),
+                userDetails?.userInfo?.userId
+              );
+            if (studentDocumentsresponse?.data?.length) {
+              setUserDocumentList(studentDocumentsresponse?.data);
+            }
+          })();
+        }
       }
     })();
-  }, [leadDetails?.course_id]);
+  }, [leadDetails?.course_id, leadDetails?.lead_id, userDetails?.userInfo?.userId]);
 
-  // const props = {
-  //   action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  //   onChange: handleChange,
-  //   multiple: true,
-  // };
+  // useEffect(() => {
+  //   const checkList = [];
+  //   if (documentList) {
+  //     [...documentList].map((doc) => {
+  //       checkList.push(doc?.id);
+  //     });
+  //   }
+  //   console.log(checkList);
 
-  console.log(leadDetails);
+  //   if (checkList) {
+  //     (async () => {
+  //       const studentDocumentsresponse =
+  //         await handleFetchLeadCheckListDocuments(leadDetails?.lead_id);
+  //       if (studentDocumentsresponse) {
+  //         setDocumentList(studentDocumentsresponse?.data);
+  //       }
+  //     })();
+  //   }
+  // }, [documentList, leadDetails?.lead_id]);
+
+  // console.log(leadDetails);
 
   return (
     <div
@@ -73,8 +116,8 @@ const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
           <span className="mx-2">{certificate?.title} : </span>
           <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
             <Upload
-              onChange={(e) => handleChange(e)}
-              id={certificate?.title}
+              onChange={(e) => handleChange(e, certificate?.id)}
+              id={certificate?.id}
               fileList={fileList}
             >
               <div className="flex items-center">
@@ -83,6 +126,10 @@ const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
               </div>
             </Upload>
           </div>
+          <div className="font-poppins">
+            <h1></h1>
+            {/* <a href=""></a> */}
+          </div>
         </div>
       ))}
     </div>
@@ -90,36 +137,3 @@ const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
 };
 
 export default CheckList;
-
-// const checkLists = [
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-//   "S.S.C Certificate",
-//   "H.S.C Certificate",
-//   "P.S.C Certificate",
-//   "J.S.C Certificate",
-//   "K.S.C Certificate",
-// ];

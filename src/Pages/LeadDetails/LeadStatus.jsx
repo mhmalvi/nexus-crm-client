@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import {
   handleAddAmount,
   handleAddCall,
+  handleLeadDetailsUpdate,
   handleLeadStatusUpdate,
 } from "../../Components/services/leads";
+import { handleRegistration } from "../../Components/services/auth";
 import Icons from "../../Components/Shared/Icons";
 
 // ----Default Values----
@@ -97,7 +99,7 @@ const LeadStatus = ({
     //       ]?.amount
     //     : ""
     // );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
@@ -206,7 +208,56 @@ const LeadStatus = ({
     }
   };
 
-  // console.log(leadDetails);
+  console.log(leadDetails);
+
+  const handleRegistrationReq = async () => {
+    const registrationFormData = new FormData();
+
+    registrationFormData.append(
+      "email",
+      leadDetails?.leadDetails?.student_email
+    );
+    registrationFormData.append("role_id", 3);
+    registrationFormData.append(
+      "contact_number",
+      leadDetails?.leadDetails?.phone_number
+    );
+    registrationFormData.append(
+      "full_name",
+      leadDetails?.leadDetails?.full_name
+    );
+    registrationFormData.append(
+      "qualification",
+      leadDetails?.leadDetails?.form_data[6]?.values[0].replace("_", " ")
+    );
+    registrationFormData.append(
+      "work_experiences",
+      leadDetails?.leadDetails?.form_data[8]?.values[0].replace("_", " ")
+    );
+    registrationFormData.append(
+      "location",
+      leadDetails?.leadDetails?.work_location
+    );
+
+    const registrationResponse = await handleRegistration(registrationFormData);
+
+    if (registrationResponse?.data?.status) {
+      const leadUpdateResponse = await handleLeadDetailsUpdate(
+        leadDetails?.leadDetails.lead_id,
+        registrationResponse?.data?.data?.user_id
+      );
+      if (leadUpdateResponse?.status) {
+        message.success("User Registered Successfully");
+        setSyncDetails(!syncDetails);
+      }
+    } else {
+      message.warning("Email Already Exist");
+    }
+
+    for (const value of registrationFormData.values()) {
+      console.log(value);
+    }
+  };
 
   const handleCancel = () => {
     setIsCallDetailsOpen(false);
@@ -465,6 +516,30 @@ const LeadStatus = ({
             )}
           </div>
         </Modal>
+
+        {activeStatusTitle === "Called" &&
+          (leadDetails?.leadDetails?.student_id === 0 ? (
+            <div className="font-poppins">
+              <button
+                title="Register the user to this system"
+                className="text-xs bg-black text-white px-3 py-2.5 rounded-lg ml-2"
+                onClick={handleRegistrationReq}
+              >
+                Register
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                title="Register the user to this system"
+                disabled
+                className="text-xs bg-gray-200 cursor-not-allowed italic text-gray-500 px-3 py-2.5 rounded-lg ml-2"
+                onClick={handleRegistrationReq}
+              >
+                Registered
+              </button>
+            </div>
+          ))}
 
         {activeStatusTitle === "Called" && (
           <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">

@@ -41,7 +41,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (window.location.pathname.length <= 1) {
-      navigate("/dashboard");
+      navigate("/login");
     } else {
       setActive(window.location.pathname.toString().slice(1));
     }

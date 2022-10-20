@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Icons from "./Icons";
 
@@ -19,8 +19,8 @@ const Sidebar = ({
     console.log("From Sidebar");
   }, [userMessages]);
 
-  const userDetails = useSelector((state) => state?.user);
-  const dispatch = useDispatch();
+  // const userDetails = useSelector((state) => state?.user);
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   (async () => {

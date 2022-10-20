@@ -25,6 +25,18 @@ export const handleLeadDetails = async (leadId) => {
   }
 };
 
+export const handleLeadDetailsUpdate = async (leadId, userId) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/${leadId}/update`,
+      { student_id: userId }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleLeadStatusUpdate = async (
   leadId,
   newStatus,
@@ -122,10 +134,27 @@ export const handleFetchChecklist = async (courseId) => {
 
 export const handleChecklistDocumentUpload = async (documentDetails) => {
   try {
-    const result = await axios.put(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/update`,
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/add/document`,
       documentDetails
     );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchLeadCheckListDocuments = async (
+  leadId,
+  checklist,
+  studentId
+) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/student/documents`,
+      { lead_id: leadId, checklist: checklist, student_id: studentId }
+    );
+    console.log(result.data);
     return result.data;
   } catch (error) {
     return error.response;

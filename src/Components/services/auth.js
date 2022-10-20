@@ -1,9 +1,20 @@
-// All Network Calls
-
 import axios from "axios";
 import { io } from "socket.io-client";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+
+export const handleRegistration = async (userDetails) => {
+  try {
+    // const result = await coreAxios.get(`/messages/${userId}`);
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/register`,
+      userDetails
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const handlefetchMessages = async (userId) => {
   //   console.log(userId);
@@ -30,7 +41,6 @@ export const handlefetchNotifications = async (userId) => {
 };
 
 export const handleAddNotification = async (notificationData) => {
-  console.log(notificationData);
   try {
     await socket.emit("send_notification", notificationData);
   } catch (error) {
@@ -45,5 +55,3 @@ export const handleSetReminder = async (reminderData) => {
     return error.response;
   }
 };
-
-
