@@ -7,6 +7,8 @@ import ManagementAnalytics from "./ManagementAnalytics";
 import SalesAnalytics from "./SalesAnalytics";
 
 const Overview = () => {
+  document.title = "Overview";
+
   const pdfRef = useRef(null);
   const [image, takeScreenShot] = useScreenshot();
 
@@ -20,7 +22,7 @@ const Overview = () => {
       }, 10000);
       localStorage.setItem("monthly_report", `${dayjs().$D}-${dayjs().$M}`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const download = (

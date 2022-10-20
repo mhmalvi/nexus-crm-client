@@ -37,11 +37,11 @@ const Conversation = ({ id }) => {
   // const [previewImage, setPreviewImage] = useState("");
   // const [previewTitle, setPreviewTitle] = useState("");
 
-  console.log("id", id);
+  // console.log("id", id);
 
-  useEffect(() => {
-    socket.emit("join_room", id);
-  }, [id]);
+  // useEffect(() => {
+  //   socket.emit("join_room", id);
+  // }, [id]);
 
   useEffect(() => {
     (async () => {

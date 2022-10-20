@@ -1,23 +1,57 @@
-import { Input } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Input, message } from "antd";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { handleLogin } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
+import { Storage } from "../../../Components/Shared/utils/store";
 
 const Login = () => {
-  // const [data, setData] = useState({
-  //   username: "",
-  //   password: "",
-  // });
-  // const [error, setError] = useState("");
+  document.title = "CRM -Log In";
+
+  const navigate = useNavigate();
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const userData = (e) => {
+    const userdata = { ...data };
+    userdata[e.target.id] = e.target.value;
+    setData(userdata);
+  };
+
+  console.log(data);
+  console.log(data.email);
+  console.log(data.password);
+
+  const handleLoginReq = async (e) => {
+    e.preventDefault();
+
+    console.log();
+
+    const loginFormData = new FormData();
+    loginFormData.append("email", data.email);
+    loginFormData.append("password", data.password);
+
+    const loginResponse = await handleLogin(loginFormData);
+
+    console.log(loginResponse);
+    console.log(loginResponse?.data?.token);
+    if (loginResponse?.status === 200) {
+      message.success("Successfully Logged In");
+      navigate("/dashboard");
+      Storage.setItem("auth_tok", loginResponse?.data?.token);
+    } else {
+      message.warning("Oopps Wrong! Check You Email or Password");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="container max-w-md border border-gray-200 rounded-md p-3 bg-white">
         <div className="pb-3 pt-8">
           <div className="flex flex-col items-center">
-            {/* <h1 className="text-lg">Welcome to</h1> */}
-            {/* <span className="text-2xl">Quadque Technologies Limited</span> */}
-            {/* <img className="w-32" src={brandLogo} alt="" /> */}
             <Icons.CompanyLogo className="w-40" />
           </div>
         </div>
@@ -31,21 +65,22 @@ const Login = () => {
         </div>
 
         <div className="m-6">
-          <form className="mb-4">
+          <form className="mb-4" onSubmit={handleLoginReq}>
             <div className="mb-6 font-poppins">
               <label
                 htmlFor="email"
                 className="block mb-2 text-sm text-gray-600"
               >
-                Username
+                Email
               </label>
               <Input
                 // type="password"
                 size="large"
-                name="username"
-                id="username"
+                name="email"
+                id="email"
                 placeholder="Enter your username"
                 className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                onChange={userData}
                 required
               />
               {/* <input
@@ -76,6 +111,7 @@ const Login = () => {
                 id="password"
                 placeholder="Enter your password"
                 className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                onChange={userData}
                 required
               />
             </div>

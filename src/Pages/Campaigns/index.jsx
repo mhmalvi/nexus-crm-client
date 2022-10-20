@@ -7,6 +7,8 @@ import campaignData from "./campaignsData.json";
 import Filter from "./Filter";
 
 const Campaigns = () => {
+  document.title = `Campaigns`;
+
   const [campaignList, setCampaignList] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
   const [searchCampaign, setSearchCampaign] = useState("");

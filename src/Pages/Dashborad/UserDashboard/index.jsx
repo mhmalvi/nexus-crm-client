@@ -2,6 +2,8 @@ import React from "react";
 import AppliedCampaign from "./AppliedCampaign";
 
 const UserDashboard = () => {
+  document.title = "Dashboard";
+
   return (
     <div className="font-poppins mb-20">
       <div>

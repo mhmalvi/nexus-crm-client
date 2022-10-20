@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import {
   handleChecklistDocumentUpload,
   handleFetchChecklist,
-  handleFetchLeadCheckListDocuments,
+  handleFetchLeadCheckListDocuments
 } from "../../Components/services/leads";
 import { handleUploadFile } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
@@ -76,7 +76,7 @@ const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
         }
       }
     })();
-  }, [leadDetails?.course_id, leadDetails?.lead_id, userDetails?.userInfo?.userId]);
+  }, [leadDetails]);
 
   // useEffect(() => {
   //   const checkList = [];

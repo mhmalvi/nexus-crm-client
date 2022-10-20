@@ -7,8 +7,8 @@ import UserDetails from "./UserDetails";
 
 const LeadDetails = () => {
   const { id } = useParams();
-
   const [leadDetails, setleadDetails] = useState();
+
   // const [statusDetails, setStatusDetails] = useState([]);
   const [syncDetails, setSyncDetails] = useState(false);
   const [leadStatusDetails, setLeadStatusDetails] = useState({
@@ -55,6 +55,8 @@ const LeadDetails = () => {
           status[
             `${Object.keys(status)[parseInt(leadStatus?.lead_status) - 1]}`
           ] = true;
+
+          document.title = `Details - ${response?.leadDetails?.full_name}`;
 
           statusTimeDate[
             `${

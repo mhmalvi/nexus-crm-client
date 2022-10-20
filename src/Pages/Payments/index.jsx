@@ -5,6 +5,8 @@ import Table from "../Dashborad/AdminDashboard/Table";
 import data from "./paymentData.json";
 
 const Payment = () => {
+  document.title = `Payments`;
+
   const [paymentData, setPaymentData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 

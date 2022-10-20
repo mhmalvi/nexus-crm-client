@@ -3,12 +3,24 @@ import { io } from "socket.io-client";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
-export const handleRegistration = async (userDetails) => {
+export const handleRegistration = async (registrationDetails) => {
   try {
     // const result = await coreAxios.get(`/messages/${userId}`);
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/register`,
-      userDetails
+      registrationDetails
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleLogin = async (loginDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/login`,
+      loginDetails
     );
     return result;
   } catch (error) {
