@@ -144,15 +144,11 @@ export const handleChecklistDocumentUpload = async (documentDetails) => {
   }
 };
 
-export const handleFetchLeadCheckListDocuments = async (
-  leadId,
-  checklist,
-  studentId
-) => {
+export const handleFetchLeadCheckListDocuments = async (details) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/student/documents`,
-      { lead_id: leadId, checklist: checklist, student_id: studentId }
+      details
     );
     console.log(result.data);
     return result.data;

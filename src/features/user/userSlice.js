@@ -21,6 +21,8 @@ const initialState = {
   success: false,
 };
 
+initialState.userInfo.client_id = 2;
+
 export const userSlice = createSlice({
   name: "user",
   initialState,

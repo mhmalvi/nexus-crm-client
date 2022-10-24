@@ -7,8 +7,8 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
   const [editNotice, setEditNotice] = useState(false);
-  const [updatedNoticeTitle, setUpdatedNoticeTitle] = useState("");
-  const [updatedNoticeDescription, setUpdatedNoticeDescription] = useState("");
+  // const [updatedNoticeTitle, setUpdatedNoticeTitle] = useState("");
+  // const [updatedNoticeDescription, setUpdatedNoticeDescription] = useState("");
 
   const handleUpdateNoticeReq = async (id) => {
     const noticeTitle = document.getElementById(
@@ -29,11 +29,9 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
     }
   };
 
-  console.log(updatedNoticeTitle, updatedNoticeDescription);
-
   return (
-    <div className="relative font-poppins my-4 flex items-center">
-      <div className="h-full w-full border border-gray-200 rounded-lg px-3 py-2 flex flex-col justify-center">
+    <div className="relative font-poppins border border-gray-200 my-4 flex items-center rounded-lg shadow">
+      <div className="h-full w-full  px-3 py-2 flex flex-col justify-center">
         <li className="list-disc text-black font-semibold text-base leading-6 my-1">
           <span
             id={`notice_title${notice?.id}`}
@@ -44,7 +42,7 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
                 ? "bg-gray-100 border border-gray-300 outline-none px-1 py-0.5 rounded-lg"
                 : "bg-white cursor-default"
             }`}
-            onChange={(e) => setUpdatedNoticeTitle(e.target.value)}
+            // onChange={(e) => setUpdatedNoticeTitle(e.target.value)}
           >
             {notice?.notice_title}
           </span>
@@ -59,11 +57,11 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
                 ? "bg-gray-100 border border-gray-300 outline-none px-1 py-0.5 rounded-lg"
                 : "bg-white cursor-default"
             }`}
-            onChange={(e) => setUpdatedNoticeDescription(e.target.value)}
+            // onChange={(e) => setUpdatedNoticeDescription(e.target.value)}
           >
             {notice?.notice_description}
           </div>
-          {userDetails?.role === "admin" && (
+          {userDetails?.role_id === 3 && (
             <div>
               {editNotice ? (
                 <button
@@ -82,7 +80,7 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
           )}
         </div>
       </div>
-      {userDetails?.role === "admin" && (
+      {userDetails?.role_id === 3 && (
         <div
           className="absolute -top-1.5 -right-1.5 w-4 py-0.5 ml-2 flex justify-center items-center bg-red-500 text-white rounded-full cursor-pointer"
           onClick={() => handleDeleteNoticeReq(notice?.id)}

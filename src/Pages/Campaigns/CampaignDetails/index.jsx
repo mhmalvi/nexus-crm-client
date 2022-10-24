@@ -150,7 +150,7 @@ const CampaignDetails = () => {
         leadList
           ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
           ?.filter(
-            (lead) => lead.sales_user_id === userDetails?.userInfo?.userId
+            (lead) => lead.sales_user_id === userDetails?.userInfo?.user_id
           )
       );
     } else {

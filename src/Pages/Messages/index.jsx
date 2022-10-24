@@ -14,9 +14,9 @@ const Messages = () => {
 
   const handleMessageNavigation = async (message) => {
     console.log("userDetails", message);
-    console.log("userDetails.userInfo.userId", userDetails.userInfo.userId);
+    console.log("userDetails.userInfo.userId", userDetails.userInfo.user_id);
 
-    if (message.receiver_id === userDetails.userInfo.userId) {
+    if (message.receiver_id === userDetails.userInfo.user_id) {
       await socket.emit("read_message", message.id);
       socket.on("updated_messages", (data) => {
         if (data) {
@@ -38,10 +38,10 @@ const Messages = () => {
   };
 
   // useEffect(() => {
-  //   console.log(userDetails?.userInfo?.userId);
+  //   console.log(userDetails?.userInfo?.user_id);
   //   // API Request
   //   const fetchData = async () => {
-  //     const response = await handlefetchMessages(userDetails?.userInfo?.userId);
+  //     const response = await handlefetchMessages(userDetails?.userInfo?.user_id);
   //     const finteredMessage = response.filter(
   //       (element, index) =>
   //         response.findIndex((obj) => obj.sender_id === element.sender_id) ===
@@ -52,7 +52,7 @@ const Messages = () => {
   //   };
 
   //   fetchData();
-  // }, [dispatch, userDetails?.userInfo?.userId]);
+  // }, [dispatch, userDetails?.userInfo?.user_id]);
 
   return (
     <div

@@ -28,7 +28,7 @@ const Table = ({
     if (data.length === 0) {
       setTimeout(() => {
         dispatch(setLoader(false));
-      }, 3000);
+      }, 5000);
     } else {
       dispatch(setLoader(false));
     }
@@ -65,7 +65,7 @@ const Table = ({
             </div>
             <div className="ml-6">
               <CSVLink
-                data={list ? list : "Empty"}
+                data={list?.length ? list : "Empty"}
                 target="_blank"
                 filename={
                   typeof activeFilter === "number"

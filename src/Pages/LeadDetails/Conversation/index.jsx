@@ -45,7 +45,7 @@ const Conversation = ({ id }) => {
 
   useEffect(() => {
     (async () => {
-      const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
+      const messages = await handlefetchMessages(userDetails?.userInfo?.user_id);
       // console.log("messages ------- ", messages);
       // console.log(
       //   messages?.filter(
@@ -72,7 +72,7 @@ const Conversation = ({ id }) => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [dispatch, id, sync, userDetails?.userInfo?.userId]);
+  }, [dispatch, id, sync, userDetails?.userInfo?.user_id]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -126,7 +126,7 @@ const Conversation = ({ id }) => {
         room: id,
         // sender_id: parseInt(localStorage.getItem("userId")),
         // sender_name: localStorage.getItem("username"),
-        sender_id: userDetails?.userInfo?.userId,
+        sender_id: userDetails?.userInfo?.user_id,
         sender_name:
           userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
         recever_id: parseInt(localStorage.getItem("receverId")),

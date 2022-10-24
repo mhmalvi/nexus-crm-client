@@ -8,7 +8,7 @@ import { handleAddNotification } from "../../../Components/services/auth";
 import {
   handleAddNotice,
   handleDeleteNotices,
-  handleFetchNotices
+  handleFetchNotices,
 } from "../../../Components/services/company";
 import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addNotifications } from "../../../features/user/notificationSlice";
@@ -496,6 +496,7 @@ const Calendar = ({
         visible={showNotices}
         onCancel={() => setShowNotices(false)}
         footer={null}
+        width="1000px"
       >
         <div className="">
           <div className="font-poppins text-base font-semibold mb-6">
@@ -517,7 +518,7 @@ const Calendar = ({
         </div>
       </Modal>
 
-      {userDetails.role === "admin" ? (
+      {userDetails.role_id === 3 ? (
         <div
           className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
           style={{

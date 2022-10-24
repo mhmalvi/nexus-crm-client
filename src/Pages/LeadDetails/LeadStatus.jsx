@@ -112,7 +112,7 @@ const LeadStatus = ({
     const statusUpdateResponse = await handleLeadStatusUpdate(
       leadDetails?.leadDetails?.lead_id,
       parseInt(key) + 1,
-      userDetails?.userInfo?.userId
+      userDetails?.userInfo?.user_id
     );
 
     if (statusUpdateResponse?.status) {

@@ -21,7 +21,7 @@ const Dashboard = () => {
 
     // API Request for fetching messages
     (async () => {
-      const messages = await handlefetchMessages(userDetails?.userInfo?.userId);
+      const messages = await handlefetchMessages(userDetails?.userInfo?.user_id);
       dispatch(
         addMessages(
           messages?.filter(
@@ -35,7 +35,7 @@ const Dashboard = () => {
     // API Request for fetching notifiaction
     (async () => {
       const response = await handlefetchNotifications(
-        userDetails?.userInfo?.userId
+        userDetails?.userInfo?.user_id
       );
 
       response?.forEach((notification) => {
@@ -47,7 +47,7 @@ const Dashboard = () => {
         }
       });
     })();
-  }, [dispatch, userDetails?.userInfo?.userId, userNotifications]);
+  }, [dispatch, userDetails?.userInfo?.user_id, userNotifications]);
 
   return (
     <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">

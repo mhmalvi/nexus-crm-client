@@ -38,7 +38,7 @@ const UserDetails = ({ leadDetails }) => {
     const reviewResponse = await handleLeadReviewUpdate(
       leadDetails?.lead_id,
       newRating,
-      userDetails?.userInfo?.userId
+      userDetails?.userInfo?.user_id
     );
 
     if (reviewResponse?.status) {
@@ -53,7 +53,7 @@ const UserDetails = ({ leadDetails }) => {
 
     const commentUpdateResponse = await handleLeadCommentUpdate(
       leadDetails?.lead_id,
-      userDetails?.userInfo?.userId,
+      userDetails?.userInfo?.user_id,
       comment
     );
 
@@ -76,8 +76,7 @@ const UserDetails = ({ leadDetails }) => {
             {leadDetails?.full_name}
           </h1>
           <div className="relative">
-            {userDetails?.userInfo?.role === "sales_employee" &&
-            closeSealsman ? (
+            {userDetails?.userInfo?.role_id === 5 && closeSealsman ? (
               <img
                 title={
                   userDetails?.userInfo?.firstName +
@@ -270,9 +269,9 @@ const UserDetails = ({ leadDetails }) => {
             >
               View
             </button>
-            <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
+            {/* <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
               Edit
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -335,7 +334,7 @@ const UserDetails = ({ leadDetails }) => {
           onSubmit={(e) => handleUpdateComment(e)}
           className="2xl:w-84 mt-5 "
         >
-          {userDetails?.userInfo?.role === "student" ? (
+          {userDetails?.userInfo?.role_id === 6 ? (
             <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
               {leadDetails?.lead_remarks
                 ? leadDetails?.lead_remarks
