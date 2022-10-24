@@ -18,6 +18,7 @@ import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
 import Settings from "../Settings";
 import CompanySettings from "../Settings/CompanySettings";
+import Subscription from "../Subscription";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -241,11 +242,11 @@ const Items = [
     count: 0,
   },
   {
-    key: "export-excel",
-    name: "export-excel",
-    icon: <Icons.Payment />,
-    label: "Export Excel",
-    component: <Dashboard />,
+    key: "subscription",
+    name: "subscription",
+    icon: <Icons.Campaigns />,
+    label: "subscription",
+    component: <Subscription />,
     count: 0,
   },
   {
@@ -256,22 +257,6 @@ const Items = [
     component: <Settings />,
     count: 0,
   },
-  // {
-  //   key: "lead/:id",
-  //   name: "lead-details",
-  //   icon: <Icons.Settings />,
-  //   label: "Lead Details",
-  //   component: <LeadDetails />,
-  //   count: 0,
-  // },
-  // {
-  //   key: "settings/company/",
-  //   name: "company-details",
-  //   icon: <Icons.Settings />,
-  //   label: "Company Details",
-  //   component: <CompanySettings />,
-  //   count: 0,
-  // },
 ];
 
 const Items2 = [

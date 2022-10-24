@@ -252,6 +252,26 @@ const Sidebar = ({
             </div>
           </div> */}
 
+          {/* pricing section */}
+          <div>
+            <NavLink
+              to={"/subscription"}
+              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              style={{
+                color: `${active === "subscription" ? "#7037FF" : "#7C8DB5"}`,
+              }}
+              onClick={() => setActive("subscription")}
+            >
+              <Icons.Pricing />
+              <span className="ml-4 leading-6 font-medium font-poppins">
+                Subscription
+              </span>
+              {active === "subscription" && (
+                <div className="ml-auto active-option">|</div>
+              )}
+            </NavLink>
+          </div>
+
           <div>
             <NavLink
               to={"/settings"}

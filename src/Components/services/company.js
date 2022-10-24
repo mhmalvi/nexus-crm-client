@@ -44,12 +44,6 @@ export const handleUpdateNotice = async (
   noticeTitile,
   noticeDesc
 ) => {
-  console.log({
-    id: noticeId,
-    notice_title: noticeTitile,
-    notice_description: noticeDesc,
-  });
-
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_COMPANY_URL}/api/notice/${noticeId}/update`,
@@ -57,6 +51,29 @@ export const handleUpdateNotice = async (
         notice_title: noticeTitile,
         notice_description: noticeDesc,
       }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchPackages = async () => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/get/package`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCreatePackage = async (packageDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/store/package`,
+      packageDetails
     );
     return result.data;
   } catch (error) {
