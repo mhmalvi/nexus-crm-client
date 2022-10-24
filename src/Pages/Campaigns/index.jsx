@@ -13,6 +13,7 @@ const Campaigns = () => {
 
   const [campaignList, setCampaignList] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
+  const [activeSection, setActiveSection] = useState(0);
   const [searchCampaign, setSearchCampaign] = useState("");
   const dispatch = useDispatch();
 
@@ -65,25 +66,56 @@ const Campaigns = () => {
 
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
-      <div>
-        <Filter
-          activeFilter={activeFilter}
-          setActiveFilter={setActiveFilter}
-          // searchCampaign={searchCampaign}
-          setSearchCampaign={setSearchCampaign}
-        />
+      <div className="flex items-center mb-6 mt-10">
+        <div onClick={() => setActiveSection(0)}>
+          <h1
+            className={`text-sm leading-4 font-poppins pr-3 py-2 cursor-pointer mr-2.5 ${
+              activeSection === 0
+                ? "text-brand-color font-semibold"
+                : "text-black font-normal"
+            }
+            rounded-full`}
+          >
+            Show Campaigns
+          </h1>
+        </div>
+        <div onClick={() => setActiveSection(1)}>
+          <h1
+            className={`text-sm leading-4 font-poppins px-3 py-2 cursor-pointer mr-2.5 ${
+              activeSection === 1
+                ? "text-brand-color font-semibold"
+                : "text-black font-normal"
+            } rounded-full`}
+          >
+            Show Courses
+          </h1>
+        </div>
       </div>
+      {activeSection === 0 && (
+        <div>
+          <Filter
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
+            // searchCampaign={searchCampaign}
+            setSearchCampaign={setSearchCampaign}
+          />
+        </div>
+      )}
       {loadingDetails ? (
         <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       ) : (
         <div>
-          <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
-            {campaignList?.map((campaign, i) => (
-              <Campaign key={i} campaign={campaign} />
-            ))}
-          </div>
+          {activeSection === 0 ? (
+            <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
+              {campaignList?.map((campaign, i) => (
+                <Campaign key={i} campaign={campaign} />
+              ))}
+            </div>
+          ) : (
+            <div>Courses</div>
+          )}
         </div>
       )}
     </div>
