@@ -28,7 +28,7 @@ const Table = ({
     if (data.length === 0) {
       setTimeout(() => {
         dispatch(setLoader(false));
-      }, 5000);
+      }, 4000);
     } else {
       dispatch(setLoader(false));
     }
@@ -191,7 +191,7 @@ export default Table;
 const statusColor = [
   {
     id: 0,
-    title: "Suspend",
+    title: "Suspended",
     color: "bg-black",
   },
   {

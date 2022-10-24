@@ -19,6 +19,7 @@ const LeadStatus = ({
   statusDateTime,
 }) => {
   const statusData = [
+    "Suspended",
     "New Lead",
     "Skilled",
     "Called",
@@ -46,6 +47,11 @@ const LeadStatus = ({
   // const [isModalOpen, setIsModalOpen] = useState(true);
 
   const statusColor = [
+    {
+      lable: "Suspended",
+      color: "#000000",
+      class: "color-black",
+    },
     {
       lable: "New Lead",
       color: "#34C759",
@@ -80,16 +86,20 @@ const LeadStatus = ({
 
   useEffect(() => {
     setActiveStatusTitle(
-      statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1]
+      leadDetails?.leadDetails?.lead_details_status === 0
+        ? "Suspended"
+        : statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0)]
     );
     setLeadStatusColor(
-      statusColor.find(
-        (i) =>
-          i.lable ===
-          statusData[
-            Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-          ]
-      ).class
+      leadDetails?.leadDetails?.lead_details_status === 0
+        ? "color-black"
+        : statusColor.find(
+            (i) =>
+              i.lable ===
+              statusData[
+                Object.values(leadStatus).reduce((a, item) => a + item, 0)
+              ]
+          ).class
     );
 
     // setAmount(
@@ -209,6 +219,7 @@ const LeadStatus = ({
   };
 
   console.log(leadDetails);
+  console.log("leadStatus", leadStatus);
 
   const handleRegistrationReq = async () => {
     const registrationFormData = new FormData();
@@ -262,6 +273,8 @@ const LeadStatus = ({
   const handleCancel = () => {
     setIsCallDetailsOpen(false);
   };
+
+  console.log("statusDateTime", statusDateTime);
 
   return (
     <div className="min-h-full pr-6 border-r">
@@ -516,6 +529,14 @@ const LeadStatus = ({
             )}
           </div>
         </Modal>
+
+        {activeStatusTitle === "Suspended" && (
+          <div>
+            <div className="ml-3">
+              {new Date(statusDateTime["Suspended"]).toString().slice(0, 31)}
+            </div>
+          </div>
+        )}
 
         {activeStatusTitle === "Called" &&
           (leadDetails?.leadDetails?.student_id === 0 ? (

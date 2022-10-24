@@ -12,6 +12,7 @@ const LeadDetails = () => {
   // const [statusDetails, setStatusDetails] = useState([]);
   const [syncDetails, setSyncDetails] = useState(false);
   const [leadStatusDetails, setLeadStatusDetails] = useState({
+    Suspended: false,
     "New Lead": true,
     Skilled: false,
     Called: false,
@@ -21,6 +22,7 @@ const LeadDetails = () => {
   });
 
   const [statusDateTime, setStatusDateTime] = useState({
+    Suspended: "Not Yet",
     "New Lead": "Not Yet",
     Skilled: "Not Yet",
     Called: "Not Yet",
@@ -35,6 +37,7 @@ const LeadDetails = () => {
       if (response) {
         setleadDetails(response);
         const status = {
+          Suspended: false,
           "New Lead": false,
           Skilled: false,
           Called: false,
@@ -43,6 +46,7 @@ const LeadDetails = () => {
           Completed: false,
         };
         const statusTimeDate = {
+          Suspended: "Not Yet",
           "New Lead": "Not Yet",
           Skilled: "Not Yet",
           Called: "Not Yet",
@@ -53,15 +57,13 @@ const LeadDetails = () => {
 
         (response?.leadAllStatus).forEach((leadStatus) => {
           status[
-            `${Object.keys(status)[parseInt(leadStatus?.lead_status) - 1]}`
+            `${Object.keys(status)[parseInt(leadStatus?.lead_status)]}`
           ] = true;
 
           document.title = `Details - ${response?.leadDetails?.full_name}`;
 
           statusTimeDate[
-            `${
-              Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status) - 1]
-            }`
+            `${Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status)]}`
           ] = `${leadStatus?.updated_at?.replace("T", " ")?.slice(0, 19)}`;
         });
 
@@ -73,7 +75,7 @@ const LeadDetails = () => {
 
   return (
     <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
-      <div className="grid grid-cols-3">
+      <div className="relative grid grid-cols-3">
         <div>
           <LeadStatus
             leadStatus={leadStatusDetails}
@@ -89,6 +91,11 @@ const LeadDetails = () => {
         <div>
           <UserDetails leadDetails={leadDetails?.leadDetails} />
         </div>
+        {leadDetails?.leadDetails?.lead_details_status === 0 && (
+          <div className="w-full h-full bg-white bg-opacity-50 absolute flex justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+            Lead has been suspended
+          </div>
+        )}
       </div>
     </div>
   );

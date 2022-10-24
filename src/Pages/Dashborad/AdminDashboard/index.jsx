@@ -58,7 +58,6 @@ const AdminDashboard = () => {
   }, [leadList, selectedDay, selectedMonth, selectedYear]);
 
   useEffect(() => {
-    console.log("filterDate >>>>>", filterDate);
     if (filterDate.length) {
       setLeadData(
         leadList.filter(
@@ -71,22 +70,28 @@ const AdminDashboard = () => {
   }, [filterDate, leadList]);
 
   const handleFilterLeadList = (filterId) => {
-    console.log("filterId....", filterId);
-
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
       (async () => {
         const response = await handleFetchLeads(
           userDetails?.userInfo?.client_id
         );
-        setLeadData(response.data);
+        setLeadData(
+          response.data.filter((lead) => lead?.lead_details_status !== 0)
+        );
         dispatch(addLeads(response.data));
       })();
     } else if (filterId === 8) {
       setLeadData(
         leadList.filter(
-          (lead) => lead.sales_user_id === userDetails?.userInfo?.userId
+          (lead) =>
+            parseInt(lead.sales_user_id) ===
+            parseInt(userDetails?.userInfo?.user_id)
         )
+      );
+    } else if (filterId === 9) {
+      setLeadData(
+        leadList.filter((lead) => parseInt(lead.lead_details_status) === 0)
       );
     } else {
       setLeadData(
@@ -100,7 +105,7 @@ const AdminDashboard = () => {
   const handleStaredLeadsFilter = (starFilterId) => {
     setActiveFilter(starFilterId);
     setLeadData(
-      leadList.filter((lead) => parseInt(lead.star_review) === starFilterId - 8)
+      leadList.filter((lead) => parseInt(lead.star_review) === starFilterId - 9)
     );
   };
 
@@ -173,6 +178,10 @@ const filterOptions = [
     title: "My Leads",
   },
   {
+    id: 9,
+    title: "Suspended",
+  },
+  {
     id: 0,
     title: "All",
   },
@@ -184,23 +193,23 @@ const filterOptions = [
 
 const ratings = [
   {
-    id: 9,
+    id: 10,
     title: "1 Stars",
   },
   {
-    id: 10,
+    id: 11,
     title: "2 Stars",
   },
   {
-    id: 11,
+    id: 12,
     title: "3 Stars",
   },
   {
-    id: 12,
+    id: 13,
     title: "4 Stars",
   },
   {
-    id: 13,
+    id: 14,
     title: "5 Stars",
   },
 ];

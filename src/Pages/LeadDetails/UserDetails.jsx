@@ -2,17 +2,19 @@ import { message, Modal } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactStars from "react-stars";
 import {
   handleLeadCommentUpdate,
   handleLeadReviewUpdate,
+  handleLeadStatusUpdate,
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 import CheckList from "./CheckList";
 
 const UserDetails = ({ leadDetails }) => {
   const userDetails = useSelector((state) => state?.user);
+  const navigate = useNavigate();
 
   const [addSealsman, setAddSealsman] = useState(false);
   const [toggleChcekList, setToggleChcekList] = useState(false);
@@ -20,8 +22,6 @@ const UserDetails = ({ leadDetails }) => {
   const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
-
-  console.log(leadDetails);
 
   useEffect(() => {
     setRating(leadDetails?.star_review);
@@ -66,6 +66,19 @@ const UserDetails = ({ leadDetails }) => {
   const handleCommentChange = (e) => {
     setComment(e?.target?.value);
     document.getElementById("lead_comment").style.caretColor = "black";
+  };
+
+  const handleLeadSuspend = async () => {
+    const statusUpdateResponse = await handleLeadStatusUpdate(
+      leadDetails?.lead_id,
+      0,
+      userDetails?.userInfo?.user_id
+    );
+
+    if (statusUpdateResponse?.status) {
+      message.success("Lead Has Been Suspended Successfully");
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -250,7 +263,10 @@ const UserDetails = ({ leadDetails }) => {
           <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
             Edit
           </button>
-          <button className="w-32 px-1.5 py-2 border border-red-500 text-red-500 ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
+          <button
+            className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 ml-4 text-xs font-medium leading-4 font-poppins rounded-md`}
+            onClick={handleLeadSuspend}
+          >
             Suspend
           </button>
         </div>

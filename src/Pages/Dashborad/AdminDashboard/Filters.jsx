@@ -6,7 +6,6 @@ const Filters = ({
   filterOptions,
   ratings,
   layout,
-  activeStars,
   setSearchInput,
   handleFilterLeadList,
   handleStaredLeadsFilter,

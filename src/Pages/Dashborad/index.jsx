@@ -17,11 +17,13 @@ const Dashboard = () => {
   ).notifications;
 
   useEffect(() => {
-    // dispatch(addUserDetails(Storage.getItem("user_info")));
+    document.title = `Dashboard`;
 
     // API Request for fetching messages
     (async () => {
-      const messages = await handlefetchMessages(userDetails?.userInfo?.user_id);
+      const messages = await handlefetchMessages(
+        userDetails?.userInfo?.user_id
+      );
       dispatch(
         addMessages(
           messages?.filter(

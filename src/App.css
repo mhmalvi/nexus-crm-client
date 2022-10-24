@@ -186,6 +186,13 @@ table.custom-table > tbody > tr:hover td {
   text-align: center;
 } */
 
+.color-black > .ant-space {
+  background-color: #000000 !important;
+  color: white !important;
+  outline: none !important;
+  border: none !important;
+}
+
 .color-green > .ant-space {
   background-color: #34c759 !important;
   color: white !important;
