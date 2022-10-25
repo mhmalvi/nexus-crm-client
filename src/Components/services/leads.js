@@ -133,11 +133,13 @@ export const handleFetchChecklist = async (courseId) => {
 };
 
 export const handleChecklistDocumentUpload = async (documentDetails) => {
+  console.log(documentDetails);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/add/document`,
       documentDetails
     );
+    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -164,6 +166,78 @@ export const handleFetchCampaigns = async (clientId) => {
       { client_id: clientId }
     );
     console.log(result.data);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleDocumentDelete = async (documentId) => {
+  try {
+    const result = await axios.delete(
+      `${process.env?.REACT_APP_FILE_SERVER_URL}/api/documents/delete/${documentId}`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchCourses = async () => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/courses`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchCourseCheckList = async (courseId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist`,
+      {
+        course_id: courseId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCreateChecklist = async (
+  clientId,
+  userId,
+  courseId,
+  title
+) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/create`,
+      {
+        client_id: clientId,
+        user_id: userId,
+        course_id: courseId,
+        title: title,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleDeleteChecklist = async (checkListId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/delete`,
+      {
+        id: checkListId,
+      }
+    );
     return result.data;
   } catch (error) {
     return error.response;

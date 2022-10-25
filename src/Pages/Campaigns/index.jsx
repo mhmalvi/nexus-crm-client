@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCampaigns } from "../../Components/services/leads";
@@ -6,21 +7,24 @@ import { addCampaigns } from "../../features/Leads/campaignSlice";
 import { setLoader } from "../../features/user/userSlice";
 import Campaign from "./Campaign";
 import campaignData from "./campaignsData.json";
+import Courses from "./Courses";
 import Filter from "./Filter";
 
 const Campaigns = () => {
-  document.title = `Campaigns`;
+  const dispatch = useDispatch();
 
   const [campaignList, setCampaignList] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
   const [searchCampaign, setSearchCampaign] = useState("");
-  const dispatch = useDispatch();
+  const [toggleCourses, setToggleCourses] = useState(false);
 
   const userDetails = useSelector((state) => state.user);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   useEffect(() => {
+    document.title = `Campaigns`;
+
     (async () => {
       dispatch(setLoader(true));
 
@@ -64,6 +68,10 @@ const Campaigns = () => {
     }
   }, [activeFilter, searchCampaign]);
 
+  const handleCancelCourseModal = () => {
+    setToggleCourses(false);
+  };
+
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
       <div className="flex items-center mb-6 mt-10">
@@ -79,7 +87,12 @@ const Campaigns = () => {
             Show Campaigns
           </h1>
         </div>
-        <div onClick={() => setActiveSection(1)}>
+        <div
+          onClick={() => {
+            setActiveSection(1);
+            setToggleCourses(true);
+          }}
+        >
           <h1
             className={`text-sm leading-4 font-poppins px-3 py-2 cursor-pointer mr-2.5 ${
               activeSection === 1
@@ -91,31 +104,32 @@ const Campaigns = () => {
           </h1>
         </div>
       </div>
-      {activeSection === 0 && (
-        <div>
-          <Filter
-            activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
-            // searchCampaign={searchCampaign}
-            setSearchCampaign={setSearchCampaign}
-          />
-        </div>
-      )}
+
+      <Modal
+        visible={toggleCourses}
+        footer={null}
+        onCancel={handleCancelCourseModal}
+        width={900}
+      >
+        <Courses />
+      </Modal>
+
+      <Filter
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        // searchCampaign={searchCampaign}
+        setSearchCampaign={setSearchCampaign}
+      />
+
       {loadingDetails ? (
         <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       ) : (
-        <div>
-          {activeSection === 0 ? (
-            <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
-              {campaignList?.map((campaign, i) => (
-                <Campaign key={i} campaign={campaign} />
-              ))}
-            </div>
-          ) : (
-            <div>Courses</div>
-          )}
+        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
+          {campaignList?.map((campaign, i) => (
+            <Campaign key={i} campaign={campaign} />
+          ))}
         </div>
       )}
     </div>
