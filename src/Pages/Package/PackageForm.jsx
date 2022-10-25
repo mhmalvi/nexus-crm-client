@@ -87,13 +87,13 @@ const PackageForm = () => {
 
   return (
     <>
-      <div className="relative flex flex-col justify-center overflow-hidden py-18">
+      <div className="font-poppins relative flex flex-col justify-center overflow-hidden py-18">
         {Object.keys(DataErr).length === 0 && Show && !error && (
           <div className="w-[30%] p-6 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
             Package created successfully!
           </div>
         )}
-        <div className="w-[30%] p-6 m-auto shadow-lg shadow-indigo-100 border-2 border-slate-200 rounded-lg">
+        <div className="w-10/12 p-6 m-auto">
           <h1 className="text-2xl font-semibold text-left text-[#7E4BFF] uppercase tracking-wide">
             Create Package
           </h1>

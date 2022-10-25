@@ -6,7 +6,6 @@ const Subscription = () => {
   return (
     <>
       <Package />
-      <SubsFooter />
     </>
   );
 };

@@ -1,4 +1,7 @@
+import { DatePicker } from "antd";
 import React, { useEffect, useState } from "react";
+import Subscription from "../Subscription";
+import SubsFooter from "../Subscription/SubsFooter";
 
 const RequisitionForm = () => {
   const [ImgFile, setImgFile] = useState();
@@ -178,422 +181,456 @@ const RequisitionForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center overflow-hidden py-16">
-      <div className="w-1/2 p-6 m-auto shadow-x bg-gray-50 rounded-md shadow">
-        <h1 className="text-xl font-semibold text-left text-brand-color uppercase tracking-wide">
-          Personal Information
-        </h1>
-        <form id="form" onSubmit={handleSubmit} className="mt-6">
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Your Name
-              </span>
-              <div className="grid grid-cols-2 gap-1">
-                <input
-                  type="text"
-                  name="fname"
-                  id="fname"
-                  placeholder="First Name"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-400 focus:border-b focus:border-indigo-400 sm:text-sm"
-                  onChange={handleChange}
-                  value={Data.fname}
-                />
-                <input
-                  type="text"
-                  name="lname"
-                  id="lname"
-                  placeholder="Last Name"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
-                  value={Data.lname}
-                  onChange={handleChange}
-                />
-              </div>
-            </label>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="text-red-500 text-xs">{DataErr.fname}</p>
-              </div>
-              <div>
-                <p className="text-red-500 text-xs">{DataErr.lname}</p>
-              </div>
-            </div>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Address
-              </span>
-              <input
-                name="address"
-                type="text"
-                id="address"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="Address"
-                value={Data.address}
-                onChange={handleChange}
-              />
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.address}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                Region
-              </label>
-              <select
-                id="region"
-                name="region"
-                value={Data.region}
-                onChange={handleChange}
-                className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
-              >
-                <option className="text-slate-400">Select Region</option>
-                <option>Victoria</option>
-                <option>Queensland</option>
-                <option>South Australia</option>
-                <option>New South Wales</option>
-                <option>Tasmania</option>
-                <option>Western Australia</option>
-              </select>
-              <p className="text-red-500 text-xs">{DataErr.region}</p>
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                Postal Code
-              </label>
-              <input
-                name="postal"
-                type="number"
-                id="postal"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="Postal code"
-                value={Data.postal}
-                onChange={handleChange}
-              />
-              <p className="text-red-500 text-xs">{DataErr.postal}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                Work Experience
-              </label>
-              <input
-                name="experience"
-                type="number"
-                id="experience"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="in years"
-                value={Data.experience}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                Work Location
-              </label>
-              <input
-                name="location"
-                type="text"
-                id="location"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="perth"
-                value={Data.location}
-                onChange={handleChange}
-              />
-              <p className="text-red-500 text-xs">{DataErr.location}</p>
-            </div>
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 tracking-wide">
-              Profession
-            </label>
-            <input
-              name="profession"
-              type="text"
-              id="profession"
-              className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-              placeholder="Tell us what you do"
-              value={Data.profession}
-              onChange={handleChange}
-            />
-            <p className="text-red-500 text-xs">{DataErr.profession}</p>
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 tracking-wide">
-              Phone
-            </label>
-            <div className="flex justify-start gap-1 my-2">
-              <div className="w-[60%]">
-                <input
-                  name="phone"
-                  type="text"
-                  id="phone"
-                  maxLength={12}
-                  minLength={9}
-                  className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  placeholder="contact No."
-                  value={Data.phone}
-                  onChange={handleChange}
-                />
-                <p className="text-red-500 text-xs">{DataErr.phone}</p>
-              </div>
-            </div>
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 tracking-wide">
-              Date of Birth (MM/DD/YYYY)
-            </label>
-            <input
-              name="birth"
-              type="date"
-              id="birth"
-              className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-              placeholder=""
-              value={Data.birth}
-              onChange={handleChange}
-            />
-            <p className="text-red-500 text-xs">{DataErr.birth}</p>
-          </div>
-          <h1 className="text-xl font-semibold text-left text-brand-color uppercase py-4 tracking-wide">
-            Company Information
+    <div>
+      <div className="w-10/12 mx-auto">
+        <Subscription />
+      </div>
+      <div className="flex flex-col justify-center items-center overflow-hidden py-16 font-poppins">
+        <div className="w-1/2">
+          <h1 className=" font-poppins text-xl font-semibold text-center pt-4 pb-8">
+            CRM Requisition From
           </h1>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Company name
-              </span>
-              <div className="flex justify-between">
-                <input
-                  type="text"
-                  name="Cname"
-                  id="Cname"
-                  placeholder="Name of your company"
-                  value={Data.Cname}
-                  onChange={handleChange}
-                  className=" mt-1 block w-full py-2 px-3 mr-1 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.Cname}</p>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Description
-              </span>
-              <textarea
-                name="description"
-                id="description"
-                className=" mt-1 block w-full py-2 px-3 mr-1 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
-                rows="2"
-                value={Data.description}
-                onChange={handleChange}
-              ></textarea>
-            </label>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide mb-2">
-                Logo
-              </span>
-              <div className="cursor-pointer w-[20%] max-h-10 shadow text-white font-medium text-center bg-brand-color focus:outline-none hover:ring-indigo-700 hover:border-indigo-700 py-2">
-                Upload
-                <input
-                  id="logo"
-                  name="logo"
-                  type="file"
-                  placeholder="Company contact no."
-                  onChange={(e) => handleImage(e)}
-                  style={{ display: "none" }}
-                />
-              </div>
-              {Show && (
-                <div className="w-full my-4">
-                  <div className="w-[20%] bg-white py-2">
-                    <img src={previewer} alt="" />
+          <div className="p-6 m-auto shadow-x bg-gray-50 bg-opacity-40 rounded-md shadow">
+            <h1 className="text-base font-semibold text-left text-brand-color uppercase tracking-wide">
+              Personal Information
+            </h1>
+            <form id="form" onSubmit={handleSubmit} className="mt-6">
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Your Name
+                  </span>
+                  <div className="grid grid-cols-2 gap-1">
+                    <input
+                      type="text"
+                      name="fname"
+                      id="fname"
+                      placeholder="First Name"
+                      className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-400 focus:border-b focus:border-indigo-400 sm:text-sm"
+                      onChange={handleChange}
+                      value={Data.fname}
+                    />
+                    <input
+                      type="text"
+                      name="lname"
+                      id="lname"
+                      placeholder="Last Name"
+                      className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
+                      value={Data.lname}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </label>
+                <div className="grid grid-cols-2">
+                  <div>
+                    <p className="text-red-500 text-xs">{DataErr.fname}</p>
+                  </div>
+                  <div>
+                    <p className="text-red-500 text-xs">{DataErr.lname}</p>
                   </div>
                 </div>
-              )}
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.logo}</p>
-          </div>
-
-          <div className="mb-2">
-            <label
-              htmlFor="telNo"
-              className="block text-sm font-medium text-gray-700 tracking-wide"
-            >
-              Company Contact Number
-            </label>
-            <input
-              id="telNo"
-              name="telNo"
-              type="tel"
-              minLength="9"
-              maxLength="14"
-              /*               pattern="[0-9]{3}-[0-9]{9}" */
-              className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-              placeholder="company contact no."
-              value={Data.telNo}
-              onChange={handleChange}
-            />
-            <p className="text-red-500 text-xs">{DataErr.telNo}</p>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Business Email
-              </span>
-              <input
-                name="email"
-                type="email"
-                id="email"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm  "
-                placeholder="john.cooks@example.com"
-                value={Data.email}
-                onChange={handleChange}
-              />
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.email}</p>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Company Address
-              </span>
-              <input
-                name="Caddress"
-                type="text"
-                id="Caddress"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="Address of your company"
-                value={Data.Caddress}
-                onChange={handleChange}
-              />
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.Caddress}</p>
-          </div>
-          <div className="grid grid-cols-3 gap-1">
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                Trading Name
-              </label>
-              <input
-                name="Tname"
-                type="text"
-                id="Tname"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="Enter trade name"
-                value={Data.Tname}
-                onChange={handleChange}
-              />
-              <p className="text-red-500 text-xs">{DataErr.Tname}</p>
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                RTO code
-              </label>
-              <input
-                name="rto"
-                type="text"
-                id="rto"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="RTO"
-                value={Data.rto}
-                onChange={handleChange}
-              />
-              <p className="text-red-500 text-xs">{DataErr.rto}</p>
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
-                ABN <span className="text-xs">(Business number)</span>
-              </label>
-              <input
-                name="abn"
-                type="text"
-                id="abn"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="Business number"
-                value={Data.abn}
-                onChange={handleChange}
-              />
-              <p className="text-red-500 text-xs">{DataErr.abn}</p>
-            </div>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Company Website
-              </span>
-              <div className="flex">
-                <span className="inline-flex items-center px-3 border-b border-t-0 border-x-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                  http://
-                </span>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Address
+                  </span>
+                  <input
+                    name="address"
+                    type="text"
+                    id="address"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Address"
+                    value={Data.address}
+                    onChange={handleChange}
+                  />
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.address}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Region
+                  </label>
+                  <select
+                    id="region"
+                    name="region"
+                    value={Data.region}
+                    onChange={handleChange}
+                    className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
+                  >
+                    <option className="text-slate-400">Select Region</option>
+                    <option>Victoria</option>
+                    <option>Queensland</option>
+                    <option>South Australia</option>
+                    <option>New South Wales</option>
+                    <option>Tasmania</option>
+                    <option>Western Australia</option>
+                  </select>
+                  <p className="text-red-500 text-xs">{DataErr.region}</p>
+                </div>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Postal Code
+                  </label>
+                  <input
+                    name="postal"
+                    type="number"
+                    id="postal"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Postal code"
+                    value={Data.postal}
+                    onChange={handleChange}
+                  />
+                  <p className="text-red-500 text-xs">{DataErr.postal}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Work Experience
+                  </label>
+                  <input
+                    name="experience"
+                    type="number"
+                    id="experience"
+                    className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="In years (Only Number)"
+                    value={Data.experience}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Work Location
+                  </label>
+                  <input
+                    name="location"
+                    type="text"
+                    id="location"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Perth"
+                    value={Data.location}
+                    onChange={handleChange}
+                  />
+                  <p className="text-red-500 text-xs">{DataErr.location}</p>
+                </div>
+              </div>
+              <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                  Profession
+                </label>
                 <input
-                  name="Cweb"
-                  id="Cweb"
-                  className="block w-full py-2 px-3 border-b border-l-0 border-gray-300 bg-white rounded-tr-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                  placeholder="www.example.com"
-                  value={Data.Cweb}
+                  name="profession"
+                  type="text"
+                  id="profession"
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                  placeholder="Tell us what you do"
+                  value={Data.profession}
                   onChange={handleChange}
                 />
+                <p className="text-red-500 text-xs">{DataErr.profession}</p>
               </div>
-            </label>
-            <p className="text-red-500 text-xs">{DataErr.Cweb}</p>
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 tracking-wide">
-              Country
-            </label>
-            <select
-              id="country"
-              name="country"
-              value={Data.country}
-              onChange={handleChange}
-              className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
-            >
-              <option className="text-slate-400">Select country</option>
-              <option>USA</option>
-              <option>Canada</option>
-              <option>Australia</option>
-              <option>UK</option>
-              <option>Bangladesh</option>
-              <option>China</option>
-              <option>India</option>
-            </select>
-            <p className="text-red-500 text-xs">{DataErr.country}</p>
-          </div>
-          <div className="mb-2">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                FaceBook Account
-              </span>
-              <input
-                name="facebook"
-                type="text"
-                id="facebook"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="www.facebook.com"
-                value={Data.facebook}
-                onChange={handleChange}
-              />
-            </label>
-          </div>
+              <div className="w-full flex items-center">
+                <div className="w-full mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Phone
+                  </label>
+                  <div className="flex justify-start gap-1 my-2">
+                    <div className="w-full">
+                      <input
+                        name="phone"
+                        type="text"
+                        id="phone"
+                        maxLength={12}
+                        minLength={9}
+                        className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                        placeholder="Contact No."
+                        value={Data.phone}
+                        onChange={handleChange}
+                      />
+                      <p className="text-red-500 text-xs">{DataErr.phone}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full mb-2 ml-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Date of Birth
+                  </label>
+                  <DatePicker
+                    className="w-full focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
+                    style={{
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      borderBottom: "1.5px solid #D1D5DB",
+                      padding: "7px",
+                    }}
+                    // defaultValue={moment("01/01/2015", dateFormatList[0])}
+                    format={dateFormatList}
+                    suffixIcon={
+                      <h1 className="font-normal text-gray-400">DD-MM-YYYY</h1>
+                    }
+                  />
 
-          <div className="flex justify-end mt-10 mb-6">
-            <button
-              type="submit"
-              className="h-10 px-5 text-white bg-brand-color text-base rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-600 font-poppins tracking-wide"
-            >
-              Submit
-            </button>
+                  {/* <input
+                  name="birth"
+                  type="date"
+                  id="birth"
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                  placeholder=""
+                  value={Data.birth}
+                  onChange={handleChange}
+                /> */}
+                  <p className="text-red-500 text-xs">{DataErr.birth}</p>
+                </div>
+              </div>
+              <h1 className="text-base font-semibold text-left text-brand-color uppercase py-4 tracking-wide">
+                Company Information
+              </h1>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Company name
+                  </span>
+                  <div className="flex justify-between">
+                    <input
+                      type="text"
+                      name="Cname"
+                      id="Cname"
+                      placeholder="Name of your company"
+                      value={Data.Cname}
+                      onChange={handleChange}
+                      className=" mt-1 block w-full py-2 px-3 mr-1 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
+                    />
+                  </div>
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.Cname}</p>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Description
+                  </span>
+                  <textarea
+                    name="description"
+                    id="description"
+                    className=" mt-1 block w-full py-2 px-3 mr-1 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
+                    rows="2"
+                    value={Data.description}
+                    onChange={handleChange}
+                  ></textarea>
+                </label>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide mb-2">
+                    Logo
+                  </span>
+                  <div className="cursor-pointer w-[20%] max-h-10 shadow text-white font-medium text-center bg-brand-color focus:outline-none hover:ring-indigo-700 hover:border-indigo-700 py-2">
+                    Upload
+                    <input
+                      id="logo"
+                      name="logo"
+                      type="file"
+                      placeholder="Company contact no."
+                      onChange={(e) => handleImage(e)}
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                  {Show && (
+                    <div className="w-full my-4">
+                      <div className="w-[20%] bg-white py-2">
+                        <img src={previewer} alt="" />
+                      </div>
+                    </div>
+                  )}
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.logo}</p>
+              </div>
+
+              <div className="mb-2">
+                <label
+                  htmlFor="telNo"
+                  className="block text-sm font-medium text-gray-700 tracking-wide"
+                >
+                  Company Contact Number
+                </label>
+                <input
+                  id="telNo"
+                  name="telNo"
+                  type="tel"
+                  minLength="9"
+                  maxLength="14"
+                  /*               pattern="[0-9]{3}-[0-9]{9}" */
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                  placeholder="company contact no."
+                  value={Data.telNo}
+                  onChange={handleChange}
+                />
+                <p className="text-red-500 text-xs">{DataErr.telNo}</p>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Business Email
+                  </span>
+                  <input
+                    name="email"
+                    type="email"
+                    id="email"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm  "
+                    placeholder="john.cooks@example.com"
+                    value={Data.email}
+                    onChange={handleChange}
+                  />
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.email}</p>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Company Address
+                  </span>
+                  <input
+                    name="Caddress"
+                    type="text"
+                    id="Caddress"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Address of your company"
+                    value={Data.Caddress}
+                    onChange={handleChange}
+                  />
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.Caddress}</p>
+              </div>
+              <div className="grid grid-cols-3 gap-1">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Trading Name
+                  </label>
+                  <input
+                    name="Tname"
+                    type="text"
+                    id="Tname"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Enter trade name"
+                    value={Data.Tname}
+                    onChange={handleChange}
+                  />
+                  <p className="text-red-500 text-xs">{DataErr.Tname}</p>
+                </div>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    RTO code
+                  </label>
+                  <input
+                    name="rto"
+                    type="text"
+                    id="rto"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="RTO"
+                    value={Data.rto}
+                    onChange={handleChange}
+                  />
+                  <p className="text-red-500 text-xs">{DataErr.rto}</p>
+                </div>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                    ABN <span className="text-xs">(Business number)</span>
+                  </label>
+                  <input
+                    name="abn"
+                    type="text"
+                    id="abn"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Business number"
+                    value={Data.abn}
+                    onChange={handleChange}
+                  />
+                  <p className="text-red-500 text-xs">{DataErr.abn}</p>
+                </div>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    Company Website
+                  </span>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 border-b border-t-0 border-x-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                      http://
+                    </span>
+                    <input
+                      name="Cweb"
+                      id="Cweb"
+                      className="block w-full py-2 px-3 border-b border-l-0 border-gray-300 bg-white rounded-tr-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
+                      placeholder="www.example.com"
+                      value={Data.Cweb}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </label>
+                <p className="text-red-500 text-xs">{DataErr.Cweb}</p>
+              </div>
+              <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  value={Data.country}
+                  onChange={handleChange}
+                  className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
+                >
+                  <option className="text-slate-400">Select country</option>
+                  <option>USA</option>
+                  <option>Canada</option>
+                  <option>Australia</option>
+                  <option>UK</option>
+                  <option>Bangladesh</option>
+                  <option>China</option>
+                  <option>India</option>
+                </select>
+                <p className="text-red-500 text-xs">{DataErr.country}</p>
+              </div>
+              <div className="mb-2">
+                <label>
+                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                    FaceBook Account
+                  </span>
+                  <input
+                    name="facebook"
+                    type="text"
+                    id="facebook"
+                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="www.facebook.com"
+                    value={Data.facebook}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
+
+              <div className="flex justify-end mt-10 mb-6">
+                <button
+                  type="submit"
+                  className="h-10 px-5 text-white bg-brand-color text-sm rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-600 font-poppins tracking-wide"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
+      </div>
+
+      <div>
+        <SubsFooter />
       </div>
     </div>
   );
 };
 
 export default RequisitionForm;
+
+const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];

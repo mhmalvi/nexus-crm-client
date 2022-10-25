@@ -70,23 +70,12 @@ const Campaigns = () => {
 
   const handleCancelCourseModal = () => {
     setToggleCourses(false);
+    setActiveSection(0);
   };
 
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
       <div className="flex items-center mb-6 mt-10">
-        <div onClick={() => setActiveSection(0)}>
-          <h1
-            className={`text-sm leading-4 font-poppins pr-3 py-2 cursor-pointer mr-2.5 ${
-              activeSection === 0
-                ? "text-brand-color font-semibold"
-                : "text-black font-normal"
-            }
-            rounded-full`}
-          >
-            Show Campaigns
-          </h1>
-        </div>
         <div
           onClick={() => {
             setActiveSection(1);
