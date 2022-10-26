@@ -21,32 +21,9 @@ const initialState = {
   success: false,
 };
 
-Storage.setItem("user_info", {
-  id: 26,
-  email: "jahissssd@quadque.digital",
-  email_verified_at: null,
-  role_id: 3,
-  business_type: null,
-  contact_number: "0123654",
-  subscription_id: null,
-  flag: null,
-  created_at: null,
-  updated_at: null,
-  user_id: 26,
-  full_name: "Mr. Test Man",
-  first_name: null,
-  last_name: null,
-  address: "",
-  qualification: "Highher Secendory",
-  region: "",
-  postcode: "",
-  work_experiences: "10 years on PHP",
-  location: "Australia",
-  profession: "",
-  secondary_contact: "",
-  date_of_birth: "",
-});
-initialState.userInfo.client_id = 2;
+if (initialState.userInfo) {
+  initialState.userInfo.client_id = 2;
+}
 
 export const userSlice = createSlice({
   name: "user",
@@ -54,6 +31,9 @@ export const userSlice = createSlice({
   reducers: {
     addUserDetails: (state, actions) => {
       console.log(actions.payload);
+
+      Storage.setItem("user_info", actions?.payload?.data[0]);
+      Storage.setItem("auth_tok", actions?.payload?.token);
       // state.userInfo = actions.payload;
       // state.userInfo.client_id = 2;
     },

@@ -1,11 +1,10 @@
 import React from "react";
 import Package from "./Package";
-import SubsFooter from "./SubsFooter";
 
-const Subscription = () => {
+const Subscription = ({ setShowRequisitionForm }) => {
   return (
     <>
-      <Package />
+      <Package setShowRequisitionForm ={setShowRequisitionForm}/>
     </>
   );
 };

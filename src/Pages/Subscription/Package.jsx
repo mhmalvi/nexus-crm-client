@@ -7,7 +7,7 @@ import { handleFetchPackages } from "../../Components/services/company";
 import { Modal } from "antd";
 import PackageForm from "../Package/PackageForm";
 
-const Package = () => {
+const Package = ({ setShowRequisitionForm }) => {
   const [Plans, setPlans] = useState([]);
   //const [Plan2, setPlan2] = useState([]);
   const [selected1, setSelected1] = useState([]);
@@ -25,7 +25,7 @@ const Package = () => {
   });
 
   const updateSelected1 = (plan) => {
-    if (!selected1.includes(plan) && selected1.length < 2) {
+    if (!selected1?.includes(plan) && selected1?.length < 2) {
       setSelected1([plan]);
       console.log(selected1);
     } else {
@@ -52,7 +52,8 @@ const Package = () => {
   }, [selected1]);
 
   const idRef = useRef();
-  const HandleDelete = (id) => {
+
+  const handleDelete = (id) => {
     idRef.current = id;
     const index = Plans.findIndex((p) => p.id === idRef.current);
     console.log(index);
@@ -112,7 +113,7 @@ const Package = () => {
 
   return (
     <div>
-      <div className="text-2xl pt-24 pb-5 px-20">
+      <div className="text-2xl py-5 px-20">
         Subscription
         <br />
         <span className="text-slate-500 text-sm">
@@ -123,7 +124,7 @@ const Package = () => {
 
       {/* Active packages div */}
       <div className="flex text-xl py-5 px-20">
-        Active Packages
+        <div className="whitespace-nowrap">Active Packages</div>
         <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
       </div>
 
@@ -139,13 +140,13 @@ const Package = () => {
 
       <div className="relative w-full mb-20">
         <button
-          className="absolute xl:right-28 2xl:right-52 w-32 py-2 bg-brand-color text-white text-center rounded-md"
+          className="absolute xl:right-24 2xl:right-24 w-32 py-2 bg-brand-color text-white text-center rounded-md"
           onClick={() => setTogglePackageCreate(true)}
         >
           Create Package
         </button>
       </div>
-      <div className="w-[95%] mx-auto grid lg:grid-cols-3 2xl:grid-cols-4 gap-4 px-20 my-4">
+      <div className="w-[98%] mx-auto grid lg:grid-cols-3 2xl:grid-cols-4 gap-4 px-20 my-4">
         {Plans &&
           Plans?.map((plan) => (
             <>
@@ -183,7 +184,7 @@ const Package = () => {
                       </div>
                       <div
                         className="flex items-center py-1.5 px-2 shadow-md border border-slate-100 justify-center hover:border-slate-200 h-10"
-                        onClick={() => HandleDelete(plan.id)}
+                        onClick={() => handleDelete(plan.id)}
                       >
                         <button title="Delete">
                           <Icons.Bin />
@@ -228,11 +229,11 @@ const Package = () => {
       {/* Inactive packages Section  */}
       <div>
         <div className="flex text-xl py-5 px-20">
-          Inactive Package
+          <div className="whitespace-nowrap">Inactive Package</div>
           <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
         </div>
         <div className="mx-auto grid grid-cols-4 max-w-7xl gap-4 px-20 my-4">
-          {Plans.length &&
+          {Plans?.length &&
             Plans?.map((plan) => (
               <>
                 {plan.active === 0 && (
@@ -256,7 +257,7 @@ const Package = () => {
                       )}
                       <div className="flex gap-1">
                         <div
-                          className="flex items-center py-1.5 px-2 shadow-md border border-slate-100 justify-center hover:border-slate-200 h-10"
+                          className="flex items-center py-1.5 px-2 shadow rounded-md border border-slate-100 justify-center hover:border-slate-200 h-10"
                           onClick={() => handleUpdate(plan.id)}
                         >
                           <button title="Edit">
@@ -265,7 +266,7 @@ const Package = () => {
                         </div>
                         <div
                           className="flex items-center py-1.5 px-2 shadow-md border border-slate-100 justify-center hover:border-slate-200 h-10"
-                          onClick={() => HandleDelete(plan.id)}
+                          onClick={() => handleDelete(plan.id)}
                         >
                           <button title="Delete">
                             <Icons.Bin />

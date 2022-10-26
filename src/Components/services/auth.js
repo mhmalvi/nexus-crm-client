@@ -22,9 +22,12 @@ export const handleLogin = async (loginDetails) => {
       `${process.env?.REACT_APP_AUTH_URL}/api/user/login`,
       loginDetails
     );
+
+    console.log(result);
     return result;
   } catch (error) {
-    return error.response;
+    console.log(error);
+    return error;
   }
 };
 

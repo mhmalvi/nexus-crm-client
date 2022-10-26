@@ -8,6 +8,7 @@ const RequisitionForm = () => {
   const [previewer, setPreviewer] = useState();
   const [DataErr, setDataErr] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [showRequisitionForm, setShowRequisitionForm] = useState(false);
   const [Show, setShow] = useState(false);
   const [Data, setData] = useState({
     fname: "",
@@ -95,7 +96,7 @@ const RequisitionForm = () => {
 
   useEffect(() => {
     console.log(DataErr);
-    if (Object.keys(DataErr).length === 0 && isSubmit) {
+    if (Object.keys(DataErr)?.length === 0 && isSubmit) {
       console.log(formData);
       /*       Axios.post("http://localhost:4000/posts", formData)
       .then(res=>console.log(res))
@@ -181,16 +182,17 @@ const RequisitionForm = () => {
   };
 
   return (
-    <div>
+    <div className="font-poppins">
+      <h1 className="font-poppins text-2xl font-semibold text-center pt-20 pb-4">
+        CRM Requisition From
+      </h1>
       <div className="w-10/12 mx-auto">
-        <Subscription />
+        <Subscription setShowRequisitionForm={setShowRequisitionForm} />
       </div>
-      <div className="flex flex-col justify-center items-center overflow-hidden py-16 font-poppins">
-        <div className="w-1/2">
-          <h1 className=" font-poppins text-xl font-semibold text-center pt-4 pb-8">
-            CRM Requisition From
-          </h1>
-          <div className="p-6 m-auto shadow-x bg-gray-50 bg-opacity-40 rounded-md shadow">
+
+      {showRequisitionForm && (
+        <div className="flex flex-col justify-center items-center overflow-hidden py-16 font-poppins">
+          <div className="w-1/2 p-6 m-auto shadow-x bg-gray-50 bg-opacity-40 rounded-md shadow">
             <h1 className="text-base font-semibold text-left text-brand-color uppercase tracking-wide">
               Personal Information
             </h1>
@@ -622,7 +624,7 @@ const RequisitionForm = () => {
             </form>
           </div>
         </div>
-      </div>
+      )}
 
       <div>
         <SubsFooter />

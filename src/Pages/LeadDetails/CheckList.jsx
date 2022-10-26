@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import {
   handleChecklistDocumentUpload,
   handleDocumentDelete,
-  handleFetchChecklist,
   handleFetchLeadCheckListDocuments,
 } from "../../Components/services/leads";
 import {
@@ -13,7 +12,7 @@ import {
 } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
 
-const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
+const CheckList = ({ leadDetails }) => {
   const [fileList, setFileList] = useState([]);
   const [documentList, setDocumentList] = useState([]);
   const [syncDocumentList, setSyncDocumentList] = useState(false);
@@ -95,7 +94,7 @@ const CheckList = ({ toggleChcekList, handleCancel, leadDetails }) => {
           if ((fetchFiledetails?.data).length) {
             document.getElementById(doc?.document_id).href = fetchFiledetails
               ?.data[0]?.document_name
-              ? `http://192.168.0.158:5000/${fetchFiledetails?.data[0]?.document_name}`
+              ? `${process.env.REACT_APP_FILE_SERVER_URL}/${fetchFiledetails?.data[0]?.document_name}`
               : "";
           }
 

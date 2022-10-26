@@ -49,6 +49,7 @@ const Sidebar = ({
 
   const handleLogout = () => {
     Storage.removeItem("auth_tok");
+    Storage.removeItem("user_info");
     navigate("/login");
   };
 

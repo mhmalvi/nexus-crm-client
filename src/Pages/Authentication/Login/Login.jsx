@@ -49,16 +49,22 @@ const Login = () => {
     const loginResponse = await handleLogin(loginFormData);
 
     if (loginResponse?.status === 200) {
-      dispatch(setLoader(false));
-      console.log(loginResponse?.data);
-      dispatch(addUserDetails(loginResponse?.data?.data[0]));
-
       Storage.setItem("user_info", loginResponse?.data?.data[0]);
-      message.success("Successfully Logged In");
-
-      navigate("/dashboard");
       Storage.setItem("auth_tok", loginResponse?.data?.token);
+
+      dispatch(setLoader(false));
+
+      console.log(loginResponse?.data);
+      dispatch(addUserDetails(loginResponse?.data));
+
+      message.success("Successfully Logged In");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
     } else {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 2000);
       message.warning("Oopps Wrong! Check You Email or Password");
     }
   };
