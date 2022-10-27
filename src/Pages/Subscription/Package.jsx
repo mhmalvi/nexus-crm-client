@@ -199,12 +199,9 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                   {plan.package_details}
                 </div>
                 <div className="my-4">
-                  <a
-                    href="#requisition_from"
-                    className="bg-slate-50 text-brand-color font-bold hover:bg-brand-color transition-colors hover:delay-50 hover:text-slate-50 hover:shadow-sm hover:transition ease-in-out delay-150 my-3 rounded-full py-3 px-6"
-                  >
+                  <div className="w-48 mx-auto bg-slate-50 text-brand-color font-bold hover:bg-brand-color transition-colors hover:delay-50 hover:text-slate-50 hover:shadow-sm hover:transition ease-in-out delay-150 my-3 rounded-full py-3">
                     Get Started
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
