@@ -253,21 +253,21 @@ const Sidebar = ({
             </div>
           </div> */}
 
-          {/* pricing section */}
+          {/* Requisitions section */}
           <div>
             <NavLink
-              to={"/subscription"}
+              to={"/requisitions"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
-                color: `${active === "subscription" ? "#7037FF" : "#7C8DB5"}`,
+                color: `${active === "requisitions" ? "#7037FF" : "#7C8DB5"}`,
               }}
-              onClick={() => setActive("subscription")}
+              onClick={() => setActive("requisitions")}
             >
               <Icons.Pricing />
               <span className="ml-4 leading-6 font-medium font-poppins">
-                Subscription
+                Requisitions
               </span>
-              {active === "subscription" && (
+              {active === "requisitions" && (
                 <div className="ml-auto active-option">|</div>
               )}
             </NavLink>

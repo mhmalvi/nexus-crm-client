@@ -19,6 +19,7 @@ import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
 import Subscription from "./Pages/Subscription";
 import Package from "./Pages/Package";
+import RequisitionTable from "./Pages/Requisition/Table";
 
 function App() {
   return (
@@ -33,17 +34,17 @@ function App() {
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
-          <Route path="subscription" element={<Subscription />} />
+          <Route path="requisitions" element={<RequisitionTable />} />
           <Route path="settings/company/:name" element={<CompanySettings />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="requisition" element={<RequisitionForm />} />
-        <Route path="package-create" element={<Package />} />
-        <Route
+        {/* <Route path="package-create" element={<Package />} /> */}
+        {/* <Route
           path="subscription/edit-package/:id"
           element={<PackageUpdate />}
-        />
+        /> */}
       </Routes>
     </div>
   );

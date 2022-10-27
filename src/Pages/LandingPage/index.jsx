@@ -16,9 +16,9 @@ import Overview from "../Overview";
 import Pay from "../Pay";
 import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
+import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
 import CompanySettings from "../Settings/CompanySettings";
-import Subscription from "../Subscription";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -212,7 +212,7 @@ const Items = [
   {
     key: "dashboard",
     name: "dashboard",
-    icon: <Icons.Dashboard />,
+    // icon: <Icons.Dashboard />,
     label: "Dashboard",
     component: <Dashboard />,
     count: 0,
@@ -220,7 +220,7 @@ const Items = [
   {
     key: "overview",
     name: "overview",
-    icon: <Icons.Chart />,
+    // icon: <Icons.Chart />,
     label: "Overview",
     component: <Overview />,
     count: 0,
@@ -228,7 +228,7 @@ const Items = [
   {
     key: "payments",
     name: "payment",
-    icon: <Icons.Payment />,
+    // icon: <Icons.Payment />,
     label: "Payments",
     component: <PaymentStatus />,
     count: 0,
@@ -236,23 +236,23 @@ const Items = [
   {
     key: "campaigns",
     name: "campaigns",
-    icon: <Icons.Campaigns />,
+    // icon: <Icons.Campaigns />,
     label: "Campaigns",
     component: <Campaigns />,
     count: 0,
   },
   {
-    key: "subscription",
-    name: "subscription",
-    icon: <Icons.Campaigns />,
-    label: "subscription",
-    component: <Subscription />,
+    key: "requisitions",
+    name: "requisitions",
+    // icon: <Icons.Campaigns />,
+    label: "requisitions",
+    component: <Requisitions />,
     count: 0,
   },
   {
     key: "settings",
     name: "settings",
-    icon: <Icons.Settings />,
+    // icon: <Icons.Settings />,
     label: "Settings",
     component: <Settings />,
     count: 0,

@@ -48,14 +48,19 @@ const Login = () => {
 
     const loginResponse = await handleLogin(loginFormData);
 
+    // console.log(loginResponse.data);
+
     if (loginResponse?.status === 200) {
-      Storage.setItem("user_info", loginResponse?.data?.data[0]);
+      console.log("USER DETAILS", loginResponse.data);
+      console.log("USER DETAILS", loginResponse.data.data);
+
+      Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem("auth_tok", loginResponse?.data?.token);
 
       dispatch(setLoader(false));
 
       console.log(loginResponse?.data);
-      dispatch(addUserDetails(loginResponse?.data));
+      dispatch(addUserDetails(loginResponse?.data?.data));
 
       message.success("Successfully Logged In");
       setTimeout(() => {

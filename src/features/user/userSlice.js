@@ -21,9 +21,9 @@ const initialState = {
   success: false,
 };
 
-if (initialState.userInfo) {
-  initialState.userInfo.client_id = 2;
-}
+// if (initialState.userInfo) {
+//   initialState.userInfo.client_id = 2;
+// }
 
 export const userSlice = createSlice({
   name: "user",
@@ -31,10 +31,10 @@ export const userSlice = createSlice({
   reducers: {
     addUserDetails: (state, actions) => {
       console.log(actions.payload);
+      state.userInfo = actions.payload;
 
-      Storage.setItem("user_info", actions?.payload?.data[0]);
-      Storage.setItem("auth_tok", actions?.payload?.token);
-      // state.userInfo = actions.payload;
+      // Storage.setItem("user_info", actions?.payload?.data[0]);
+      // Storage.setItem("auth_tok", actions?.payload?.token);
       // state.userInfo.client_id = 2;
     },
     updateUserDetails: (state) => {

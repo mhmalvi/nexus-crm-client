@@ -80,3 +80,15 @@ export const handleCreatePackage = async (packageDetails) => {
     return error.response;
   }
 };
+
+export const handleCreateCompanyRequisition = async (requisitionData) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/store/requisition`,
+      requisitionData
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};

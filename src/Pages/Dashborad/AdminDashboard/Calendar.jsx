@@ -57,11 +57,8 @@ const Calendar = ({
     //     textAreaInput.placeholder = "Write notice here";
     //   }
 
-    console.log(userDetails?.client_id);
-
     (async () => {
       const response = await handleFetchNotices(userDetails?.client_id);
-      console.log(response.data);
       if (response?.data) {
         setNotices(response?.data?.filter((notice) => notice.status));
       }
@@ -518,7 +515,7 @@ const Calendar = ({
         </div>
       </Modal>
 
-      {userDetails.role_id === 3 ? (
+      {userDetails?.role_id === 3 ? (
         <div
           className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
           style={{
@@ -532,7 +529,6 @@ const Calendar = ({
             <button
               onClick={() => {
                 setShowNotices(true);
-                console.log(showNotices);
               }}
               className="bg-black px-4 py-2 text-white rounded-lg"
             >

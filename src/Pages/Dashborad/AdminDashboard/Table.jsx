@@ -1,11 +1,10 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Space } from "antd";
+import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoader } from "../../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
+import { setLoader } from "../../../features/user/userSlice";
 
 const Table = ({
   title,
@@ -14,6 +13,7 @@ const Table = ({
   activeFilter,
   searchInput,
   filterOptions,
+  handleSyncLeadsReq,
 }) => {
   const leads = useSelector((state) => state?.leads)?.leads;
   const loadingDetails = useSelector((state) => state?.user)?.loading;
@@ -89,16 +89,13 @@ const Table = ({
             </div>
           </div>
           <div className="mr-12">
-            <Dropdown
-              className="cursor-pointer px-3 py-1 rounded-lg shadow-md"
-              overlay={menu}
-              trigger={["click"]}
+            <button
+              id="sync_leads"
+              className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+              onClick={handleSyncLeadsReq}
             >
-              <Space>
-                Latest
-                <DownOutlined />
-              </Space>
-            </Dropdown>
+              Sync Leads
+            </button>
           </div>
         </div>
 
@@ -106,8 +103,8 @@ const Table = ({
           <table cellPadding="0" cellSpacing="0" border="0">
             <thead>
               <tr>
-                {tableHeaders.map((hedaer, i) => (
-                  <th key={i}>{hedaer}</th>
+                {tableHeaders?.map((header, i) => (
+                  <th key={i}>{header}</th>
                 ))}
               </tr>
             </thead>
@@ -128,7 +125,7 @@ const Table = ({
                 border="0"
               >
                 <tbody>
-                  {list.map(
+                  {list?.map(
                     (list) => (
                       // list?.sales_user_id !== 0 && (
                       <tr
@@ -225,18 +222,3 @@ const statusColor = [
     color: "bg-red-500",
   },
 ];
-
-const menu = (
-  <Menu
-    items={[
-      {
-        label: "7 Days",
-        key: "0",
-      },
-      {
-        label: "30 Days",
-        key: "1",
-      },
-    ]}
-  />
-);

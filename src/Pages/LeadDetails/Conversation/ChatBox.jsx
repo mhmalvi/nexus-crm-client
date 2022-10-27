@@ -1,9 +1,6 @@
-import React from "react";
-import ScrollToBottom from "react-scroll-to-bottom";
 import Filter from "bad-words";
-import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const ChatBox = ({ messageList, setMessageList, socket }) => {
   const filter = new Filter();

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useRef } from "react";
-import "./package.css";
-import Axios from "axios";
 import { message } from "antd";
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
+import "./package.css";
 
-const PackageForm = () => {
+const PackageForm = ({
+  syncPackages,
+  setSyncPackages,
+  setTogglePackageCreate,
+}) => {
   const [Data, setData] = useState({
     package_name: "",
     package_type: "",
@@ -14,9 +17,6 @@ const PackageForm = () => {
   });
   const [DataErr, setDataErr] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [Show, setShow] = useState(false);
-  const [error, setError] = useState(false);
-  // const [error_msg, setError_msg] = useState(false);
 
   const handleChange = (e) => {
     setData({ ...Data, [e.target.name]: e.target.value });
@@ -29,7 +29,6 @@ const PackageForm = () => {
   };
 
   useEffect(() => {
-    console.log(DataErr);
     if (Object.keys(DataErr).length === 0 && isSubmit) {
       console.log(Data);
 
@@ -38,28 +37,20 @@ const PackageForm = () => {
         Data
       )
         .then((res) => {
-          console.log(res);
-          setShow(!Show);
+          setData({
+            package_name: "",
+            package_type: "",
+            package_type_limit: "",
+            business_type: 1,
+            package_details: "",
+          });
+          setSyncPackages(!syncPackages);
+          setTogglePackageCreate(false);
+          message.success("Package Added Successfully");
         })
         .catch((err) => {
-          //console.log(err.response.data.errors.package_type);
-          if (err.response.data.errors) {
-            console.log(err.response.data.errors.package_type);
-          } else {
-            console.log(err.response.data);
-          }
-          setError(!error);
-          console.log(err.response.data.errors.package_type);
           message.warning(err.response.data.errors.package_type);
         });
-
-      setData({
-        package_name: "",
-        package_type: "",
-        package_type_limit: "",
-        business_type: 1,
-        package_details: "",
-      });
 
       setIsSubmit(!isSubmit);
     }
@@ -88,11 +79,6 @@ const PackageForm = () => {
   return (
     <>
       <div className="font-poppins relative flex flex-col justify-center overflow-hidden py-18">
-        {Object.keys(DataErr).length === 0 && Show && !error && (
-          <div className="w-[30%] p-6 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
-            Package created successfully!
-          </div>
-        )}
         <div className="w-10/12 p-6 m-auto">
           <h1 className="text-2xl font-semibold text-left text-[#7E4BFF] uppercase tracking-wide">
             Create Package

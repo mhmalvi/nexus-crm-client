@@ -243,3 +243,18 @@ export const handleDeleteChecklist = async (checkListId) => {
     return error.response;
   }
 };
+
+export const handleSyncLeads = async (clientId, acToken) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/scrap`,
+      {
+        client_id: clientId,
+        ac_k: acToken,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

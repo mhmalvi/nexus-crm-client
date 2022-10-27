@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFetchLeads } from "../../../Components/services/leads";
+import {
+  handleFetchLeads,
+  handleSyncLeads
+} from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
+import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
-import Table from "./Table";
 import data from "./leadData.json";
+import Table from "./Table";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -14,6 +18,7 @@ const AdminDashboard = () => {
   const [leadData, setLeadData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filterDate, setFilterDate] = useState("");
+  const [syncLeads, setSyncLeads] = useState(false);
 
   // For Yearwise Filter
   const [selectedDay, setSelectedDay] = useState("");
@@ -33,7 +38,7 @@ const AdminDashboard = () => {
       }
       setLeadData(response.data);
     })();
-  }, [dispatch, userDetails?.userInfo?.client_id]);
+  }, [dispatch, userDetails?.userInfo?.client_id, syncLeads]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
@@ -109,6 +114,20 @@ const AdminDashboard = () => {
     );
   };
 
+  const handleSyncLeadsReq = async () => {
+    dispatch(setLoader(true));
+
+    const syncResponse = await handleSyncLeads(
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.ac_k
+    );
+
+    if (syncResponse?.status) {
+      setSyncLeads(!syncLeads);
+      dispatch(setLoader(false));
+    }
+  };
+
   return (
     <div>
       <Calendar
@@ -141,6 +160,7 @@ const AdminDashboard = () => {
         ratings={ratings}
         activeFilter={activeFilter}
         searchInput={searchInput}
+        handleSyncLeadsReq={handleSyncLeadsReq}
       />
     </div>
   );
@@ -223,3 +243,4 @@ const tableHeaders = [
   "Campaign ID",
   "Lead Status",
 ];
+

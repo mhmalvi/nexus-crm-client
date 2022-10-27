@@ -1,10 +1,14 @@
 import React from "react";
 import Package from "./Package";
 
-const Subscription = ({ setShowRequisitionForm }) => {
+const Subscription = ({ setShowRequisitionForm, data, setData }) => {
   return (
     <>
-      <Package setShowRequisitionForm ={setShowRequisitionForm}/>
+      <Package
+        setShowRequisitionForm={setShowRequisitionForm}
+        data={data}
+        setData={setData}
+      />
     </>
   );
 };
