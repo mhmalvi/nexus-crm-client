@@ -201,6 +201,13 @@ const Login = () => {
                 Log in
               </button>
             </div>
+
+            <div className="text-center">
+              <a className="font-semibold" href="/requisition" target="_blank">
+                Click Here To Explore Packages and Send Requisition
+              </a>
+            </div>
+
             {/* <p className="text-sm text-center text-gray-400">
                 Don't have an account yet?
                 <Link to="/join" className="font-semibold ml-1.5">

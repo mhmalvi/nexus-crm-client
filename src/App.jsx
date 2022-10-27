@@ -10,16 +10,13 @@ import Dashboard from "./Pages/Dashborad";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
-import PackageUpdate from "./Pages/Package/PackageUpdate";
 import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
 import RequisitionForm from "./Pages/Requisition";
+import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
 import CompanySettings from "./Pages/Settings/CompanySettings";
-import Subscription from "./Pages/Subscription";
-import Package from "./Pages/Package";
-import RequisitionTable from "./Pages/Requisition/Table";
 
 function App() {
   return (

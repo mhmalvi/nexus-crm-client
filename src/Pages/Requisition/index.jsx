@@ -1,11 +1,10 @@
-import { AutoComplete, message, Modal } from "antd";
+import { message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { handleCreateCompanyRequisition } from "../../Components/services/company";
 import Subscription from "../Subscription";
 import SubsFooter from "../Subscription/SubsFooter";
 import countries from "./countries.json";
-import Dialog from "./Dialog";
+import Dialog from "./SuccessRequisition";
 import RequisitionForm from "./RequisitionForm";
 
 const Requisition = () => {

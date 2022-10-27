@@ -1,16 +1,27 @@
-import React from "react";
-import requisitionData from "../../Requisition/requisitionData.json";
+import React, { useEffect, useState } from "react";
+import { handleFetchRequisitions } from "../../../Components/services/crmAdmin";
 import RequisitionTable from "./RequisitionTable";
 
-const Requisitions = ({ activeFilter, searchInput }) => {
+const Requisitions = () => {
+  const [requisitionsData, setRequisitionsData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const requisitionsResponse = await handleFetchRequisitions();
+      if (requisitionsResponse?.status) {
+        setRequisitionsData(requisitionsResponse?.data);
+      }
+    })();
+  }, []);
+
   return (
     <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
       <RequisitionTable
         title="Requisition List"
-        tableHeaders={RequisitiontableHeaders}
-        data={requisitionData}
-        activeFilter={activeFilter}
-        searchInput={searchInput}
+        tableHeaders={requisitionTableHeader}
+        data={requisitionsData}
+        // activeFilter={activeFilter}
+        // searchInput={searchInput}
       />
     </div>
   );
@@ -18,7 +29,7 @@ const Requisitions = ({ activeFilter, searchInput }) => {
 
 export default Requisitions;
 
-const RequisitiontableHeaders = [
+const requisitionTableHeader = [
   "ID",
   "User Name",
   "Company",
