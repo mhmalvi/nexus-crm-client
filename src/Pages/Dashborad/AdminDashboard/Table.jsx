@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
+import LazyLoad from "react-lazyload";
+import Skeleton from "react-skeleton-loader";
 
 const Table = ({
   title,
@@ -54,19 +56,19 @@ const Table = ({
   };
 
   return (
-    <div className="mt-0.5">
-      <div className="border rounded-xl px-10 py-7.5 mt-5">
-        <div className="flex justify-between items-center">
-          <div className="flex items-start">
+    <div className='mt-0.5'>
+      <div className='border rounded-xl px-10 py-7.5 mt-5'>
+        <div className='flex justify-between items-center'>
+          <div className='flex items-start'>
             <div>
-              <h1 className="text-xl leading-7 font-poppins font-semibold">
+              <h1 className='text-xl leading-7 font-poppins font-semibold'>
                 {title}
               </h1>
             </div>
-            <div className="ml-6">
+            <div className='ml-6'>
               <CSVLink
                 data={list?.length ? list : "Empty"}
-                target="_blank"
+                target='_blank'
                 filename={
                   typeof activeFilter === "number"
                     ? `${
@@ -78,7 +80,7 @@ const Table = ({
                 }
               >
                 <h1
-                  className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
+                  className='text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black'
                   style={{
                     fontSize: "10px",
                   }}
@@ -88,9 +90,9 @@ const Table = ({
               </CSVLink>
             </div>
           </div>
-          <div className="mr-12">
+          <div className='mr-12'>
             <button
-              id="sync_leads"
+              id='sync_leads'
               className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
               onClick={handleSyncLeadsReq}
             >
@@ -99,8 +101,8 @@ const Table = ({
           </div>
         </div>
 
-        <div className="tbl-header">
-          <table cellPadding="0" cellSpacing="0" border="0">
+        <div className='tbl-header'>
+          <table cellPadding='0' cellSpacing='0' border='0'>
             <thead>
               <tr>
                 {tableHeaders?.map((header, i) => (
@@ -112,32 +114,69 @@ const Table = ({
         </div>
 
         {loadingDetails ? (
-          <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className='w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70'>
             <Loading />
           </div>
         ) : (
-          <div className="tbl-content">
+          <div className='tbl-content'>
             {data?.length ? (
               <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
+                className='custom-table'
+                cellPadding='0'
+                cellSpacing='0'
+                border='0'
               >
                 <tbody>
                   {list?.map(
                     (list) => (
                       // list?.sales_user_id !== 0 && (
+                      // <LazyLoad height={200} offset={100}>
                       <tr
                         key={list.lead_id}
                         onClick={() => handleNavigate(list.lead_id)}
                       >
-                        <td>{list.lead_id}</td>
-                        <td>{list.lead_apply_date}</td>
-                        <td>{list.full_name}</td>
-                        <td>{list.course_code}</td>
-                        <td className="uppercase">{list.work_location}</td>
-                        <td>{list.campaign_id}</td>
+                        <td>
+                          {list.lead_id ? (
+                            list.lead_id
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
+                        <td>
+                          {list.lead_apply_date ? (
+                            list.lead_apply_date
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
+                        <td>
+                          {list.full_name ? (
+                            list.full_name
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
+                        <td>
+                          {list.course_code ? (
+                            list.course_code
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
+                        <td className='uppercase'>
+                          {list.work_location ? (
+                            list.work_location
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
+                        <td>
+                          {list.campaign_id ? (
+                            list.campaign_id
+                          ) : (
+                            <Skeleton color='#F0EFEF' />
+                          )}
+                        </td>
 
                         {statusColor.find(
                           (status) => status.id === list?.lead_details_status
@@ -151,12 +190,12 @@ const Table = ({
                               .map((lead_status, index) => (
                                 <div
                                   key={index}
-                                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                                  className='w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md'
                                 >
                                   <div
                                     className={`w-2 h-2 ${lead_status.color} rounded-full`}
                                   ></div>
-                                  <div className="ml-1">
+                                  <div className='ml-1'>
                                     {lead_status.title}
                                   </div>
                                 </div>
@@ -166,14 +205,15 @@ const Table = ({
                           <td>{list?.payment_via}</td>
                         )}
                       </tr>
+                      // </LazyLoad>
                     )
                     // )
                   )}
                 </tbody>
               </table>
             ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Leads</h1>
+              <div className='py-20 flex justify-center items-center'>
+                <h1 className='text-xl font-light'>No Leads</h1>
               </div>
             )}
           </div>

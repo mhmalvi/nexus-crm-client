@@ -60,7 +60,7 @@ const Dashboard = () => {
   }, [dispatch, userDetails?.userInfo?.user_id, userNotifications]);
 
   return (
-    <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
+    <div className='lg:px-8 2xl:ml-12 2xl:mr-16 py-24'>
       {userDetails?.userInfo?.role_id === 6 ? (
         <UserDashboard />
       ) : (
