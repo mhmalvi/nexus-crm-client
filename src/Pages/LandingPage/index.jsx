@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import Icons from "../../Components/Shared/Icons";
+import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
 import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
@@ -59,13 +60,13 @@ const LandingPage = () => {
       duration: 0,
       description: (
         <div>
-          <h4 className="text-sm font-normal">
+          <h4 className='text-sm font-normal'>
             {details?.details} on Lead id {details?.lead_id}
           </h4>
           <a
-            className="text-brand-color font-medium"
+            className='text-brand-color font-medium'
             href={`/lead/${details?.lead_id}`}
-            target="__blank"
+            target='__blank'
           >
             Click Here
           </a>
@@ -92,13 +93,13 @@ const LandingPage = () => {
 
   return (
     <div
-      className="flex justify-start items-start font-poppins overflow-x-hidden"
+      className='flex justify-start items-start font-poppins overflow-x-hidden'
       onClick={() => {
         setToggleMessage(false);
         setToggleNotification(false);
       }}
     >
-      <div className="fixed top-0 left-0 overflow-x-hidden">
+      <div className='fixed top-0 left-0 overflow-x-hidden'>
         <Sidebar
           Items={Items}
           Items2={Items2}
@@ -111,62 +112,11 @@ const LandingPage = () => {
         />
       </div>
       <div
-        className="relative ml-auto"
+        className='relative ml-auto'
         style={{
           width: "calc(100vw - 277px)",
         }}
       >
-        {/* <div className="fixed right-16 bottom-16">
-          {currentTasks.map((reminder, i) => (
-            <div key={i} className="mb-4">
-              <Alert
-                className="mb-2"
-                message="Warning"
-                description={
-                  <div className="ml-6">
-                    {reminder?.message
-                      ? reminder?.message + " to lead No. " + reminder?.lead
-                      : "New task in lead No. " + reminder?.lead + " "}
-                    <br />
-                    Please Visit{" "}
-                    <span className="font-medium">
-                      Dashboard{">"}Today's Task
-                    </span>
-                  </div>
-                }
-                type="warning"
-                showIcon
-                closable
-                afterClose={handleClose}
-              />
-            </div>
-
-            // <div
-            //   key={i}
-            //   className="max-w-md z-50 bg-yellow-50 px-5 py-4 shadow rounded-md mb-1"
-            // >
-            //   <div className="flex items-start justify-between">
-            //     <div className="flex items-center mb-2">
-            //       <Icons.Alert className="w-4 mr-2 text-yellow-500" />
-            //       <h1 className="font-medium mb-0 text-base">Warning</h1>
-            //     </div>
-            //     <div
-            //       className="font-semibold px-1.5 py-0 bg-red-100 shadow rounded cursor-pointer"
-            //       onClick={() => handleClose("12345")}
-            //     >
-            //       x
-            //     </div>
-            //   </div>
-            //   <div className="ml-6">
-            //     {reminder?.message
-            //       ? reminder?.message + " to lead No. " + reminder?.lead
-            //       : "New task in lead No. " + reminder?.lead + " "}
-            //     <br /> Please visit Today's Task of Dashboard
-            //   </div>
-            // </div>
-          ))}
-        </div> */}
-
         <Routes>
           <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
@@ -180,11 +130,13 @@ const LandingPage = () => {
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
           <Routes key={i}>
-            <Route
-              key={navItem.key}
-              path={`${navItem.key}`}
-              element={navItem.component}
-            />
+            <Route path='/*' element={<ProtectedRoute />}>
+              <Route
+                key={navItem.key}
+                path={`${navItem.key}`}
+                element={navItem.component}
+              />
+            </Route>
           </Routes>
         ))}
       </div>

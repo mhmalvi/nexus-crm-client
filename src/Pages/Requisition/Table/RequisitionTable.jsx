@@ -55,15 +55,15 @@ const RequisitionTable = ({
     const index = data.findIndex((p) => p.user_id === idRef.current);
   };
 
-  const DoubleConfirmDelete = (choice) => {
-    if (choice) {
-      const newList = [...list];
-      const index = newList.findIndex((c) => c.user_id === idRef.current);
-      newList.splice(index, 1);
-      setList(newList);
-      console.log(newList);
-    }
-  };
+  // const DoubleConfirmDelete = (choice) => {
+  //   if (choice) {
+  //     const newList = [...list];
+  //     const index = newList.findIndex((c) => c.user_id === idRef.current);
+  //     newList.splice(index, 1);
+  //     setList(newList);
+  //     console.log(newList);
+  //   }
+  // };
 
   const HandleApprove = (id) => {
     const newList = [...list];
