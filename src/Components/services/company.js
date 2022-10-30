@@ -1,5 +1,17 @@
 import axios from "axios";
 
+export const handleCreateCompany = async (companyDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/create`,
+      companyDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleFetchNotices = async (clientId) => {
   try {
     const result = await axios.post(

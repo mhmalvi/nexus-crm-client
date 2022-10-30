@@ -1,9 +1,14 @@
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-import { useDispatch } from "react-redux";
-import { handleFetchPackages } from "../../../Components/services/company";
+import { useDispatch, useSelector } from "react-redux";
+import { handleRegistration } from "../../../Components/services/auth";
+import {
+  handleCreateCompany,
+  handleFetchPackages,
+} from "../../../Components/services/company";
 import { handleUpdateRequisitions } from "../../../Components/services/crmAdmin";
+import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 
 const RequisitionTable = ({
@@ -14,6 +19,7 @@ const RequisitionTable = ({
   setSyncRequisitionsData,
 }) => {
   const dispatch = useDispatch();
+  const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [list, setList] = useState([]);
   const [requisitionDetails, setRequisitionDetails] = useState();
@@ -23,19 +29,16 @@ const RequisitionTable = ({
   const [showRequisitionDetails, setShowRequisitionDetails] = useState(false);
 
   useEffect(() => {
-    dispatch(setLoader(true));
-
     (async () => {
       const packagesResponse = await handleFetchPackages();
 
-      if (Object.keys(requisitionDetails).length !== 0) {
+      // if (Object.keys(requisitionDetails).length !== 0) {
+      if (requisitionDetails) {
         const packageDetails = packagesResponse.packages.find(
           (pack) => pack.id === requisitionDetails?.id
         );
         console.log("packageDetails", packageDetails);
         setRequisitionPackageDetails(packageDetails);
-
-        dispatch(setLoader(false));
       }
     })();
 
@@ -43,11 +46,7 @@ const RequisitionTable = ({
   }, [data, dispatch, requisitionDetails]);
 
   const HandleDelete = async (id) => {
-    console.log(id);
     const removeRequisitionResponse = await handleUpdateRequisitions(id, 2);
-
-    console.log("removeRequisitionResponse", removeRequisitionResponse);
-
     if (removeRequisitionResponse?.key === "success") {
       setSyncRequisitionsData(!syncRequisitionsData);
     }
@@ -56,10 +55,54 @@ const RequisitionTable = ({
   const HandleApprove = async (id) => {
     const approveRequisitionResponse = await handleUpdateRequisitions(id, 1);
 
-    console.log(approveRequisitionResponse);
-
     if (approveRequisitionResponse?.key === "success") {
       setSyncRequisitionsData(!syncRequisitionsData);
+      message.success("Requisition Accepeted & Company Added Successfully");
+    }
+
+    const reqDetails = data.find((requisition) => requisition?.id === id);
+
+    console.log(reqDetails);
+
+    const registrationDetails = {
+      email: reqDetails?.email,
+      role_id: 3,
+      contact_number: reqDetails?.contact,
+      full_name: reqDetails?.name,
+      qualification: "",
+      work_experiences: "",
+      location: "",
+    };
+
+    const handleUserRegistration = await handleRegistration(
+      registrationDetails
+    );
+
+    console.log("approveRequisitionResponse", approveRequisitionResponse);
+    console.log("handleUserRegistration", handleUserRegistration);
+
+    if (handleUserRegistration?.data?.user_id) {
+      const createCompany = await handleCreateCompany({
+        name: reqDetails?.company_name,
+        description: reqDetails?.description,
+        logo_id: "",
+        contact: reqDetails?.contact,
+        business_email: reqDetails?.business_email,
+        address: reqDetails?.address,
+        abn: reqDetails?.abn,
+        website: reqDetails?.website,
+        trading_name: reqDetails?.trading_name,
+        rto_code: reqDetails?.rto_code,
+        country_name: reqDetails?.country_name,
+        admin: handleUserRegistration?.data?.user_id,
+        fb_ac_credential: "Not Added Yet",
+        secret_key: "Not Added Yet",
+        form: "Not Added Yet",
+        subscription_id: reqDetails?.packages_id,
+        business_type: 1,
+      });
+
+      console.log("createCompany", createCompany);
     }
   };
 
@@ -67,9 +110,7 @@ const RequisitionTable = ({
     const requisitionDetails = list.find(
       (requisition) => requisition?.id === requisitionId
     );
-
     setRequisitionDetails(requisitionDetails);
-
     setShowRequisitionDetails(true);
   };
 
@@ -86,7 +127,6 @@ const RequisitionTable = ({
           <h1 className="text-lg font-semibold text-center pb-2 mb-12">
             <span>Requisition for </span>
             <span className="text-brand-color">
-              {" "}
               {requisitionDetails?.company_name}
             </span>
           </h1>
@@ -254,103 +294,117 @@ const RequisitionTable = ({
           </thead>
         </table>
       </div>
-      <div className="tbl-content">
-        <form action="">
-          <table
-            className="custom-table"
-            cellPadding="0"
-            cellSpacing="0"
-            border="0"
-          >
-            <tbody>
-              {list.map((list, i) => (
-                <tr key={i}>
-                  <td
-                    onClick={() => handleRequisitionDetails(list?.id)}
-                    className="w-19"
-                  >
-                    {i + 1}
-                  </td>
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.name}
-                  </td>
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.company_name}
-                  </td>
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.contact}
-                  </td>
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.email}
-                  </td>
-                  <td
-                    className="pl-8"
-                    onClick={() => handleRequisitionDetails(list?.id)}
-                  >
-                    {list.trading_name}
-                  </td>
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.created_at.replace("T", " ").toString().slice(0, 19)}
-                    {/* {list.trading_name} */}
-                  </td>
-                  {/* <td onClick={() => handleRequisitionDetails(list?.id)}>
+
+      {loadingDetails ? (
+        <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      ) : (
+        <div className="tbl-content">
+          {data.length ? (
+            <table
+              className="custom-table"
+              cellPadding="0"
+              cellSpacing="0"
+              border="0"
+            >
+              <tbody>
+                {list.map((list, i) => (
+                  <tr key={i}>
+                    <td
+                      onClick={() => handleRequisitionDetails(list?.id)}
+                      className="w-19"
+                    >
+                      {i + 1}
+                    </td>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.name}
+                    </td>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.company_name}
+                    </td>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.contact}
+                    </td>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.email}
+                    </td>
+                    <td
+                      className="pl-8"
+                      onClick={() => handleRequisitionDetails(list?.id)}
+                    >
+                      {list.trading_name}
+                    </td>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.created_at
+                        .replace("T", " ")
+                        .toString()
+                        .slice(0, 19)}
+                      {/* {list.trading_name} */}
+                    </td>
+                    {/* <td onClick={() => handleRequisitionDetails(list?.id)}>
                     {list.created_at.toString().slice(0, 31)}
                   </td> */}
 
-                  <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.status === 2 ? (
-                      <div className="flex items-center">
-                        <div
-                          className={`w-2 h-2 bg-red-500 rounded-full`}
-                        ></div>
-                        <div className="ml-1">Cancelled</div>
-                      </div>
-                    ) : (
-                      <>
-                        {list.status === 1 ? (
-                          <div className="flex items-center">
-                            <div
-                              className={`w-2 h-2 bg-green-500 rounded-full`}
-                            ></div>
-                            <div className="ml-1">Approved</div>
-                          </div>
-                        ) : (
-                          // : list.status === "0" ? (
-                          <div className="flex items-center">
-                            <div
-                              className={`w-2 h-2 bg-orange-500 rounded-full`}
-                            ></div>
-                            <div className="ml-1">Pending</div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </td>
-                  <td className="py-2 px-0">
-                    {list.status === 0 ? (
-                      <td className="flex p-0 justify-start items-start gap-1">
-                        <div
-                          className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
-                          onClick={() => HandleApprove(list.id)}
-                        >
-                          <div className="text-green-500 font-extrabold">✔</div>
+                    <td onClick={() => handleRequisitionDetails(list?.id)}>
+                      {list.status === 2 ? (
+                        <div className="flex items-center">
+                          <div
+                            className={`w-2 h-2 bg-red-500 rounded-full`}
+                          ></div>
+                          <div className="ml-1">Cancelled</div>
                         </div>
-                        <div
-                          className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
-                          onClick={() => HandleDelete(list.id)}
-                        >
-                          <div className="text-red-500 font-extrabold">✖</div>
-                        </div>
-                        {/* </td> */}
-                      </td>
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </form>
-      </div>
+                      ) : (
+                        <>
+                          {list.status === 1 ? (
+                            <div className="flex items-center">
+                              <div
+                                className={`w-2 h-2 bg-green-500 rounded-full`}
+                              ></div>
+                              <div className="ml-1">Approved</div>
+                            </div>
+                          ) : (
+                            // : list.status === "0" ? (
+                            <div className="flex items-center">
+                              <div
+                                className={`w-2 h-2 bg-orange-500 rounded-full`}
+                              ></div>
+                              <div className="ml-1">Pending</div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </td>
+                    <td className="py-2 px-0">
+                      {list.status === 0 ? (
+                        <td className="flex p-0 justify-start items-start gap-1">
+                          <div
+                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
+                            onClick={() => HandleApprove(list.id)}
+                          >
+                            <div className="text-green-500 font-extrabold">
+                              ✔
+                            </div>
+                          </div>
+                          <div
+                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
+                            onClick={() => HandleDelete(list.id)}
+                          >
+                            <div className="text-red-500 font-extrabold">✖</div>
+                          </div>
+                          {/* </td> */}
+                        </td>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <h1>No Requisition Yet</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 };
