@@ -29,6 +29,20 @@ const RequisitionTable = ({
   const [showRequisitionDetails, setShowRequisitionDetails] = useState(false);
 
   useEffect(() => {
+    dispatch(setLoader(true));
+
+    if (data) {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 3000);
+    }
+  }, []);
+
+  useEffect(() => {
     (async () => {
       const packagesResponse = await handleFetchPackages();
 
@@ -61,25 +75,18 @@ const RequisitionTable = ({
     }
 
     const reqDetails = data.find((requisition) => requisition?.id === id);
-
-    console.log(reqDetails);
-
     const registrationDetails = {
       email: reqDetails?.email,
       role_id: 3,
       contact_number: reqDetails?.contact,
       full_name: reqDetails?.name,
-      qualification: "",
-      work_experiences: "",
-      location: "",
+      qualification: "Not Added",
+      work_experiences: "Not Added",
+      location: "Not Added",
     };
-
     const handleUserRegistration = await handleRegistration(
       registrationDetails
     );
-
-    console.log("approveRequisitionResponse", approveRequisitionResponse);
-    console.log("handleUserRegistration", handleUserRegistration);
 
     if (handleUserRegistration?.data?.user_id) {
       const createCompany = await handleCreateCompany({
@@ -401,7 +408,9 @@ const RequisitionTable = ({
               </tbody>
             </table>
           ) : (
-            <h1>No Requisition Yet</h1>
+            <h1 className="text-lg font-medium text-center py-16">
+              No Requisition Yet
+            </h1>
           )}
         </div>
       )}
