@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
 import { handleFetchPackages } from "../../../Components/services/company";
@@ -40,17 +40,7 @@ const RequisitionTable = ({
     })();
 
     setList(data);
-  }, [data, requisitionDetails]);
-
-  console.log("Requisitions", data);
-
-  // const handleDialog = (message, isLoading, user) => {
-  //   setdialog({
-  //     message,
-  //     isLoading,
-  //     user,
-  //   });
-  // };
+  }, [data, dispatch, requisitionDetails]);
 
   const HandleDelete = async (id) => {
     console.log(id);
@@ -62,16 +52,6 @@ const RequisitionTable = ({
       setSyncRequisitionsData(!syncRequisitionsData);
     }
   };
-
-  // const DoubleConfirmDelete = (choice) => {
-  //   if (choice) {
-  //     const newList = [...list];
-  //     const index = newList.findIndex((c) => c.user_id === idRef.current);
-  //     newList.splice(index, 1);
-  //     setList(newList);
-  //     console.log(newList);
-  //   }
-  // };
 
   const HandleApprove = async (id) => {
     const approveRequisitionResponse = await handleUpdateRequisitions(id, 1);
@@ -318,7 +298,7 @@ const RequisitionTable = ({
                   </td> */}
 
                   <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.status === 2  ? (
+                    {list.status === 2 ? (
                       <div className="flex items-center">
                         <div
                           className={`w-2 h-2 bg-red-500 rounded-full`}
@@ -347,37 +327,23 @@ const RequisitionTable = ({
                     )}
                   </td>
                   <td className="py-2 px-0">
-                    {
-                      list.status === 0 ? (
-                        <td className="flex p-0 justify-start items-start gap-1">
-                          {/* <td className="border-none p-0"> */}
-                          {/* <td className="flex  gap-1"> */}
-                          <div
-                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
-                            onClick={() => HandleApprove(list.id)}
-                          >
-                            <div className="text-green-500 font-extrabold">
-                              ✔
-                            </div>
-                          </div>
-                          <div
-                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
-                            onClick={() => HandleDelete(list.id)}
-                          >
-                            <div className="text-red-500 font-extrabold">✖</div>
-                          </div>
-                          {/* </td> */}
-                        </td>
-                      ) : null
-                      // <td className="flex flex-col justify-center items-start">
-                      //   <div
-                      //     className="flex justify-center items-center py-1.5 px-7 rounded-lg shadow-md border border-red-500"
-                      //     onClick={() => HandleDelete(list.user_id)}
-                      //   >
-                      //     <div className="text-red-500 font-extrabold">✖</div>
-                      //   </div>
-                      // </td>
-                    }
+                    {list.status === 0 ? (
+                      <td className="flex p-0 justify-start items-start gap-1">
+                        <div
+                          className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
+                          onClick={() => HandleApprove(list.id)}
+                        >
+                          <div className="text-green-500 font-extrabold">✔</div>
+                        </div>
+                        <div
+                          className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
+                          onClick={() => HandleDelete(list.id)}
+                        >
+                          <div className="text-red-500 font-extrabold">✖</div>
+                        </div>
+                        {/* </td> */}
+                      </td>
+                    ) : null}
                   </td>
                 </tr>
               ))}

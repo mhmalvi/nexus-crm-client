@@ -302,7 +302,7 @@ const UserDetails = ({ leadDetails }) => {
             </h1>
           </div>
           <div className="ml-4 mt-5">
-            <Link to={"/pay/16541"}>
+            <Link to={`/pay/${leadDetails?.lead_id}`}>
               <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
                 Pay
               </button>

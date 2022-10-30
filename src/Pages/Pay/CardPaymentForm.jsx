@@ -4,8 +4,7 @@ import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
 import visa from "../../assets/Images/visa.png";
 
-const CardPaymentForm = () => {
-  const [amount, setAmount] = useState("");
+const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
 
   useEffect(() => {
     const scriptContainer = document.getElementById("e-way");
@@ -15,16 +14,19 @@ const CardPaymentForm = () => {
     script.className = "eway-paynow-button";
     script.setAttribute(
       "data-publicapikey",
-      "epk-5C39F555-79BF-4DF3-A805-0260D31CF07B"
+      `${process.env.REACT_APP_EWAY_ACCESS_KEY}`
     );
     script.setAttribute("data-amount", `${amount * 100}`);
     script.setAttribute("data-currency", "AUD");
     script.setAttribute("data-submitform", "yes");
-    script.setAttribute("data-resulturl", "http://localhost:3000/pay/16541");
+    script.setAttribute(
+      "data-resulturl",
+      `${process.env.REACT_APP_CLIENT_URL}/success/${requestedLeadDetails?.leadDetails?.lead_id}`
+    );
 
     script.async = true;
     scriptContainer.appendChild(script);
-  }, [amount]);
+  }, [amount, requestedLeadDetails?.leadDetails?.lead_id]);
 
   return (
     <div>
@@ -45,7 +47,7 @@ const CardPaymentForm = () => {
             type="text"
             name="card_number"
             onChange={(e) => setAmount(e.target.value)}
-            id=""
+            id="payment_amount"
             placeholder="$amount"
           />
         </div>

@@ -1,17 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams, useSearchParams } from "react-router-dom";
+import {
+  handleAddEwayPaymentDetails,
+  handleLeadDetails,
+} from "../../Components/services/leads";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
 import PayPalPaymentForm from "./PayPalPaymentForm";
 
 const Pay = () => {
+  const { id } = useParams();
+  const userDetails = useSelector((state) => state.user)?.userInfo;
+  const [amount, setAmount] = useState("");
+  const [searchParams] = useSearchParams();
+
+  console.log(userDetails);
+  console.log(searchParams.get("AccessCode"));
+
   const [transactionsMethod, setTransactionsMethod] = useState(0);
-  // const [transactionsType, setTransactionsType] = useState("payment");
+  const [requestedLeadDetails, setRequestedLeadDetails] = useState();
+
+  useEffect(() => {
+    if (searchParams?.get("AccessCode")) {
+      (async () => {
+        const addEwayPaymentHistory = await handleAddEwayPaymentDetails(
+          userDetails?.user_id,
+          id,
+          userDetails?.client_id,
+          "eWay",
+          searchParams.get("AccessCode")
+        );
+        console.log(addEwayPaymentHistory);
+      })();
+    }
+  }, [id, searchParams, userDetails?.client_id, userDetails?.user_id]);
+
+  useEffect(() => {
+    (async () => {
+      const leadDetailsResponse = await handleLeadDetails(id);
+      if (leadDetailsResponse?.status) {
+        setRequestedLeadDetails(leadDetailsResponse);
+      }
+    })();
+  }, []);
 
   const paymentOptions = [
     {
       id: 0,
       title: "Credit/Debit Card",
-      component: <CardPaymentForm />,
+      component: (
+        <CardPaymentForm
+          requestedLeadDetails={requestedLeadDetails}
+          amount={amount}
+          setAmount={setAmount}
+        />
+      ),
     },
     {
       id: 1,
@@ -35,24 +79,30 @@ const Pay = () => {
                 <div className="mb-10 flex items-start justify-between">
                   <div className="font-semibold text-base leading-6 font-poppins">
                     <div>
-                      <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
-                        Davidov Artur
+                      <h1 className="w-52 text-lg leading-8 font-poppins font-semibold mb-0">
+                        {requestedLeadDetails?.leadDetails?.full_name}
                       </h1>
                     </div>
-                    <div className="font-medium text-base leading-6 font-poppins flex items-center mt-2">
-                      {/* <span>Email:&nbsp;</span> */}
-                      <span>art89@google.com</span>
+                    <div className="w-52 font-medium text-base leading-6 font-poppins flex items-center mt-2">
+                      <span>
+                        {requestedLeadDetails?.leadDetails?.student_email}
+                      </span>
                     </div>
                   </div>
                   <div>
-                    <div className="text-xl leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
+                    <div className="text-lg leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
                       {/* <span>Courses:&nbsp;</span> */}
                       <span>Fashion Designing</span>
                     </div>
                     <div>
                       <h4 className="font-medium text-base leading-8 text-black text-center pb-6">
                         Total Payable:{" "}
-                        <span className="text-red-600">$1500</span>
+                        <span className="text-red-600">
+                          {requestedLeadDetails?.leadAmountHistory?.length === 0
+                            ? "Not Set Yet"
+                            : requestedLeadDetails?.leadAmountHistory[0]
+                                ?.amount}
+                        </span>
                       </h4>
                     </div>
                   </div>
