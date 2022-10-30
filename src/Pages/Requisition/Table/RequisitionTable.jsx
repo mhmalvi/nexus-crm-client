@@ -1,16 +1,20 @@
 import { Modal } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { CSVLink } from "react-csv";
+import { useDispatch } from "react-redux";
 import { handleFetchPackages } from "../../../Components/services/company";
+import { handleUpdateRequisitions } from "../../../Components/services/crmAdmin";
+import { setLoader } from "../../../features/user/userSlice";
 
 const RequisitionTable = ({
   title,
   tableHeaders,
   data,
-  // activeFilter,
-  // searchInput,
+  syncRequisitionsData,
+  setSyncRequisitionsData,
 }) => {
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [list, setList] = useState([]);
   const [requisitionDetails, setRequisitionDetails] = useState();
   const [requisitionPackageDetails, setRequisitionPackageDetails] = useState(
@@ -19,6 +23,8 @@ const RequisitionTable = ({
   const [showRequisitionDetails, setShowRequisitionDetails] = useState(false);
 
   useEffect(() => {
+    dispatch(setLoader(true));
+
     (async () => {
       const packagesResponse = await handleFetchPackages();
 
@@ -26,20 +32,17 @@ const RequisitionTable = ({
         const packageDetails = packagesResponse.packages.find(
           (pack) => pack.id === requisitionDetails?.id
         );
-
         console.log("packageDetails", packageDetails);
-
         setRequisitionPackageDetails(packageDetails);
+
+        dispatch(setLoader(false));
       }
     })();
 
     setList(data);
   }, [data, requisitionDetails]);
 
-  console.log("requisitionPackageDetails", requisitionPackageDetails);
-  // const handleNavigate = (id) => {
-  //   navigate(`/profile/${id}`);
-  // };
+  console.log("Requisitions", data);
 
   // const handleDialog = (message, isLoading, user) => {
   //   setdialog({
@@ -49,10 +52,15 @@ const RequisitionTable = ({
   //   });
   // };
 
-  const idRef = useRef();
-  const HandleDelete = (id) => {
-    idRef.current = id;
-    const index = data.findIndex((p) => p.user_id === idRef.current);
+  const HandleDelete = async (id) => {
+    console.log(id);
+    const removeRequisitionResponse = await handleUpdateRequisitions(id, 2);
+
+    console.log("removeRequisitionResponse", removeRequisitionResponse);
+
+    if (removeRequisitionResponse?.key === "success") {
+      setSyncRequisitionsData(!syncRequisitionsData);
+    }
   };
 
   // const DoubleConfirmDelete = (choice) => {
@@ -65,11 +73,14 @@ const RequisitionTable = ({
   //   }
   // };
 
-  const HandleApprove = (id) => {
-    const newList = [...list];
-    const index = newList.findIndex((c) => c.user_id === id);
-    newList[index].status = 0;
-    setList(newList);
+  const HandleApprove = async (id) => {
+    const approveRequisitionResponse = await handleUpdateRequisitions(id, 1);
+
+    console.log(approveRequisitionResponse);
+
+    if (approveRequisitionResponse?.key === "success") {
+      setSyncRequisitionsData(!syncRequisitionsData);
+    }
   };
 
   const handleRequisitionDetails = (requisitionId) => {
@@ -173,7 +184,15 @@ const RequisitionTable = ({
 
               <h1 className="text-sm">
                 <span>Website : </span>
-                <span>{requisitionDetails?.website}</span>
+                <a
+                  href={requisitionDetails?.website}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {requisitionDetails?.website
+                    ? requisitionDetails?.website
+                    : "Not Submitted"}
+                </a>
               </h1>
             </div>
           </div>
@@ -265,56 +284,101 @@ const RequisitionTable = ({
           >
             <tbody>
               {list.map((list, i) => (
-                <tr key={i} onClick={() => handleRequisitionDetails(list?.id)}>
-                  <td className="w-19">{i + 1}</td>
-                  <td>{list.name}</td>
-                  <td>{list.company_name}</td>
-                  <td>{list.contact}</td>
-                  <td>{list.email}</td>
-                  <td>{list.trading_name}</td>
+                <tr key={i}>
+                  <td
+                    onClick={() => handleRequisitionDetails(list?.id)}
+                    className="w-19"
+                  >
+                    {i + 1}
+                  </td>
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.name}
+                  </td>
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.company_name}
+                  </td>
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.contact}
+                  </td>
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.email}
+                  </td>
+                  <td
+                    className="pl-8"
+                    onClick={() => handleRequisitionDetails(list?.id)}
+                  >
+                    {list.trading_name}
+                  </td>
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.created_at.replace("T", " ").toString().slice(0, 19)}
+                    {/* {list.trading_name} */}
+                  </td>
+                  {/* <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.created_at.toString().slice(0, 31)}
+                  </td> */}
 
-                  <td>
-                    {list.status === "1" ? (
+                  <td onClick={() => handleRequisitionDetails(list?.id)}>
+                    {list.status === 2  ? (
                       <div className="flex items-center">
                         <div
-                          className={`w-2 h-2 bg-green-500 rounded-full`}
+                          className={`w-2 h-2 bg-red-500 rounded-full`}
                         ></div>
-                        <div className="ml-1">Approved</div>
+                        <div className="ml-1">Cancelled</div>
                       </div>
                     ) : (
-                      <div className="flex items-center">
-                        <div
-                          className={`w-2 h-2 bg-orange-500 rounded-full`}
-                        ></div>
-                        <div className="ml-1">Pending</div>
-                      </div>
+                      <>
+                        {list.status === 1 ? (
+                          <div className="flex items-center">
+                            <div
+                              className={`w-2 h-2 bg-green-500 rounded-full`}
+                            ></div>
+                            <div className="ml-1">Approved</div>
+                          </div>
+                        ) : (
+                          // : list.status === "0" ? (
+                          <div className="flex items-center">
+                            <div
+                              className={`w-2 h-2 bg-orange-500 rounded-full`}
+                            ></div>
+                            <div className="ml-1">Pending</div>
+                          </div>
+                        )}
+                      </>
                     )}
                   </td>
-                  {list.status === "0" ? (
-                    <td className="flex flex-wrap justify-center items-start gap-1">
-                      <div
-                        className="flex items-center py-1.5 px-7 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
-                        onClick={() => HandleApprove(list.user_id)}
-                      >
-                        <div className="text-green-500 font-extrabold">✔</div>
-                      </div>
-                      <div
-                        className="flex items-center py-1.5 px-7 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
-                        onClick={() => HandleDelete(list.user_id)}
-                      >
-                        <div className="text-red-500 font-extrabold">✖</div>
-                      </div>
-                    </td>
-                  ) : (
-                    <td className="flex flex-col justify-center items-start">
-                      <div
-                        className="flex justify-center items-center py-1.5 px-7 rounded-lg shadow-md border border-red-500"
-                        onClick={() => HandleDelete(list.user_id)}
-                      >
-                        <div className="text-red-500 font-extrabold">✖</div>
-                      </div>
-                    </td>
-                  )}
+                  <td className="py-2 px-0">
+                    {
+                      list.status === 0 ? (
+                        <td className="flex p-0 justify-start items-start gap-1">
+                          {/* <td className="border-none p-0"> */}
+                          {/* <td className="flex  gap-1"> */}
+                          <div
+                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-green-400 justify-center hover:border-green-500"
+                            onClick={() => HandleApprove(list.id)}
+                          >
+                            <div className="text-green-500 font-extrabold">
+                              ✔
+                            </div>
+                          </div>
+                          <div
+                            className="flex items-center py-1.5 px-4 rounded-lg shadow-md border border-red-400 justify-center hover:border-red-500"
+                            onClick={() => HandleDelete(list.id)}
+                          >
+                            <div className="text-red-500 font-extrabold">✖</div>
+                          </div>
+                          {/* </td> */}
+                        </td>
+                      ) : null
+                      // <td className="flex flex-col justify-center items-start">
+                      //   <div
+                      //     className="flex justify-center items-center py-1.5 px-7 rounded-lg shadow-md border border-red-500"
+                      //     onClick={() => HandleDelete(list.user_id)}
+                      //   >
+                      //     <div className="text-red-500 font-extrabold">✖</div>
+                      //   </div>
+                      // </td>
+                    }
+                  </td>
                 </tr>
               ))}
             </tbody>

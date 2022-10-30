@@ -258,3 +258,21 @@ export const handleSyncLeads = async (clientId, acToken) => {
     return error.response;
   }
 };
+
+export const handleAddEwayPaymentDetails = async (clientId, acToken) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/eway/payment/response`,
+      {
+        user_id: clientId,
+        lead_id: acToken,
+        company_id: acToken,
+        payment_method: acToken,
+        accessCode: acToken,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

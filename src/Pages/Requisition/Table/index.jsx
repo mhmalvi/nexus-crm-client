@@ -4,6 +4,7 @@ import RequisitionTable from "./RequisitionTable";
 
 const Requisitions = () => {
   const [requisitionsData, setRequisitionsData] = useState([]);
+  const [syncRequisitionsData, setSyncRequisitionsData] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -12,7 +13,7 @@ const Requisitions = () => {
         setRequisitionsData(requisitionsResponse?.data);
       }
     })();
-  }, []);
+  }, [syncRequisitionsData]);
 
   return (
     <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
@@ -20,6 +21,8 @@ const Requisitions = () => {
         title="Requisition List"
         tableHeaders={requisitionTableHeader}
         data={requisitionsData}
+        syncRequisitionsData={syncRequisitionsData}
+        setSyncRequisitionsData={setSyncRequisitionsData}
         // activeFilter={activeFilter}
         // searchInput={searchInput}
       />
@@ -36,7 +39,7 @@ const requisitionTableHeader = [
   "Contact",
   "Business Email",
   "Trade Name",
-  // "ABN",
+  "Time",
   // "RTO CODE",
   "Status",
   "Approval",
