@@ -1,13 +1,26 @@
-import { Dropdown, Menu, message, Space, DatePicker, Modal } from "antd";
+import {
+  DatePicker,
+  Dropdown,
+  Menu,
+  message,
+  Modal,
+  Space,
+  Upload,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
   handleAddCall,
-  handleLeadDetailsUpdate,
+  handleLeadCertificatetDetailsUpdate,
   handleLeadStatusUpdate,
+  handleLeadStudentDetailsUpdate,
 } from "../../Components/services/leads";
-import { handleRegistration } from "../../Components/services/auth";
+import {
+  handleFetchFile,
+  handleUploadFile,
+} from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
 
 // ----Default Values----
@@ -33,6 +46,7 @@ const LeadStatus = ({
   // const [activeStatus, setActiveStatus] = useState(
   //   Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   // );
+  const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
   // const [callCount, setCallCount] = useState(0);
@@ -44,7 +58,7 @@ const LeadStatus = ({
   const [isCallDetailsOpen, setIsCallDetailsOpen] = useState(false);
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
   const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
-  // const [isModalOpen, setIsModalOpen] = useState(true);
+  const [certificate, setCertificate] = useState("");
 
   const statusColor = [
     {
@@ -102,14 +116,18 @@ const LeadStatus = ({
           ).class
     );
 
-    // setAmount(
-    //   leadDetails?.leadAmountHistory.length > 0
-    //     ? leadDetails?.leadAmountHistory[
-    //         leadDetails?.leadAmountHistory?.length - 1
-    //       ]?.amount
-    //     : ""
-    // );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (leadDetails?.leadDetails?.document_certificate_id) {
+      (async () => {
+        const fetchCertificateFIle = await handleFetchFile(
+          leadDetails?.leadDetails?.document_certificate_id
+        );
+
+        setCertificate(
+          "http://192.168.0.158:5000/" +
+            fetchCertificateFIle?.data?.[0]?.document_name
+        );
+      })();
+    }
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
@@ -253,7 +271,8 @@ const LeadStatus = ({
     const registrationResponse = await handleRegistration(registrationFormData);
 
     if (registrationResponse?.data?.status) {
-      const leadUpdateResponse = await handleLeadDetailsUpdate(
+      // For Registering Students
+      const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
         leadDetails?.leadDetails.lead_id,
         registrationResponse?.data?.data?.user_id
       );
@@ -274,7 +293,26 @@ const LeadStatus = ({
     setIsCallDetailsOpen(false);
   };
 
-  console.log("statusDateTime", statusDateTime);
+  const handleCertificateFileChange = async (e) => {
+    const fileFormData = new FormData();
+    fileFormData.append("user_id", userDetails?.userInfo?.user_id);
+    fileFormData.append("client_id", leadDetails.client_id);
+    fileFormData.append("document_name", e?.file?.originFileObj);
+    fileFormData.append("document_details", e?.file?.originFileObj?.name);
+
+    const uploadFile = await handleUploadFile(fileFormData);
+
+    console.log("File", uploadFile?.message?.data[0]?.id);
+
+    const certificateUploadResponse = await handleLeadCertificatetDetailsUpdate(
+      leadDetails?.leadDetails?.lead_id,
+      uploadFile?.message?.data[0]?.id
+    );
+
+    if (certificateUploadResponse?.status) {
+      setSyncDetails(!syncDetails);
+    }
+  };
 
   return (
     <div className="min-h-full pr-6 border-r">
@@ -555,7 +593,6 @@ const LeadStatus = ({
                 title="Register the user to this system"
                 disabled
                 className="text-xs bg-gray-200 cursor-not-allowed italic text-gray-500 px-3 py-2.5 rounded-lg ml-2"
-                onClick={handleRegistrationReq}
               >
                 Registered
               </button>
@@ -609,7 +646,7 @@ const LeadStatus = ({
               </h6>
             </div>
           </div>
-          <div>
+          <div className="text-xs">
             {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
               ? new Date(leadDetails?.leadDetails?.lead_apply_date)
                   .toString()
@@ -651,7 +688,7 @@ const LeadStatus = ({
               </h6>
             </div>
           </div>
-          <div>
+          <div className="text-xs">
             {statusDateTime["Skilled"] !== "Not Yet"
               ? new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
               : "Not Yet"}
@@ -686,7 +723,7 @@ const LeadStatus = ({
               </h6>
             </div>
           </div>
-          <div>
+          <div className="text-xs">
             {statusDateTime["Called"] !== "Not Yet"
               ? new Date(statusDateTime["Called"]).toString().slice(0, 31)
               : "Not Yet"}
@@ -724,7 +761,7 @@ const LeadStatus = ({
               </h6>
             </div>
           </div>
-          <div>
+          <div className="text-xs">
             {statusDateTime["Paid"] !== "Not Yet"
               ? new Date(statusDateTime["Paid"]).toString().slice(0, 31)
               : "Not Yet"}
@@ -762,19 +799,20 @@ const LeadStatus = ({
                 )}
               </h6>
               <div className="flex mt-1">
-                <Icons.PDF />
-                <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                  Files
+                {/* <Icons.PDF /> */}
+                <h6 className="mb-0 italic text-xs whitespace-nowrap font-medium font-poppins leading-5">
+                  <span className="text-red-500">*</span> Please Check The
+                  Checklist Section
                 </h6>
               </div>
             </div>
           </div>
-          <div>
-            <p>
-              {statusDateTime["Verified"] !== "Not Yet"
-                ? new Date(statusDateTime["Verified"]).toString().slice(0, 31)
-                : "Not Yet"}
-            </p>
+          <div className="text-xs">
+            {/* <p className="text-xs"> */}
+            {statusDateTime["Verified"] !== "Not Yet"
+              ? new Date(statusDateTime["Verified"]).toString().slice(0, 31)
+              : "Not Yet"}
+            {/* </p> */}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -802,22 +840,50 @@ const LeadStatus = ({
                 Completed
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Certificate Provided
+                {leadDetails?.leadDetails?.document_certificate_id > 0
+                  ? "Certificate Provided"
+                  : "Certificate Has Not Provided Yet"}
               </h6>
               <div className="flex mt-1">
-                <Icons.PDF />
-                <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                  Files
-                </h6>
+                {leadDetails?.leadDetails?.document_certificate_id === 0 ? (
+                  leadStatus["Completed"] && (
+                    <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
+                      <Upload
+                        onChange={handleCertificateFileChange}
+                        fileList={fileList}
+                      >
+                        <div className="flex items-center">
+                          <Icons.PDF />
+                          <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                            Certificate
+                          </h6>
+                        </div>
+                      </Upload>
+                    </div>
+                  )
+                ) : (
+                  <div>
+                    <a
+                      id="certificate"
+                      className="flex items-center"
+                      href={certificate}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <Icons.PDF />
+                      <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                        Download Certificate
+                      </h6>
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-          <div>
-            <p>
-              {statusDateTime["Completed"] !== "Not Yet"
-                ? new Date(statusDateTime["Completed"]).toString().slice(0, 31)
-                : "Not Yet"}
-            </p>
+          <div className="text-xs">
+            {statusDateTime["Completed"] !== "Not Yet"
+              ? new Date(statusDateTime["Completed"]).toString().slice(0, 31)
+              : "Not Yet"}
           </div>
         </div>
       </div>

@@ -30,7 +30,6 @@ const RequisitionTable = ({
 
   useEffect(() => {
     dispatch(setLoader(true));
-
     if (data) {
       setTimeout(() => {
         dispatch(setLoader(false));
@@ -263,7 +262,11 @@ const RequisitionTable = ({
             </h1>
           </div>
           <div className="ml-6">
-            <CSVLink data={data} target="_blank" filename={"Requisitions.csv"}>
+            <CSVLink
+              data={data.length ? data : "Empty"}
+              target="_blank"
+              filename={"Requisitions.csv"}
+            >
               <h1
                 className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                 style={{

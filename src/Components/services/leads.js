@@ -25,7 +25,7 @@ export const handleLeadDetails = async (leadId) => {
   }
 };
 
-export const handleLeadDetailsUpdate = async (leadId, userId) => {
+export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/${leadId}/update`,
@@ -276,6 +276,18 @@ export const handleAddEwayPaymentDetails = async (
         payment_method: paymentMethod,
         accessCode: accessCode,
       }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleLeadCertificatetDetailsUpdate = async (leadId, certificateId) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/${leadId}/update`,
+      { document_certificate_id: certificateId }
     );
     return result.data;
   } catch (error) {

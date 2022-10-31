@@ -41,14 +41,11 @@ const UserDetails = ({ leadDetails }) => {
       userDetails?.userInfo?.user_id
     );
 
-    console.log(reviewResponse?.data);
-
-    if (reviewResponse?.data?.status) {
+    if (reviewResponse?.status) {
       message.success("Rating Added Successfully");
     } else {
-      message.warn(reviewResponse?.data?.message);
+      message.warn(reviewResponse?.message);
     }
-
     setRating(newRating);
   };
 
