@@ -12,6 +12,33 @@ export const handleCreateCompany = async (companyDetails) => {
   }
 };
 
+export const handleUpdateCompany = async (companyDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/update`,
+      companyDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handlePasswordReset = async (userId, newPassword) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/password-reset`,
+      {
+        user_id: userId,
+        password: newPassword,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleFetchNotices = async (clientId) => {
   try {
     const result = await axios.post(

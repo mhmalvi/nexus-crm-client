@@ -51,15 +51,16 @@ const Login = () => {
     // console.log(loginResponse.data);
 
     if (loginResponse?.status === 200) {
-      console.log("USER DETAILS", loginResponse.data);
-      console.log("USER DETAILS", loginResponse.data.data);
+      // if ()
+
+      if (!Storage.getItem("p_changed")) {
+        Storage.setItem("p_changed", false);
+      }
 
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem("auth_tok", loginResponse?.data?.token);
 
       dispatch(setLoader(false));
-
-      console.log(loginResponse?.data);
       dispatch(addUserDetails(loginResponse?.data?.data));
 
       message.success("Successfully Logged In");
