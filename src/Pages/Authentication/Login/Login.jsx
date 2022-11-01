@@ -48,7 +48,7 @@ const Login = () => {
 
     const loginResponse = await handleLogin(loginFormData);
 
-    // console.log(loginResponse.data);
+    console.log("loginResponse", loginResponse);
 
     if (loginResponse?.status === 200) {
       // if ()

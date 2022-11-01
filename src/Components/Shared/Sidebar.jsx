@@ -50,6 +50,7 @@ const Sidebar = ({
   const handleLogout = () => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
+    Storage.setItem("p_changed", true);
     navigate("/login");
   };
 

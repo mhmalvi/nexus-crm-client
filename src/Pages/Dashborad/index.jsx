@@ -1,4 +1,4 @@
-import { Input, message, Modal } from "antd";
+import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -53,10 +53,13 @@ const Dashboard = () => {
       );
       dispatch(
         addMessages(
-          messages?.filter(
-            (element, index) =>
-              messages.findIndex((obj) => obj.room === element.room) === index
-          )
+          messages.length
+            ? messages?.filter(
+                (element, index) =>
+                  messages.findIndex((obj) => obj.room === element.room) ===
+                  index
+              )
+            : []
         )
       );
     })();
@@ -67,14 +70,17 @@ const Dashboard = () => {
         userDetails?.userInfo?.user_id
       );
 
-      response?.forEach((notification) => {
-        if (
-          userNotifications?.filter((notific) => notific.id !== notification.id)
-            .length === 0
-        ) {
-          dispatch(addNotifications(notification));
-        }
-      });
+      if (response) {
+        response?.forEach((notification) => {
+          if (
+            userNotifications?.filter(
+              (notific) => notific.id !== notification.id
+            ).length === 0
+          ) {
+            dispatch(addNotifications(notification));
+          }
+        });
+      }
     })();
   }, [dispatch, userDetails?.userInfo?.user_id, userNotifications]);
 
@@ -107,10 +113,10 @@ const Dashboard = () => {
     setPasswordDetails(e?.target?.vaue);
   };
 
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setToggleChanglePassword(false);
-  };
+  // const handleCancel = () => {
+  //   console.log("Clicked cancel button");
+  //   setToggleChanglePassword(false);
+  // };
 
   return (
     <div>
@@ -119,16 +125,21 @@ const Dashboard = () => {
         title="Change Password"
         centered
         visible={toggleChanglePassword}
-        onOk={handleOk}
+        // onOk={handleOk}
         confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        okText="Save"
+        footer={[
+          <Button key="submit" type="primary" onClick={handleOk}>
+            Save
+          </Button>,
+        ]}
+        // okText="Save"
       >
         <div className="font-poppins">
           <div>
             <div className="mb-6">
               <span className="text-sm mb-0.5 font-light">Old Password</span>
               <Input.Password
+                required
                 value={passwordDetails}
                 onChange={handleChange}
                 placeholder="Old Password"
@@ -138,6 +149,7 @@ const Dashboard = () => {
             <div className="mb-3">
               <span className="text-sm mb-0.5 font-light">New Password</span>
               <Input.Password
+                required
                 id="new_password"
                 className="bg-white"
                 placeholder="New Password"
@@ -149,6 +161,7 @@ const Dashboard = () => {
                 Re-Type New Password
               </span>
               <Input.Password
+                required
                 id="re_new_password"
                 className="bg-white"
                 placeholder="Re-Type New Password"

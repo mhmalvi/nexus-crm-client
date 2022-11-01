@@ -68,25 +68,11 @@ const CheckList = ({ leadDetails }) => {
         student_id: userDetails?.userInfo?.user_id,
         course_id: leadDetails?.course_id,
       });
-
-      // const response = await handleFetchChecklist(leadDetails?.course_id);
-
-      // const documentList = [];
-
       console.log("documentResponse?.data", documentResponse?.data);
 
       if (documentResponse?.data) {
         documentResponse?.data.map(async (doc) => {
           const fetchFiledetails = await handleFetchFile(doc?.document_id);
-          // console.log("fetchFiledetails", fetchFiledetails?.data);
-
-          // console.log(
-          //   "fetchFiledetails?.data[0]?.document_name",
-          //   fetchFiledetails?.data[0]?.document_name
-          // );
-
-          // console.log("doc", doc);
-
           if (doc?.document_id === "") {
             document.getElementById(doc?.document_id).style.display = "none";
           }
@@ -97,49 +83,9 @@ const CheckList = ({ leadDetails }) => {
               ? `${process.env.REACT_APP_FILE_SERVER_URL}/${fetchFiledetails?.data[0]?.document_name}`
               : "";
           }
-
-          //   doc["document_details"] = fetchFiledetails?.data[0]?.document_details
-          //     ? fetchFiledetails?.data[0]?.document_details
-          //     : "";
-          //   doc["document_name"] = fetchFiledetails?.data[0]?.document_name
-          //     ? fetchFiledetails?.data[0]?.document_name
-          //     : "";
-          //   console.log("DOCCCC", doc);
-          //   documentList.push(doc);
         });
-        // setDocumentFiles(documentList);
       }
-
-      // console.log("documentList", documentList);
-      // console.log("setDocumentFiles", documentFiles);
-
       setDocumentList(documentResponse?.data);
-      // setDocumentList(documentResponse?.data);
-
-      // if (response?.status) {
-      //   setDocumentList(response?.data);
-      //   const checkList = [];
-      //   if (documentList) {
-      //     (response?.data).map((doc) => {
-      //       checkList.push(doc?.id);
-      //     });
-      //   }
-      //   console.log(checkList);
-
-      //   if (checkList.length) {
-      //     (async () => {
-      //       const studentDocumentsresponse =
-      //         await handleFetchLeadCheckListDocuments(
-      //           leadDetails?.lead_id,
-      //           JSON.stringify(checkList),
-      //           userDetails?.userInfo?.userId
-      //         );
-      //       if (studentDocumentsresponse?.data?.length) {
-      //         setUserDocumentList(studentDocumentsresponse?.data);
-      //       }
-      //     })();
-      //   }
-      // }
     })();
   }, [leadDetails, userDetails?.userInfo?.user_id, syncDocumentList]);
 
@@ -181,7 +127,12 @@ const CheckList = ({ leadDetails }) => {
             <div className="flex font-poppins mt-0.5">
               {/* <h1>{document.document_id}</h1> */}
               <div>
-                <a href="#" target="_blank" id={document.document_id}>
+                <a
+                  href="#"
+                  target="_blank"
+                  id={document.document_id}
+                  rel="noreferrer"
+                >
                   <Icons.Eye className="w-4 text-black hover:text-brand-color" />
                 </a>
               </div>

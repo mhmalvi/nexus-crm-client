@@ -38,6 +38,7 @@ import { ReactComponent as Pricing } from "../../assets/Icons/price-list.svg";
 import { ReactComponent as Tick } from "../../assets/Icons/tick.svg";
 import { ReactComponent as Edit } from "../../assets/Icons/edit.svg";
 import { ReactComponent as Bin } from "../../assets/Icons/bin.svg";
+import { ReactComponent as AddImage } from "../../assets/Icons/add_image.svg";
 
 const Icons = {
   CompanyLogo,
@@ -80,6 +81,7 @@ const Icons = {
   Tick,
   Edit,
   Bin,
+  AddImage,
 };
 
 export default Icons;

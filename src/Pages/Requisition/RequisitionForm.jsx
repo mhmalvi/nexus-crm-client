@@ -42,7 +42,7 @@ const RequisitionForm = ({
             <div className="mb-6">
               <label>
                 <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                  email
+                  Email
                 </span>
                 <input
                   name="email"
@@ -124,29 +124,30 @@ const RequisitionForm = ({
               </label>
               <p className="text-red-500 text-xs">{DataErr.business_email}</p>
             </div>
+
             {/* <div className="mb-6">
-                  <span className="block text-sm font-medium text-gray-700 tracking-wide mb-2">
-                    Logo
-                  </span>
-                  <div className="w-full flex justify-start items-end">
-                    <label
-                      htmlFor="logo"
-                      className="cursor-pointer mr-6 w-44 max-h-10 shadow text-white font-medium text-center bg-brand-color focus:outline-none hover:ring-indigo-700 hover:border-indigo-700 py-2"
-                    >
-                      <span>Upload</span>
-                      <input
-                        id="logo"
-                        accept="image/png, image/jpeg, image/jpg"
-                        name="logo"
-                        type="file"
-                        placeholder="Company contact no."
-                        onChange={(e) => handleImage(e)}
-                        style={{ display: "none" }}
-                      />
-                    </label>
-                  </div>
-                  <p className="text-red-500 text-xs">{DataErr.logo}</p>
-                </div> */}
+              <span className="block text-sm font-medium text-gray-700 tracking-wide mb-2">
+                Logo
+              </span>
+              <div className="w-full flex justify-start items-end">
+                <label
+                  htmlFor="logo"
+                  className="cursor-pointer mr-6 w-44 max-h-10 shadow text-white font-medium text-center bg-brand-color focus:outline-none hover:ring-indigo-700 hover:border-indigo-700 py-2"
+                >
+                  <span>Upload</span>
+                  <input
+                    id="logo"
+                    accept="image/png, image/jpeg, image/jpg"
+                    name="logo"
+                    type="file"
+                    placeholder="Company contact no."
+                    onChange={(e) => handleImage(e)}
+                    style={{ display: "none" }}
+                  />
+                </label>
+              </div>
+              <p className="text-red-500 text-xs">{DataErr.logo}</p>
+            </div> */}
           </div>
 
           <div className="mb-6">

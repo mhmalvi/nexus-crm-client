@@ -1,18 +1,21 @@
 import { message, Modal, Popconfirm } from "antd";
 import Axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { handleFetchPackages } from "../../Components/services/company";
 import Icons from "../../Components/Shared/Icons";
+import { addPackages } from "../../features/utils/packagesSlice";
 import PackageForm from "../Package/PackageForm";
 import PackageUpdate from "../Package/PackageUpdate";
 
 const Package = ({ setShowRequisitionForm, data, setData }) => {
+  const dispatch = useDispatch();
+
   const [Plans, setPlans] = useState([]);
   const [activePackages, setActivePackages] = useState([]);
   const [inActivePackages, setInActivePackages] = useState([]);
   const [updatePackageDate, setUpdatePackageDate] = useState({});
   const [selected1, setSelected1] = useState([]);
-  //const [selected2, setSelected2] = useState([]);
   const [togglePackageUpdate, setTogglePackageUpdate] = useState(false);
   const [togglePackageCreate, setTogglePackageCreate] = useState(false);
   const [syncPackages, setSyncPackages] = useState(false);
@@ -37,14 +40,16 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
   useEffect(() => {
     (async () => {
       const fetchPackages = await handleFetchPackages();
-      console.log((fetchPackages?.packages).filter((pack) => pack.active));
+
+      dispatch(addPackages(fetchPackages?.packages));
+
       setActivePackages(
         (fetchPackages?.packages).filter((pack) => pack.active)
       );
       setInActivePackages(
         (fetchPackages?.packages).filter((pack) => !pack.active)
       );
-      setPlans(fetchPackages.packages);
+      setPlans(fetchPackages?.packages);
     })();
   }, [selected1, syncPackages]);
 
@@ -189,7 +194,7 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                   {plan.package_name}
                 </h3>
                 <h1 className="ml-3 text-4xl text-brand-color mb-0">
-                  {plan.price} $100
+                  ${plan.price}
                   <br />
                 </h1>
                 <span className="text-brand-color text-sm ml-5">/Monthly</span>
@@ -269,9 +274,12 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                       </Popconfirm>
                     </div>
                   </div>
-                  <h3 className="font-bold py-10 text-[20px]">
+                  <h3 className="font-bold pt-10 pb-4 text-[20px]">
                     {plan.package_name}
                   </h3>
+                  <h1 className="ml-3 text-base text-red-500 mb-0">
+                    ${plan.price}
+                  </h1>
                   <div className="flex-1 text-slate-500 text-xs py-4">
                     {plan.package_details}
                   </div>
