@@ -1,11 +1,8 @@
-import { Modal } from "antd";
 import React from "react";
 
 const RequisitionDetails = ({
   requisitionDetails,
   requisitionPackageDetails,
-  showRequisitionDetails,
-  setShowRequisitionDetails,
 }) => {
   return (
     <div className="font-poppins py-6 px-10">

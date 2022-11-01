@@ -25,26 +25,19 @@ const Dashboard = () => {
 
   const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [passwordDetails, setPasswordDetails] = useState({
-    old_password: "",
-    new_password: "",
-    re_new_password: "",
-  });
+  const [passwordDetails, setPasswordDetails] = useState("");
 
   useEffect(() => {
-    const passwordData = { ...passwordDetails };
-    passwordData.old_password = Storage.getItem("crm_password").split("_")
-      .length
-      ? Storage.getItem("crm_password").split("_")?.[0]
-      : "";
-    setPasswordDetails(passwordData);
+    if (Storage.getItem("crm_password")) {
+      setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
+    }
 
     if (!Storage.getItem("p_changed")) {
       setToggleChanglePassword(true);
     } else {
       setToggleChanglePassword(false);
     }
-  }, []);
+  }, [passwordDetails]);
 
   useEffect(() => {
     document.title = `Dashboard`;
@@ -110,6 +103,10 @@ const Dashboard = () => {
     }, 2000);
   };
 
+  const handleChange = (e) => {
+    setPasswordDetails(e?.target?.vaue);
+  };
+
   const handleCancel = () => {
     console.log("Clicked cancel button");
     setToggleChanglePassword(false);
@@ -132,7 +129,8 @@ const Dashboard = () => {
             <div className="mb-6">
               <span className="text-sm mb-0.5 font-light">Old Password</span>
               <Input.Password
-                value={passwordDetails?.old_password}
+                value={passwordDetails}
+                onChange={handleChange}
                 placeholder="Old Password"
                 prefix={<UserOutlined />}
               />

@@ -40,7 +40,7 @@ const RequisitionTable = ({
         dispatch(setLoader(false));
       }, 3000);
     }
-  }, []);
+  }, [data, dispatch]);
 
   useEffect(() => {
     (async () => {
