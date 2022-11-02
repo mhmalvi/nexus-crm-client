@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import companyIcon from "../../../assets/Images/company_icon.png";
 import {
   handleFetchCompanyDetails,
+  handleRefreshCompanyFBToken,
   handleUpdateCompany,
 } from "../../../Components/services/company";
 import Icons from "../../../Components/Shared/Icons";
@@ -18,8 +19,11 @@ const CompanyDetails = () => {
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
+  // const [syncDetails, setSyncDetails] = useState(false);
   const [toggleShowPassword, setToggleShowPassword] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
+  const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
+  const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -80,6 +84,37 @@ const CompanyDetails = () => {
     setToggleShowPassword(!toggleShowPassword);
   };
 
+  const showFacebookSecret = () => {
+    var x = document.getElementById("secret_key");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    setToggleFacebookSecret(!toggleFacebookSecret);
+  };
+
+  const showFacebookAppId = () => {
+    var x = document.getElementById("app_id");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    setToggleFacebookAppId(!toggleFacebookAppId);
+  };
+
+  const handleUpdateFaceboookToken = async () => {
+    const refreshResponse = await handleRefreshCompanyFBToken();
+
+    console.log("refreshResponse", refreshResponse);
+
+    if (refreshResponse?.status === true) {
+      setCompanyDetails(refreshResponse?.data);
+      message.success("Facebook Token Updated Successfully");
+    }
+  };
+
   return (
     <div
       className="lg:w-[95%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto my-20"
@@ -135,7 +170,7 @@ const CompanyDetails = () => {
         </div>
 
         <div className="relative w-1/2 pb-8">
-          <div className="h-91 ml-4">
+          <div className="h-98 ml-4">
             <div>
               <div className="flex mb-4">
                 <h1 className="text-lg font-semibold">Company Details</h1>
@@ -149,7 +184,7 @@ const CompanyDetails = () => {
               <div className="flex justify-between">
                 <div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
-                    <span>Trading Name:&nbsp;</span>
+                    <span>Trading Name :&nbsp;</span>
                     {toggleEditDetails ? (
                       <input
                         id="trading_name"
@@ -164,7 +199,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
-                    <span>Contact:&nbsp;</span>
+                    <span>Contact :&nbsp;</span>
                     {toggleEditDetails ? (
                       <input
                         id="contact"
@@ -179,7 +214,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Email:&nbsp;</span>
+                    <span>Email :&nbsp;</span>
                     {toggleEditDetails ? (
                       <input
                         id="business_email"
@@ -194,7 +229,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Address:&nbsp;</span>
+                    <span>Address :&nbsp;</span>
 
                     {toggleEditDetails ? (
                       <input
@@ -210,7 +245,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>ABN:&nbsp;</span>
+                    <span>ABN :&nbsp;</span>
                     {toggleEditDetails ? (
                       <input
                         id="abn"
@@ -225,7 +260,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>RTO Code:&nbsp;</span>
+                    <span>RTO Code :&nbsp;</span>
                     {toggleEditDetails ? (
                       <input
                         id="rto_code"
@@ -240,7 +275,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Website:&nbsp;</span>
+                    <span>Website :&nbsp;</span>
 
                     {toggleEditDetails ? (
                       <input
@@ -256,7 +291,7 @@ const CompanyDetails = () => {
                     )}
                   </div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Country:&nbsp;</span>
+                    <span>Country :&nbsp;</span>
 
                     {toggleEditDetails ? (
                       <input
@@ -273,7 +308,7 @@ const CompanyDetails = () => {
                   </div>
 
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Facebook Credential:&nbsp;</span>
+                    <span>Facebook Credential :&nbsp;</span>
                     <input
                       id="fb_ac_credential"
                       className={`w-36 ${
@@ -296,6 +331,77 @@ const CompanyDetails = () => {
                       <Icons.CloseEye
                         onClick={showPassword}
                         className="w-4 h-4 ml-3 font-semibold cursor-pointer"
+                      />
+                    )}
+
+                    <div>
+                      <button
+                        className="px-3 py-1 ml-4 text-xs rounded-md border border-brand-color text-brand-color hover:bg-brand-color hover:text-white hover:transition-colors hover:delay-150"
+                        onClick={handleUpdateFaceboookToken}
+                      >
+                        Refresh
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+                    <span>Facebook Secret :&nbsp;</span>
+
+                    <input
+                      id="secret_key"
+                      className={`w-36 ${
+                        toggleEditDetails
+                          ? "outline-none border bg-gray-100 px-2 rounded-lg"
+                          : "bg-transparent"
+                      }`}
+                      type="password"
+                      disabled={!toggleEditDetails ? "disabled" : ""}
+                      onChange={handleLoadCompanyDetails}
+                      defaultValue={companyDetails?.secret_key}
+                    />
+
+                    {!toggleFacebookSecret ? (
+                      <Icons.Eye
+                        onClick={showFacebookSecret}
+                        className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                      />
+                    ) : (
+                      <Icons.CloseEye
+                        onClick={showFacebookSecret}
+                        className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                      />
+                    )}
+                  </div>
+
+                  <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+                    <span>Facebook AppID :&nbsp;</span>
+
+                    <input
+                      id="app_id"
+                      className={`w-36 ${
+                        toggleEditDetails
+                          ? "outline-none border bg-gray-100 px-2 rounded-lg"
+                          : "bg-transparent"
+                      }`}
+                      type="password"
+                      disabled={!toggleEditDetails ? "disabled" : ""}
+                      onChange={handleLoadCompanyDetails}
+                      defaultValue={
+                        companyDetails?.app_id
+                          ? companyDetails?.app_id
+                          : "Not Added Yet"
+                      }
+                    />
+
+                    {!toggleFacebookAppId ? (
+                      <Icons.Eye
+                        onClick={showFacebookAppId}
+                        className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                      />
+                    ) : (
+                      <Icons.CloseEye
+                        onClick={showFacebookAppId}
+                        className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
                       />
                     )}
                   </div>
@@ -363,6 +469,7 @@ const initialState = {
   admin: "",
   fb_ac_credential: "",
   secret_key: "",
+  app_id: "",
   subscription_id: "",
   business_type: "",
 };

@@ -70,6 +70,17 @@ export const handleAddCompanyEmployees = async (employeeDetails) => {
   }
 };
 
+export const handleRefreshCompanyFBToken = async (companyId) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/token/update`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleFetchNotices = async (clientId) => {
   try {
     const result = await axios.post(

@@ -18,7 +18,10 @@ const CompanySettings = () => {
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
-  const [toggleShowPassword, setToggleShowPassword] = useState(false);
+  const [toggleFacebookCredential, setToggleFacebookCredential] =
+    useState(false);
+  const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
+  const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -79,14 +82,34 @@ const CompanySettings = () => {
     }
   };
 
-  const showPassword = () => {
+  const showFacebookCredential = () => {
     var x = document.getElementById("fb_ac_credential");
     if (x.type === "password") {
       x.type = "text";
     } else {
       x.type = "password";
     }
-    setToggleShowPassword(!toggleShowPassword);
+    setToggleFacebookCredential(!toggleFacebookCredential);
+  };
+
+  const showFacebookSecret = () => {
+    var x = document.getElementById("secret_key");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    setToggleFacebookSecret(!toggleFacebookSecret);
+  };
+
+  const showFacebookAppId = () => {
+    var x = document.getElementById("app_id");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    setToggleFacebookAppId(!toggleFacebookAppId);
   };
 
   return (
@@ -146,7 +169,7 @@ const CompanySettings = () => {
             </p>
           </div>
           <div className="relative w-1/2 pb-8">
-            <div className="h-91 ml-2">
+            <div className="h-98 ml-2">
               <div>
                 <div className="flex mb-4">
                   <h1 className="text-lg font-semibold">Company Details</h1>
@@ -157,133 +180,140 @@ const CompanySettings = () => {
                     />
                   ) : null}
                 </div>
+
                 <div className="flex justify-between">
                   <div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
-                      <span>Trading Name:&nbsp;</span>
-                      <input
-                        id="trading_name"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.trading_name}
-                      />
+                      <span>Trading Name :&nbsp;</span>
+                      {toggleEditDetails ? (
+                        <input
+                          id="trading_name"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.trading_name}
+                        />
+                      ) : (
+                        <span>{companyDetails?.trading_name}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                       <span>Contact:&nbsp;</span>
-                      <input
-                        id="contact"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.contact}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="contact"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.contact}
+                        />
+                      ) : (
+                        <span>{companyDetails?.contact}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>Email:&nbsp;</span>
-                      <input
-                        id="business_email"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.business_email}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="business_email"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.business_email}
+                        />
+                      ) : (
+                        <span>{companyDetails?.business_email}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>Address:&nbsp;</span>
 
-                      <input
-                        id="address"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.address}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="address"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.address}
+                        />
+                      ) : (
+                        <span>{companyDetails?.address}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>ABN:&nbsp;</span>
-                      <input
-                        id="abn"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.abn}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="abn"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.abn}
+                        />
+                      ) : (
+                        <span>{companyDetails?.abn}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>RTO Code:&nbsp;</span>
-                      <input
-                        id="rto_code"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.rto_code}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="rto_code"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.rto_code}
+                        />
+                      ) : (
+                        <span>{companyDetails?.rto_code}</span>
+                      )}
                     </div>
+
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>Website:&nbsp;</span>
 
-                      <input
-                        id="website"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.website}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="website"
+                          className={`w-72 outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.website}
+                        />
+                      ) : (
+                        <span>{companyDetails?.website}</span>
+                      )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                       <span>Country:&nbsp;</span>
 
-                      <input
-                        id="country_name"
-                        className={`w-auto ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="text"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.country_name}
-                      />
+                      {toggleEditDetails ? (
+                        <input
+                          id="country_name"
+                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
+                          type="text"
+                          disabled={!toggleEditDetails ? "disabled" : ""}
+                          onChange={handleLoadCompanyDetails}
+                          defaultValue={companyDetails?.country_name}
+                        />
+                      ) : (
+                        <span>{companyDetails?.country_name}</span>
+                      )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Facebook Credential:&nbsp;</span>
+                      <span>Facebook Credential :&nbsp;</span>
 
                       <input
                         id="fb_ac_credential"
@@ -298,14 +328,75 @@ const CompanySettings = () => {
                         defaultValue={companyDetails?.fb_ac_credential}
                       />
 
-                      {!toggleShowPassword ? (
+                      {!toggleFacebookCredential ? (
                         <Icons.Eye
-                          onClick={showPassword}
+                          onClick={showFacebookCredential}
                           className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
                         />
                       ) : (
                         <Icons.CloseEye
-                          onClick={showPassword}
+                          onClick={showFacebookCredential}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      )}
+                    </div>
+                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+                      <span>Facebook Secret :&nbsp;</span>
+
+                      <input
+                        id="secret_key"
+                        className={`w-36 ${
+                          toggleEditDetails
+                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
+                            : "bg-transparent"
+                        }`}
+                        type="password"
+                        disabled={!toggleEditDetails ? "disabled" : ""}
+                        onChange={handleLoadCompanyDetails}
+                        defaultValue={companyDetails?.secret_key}
+                      />
+
+                      {!toggleFacebookSecret ? (
+                        <Icons.Eye
+                          onClick={showFacebookSecret}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      ) : (
+                        <Icons.CloseEye
+                          onClick={showFacebookSecret}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      )}
+                    </div>
+
+                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+                      <span>Facebook AppID :&nbsp;</span>
+
+                      <input
+                        id="app_id"
+                        className={`w-36 ${
+                          toggleEditDetails
+                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
+                            : "bg-transparent"
+                        }`}
+                        type="password"
+                        disabled={!toggleEditDetails ? "disabled" : ""}
+                        onChange={handleLoadCompanyDetails}
+                        defaultValue={
+                          companyDetails?.app_id
+                            ? companyDetails?.app_id
+                            : "Not Added Yet"
+                        }
+                      />
+
+                      {!toggleFacebookAppId ? (
+                        <Icons.Eye
+                          onClick={showFacebookAppId}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      ) : (
+                        <Icons.CloseEye
+                          onClick={showFacebookAppId}
                           className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
                         />
                       )}
