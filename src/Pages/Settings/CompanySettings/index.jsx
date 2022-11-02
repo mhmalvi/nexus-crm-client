@@ -18,6 +18,7 @@ const CompanySettings = () => {
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
+  const [toggleShowPassword, setToggleShowPassword] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -32,6 +33,10 @@ const CompanySettings = () => {
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
         dispatch(setLoader(false));
+      } else {
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 3000);
       }
     })();
   }, [dispatch, userDetails?.userInfo?.client_id]);
@@ -74,15 +79,24 @@ const CompanySettings = () => {
     }
   };
 
+  const showPassword = () => {
+    var x = document.getElementById("fb_ac_credential");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    setToggleShowPassword(!toggleShowPassword);
+  };
+
   return (
     <div className="mx-6 py-12">
       {/* <CompanyDetails companyDetails={companyDetails} />
       <SalesAdmins admin={true} /> */}
 
       <div
-        className="font-poppins border py-6 px-8 mx-auto mb-28"
+        className="lg:w-[100%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto mb-28"
         style={{
-          width: "80%",
           borderRadius: "20px",
         }}
       >
@@ -132,7 +146,7 @@ const CompanySettings = () => {
             </p>
           </div>
           <div className="relative w-1/2 pb-8">
-            <div className="h-91 ml-4">
+            <div className="h-91 ml-2">
               <div>
                 <div className="flex mb-4">
                   <h1 className="text-lg font-semibold">Company Details</h1>
@@ -143,7 +157,7 @@ const CompanySettings = () => {
                     />
                   ) : null}
                 </div>
-                <div className="flex justify-end">
+                <div className="flex justify-between">
                   <div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                       <span>Trading Name:&nbsp;</span>
@@ -273,34 +287,43 @@ const CompanySettings = () => {
 
                       <input
                         id="fb_ac_credential"
-                        className={`w-auto ${
+                        className={`w-36 ${
                           toggleEditDetails
                             ? "outline-none border bg-gray-100 px-2 rounded-lg"
                             : "bg-transparent"
                         }`}
-                        type="text"
+                        type="password"
                         disabled={!toggleEditDetails ? "disabled" : ""}
                         onChange={handleLoadCompanyDetails}
                         defaultValue={companyDetails?.fb_ac_credential}
                       />
+
+                      {!toggleShowPassword ? (
+                        <Icons.Eye
+                          onClick={showPassword}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      ) : (
+                        <Icons.CloseEye
+                          onClick={showPassword}
+                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                        />
+                      )}
                     </div>
                   </div>
                   <div>
                     <div
-                      className={`w-44 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center`}
+                      className={`w-36 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
                     >
-                      <h3 className="font-bold py-4 text-sm">
-                        Package
+                      <h3 className="font-bold py-2 text-xs">
                         {companyDetails?.package_name}
                       </h3>
-                      <h1 className="ml-3 text-sm text-brand-color mb-0">
-                        $100
+                      <h1 className="text-xs text-brand-color mb-0">
+                        ${companyDetails?.price}
                         <br />
                       </h1>
-                      <span className="text-brand-color text-sm ml-5">
-                        /Monthly
-                      </span>
-                      <div className="flex-1 text-slate-500 text-xs py-4">
+                      <span className="text-brand-color text-xs">/Monthly</span>
+                      <div className="flex-1 text-slate-500 text-xs py-2">
                         {companyDetails?.package_details}
                       </div>
                     </div>
@@ -310,19 +333,27 @@ const CompanySettings = () => {
             </div>
             <div className="absolute bottom-0 right-0">
               {toggleEditDetails ? (
-                <button
-                  className="px-4 py-1 rounded-md bg-brand-color text-white"
-                  onClick={handleUpdateCompanyDetailsReq}
-                >
-                  Save
-                </button>
+                <div>
+                  <button
+                    className="px-4 py-1 rounded-md bg-black text-white"
+                    onClick={() => setToggleEditDetails(false)}
+                  >
+                    Cancle
+                  </button>
+                  <button
+                    className="px-4 py-1 ml-2 rounded-md bg-brand-color text-white"
+                    onClick={handleUpdateCompanyDetailsReq}
+                  >
+                    Save
+                  </button>
+                </div>
               ) : null}
             </div>
           </div>
         </div>
       </div>
 
-      <SalesAdmins />
+      <SalesAdmins clientId={userDetails?.userInfo?.client_id} />
     </div>
   );
 };

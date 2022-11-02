@@ -16,7 +16,7 @@ import PaymentStatus from "./Pages/Payments";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
-import CompanySettings from "./Pages/Settings/CompanySettings";
+import CompanyDetails from "./Pages/Settings/AdminSettings/CompanyDetails";
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="requisitions" element={<RequisitionTable />} />
-          <Route path="settings/company/:id" element={<CompanySettings />} />
+          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />

@@ -37,6 +37,7 @@ export const handleFetchCompanies = async () => {
 };
 
 export const handleFetchCompanyDetails = async (companyId) => {
+  console.log("companyId", companyId);
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/details`
@@ -46,17 +47,24 @@ export const handleFetchCompanyDetails = async (companyId) => {
     return error.response;
   }
 };
+export const handleFetchCompanyEmployees = async (companyId) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/employee/list`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
-export const handlePasswordReset = async (userId, newPassword) => {
+export const handleAddCompanyEmployees = async (employeeDetails) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_AUTH_URL}/api/user/password-reset`,
-      {
-        user_id: userId,
-        password: newPassword,
-      }
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/employee/create`,
+      employeeDetails
     );
-    return result;
+    return result.data;
   } catch (error) {
     return error.response;
   }

@@ -19,7 +19,7 @@ import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
-import CompanySettings from "../Settings/CompanySettings";
+import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -60,13 +60,13 @@ const LandingPage = () => {
       duration: 0,
       description: (
         <div>
-          <h4 className='text-sm font-normal'>
+          <h4 className="text-sm font-normal">
             {details?.details} on Lead id {details?.lead_id}
           </h4>
           <a
-            className='text-brand-color font-medium'
+            className="text-brand-color font-medium"
             href={`/lead/${details?.lead_id}`}
-            target='__blank'
+            target="__blank"
           >
             Click Here
           </a>
@@ -93,13 +93,13 @@ const LandingPage = () => {
 
   return (
     <div
-      className='flex justify-start items-start font-poppins overflow-x-hidden'
+      className="flex justify-start items-start font-poppins overflow-x-hidden"
       onClick={() => {
         setToggleMessage(false);
         setToggleNotification(false);
       }}
     >
-      <div className='fixed top-0 left-0 overflow-x-hidden'>
+      <div className="fixed top-0 left-0 overflow-x-hidden">
         <Sidebar
           Items={Items}
           Items2={Items2}
@@ -112,7 +112,7 @@ const LandingPage = () => {
         />
       </div>
       <div
-        className='relative ml-auto'
+        className="relative ml-auto"
         style={{
           width: "calc(100vw - 277px)",
         }}
@@ -122,15 +122,12 @@ const LandingPage = () => {
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
-          <Route
-            path={"settings/company/:name"}
-            element={<CompanySettings admin={true} />}
-          />
+          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
           <Routes key={i}>
-            <Route path='/*' element={<ProtectedRoute />}>
+            <Route path="/*" element={<ProtectedRoute />}>
               <Route
                 key={navItem.key}
                 path={`${navItem.key}`}

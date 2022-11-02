@@ -1,22 +1,20 @@
+import { UserOutlined } from "@ant-design/icons";
 import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   handlefetchMessages,
   handlefetchNotifications,
+  handlePasswordReset,
 } from "../../Components/services/auth";
 import { Storage } from "../../Components/Shared/utils/store";
 import { addMessages } from "../../features/user/messagesSlice";
 import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";
 import UserDashboard from "./UserDashboard";
-import { UserOutlined } from "@ant-design/icons";
-import { handlePasswordReset } from "../../Components/services/company";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state?.user);
   const userNotifications = useSelector(
@@ -41,10 +39,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     document.title = `Dashboard`;
-
-    if (!Storage.getItem("auth_tok")) {
-      navigate("/login");
-    }
 
     // API Request for fetching messages
     (async () => {

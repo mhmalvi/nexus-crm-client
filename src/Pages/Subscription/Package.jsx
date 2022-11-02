@@ -1,15 +1,14 @@
 import { message, Modal, Popconfirm } from "antd";
 import Axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { handleFetchPackages } from "../../Components/services/company";
 import Icons from "../../Components/Shared/Icons";
-import { addPackages } from "../../features/utils/packagesSlice";
+// import { addPackages } from "../../features/utils/packagesSlice";
 import PackageForm from "../Package/PackageForm";
 import PackageUpdate from "../Package/PackageUpdate";
 
 const Package = ({ setShowRequisitionForm, data, setData }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [Plans, setPlans] = useState([]);
   const [activePackages, setActivePackages] = useState([]);
@@ -41,7 +40,7 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
     (async () => {
       const fetchPackages = await handleFetchPackages();
 
-      dispatch(addPackages(fetchPackages?.packages));
+      // dispatch(addPackages(fetchPackages?.packages));
 
       setActivePackages(
         (fetchPackages?.packages).filter((pack) => pack.active)

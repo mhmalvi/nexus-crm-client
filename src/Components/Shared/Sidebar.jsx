@@ -60,6 +60,7 @@ const Sidebar = ({
       style={{
         width: "277px",
         overflowX: "hidden",
+        overflowY: "scroll",
       }}
     >
       <div className="ml-10">

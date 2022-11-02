@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import companyIcon from "../../../assets/Images/company_icon.png";
-import { Link } from "react-router-dom";
-import { Button, Modal } from "antd";
-import { useEffect } from "react";
-import { handleFetchCompanies } from "../../../Components/services/company";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoader } from "../../../features/user/userSlice";
+import { Link } from "react-router-dom";
+import companyIcon from "../../../assets/Images/company_icon.png";
+import { handleFetchCompanies } from "../../../Components/services/company";
 import Loading from "../../../Components/Shared/Loader";
+import { setLoader } from "../../../features/user/userSlice";
 
 const Companies = () => {
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companies, setCompanies] = useState([]);
-  const [toggleAddCompany, setToggleAddCompany] = useState(false);
+  // const [toggleAddCompany, setToggleAddCompany] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -27,13 +25,13 @@ const Companies = () => {
     })();
   }, [dispatch]);
 
-  const handleCancel = () => {
-    setToggleAddCompany(false);
-  };
+  // const handleCancel = () => {
+  //   setToggleAddCompany(false);
+  // };
 
-  const handleSubmit = () => {
-    setToggleAddCompany(false);
-  };
+  // const handleSubmit = () => {
+  //   setToggleAddCompany(false);
+  // };
 
   return (
     <div className="font-poppins">
@@ -41,7 +39,7 @@ const Companies = () => {
         <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-0">
           Companies
         </h1>
-        <button
+        {/* <button
           className="ml-28 py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white"
           style={{
             width: "75px",
@@ -49,7 +47,7 @@ const Companies = () => {
           onClick={() => setToggleAddCompany(true)}
         >
           Add
-        </button>
+        </button> */}
       </div>
 
       {/* Loader */}
@@ -87,7 +85,7 @@ const Companies = () => {
 
       {/* Add company modal */}
 
-      <div>
+      {/* <div>
         <Modal
           title="Create Company Profile"
           centered
@@ -105,7 +103,7 @@ const Companies = () => {
         >
           <p>Company informations</p>
         </Modal>
-      </div>
+      </div> */}
     </div>
   );
 };

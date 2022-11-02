@@ -34,6 +34,7 @@ import { ReactComponent as Cross } from "../../assets/Icons/cross.svg";
 import { ReactComponent as Bell } from "../../assets/Icons/bell.svg";
 import { ReactComponent as History } from "../../assets/Icons/history_icon.svg";
 import { ReactComponent as Eye } from "../../assets/Icons/eye.svg";
+import { ReactComponent as CloseEye } from "../../assets/Icons/closed_eye.svg";
 import { ReactComponent as Pricing } from "../../assets/Icons/price-list.svg";
 import { ReactComponent as Tick } from "../../assets/Icons/tick.svg";
 import { ReactComponent as Edit } from "../../assets/Icons/edit.svg";
@@ -82,6 +83,7 @@ const Icons = {
   Edit,
   Bin,
   AddImage,
+  CloseEye,
 };
 
 export default Icons;

@@ -18,7 +18,7 @@ const Requisition = () => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  console.log(data);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDataErr(validate(data));
@@ -50,9 +50,7 @@ const Requisition = () => {
 
   const handleSetCountryname = (value) => {
     const reqData = { ...data };
-    console.log(value);
     reqData.country_name = value;
-
     setData(reqData);
   };
 
