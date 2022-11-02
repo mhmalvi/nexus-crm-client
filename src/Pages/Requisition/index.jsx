@@ -51,6 +51,7 @@ const Requisition = () => {
   const handleSetCountryname = (value) => {
     const reqData = { ...data };
     reqData.country_name = value;
+
     setData(reqData);
   };
 

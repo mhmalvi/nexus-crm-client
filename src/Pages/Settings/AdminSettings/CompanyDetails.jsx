@@ -146,7 +146,7 @@ const CompanyDetails = () => {
                   />
                 ) : null}
               </div>
-              <div className="flex">
+              <div className="flex justify-between">
                 <div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                     <span>Trading Name:&nbsp;</span>
