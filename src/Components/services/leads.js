@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const handleFetchLeads = async (clientId) => {
+  console.log(clientId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
@@ -283,7 +284,10 @@ export const handleAddEwayPaymentDetails = async (
   }
 };
 
-export const handleLeadCertificatetDetailsUpdate = async (leadId, certificateId) => {
+export const handleLeadCertificatetDetailsUpdate = async (
+  leadId,
+  certificateId
+) => {
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/${leadId}/update`,

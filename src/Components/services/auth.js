@@ -50,6 +50,21 @@ export const handlePasswordReset = async (userId, newPassword) => {
   }
 };
 
+export const handleUpdateStatus = async (userId, status) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/status`,
+      {
+        id: userId,
+        status: status,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handlefetchMessages = async (userId) => {
   //   console.log(userId);
   try {

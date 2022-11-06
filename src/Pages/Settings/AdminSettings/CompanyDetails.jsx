@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Popconfirm, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,14 +8,20 @@ import {
   handleRefreshCompanyFBToken,
   handleUpdateCompany,
 } from "../../../Components/services/company";
+import {
+  handleFetchFile,
+  handleUploadFile,
+} from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
+import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader } from "../../../features/user/userSlice";
 import SalesAdmins from "../CompanySettings/SalesAdmins";
 
 const CompanyDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state.user);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
@@ -24,13 +30,38 @@ const CompanyDetails = () => {
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
   const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
+  const [fileList, setFileList] = useState();
+  const [fileId, setFileId] = useState();
+  const [avatarPreviewer, setAvatarPreviewer] = useState();
 
   useEffect(() => {
+    // const someDate = new Date();
+    // const result = new Date().setDate(someDate.getDate() + 50);
+    // const finaldate = new Date(result);
+    // const futureDate = finaldate.toString().slice(0, 15);
+
     dispatch(setLoader(true));
+
     (async () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(id);
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
+
+        if (companyDetailsResponse?.data?.[0]?.logo_id) {
+          const fetchFile = await handleFetchFile(
+            parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
+          );
+
+          const filePath = fetchFile?.data?.[0];
+          setAvatarPreviewer(
+            (
+              process.env.REACT_APP_FILE_SERVER_URL +
+              "/" +
+              filePath?.document_name
+            ).toString()
+          );
+        }
+
         dispatch(setLoader(false));
       }
     })();
@@ -49,7 +80,7 @@ const CompanyDetails = () => {
       id: companyDetails?.cid,
       name: companyDetails?.name,
       description: document.getElementById("description").innerText,
-      logo_id: "",
+      logo_id: fileId,
       contact: companyDetails?.contact,
       business_email: companyDetails?.business_email,
       address: companyDetails?.address,
@@ -60,13 +91,14 @@ const CompanyDetails = () => {
       country_name: companyDetails?.country_name,
       admin: companyDetails?.admin,
       fb_ac_credential: companyDetails?.fb_ac_credential,
-      secret_key: "Not Added Yet",
+      app_id: companyDetails?.app_id,
+      secret_key: companyDetails?.secret_key,
       form: "Not Added Yet",
       subscription_id: companyDetails?.subscription_id,
       business_type: 1,
     });
 
-    console.log(createCompany);
+    // console.log(createCompany);
 
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
@@ -104,15 +136,41 @@ const CompanyDetails = () => {
     setToggleFacebookAppId(!toggleFacebookAppId);
   };
 
-  const handleUpdateFaceboookToken = async () => {
-    const refreshResponse = await handleRefreshCompanyFBToken();
+  const confirm = async () => {
+    const refreshResponse = await handleRefreshCompanyFBToken(id);
+    const someDate = new Date();
+    const result = new Date().setDate(someDate.getDate() + 50);
+    const finaldate = new Date(result);
+    const futureDate = finaldate.toString().slice(0, 15);
 
-    console.log("refreshResponse", refreshResponse);
-
+    Storage.setItem("refresh_tok", futureDate);
     if (refreshResponse?.status === true) {
       setCompanyDetails(refreshResponse?.data);
       message.success("Facebook Token Updated Successfully");
     }
+  };
+
+  const cancel = (e) => {
+    console.log(e);
+  };
+
+  const handleChangeAvatar = async (e) => {
+    const file = await getBase64(e.file.originFileObj);
+    setAvatarPreviewer(file);
+
+    const fileFormData = new FormData();
+    fileFormData.append("user_id", userDetails?.userInfo?.user_id);
+    fileFormData.append("client_id", userDetails?.userInfo?.client_id);
+    fileFormData.append("document_name", e?.file?.originFileObj);
+    fileFormData.append("document_details", e?.file?.originFileObj?.name);
+    // for (const value of fileFormData.values()) {
+    //   console.log(value);
+    // }
+    const uploadFile = await handleUploadFile(fileFormData);
+    // console.log("uploadFile", uploadFile);
+    // console.log(uploadFile?.message?.data[0]?.id);
+
+    setFileId(uploadFile?.message?.data[0]?.id);
   };
 
   return (
@@ -135,11 +193,25 @@ const CompanyDetails = () => {
         <div className="w-1/2 border-r mr-4">
           <div className="mb-8">
             <div className="relative w-24">
-              <img className="w-20" src={companyIcon} alt="" />
+              <img
+                className="w-full rounded-md shadow-sm"
+                src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
+                alt=""
+              />
+
               {toggleEditDetails ? (
-                <div className="w-8 h-8 absolute bottom-0 right-0 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
-                  <Icons.AddImage className="w-4 text-white" />
-                </div>
+                <Upload
+                  onChange={(e) => handleChangeAvatar(e)}
+                  id="avatar"
+                  accept="image/png, image/jpeg, image/jpg"
+                  fileList={fileList}
+                >
+                  {/* <label htmlFor="avatar"> */}
+                  <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
+                    <Icons.AddImage className="w-4 text-white" />
+                  </div>
+                  {/* </label> */}
+                </Upload>
               ) : null}
             </div>
           </div>
@@ -158,7 +230,7 @@ const CompanyDetails = () => {
           <p
             id="description"
             contentEditable={toggleEditDetails}
-            className={`h-48 overflow-y-auto w-10/12 block text-justify font-normal leading-6 text-sm mt-4 ${
+            className={`h-56 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
               toggleEditDetails &&
               "outline-none border bg-gray-100 p-2 rounded-lg"
             }`}
@@ -181,7 +253,7 @@ const CompanyDetails = () => {
                   />
                 ) : null}
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-start">
                 <div>
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                     <span>Trading Name :&nbsp;</span>
@@ -308,7 +380,9 @@ const CompanyDetails = () => {
                   </div>
 
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Facebook Credential :&nbsp;</span>
+                    <span className="whitespace-nowrap">
+                      FB Credential :&nbsp;
+                    </span>
                     <input
                       id="fb_ac_credential"
                       className={`w-36 ${
@@ -335,17 +409,32 @@ const CompanyDetails = () => {
                     )}
 
                     <div>
-                      <button
-                        className="px-3 py-1 ml-4 text-xs rounded-md border border-brand-color text-brand-color hover:bg-brand-color hover:text-white hover:transition-colors hover:delay-150"
-                        onClick={handleUpdateFaceboookToken}
+                      <Popconfirm
+                        title="Are you sure?"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
                       >
-                        Refresh
-                      </button>
+                        <button
+                          className="px-3 py-1 ml-4 text-xs rounded-md border border-brand-color text-brand-color hover:bg-brand-color hover:text-white hover:transition-colors hover:delay-150"
+                          // onClick={handleUpdateFaceboookToken}
+                        >
+                          Refresh
+                        </button>
+                      </Popconfirm>
                     </div>
                   </div>
 
+                  <div>
+                    <span className="text-xs text-red-500 font-semibold italic mt-0.5 mb-2">
+                      (Refresh facebook credential on{" "}
+                      {Storage.getItem("refresh_tok")})
+                    </span>
+                  </div>
+
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Facebook Secret :&nbsp;</span>
+                    <span>FB Secret :&nbsp;</span>
 
                     <input
                       id="secret_key"
@@ -374,7 +463,7 @@ const CompanyDetails = () => {
                   </div>
 
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                    <span>Facebook AppID :&nbsp;</span>
+                    <span>FB AppID :&nbsp;</span>
 
                     <input
                       id="app_id"
@@ -386,11 +475,7 @@ const CompanyDetails = () => {
                       type="password"
                       disabled={!toggleEditDetails ? "disabled" : ""}
                       onChange={handleLoadCompanyDetails}
-                      defaultValue={
-                        companyDetails?.app_id
-                          ? companyDetails?.app_id
-                          : "Not Added Yet"
-                      }
+                      defaultValue={companyDetails?.app_id}
                     />
 
                     {!toggleFacebookAppId ? (
@@ -408,7 +493,7 @@ const CompanyDetails = () => {
                 </div>
                 <div>
                   <div
-                    className={`w-36 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                    className={`w-32 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
                   >
                     <h3 className="font-bold py-2 text-xs">
                       {companyDetails?.package_name}
@@ -446,7 +531,6 @@ const CompanyDetails = () => {
           </div>
         </div>
       </div>
-
       <SalesAdmins clientId={id} />
     </div>
   );
@@ -473,3 +557,11 @@ const initialState = {
   subscription_id: "",
   business_type: "",
 };
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });

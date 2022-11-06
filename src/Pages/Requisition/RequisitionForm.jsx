@@ -316,7 +316,7 @@ const RequisitionForm = ({
                 htmlFor="terms&conditions"
                 className="ml-3 cursor-pointer font-light font-mulish"
               >
-                agree to all the{" "}
+                Agree to all the{" "}
                 <Link to={"/"} className="text-blue-600">
                   Terms
                 </Link>{" "}

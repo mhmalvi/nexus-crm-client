@@ -272,8 +272,8 @@ const Calendar = ({
       >
         <div>
           <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
-            {weekDays[dayjs().day()]}, {datesInMonth[dayjs().month()].month}{" "}
-            {dayjs().year()}
+            {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
+            {datesInMonth[dayjs().month()].month} {dayjs().year()}
           </h1>
         </div>
 

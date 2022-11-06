@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import companyIcon from "../../../assets/Images/company_icon.png";
@@ -6,6 +6,11 @@ import {
   handleFetchCompanyDetails,
   handleUpdateCompany,
 } from "../../../Components/services/company";
+import { handleSyncLeads } from "../../../Components/services/leads";
+import {
+  handleFetchFile,
+  handleUploadFile,
+} from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
@@ -20,21 +25,54 @@ const CompanySettings = () => {
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookCredential, setToggleFacebookCredential] =
     useState(false);
+  const [fileList, setFileList] = useState([]);
+  const [fileId, setFileId] = useState();
+  const [avatarPreviewer, setAvatarPreviewer] = useState();
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
   const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
 
-    console.log(userDetails?.userInfo?.client_id);
-
     (async () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(
         userDetails?.userInfo?.client_id
       );
 
+      // console.log(
+      //   "companyDetailsResponse?.data?.[0]?.logo_id",
+      //   companyDetailsResponse?.data?.[0]?.logo_id
+      // );
+
+      if (companyDetailsResponse?.data?.[0]?.logo_id) {
+        const fetchFile = await handleFetchFile(
+          parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
+        );
+
+        const filePath = fetchFile?.data?.[0];
+        // console.log(
+        //   (
+        //     process.env.REACT_APP_FILE_SERVER_URL +
+        //     "/" +
+        //     filePath?.document_name
+        //   ).toString()
+        // );
+        setAvatarPreviewer(
+          (
+            process.env.REACT_APP_FILE_SERVER_URL +
+            "/" +
+            filePath?.document_name
+          ).toString()
+        );
+      }
+
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
+
+        // if (companyDetailsResponse?.data?.[0].logo) {
+        //   setAvatarPreviewer()
+        // };
+
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -44,7 +82,7 @@ const CompanySettings = () => {
     })();
   }, [dispatch, userDetails?.userInfo?.client_id]);
 
-  console.log(companyDetails);
+  // console.log(companyDetails);
 
   const handleLoadCompanyDetails = (e) => {
     const data = { ...companyDetails };
@@ -57,7 +95,7 @@ const CompanySettings = () => {
       id: companyDetails?.cid,
       name: companyDetails?.name,
       description: document.getElementById("description").innerText,
-      logo_id: "",
+      logo_id: fileId,
       contact: companyDetails?.contact,
       business_email: companyDetails?.business_email,
       address: companyDetails?.address,
@@ -68,16 +106,25 @@ const CompanySettings = () => {
       country_name: companyDetails?.country_name,
       admin: companyDetails?.admin,
       fb_ac_credential: companyDetails?.fb_ac_credential,
-      secret_key: "Not Added Yet",
+      app_id: companyDetails?.app_id,
+      secret_key: companyDetails?.secret_key,
       form: "Not Added Yet",
       subscription_id: companyDetails?.subscription_id,
       business_type: 1,
     });
 
-    console.log(createCompany);
-
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
+
+      dispatch(setLoader(true));
+      const syncResponse = await handleSyncLeads(
+        companyDetails?.cid,
+        companyDetails?.fb_ac_credential
+      );
+      if (syncResponse?.status) {
+        dispatch(setLoader(false));
+      }
+
       message.success("Company Details updated Successfully");
     }
   };
@@ -112,6 +159,25 @@ const CompanySettings = () => {
     setToggleFacebookAppId(!toggleFacebookAppId);
   };
 
+  const handleChangeAvatar = async (e) => {
+    const file = await getBase64(e.file.originFileObj);
+    setAvatarPreviewer(file);
+
+    const fileFormData = new FormData();
+    fileFormData.append("user_id", userDetails?.userInfo?.user_id);
+    fileFormData.append("client_id", userDetails?.userInfo?.client_id);
+    fileFormData.append("document_name", e?.file?.originFileObj);
+    fileFormData.append("document_details", e?.file?.originFileObj?.name);
+
+    // for (const value of fileFormData.values()) {
+    //   console.log(value);
+    // }
+    const uploadFile = await handleUploadFile(fileFormData);
+    // console.log("uploadFile", uploadFile);
+    // console.log(uploadFile?.message?.data[0]?.id);
+    setFileId(uploadFile?.message?.data[0]?.id);
+  };
+
   return (
     <div className="mx-6 py-12">
       {/* <CompanyDetails companyDetails={companyDetails} />
@@ -135,14 +201,30 @@ const CompanySettings = () => {
           <div className="w-1/2 border-r mr-4">
             <div className="mb-8">
               <div className="relative w-24">
-                <img className="w-20" src={companyIcon} alt="" />
+                <img
+                  className="w-full rounded-md shadow-sm"
+                  src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
+                  alt=""
+                />
+
                 {toggleEditDetails ? (
-                  <div className="w-8 h-8 absolute bottom-0 right-0 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
-                    <Icons.AddImage className="w-4 text-white" />
-                  </div>
+                  <Upload
+                    className="company_avatar"
+                    onChange={(e) => handleChangeAvatar(e)}
+                    id="avatar"
+                    accept="image/png, image/jpeg, image/jpg"
+                    fileList={fileList}
+                  >
+                    {/* <label htmlFor="avatar"> */}
+                    <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
+                      <Icons.AddImage className="w-4 text-white" />
+                    </div>
+                    {/* </label> */}
+                  </Upload>
                 ) : null}
               </div>
             </div>
+
             <input
               id="name"
               className={`text-xl font-semibold ${
@@ -158,7 +240,7 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`h-48 overflow-y-auto w-10/12 block text-justify font-normal leading-6 text-sm mt-4 ${
+              className={`h-56 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
                 toggleEditDetails &&
                 "outline-none border bg-gray-100 p-2 rounded-lg"
               }`}
@@ -168,6 +250,8 @@ const CompanySettings = () => {
                 : "No details added"}
             </p>
           </div>
+
+          {/* Company Details */}
           <div className="relative w-1/2 pb-8">
             <div className="h-98 ml-2">
               <div>
@@ -313,7 +397,7 @@ const CompanySettings = () => {
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Facebook Credential :&nbsp;</span>
+                      <span>FB Credential :&nbsp;</span>
 
                       <input
                         id="fb_ac_credential"
@@ -341,7 +425,7 @@ const CompanySettings = () => {
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Facebook Secret :&nbsp;</span>
+                      <span>FB Secret :&nbsp;</span>
 
                       <input
                         id="secret_key"
@@ -370,7 +454,7 @@ const CompanySettings = () => {
                     </div>
 
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Facebook AppID :&nbsp;</span>
+                      <span>FB AppID :&nbsp;</span>
 
                       <input
                         id="app_id"
@@ -382,11 +466,7 @@ const CompanySettings = () => {
                         type="password"
                         disabled={!toggleEditDetails ? "disabled" : ""}
                         onChange={handleLoadCompanyDetails}
-                        defaultValue={
-                          companyDetails?.app_id
-                            ? companyDetails?.app_id
-                            : "Not Added Yet"
-                        }
+                        defaultValue={companyDetails?.app_id}
                       />
 
                       {!toggleFacebookAppId ? (
@@ -469,3 +549,11 @@ const initialState = {
   subscription_id: "",
   business_type: "",
 };
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });

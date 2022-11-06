@@ -53,9 +53,7 @@ const Login = () => {
     if (loginResponse?.status === 200) {
       // if ()
 
-      if (!Storage.getItem("p_changed")) {
-        Storage.setItem("p_changed", false);
-      }
+
 
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem("auth_tok", loginResponse?.data?.token);

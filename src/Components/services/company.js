@@ -71,6 +71,7 @@ export const handleAddCompanyEmployees = async (employeeDetails) => {
 };
 
 export const handleRefreshCompanyFBToken = async (companyId) => {
+  console.log(companyId);
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/token/update`

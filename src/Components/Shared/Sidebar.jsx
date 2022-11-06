@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
 
@@ -18,9 +21,11 @@ const Sidebar = ({
   const userMessages = useSelector((state) => state.messages);
   const userNotification = useSelector((state) => state.notifications);
 
-  useEffect(() => {
-    console.log("From Sidebar");
-  }, [userMessages]);
+  const [companyName, setCompanyName] = useState("");
+
+  // useEffect(() => {
+  //   console.log("From Sidebar");
+  // }, [userMessages]);
 
   // const userDetails = useSelector((state) => state?.user);
   // const dispatch = useDispatch();
@@ -47,10 +52,21 @@ const Sidebar = ({
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
 
+  useEffect(() => {
+    (async () => {
+      const companyName = await handleFetchCompanyDetails(
+        userDetails?.userInfo?.client_id
+      );
+
+      setCompanyName(
+        companyName?.data?.[0]?.name ? companyName?.data?.[0]?.name : " "
+      );
+    })();
+  }, [userDetails?.userInfo?.client_id]);
+
   const handleLogout = () => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
-    Storage.setItem("p_changed", true);
     navigate("/login");
   };
 
@@ -90,7 +106,7 @@ const Sidebar = ({
             >
               <Icons.Dashboard />
               <span className="ml-4 leading-6 font-medium font-poppins">
-                Dashboard
+                Home
               </span>
               {active === "dashboard" && (
                 <div className="ml-auto active-option">|</div>
@@ -296,8 +312,8 @@ const Sidebar = ({
 
           <div className="lg:mt-0 2xl:mt-36 pt-1.5">
             <div className="mr-4">
-              <h1 className=" font-poppins text-2xl font-semibold text-black text-opacity-70">
-                ITEC
+              <h1 className="font-poppins text-lg font-semibold text-black text-opacity-70">
+                {companyName}
               </h1>
             </div>
             {Items2.map((item) => (

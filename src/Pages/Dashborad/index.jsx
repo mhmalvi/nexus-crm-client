@@ -2,6 +2,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   handlefetchMessages,
   handlefetchNotifications,
@@ -15,6 +16,7 @@ import UserDashboard from "./UserDashboard";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state?.user);
   const userNotifications = useSelector(
@@ -30,12 +32,12 @@ const Dashboard = () => {
       setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
     }
 
-    if (!Storage.getItem("p_changed")) {
+    if (userDetails?.userInfo?.flag === 1) {
       setToggleChanglePassword(true);
     } else {
       setToggleChanglePassword(false);
     }
-  }, [passwordDetails]);
+  }, [passwordDetails, userDetails?.userInfo?.flag]);
 
   useEffect(() => {
     document.title = `Dashboard`;
@@ -83,8 +85,8 @@ const Dashboard = () => {
     setTimeout(async () => {
       const newPassword = document.getElementById("new_password").value;
       const rewNewPassword = document.getElementById("re_new_password").value;
-      console.log("newPassword", newPassword);
-      console.log("reNewPassword", rewNewPassword);
+      // console.log("newPassword", newPassword);
+      // console.log("reNewPassword", rewNewPassword);
 
       if (newPassword === rewNewPassword) {
         const passwordChangeResponse = await handlePasswordReset(
@@ -92,9 +94,12 @@ const Dashboard = () => {
           newPassword.toString()
         );
         if (passwordChangeResponse?.status === 205) {
-          Storage.setItem("p_changed", true);
           Storage.setItem("crm_password", newPassword);
           message.success("Password Changed Successfully");
+
+          Storage.removeItem("auth_tok");
+          Storage.removeItem("user_info");
+          navigate("/login");
         }
       }
 
