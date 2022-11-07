@@ -190,7 +190,7 @@ const Calendar = ({
 
   const dayMenu = (
     <Menu
-      className="grid grid-cols-4 gap-2"
+      className='grid grid-cols-4 gap-2'
       onClick={(e) => onDayChange(e)}
       items={dayPickerDays}
     />
@@ -258,32 +258,32 @@ const Calendar = ({
 
   return (
     <div
-      className="flex justify-between"
+      className='flex justify-between'
       onClick={() => {
         setMonthPicker(false);
         setYearPicker(false);
       }}
     >
       <div
-        className="border py-3 px-7 mt-4"
+        className='border py-3 px-7 mt-4'
         style={{
           borderRadius: "20px",
         }}
       >
         <div>
-          <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
+          <h1 className='text-xl font-semibold mb-7 leading-8 font-poppins'>
             {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
             {datesInMonth[dayjs().month()].month} {dayjs().year()}
           </h1>
         </div>
 
         <div
-          className="relative flex justify-center items-center"
+          className='relative flex justify-center items-center'
           style={{
             width: "42vw",
           }}
         >
-          <div className="flex items-center rounded-full bg-gray-100 mb-5">
+          <div className='flex items-center rounded-full bg-gray-100 mb-5'>
             <Dropdown overlay={dayMenu} trigger={["click"]}>
               <div
                 className={`px-3 py-2 text-xs leading-4 font-medium font-poppins ${
@@ -308,7 +308,7 @@ const Calendar = ({
                 e.stopPropagation();
               }}
             >
-              <div className="absolute top-0.5 left-0 w-17 h-full flex justify-center items-center">
+              <div className='absolute top-0.5 left-0 w-17 h-full flex justify-center items-center'>
                 <h1
                   className={`${
                     activeSection === "month"
@@ -322,9 +322,9 @@ const Calendar = ({
                 </h1>
               </div>
               <DatePicker
-                suffixIcon=""
-                className="custom-picker text-white"
-                picker="month"
+                suffixIcon=''
+                className='custom-picker text-white'
+                picker='month'
                 open={monthPicker}
                 bordered={false}
                 onChange={onMonthChange}
@@ -341,7 +341,7 @@ const Calendar = ({
                 e.stopPropagation();
               }}
             >
-              <div className="absolute top-0.5 -left-2.5 w-17 h-full flex justify-center items-center">
+              <div className='absolute top-0.5 -left-2.5 w-17 h-full flex justify-center items-center'>
                 <h1
                   className={`${
                     activeSection === "year" ? " text-white" : "text-black"
@@ -351,22 +351,22 @@ const Calendar = ({
                 </h1>
               </div>
               <DatePicker
-                suffixIcon=""
-                className="text-white"
-                picker="year"
+                suffixIcon=''
+                className='text-white'
+                picker='year'
                 open={yearPicker}
                 bordered={false}
                 onChange={onYearChange}
               />
             </div>
           </div>
-          <div className="absolute right-0 bottom-4">
+          <div className='absolute right-0 bottom-4'>
             {filterDate?.length |
             selectedDay?.length |
             selectedMonth?.length |
             selectedYear?.length ? (
               <h1
-                className="text-brand-color font-semibold text-base cursor-pointer p-0.5"
+                className='text-brand-color font-semibold text-base cursor-pointer p-0.5'
                 onClick={handleClearDate}
               >
                 Clear
@@ -378,7 +378,7 @@ const Calendar = ({
         </div>
 
         <div
-          className="relative calender-carousel"
+          className='relative calender-carousel'
           style={{
             width: "42vw",
           }}
@@ -387,7 +387,7 @@ const Calendar = ({
             {datesInMonth.map((date) => (
               <div
                 key={date.key}
-                className="py-5 -ml-2 cursor-pointer text-base leading-6 font-poppins"
+                className='py-5 -ml-2 cursor-pointer text-base leading-6 font-poppins'
                 onClick={() => handleMonths(date.key)}
               >
                 <h1
@@ -401,17 +401,18 @@ const Calendar = ({
               </div>
             ))}
           </Slider>
-          <div className="calendar-fader-left"></div>
-          <div className="calendar-fader-right"></div>
+          <div className='calendar-fader-left'></div>
+          <div className='calendar-fader-right'></div>
         </div>
 
         <div
-          className="relative"
+          className='relative'
           style={{
             width: "42vw",
           }}
         >
-          <div className="ml-14 mb-5">
+          <div className='ml-14 mb-5'>
+            
             {/* <div className=" flex justify-between items-center">
               {dates.map((i) => (
                 <div key={i} className="flex flex-col items-center">
@@ -451,7 +452,7 @@ const Calendar = ({
                 <div
                   key={i}
                   onClick={() => handleDates(i)}
-                  className="cursor-pointer flex  justify-center items-center"
+                  className='cursor-pointer flex  justify-center items-center'
                 >
                   {/* <div
                     onClick={() => handleDates(i)}
@@ -467,9 +468,9 @@ const Calendar = ({
                     {i + 1}
                   </h1>
                   {/* </div> */}
-                  <div className="mt-3">
+                  <div className='mt-3'>
                     <h1
-                      className="leading-4 text-center font-normal font-poppins"
+                      className='leading-4 text-center font-normal font-poppins'
                       style={{
                         fontSize: "10px",
                       }}
@@ -483,8 +484,8 @@ const Calendar = ({
               ))}
             </Slider>
 
-            <div className="calendar-fader-right"></div>
-            <div className="calendar-fader-left"></div>
+            <div className='calendar-fader-right'></div>
+            <div className='calendar-fader-left'></div>
           </div>
         </div>
       </div>
@@ -493,10 +494,10 @@ const Calendar = ({
         visible={showNotices}
         onCancel={() => setShowNotices(false)}
         footer={null}
-        width="1000px"
+        width='1000px'
       >
-        <div className="">
-          <div className="font-poppins text-base font-semibold mb-6">
+        <div className=''>
+          <div className='font-poppins text-base font-semibold mb-6'>
             Notices
           </div>
           {notices.length ? (
@@ -510,27 +511,27 @@ const Calendar = ({
               ))}
             </div>
           ) : (
-            <h1 className="font-poppins text-center">No Notices</h1>
+            <h1 className='font-poppins text-center'>No Notices</h1>
           )}
         </div>
       </Modal>
 
       {userDetails?.role_id === 3 ? (
         <div
-          className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
+          className='lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6'
           style={{
             borderRadius: "20px",
           }}
         >
-          <div className="py-2.5 border-b flex flex-col justify-center items-center">
-            <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
+          <div className='py-2.5 border-b flex flex-col justify-center items-center'>
+            <h1 className='text-xl text-center font-semibold leading-8 font-poppins'>
               Notice Board
             </h1>
             <button
               onClick={() => {
                 setShowNotices(true);
               }}
-              className="bg-black px-4 py-2 text-white rounded-lg"
+              className='bg-black px-4 py-2 text-white rounded-lg'
             >
               Preview Notices
             </button>
@@ -538,31 +539,31 @@ const Calendar = ({
           <div>
             <form
               onSubmit={(e) => handleSendNotice(e)}
-              className="flex items-start flex-col"
+              className='flex items-start flex-col'
             >
               <input
-                className="w-full px-2 py-1 rounded-md bg-transparent outline-none border mb-3"
-                type="text"
-                placeholder="Notice Title"
+                className='w-full px-2 py-1 rounded-md bg-transparent outline-none border mb-3'
+                type='text'
+                placeholder='Notice Title'
                 value={noticeTitle}
                 onChange={(e) => setNoticeTitle(e.target.value)}
               />
-              <span className="text-xs font-normal font-poppins mb-0.5 ml-1.5">
+              <span className='text-xs font-normal font-poppins mb-0.5 ml-1.5'>
                 Notice Details
               </span>
               <textarea
-                className="w-full outline-none border px-2 py-1 rounded-md bg-transparent"
-                name=""
+                className='w-full outline-none border px-2 py-1 rounded-md bg-transparent'
+                name=''
                 style={{ resize: "none" }}
-                id="notice_input"
+                id='notice_input'
                 value={noticeDescription}
                 onChange={(e) => setNoticeDescription(e.target.value)}
-                rows="3"
+                rows='3'
               ></textarea>
               <input
-                className="px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md"
-                type="submit"
-                value="Send"
+                className='px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md'
+                type='submit'
+                value='Send'
               />
             </form>
           </div>
@@ -570,20 +571,20 @@ const Calendar = ({
       ) : (
         <div>
           <div
-            className="lg:w-64 h-60 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
+            className='lg:w-64 h-60 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6'
             style={{
               borderRadius: "20px",
             }}
           >
-            <div className="py-2.5 border-b">
-              <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
+            <div className='py-2.5 border-b'>
+              <h1 className='text-xl text-center font-semibold leading-8 font-poppins'>
                 Notice Board
               </h1>
             </div>
-            <div className="mt-14 flex items-center justify-center">
+            <div className='mt-14 flex items-center justify-center'>
               <button
                 onClick={() => setShowNotices(true)}
-                className="bg-black px-4 py-2 text-white rounded-lg"
+                className='bg-black px-4 py-2 text-white rounded-lg'
               >
                 Preview Notices
               </button>

@@ -72,15 +72,15 @@ const Sidebar = ({
 
   return (
     <div
-      className="bg-white"
+      className='bg-white'
       style={{
         width: "277px",
         overflowX: "hidden",
         overflowY: "scroll",
       }}
     >
-      <div className="ml-10">
-        <div className="pb-4 pt-12">
+      <div className='ml-10'>
+        <div className='pb-4 pt-12'>
           <Icons.CompanyLogo
             style={{
               width: "122px",
@@ -88,27 +88,27 @@ const Sidebar = ({
           />
         </div>
         <div
-          className="border-r 2xl:pt-8 pb-4 overflow-y-scroll"
+          className='border-r 2xl:pt-8 pb-20 overflow-y-scroll'
           style={{
-            height: `calc (100vh - 100px)`,
+            height: `calc(100vh - 100px)`,
             overflowX: "hidden",
           }}
         >
           <div>
             <NavLink
               to={"/dashboard"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${active === "dashboard" ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={() => setActive("dashboard")}
             >
               <Icons.Dashboard />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Home
               </span>
               {active === "dashboard" && (
-                <div className="ml-auto active-option">|</div>
+                <div className='ml-auto active-option'>|</div>
               )}
             </NavLink>
           </div>
@@ -117,18 +117,18 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/overview"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className='flex items-center text-base cursor-pointer my-5 py-0.5'
                 style={{
                   color: `${active === "overview" ? "#7037FF" : "#7C8DB5"}`,
                 }}
                 onClick={() => setActive("overview")}
               >
                 <Icons.Chart />
-                <span className="ml-4 leading-6 font-medium font-poppins">
+                <span className='ml-4 leading-6 font-medium font-poppins'>
                   Overview
                 </span>
                 {active === "overview" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className='ml-auto active-option'>|</div>
                 )}
               </NavLink>
             </div>
@@ -136,7 +136,7 @@ const Sidebar = ({
 
           <div>
             <div
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${toggleMessage ? "#7037FF" : "#7C8DB5"}`,
               }}
@@ -147,14 +147,14 @@ const Sidebar = ({
               }}
             >
               <Icons.Message />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Message
               </span>
               {userMessages?.messages?.filter((message) => message.status === 0)
                 ?.length !== 0 && (
-                <div className="relative -right-5 flex justify-center items-center">
+                <div className='relative -right-5 flex justify-center items-center'>
                   <div
-                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                    className='w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins'
                     style={{
                       background: "#FF3B30",
                     }}
@@ -168,13 +168,13 @@ const Sidebar = ({
                   </div>
                 </div>
               )}
-              {toggleMessage && <div className="ml-auto active-option">|</div>}
+              {toggleMessage && <div className='ml-auto active-option'>|</div>}
             </div>
           </div>
 
           <div>
             <div
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
               }}
@@ -184,16 +184,16 @@ const Sidebar = ({
                 e.stopPropagation();
               }}
             >
-              <Icons.Bell className="w-4" />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <Icons.Bell className='w-4' />
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Notification
               </span>
               {userNotification?.notifications?.filter(
                 (notification) => notification.status === 0
               )?.length !== 0 && (
-                <div className="relative right-0 flex justify-center items-center">
+                <div className='relative right-0 flex justify-center items-center'>
                   <div
-                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                    className='w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins'
                     style={{
                       background: "#FF3B30",
                     }}
@@ -207,7 +207,7 @@ const Sidebar = ({
                 </div>
               )}
               {toggleNotification && (
-                <div className="ml-auto active-option">|</div>
+                <div className='ml-auto active-option'>|</div>
               )}
             </div>
           </div>
@@ -215,18 +215,18 @@ const Sidebar = ({
           <div>
             <NavLink
               to={"/payments"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${active === "payments" ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={() => setActive("payments")}
             >
               <Icons.Payment />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Payments
               </span>
               {active === "payments" && (
-                <div className="ml-auto active-option">|</div>
+                <div className='ml-auto active-option'>|</div>
               )}
             </NavLink>
           </div>
@@ -235,18 +235,18 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/campaigns"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className='flex items-center text-base cursor-pointer my-5 py-0.5'
                 style={{
                   color: `${active === "campaigns" ? "#7037FF" : "#7C8DB5"}`,
                 }}
                 onClick={() => setActive("campaigns")}
               >
                 <Icons.Campaigns />
-                <span className="ml-4 leading-6 font-medium font-poppins">
+                <span className='ml-4 leading-6 font-medium font-poppins'>
                   Campaigns
                 </span>
                 {active === "campaigns" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className='ml-auto active-option'>|</div>
                 )}
               </NavLink>
             </div>
@@ -274,18 +274,18 @@ const Sidebar = ({
           <div>
             <NavLink
               to={"/requisitions"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${active === "requisitions" ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={() => setActive("requisitions")}
             >
               <Icons.Pricing />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Requisitions
               </span>
               {active === "requisitions" && (
-                <div className="ml-auto active-option">|</div>
+                <div className='ml-auto active-option'>|</div>
               )}
             </NavLink>
           </div>
@@ -293,56 +293,56 @@ const Sidebar = ({
           <div>
             <NavLink
               to={"/settings"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              className='flex items-center text-base cursor-pointer my-5 py-0.5'
               style={{
                 color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={() => setActive("settings")}
             >
               <Icons.Settings />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Settings
               </span>
               {active === "settings" && (
-                <div className="ml-auto active-option">|</div>
+                <div className='ml-auto active-option'>|</div>
               )}
             </NavLink>
           </div>
 
-          <div className="lg:mt-0 2xl:mt-36 pt-1.5">
-            <div className="mr-4">
-              <h1 className="font-poppins text-lg font-semibold text-black text-opacity-70 pt-6 pb-2">
+          <div className='lg:mt-0 2xl:mt-36 pt-1.5'>
+            <div className='mr-4'>
+              <h1 className='font-poppins text-lg font-semibold text-black text-opacity-70 pt-6 pb-2'>
                 {companyName}
               </h1>
             </div>
             {Items2.map((item) => (
               <div
                 key={item.key}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className='flex items-center text-base cursor-pointer my-5 py-0.5'
                 style={{
                   color: `${active === item.name ? "#7037FF" : "#7C8DB5"}`,
                 }}
                 onClick={() => setActive(item.name)}
               >
                 {item.icon}
-                <span className="ml-4 leading-6 font-medium font-poppins">
+                <span className='ml-4 leading-6 font-medium font-poppins'>
                   {item.label}
                 </span>
                 {active === item.name && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className='ml-auto active-option'>|</div>
                 )}
               </div>
             ))}
 
             <div
-              className="flex items-center text-base cursor-pointer my-4 py-1.5"
+              className='flex items-center text-base cursor-pointer my-4 py-1.5'
               style={{
                 color: "#FF3B30",
               }}
               onClick={handleLogout}
             >
               <Icons.LogOut />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className='ml-4 leading-6 font-medium font-poppins'>
                 Log out
               </span>
             </div>
