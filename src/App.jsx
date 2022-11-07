@@ -19,6 +19,10 @@ import Settings from "./Pages/Settings";
 import CompanyDetails from "./Pages/Settings/AdminSettings/CompanyDetails";
 
 function App() {
+  // useEffect(() => {
+  //   console.log = function () {};
+  // }, []);
+
   return (
     <div>
       <Routes>

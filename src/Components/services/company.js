@@ -47,6 +47,7 @@ export const handleFetchCompanyDetails = async (companyId) => {
     return error.response;
   }
 };
+
 export const handleFetchCompanyEmployees = async (companyId) => {
   try {
     const result = await axios.get(

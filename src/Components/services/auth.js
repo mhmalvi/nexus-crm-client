@@ -50,7 +50,7 @@ export const handlePasswordReset = async (userId, newPassword) => {
   }
 };
 
-export const handleUpdateStatus = async (userId, status) => {
+export const handleUpdateUserStatus = async (userId, status) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/status`,

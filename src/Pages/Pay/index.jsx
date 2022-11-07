@@ -43,12 +43,12 @@ const Pay = () => {
         setRequestedLeadDetails(leadDetailsResponse);
       }
     })();
-  }, []);
+  }, [id]);
 
   const paymentOptions = [
     {
       id: 0,
-      title: "Credit/Debit Card",
+      title: "E-way",
       component: (
         <CardPaymentForm
           requestedLeadDetails={requestedLeadDetails}
@@ -79,11 +79,11 @@ const Pay = () => {
                 <div className="mb-10 flex items-start justify-between">
                   <div className="font-semibold text-base leading-6 font-poppins">
                     <div>
-                      <h1 className="w-52 text-lg leading-8 font-poppins font-semibold mb-0">
+                      <h1 className="w-72 text-lg leading-8 font-poppins font-semibold mb-0">
                         {requestedLeadDetails?.leadDetails?.full_name}
                       </h1>
                     </div>
-                    <div className="w-52 font-medium text-base leading-6 font-poppins flex items-center mt-2">
+                    <div className="w-72 font-medium text-base leading-6 font-poppins flex items-center mt-2">
                       <span>
                         {requestedLeadDetails?.leadDetails?.student_email}
                       </span>

@@ -81,7 +81,6 @@ const Sidebar = ({
     >
       <div className="ml-10">
         <div className="pb-4 pt-12">
-          {/* <img src={QQLogo} alt="" /> */}
           <Icons.CompanyLogo
             style={{
               width: "122px",
@@ -91,8 +90,8 @@ const Sidebar = ({
         <div
           className="border-r 2xl:pt-8 pb-4 overflow-y-scroll"
           style={{
-            height: `100vh`,
-            // height: `calc(100vh - 100px)`,
+            height: `calc (100vh - 100px)`,
+            overflowX: "hidden",
           }}
         >
           <div>
@@ -312,7 +311,7 @@ const Sidebar = ({
 
           <div className="lg:mt-0 2xl:mt-36 pt-1.5">
             <div className="mr-4">
-              <h1 className="font-poppins text-lg font-semibold text-black text-opacity-70">
+              <h1 className="font-poppins text-lg font-semibold text-black text-opacity-70 pt-6 pb-2">
                 {companyName}
               </h1>
             </div>

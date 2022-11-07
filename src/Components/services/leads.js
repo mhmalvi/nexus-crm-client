@@ -245,6 +245,22 @@ export const handleDeleteChecklist = async (checkListId) => {
   }
 };
 
+export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/assign`,
+      {
+        lead_id: leadId,
+        sales_user_id: salesUserId,
+        assign_by: assignBy,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleSyncLeads = async (clientId, acToken) => {
   try {
     const result = await axios.post(

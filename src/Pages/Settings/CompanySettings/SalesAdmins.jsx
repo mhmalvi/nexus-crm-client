@@ -1,15 +1,16 @@
-import { message, Modal } from "antd";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { handleUpdateStatus } from "../../../Components/services/auth";
+import { Badge, message, Modal } from "antd";
+import React, { useEffect, useState } from "react";
+import Avatar from "react-avatar";
+import { handleUpdateUserStatus } from "../../../Components/services/auth";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
 const SalesAdmins = ({ clientId }) => {
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
+  const [companyAdminEmployee, setCompanyAdminEmployee] = useState();
+  const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [syncEmployees, setSyncEmployees] = useState(false);
-  const [companyAdminEmployees, setCompanyAdminEmployees] = useState([]);
   const [inactiveAdminEmployees, setInactiveAdminEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
@@ -20,11 +21,30 @@ const SalesAdmins = ({ clientId }) => {
 
       if (employeeResponse?.status === true) {
         console.log(employeeResponse?.data);
+
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
-            (employee) =>
-              (employee?.role_id === 3 || employee?.role_id === 4) &&
-              employee?.status === 1
+            (employee) => employee?.role_id === 4 && employee?.status === 1
+          );
+
+          const sales = (employeeResponse?.data).filter(
+            (employee) => employee?.role_id === 5 && employee?.status === 1
+          );
+
+          setCompanyAdvisorEmployees(admins);
+          setCompanySalesEmployees(sales);
+
+          console.log(
+            "LLLLL",
+            (employeeResponse?.data).find(
+              (employee) => employee?.role_id === 3 && employee?.status === 1
+            )
+          );
+
+          setCompanyAdminEmployee(
+            (employeeResponse?.data).find(
+              (employee) => employee?.role_id === 3 && employee?.status === 1
+            )
           );
 
           setInactiveAdminEmployees(
@@ -40,20 +60,13 @@ const SalesAdmins = ({ clientId }) => {
               (employee) => employee?.role_id === 5 && employee?.status === 0
             )
           );
-
-          const sales = (employeeResponse?.data).filter(
-            (employee) => employee?.role_id === 5 && employee?.status === 1
-          );
-
-          setCompanyAdminEmployees(admins);
-          setCompanySalesEmployees(sales);
         }
       }
     })();
   }, [clientId, syncEmployees]);
 
   const handleActiveUser = async (userId) => {
-    const statusUpdateResponse = await handleUpdateStatus(userId, 1);
+    const statusUpdateResponse = await handleUpdateUserStatus(userId, 1);
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
@@ -63,7 +76,7 @@ const SalesAdmins = ({ clientId }) => {
   };
 
   const handleRemoveUser = async (userId) => {
-    const statusUpdateResponse = await handleUpdateStatus(userId, 0);
+    const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
@@ -71,6 +84,8 @@ const SalesAdmins = ({ clientId }) => {
       setSyncEmployees(!syncEmployees);
     }
   };
+
+  console.log(companyAdminEmployee);
 
   return (
     <div className="flex justify-between 2xl:justify-evenly mt-12 pt-0.5">
@@ -131,16 +146,65 @@ const SalesAdmins = ({ clientId }) => {
         </div>
 
         <div className="ml-8 px-4 mt-5">
-          {companyAdminEmployees.length ? (
-            companyAdminEmployees.map((employee, i) => (
-              <div key={i} className="flex mb-6">
-                <div
-                  className={`${
-                    avatarColor[Math.floor(Math.random() * 10) + 1]
-                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                >
-                  {(employee?.full_name).slice(0, 2)}
+          {/* Admin of Company */}
+          {companyAdminEmployee ? (
+            <div className="flex mb-6">
+              <Avatar
+                className="rounded-full cursor-pointer mt-2"
+                size="38"
+                color={Avatar.getRandomColor("sitebase", [
+                  "red",
+                  "green",
+                  "#728FCE",
+                  "violet",
+                  "#2B547E",
+                  "black",
+                  "#87AFC7",
+                  "Lime",
+                  "#D5D6EA",
+                  "#77BFC7",
+                  "orange",
+                  "#FDD017",
+                  "#665D1E",
+                ])}
+                name={companyAdminEmployee?.full_name}
+              />
+              <Badge.Ribbon text="Admin" color="volcano" size="small">
+                <div className="ml-4 mt-4 w-52">
+                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
+                    {companyAdminEmployee?.full_name}
+                  </h1>
+                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
+                    {companyAdminEmployee?.email}
+                  </p>
                 </div>
+              </Badge.Ribbon>
+            </div>
+          ) : null}
+
+          {companyAdvisorEmployees.length ? (
+            companyAdvisorEmployees.map((employee, i) => (
+              <div key={i} className="flex mb-6">
+                <Avatar
+                  className="rounded-full cursor-pointer"
+                  size="38"
+                  color={Avatar.getRandomColor("sitebase", [
+                    "red",
+                    "green",
+                    "#728FCE",
+                    "violet",
+                    "#2B547E",
+                    "black",
+                    "#87AFC7",
+                    "Lime",
+                    "#D5D6EA",
+                    "#77BFC7",
+                    "orange",
+                    "#FDD017",
+                    "#665D1E",
+                  ])}
+                  name={employee?.full_name}
+                />
                 <div className="ml-4">
                   <h1 className="font-semibold text-lg leading-5 text-gray-600">
                     {employee?.full_name}
@@ -169,13 +233,33 @@ const SalesAdmins = ({ clientId }) => {
             <div className="mt-3 grid grid-cols-2 gap-6 px-4">
               {inactiveAdminEmployees.map((employee, i) => (
                 <div key={i} className="flex ">
-                  <div
+                  {/* <div
                     className={`${
                       avatarColor[Math.floor(Math.random() * 10) + 1]
                     } w-7.5 h-7.5 p-3 border-2 text-red-500 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
                   >
                     {(employee?.full_name).slice(0, 2)}
-                  </div>
+                  </div> */}
+                  <Avatar
+                    className="rounded-full cursor-pointer"
+                    size="38"
+                    color={Avatar.getRandomColor("sitebase", [
+                      "red",
+                      "green",
+                      "#728FCE",
+                      "violet",
+                      "#2B547E",
+                      "black",
+                      "#87AFC7",
+                      "Lime",
+                      "#D5D6EA",
+                      "#77BFC7",
+                      "orange",
+                      "#FDD017",
+                      "#665D1E",
+                    ])}
+                    name={employee?.full_name}
+                  />
                   <div className="ml-4">
                     <h1 className="text-red-500 font-semibold text-lg leading-5">
                       {employee?.full_name}
@@ -219,13 +303,33 @@ const SalesAdmins = ({ clientId }) => {
           {companySalesEmployees.length ? (
             companySalesEmployees.map((employee, i) => (
               <div key={i} className="flex ">
-                <div
+                {/* <div
                   className={`${
                     avatarColor[Math.floor(Math.random() * 10) + 1]
                   } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
                 >
                   {(employee?.full_name).slice(0, 2)}
-                </div>
+                </div> */}
+                <Avatar
+                  className="rounded-full cursor-pointer"
+                  size="38"
+                  color={Avatar.getRandomColor("sitebase", [
+                    "red",
+                    "green",
+                    "#728FCE",
+                    "violet",
+                    "#2B547E",
+                    "black",
+                    "#87AFC7",
+                    "Lime",
+                    "#D5D6EA",
+                    "#77BFC7",
+                    "orange",
+                    "#FDD017",
+                    "#665D1E",
+                  ])}
+                  name={employee?.full_name}
+                />
                 <div className="ml-4">
                   <h1 className="font-semibold text-lg leading-5 text-gray-600">
                     {employee?.full_name}
@@ -257,13 +361,34 @@ const SalesAdmins = ({ clientId }) => {
             <div className="mt-3 grid grid-cols-2 gap-6 px-4">
               {inactiveSalesEmployees.map((employee, i) => (
                 <div key={i} className="flex ">
-                  <div
+                  {/* <div
                     className={`${
                       avatarColor[Math.floor(Math.random() * 10) + 1]
                     } w-7.5 h-7.5 p-3 border-2 text-red-500 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
                   >
                     {(employee?.full_name).slice(0, 2)}
-                  </div>
+                  </div> */}
+
+                  <Avatar
+                    className="rounded-full cursor-pointer"
+                    size="38"
+                    color={Avatar.getRandomColor("sitebase", [
+                      "red",
+                      "green",
+                      "#728FCE",
+                      "violet",
+                      "#2B547E",
+                      "black",
+                      "#87AFC7",
+                      "Lime",
+                      "#D5D6EA",
+                      "#77BFC7",
+                      "orange",
+                      "#FDD017",
+                      "#665D1E",
+                    ])}
+                    name={employee?.full_name}
+                  />
                   <div className="ml-4">
                     <h1 className="text-red-500 font-semibold text-lg leading-5">
                       {employee?.full_name}
@@ -289,19 +414,3 @@ const SalesAdmins = ({ clientId }) => {
 };
 
 export default SalesAdmins;
-
-const avatarColor = [
-  "text-orange-500",
-  "text-blue-500",
-  "text-vioilet-500",
-  "text-indigo-500",
-  "text-black",
-  "text-gray-600",
-  "text-pink-600",
-  "text-fuchsia-600",
-  "text-sky-600",
-  "text-teal-600",
-  "text-cyan-600",
-  "text-yellow-600",
-  "text-lime-600",
-];

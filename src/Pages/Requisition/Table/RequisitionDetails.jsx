@@ -106,19 +106,13 @@ const RequisitionDetails = ({
           <span>Package : </span>
         </h1>
         <div
-          className={`w-72 mt-4 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center`}
+          className={`w-72 mt-4 mx-auto flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center`}
         >
-          <div className="flex justify-between gap-2">
-            <div className="border-brand-color border rounded-full w-20 h-6 my-2">
-              <span className="text-brand-color text-sm font-bold">active</span>
-            </div>
-          </div>
           <h3 className="font-bold py-10 text-[20px]">
-            Package
             {requisitionPackageDetails?.package_name}
           </h3>
           <h1 className="ml-3 text-4xl text-brand-color mb-0">
-            $100
+            ${requisitionPackageDetails?.price}
             <br />
           </h1>
           <span className="text-brand-color text-sm ml-5">/Monthly</span>

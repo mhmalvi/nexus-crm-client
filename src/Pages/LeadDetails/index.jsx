@@ -34,6 +34,7 @@ const LeadDetails = () => {
   useEffect(() => {
     (async () => {
       const response = await handleLeadDetails(id);
+      console.log("response", response);
       if (response) {
         setleadDetails(response);
         const status = {
@@ -55,7 +56,7 @@ const LeadDetails = () => {
           Completed: "Not Yet",
         };
 
-        (response?.leadAllStatus).forEach((leadStatus) => {
+        response?.leadAllStatus?.forEach((leadStatus) => {
           status[
             `${Object.keys(status)[parseInt(leadStatus?.lead_status)]}`
           ] = true;
@@ -89,7 +90,11 @@ const LeadDetails = () => {
           <Conversation id={id} />
         </div>
         <div>
-          <UserDetails leadDetails={leadDetails?.leadDetails} />
+          <UserDetails
+            leadDetails={leadDetails}
+            syncDetails={syncDetails}
+            setSyncDetails={setSyncDetails}
+          />
         </div>
         {leadDetails?.leadDetails?.lead_details_status === 0 && (
           <div className="w-full h-full bg-white bg-opacity-50 absolute flex justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">

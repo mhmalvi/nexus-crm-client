@@ -467,7 +467,7 @@ const LeadStatus = ({
                 border="0"
               >
                 <tbody>
-                  {leadDetails?.leadCallHistory.map((history, i) => (
+                  {leadDetails?.leadCallHistory?.map((history, i) => (
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
                       <td>{history.call_start_time}</td>

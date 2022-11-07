@@ -1,6 +1,13 @@
-import { message, Modal } from "antd";
+import {
+  message,
+  Modal,
+  Popconfirm,
+  Tooltip,
+  Avatar as AntdAvatar,
+} from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ReactStars from "react-stars";
@@ -8,24 +15,57 @@ import {
   handleLeadCommentUpdate,
   handleLeadReviewUpdate,
   handleLeadStatusUpdate,
-} from "../../Components/services/leads";
-import Icons from "../../Components/Shared/Icons";
-import CheckList from "./CheckList";
+} from "../../../Components/services/leads";
+import Icons from "../../../Components/Shared/Icons";
+import CheckList from "../CheckList";
+import EmployeeHistory from "./EmployeeHistory";
+import SalesEmployees from "./SalesEmployees";
 
-const UserDetails = ({ leadDetails }) => {
+const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
   const userDetails = useSelector((state) => state?.user);
   const navigate = useNavigate();
 
   const [addSealsman, setAddSealsman] = useState(false);
+  const [salesEmployeeName, setSalesEmployeeName] = useState("");
+  const [closeSealsman, setCloseSealsman] = useState(false);
+  const [toggleSalesEmployeeHistory, setToggleSalesEmployeeHistory] =
+    useState(false);
+  const [prevSalesEmployeesName, setPrevSalesEmployeesName] = useState([]);
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [toggleApplication, setToggleApplication] = useState(false);
-  const [closeSealsman, setCloseSealsman] = useState(true);
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-    setRating(leadDetails?.star_review);
-    setComment(leadDetails?.lead_remarks);
+    if (leadDetails?.leadSalesEmployeeHistory?.length) {
+      console.log(leadDetails?.leadSalesEmployeeHistory);
+      const salesman = leadDetails?.leadSalesEmployeeHistory?.find(
+        (employee) =>
+          employee?.sales_user_id === leadDetails?.leadDetails?.sales_user_id
+      );
+      // const previousSalesman = leadDetails?.leadSalesEmployeeHistory?.filter(
+      //   (employee) =>
+      //     employee?.sales_user_id !== leadDetails?.leadDetails?.sales_user_id
+      // );
+
+      const previousSalesmans = [];
+
+      leadDetails?.leadSalesEmployeeHistory?.forEach((employee) => {
+        if (
+          employee?.sales_user_id !== leadDetails?.leadDetails?.sales_user_id
+        ) {
+          previousSalesmans.push(employee?.sales_user_name);
+        }
+      });
+
+      setPrevSalesEmployeesName(previousSalesmans);
+      // setSalesEmployeeName(salesman?.sales_user_id);
+      setCloseSealsman(true);
+      setSalesEmployeeName(salesman?.sales_user_name);
+    }
+
+    setRating(leadDetails?.leadDetails?.star_review);
+    setComment(leadDetails?.leadDetails?.lead_remarks);
   }, [leadDetails]);
 
   const handleCancel = () => {
@@ -36,7 +76,7 @@ const UserDetails = ({ leadDetails }) => {
 
   const ratingChanged = async (newRating) => {
     const reviewResponse = await handleLeadReviewUpdate(
-      leadDetails?.lead_id,
+      leadDetails?.leadDetails?.lead_id,
       newRating,
       userDetails?.userInfo?.user_id
     );
@@ -55,7 +95,7 @@ const UserDetails = ({ leadDetails }) => {
     e.preventDefault();
 
     const commentUpdateResponse = await handleLeadCommentUpdate(
-      leadDetails?.lead_id,
+      leadDetails?.leadDetails?.lead_id,
       userDetails?.userInfo?.user_id,
       comment
     );
@@ -71,9 +111,11 @@ const UserDetails = ({ leadDetails }) => {
     document.getElementById("lead_comment").style.caretColor = "black";
   };
 
-  const handleLeadSuspend = async () => {
+  console.log(prevSalesEmployeesName);
+
+  const confirm = async (e) => {
     const statusUpdateResponse = await handleLeadStatusUpdate(
-      leadDetails?.lead_id,
+      leadDetails?.leadDetails?.lead_id,
       0,
       userDetails?.userInfo?.user_id
     );
@@ -84,87 +126,158 @@ const UserDetails = ({ leadDetails }) => {
     }
   };
 
+  const confirmCancleSalesEmployee = async (e) => {
+    setCloseSealsman(false);
+  };
+
+  const cancel = (e) => {
+    console.log(e);
+  };
+
   return (
     <div className="mx-6">
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
-            {leadDetails?.full_name}
+            {leadDetails?.leadDetails?.full_name}
           </h1>
-          <div className="relative">
-            {userDetails?.userInfo?.role_id === 5 && closeSealsman ? (
-              <img
-                title={
-                  userDetails?.userInfo?.firstName +
-                  " " +
-                  userDetails?.userInfo?.lastName
-                }
-                className="w-10 rounded-full cursor-pointer"
-                src={userDetails?.userInfo?.avatar}
-                alt=""
-              />
-            ) : (
-              <Icons.People
-                className="cursor-pointer"
-                onClick={() => {
-                  !closeSealsman && setAddSealsman(true);
-                }}
-              />
-            )}
-            {closeSealsman && (
-              <span
-                className="absolute cursor-pointer -top-2 -right-2.5 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0"
-                onClick={() => {
-                  setCloseSealsman(!closeSealsman);
+
+          {/* Sales Employee History */}
+          <Modal
+            visible={toggleSalesEmployeeHistory}
+            onCancel={() => setToggleSalesEmployeeHistory(false)}
+            footer={false}
+          >
+            <EmployeeHistory
+              employeeList={leadDetails?.leadSalesEmployeeHistory}
+            />
+          </Modal>
+
+          <div className="relative flex items-center">
+            <div onClick={() => setToggleSalesEmployeeHistory(true)}>
+              <AntdAvatar.Group
+                className="mr-1 cursor-pointer"
+                maxCount={1}
+                maxStyle={{
+                  color: "#f56a00",
+                  backgroundColor: "#fde3cf",
                 }}
               >
-                x
-              </span>
+                {prevSalesEmployeesName?.length ? (
+                  <>
+                    <Avatar
+                      className="rounded-full shadow-sm cursor-pointer"
+                      size="30"
+                      color={Avatar.getRandomColor("sitebase", [
+                        "red",
+                        "green",
+                        "#728FCE",
+                        "violet",
+                        "#2B547E",
+                        "black",
+                        "#87AFC7",
+                        "Lime",
+                        "#D5D6EA",
+                        "#77BFC7",
+                        "orange",
+                        "#FDD017",
+                        "#665D1E",
+                      ])}
+                      name={prevSalesEmployeesName?.[0]}
+                    />
+                    {prevSalesEmployeesName?.length > 1 ? (
+                      <Tooltip title="Previous Sales Employee" placement="top">
+                        {prevSalesEmployeesName.slice(1).map((name, i) => (
+                          <Avatar
+                            key={i}
+                            className="rounded-full shadow-sm cursor-pointer"
+                            size="30"
+                            color={Avatar.getRandomColor("sitebase", [
+                              "red",
+                              "green",
+                              "#728FCE",
+                              "violet",
+                              "#2B547E",
+                              "black",
+                              "#87AFC7",
+                              "Lime",
+                              "#D5D6EA",
+                              "#77BFC7",
+                              "orange",
+                              "#FDD017",
+                              "#665D1E",
+                            ])}
+                            name={name}
+                          />
+                        ))}
+                      </Tooltip>
+                    ) : null}
+                  </>
+                ) : null}
+              </AntdAvatar.Group>
+            </div>
+
+            {leadDetails?.leadDetails?.sales_user_id !== 0 && closeSealsman ? (
+              <div className="relative">
+                <Avatar
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="45"
+                  color={Avatar.getRandomColor("sitebase", [
+                    "red",
+                    "green",
+                    "#728FCE",
+                    "violet",
+                    "#2B547E",
+                    "black",
+                    "#87AFC7",
+                    "Lime",
+                    "#D5D6EA",
+                    "#77BFC7",
+                    "orange",
+                    "#FDD017",
+                    "#665D1E",
+                  ])}
+                  name={salesEmployeeName}
+                />
+                <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
+                  &nbsp;
+                </div>
+              </div>
+            ) : (
+              <div
+                className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
+                onClick={() => {
+                  setAddSealsman(true);
+                }}
+              >
+                +
+              </div>
             )}
+
+            {closeSealsman ? (
+              <Popconfirm
+                title="Are you sure to remove this Salesman?"
+                onConfirm={confirmCancleSalesEmployee}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <span className="absolute cursor-pointer -top-1 -right-2 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0">
+                  x
+                </span>
+              </Popconfirm>
+            ) : null}
           </div>
 
           {/* Sales Team List Modal */}
-          <Modal visible={addSealsman} footer={null} onCancel={handleCancel}>
-            <div>
-              <h1 className="font-poppins text-xl font-extrabold">
-                Seals Team
-              </h1>
-              <span className="font-poppins text-xs">
-                <span className="text-red-600">*</span> Select a sales person to
-                handle this lead
-              </span>
-            </div>
-            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
-            <div className="grid grid-cols-2 justify-center items-center py-6 ">
-              <div className="flex justify-center items-center my-2 cursor-pointer">
-                <Icons.PeopleRounded />
-                <div className="ml-2 text-lg font-poppins font-semibold">
-                  Samin Hasan
-                </div>
-              </div>
-
-              <div className="flex justify-center items-center my-2 cursor-pointer">
-                <Icons.PeopleRounded />
-                <div className="ml-2 text-lg font-poppins font-semibold">
-                  Samin Hasan
-                </div>
-              </div>
-
-              <div className="flex justify-center items-center my-2 cursor-pointer">
-                <Icons.PeopleRounded />
-                <div className="ml-2 text-lg font-poppins font-semibold">
-                  Samin Hasan
-                </div>
-              </div>
-
-              <div className="flex justify-center items-center my-2 cursor-pointer">
-                <Icons.PeopleRounded />
-                <div className="ml-2 text-lg font-poppins font-semibold">
-                  Samin Hasan
-                </div>
-              </div>
-            </div>
-          </Modal>
+          <SalesEmployees
+            addSealsman={addSealsman}
+            setAddSealsman={setAddSealsman}
+            handleCancel={handleCancel}
+            leadDetails={leadDetails}
+            syncDetails={syncDetails}
+            setSyncDetails={setSyncDetails}
+          />
 
           {/* Application Form Modal */}
           <Modal
@@ -179,9 +292,9 @@ const UserDetails = ({ leadDetails }) => {
             </div>
             {/* <div className="flex flex-col justify-center items-center py-6 "> */}
             <div className="py-6">
-              {/* {JSON.parse(leadDetails?.form_data).map((question) => ( */}
+              {/* {JSON.parse(leadDetails?.leadDetails?.form_data).map((question) => ( */}
               <div className="my-2">
-                {leadDetails?.form_data?.map((question, i) => (
+                {leadDetails?.leadDetails?.form_data?.map((question, i) => (
                   <div key={i} className="ml-2 font-poppins">
                     <li className="text-base list-disc font-semibold">
                       {/* for removing underscores and capitalize the first letter of the Question */}
@@ -202,7 +315,7 @@ const UserDetails = ({ leadDetails }) => {
         </div>
 
         <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
-          #{leadDetails?.lead_id}
+          #{leadDetails?.leadDetails?.lead_id}
         </h1>
       </div>
       <div>
@@ -231,7 +344,7 @@ const UserDetails = ({ leadDetails }) => {
           <div className="mt-1">
             <img
               className="w-16"
-              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.phone_number}&backcolor=%23ffffff`}
+              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
               alt=""
             />
             <div
@@ -246,32 +359,43 @@ const UserDetails = ({ leadDetails }) => {
           <div className="ml-5">
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
               <span>Contact:&nbsp;&nbsp;</span>
-              <span> {leadDetails?.phone_number}</span>
+              <span> {leadDetails?.leadDetails?.phone_number}</span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Email:&nbsp;&nbsp;</span>
-              <span>{leadDetails?.student_email}</span>
+              <span>{leadDetails?.leadDetails?.student_email}</span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex mt-2">
               <span>Courses:&nbsp;&nbsp;</span>
-              <span>{leadDetails?.course_title}</span>
+              <span>{leadDetails?.leadDetails?.course_title}</span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Location:&nbsp;&nbsp;</span>
-              <span className="uppercase">{leadDetails?.work_location}</span>
+              <span className="uppercase">
+                {leadDetails?.leadDetails?.work_location}
+              </span>
             </div>
           </div>
         </div>
-        <div className="xl:ml-4 mt-5 flex">
-          <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+        <div className="xl:ml-4 mt-5">
+          {/* <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
             Edit
-          </button>
-          <button
-            className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 ml-4 text-xs font-medium leading-4 font-poppins rounded-md`}
-            onClick={handleLeadSuspend}
+          </button> */}
+
+          <Popconfirm
+            title="Are you sure to Suspend this lead?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
           >
-            Suspend
-          </button>
+            <button
+              className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
+              // onClick={handleLeadSuspend}
+            >
+              Suspend
+            </button>
+          </Popconfirm>
         </div>
 
         {/* --------------- If user wants to Pay------------- */}
@@ -301,7 +425,7 @@ const UserDetails = ({ leadDetails }) => {
             </h1>
           </div>
           <div className="ml-4 mt-5">
-            <Link to={`/pay/${leadDetails?.lead_id}`}>
+            <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
               <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
                 Pay
               </button>
@@ -355,8 +479,8 @@ const UserDetails = ({ leadDetails }) => {
         >
           {userDetails?.userInfo?.role_id === 6 ? (
             <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-              {leadDetails?.lead_remarks
-                ? leadDetails?.lead_remarks
+              {leadDetails?.leadDetails?.lead_remarks
+                ? leadDetails?.leadDetails?.lead_remarks
                 : "No Comments Yet"}
             </h1>
           ) : (
