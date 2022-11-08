@@ -1,11 +1,9 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
 import visa from "../../assets/Images/visa.png";
 
 const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
-
   useEffect(() => {
     const scriptContainer = document.getElementById("e-way");
     scriptContainer.innerHTML = "";
@@ -21,12 +19,14 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
     script.setAttribute("data-submitform", "yes");
     script.setAttribute(
       "data-resulturl",
-      `${process.env.REACT_APP_CLIENT_URL}/success/${requestedLeadDetails?.leadDetails?.lead_id}`
+      `${process.env.REACT_APP_CLIENT_URL}/success/${requestedLeadDetails?.leadDetails?.lead_id}-${requestedLeadDetails?.leadDetails?.client_id}`
     );
 
     script.async = true;
     scriptContainer.appendChild(script);
   }, [amount, requestedLeadDetails?.leadDetails?.lead_id]);
+
+  console.log(requestedLeadDetails);
 
   return (
     <div>

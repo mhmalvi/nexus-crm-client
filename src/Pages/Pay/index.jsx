@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
-import {
-  handleAddEwayPaymentDetails,
-  handleLeadDetails,
-} from "../../Components/services/leads";
+import { handleLeadDetails } from "../../Components/services/leads";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
 import PayPalPaymentForm from "./PayPalPaymentForm";
@@ -20,21 +17,6 @@ const Pay = () => {
 
   const [transactionsMethod, setTransactionsMethod] = useState(0);
   const [requestedLeadDetails, setRequestedLeadDetails] = useState();
-
-  useEffect(() => {
-    if (searchParams?.get("AccessCode")) {
-      (async () => {
-        const addEwayPaymentHistory = await handleAddEwayPaymentDetails(
-          userDetails?.user_id,
-          id,
-          userDetails?.client_id,
-          "eWay",
-          searchParams.get("AccessCode")
-        );
-        console.log(addEwayPaymentHistory);
-      })();
-    }
-  }, [id, searchParams, userDetails?.client_id, userDetails?.user_id]);
 
   useEffect(() => {
     (async () => {

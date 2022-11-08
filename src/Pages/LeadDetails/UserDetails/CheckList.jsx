@@ -5,12 +5,12 @@ import {
   handleChecklistDocumentUpload,
   handleDocumentDelete,
   handleFetchLeadCheckListDocuments,
-} from "../../Components/services/leads";
+} from "../../../Components/services/leads";
 import {
   handleFetchFile,
   handleUploadFile,
-} from "../../Components/services/utils";
-import Icons from "../../Components/Shared/Icons";
+} from "../../../Components/services/utils";
+import Icons from "../../../Components/Shared/Icons";
 
 const CheckList = ({ leadDetails }) => {
   const [fileList, setFileList] = useState([]);

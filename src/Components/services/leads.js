@@ -283,6 +283,13 @@ export const handleAddEwayPaymentDetails = async (
   paymentMethod,
   accessCode
 ) => {
+  console.log({
+    user_id: userId,
+    lead_id: leadId,
+    company_id: companyId,
+    payment_method: paymentMethod,
+    accessCode: accessCode,
+  });
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_PAYMENT_URL}/api/eway/payment/response`,

@@ -17,7 +17,7 @@ import {
   handleLeadStatusUpdate,
 } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
-import CheckList from "../CheckList";
+import CheckList from "./CheckList";
 import EmployeeHistory from "./EmployeeHistory";
 import SalesEmployees from "./SalesEmployees";
 
@@ -446,7 +446,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             footer={null}
             onCancel={handleCancel}
           >
-            <CheckList leadDetails={leadDetails} />
+            <CheckList leadDetails={leadDetails?.leadDetails} />
           </Modal>
 
           <div className="ml-4 mt-5">

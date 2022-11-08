@@ -1,8 +1,50 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import successBlower from "../../assets/Images/success_blower.gif";
+import { handleAddEwayPaymentDetails } from "../../Components/services/leads";
 
 const Success = () => {
+  const { id } = useParams();
+  const [leadInfo, setLeadInfo] = useState([]);
+  const userDetails = useSelector((state) => state.user)?.userInfo;
+  const [searchParams] = useSearchParams();
+
+  // console.log(userDetails);
+  // console.log(id.split("-"));
+  // console.log(searchParams.get("AccessCode"));
+
+  // useEffect(() => {
+  //   setLeadInfo(id.split("-"));
+  // }, [id]);
+
+  useEffect(() => {
+    console.log({
+      user_id: userDetails?.user_id,
+      lid: id.split("-")?.[0],
+      cid: parseInt(id.split("-")?.[1]),
+      method: "eWay",
+      sc: searchParams.get("AccessCode"),
+    });
+
+    // console.log(parseInt(leadInfo?.[1]));
+
+    if (searchParams?.get("AccessCode")) {
+      (async () => {
+        const addEwayPaymentHistory = await handleAddEwayPaymentDetails(
+          userDetails?.user_id,
+          parseInt(id.split("-")?.[0]),
+          parseInt(id.split("-")?.[1]),
+          "eWay",
+          searchParams.get("AccessCode")
+        );
+        console.log("addEwayPaymentHistory", addEwayPaymentHistory);
+      })();
+    }
+  }, [id, leadInfo, searchParams, userDetails.client_id, userDetails?.user_id]);
+
   return (
     <div className="lg:px-4 2xl:px-6 pt-25 pt-1 pb-10 flex justify-center items-center bg-gray-100 h-screen">
       <div
