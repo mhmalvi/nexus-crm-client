@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFetchLeads,
-  handleSyncLeads
+  handleSyncLeads,
 } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
@@ -141,22 +141,30 @@ const AdminDashboard = () => {
         setSelectedYear={setSelectedYear}
       />
       <Filters
-        layout="Dashboard"
+        layout='Dashboard'
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
         activeStars={activeStars}
-        filterOptions={filterOptions}
+        filterOptions={
+          userDetails?.userInfo?.role_id === 3
+            ? adminFilterOptions
+            : salesEmployeesFilterOptions
+        }
         ratings={ratings}
         handleStaredLeadsFilter={handleStaredLeadsFilter}
         setActiveStars={setActiveStars}
         setSearchInput={setSearchInput}
       />
       <Table
-        title="Lead List"
+        title='Lead List'
         tableHeaders={tableHeaders}
         data={leadData}
-        filterOptions={filterOptions}
+        filterOptions={
+          userDetails?.userInfo?.role_id === 3
+            ? adminFilterOptions
+            : salesEmployeesFilterOptions
+        }
         ratings={ratings}
         activeFilter={activeFilter}
         searchInput={searchInput}
@@ -168,7 +176,7 @@ const AdminDashboard = () => {
 
 export default AdminDashboard;
 
-const filterOptions = [
+const adminFilterOptions = [
   {
     id: 1,
     title: "New Lead",
@@ -194,10 +202,6 @@ const filterOptions = [
     title: "Completed",
   },
   {
-    id: 8,
-    title: "My Leads",
-  },
-  {
     id: 9,
     title: "Suspended",
   },
@@ -205,10 +209,21 @@ const filterOptions = [
     id: 0,
     title: "All",
   },
+];
+
+const salesEmployeesFilterOptions = [
   {
-    id: 7,
-    title: "Today's Task",
+    id: 8,
+    title: "My Leads",
   },
+  {
+    id: 0,
+    title: "All",
+  },
+  // {
+  //   id: 7,
+  //   title: "Today's Task",
+  // },
 ];
 
 const ratings = [
@@ -243,4 +258,3 @@ const tableHeaders = [
   "Campaign ID",
   "Lead Status",
 ];
-
