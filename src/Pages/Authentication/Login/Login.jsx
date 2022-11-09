@@ -1,18 +1,20 @@
 import { Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { addUserDetails, setLoader } from "../../../features/user/userSlice";
+import ForgotPassword from "./ForgotModal";
 
 const Login = () => {
   document.title = "CRM -Log In";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const [tooglePasswordForget, setTooglePasswordForget] = useState(false);
 
   const [data, setData] = useState({
     email: "",
@@ -52,8 +54,6 @@ const Login = () => {
 
     if (loginResponse?.status === 200) {
       // if ()
-
-
 
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem("auth_tok", loginResponse?.data?.token);
@@ -99,6 +99,20 @@ const Login = () => {
           "_" +
           makeid(3)
       );
+    }
+  };
+
+  const ForgotPasswordModal = () => {
+    const regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (data.email !== "") {
+      if (regex.test(data.email) === true) {
+        setTooglePasswordForget(true);
+      } else {
+        message.warning("Please enter a valid email address.");
+      }
+    } else {
+      message.warning("Enter your email first.");
     }
   };
 
@@ -154,16 +168,23 @@ const Login = () => {
               /> */}
             </div>
             <div className="mb-4 font-poppins">
+              {/* Forgot password */}
               <div className="flex justify-between mb-2">
                 <label htmlFor="password" className="text-sm text-gray-600">
                   Password
                 </label>
-                <Link
-                  to="/login"
-                  className="text-xs text-gray-400 focus:outline-none"
+                <label
+                  className="text-xs text-gray-400 focus:outline-none hover:text-indigo-500"
+                  onClick={ForgotPasswordModal}
                 >
                   Forgot password?
-                </Link>
+                </label>
+
+                <ForgotPassword
+                  visibility={tooglePasswordForget}
+                  oncancel={(cancel) => setTooglePasswordForget(cancel)}
+                  emaildata ={data.email} 
+                />
               </div>
               <Input.Password
                 // type="password"

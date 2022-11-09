@@ -17,6 +17,7 @@ import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
 import CompanyDetails from "./Pages/Settings/AdminSettings/CompanyDetails";
+import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 
 function App() {
   // useEffect(() => {
@@ -41,6 +42,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="requisition" element={<RequisitionForm />} />
+        <Route path="reset-password" element={<ResetPassword />} />
         {/* <Route path="package-create" element={<Package />} /> */}
         {/* <Route
           path="subscription/edit-package/:id"
