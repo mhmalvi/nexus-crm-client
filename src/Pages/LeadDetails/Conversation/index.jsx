@@ -45,7 +45,9 @@ const Conversation = ({ id }) => {
 
   useEffect(() => {
     (async () => {
-      const messages = await handlefetchMessages(userDetails?.userInfo?.user_id);
+      const messages = await handlefetchMessages(
+        userDetails?.userInfo?.user_id
+      );
       // console.log("messages ------- ", messages);
       // console.log(
       //   messages?.filter(
@@ -279,58 +281,60 @@ const Conversation = ({ id }) => {
 
   return (
     <div className="min-h-full px-6 border-r">
-      <div
-        className="border py-3 px-7 mb-4"
-        style={{
-          borderRadius: "20px",
-        }}
-      >
-        <div className="px-0.5">
-          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
-            Add Reminder
-          </h1>
-        </div>
+      {userDetails?.userInfo?.role_id === 4 ||
+      userDetails?.userInfo?.role_id === 5 ? (
+        <div
+          className="border py-3 px-7 mb-9 "
+          style={{
+            borderRadius: "20px",
+          }}
+        >
+          <div className="px-0.5">
+            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
+              Add Reminder
+            </h1>
+          </div>
 
-        {/* --------------- Add Reminder Section ------------------ */}
-        <div>
-          <Space
-            className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-            direction="vertical"
-            size={12}
-          >
-            <DatePicker
-              className="date-time-picker"
-              suffixIcon={dateTime ? dateTime : "Select Date and Time"}
-              bordered={false}
-              showTime
-              onOk={onOk}
-            />
-          </Space>
-
-          <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
-            <input
-              className="w-full font-poppins outline-none"
-              type="text"
-              placeholder="Write Message"
-              name="reminder message"
-              id="reminder_message"
-              value={reminderMessage}
-              onChange={(e) => setReminderMessage(e.target.value)}
-            />
-            <button
-              className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4"
-              onClick={handleAddReminder}
+          {/* --------------- Add Reminder Section ------------------ */}
+          <div>
+            <Space
+              className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+              direction="vertical"
+              size={12}
             >
-              Save
-            </button>
+              <DatePicker
+                className="date-time-picker"
+                suffixIcon={dateTime ? dateTime : "Select Date and Time"}
+                bordered={false}
+                showTime
+                onOk={onOk}
+              />
+            </Space>
+
+            <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+              <input
+                className="w-full font-poppins outline-none"
+                type="text"
+                placeholder="Write Message"
+                name="reminder message"
+                id="reminder_message"
+                value={reminderMessage}
+                onChange={(e) => setReminderMessage(e.target.value)}
+              />
+              <button
+                className="px-3 py-1 bg-black text-white rounded-md font-poppins text-xs leading-5 font-medium ml-4"
+                onClick={handleAddReminder}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
       <div>
         {/* --------------- Conversion Section -------------- */}
         <div
-          className="mt-5"
           style={{
             height: "500px",
           }}
@@ -438,15 +442,16 @@ const Conversation = ({ id }) => {
               ))}
             </ScrollToBottom>
 
-            <div className="relative w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
-              <input
-                className="w-full outline-none font-normal bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
-                placeholder="Write a massage"
-                type="text"
-                name=""
-                id="message"
-              />
-              <div className="ml-2 flex items-center">
+            {userDetails?.userInfo?.role_id !== 1 ||
+            userDetails?.userInfo?.role_id !== 2 ? (
+              <div className="relative w-full flex justify-between items-center p-2.5 bg-gray-100 rounded-xl mt-2">
+                <input
+                  className="w-full outline-none font-normal bg-gray-100 text-xs leading-5 font-poppins placeholder:text-black placeholder:text-opacity-25"
+                  placeholder="Write a massage"
+                  type="text"
+                  name=""
+                  id="message"
+                />
                 {/* <div className="mr-2 cursor-pointer">
                   <label htmlFor="file" className="cursor-pointer">
                     <Icons.Clip />
@@ -463,24 +468,26 @@ const Conversation = ({ id }) => {
                   />
                 </div> */}
 
-                <Upload
-                  {...props}
-                  defaultFileList={[...fileList]}
-                  listType="text"
-                  fileList={fileList}
-                  className="mr-2.5 mt-0.5"
-                >
-                  <Icons.Clip />
-                </Upload>
+                <div className="ml-2 flex items-center">
+                  <Upload
+                    {...props}
+                    defaultFileList={[...fileList]}
+                    listType="text"
+                    fileList={fileList}
+                    className="mr-2.5 mt-0.5"
+                  >
+                    <Icons.Clip />
+                  </Upload>
 
-                <button
-                  className="px-2.5 py-0.5 font-poppins font-semibold text-xs leading-5 text-black border border-black rounded-md"
-                  type="submit"
-                >
-                  Send
-                </button>
+                  <button
+                    className="px-2.5 py-0.5 font-poppins font-semibold text-xs leading-5 text-black border border-black rounded-md"
+                    type="submit"
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : null}
           </form>
         </div>
         <script

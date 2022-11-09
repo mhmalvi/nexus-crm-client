@@ -148,15 +148,15 @@ const Table = ({
                           )}
                         </td>
                         <td>
-                          {list.full_name ? (
-                            list.full_name
+                          {list.course_code ? (
+                            list.course_code
                           ) : (
                             <Skeleton color="#F0EFEF" />
                           )}
                         </td>
                         <td>
-                          {list.course_code ? (
-                            list.course_code
+                          {list.full_name ? (
+                            list.full_name
                           ) : (
                             <Skeleton color="#F0EFEF" />
                           )}

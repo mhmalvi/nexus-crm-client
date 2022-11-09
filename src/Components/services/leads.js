@@ -43,7 +43,6 @@ export const handleLeadStatusUpdate = async (
   newStatus,
   salesUserId
 ) => {
-  console.log(salesUserId);
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,

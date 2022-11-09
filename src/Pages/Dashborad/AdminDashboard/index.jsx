@@ -141,13 +141,14 @@ const AdminDashboard = () => {
         setSelectedYear={setSelectedYear}
       />
       <Filters
-        layout='Dashboard'
+        layout="Dashboard"
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
         activeStars={activeStars}
         filterOptions={
-          userDetails?.userInfo?.role_id === 3
+          userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
             : salesEmployeesFilterOptions
         }
@@ -157,11 +158,12 @@ const AdminDashboard = () => {
         setSearchInput={setSearchInput}
       />
       <Table
-        title='Lead List'
+        title="Lead List"
         tableHeaders={tableHeaders}
         data={leadData}
         filterOptions={
-          userDetails?.userInfo?.role_id === 3
+          userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
             : salesEmployeesFilterOptions
         }
@@ -213,12 +215,16 @@ const adminFilterOptions = [
 
 const salesEmployeesFilterOptions = [
   {
-    id: 8,
-    title: "My Leads",
-  },
-  {
     id: 0,
     title: "All",
+  },
+  {
+    id: 1,
+    title: "New Lead",
+  },
+  {
+    id: 8,
+    title: "My Leads",
   },
   // {
   //   id: 7,
@@ -252,8 +258,8 @@ const ratings = [
 const tableHeaders = [
   "ID",
   "Date",
-  "Coustomer Name",
   "Course Code",
+  "Customer Name",
   "Location",
   "Campaign ID",
   "Lead Status",

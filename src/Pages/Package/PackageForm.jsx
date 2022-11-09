@@ -14,6 +14,7 @@ const PackageForm = ({
     package_type_limit: "",
     business_type: 1,
     package_details: "",
+    package_price: "",
   });
   const [DataErr, setDataErr] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -167,10 +168,25 @@ const PackageForm = ({
               <p className="text-red-500 text-xs">{DataErr.business_type}</p>
             </div>
 
+            <div className="mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                Package Price
+                <input
+                  name="package_price"
+                  type="number"
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                  placeholder="Package Price"
+                  value={Data.package_price}
+                  onChange={handleChange}
+                />
+              </label>
+              <p className="text-red-500 text-xs">{DataErr.business_type}</p>
+            </div>
+
             <div className="flex justify-center my-10">
               <button
                 type="submit"
-                className="h-10 px-5 w-full text-indigo-100 bg-[#7E4BFF] rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
+                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
               >
                 Submit
               </button>

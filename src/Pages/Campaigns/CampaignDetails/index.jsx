@@ -13,7 +13,6 @@ import Calendar from "../../Dashborad/AdminDashboard/Calendar";
 import Filters from "../../Dashborad/AdminDashboard/Filters";
 import Table from "../../Dashborad/AdminDashboard/Table";
 import data from "../../Dashborad/AdminDashboard/leadData.json";
-import campaignData from "../campaignsData.json";
 import { addCampaigns } from "../../../features/Leads/campaignSlice";
 
 const CampaignDetails = () => {
@@ -66,9 +65,6 @@ const CampaignDetails = () => {
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
         // setCampaignList(response?.data);
-      } else {
-        dispatch(addCampaigns(campaignData));
-        // setCampaignList(campaignData);
       }
     })();
   }, [dispatch, id, userDetails?.userInfo?.client_id]);
@@ -105,9 +101,14 @@ const CampaignDetails = () => {
           .map((item) => item.course_description)
       ),
     ];
-    setCampaignCourses(unique);
 
-    if (filterDate.length) {
+    if (unique[0] !== null) {
+      setCampaignCourses(unique);
+    } else {
+      setCampaignCourses([]);
+    }
+
+    if (filterDate?.length) {
       setLeadData(
         leadList
           .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
@@ -172,19 +173,20 @@ const CampaignDetails = () => {
   };
 
   const handleCourseWiseLeads = (course) => {
-    console.log("course", course.length);
-    console.log(
-      leadList
-        ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
-        ?.filter((lead) => lead.course_description === course)
-    );
-
+    // console.log("course", course.length);
+    // console.log(
+    //   leadList
+    //     ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+    //     ?.filter((lead) => lead.course_description === course)
+    // );
     setLeadData(
       leadList
         ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
         ?.filter((lead) => lead.course_description === course)
     );
   };
+
+  console.log("campaignCourses", campaignCourses?.length);
 
   return (
     <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">
@@ -226,15 +228,17 @@ const CampaignDetails = () => {
               </div>
             </div>
           </div>
-          <div className="border rounded-2xl p-6 bg-white bg-opacity-70">
-            {campaignCourses.map((course) => (
-              <div onClick={() => handleCourseWiseLeads(course)}>
-                <li className="list-disc rounded-lg font-poppins text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer">
-                  {course}
-                </li>
-              </div>
-            ))}
-          </div>
+          {campaignCourses?.length > 0 ? (
+            <div className="border rounded-2xl p-6 bg-white bg-opacity-70">
+              {campaignCourses?.map((course) => (
+                <div onClick={() => handleCourseWiseLeads(course)}>
+                  <li className="list-disc rounded-lg font-poppins text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer">
+                    {course}
+                  </li>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -342,8 +346,8 @@ const ratings = [
 const tableHeaders = [
   "ID",
   "Date",
-  "Coustomer Name",
   "Course Code",
+  "Customer Name",
   "Location",
   "Campaign ID",
   "Lead Status",

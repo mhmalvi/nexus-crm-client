@@ -128,7 +128,7 @@ const CheckList = ({ leadDetails }) => {
               {/* <h1>{document.document_id}</h1> */}
               <div>
                 <a
-                  href="#"
+                  href="null"
                   target="_blank"
                   id={document.document_id}
                   rel="noreferrer"

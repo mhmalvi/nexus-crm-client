@@ -203,7 +203,7 @@ const RequisitionTable = ({
               border="0"
             >
               <tbody>
-                {list.map((list, i) => (
+                {list?.map((list, i) => (
                   <tr key={i}>
                     <td
                       onClick={() => handleRequisitionDetails(list?.id)}
