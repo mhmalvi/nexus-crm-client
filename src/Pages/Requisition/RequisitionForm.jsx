@@ -330,7 +330,7 @@ const RequisitionForm = ({
           <div className="flex justify-end mt-10 mb-6">
             <button
               type="submit"
-              className="h-10 px-5 text-white bg-brand-color text-sm rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-600 font-poppins tracking-wide"
+              className="h-10 px-5 text-white bg-black text-sm rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-600 font-poppins tracking-wide"
             >
               Submit
             </button>

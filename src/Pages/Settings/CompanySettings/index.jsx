@@ -377,7 +377,15 @@ const CompanySettings = () => {
                           defaultValue={companyDetails?.website}
                         />
                       ) : (
-                        <span>{companyDetails?.website}</span>
+                        <a
+                          href={companyDetails?.website}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {companyDetails?.website}
+                        </a>
+
+                        // <span>{companyDetails?.website}</span>
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">

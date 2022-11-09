@@ -27,6 +27,7 @@ const PackageUpdate = ({
       package_type_limit: document.getElementById("package_type_limit").value,
       business_type: document.getElementById("business_type").value,
       package_details: document.getElementById("package_details").value,
+      package_price: document.getElementById("package_price").value,
     };
 
     e.preventDefault();
@@ -120,16 +121,30 @@ const PackageUpdate = ({
                   name="package_details"
                   type="text"
                   className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  defaultValue={updatePackageDate.package_details}
+                  defaultValue={updatePackageDate?.package_details}
                   // onChange={handleChange}
                 />
               </div>
             </div>
 
+            <div className="mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                Package Price
+                <input
+                  id="package_price"
+                  name="package_price"
+                  type="number"
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                  placeholder="Package Price"
+                  value={updatePackageDate?.package_price}
+                />
+              </label>
+            </div>
+
             <div className="flex justify-center my-10">
               <button
                 type="submit"
-                className="h-10 px-5 w-full text-indigo-100 bg-[#7E4BFF] rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
+                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
               >
                 Submit
               </button>

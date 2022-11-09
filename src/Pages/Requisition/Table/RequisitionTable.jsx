@@ -203,7 +203,7 @@ const RequisitionTable = ({
               border="0"
             >
               <tbody>
-                {list.map((list, i) => (
+                {list?.map((list, i) => (
                   <tr key={i}>
                     <td
                       onClick={() => handleRequisitionDetails(list?.id)}
@@ -230,10 +230,12 @@ const RequisitionTable = ({
                       {list.trading_name}
                     </td>
                     <td onClick={() => handleRequisitionDetails(list?.id)}>
-                      {list.created_at
+                      {new Date(list.created_at).toString().slice(4, 21)}{" "}
+                      {new Date(list.created_at).toString().slice(25, 31)}
+                      {/* {list.created_at
                         .replace("T", " ")
                         .toString()
-                        .slice(0, 19)}
+                        .slice(0, 19)} */}
                       {/* {list.trading_name} */}
                     </td>
                     {/* <td onClick={() => handleRequisitionDetails(list?.id)}>

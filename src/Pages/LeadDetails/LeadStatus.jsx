@@ -123,7 +123,7 @@ const LeadStatus = ({
         );
 
         setCertificate(
-          "http://192.168.0.158:5000/" +
+          process.env.REACT_APP_FILE_SERVER_URL +
             fetchCertificateFIle?.data?.[0]?.document_name
         );
       })();
@@ -142,6 +142,8 @@ const LeadStatus = ({
       parseInt(key) + 1,
       userDetails?.userInfo?.user_id
     );
+
+    // console.log("statusUpdateResponse", statusUpdateResponse);
 
     if (statusUpdateResponse?.status) {
       message.success("Status Updated Successfully");
@@ -240,6 +242,8 @@ const LeadStatus = ({
   console.log("leadStatus", leadStatus);
 
   const handleRegistrationReq = async () => {
+    // For Registering Students
+
     const registrationFormData = new FormData();
 
     registrationFormData.append(
@@ -270,12 +274,12 @@ const LeadStatus = ({
 
     const registrationResponse = await handleRegistration(registrationFormData);
 
-    if (registrationResponse?.data?.status) {
-      // For Registering Students
+    if (registrationResponse?.status === true) {
       const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
         leadDetails?.leadDetails.lead_id,
-        registrationResponse?.data?.data?.user_id
+        registrationResponse?.data?.user_id
       );
+      console.log("leadUpdateResponse", leadUpdateResponse);
       if (leadUpdateResponse?.status) {
         message.success("User Registered Successfully");
         setSyncDetails(!syncDetails);
@@ -323,6 +327,13 @@ const LeadStatus = ({
       </div>
       <div className="lead_status flex flex-wrap items-center gap-y-3 mt-5">
         <Dropdown
+          disabled={
+            userDetails?.userInfo?.role_id === 1 ||
+            userDetails?.userInfo?.role_id === 2 ||
+            userDetails?.userInfo?.role_id === 6
+              ? true
+              : false
+          }
           className={`cursor-pointer ${leadStatusColor}`}
           overlay={menu}
           trigger="click"
@@ -331,32 +342,40 @@ const LeadStatus = ({
             <Space>{activeStatusTitle}</Space>
           </div>
         </Dropdown>
+        <div className="flex items-center">
+          {/* For Counting Calls */}
+          {activeStatusTitle === "Called" &&
+            (userDetails?.userInfo?.role_id === 5 ? (
+              <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+                <div>
+                  <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                    {leadDetails?.leadCallHistory?.length}
+                  </h1>
+                </div>
+                <div className="ml-3 mb-0 flex justify-center items-center">
+                  <button
+                    className="px-1.5 py-0.5 rounded-md bg-black text-white"
+                    onClick={showCallDetailsModal}
+                  >
+                    <Icons.PhoneVolume className="w-3 text-white py-1" />
+                  </button>
+                </div>
+              </div>
+            ) : null)}
 
-        {activeStatusTitle === "Called" && (
-          <div className="flex items-center">
-            <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+          {/* For Call History */}
+          {activeStatusTitle === "Called" || activeStatusTitle === "Paid" ? (
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
               <div>
-                <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
-                  {leadDetails?.leadCallHistory?.length}
-                </h1>
+                <Icons.CallHistory
+                  className="w-6 text-gray-700 mx-2 cursor-pointer"
+                  onClick={() => setIsCallHistoryOpen(true)}
+                />
               </div>
-              <div className="ml-3 mb-0 flex justify-center items-center">
-                <button
-                  className="px-1.5 py-0.5 rounded-md bg-black text-white"
-                  onClick={showCallDetailsModal}
-                >
-                  <Icons.PhoneVolume className="w-3 text-white py-1" />
-                </button>
-              </div>
-            </div>
-            <div>
-              <Icons.History
-                className="w-5 mx-2 cursor-pointer"
-                onClick={() => setIsCallHistoryOpen(true)}
-              />
-            </div>
-          </div>
-        )}
+            ) : null
+          ) : null}
+        </div>
 
         {/* Call Details Form */}
         <Modal
@@ -434,7 +453,6 @@ const LeadStatus = ({
             </div>
           </div>
         </Modal>
-
         {/* Call History Details */}
         <Modal
           visible={isCallHistoryOpen}
@@ -484,40 +502,45 @@ const LeadStatus = ({
             )}
           </div>
         </Modal>
-
         {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
         {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
           <div className="flex items-center">
-            <form
-              onSubmit={(e) => handleAddLeadAmount(e)}
-              className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border"
-            >
-              <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
-                $
-              </span>
-              <input
-                className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
-                type="text"
-                name=""
-                defaultValue={
-                  leadDetails?.leadAmountHistory[
-                    leadDetails?.leadAmountHistory?.length - 1
-                  ]?.amount
-                }
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Amount"
-                id=""
-              />
-            </form>
-            <div>
-              <Icons.History
-                className="w-5 mx-2 cursor-pointer"
-                onClick={() => setIsAmountHistoryOpen(true)}
-              />
-            </div>
+            {userDetails?.userInfo?.role_id === 5 ? (
+              <form
+                onSubmit={(e) => handleAddLeadAmount(e)}
+                className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border"
+              >
+                <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
+                  $
+                </span>
+                <input
+                  className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
+                  type="text"
+                  name=""
+                  defaultValue={
+                    leadDetails?.leadAmountHistory[
+                      leadDetails?.leadAmountHistory?.length - 1
+                    ]?.amount
+                  }
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="Amount"
+                  id=""
+                />
+              </form>
+            ) : null}
+
+            {/* For Amount History */}
+            {userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div>
+                <Icons.AmountHistory
+                  className="w-6 text-gray-700 mx-2 cursor-pointer"
+                  onClick={() => setIsAmountHistoryOpen(true)}
+                />
+              </div>
+            ) : null}
           </div>
         )}
-
         {/* Amount History Details */}
         <Modal
           visible={isAmountHistoryOpen}
@@ -567,7 +590,6 @@ const LeadStatus = ({
             )}
           </div>
         </Modal>
-
         {activeStatusTitle === "Suspended" && (
           <div>
             <div className="ml-3">
@@ -575,7 +597,6 @@ const LeadStatus = ({
             </div>
           </div>
         )}
-
         {activeStatusTitle === "Called" &&
           (leadDetails?.leadDetails?.student_id === 0 ? (
             <div className="font-poppins">
@@ -598,22 +619,22 @@ const LeadStatus = ({
               </button>
             </div>
           ))}
-
-        {activeStatusTitle === "Called" && (
-          <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
-            <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
-              Payable :
-            </span>
-            <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-              $
-              {
-                leadDetails?.leadAmountHistory[
-                  leadDetails?.leadAmountHistory?.length - 1
-                ]?.amount
-              }
-            </span>
-          </div>
-        )}
+        {activeStatusTitle === "Called" &&
+          (userDetails?.userInfo?.role_id === 6 ? (
+            <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
+              <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
+                Payable :
+              </span>
+              <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
+                $
+                {
+                  leadDetails?.leadAmountHistory[
+                    leadDetails?.leadAmountHistory?.length - 1
+                  ]?.amount
+                }
+              </span>
+            </div>
+          ) : null)}
       </div>
 
       <div className="flex flex-col items-start justify-center mt-8 ">
@@ -650,8 +671,15 @@ const LeadStatus = ({
             {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
               ? new Date(leadDetails?.leadDetails?.lead_apply_date)
                   .toString()
-                  .slice(0, 31)
-              : "Not Yet"}
+                  .slice(4, 21) +
+                " " +
+                new Date(leadDetails?.leadDetails?.lead_apply_date)
+                  .toString()
+                  .slice(25, 31)
+              : // new Date(leadDetails?.leadDetails?.lead_apply_date)
+                //     .toString()
+                //     .slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
 
@@ -690,8 +718,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Skilled"] !== "Not Yet"
-              ? new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Skilled"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Skilled"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -725,8 +756,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Called"] !== "Not Yet"
-              ? new Date(statusDateTime["Called"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Called"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Called"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Called"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -763,8 +797,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Paid"] !== "Not Yet"
-              ? new Date(statusDateTime["Paid"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Paid"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Paid"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -810,8 +847,11 @@ const LeadStatus = ({
           <div className="text-xs">
             {/* <p className="text-xs"> */}
             {statusDateTime["Verified"] !== "Not Yet"
-              ? new Date(statusDateTime["Verified"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Verified"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Verified"]).toString().slice(0, 31)
+                "Not Yet"}
             {/* </p> */}
           </div>
         </div>
@@ -845,8 +885,11 @@ const LeadStatus = ({
                   : "Certificate Has Not Provided Yet"}
               </h6>
               <div className="flex mt-1">
-                {leadDetails?.leadDetails?.document_certificate_id === 0 ? (
-                  leadStatus["Completed"] && (
+                {leadStatus["Completed"] &&
+                leadDetails?.leadDetails?.document_certificate_id === 0 ? (
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ||
+                  userDetails?.userInfo?.role_id === 5 ? (
                     <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
                       <Upload
                         onChange={handleCertificateFileChange}
@@ -859,6 +902,13 @@ const LeadStatus = ({
                           </h6>
                         </div>
                       </Upload>
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <Icons.PDF />
+                      <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                        Not Provided Yet
+                      </h6>
                     </div>
                   )
                 ) : (
@@ -882,8 +932,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Completed"] !== "Not Yet"
-              ? new Date(statusDateTime["Completed"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Completed"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Completed"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Completed"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
       </div>

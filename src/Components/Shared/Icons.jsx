@@ -40,6 +40,8 @@ import { ReactComponent as Tick } from "../../assets/Icons/tick.svg";
 import { ReactComponent as Edit } from "../../assets/Icons/edit.svg";
 import { ReactComponent as Bin } from "../../assets/Icons/bin.svg";
 import { ReactComponent as AddImage } from "../../assets/Icons/add_image.svg";
+import { ReactComponent as CallHistory } from "../../assets/Icons/Call_history.svg";
+import { ReactComponent as AmountHistory } from "../../assets/Icons/Amount_history.svg";
 
 const Icons = {
   CompanyLogo,
@@ -84,6 +86,8 @@ const Icons = {
   Bin,
   AddImage,
   CloseEye,
+  CallHistory,
+  AmountHistory,
 };
 
 export default Icons;

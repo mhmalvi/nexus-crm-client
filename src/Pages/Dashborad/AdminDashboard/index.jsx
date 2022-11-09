@@ -8,12 +8,16 @@ import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
-import data from "./leadData.json";
 import Table from "./Table";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const [activeFilter, setActiveFilter] = useState(0);
+  const userDetails = useSelector((state) => state.user);
+  const leadList = useSelector((state) => state.leads)?.leads;
+
+  const [activeFilter, setActiveFilter] = useState(
+    userDetails?.userInfo?.role_id === 5 ? 1 : 0
+  );
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -25,25 +29,22 @@ const AdminDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
-  const userDetails = useSelector((state) => state.user);
-  const leadList = useSelector((state) => state.leads)?.leads;
-
   useEffect(() => {
     (async () => {
-      const response = await handleFetchLeads(userDetails?.userInfo?.client_id);
+      const response = await handleFetchLeads({
+        client_id: userDetails?.userInfo?.client_id,
+      });
       if (response?.data) {
         dispatch(addLeads(response.data));
-      } else {
-        dispatch(addLeads(data));
       }
+
       setLeadData(response.data);
     })();
   }, [dispatch, userDetails?.userInfo?.client_id, syncLeads]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
-
-    console.log(seletedDate);
+    // console.log(seletedDate);
 
     if (selectedDay && selectedMonth && selectedYear) {
       setLeadData(
@@ -51,12 +52,12 @@ const AdminDashboard = () => {
           (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
         )
       );
-      console.log(
-        "SELECTED DATE",
-        leadList.filter(
-          (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
-        )
-      );
+      // console.log(
+      //   "SELECTED DATE",
+      //   leadList.filter(
+      //     (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
+      //   )
+      // );
     } else {
       setLeadData(leadList);
     }
@@ -78,9 +79,9 @@ const AdminDashboard = () => {
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
       (async () => {
-        const response = await handleFetchLeads(
-          userDetails?.userInfo?.client_id
-        );
+        const response = await handleFetchLeads({
+          client_id: userDetails?.userInfo?.client_id,
+        });
         setLeadData(
           response.data.filter((lead) => lead?.lead_details_status !== 0)
         );
@@ -141,13 +142,14 @@ const AdminDashboard = () => {
         setSelectedYear={setSelectedYear}
       />
       <Filters
-        layout='Dashboard'
+        layout="Dashboard"
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
         activeStars={activeStars}
         filterOptions={
-          userDetails?.userInfo?.role_id === 3
+          userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
             : salesEmployeesFilterOptions
         }
@@ -157,11 +159,12 @@ const AdminDashboard = () => {
         setSearchInput={setSearchInput}
       />
       <Table
-        title='Lead List'
+        title="Lead List"
         tableHeaders={tableHeaders}
         data={leadData}
         filterOptions={
-          userDetails?.userInfo?.role_id === 3
+          userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
             : salesEmployeesFilterOptions
         }
@@ -213,12 +216,16 @@ const adminFilterOptions = [
 
 const salesEmployeesFilterOptions = [
   {
+    id: 1,
+    title: "New Lead",
+  },
+  // {
+  //   id: 0,
+  //   title: "All",
+  // },
+  {
     id: 8,
     title: "My Leads",
-  },
-  {
-    id: 0,
-    title: "All",
   },
   // {
   //   id: 7,
@@ -252,8 +259,8 @@ const ratings = [
 const tableHeaders = [
   "ID",
   "Date",
-  "Coustomer Name",
   "Course Code",
+  "Customer Name",
   "Location",
   "Campaign ID",
   "Lead Status",

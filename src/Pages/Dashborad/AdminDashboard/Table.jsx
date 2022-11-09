@@ -16,6 +16,7 @@ const Table = ({
   handleSyncLeadsReq,
 }) => {
   const leads = useSelector((state) => state?.leads)?.leads;
+  const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const navigate = useNavigate();
@@ -36,7 +37,11 @@ const Table = ({
 
   useEffect(() => {
     if (!searchInput?.length) {
-      setList(data);
+      setList(
+        userDetails?.role_id === 5
+          ? data.filter((lead) => parseInt(lead.lead_details_status) === 1)
+          : data
+      );
     } else {
       setList(
         data.filter((lead) =>
@@ -142,14 +147,16 @@ const Table = ({
                         </td>
                         <td>
                           {list.lead_apply_date ? (
-                            list.lead_apply_date
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td>
-                          {list.full_name ? (
-                            list.full_name
+                            // new Date(list.lead_apply_date)
+                            //   .toString()
+                            //   .slice(0, 31)
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(4, 21) +
+                            " " +
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(25, 31)
                           ) : (
                             <Skeleton color="#F0EFEF" />
                           )}
@@ -157,6 +164,13 @@ const Table = ({
                         <td>
                           {list.course_code ? (
                             list.course_code
+                          ) : (
+                            <Skeleton color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td>
+                          {list.full_name ? (
+                            list.full_name
                           ) : (
                             <Skeleton color="#F0EFEF" />
                           )}

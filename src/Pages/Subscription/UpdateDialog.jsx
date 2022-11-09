@@ -136,7 +136,7 @@ function UpdateDialog({ user_id, onDialog }) {
             <div className="flex justify-center my-10">
               <button
                 type="submit"
-                className="h-10 px-5 w-full text-indigo-100 bg-[#7E4BFF] rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
+                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
               >
                 Submit Change
               </button>

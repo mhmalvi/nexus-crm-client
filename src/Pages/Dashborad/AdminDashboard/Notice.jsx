@@ -30,9 +30,9 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
   };
 
   return (
-    <div className='relative font-poppins border border-gray-200 my-4 flex items-center rounded-lg shadow'>
-      <div className='h-full w-full  px-3 py-2 flex flex-col justify-center'>
-        <li className='list-disc text-black font-semibold text-base leading-6 my-1'>
+    <div className="relative font-poppins border border-gray-200 my-4 flex items-center rounded-lg shadow">
+      <div className="h-full w-full  px-3 py-2 flex flex-col justify-center">
+        <li className="list-disc text-black font-semibold text-base leading-6 my-1">
           <span
             id={`notice_title${notice?.id}`}
             contentEditable={editNotice}
@@ -47,7 +47,7 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
             {notice?.notice_title}
           </span>
         </li>
-        <div className='flex justify-between'>
+        <div className="flex justify-between">
           <div
             id={`notice_description${notice?.id}`}
             contentEditable={editNotice}
@@ -65,14 +65,14 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
             <div>
               {editNotice ? (
                 <button
-                  className='text-xs bg-black text-white px-2 py-1 rounded-lg ml-2'
+                  className="text-xs bg-black text-white px-2 py-1 rounded-lg ml-2"
                   onClick={() => handleUpdateNoticeReq(notice?.id)}
                 >
                   Save
                 </button>
               ) : (
                 <Icons.PenUnderLine
-                  className='w-3.5 cursor-pointer'
+                  className="w-3.5 cursor-pointer"
                   onClick={() => setEditNotice(true)}
                 />
               )}
@@ -82,10 +82,10 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
       </div>
       {userDetails?.role_id === 3 && (
         <div
-          className='absolute -top-1.5 -right-1.5 w-4 py-0.5 ml-2 flex justify-center items-center bg-red-500 text-white rounded-full cursor-pointer'
+          className="absolute -top-1.5 -right-1.5 w-4 py-0.5 ml-2 flex justify-center items-center bg-red-500 text-white rounded-full cursor-pointer"
           onClick={() => handleDeleteNoticeReq(notice?.id)}
         >
-          <Icons.Cross className='w-2 cursor-pointer' />
+          <Icons.Cross className="w-2 cursor-pointer" />
         </div>
       )}
     </div>

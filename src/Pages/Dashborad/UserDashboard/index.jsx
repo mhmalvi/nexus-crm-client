@@ -1,19 +1,49 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleFetchLeads } from "../../../Components/services/leads";
+import { addLeads } from "../../../features/Leads/leadsSlice";
 import AppliedCampaign from "./AppliedCampaign";
 
 const UserDashboard = () => {
   document.title = "Dashboard";
 
+  const dispatch = useDispatch();
+
+  const [leadData, setLeadData] = useState([]);
+  // const [syncLeads, setSyncLeads] = useState(false);
+
+  const userDetails = useSelector((state) => state.user);
+  // const leadList = useSelector((state) => state.leads)?.leads;
+
+  console.log(userDetails);
+
+  useEffect(() => {
+    (async () => {
+      const response = await handleFetchLeads({
+        student_id: userDetails?.userInfo?.user_id,
+      });
+
+      console.log("response", response);
+
+      if (response?.data) {
+        dispatch(addLeads(response.data));
+      }
+      setLeadData(response.data);
+    })();
+  }, [dispatch, userDetails?.userInfo?.user_id]);
+
   return (
     <div className="font-poppins mb-20">
       <div>
         <h4 className="text-xl leading-6 font-poppins font-semibold text-black text-opacity-80">
-          Applied
+          Applied Courses
         </h4>
       </div>
       <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-7.5 mr-1">
-        {Array.from({ length: 6 }, () => Math.random()).map((arr, i) => (
-          <AppliedCampaign key={i} />
+        {leadData?.map((leadDetails, i) => (
+          <AppliedCampaign key={i} leadDetails={leadDetails} />
         ))}
       </div>
     </div>

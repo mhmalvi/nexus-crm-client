@@ -124,7 +124,7 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
 
       <div className="relative w-full mb-20">
         <button
-          className="absolute xl:right-24 2xl:right-24 w-36 py-2 bg-brand-color text-white text-center rounded-md"
+          className="absolute xl:right-24 2xl:right-24 w-36 py-2 bg-black text-white text-center rounded-md"
           onClick={() => setTogglePackageCreate(true)}
         >
           Create Package

@@ -42,5 +42,5 @@ const requisitionTableHeader = [
   "Time",
   // "RTO CODE",
   "Status",
-  "Approval",
+  "Actions",
 ];

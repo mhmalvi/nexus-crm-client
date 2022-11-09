@@ -154,107 +154,119 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           </Modal>
 
           <div className="relative flex items-center">
-            <div onClick={() => setToggleSalesEmployeeHistory(true)}>
-              <AntdAvatar.Group
-                className="mr-1 cursor-pointer"
-                maxCount={1}
-                maxStyle={{
-                  color: "#f56a00",
-                  backgroundColor: "#fde3cf",
-                }}
-              >
-                {prevSalesEmployeesName?.length ? (
-                  <>
-                    <Avatar
-                      className="rounded-full shadow-sm cursor-pointer"
-                      size="30"
-                      color={Avatar.getRandomColor("sitebase", [
-                        "red",
-                        "green",
-                        "#728FCE",
-                        "violet",
-                        "#2B547E",
-                        "black",
-                        "#87AFC7",
-                        "Lime",
-                        "#D5D6EA",
-                        "#77BFC7",
-                        "orange",
-                        "#FDD017",
-                        "#665D1E",
-                      ])}
-                      name={prevSalesEmployeesName?.[0]}
-                    />
-                    {prevSalesEmployeesName?.length > 1 ? (
-                      <Tooltip title="Previous Sales Employee" placement="top">
-                        {prevSalesEmployeesName.slice(1).map((name, i) => (
-                          <Avatar
-                            key={i}
-                            className="rounded-full shadow-sm cursor-pointer"
-                            size="30"
-                            color={Avatar.getRandomColor("sitebase", [
-                              "red",
-                              "green",
-                              "#728FCE",
-                              "violet",
-                              "#2B547E",
-                              "black",
-                              "#87AFC7",
-                              "Lime",
-                              "#D5D6EA",
-                              "#77BFC7",
-                              "orange",
-                              "#FDD017",
-                              "#665D1E",
-                            ])}
-                            name={name}
-                          />
-                        ))}
-                      </Tooltip>
-                    ) : null}
-                  </>
-                ) : null}
-              </AntdAvatar.Group>
-            </div>
+            {userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div onClick={() => setToggleSalesEmployeeHistory(true)}>
+                <AntdAvatar.Group
+                  className="mr-1 cursor-pointer"
+                  maxCount={1}
+                  maxStyle={{
+                    color: "#f56a00",
+                    backgroundColor: "#fde3cf",
+                  }}
+                >
+                  {prevSalesEmployeesName?.length ? (
+                    <>
+                      <Avatar
+                        className="rounded-full shadow-sm cursor-pointer"
+                        size="30"
+                        color={Avatar.getRandomColor("sitebase", [
+                          "red",
+                          "green",
+                          "#728FCE",
+                          "violet",
+                          "#2B547E",
+                          "black",
+                          "#87AFC7",
+                          "Lime",
+                          "#D5D6EA",
+                          "#77BFC7",
+                          "orange",
+                          "#FDD017",
+                          "#665D1E",
+                        ])}
+                        name={prevSalesEmployeesName?.[0]}
+                      />
+                      {prevSalesEmployeesName?.length > 1 ? (
+                        <Tooltip
+                          title="Previous Sales Employee"
+                          placement="top"
+                        >
+                          {prevSalesEmployeesName.slice(1).map((name, i) => (
+                            <Avatar
+                              key={i}
+                              className="rounded-full shadow-sm cursor-pointer"
+                              size="30"
+                              color={Avatar.getRandomColor("sitebase", [
+                                "red",
+                                "green",
+                                "#728FCE",
+                                "violet",
+                                "#2B547E",
+                                "black",
+                                "#87AFC7",
+                                "Lime",
+                                "#D5D6EA",
+                                "#77BFC7",
+                                "orange",
+                                "#FDD017",
+                                "#665D1E",
+                              ])}
+                              name={name}
+                            />
+                          ))}
+                        </Tooltip>
+                      ) : null}
+                    </>
+                  ) : null}
+                </AntdAvatar.Group>
+              </div>
+            ) : null}
 
-            {leadDetails?.leadDetails?.sales_user_id !== 0 && closeSealsman ? (
-              <div className="relative">
-                <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="45"
-                  color={Avatar.getRandomColor("sitebase", [
-                    "red",
-                    "green",
-                    "#728FCE",
-                    "violet",
-                    "#2B547E",
-                    "black",
-                    "#87AFC7",
-                    "Lime",
-                    "#D5D6EA",
-                    "#77BFC7",
-                    "orange",
-                    "#FDD017",
-                    "#665D1E",
-                  ])}
-                  name={salesEmployeeName}
-                />
-                <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
-                  &nbsp;
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) &&
+              (leadDetails?.leadDetails?.sales_user_id !== 0 &&
+              closeSealsman ? (
+                <div className="relative">
+                  <Avatar
+                    className="rounded-full shadow-sm cursor-pointer"
+                    size="45"
+                    color={Avatar.getRandomColor("sitebase", [
+                      "red",
+                      "green",
+                      "#728FCE",
+                      "violet",
+                      "#2B547E",
+                      "black",
+                      "#87AFC7",
+                      "Lime",
+                      "#D5D6EA",
+                      "#77BFC7",
+                      "orange",
+                      "#FDD017",
+                      "#665D1E",
+                    ])}
+                    name={salesEmployeeName}
+                  />
+                  <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
+                    &nbsp;
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div
-                className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
-                onClick={() => {
-                  setAddSealsman(true);
-                }}
-              >
-                +
-              </div>
-            )}
+              ) : (
+                <div
+                  className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
+                  onClick={() => {
+                    setAddSealsman(true);
+                  }}
+                >
+                  +
+                </div>
+              ))}
 
-            {closeSealsman ? (
+            {closeSealsman &&
+            (userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) ? (
               <Popconfirm
                 title="Are you sure to remove this Salesman?"
                 onConfirm={confirmCancleSalesEmployee}
@@ -320,6 +332,13 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
       </div>
       <div>
         <ReactStars
+          edit={
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ||
+            userDetails?.userInfo?.role_id === 5
+              ? true
+              : false
+          }
           count={5}
           onChange={ratingChanged}
           size={24}
@@ -341,21 +360,25 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           <hr />
         </div>
         <div className="flex pt-4 pb-2">
-          <div className="mt-1">
-            <img
-              className="w-16"
-              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
-              alt=""
-            />
-            <div
-              className="font-poppins my-2 text-center font-medium"
-              style={{
-                fontSize: "10px",
-              }}
-            >
-              Scan To Call
+          {(userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ||
+            userDetails?.userInfo?.role_id === 5) && (
+            <div className="mt-1">
+              <img
+                className="w-16"
+                src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
+                alt=""
+              />
+              <div
+                className="font-poppins my-2 text-center font-medium"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                Scan To Call
+              </div>
             </div>
-          </div>
+          )}
           <div className="ml-5">
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
               <span>Contact:&nbsp;&nbsp;</span>
@@ -377,26 +400,27 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             </div>
           </div>
         </div>
-        <div className="xl:ml-4 mt-5">
-          {/* <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
-            Edit
-          </button> */}
 
-          <Popconfirm
-            title="Are you sure to Suspend this lead?"
-            onConfirm={confirm}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <button
-              className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
-              // onClick={handleLeadSuspend}
+        {(userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4 ||
+          userDetails?.userInfo?.role_id === 5) && (
+          <div className="xl:ml-4 mt-5">
+            <Popconfirm
+              title="Are you sure to Suspend this lead?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
             >
-              Suspend
-            </button>
-          </Popconfirm>
-        </div>
+              <button
+                className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
+                // onClick={handleLeadSuspend}
+              >
+                Suspend
+              </button>
+            </Popconfirm>
+          </div>
+        )}
 
         {/* --------------- If user wants to Pay------------- */}
         <div className="mt-7.5">
@@ -418,20 +442,22 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           </div>
         </div>
 
-        <div className="mt-7.5">
-          <div>
-            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Payment
-            </h1>
+        {userDetails?.userInfo?.role_id === 6 && (
+          <div className="mt-7.5">
+            <div>
+              <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+                Payment
+              </h1>
+            </div>
+            <div className="ml-4 mt-5">
+              <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
+                <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
+                  Pay
+                </button>
+              </Link>
+            </div>
           </div>
-          <div className="ml-4 mt-5">
-            <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
-              <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
-                Pay
-              </button>
-            </Link>
-          </div>
-        </div>
+        )}
 
         <div className="mt-7.5">
           <div>
@@ -477,7 +503,9 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           onSubmit={(e) => handleUpdateComment(e)}
           className="2xl:w-84 mt-5 "
         >
-          {userDetails?.userInfo?.role_id === 6 ? (
+          {userDetails?.userInfo?.role_id === 1 ||
+          userDetails?.userInfo?.role_id === 2 ||
+          userDetails?.userInfo?.role_id === 6 ? (
             <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
               {leadDetails?.leadDetails?.lead_remarks
                 ? leadDetails?.leadDetails?.lead_remarks

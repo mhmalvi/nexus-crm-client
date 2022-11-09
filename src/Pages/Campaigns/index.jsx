@@ -6,7 +6,6 @@ import Loading from "../../Components/Shared/Loader";
 import { addCampaigns } from "../../features/Leads/campaignSlice";
 import { setLoader } from "../../features/user/userSlice";
 import Campaign from "./Campaign";
-import campaignData from "./campaignsData.json";
 import Courses from "./Courses";
 import Filter from "./Filter";
 
@@ -20,6 +19,7 @@ const Campaigns = () => {
   const [toggleCourses, setToggleCourses] = useState(false);
 
   const userDetails = useSelector((state) => state.user);
+  const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   useEffect(() => {
@@ -32,13 +32,13 @@ const Campaigns = () => {
         userDetails?.userInfo?.client_id
       );
 
+      console.log("response", response);
+
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
         dispatch(setLoader(false));
 
         setCampaignList(response?.data);
-      } else {
-        setCampaignList(campaignData);
       }
     })();
   }, [dispatch, userDetails?.userInfo?.client_id]);
@@ -46,20 +46,20 @@ const Campaigns = () => {
   useEffect(() => {
     if (!searchCampaign.length) {
       if (activeFilter === 0) {
-        setCampaignList(campaignData);
+        setCampaignList(campaigns);
       } else if (activeFilter === 1) {
-        const runningCampaigns = campaignData.filter(
+        const runningCampaigns = campaigns.filter(
           (campaign) => campaign?.campaign_status === "ACTIVE"
         );
         setCampaignList(runningCampaigns);
       } else if (activeFilter === 2) {
-        const closedCampaigns = campaignData.filter(
+        const closedCampaigns = campaigns.filter(
           (campaign) => campaign?.campaign_status === "PAUSED"
         );
         setCampaignList(closedCampaigns);
       }
     } else {
-      const campaign = campaignData.filter((campaign) =>
+      const campaign = campaignList.filter((campaign) =>
         campaign.campaign_name
           .toLowerCase()
           .includes(searchCampaign.toLowerCase())
