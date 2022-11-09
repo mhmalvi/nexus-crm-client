@@ -37,7 +37,9 @@ const CampaignDetails = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await handleFetchLeads(userDetails?.userInfo?.client_id);
+      const response = await handleFetchLeads({
+        client_id: userDetails?.userInfo?.client_id,
+      });
       if (response?.data) {
         dispatch(addLeads(response?.data));
         console.log(

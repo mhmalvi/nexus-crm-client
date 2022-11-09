@@ -223,42 +223,46 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
               </div>
             ) : null}
 
-            {leadDetails?.leadDetails?.sales_user_id !== 0 && closeSealsman ? (
-              <div className="relative">
-                <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="45"
-                  color={Avatar.getRandomColor("sitebase", [
-                    "red",
-                    "green",
-                    "#728FCE",
-                    "violet",
-                    "#2B547E",
-                    "black",
-                    "#87AFC7",
-                    "Lime",
-                    "#D5D6EA",
-                    "#77BFC7",
-                    "orange",
-                    "#FDD017",
-                    "#665D1E",
-                  ])}
-                  name={salesEmployeeName}
-                />
-                <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
-                  &nbsp;
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) &&
+              (leadDetails?.leadDetails?.sales_user_id !== 0 &&
+              closeSealsman ? (
+                <div className="relative">
+                  <Avatar
+                    className="rounded-full shadow-sm cursor-pointer"
+                    size="45"
+                    color={Avatar.getRandomColor("sitebase", [
+                      "red",
+                      "green",
+                      "#728FCE",
+                      "violet",
+                      "#2B547E",
+                      "black",
+                      "#87AFC7",
+                      "Lime",
+                      "#D5D6EA",
+                      "#77BFC7",
+                      "orange",
+                      "#FDD017",
+                      "#665D1E",
+                    ])}
+                    name={salesEmployeeName}
+                  />
+                  <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
+                    &nbsp;
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div
-                className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
-                onClick={() => {
-                  setAddSealsman(true);
-                }}
-              >
-                +
-              </div>
-            )}
+              ) : (
+                <div
+                  className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
+                  onClick={() => {
+                    setAddSealsman(true);
+                  }}
+                >
+                  +
+                </div>
+              ))}
 
             {closeSealsman &&
             (userDetails?.userInfo?.role_id === 3 ||
@@ -328,6 +332,13 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
       </div>
       <div>
         <ReactStars
+          edit={
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ||
+            userDetails?.userInfo?.role_id === 5
+              ? true
+              : false
+          }
           count={5}
           onChange={ratingChanged}
           size={24}
@@ -349,21 +360,25 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           <hr />
         </div>
         <div className="flex pt-4 pb-2">
-          <div className="mt-1">
-            <img
-              className="w-16"
-              src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
-              alt=""
-            />
-            <div
-              className="font-poppins my-2 text-center font-medium"
-              style={{
-                fontSize: "10px",
-              }}
-            >
-              Scan To Call
+          {(userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ||
+            userDetails?.userInfo?.role_id === 5) && (
+            <div className="mt-1">
+              <img
+                className="w-16"
+                src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
+                alt=""
+              />
+              <div
+                className="font-poppins my-2 text-center font-medium"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                Scan To Call
+              </div>
             </div>
-          </div>
+          )}
           <div className="ml-5">
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
               <span>Contact:&nbsp;&nbsp;</span>

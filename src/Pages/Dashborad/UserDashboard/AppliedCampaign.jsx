@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AppliedCampaign = () => {
+const AppliedCampaign = ({ leadDetails }) => {
+  console.log("leadDetails", leadDetails);
   return (
     <Link
-      to={"/lead/113256"}
+      to={`/lead/${leadDetails?.lead_id}`}
       className="h-40 w-64 bg-brand-color bg-opacity-90 shadow p-2 rounded-2xl cursor-pointer font-poppins"
     >
       <div

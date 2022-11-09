@@ -8,7 +8,6 @@ import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
-import data from "./leadData.json";
 import Table from "./Table";
 
 const AdminDashboard = () => {
@@ -30,12 +29,13 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await handleFetchLeads(userDetails?.userInfo?.client_id);
+      const response = await handleFetchLeads(
+        { client_id:userDetails?.userInfo?.client_id}
+        );
       if (response?.data) {
         dispatch(addLeads(response.data));
-      } else {
-        dispatch(addLeads(data));
       }
+
       setLeadData(response.data);
     })();
   }, [dispatch, userDetails?.userInfo?.client_id, syncLeads]);
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
     if (filterId === 0 || filterId === 7) {
       (async () => {
         const response = await handleFetchLeads(
-          userDetails?.userInfo?.client_id
+          { client_id:userDetails?.userInfo?.client_id}
         );
         setLeadData(
           response.data.filter((lead) => lead?.lead_details_status !== 0)

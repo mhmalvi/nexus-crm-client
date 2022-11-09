@@ -142,7 +142,16 @@ const Table = ({
                         </td>
                         <td>
                           {list.lead_apply_date ? (
-                            list.lead_apply_date
+                            // new Date(list.lead_apply_date)
+                            //   .toString()
+                            //   .slice(0, 31)
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(4, 21) +
+                            " " +
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(25, 31)
                           ) : (
                             <Skeleton color="#F0EFEF" />
                           )}

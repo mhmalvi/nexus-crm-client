@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export const handleFetchLeads = async (clientId) => {
-  console.log(clientId);
+export const handleFetchLeads = async (details) => {
+  // console.log(clientId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
-      { client_id: clientId }
+      details
+      // { client_id: clientId }
     );
     return result.data;
   } catch (error) {

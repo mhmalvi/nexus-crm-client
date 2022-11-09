@@ -273,7 +273,7 @@ const Sidebar = ({
 
           {/* Requisitions section */}
           {(userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2) && (
+            userDetails?.userInfo?.role_id === 3) && (
             <div>
               <NavLink
                 to={"/requisitions"}

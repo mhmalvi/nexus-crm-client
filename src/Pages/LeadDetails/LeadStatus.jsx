@@ -143,7 +143,7 @@ const LeadStatus = ({
       userDetails?.userInfo?.user_id
     );
 
-    console.log("statusUpdateResponse", statusUpdateResponse);
+    // console.log("statusUpdateResponse", statusUpdateResponse);
 
     if (statusUpdateResponse?.status) {
       message.success("Status Updated Successfully");
@@ -327,6 +327,13 @@ const LeadStatus = ({
       </div>
       <div className="lead_status flex flex-wrap items-center gap-y-3 mt-5">
         <Dropdown
+          disabled={
+            userDetails?.userInfo?.role_id === 1 ||
+            userDetails?.userInfo?.role_id === 2 ||
+            userDetails?.userInfo?.role_id === 6
+              ? true
+              : false
+          }
           className={`cursor-pointer ${leadStatusColor}`}
           overlay={menu}
           trigger="click"
@@ -664,8 +671,15 @@ const LeadStatus = ({
             {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
               ? new Date(leadDetails?.leadDetails?.lead_apply_date)
                   .toString()
-                  .slice(0, 31)
-              : "Not Yet"}
+                  .slice(4, 21) +
+                " " +
+                new Date(leadDetails?.leadDetails?.lead_apply_date)
+                  .toString()
+                  .slice(25, 31)
+              : // new Date(leadDetails?.leadDetails?.lead_apply_date)
+                //     .toString()
+                //     .slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
 
@@ -704,8 +718,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Skilled"] !== "Not Yet"
-              ? new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Skilled"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Skilled"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7">
@@ -739,8 +756,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Called"] !== "Not Yet"
-              ? new Date(statusDateTime["Called"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Called"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Called"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Called"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -777,8 +797,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Paid"] !== "Not Yet"
-              ? new Date(statusDateTime["Paid"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Paid"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Paid"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
         <div className="w-full flex justify-between mt-7 ">
@@ -824,8 +847,11 @@ const LeadStatus = ({
           <div className="text-xs">
             {/* <p className="text-xs"> */}
             {statusDateTime["Verified"] !== "Not Yet"
-              ? new Date(statusDateTime["Verified"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Verified"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Verified"]).toString().slice(0, 31)
+                "Not Yet"}
             {/* </p> */}
           </div>
         </div>
@@ -906,8 +932,11 @@ const LeadStatus = ({
           </div>
           <div className="text-xs">
             {statusDateTime["Completed"] !== "Not Yet"
-              ? new Date(statusDateTime["Completed"]).toString().slice(0, 31)
-              : "Not Yet"}
+              ? new Date(statusDateTime["Completed"]).toString().slice(4, 21) +
+                " " +
+                new Date(statusDateTime["Completed"]).toString().slice(25, 31)
+              : // new Date(statusDateTime["Completed"]).toString().slice(0, 31)
+                "Not Yet"}
           </div>
         </div>
       </div>
