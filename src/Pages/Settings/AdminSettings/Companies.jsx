@@ -37,7 +37,7 @@ const Companies = () => {
     <div className="font-poppins">
       <div className="flex items-center mb-5">
         <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-0">
-          Companies
+          Companies Management
         </h1>
         {/* <button
           className="ml-28 py-1 text-base leading-6 font-medium bg-blue-500 rounded-md text-white"

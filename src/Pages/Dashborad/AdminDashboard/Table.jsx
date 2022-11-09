@@ -16,6 +16,7 @@ const Table = ({
   handleSyncLeadsReq,
 }) => {
   const leads = useSelector((state) => state?.leads)?.leads;
+  const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const navigate = useNavigate();
@@ -36,7 +37,11 @@ const Table = ({
 
   useEffect(() => {
     if (!searchInput?.length) {
-      setList(data);
+      setList(
+        userDetails?.role_id === 5
+          ? data.filter((lead) => parseInt(lead.lead_details_status) === 1)
+          : data
+      );
     } else {
       setList(
         data.filter((lead) =>
