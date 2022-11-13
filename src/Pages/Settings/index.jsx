@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import AdminSettings from "./AdminSettings";
 import CompanySettings from "./CompanySettings";
 import ProfileSettings from "./ProfileSettings";
 

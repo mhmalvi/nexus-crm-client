@@ -1,104 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleFetchLeads,
-  handleSyncLeads,
-} from "../../../Components/services/leads";
-import { addLeads } from "../../../features/Leads/leadsSlice";
-import { setLoader } from "../../../features/user/userSlice";
-import Calendar from "./Calendar";
-import Filters from "./Filters";
-import Table from "./Table";
+import { handleFetchLeads } from "../../../../Components/services/leads";
+import { addLeads } from "../../../../features/Leads/leadsSlice";
+import Filters from "../../AdminDashboard/Filters";
+import Table from "../../AdminDashboard/Table";
 
-const AdminDashboard = () => {
+const CompanyLeads = ({ clientId }) => {
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
+  const userDetails = useSelector((state) => state.user);
 
+  const [activeStars, setActiveStars] = useState(0);
   const [activeFilter, setActiveFilter] = useState(
     userDetails?.userInfo?.role_id === 5 ? 1 : 0
   );
-  const [activeStars, setActiveStars] = useState(0);
-  const [leadData, setLeadData] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [filterDate, setFilterDate] = useState("");
-  const [syncLeads, setSyncLeads] = useState(false);
-
-  // For Yearwise Filter
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
 
   useEffect(() => {
     (async () => {
       const response = await handleFetchLeads({
-        client_id: userDetails?.userInfo?.client_id,
+        client_id: clientId,
       });
+
       if (response?.data) {
         dispatch(addLeads(response.data));
+        setLeads(response.data);
       }
-
-      setLeadData(response.data);
     })();
-  }, [
-    dispatch,
-    userDetails?.userInfo?.client_id,
-    syncLeads,
-    userDetails?.userInfo?.role_id,
-  ]);
-
-  useEffect(() => {
-    const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
-    // console.log(seletedDate);
-
-    if (selectedDay && selectedMonth && selectedYear) {
-      setLeadData(
-        leadList.filter(
-          (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
-        )
-      );
-      // console.log(
-      //   "SELECTED DATE",
-      //   leadList.filter(
-      //     (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
-      //   )
-      // );
-    } else {
-      setLeadData(leadList);
-    }
-  }, [leadList, selectedDay, selectedMonth, selectedYear]);
-
-  useEffect(() => {
-    if (filterDate.length) {
-      setLeadData(
-        leadList.filter(
-          (lead) => lead.lead_apply_date.slice(0, 10) === filterDate?.toString()
-        )
-      );
-    } else {
-      setLeadData(leadList);
-    }
-  }, [filterDate, leadList]);
+  }, [clientId, dispatch]);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
-      // (async () => {
-      //   const response = await handleFetchLeads({
-      //     client_id: userDetails?.userInfo?.client_id,
-      //   });
-      //   setLeadData(
-      //     response.data.filter(
-      //       (lead) => parseInt(lead?.lead_details_status) !== 0
-      //     )
-      //   );
-      //   dispatch(addLeads(response.data));
-      // })();
-      setLeadData(
+      setLeads(
         leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
       );
     } else if (filterId === 8) {
-      setLeadData(
+      setLeads(
         leadList
           .filter(
             (lead) =>
@@ -111,7 +50,7 @@ const AdminDashboard = () => {
           )
       );
     } else if (filterId === 9) {
-      setLeadData(
+      setLeads(
         leadList
           .filter((lead) => parseInt(lead.lead_details_status) === 0)
           ?.sort(
@@ -120,7 +59,7 @@ const AdminDashboard = () => {
           )
       );
     } else {
-      setLeadData(
+      setLeads(
         leadList.filter(
           (lead) => parseInt(lead.lead_details_status) === filterId
         )
@@ -130,37 +69,13 @@ const AdminDashboard = () => {
 
   const handleStaredLeadsFilter = (starFilterId) => {
     setActiveFilter(starFilterId);
-    setLeadData(
+    setLeads(
       leadList.filter((lead) => parseInt(lead.star_review) === starFilterId - 9)
     );
   };
 
-  const handleSyncLeadsReq = async () => {
-    dispatch(setLoader(true));
-
-    const syncResponse = await handleSyncLeads(
-      userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.ac_k
-    );
-
-    if (syncResponse?.status) {
-      setSyncLeads(!syncLeads);
-      dispatch(setLoader(false));
-    }
-  };
-
   return (
     <div>
-      <Calendar
-        filterDate={filterDate}
-        setFilterDate={setFilterDate}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      />
       <Filters
         layout="Dashboard"
         handleFilterLeadList={handleFilterLeadList}
@@ -168,6 +83,7 @@ const AdminDashboard = () => {
         setActiveFilter={setActiveFilter}
         activeStars={activeStars}
         filterOptions={
+          userDetails?.userInfo?.role_id === 1 ||
           userDetails?.userInfo?.role_id === 3 ||
           userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
@@ -181,8 +97,9 @@ const AdminDashboard = () => {
       <Table
         title="Lead List"
         tableHeaders={tableHeaders}
-        data={leadData}
+        data={leads}
         filterOptions={
+          userDetails?.userInfo?.role_id === 1 ||
           userDetails?.userInfo?.role_id === 3 ||
           userDetails?.userInfo?.role_id === 4
             ? adminFilterOptions
@@ -191,13 +108,12 @@ const AdminDashboard = () => {
         ratings={ratings}
         activeFilter={activeFilter}
         searchInput={searchInput}
-        handleSyncLeadsReq={handleSyncLeadsReq}
       />
     </div>
   );
 };
 
-export default AdminDashboard;
+export default CompanyLeads;
 
 const adminFilterOptions = [
   {

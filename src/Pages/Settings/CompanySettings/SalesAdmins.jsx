@@ -1,15 +1,17 @@
 import { Badge, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleUpdateUserStatus,
   handleUserSuspendStatus,
 } from "../../../Components/services/auth";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
+import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
 const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
+  const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
 
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
@@ -22,6 +24,8 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
 
   useEffect(() => {
+    dispatch(setLoader(true));
+
     (async () => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
@@ -66,9 +70,10 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
             )
           );
         }
+        dispatch(setLoader(false));
       }
     })();
-  }, [clientId, syncEmployees]);
+  }, [clientId, dispatch, syncEmployees]);
 
   // const handleActiveUser = async (userId) => {
   //   const statusUpdateResponse = await handleUpdateUserStatus(userId, 1);
@@ -160,7 +165,10 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
             <h1 className="font-semibold text-xl leading-8 py-5 px-3 my-0">
               Admins
             </h1>
-            {userDetails?.userInfo?.role_id === 3 ? (
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ? (
               <div>
                 <div>
                   <button
@@ -339,7 +347,8 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
               Sales Admins
             </h1>
 
-            {(userDetails?.userInfo?.client_id === clientId &&
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
               userDetails?.userInfo?.role_id === 1) ||
             userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ? (

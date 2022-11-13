@@ -4,9 +4,11 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
+import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
+import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
@@ -16,12 +18,10 @@ import PaymentStatus from "./Pages/Payments";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
-import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
-import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 
 function App() {
   // useEffect(() => {
-  //   console.log = function () {};
+  //   console.log = () => {};
   // }, []);
 
   return (

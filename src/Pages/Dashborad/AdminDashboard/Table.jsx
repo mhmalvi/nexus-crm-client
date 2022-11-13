@@ -15,7 +15,7 @@ const Table = ({
   filterOptions,
   handleSyncLeadsReq,
 }) => {
-  const leads = useSelector((state) => state?.leads)?.leads;
+  // const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
@@ -38,10 +38,11 @@ const Table = ({
   useEffect(() => {
     if (!searchInput?.length) {
       setList(
-        userDetails?.role_id === 5
+        userDetails?.role_id === 5 && activeFilter !== 8
           ? data.filter((lead) => parseInt(lead.lead_details_status) === 1)
           : data
       );
+      // setList(data);
     } else {
       setList(
         data.filter((lead) =>
@@ -50,7 +51,7 @@ const Table = ({
       );
     }
     console.log(data);
-  }, [data, leads, searchInput, activeFilter, userDetails?.role_id]);
+  }, [data, searchInput, activeFilter, userDetails?.role_id]);
 
   // console.log("list...........", list);
 
@@ -93,15 +94,17 @@ const Table = ({
               </CSVLink>
             </div>
           </div>
-          <div className="mr-12">
-            <button
-              id="sync_leads"
-              className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
-              onClick={handleSyncLeadsReq}
-            >
-              Sync Leads
-            </button>
-          </div>
+          {userDetails?.role_id !== 1 && (
+            <div className="mr-12">
+              <button
+                id="sync_leads"
+                className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                onClick={handleSyncLeadsReq}
+              >
+                Sync Leads
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="tbl-header">

@@ -363,9 +363,9 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
             userDetails?.userInfo?.role_id === 5) && (
-            <div className="mt-1">
+            <div className="w-1/3 2xl:w-20 mt-1">
               <img
-                className="w-16"
+                className="w-full"
                 src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
                 alt=""
               />
@@ -379,18 +379,20 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
               </div>
             </div>
           )}
-          <div className="ml-5">
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins">
+          <div className="w-2/3 ml-5">
+            <div className="font-normal text-sm 2xl:text-base leading-6 flex flex-wrap font-poppins">
               <span>Contact:&nbsp;&nbsp;</span>
               <span> {leadDetails?.leadDetails?.phone_number}</span>
             </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex flex-wrap mt-2">
               <span>Email:&nbsp;&nbsp;</span>
               <span>{leadDetails?.leadDetails?.student_email}</span>
             </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex mt-2">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mt-2 flex flex-wrap">
               <span>Courses:&nbsp;&nbsp;</span>
-              <span>{leadDetails?.leadDetails?.course_title}</span>
+              <span className="text-xs">
+                {leadDetails?.leadDetails?.course_title}
+              </span>
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
               <span>Location:&nbsp;&nbsp;</span>

@@ -241,7 +241,7 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`h-56 px-4 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
+              className={`max-h-100 px-4 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
                 toggleEditDetails &&
                 "outline-none border bg-gray-100 p-2 rounded-lg"
               }`}
@@ -254,7 +254,7 @@ const CompanySettings = () => {
 
           {/* Company Details */}
           <div className="relative w-1/2 pb-8">
-            <div className="h-98 ml-2">
+            <div className=" ml-2">
               <div>
                 <div className="flex mb-4">
                   <h1 className="text-lg font-semibold">Company Details</h1>
@@ -266,8 +266,8 @@ const CompanySettings = () => {
                   ) : null}
                 </div>
 
-                <div className="flex justify-between">
-                  <div>
+                <div className="flex flex-wrap justify-between items-start">
+                  <div className="mb-8">
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                       <span>Trading Name :&nbsp;</span>
                       {toggleEditDetails ? (
@@ -406,7 +406,9 @@ const CompanySettings = () => {
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>FB Credential :&nbsp;</span>
+                      <span className="whitespace-nowrap">
+                        FB Credential :&nbsp;
+                      </span>
 
                       <input
                         id="fb_ac_credential"
@@ -491,7 +493,11 @@ const CompanySettings = () => {
                       )}
                     </div>
                   </div>
-                  <div>
+
+                  <div className="flex">
+                    <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
+                      Active Package:
+                    </h1>
                     <div
                       className={`w-36 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
                     >

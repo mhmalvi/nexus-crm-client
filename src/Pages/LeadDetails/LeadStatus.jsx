@@ -250,7 +250,7 @@ const LeadStatus = ({
       "email",
       leadDetails?.leadDetails?.student_email
     );
-    registrationFormData.append("role_id", 3);
+    registrationFormData.append("role_id", 6);
     registrationFormData.append(
       "contact_number",
       leadDetails?.leadDetails?.phone_number
