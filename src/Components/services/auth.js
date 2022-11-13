@@ -50,6 +50,22 @@ export const handlePasswordReset = async (userId, newPassword) => {
   }
 };
 
+export const handleUserSuspendStatus = async (userId, status) => {
+  // console.log();
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/user-suspend`,
+      {
+        user_id: userId,
+        suspend: status,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleUpdateUserStatus = async (userId, status) => {
   try {
     const result = await axios.post(

@@ -4,23 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import companyIcon from "../../../assets/Images/company_icon.png";
 import {
+  handleCompanyStatusUpdate,
   handleFetchCompanyDetails,
   handleRefreshCompanyFBToken,
-  handleUpdateCompany,
+  handleUpdateCompany
 } from "../../../Components/services/company";
 import {
   handleFetchFile,
-  handleUploadFile,
+  handleUploadFile
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader } from "../../../features/user/userSlice";
-import SalesAdmins from "../CompanySettings/SalesAdmins";
+import SalesAdmins from "../../Settings/CompanySettings/SalesAdmins";
 
 const CompanyDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
@@ -33,12 +35,22 @@ const CompanyDetails = () => {
   const [fileList, setFileList] = useState();
   const [fileId, setFileId] = useState();
   const [avatarPreviewer, setAvatarPreviewer] = useState();
+  const [syncDetails, setSyncDetails] = useState(false);
+  const [syncEmployees, setSyncEmployees] = useState(false);
 
   useEffect(() => {
     // const someDate = new Date();
     // const result = new Date().setDate(someDate.getDate() + 50);
     // const finaldate = new Date(result);
     // const futureDate = finaldate.toString().slice(0, 15);
+
+    // if (
+    //   userDetails?.userInfo?.client_id !== id &&
+    //   (userDetails?.userInfo?.role_id !== 1 ||
+    //     userDetails?.userInfo?.role_id !== 2)
+    // ) {
+    //   navigate("/dashboard");
+    // }
 
     dispatch(setLoader(true));
 
@@ -65,7 +77,7 @@ const CompanyDetails = () => {
         dispatch(setLoader(false));
       }
     })();
-  }, [dispatch, id]);
+  }, [dispatch, id, syncDetails, syncEmployees]);
 
   console.log(companyDetails);
 
@@ -173,6 +185,29 @@ const CompanyDetails = () => {
     setFileId(uploadFile?.message?.data[0]?.id);
   };
 
+  const handleCompanyStatusUpdateReq = async (companyId, status) => {
+    dispatch(setLoader(true));
+    const companiesResponse = await handleCompanyStatusUpdate(
+      companyId,
+      status
+    );
+
+    console.log("companiesResponse", companiesResponse);
+
+    if (companiesResponse?.status === true) {
+      setSyncDetails(!syncDetails);
+      setSyncEmployees(!syncEmployees);
+
+      dispatch(setLoader(false));
+
+      if (status) {
+        message.success("Company Activated Successfully");
+      } else {
+        message.success("Company Inactivated Successfully");
+      }
+    }
+  };
+
   return (
     <div
       className="lg:w-[95%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto my-20"
@@ -230,7 +265,7 @@ const CompanyDetails = () => {
           <p
             id="description"
             contentEditable={toggleEditDetails}
-            className={`h-56 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
+            className={`h-56 px-4 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
               toggleEditDetails &&
               "outline-none border bg-gray-100 p-2 rounded-lg"
             }`}
@@ -244,14 +279,48 @@ const CompanyDetails = () => {
         <div className="relative w-1/2 pb-8">
           <div className="h-98 ml-4">
             <div>
-              <div className="flex mb-4">
-                <h1 className="text-lg font-semibold">Company Details</h1>
-                {!toggleEditDetails ? (
-                  <Icons.Edit
-                    className="mt-1 cursor-pointer ml-6"
-                    onClick={() => setToggleEditDetails(true)}
-                  />
-                ) : null}
+              <div className="flex justify-between">
+                <div className="flex mb-4">
+                  <h1 className="text-lg font-semibold">Company Details</h1>
+                  {!toggleEditDetails ? (
+                    <Icons.Edit
+                      className="mt-1 cursor-pointer ml-6"
+                      onClick={() => setToggleEditDetails(true)}
+                    />
+                  ) : null}
+                </div>
+
+                <div>
+                  {companyDetails?.active === 0 ? (
+                    <Popconfirm
+                      title="Are you sure to add this Company?"
+                      onConfirm={() =>
+                        handleCompanyStatusUpdateReq(companyDetails?.cid, 1)
+                      }
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-black rounded-xl text-black hover:bg-black hover:text-white hover:transition-colors hover:delay-100">
+                        Active
+                      </div>
+                    </Popconfirm>
+                  ) : (
+                    <Popconfirm
+                      title="Are you sure to remove this Company?"
+                      onConfirm={() =>
+                        handleCompanyStatusUpdateReq(companyDetails?.cid, 0)
+                      }
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-red-500 rounded-xl text-red-500 hover:bg-red-500 hover:text-white hover:transition-colors hover:delay-100">
+                        Inactive
+                      </div>
+                    </Popconfirm>
+                  )}
+                </div>
               </div>
               <div className="flex justify-between items-start">
                 <div>
@@ -432,12 +501,12 @@ const CompanyDetails = () => {
                     </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <span className="text-xs text-red-500 font-semibold italic mt-0.5 mb-2">
                       (Refresh facebook credential on{" "}
                       {Storage.getItem("refresh_tok")})
                     </span>
-                  </div>
+                  </div> */}
 
                   <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
                     <span>FB Secret :&nbsp;</span>
@@ -537,7 +606,13 @@ const CompanyDetails = () => {
           </div>
         </div>
       </div>
-      <SalesAdmins clientId={id} />
+      <SalesAdmins
+        clientId={id}
+        syncEmployees={syncEmployees}
+        setSyncEmployees={setSyncEmployees}
+      />
+
+      
     </div>
   );
 };

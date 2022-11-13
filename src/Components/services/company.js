@@ -175,3 +175,18 @@ export const handleCreateCompanyRequisition = async (requisitionData) => {
     return error.response;
   }
 };
+
+export const handleCompanyStatusUpdate = async (companyId, status) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/status`,
+      {
+        company_id: companyId,
+        active: status,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};

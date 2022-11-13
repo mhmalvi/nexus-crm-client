@@ -30,6 +30,7 @@ const CompanySettings = () => {
   const [avatarPreviewer, setAvatarPreviewer] = useState();
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
   const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
+  const [syncEmployees, setSyncEmployees] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -240,7 +241,7 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`h-56 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
+              className={`h-56 px-4 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
                 toggleEditDetails &&
                 "outline-none border bg-gray-100 p-2 rounded-lg"
               }`}
@@ -532,7 +533,11 @@ const CompanySettings = () => {
         </div>
       </div>
 
-      <SalesAdmins clientId={userDetails?.userInfo?.client_id} />
+      <SalesAdmins
+        clientId={userDetails?.userInfo?.client_id}
+        syncEmployees={syncEmployees}
+        setSyncEmployees={setSyncEmployees}
+      />
     </div>
   );
 };

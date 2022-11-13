@@ -12,13 +12,14 @@ const Settings = () => {
   return (
     <div className="pt-1 pb-10">
       {/* Company Profile Settings */}
-      {(userDetails?.userInfo?.role_id === 1 ||
-        userDetails?.userInfo?.role_id === 2) && <AdminSettings />}
+      {/* {(userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 2) && <AdminSettings />} */}
       {/* {userDetails?.userInfo?.role_id === 1 && <AdminSettings />} */}
 
       {/* Company Profile Settings */}
-      {(userDetails?.userInfo?.role_id !== 5 ||
-        userDetails?.userInfo?.role_id !== 6) && <CompanySettings />}
+      {(userDetails?.userInfo?.role_id === 3 ||
+        userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 5) && <CompanySettings />}
 
       {/* Personal Profile Settings */}
       <ProfileSettings />

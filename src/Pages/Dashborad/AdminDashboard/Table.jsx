@@ -26,14 +26,14 @@ const Table = ({
 
   useEffect(() => {
     dispatch(setLoader(true));
-    if (data.length === 0) {
+    if (data?.length === 0) {
       setTimeout(() => {
         dispatch(setLoader(false));
       }, 4000);
     } else {
       dispatch(setLoader(false));
     }
-  }, [data, data.length, dispatch]);
+  }, [data, data?.length, dispatch]);
 
   useEffect(() => {
     if (!searchInput?.length) {
@@ -50,7 +50,7 @@ const Table = ({
       );
     }
     console.log(data);
-  }, [data, leads, searchInput, activeFilter]);
+  }, [data, leads, searchInput, activeFilter, userDetails?.role_id]);
 
   // console.log("list...........", list);
 

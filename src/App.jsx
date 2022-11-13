@@ -16,7 +16,7 @@ import PaymentStatus from "./Pages/Payments";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
-import CompanyDetails from "./Pages/Settings/AdminSettings/CompanyDetails";
+import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
 import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
@@ -37,7 +38,7 @@ function App() {
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="requisitions" element={<RequisitionTable />} />
-          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
+          {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />

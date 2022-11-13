@@ -10,6 +10,7 @@ import { Storage } from "../../Components/Shared/utils/store";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
 import Dashboard from "../Dashborad";
+import CompanyDetails from "../Dashborad/SuperAdminDashboard/CompanyDetails";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import Notifications from "../Notifications";
@@ -19,7 +20,6 @@ import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
-import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -122,7 +122,7 @@ const LandingPage = () => {
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
-          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
+          <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
