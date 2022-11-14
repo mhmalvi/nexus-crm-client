@@ -172,7 +172,7 @@ const salesEmployeesFilterOptions = [
 const ratings = [
   {
     id: 10,
-    title: "1 Stars",
+    title: "1 Star",
   },
   {
     id: 11,

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import companyIcon from "../../../assets/Images/company_icon.png";
 import { handleFetchCompanies } from "../../../Components/services/company";
+import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 
@@ -10,6 +11,7 @@ const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
+  const [storecompanies, setStoreCompanies] = useState([]);
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -18,24 +20,70 @@ const SuperAdminDashboard = () => {
     (async () => {
       const companiesResponse = await handleFetchCompanies();
 
-      if (companiesResponse?.data?.length) {
-        setCompanies(companiesResponse?.data);
+      console.log("companiesResponse", companiesResponse);
+
+      if (companiesResponse?.status === true) {
+        setCompanies(
+          companiesResponse?.data?.filter((company) => !company?.super_admin)
+        );
+        setStoreCompanies(
+          companiesResponse?.data?.filter((company) => !company?.super_admin)
+        );
         dispatch(setLoader(false));
       }
     })();
   }, [dispatch]);
 
+  const handleChange = (input) => {
+    console.log(input);
+
+    if (input?.length === 0) {
+      setCompanies(storecompanies);
+    } else {
+      setCompanies(
+        storecompanies?.filter((company) =>
+          (company?.name).toLowerCase().includes(input.toLowerCase())
+        )
+      );
+    }
+  };
+
   return (
     <div>
       {/* <Companies /> */}
-
       <div className="font-poppins">
-        <div className="flex items-center mb-5">
+        <div className="flex justify-between items-end mb-10">
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-0">
             Companies Management
           </h1>
-
-          {/* <div></div> */}
+          <div>
+            <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+              Search Lead
+            </h1>
+            <div
+              className="w-58 px-4 py-2.5 mx-0.5 flex items-center bg-gray-100"
+              style={{
+                borderRadius: "10px",
+              }}
+            >
+              <div>
+                <Icons.Search />
+              </div>
+              <div>
+                <input
+                  className="outline-none text-xs bg-gray-100 leading-5 font-medium font-poppins ml-4"
+                  type="text"
+                  name="search-code"
+                  id=""
+                  onChange={(e) => handleChange(e.target.value)}
+                  placeholder="Search Code"
+                />
+              </div>
+              <div>
+                <Icons.Send />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Loader */}
@@ -47,13 +95,13 @@ const SuperAdminDashboard = () => {
           )}
         </div>
 
-        {companies.length ? (
-          <div className="grid grid-cols-4 2xl:grid-cols-5 gap-8">
+        {companies.length !== 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
             {companies?.map((company, i) => (
               <Link
                 key={i}
                 to={`company/${company?.id}`}
-                className="border border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer"
+                className="border h-48 border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer"
               >
                 <div className="my-4 relative">
                   <img className="mx-auto w-16" src={companyIcon} alt="" />

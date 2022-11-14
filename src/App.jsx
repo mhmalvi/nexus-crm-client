@@ -9,6 +9,7 @@ import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
 import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
+import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
@@ -34,6 +35,7 @@ function App() {
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
+          <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />

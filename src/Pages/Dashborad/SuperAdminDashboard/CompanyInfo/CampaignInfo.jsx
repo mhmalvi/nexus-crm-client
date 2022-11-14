@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import activeImg from "../../../assets/Images/active.png";
-import inactiveImg from "../../../assets/Images/inactive.png";
-import campaignBg from "../../../assets/Images/campaign_bg.jpg";
+import activeImg from "../../../../assets/Images/active.png";
+import inactiveImg from "../../../../assets/Images/inactive.png";
+import campaignBg from "../../../../assets/Images/campaign_bg.jpg";
 import {
   handleFetchCampaigns,
   handleFetchLeads,
-} from "../../../Components/services/leads";
-import { addLeads } from "../../../features/Leads/leadsSlice";
-import Calendar from "../../Dashborad/AdminDashboard/Calendar";
-import Filters from "../../Dashborad/AdminDashboard/Filters";
-import Table from "../../Dashborad/AdminDashboard/Table";
-import data from "../../Dashborad/AdminDashboard/leadData.json";
-import { addCampaigns } from "../../../features/Leads/campaignSlice";
+} from "../../../../Components/services/leads";
+import { addLeads } from "../../../../features/Leads/leadsSlice";
+import Calendar from "../../../Dashborad/AdminDashboard/Calendar";
+import Filters from "../../../Dashborad/AdminDashboard/Filters";
+import Table from "../../../Dashborad/AdminDashboard/Table";
+import data from "../../../Dashborad/AdminDashboard/leadData.json";
+import { addCampaigns } from "../../../../features/Leads/campaignSlice";
 
-const CampaignDetails = () => {
+const CampaignInfo = () => {
   const { id } = useParams();
+  console.log(id);
+  const clientId = id?.split("_")?.[0];
+  const campaignId = id?.split("_")?.[1];
+
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
@@ -38,19 +42,16 @@ const CampaignDetails = () => {
   useEffect(() => {
     (async () => {
       const response = await handleFetchLeads({
-        client_id: userDetails?.userInfo?.client_id,
+        client_id: clientId,
       });
+
+      console.log("response", response);
+
       if (response?.data) {
         dispatch(addLeads(response?.data));
-        console.log(
-          "filtered",
-          (response?.data).filter(
-            (lead) => parseInt(lead.campaign_id) === parseInt(id)
-          )
-        );
         setLeadData(
           (response?.data).filter(
-            (lead) => parseInt(lead.campaign_id) === parseInt(id)
+            (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
           )
         );
       } else {
@@ -60,16 +61,14 @@ const CampaignDetails = () => {
     })();
 
     (async () => {
-      const response = await handleFetchCampaigns(
-        userDetails?.userInfo?.client_id
-      );
+      const response = await handleFetchCampaigns(clientId);
       console.log(response.data);
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
         // setCampaignList(response?.data);
       }
     })();
-  }, [dispatch, id, userDetails?.userInfo?.client_id]);
+  }, [clientId, dispatch, campaignId]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
@@ -77,29 +76,37 @@ const CampaignDetails = () => {
     if (selectedDay && selectedMonth && selectedYear) {
       setLeadData(
         leadList
-          .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+          .filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
           .filter((lead) => lead.lead_apply_date.slice(0, 10) === seletedDate)
       );
     } else {
       setLeadData(
-        leadList?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+        leadList?.filter(
+          (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
+        )
       );
     }
-  }, [id, leadList, selectedDay, selectedMonth, selectedYear]);
+  }, [campaignId, leadList, selectedDay, selectedMonth, selectedYear]);
 
   console.log("leadData >>>>>>>", leadData);
 
   useEffect(() => {
     setCampaignDetails(
       campaignList?.find(
-        (campaign) => parseInt(campaign.campaign_id) === parseInt(id)
+        (campaign) => parseInt(campaign.campaign_id) === parseInt(campaignId)
       )
     );
+
+    document.title = `Campaign - ${
+      campaignList?.find(
+        (campaign) => parseInt(campaign.campaign_id) === parseInt(campaignId)
+      )?.campaign_name
+    }`;
 
     const unique = [
       ...new Set(
         leadList
-          .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+          .filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
           .map((item) => item.course_description)
       ),
     ];
@@ -113,7 +120,7 @@ const CampaignDetails = () => {
     if (filterDate?.length) {
       setLeadData(
         leadList
-          .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+          .filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
           .filter(
             (lead) =>
               lead.lead_apply_date.slice(0, 10) === filterDate?.toString()
@@ -121,15 +128,17 @@ const CampaignDetails = () => {
       );
     } else {
       setLeadData(
-        leadList?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+        leadList?.filter(
+          (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
+        )
       );
     }
-  }, [campaignList, filterDate, id, leadList]);
+  }, [campaignId, campaignList, filterDate, leadList]);
 
   console.log("campaignCourses", campaignCourses);
 
   // useEffect(() => {
-  //   setCampaignCourses(leadList.filter(lead=>lead.campaign_id===id));
+  //   setCampaignCourses(leadList.filter(lead=>lead.campaign_id===campaignId));
   // }, [input]);
 
   const handleFilterLeadList = (filterId) => {
@@ -143,7 +152,7 @@ const CampaignDetails = () => {
         // );
         setLeadData(
           leadList?.filter(
-            (lead) => parseInt(lead.campaign_id) === parseInt(id)
+            (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
           )
         );
         // dispatch(addLeads(response.data));
@@ -151,7 +160,9 @@ const CampaignDetails = () => {
     } else if (filterId === 8) {
       setLeadData(
         leadList
-          ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+          ?.filter(
+            (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
+          )
           ?.filter(
             (lead) => lead.sales_user_id === userDetails?.userInfo?.user_id
           )
@@ -159,7 +170,9 @@ const CampaignDetails = () => {
     } else {
       setLeadData(
         leadList
-          ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+          ?.filter(
+            (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
+          )
           ?.filter((lead) => parseInt(lead.lead_details_status) === filterId)
       );
     }
@@ -169,7 +182,7 @@ const CampaignDetails = () => {
     setActiveFilter(starFilterId);
     setLeadData(
       leadList
-        ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+        ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
         ?.filter((lead) => parseInt(lead.star_review) === starFilterId - 8)
     );
   };
@@ -178,12 +191,12 @@ const CampaignDetails = () => {
     // console.log("course", course.length);
     // console.log(
     //   leadList
-    //     ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+    //     ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
     //     ?.filter((lead) => lead.course_description === course)
     // );
     setLeadData(
       leadList
-        ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+        ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
         ?.filter((lead) => lead.course_description === course)
     );
   };
@@ -214,7 +227,6 @@ const CampaignDetails = () => {
                 <h1 className="text-base leading-8 font-poppins font-medium">
                   End Time: {campaignDetails?.stop_time}
                 </h1>
-
                 <div className="flex items-center">
                   <span className="text-base leading-8 font-poppins font-medium mr-2">
                     Status:
@@ -224,22 +236,25 @@ const CampaignDetails = () => {
                   ) : (
                     <img className="w-6" src={inactiveImg} alt="" />
                   )}
-                  <h1 className="block text-base leading-8 font-poppins font-medium ml-1 mb-0">
+                  <h1 className="text-base leading-8 font-poppins font-medium ml-1 mb-0">
                     {campaignDetails?.campaign_status}
                   </h1>
                 </div>
 
-                <h1 className="block text-lg text-brand-color leading-8 font-poppins font-semibold pt-6">
+                <h1 className="text-lg text-brand-color leading-8 font-poppins font-semibold pt-6">
                   Total Leads:{" "}
                   {
                     leadList?.filter(
-                      (lead) => parseInt(lead.campaign_id) === parseInt(id)
+                      (lead) =>
+                        parseInt(lead.campaign_id) === parseInt(campaignId)
                     )?.length
                   }
                 </h1>
               </div>
             </div>
           </div>
+
+          {/* Courses */}
           {campaignCourses?.length > 0 ? (
             <div className="border rounded-2xl p-6 bg-white bg-opacity-75">
               {campaignCourses?.map((course) => (
@@ -251,7 +266,8 @@ const CampaignDetails = () => {
                         leadList
                           ?.filter(
                             (lead) =>
-                              parseInt(lead.campaign_id) === parseInt(id)
+                              parseInt(lead.campaign_id) ===
+                              parseInt(campaignId)
                           )
                           ?.filter((lead) => lead.course_description === course)
                           ?.length
@@ -302,7 +318,7 @@ const CampaignDetails = () => {
   );
 };
 
-export default CampaignDetails;
+export default CampaignInfo;
 
 const filterOptions = [
   {
@@ -336,10 +352,6 @@ const filterOptions = [
   {
     id: 0,
     title: "All",
-  },
-  {
-    id: 7,
-    title: "Today's Task",
   },
 ];
 

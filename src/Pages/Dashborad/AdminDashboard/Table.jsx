@@ -228,7 +228,7 @@ const Table = ({
               </table>
             ) : (
               <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Leads</h1>
+                <h1 className="text-xl font-light">No Leads Yet</h1>
               </div>
             )}
           </div>
