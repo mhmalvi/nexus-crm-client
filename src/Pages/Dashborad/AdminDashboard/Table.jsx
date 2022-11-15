@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Avatar from "react-avatar";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ const Table = ({
   searchInput,
   filterOptions,
   handleSyncLeadsReq,
+  companyEmployeeList,
 }) => {
   // const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user?.userInfo);
@@ -24,28 +26,31 @@ const Table = ({
 
   const [list, setList] = useState([]);
 
+  console.log(companyEmployeeList);
+
   useEffect(() => {
-    dispatch(setLoader(true));
-    if (data?.length === 0) {
-      setTimeout(() => {
+    (async () => {
+      dispatch(setLoader(true));
+      if (data?.length === 0) {
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 4000);
+      } else {
         dispatch(setLoader(false));
-      }, 4000);
-    } else {
-      dispatch(setLoader(false));
-    }
+      }
+    })();
   }, [data, data?.length, dispatch]);
 
   useEffect(() => {
     if (!searchInput?.length) {
       setList(
         userDetails?.role_id === 5 && activeFilter !== 8
-          ? data.filter((lead) => parseInt(lead.lead_details_status) === 1)
+          ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
           : data
       );
-      // setList(data);
     } else {
       setList(
-        data.filter((lead) =>
+        data?.filter((lead) =>
           (lead?.lead_id).toString().includes(searchInput.toString())
         )
       );
@@ -133,97 +138,118 @@ const Table = ({
                 border="0"
               >
                 <tbody>
-                  {list?.map(
-                    (list) => (
-                      // list?.sales_user_id !== 0 && (
-                      // <LazyLoad height={200} offset={100}>
-                      <tr
-                        key={list.lead_id}
-                        onClick={() => handleNavigate(list.lead_id)}
-                      >
-                        <td>
-                          {list.lead_id ? (
-                            list.lead_id
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td>
-                          {list.lead_apply_date ? (
-                            // new Date(list.lead_apply_date)
-                            //   .toString()
-                            //   .slice(0, 31)
-                            new Date(list.lead_apply_date)
-                              .toString()
-                              .slice(4, 21) +
-                            " " +
-                            new Date(list.lead_apply_date)
-                              .toString()
-                              .slice(25, 31)
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td>
-                          {list.course_code ? (
-                            list.course_code
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td>
-                          {list.full_name ? (
-                            list.full_name
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td className="uppercase">
-                          {list.work_location ? (
-                            list.work_location
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-                        <td>
-                          {list.campaign_id ? (
-                            list.campaign_id
-                          ) : (
-                            <Skeleton color="#F0EFEF" />
-                          )}
-                        </td>
-
-                        {statusColor.find(
-                          (status) => status.id === list?.lead_details_status
-                        ) ? (
-                          <td>
-                            {statusColor
-                              .filter(
-                                (status) =>
-                                  status.id === list?.lead_details_status
-                              )
-                              .map((lead_status, index) => (
-                                <div
-                                  key={index}
-                                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                                >
-                                  <div
-                                    className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                                  ></div>
-                                  <div className="ml-1">
-                                    {lead_status.title}
-                                  </div>
-                                </div>
-                              ))}
-                          </td>
+                  {list?.map((list) => (
+                    <tr
+                      className="relative"
+                      key={list.lead_id}
+                      onClick={() => handleNavigate(list.lead_id)}
+                    >
+                      <td>
+                        {list.lead_id ? (
+                          list.lead_id
                         ) : (
-                          <td>{list?.payment_via}</td>
+                          <Skeleton color="#F0EFEF" />
                         )}
-                      </tr>
-                      // </LazyLoad>
-                    )
-                    // )
-                  )}
+                      </td>
+                      <td>
+                        {list.lead_apply_date ? (
+                          new Date(list.lead_apply_date)
+                            .toString()
+                            .slice(4, 21) +
+                          " " +
+                          new Date(list.lead_apply_date)
+                            .toString()
+                            .slice(25, 31)
+                        ) : (
+                          <Skeleton color="#F0EFEF" />
+                        )}
+                      </td>
+                      <td>
+                        {list.course_code ? (
+                          list.course_code
+                        ) : (
+                          <Skeleton color="#F0EFEF" />
+                        )}
+                      </td>
+                      <td>
+                        {list.full_name ? (
+                          list.full_name
+                        ) : (
+                          <Skeleton color="#F0EFEF" />
+                        )}
+                      </td>
+                      <td className="uppercase">
+                        {list.work_location ? (
+                          list.work_location
+                        ) : (
+                          <Skeleton color="#F0EFEF" />
+                        )}
+                      </td>
+                      <td>
+                        {list.campaign_id ? (
+                          list.campaign_id
+                        ) : (
+                          <Skeleton color="#F0EFEF" />
+                        )}
+                      </td>
+
+                      {statusColor.find(
+                        (status) => status.id === list?.lead_details_status
+                      ) ? (
+                        <td className="flex items-center">
+                          {statusColor
+                            .filter(
+                              (status) =>
+                                status.id === list?.lead_details_status
+                            )
+                            .map((lead_status, index) => (
+                              <div
+                                key={index}
+                                className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                              >
+                                <div
+                                  className={`w-2 h-2 ${lead_status.color} rounded-full`}
+                                ></div>
+                                <div className="ml-1">{lead_status.title}</div>
+                              </div>
+                            ))}
+                          {(userDetails?.role_id === 3 ||
+                            userDetails?.role_id === 4) &&
+                          list?.sales_user_id ? (
+                            <div className="ml-3">
+                              <Avatar
+                                className="rounded-full shadow-sm cursor-pointer"
+                                size="30"
+                                color={Avatar.getRandomColor("sitebase", [
+                                  "red",
+                                  "green",
+                                  "#728FCE",
+                                  "violet",
+                                  "#2B547E",
+                                  "black",
+                                  "#87AFC7",
+                                  "Lime",
+                                  "#D5D6EA",
+                                  "#77BFC7",
+                                  "orange",
+                                  "#FDD017",
+                                  "#665D1E",
+                                ])}
+                                name={
+                                  companyEmployeeList.find(
+                                    (employee) =>
+                                      employee?.id === list?.sales_user_id
+                                  )?.full_name
+                                }
+                              />
+                            </div>
+                          ) : null}
+                        </td>
+                      ) : (
+                        <td>{list?.payment_via}</td>
+                      )}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             ) : (

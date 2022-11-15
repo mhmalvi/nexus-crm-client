@@ -178,3 +178,31 @@ export const handleCompanyStatusUpdate = async (companyId, status) => {
     return error.response;
   }
 };
+
+export const handleFetchStudentsPaymentHistory = async (userId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      {
+        user_id: userId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchClientsPaymentHistory = async (companyId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      {
+        company_id: companyId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};

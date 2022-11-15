@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
   handleFetchLeads,
   handleSyncLeads,
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
   );
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
+  const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filterDate, setFilterDate] = useState("");
   const [syncLeads, setSyncLeads] = useState(false);
@@ -38,13 +40,22 @@ const AdminDashboard = () => {
         dispatch(addLeads(response.data));
       }
 
+      const fetchEmployees = await handleFetchCompanyEmployees(
+        userDetails?.userInfo?.client_id
+      );
+
+      if (fetchEmployees?.status === true) {
+        setCompanyEmployeeList(fetchEmployees?.data);
+      }
+
       setLeadData(response.data);
     })();
   }, [
     dispatch,
     userDetails?.userInfo?.client_id,
     syncLeads,
-    userDetails?.userInfo?.role_id,
+    userDetails?.userInfo.role_id,
+    userDetails?.client_id,
   ]);
 
   useEffect(() => {
@@ -83,17 +94,6 @@ const AdminDashboard = () => {
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
-      // (async () => {
-      //   const response = await handleFetchLeads({
-      //     client_id: userDetails?.userInfo?.client_id,
-      //   });
-      //   setLeadData(
-      //     response.data.filter(
-      //       (lead) => parseInt(lead?.lead_details_status) !== 0
-      //     )
-      //   );
-      //   dispatch(addLeads(response.data));
-      // })();
       setLeadData(
         leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
       );
@@ -182,6 +182,7 @@ const AdminDashboard = () => {
         title="Lead List"
         tableHeaders={tableHeaders}
         data={leadData}
+        companyEmployeeList={companyEmployeeList}
         filterOptions={
           userDetails?.userInfo?.role_id === 3 ||
           userDetails?.userInfo?.role_id === 4

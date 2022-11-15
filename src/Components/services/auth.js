@@ -81,6 +81,17 @@ export const handleUpdateUserStatus = async (userId, status) => {
   }
 };
 
+export const handleFetchUserProfileDetails = async (userId) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/${userId}/details`
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const handlefetchMessages = async (userId) => {
   //   console.log(userId);
   try {

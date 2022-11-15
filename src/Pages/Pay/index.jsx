@@ -79,12 +79,13 @@ const Pay = () => {
                     <div>
                       <h4 className="font-medium text-base leading-8 text-black text-center pb-6">
                         Total Payable:{" "}
-                        <span className="text-red-600">
-                          {requestedLeadDetails?.leadAmountHistory?.length === 0
-                            ? "Not Set Yet"
-                            : requestedLeadDetails?.leadAmountHistory[0]
-                                ?.amount}
-                        </span>
+                        {requestedLeadDetails?.leadAmountHistory?.length ? (
+                          <span className="text-red-600">
+                            {requestedLeadDetails?.leadAmountHistory[0]?.amount}
+                          </span>
+                        ) : (
+                          <span className="text-red-600">Not Set Yet</span>
+                        )}
                       </h4>
                     </div>
                   </div>

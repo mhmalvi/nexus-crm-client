@@ -258,15 +258,20 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
                   <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
                     {employee?.email}
                   </p>
-                  {userDetails?.userInfo?.role_id === 3 ? (
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
                     <div>
-                      <button
-                        className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                        onClick={() => handleRemoveUser(employee?.id)}
-                      >
-                        Remove
-                      </button>
-
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
                       <button
                         className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
                         onClick={() => handleSuspendEmployee(employee?.id)}
@@ -403,14 +408,20 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
                     {employee?.email}
                   </p>
 
-                  {userDetails?.userInfo?.role_id === 3 ? (
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
                     <div>
-                      <button
-                        className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                        onClick={() => handleRemoveUser(employee?.id)}
-                      >
-                        Remove
-                      </button>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
 
                       <button
                         className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"

@@ -598,27 +598,33 @@ const LeadStatus = ({
           </div>
         )}
         {activeStatusTitle === "Called" &&
-          (leadDetails?.leadDetails?.student_id === 0 ? (
-            <div className="font-poppins">
-              <button
-                title="Register the user to this system"
-                className="text-xs bg-black text-white px-3 py-2.5 rounded-lg ml-2"
-                onClick={handleRegistrationReq}
-              >
-                Register
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button
-                title="Register the user to this system"
-                disabled
-                className="text-xs bg-gray-200 cursor-not-allowed italic text-gray-500 px-3 py-2.5 rounded-lg ml-2"
-              >
-                Registered
-              </button>
-            </div>
-          ))}
+        (userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4 ||
+          userDetails?.userInfo?.role_id === 5) ? (
+          <>
+            {leadDetails?.leadDetails?.student_id === 0 ? (
+              <div className="font-poppins">
+                <button
+                  title="Register the user to this system"
+                  className="text-xs bg-black text-white px-3 py-2.5 rounded-lg ml-2"
+                  onClick={handleRegistrationReq}
+                >
+                  Register
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  title="Register the user to this system"
+                  disabled
+                  className="text-xs bg-gray-200 cursor-not-allowed italic text-gray-500 px-3 py-2.5 rounded-lg ml-2"
+                >
+                  Registered
+                </button>
+              </div>
+            )}
+          </>
+        ) : null}
         {activeStatusTitle === "Called" &&
           (userDetails?.userInfo?.role_id === 6 ? (
             <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
