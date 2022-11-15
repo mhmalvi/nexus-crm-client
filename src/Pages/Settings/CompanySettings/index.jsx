@@ -31,33 +31,25 @@ const CompanySettings = () => {
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
   const [toggleFacebookAppId, setToggleFacebookAppId] = useState(false);
   const [syncEmployees, setSyncEmployees] = useState(false);
+  const [packageEndTime, setpackageEndTime] = useState("");
 
   useEffect(() => {
+    const packageEnd = new Date(companyDetails?.package_date);
+    packageEnd.setDate(packageEnd.getDate() + 10);
+    setpackageEndTime(packageEnd.toString()?.slice(4, 15));
+
     dispatch(setLoader(true));
 
     (async () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(
         userDetails?.userInfo?.client_id
       );
-
-      // console.log(
-      //   "companyDetailsResponse?.data?.[0]?.logo_id",
-      //   companyDetailsResponse?.data?.[0]?.logo_id
-      // );
-
       if (companyDetailsResponse?.data?.[0]?.logo_id) {
         const fetchFile = await handleFetchFile(
           parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
         );
 
         const filePath = fetchFile?.data?.[0];
-        // console.log(
-        //   (
-        //     process.env.REACT_APP_FILE_SERVER_URL +
-        //     "/" +
-        //     filePath?.document_name
-        //   ).toString()
-        // );
         setAvatarPreviewer(
           (
             process.env.REACT_APP_FILE_SERVER_URL +
@@ -69,11 +61,6 @@ const CompanySettings = () => {
 
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
-
-        // if (companyDetailsResponse?.data?.[0].logo) {
-        //   setAvatarPreviewer()
-        // };
-
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -81,7 +68,11 @@ const CompanySettings = () => {
         }, 3000);
       }
     })();
-  }, [dispatch, userDetails?.userInfo?.client_id]);
+  }, [
+    companyDetails?.package_date,
+    dispatch,
+    userDetails?.userInfo?.client_id,
+  ]);
 
   // console.log(companyDetails);
 
@@ -266,7 +257,7 @@ const CompanySettings = () => {
                   ) : null}
                 </div>
 
-                <div className="flex flex-wrap justify-between items-start">
+                <div className="mb-4">
                   <div className="mb-8">
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
                       <span>Trading Name :&nbsp;</span>
@@ -498,25 +489,43 @@ const CompanySettings = () => {
                     <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
                       Active Package:
                     </h1>
-                    <div
-                      className={`w-36 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
-                    >
-                      <h3 className="font-bold py-2 text-xs">
-                        {companyDetails?.package_name}
-                      </h3>
-                      <h1 className="text-xs text-brand-color mb-0">
-                        ${companyDetails?.price}
-                        <br />
-                      </h1>
-                      <span className="text-brand-color text-xs">/Monthly</span>
-                      <div className="flex-1 text-slate-500 text-xs py-2">
-                        {companyDetails?.package_details}
+                    {companyDetails?.pid ? (
+                      <div
+                        className={`w-48 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                      >
+                        <h3 className="font-bold py-2 text-xs">
+                          {companyDetails?.package_name}
+                        </h3>
+                        <h1 className="text-xs text-brand-color mb-0">
+                          ${companyDetails?.price}
+                          <br />
+                        </h1>
+                        <span className="text-brand-color text-xs">
+                          /Monthly
+                        </span>
+                        <div className="flex-1 text-slate-500 text-xs py-2">
+                          {companyDetails?.package_details}
+                        </div>
+                        <div className="flex-1 text-black text-xs py-1 font-semibold italic">
+                          <span>
+                            {new Date(companyDetails?.package_date)
+                              .toString()
+                              .slice(4, 15)}
+                          </span>
+                          <span> - </span>
+                          <span>{packageEndTime}</span>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="flex">
+                        <h1>No Package Yet</h1>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="absolute bottom-0 right-0">
               {toggleEditDetails ? (
                 <div>

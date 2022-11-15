@@ -37,6 +37,7 @@ const CompanyDetails = () => {
   const [avatarPreviewer, setAvatarPreviewer] = useState();
   const [syncDetails, setSyncDetails] = useState(false);
   const [syncEmployees, setSyncEmployees] = useState(false);
+  const [packageEndTime, setpackageEndTime] = useState("");
 
   useEffect(() => {
     // const someDate = new Date();
@@ -51,6 +52,10 @@ const CompanyDetails = () => {
     // ) {
     //   navigate("/dashboard");
     // }
+
+    const packageEnd = new Date(companyDetails?.package_date);
+    packageEnd.setDate(packageEnd.getDate() + 10);
+    setpackageEndTime(packageEnd.toString()?.slice(4, 15));
 
     dispatch(setLoader(true));
 
@@ -79,7 +84,7 @@ const CompanyDetails = () => {
         dispatch(setLoader(false));
       }
     })();
-  }, [dispatch, id, syncDetails, syncEmployees]);
+  }, [companyDetails?.package_date, dispatch, id, syncDetails, syncEmployees]);
 
   // console.log(companyDetails);
 
@@ -209,6 +214,8 @@ const CompanyDetails = () => {
       }
     }
   };
+
+  console.log("companyDetails", companyDetails);
 
   return (
     <div className="mx-6 py-12">
@@ -571,13 +578,13 @@ const CompanyDetails = () => {
                     </div>
                   </div>
 
-                  {companyDetails?.package_name ? (
-                    <div className="flex">
-                      <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
-                        Active Package:
-                      </h1>
+                  <div className="flex">
+                    <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
+                      Active Package:
+                    </h1>
+                    {companyDetails?.pid ? (
                       <div
-                        className={`w-36 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                        className={`w-48 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
                       >
                         <h3 className="font-bold py-2 text-xs">
                           {companyDetails?.package_name}
@@ -592,16 +599,22 @@ const CompanyDetails = () => {
                         <div className="flex-1 text-slate-500 text-xs py-2">
                           {companyDetails?.package_details}
                         </div>
+                        <div className="flex-1 text-black text-xs py-1 font-semibold italic">
+                          <span>
+                            {new Date(companyDetails?.package_date)
+                              .toString()
+                              .slice(4, 15)}
+                          </span>
+                          <span> - </span>
+                          <span>{packageEndTime}</span>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="flex">
-                      <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
-                        Active Package:
-                      </h1>
-                      <h1>No Package Yet</h1>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="flex">
+                        <h1>No Package Yet</h1>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* <div className="flex justify-between ">

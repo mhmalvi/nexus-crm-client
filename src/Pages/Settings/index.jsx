@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CompanySettings from "./CompanySettings";
-import ProfileSettings from "./ProfileSettings";
 
 const Settings = () => {
   document.title = `Settings`;
@@ -19,9 +18,6 @@ const Settings = () => {
       {(userDetails?.userInfo?.role_id === 3 ||
         userDetails?.userInfo?.role_id === 1 ||
         userDetails?.userInfo?.role_id === 5) && <CompanySettings />}
-
-      {/* Personal Profile Settings */}
-      <ProfileSettings />
     </div>
   );
 };

@@ -676,10 +676,7 @@ const LeadStatus = ({
                 new Date(leadDetails?.leadDetails?.lead_apply_date)
                   .toString()
                   .slice(25, 31)
-              : // new Date(leadDetails?.leadDetails?.lead_apply_date)
-                //     .toString()
-                //     .slice(0, 31)
-                "Not Yet"}
+              : "Not Yet"}
           </div>
         </div>
 

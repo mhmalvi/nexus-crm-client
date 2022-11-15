@@ -1,14 +1,19 @@
 import { message, Modal, Popconfirm } from "antd";
 import Axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { handleFetchPackages } from "../../Components/services/company";
 import Icons from "../../Components/Shared/Icons";
+import Loading from "../../Components/Shared/Loader";
+import { setLoader } from "../../features/user/userSlice";
 // import { addPackages } from "../../features/utils/packagesSlice";
 import PackageForm from "../Package/PackageForm";
 import PackageUpdate from "../Package/PackageUpdate";
 
 const Package = ({ setShowRequisitionForm, data, setData }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state?.user);
+  const loadingDetails = useSelector((state) => state?.user?.loading);
 
   const [Plans, setPlans] = useState([]);
   const [activePackages, setActivePackages] = useState([]);
@@ -36,21 +41,41 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
     }
   };
 
+  const getPackageTypeLimit = (typeLimit) => {
+    if (typeLimit === 30) {
+      return 0;
+    } else if (typeLimit === 90) {
+      return 1;
+    } else if (typeLimit === 180) {
+      return 2;
+    } else if (typeLimit === 360) {
+      return 3;
+    }
+  };
+
   useEffect(() => {
+    dispatch(setLoader(true));
+
     (async () => {
       const fetchPackages = await handleFetchPackages();
 
       // dispatch(addPackages(fetchPackages?.packages));
 
-      setActivePackages(
-        (fetchPackages?.packages).filter((pack) => pack.active)
-      );
-      setInActivePackages(
-        (fetchPackages?.packages).filter((pack) => !pack.active)
-      );
-      setPlans(fetchPackages?.packages);
+      console.log("fetchPackages", fetchPackages);
+
+      if (fetchPackages?.packages.length) {
+        setActivePackages(
+          (fetchPackages?.packages).filter((pack) => pack.active)
+        );
+        setInActivePackages(
+          (fetchPackages?.packages).filter((pack) => !pack.active)
+        );
+        setPlans(fetchPackages?.packages);
+
+        dispatch(setLoader(false));
+      }
     })();
-  }, [selected1, syncPackages]);
+  }, [dispatch, selected1, syncPackages]);
 
   const idRef = useRef();
 
@@ -94,11 +119,26 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
   return (
     <div className="pb-16">
       <div className="text-2xl py-5 px-20">
-        Subscription
+        <div className="flex text-xl py-5">
+          <div className="whitespace-nowrap">Subscription</div>
+          <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
+        </div>
+
         <br />
+
         <span className="text-slate-500 text-sm">
           Choose your desired plan to get access to our content easily. We like
           to offer special offers to our valuable users.
+          <br />
+          <br />
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa vero
+          veritatis quae adipisci dolorum nisi! Culpa nisi reiciendis sed itaque
+          debitis eum iusto, numquam deleniti molestias quaerat necessitatibus
+          rerum sint, cupiditate nostrum. Minima adipisci libero dolor corporis
+          illum quisquam ab aut officiis! Maxime, voluptates exercitationem.
+          Quam iusto officiis nostrum excepturi repudiandae animi at explicabo
+          culpa atque placeat. Reprehenderit ex ducimus tempore nesciunt nisi
+          excepturi odio reiciendis necessitatibus sed corporis!
         </span>
       </div>
 
@@ -122,14 +162,17 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
         />
       </Modal>
 
-      <div className="relative w-full mb-20">
-        <button
-          className="absolute xl:right-24 2xl:right-24 w-36 py-2 bg-black text-white text-center rounded-md"
-          onClick={() => setTogglePackageCreate(true)}
-        >
-          Create Package
-        </button>
-      </div>
+      {(userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 2) && (
+        <div className="relative w-full mb-20">
+          <button
+            className="absolute xl:right-24 2xl:right-24 w-36 py-2 bg-black text-white text-center rounded-md"
+            onClick={() => setTogglePackageCreate(true)}
+          >
+            Create Package
+          </button>
+        </div>
+      )}
 
       {/* Package Update Modal */}
       <Modal
@@ -146,154 +189,194 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
         />
       </Modal>
 
-      <div className="w-[98%] mx-auto grid lg:grid-cols-3 2xl:grid-cols-4 gap-4 px-20 my-4">
-        {activePackages.length ? (
-          activePackages?.map((plan, i) => (
-            <div key={i}>
-              <div
-                className={`cursor-pointer ${
-                  selected1.includes(plan.id)
-                    ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
-                    : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
-                }`}
-                onClick={() => updateSelected1(plan.id)}
-              >
-                <div className="flex justify-between gap-2">
-                  <div className="border-brand-color border rounded-full w-20 h-6 my-2">
-                    <span className="text-brand-color text-sm font-bold">
-                      active
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    <div
-                      className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center hover:border-slate-200 h-10"
-                      onClick={() => handleUpdate(plan.id)}
-                    >
-                      <button title="Edit">
-                        <Icons.Edit />
-                      </button>
-                    </div>
-                    <Popconfirm
-                      title="Are you sure to delete this Package?"
-                      onConfirm={confirm}
-                      onCancel={cancel}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <div
-                        className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center hover:border-slate-200 h-10"
-                        onClick={() => handleDelete(plan.id)}
-                      >
-                        <Icons.Bin />
-                      </div>
-                    </Popconfirm>
-                  </div>
-                </div>
-                <h3 className="font-bold py-10 text-[20px]">
-                  {plan.package_name}
-                </h3>
-                <h1 className="ml-3 text-4xl text-brand-color mb-0">
-                  ${plan.price}
-                  <br />
-                </h1>
-                <span className="text-brand-color text-sm ml-5">/Monthly</span>
-                <div className="flex-1 text-slate-500 text-xs py-4">
-                  {plan.package_details}
-                </div>
-                <div className="my-4">
-                  <div
-                    className="w-48 mx-auto bg-slate-50 text-brand-color font-bold hover:bg-brand-color transition-colors hover:delay-50 hover:text-slate-50 hover:shadow-sm hover:transition ease-in-out delay-150 my-3 rounded-full py-3"
-                    onClick={() => setShowRequisitionForm(true)}
-                  >
-                    Get Started
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="font-poppins text-lg text-center">
-            No Active Package
+      <div className="w-[98%] mx-auto relative">
+        {loadingDetails && (
+          // <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-96 text-7xl absolute z-50 flex justify-center mx-auto items-center bg-white bg-opacity-70">
+            <Loading />
           </div>
         )}
-      </div>
-
-      {/* Inactive packages Section  */}
-      <div>
-        <div className="flex text-xl py-5 px-20">
-          <div className="whitespace-nowrap">Inactive Package</div>
-          <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
-        </div>
-        <div className="mx-auto grid grid-cols-4 max-w-7xl gap-4 px-20 my-4">
-          {inActivePackages?.length ? (
-            inActivePackages?.map((plan, i) => (
+        <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4 px-20 my-4">
+          {activePackages.length ? (
+            activePackages?.map((plan, i) => (
               <div key={i}>
                 <div
-                  className="cursor-pointer flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:transition ease-in-out delay-150"
+                  className={`cursor-pointer ${
+                    selected1.includes(plan.id)
+                      ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
+                      : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
+                  }`}
                   onClick={() => updateSelected1(plan.id)}
                 >
-                  <div className="flex justify-between gap-2">
-                    {plan.active === 1 ? (
+                  {(userDetails?.userInfo?.role_id === 1 ||
+                    userDetails?.userInfo?.role_id === 2) && (
+                    <div className="flex justify-between gap-2">
                       <div className="border-brand-color border rounded-full w-20 h-6 my-2">
                         <span className="text-brand-color text-sm font-bold">
                           active
                         </span>
                       </div>
-                    ) : (
-                      <div className="border-red-600 border rounded-full w-20 h-6 my-2">
-                        <span className="text-red-600 text-sm font-bold">
-                          inactive
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex gap-1">
-                      <div
-                        className="flex items-center py-1.5 px-2 shadow-sm rounded-md border border-slate-100 justify-center hover:border-slate-200 h-10"
-                        onClick={() => handleUpdate(plan.id)}
-                      >
-                        <button title="Edit">
-                          <Icons.Edit />
-                        </button>
-                      </div>
-                      <Popconfirm
-                        title="Are you sure to delete this task?"
-                        onConfirm={confirm}
-                        onCancel={cancel}
-                        okText="Yes"
-                        cancelText="No"
-                      >
+                      <div className="flex gap-1">
                         <div
-                          className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center  hover:border-slate-200 h-10"
-                          onClick={() => handleDelete(plan.id)}
+                          className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center hover:border-slate-200 h-10"
+                          onClick={() => handleUpdate(plan.id)}
                         >
-                          <button title="Delete">
-                            <Icons.Bin />
+                          <button title="Edit">
+                            <Icons.Edit />
                           </button>
                         </div>
-                      </Popconfirm>
+                        <Popconfirm
+                          title="Are you sure to delete this Package?"
+                          onConfirm={confirm}
+                          onCancel={cancel}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <div
+                            className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center hover:border-slate-200 h-10"
+                            onClick={() => handleDelete(plan.id)}
+                          >
+                            <Icons.Bin />
+                          </div>
+                        </Popconfirm>
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="font-bold pt-10 pb-4 text-[20px]">
+                  )}
+
+                  <h3 className="font-bold py-10 text-[20px]">
                     {plan.package_name}
                   </h3>
-                  <h1 className="ml-3 text-base text-red-500 mb-0">
+                  <h1 className="ml-3 text-xl text-brand-color mb-0">
                     ${plan.price}
+                    <span className="text-xs text-black">
+                      /
+                      {
+                        packageTypeData[
+                          packageType[parseInt(plan?.package_type) - 1]
+                        ][getPackageTypeLimit(plan?.package_type_limit)]
+                      }
+                    </span>
+                    <br />
                   </h1>
+                  {/* <span className="text-brand-color text-sm ml-5">
+                  {packageType[plan?.package_type]}
+                </span> */}
                   <div className="flex-1 text-slate-500 text-xs py-4">
                     {plan.package_details}
+                  </div>
+                  <div className="my-4">
+                    <div
+                      className="w-48 mx-auto bg-slate-50 text-brand-color font-bold hover:bg-brand-color transition-colors hover:delay-50 hover:text-slate-50 hover:shadow-sm hover:transition ease-in-out delay-150 my-3 rounded-full py-3"
+                      onClick={() => setShowRequisitionForm(true)}
+                    >
+                      Get Started
+                    </div>
                   </div>
                 </div>
               </div>
             ))
           ) : (
             <div className="font-poppins text-lg text-center">
-              No Inactive Package
+              No Active Package
             </div>
           )}
         </div>
       </div>
+
+      {/* Inactive packages Section  */}
+      {(userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 2) && (
+        <div>
+          <div className="flex text-xl py-5 px-20">
+            <div className="whitespace-nowrap">Inactive Package</div>
+            <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
+          </div>
+          {/* {loadingDetails && (
+            <div className="w-full h-96 text-7xl absolute z-50 flex justify-center mx-auto items-center bg-white bg-opacity-70">
+              <Loading />
+            </div>
+          )} */}
+          <div className="mx-auto grid grid-cols-4 max-w-7xl gap-4 px-20 my-4">
+            {inActivePackages?.length ? (
+              inActivePackages?.map((plan, i) => (
+                <div key={i}>
+                  <div
+                    className="cursor-pointer flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:transition ease-in-out delay-150"
+                    onClick={() => updateSelected1(plan.id)}
+                  >
+                    <div className="flex justify-between gap-2">
+                      <div className="border-red-600 border rounded-full w-20 h-6 my-2">
+                        <span className="text-red-600 text-sm font-bold">
+                          inactive
+                        </span>
+                      </div>
+
+                      {/* <div className="flex gap-1">
+                        <div
+                          className="flex items-center py-1.5 px-2 shadow-sm rounded-md border border-slate-100 justify-center hover:border-slate-200 h-10"
+                          onClick={() => handleUpdate(plan.id)}
+                        >
+                          <button title="Edit">
+                            <Icons.Edit />
+                          </button>
+                        </div>
+                        <Popconfirm
+                          title="Are you sure to delete this task?"
+                          onConfirm={confirm}
+                          onCancel={cancel}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <div
+                            className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center  hover:border-slate-200 h-10"
+                            onClick={() => handleDelete(plan.id)}
+                          >
+                            <button title="Delete">
+                              <Icons.Bin />
+                            </button>
+                          </div>
+                        </Popconfirm>
+                      </div> */}
+                    </div>
+                    <h3 className="font-bold pt-10 pb-4 text-[20px]">
+                      {plan.package_name}
+                    </h3>
+                    <h1 className="ml-3 text-xl text-red-500 mb-2">
+                      ${plan.price}
+                      <span className="text-xs text-black">
+                        /
+                        {
+                          packageTypeData[packageType[plan?.package_type - 1]][
+                            getPackageTypeLimit(plan?.package_type_limit)
+                          ]
+                        }
+                      </span>
+                      <br />
+                    </h1>
+                    <div className="flex-1 text-slate-500 text-xs py-4">
+                      {plan.package_details}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="font-poppins text-lg text-center">
+                No Inactive Package
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Package;
+
+const packageType = ["User Limit", "Monthly", "Storage Limit"];
+
+const packageTypeData = {
+  "User Limit": ["10", "20", "50", "100"],
+  Monthly: ["Free(1 Month)", "3 Months", "6 Months", "12 Months"],
+  "Storage Limit": ["5GB", "10GB", "20GB", "50GB", "1TB"],
+};

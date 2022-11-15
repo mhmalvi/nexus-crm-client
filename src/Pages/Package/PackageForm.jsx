@@ -1,6 +1,6 @@
-import { message } from "antd";
-import Axios from "axios";
-import React, { useEffect, useState } from "react";
+import { message, Select } from "antd";
+import React, { useState } from "react";
+import { handleCreatePackage } from "../../Components/services/crmAdmin";
 import "./package.css";
 
 const PackageForm = ({
@@ -10,72 +10,76 @@ const PackageForm = ({
 }) => {
   const [Data, setData] = useState({
     package_name: "",
-    package_type: "",
-    package_type_limit: "",
+    package_type: 2,
+    package_type_limit: 30,
     business_type: 1,
     package_details: "",
-    package_price: "",
+    price: 0,
   });
-  const [DataErr, setDataErr] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+
+  const [packageLimit, setPackageLimit] = useState(
+    packageTypeData[packageType[1]]
+  );
+  const [secondPackageLimit, setSecondPackageLimit] = useState(
+    packageTypeData[packageType[1]][0]
+  );
+
+  const handlePackageTypeChange = (value) => {
+    console.log(value);
+    setPackageLimit(packageTypeData[value]);
+    setSecondPackageLimit(packageTypeData[value][0]);
+
+    const packageData = { ...Data };
+
+    if (value === "Monthly") {
+      packageData.package_type = 2;
+    } else if (value === "Storage Limit") {
+      packageData.package_type = 3;
+    } else if (value === "User Limit") {
+      packageData.package_type = 1;
+    }
+    setData(packageData);
+  };
+
+  const onPackageLimitChange = (value) => {
+    setSecondPackageLimit(value);
+    const packageData = { ...Data };
+
+    if (value === "Free(1 Month)") {
+      packageData.package_type_limit = 30;
+    } else {
+      packageData.package_type_limit = parseInt(value?.split(" ")[0]) * 30;
+    }
+    setData(packageData);
+  };
 
   const handleChange = (e) => {
     setData({ ...Data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDataErr(validate(Data));
-    setIsSubmit(true);
+    const packageCreateResponse = await handleCreatePackage(Data);
+
+    if (packageCreateResponse?.status === 201) {
+      setSyncPackages(!syncPackages);
+      setTogglePackageCreate(false);
+      setData({
+        package_name: "",
+        package_type: "",
+        package_type_limit: "",
+        business_type: 1,
+        package_details: "",
+        price: 0,
+      });
+
+      message.success("Package Added Successfully");
+    } else {
+      message.warn(validate(Data));
+    }
   };
 
-  useEffect(() => {
-    if (Object.keys(DataErr).length === 0 && isSubmit) {
-      console.log(Data);
-
-      Axios.post(
-        `${process.env?.REACT_APP_COMPANY_URL}/api/store/package`,
-        Data
-      )
-        .then((res) => {
-          setData({
-            package_name: "",
-            package_type: "",
-            package_type_limit: "",
-            business_type: 1,
-            package_details: "",
-          });
-          setSyncPackages(!syncPackages);
-          setTogglePackageCreate(false);
-          message.success("Package Added Successfully");
-        })
-        .catch((err) => {
-          message.warning(err.response.data.errors.package_type);
-        });
-
-      setIsSubmit(!isSubmit);
-    }
-  }, [isSubmit]);
-
-  const validate = (values) => {
-    const errors = {};
-    if (!values.package_name) {
-      errors.package_name = "package name is required!";
-    }
-    if (!values.package_type) {
-      errors.package_type = "package type is required!";
-    }
-    if (!values.package_type_limit) {
-      errors.package_type_limit = "package type is required!";
-    }
-    if (!values.business_type) {
-      errors.business_type = "Business type is  required!";
-    }
-    if (!values.package_details) {
-      errors.package_details = "Business type is  required!";
-    }
-    return errors;
-  };
+  console.log(Data);
 
   return (
     <>
@@ -99,41 +103,60 @@ const PackageForm = ({
                   value={Data.package_name}
                 />
               </label>
-              <p className="text-red-500 text-xs">{DataErr.package_name}</p>
             </div>
 
             <div className="mb-2">
               <label>
-                <span className="block text-sm font-medium text-gray-700 tracking-wide">
+                <span className="block text-sm font-medium text-gray-700 tracking-wide mb-1">
                   Package Type
                 </span>
-                <input
+                {/* <input
                   name="package_type"
                   type="number"
                   className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                   placeholder="Ex. 1,2,3"
                   value={Data.package_type}
                   onChange={handleChange}
+                /> */}
+                <Select
+                  className="requisition_package"
+                  defaultValue={packageType[1]}
+                  style={{
+                    width: "100%",
+                  }}
+                  onChange={handlePackageTypeChange}
+                  options={packageType.map((province) => ({
+                    label: province,
+                    value: province,
+                  }))}
                 />
               </label>
-              <p className="text-red-500 text-xs">{DataErr.package_type}</p>
             </div>
 
             <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide mb-1">
                 Package Type Limit
-                <input
+                {/* <input
                   name="package_type_limit"
                   type="number"
                   className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                   placeholder="Ex. 1,2,3"
                   value={Data.package_type_limit}
                   onChange={handleChange}
+                /> */}
+                <Select
+                  className="requisition_package"
+                  style={{
+                    width: "100%",
+                  }}
+                  value={secondPackageLimit}
+                  onChange={onPackageLimitChange}
+                  options={packageLimit.map((city) => ({
+                    label: city,
+                    value: city,
+                  }))}
                 />
               </label>
-              <p className="text-red-500 text-xs">
-                {DataErr.package_type_limit}
-              </p>
             </div>
 
             <div className="mb-2">
@@ -141,16 +164,23 @@ const PackageForm = ({
                 <span className="block text-sm font-medium text-gray-700 tracking-wide">
                   Business Type
                 </span>
-                <input
+                <Select
+                  className="requisition_package"
+                  defaultValue="RTO"
+                  style={{
+                    width: "100%",
+                  }}
+                  options={[]}
+                />
+                {/* <input
                   name="business_type"
                   type="number"
                   className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                   placeholder="Business type"
                   value={Data.business_type}
                   onChange={handleChange}
-                />
+                /> */}
               </label>
-              <p className="text-red-500 text-xs">{DataErr.business_type}</p>
             </div>
 
             <div className="mb-2">
@@ -165,28 +195,26 @@ const PackageForm = ({
                   onChange={handleChange}
                 />
               </label>
-              <p className="text-red-500 text-xs">{DataErr.business_type}</p>
             </div>
 
             <div className="mb-2">
               <label className="block text-sm font-medium text-gray-700 tracking-wide">
                 Package Price
                 <input
-                  name="package_price"
+                  name="price"
                   type="number"
                   className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                   placeholder="Package Price"
-                  value={Data.package_price}
+                  value={Data.price}
                   onChange={handleChange}
                 />
               </label>
-              <p className="text-red-500 text-xs">{DataErr.business_type}</p>
             </div>
 
             <div className="flex justify-center my-10">
               <button
                 type="submit"
-                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-[#723bff] tracking-wide"
+                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-gray-800 tracking-wide"
               >
                 Submit
               </button>
@@ -199,3 +227,33 @@ const PackageForm = ({
 };
 
 export default PackageForm;
+
+const packageType = ["User Limit", "Monthly", "Storage Limit"];
+// const packageType = ["Monthly"];
+
+const packageTypeData = {
+  "User Limit": ["10", "20", "50", "100"],
+  Monthly: ["Free(1 Month)", "3 Months", "6 Months", "12 Months"],
+  "Storage Limit": ["5GB", "10GB", "20GB", "50GB", "1TB"],
+};
+
+const validate = (values) => {
+  if (!values.package_name) {
+    return "package name is required!";
+  }
+  if (!values.package_type) {
+    return "package type is required!";
+  }
+  if (!values.package_type_limit) {
+    return "package type is required!";
+  }
+  if (!values.business_type) {
+    return "Business type is  required!";
+  }
+  if (!values.package_details) {
+    return "Package Details is  required!";
+  }
+  if (!values.price) {
+    return "Price type is  required!";
+  }
+};

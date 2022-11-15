@@ -39,6 +39,8 @@ const Requisition = () => {
   };
 
   useEffect(() => {
+    document.title = "Requisition";
+
     (async () => {
       const cityDetails = [];
       countries.forEach((details) => {
@@ -106,8 +108,8 @@ const Requisition = () => {
 
   return (
     <div className="font-poppins scroll-smooth">
-      <h1 className="font-poppins text-2xl font-semibold text-center pt-20 pb-4">
-        CRM Requisition From
+      <h1 className="font-poppins text-3xl font-semibold text-center pt-20 pb-10">
+        Send Your Company Requisition
       </h1>
       <div className="w-10/12 mx-auto">
         <Subscription

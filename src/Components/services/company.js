@@ -152,18 +152,6 @@ export const handleFetchPackages = async () => {
   }
 };
 
-export const handleCreatePackage = async (packageDetails) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/store/package`,
-      packageDetails
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
-
 export const handleCreateCompanyRequisition = async (requisitionData) => {
   try {
     const result = await axios.post(
