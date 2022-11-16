@@ -42,15 +42,12 @@ const LeadStatus = ({
   ];
 
   const userDetails = useSelector((state) => state?.user);
-
   // const [activeStatus, setActiveStatus] = useState(
   //   Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   // );
   const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
-  // const [callCount, setCallCount] = useState(0);
-  // const [leadCallHistory, setLeadCallHistory] = useState([]);
   const [callStart, setCallStart] = useState("Start Time");
   const [callEnd, setCallEnd] = useState("End Time");
   const [callRemark, setCallRemark] = useState("");
@@ -58,6 +55,7 @@ const LeadStatus = ({
   const [isCallDetailsOpen, setIsCallDetailsOpen] = useState(false);
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
   const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
+  const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
   const [certificate, setCertificate] = useState("");
 
   const statusColor = [
@@ -142,9 +140,7 @@ const LeadStatus = ({
       parseInt(key) + 1,
       userDetails?.userInfo?.user_id
     );
-
     // console.log("statusUpdateResponse", statusUpdateResponse);
-
     if (statusUpdateResponse?.status) {
       message.success("Status Updated Successfully");
       setSyncDetails(!syncDetails);
@@ -243,7 +239,6 @@ const LeadStatus = ({
 
   const handleRegistrationReq = async () => {
     // For Registering Students
-
     const registrationFormData = new FormData();
 
     registrationFormData.append(
@@ -453,11 +448,13 @@ const LeadStatus = ({
             </div>
           </div>
         </Modal>
+
         {/* Call History Details */}
         <Modal
           visible={isCallHistoryOpen}
           onCancel={() => setIsCallHistoryOpen(false)}
           footer={false}
+          width={800}
         >
           <div>
             <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
@@ -488,7 +485,14 @@ const LeadStatus = ({
                   {leadDetails?.leadCallHistory?.map((history, i) => (
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
-                      <td>{history.call_start_time}</td>
+                      <td>
+                        {new Date(history.call_start_time)
+                          .toString()
+                          .slice(4, 21)}{" "}
+                        {new Date(history.call_start_time)
+                          .toString()
+                          .slice(25, 31)}
+                      </td>
                       <td>{history.call_end_time}</td>
                       <td>{history.call_remark}</td>
                     </tr>
@@ -502,6 +506,117 @@ const LeadStatus = ({
             )}
           </div>
         </Modal>
+
+        {/* Amount History Details */}
+        <Modal
+          visible={isAmountHistoryOpen}
+          onCancel={() => setIsAmountHistoryOpen(false)}
+          footer={false}
+          width={500}
+        >
+          <div>
+            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              Amount History
+            </h1>
+          </div>
+          <div className="tbl-header">
+            <table cellPadding="0" cellSpacing="0" border="0">
+              <thead>
+                <tr>
+                  <th className="w-16">No.</th>
+                  <th>Date</th>
+                  <th className="w-32">Amount</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div className="">
+            {leadDetails?.leadAmountHistory?.length > 0 ? (
+              <table
+                className="custom-table"
+                cellPadding="0"
+                cellSpacing="0"
+                border="0"
+              >
+                <tbody>
+                  {leadDetails?.leadAmountHistory?.map((history, i) => (
+                    <tr key={i}>
+                      <td className="w-16">{i + 1}</td>
+                      <td>
+                        {new Date(history.created_at).toString().slice(4, 21)}{" "}
+                        {new Date(history.created_at).toString().slice(25, 31)}
+                      </td>
+                      <td className="w-32">${history.amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="py-20 flex justify-center items-center">
+                <h1 className="text-xl font-light">No Amount History</h1>
+              </div>
+            )}
+          </div>
+        </Modal>
+
+        {/* Payment History Details */}
+        <Modal
+          visible={isPaymentHistoryOpen}
+          onCancel={() => setIsPaymentHistoryOpen(false)}
+          footer={false}
+          width={900}
+        >
+          <div>
+            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              Payment History
+            </h1>
+          </div>
+          <div className="tbl-header">
+            <table cellPadding="0" cellSpacing="0" border="0">
+              <thead>
+                <tr>
+                  <th className="w-16">No.</th>
+                  <th>Date Time</th>
+                  <th className="w-24">Amount</th>
+                  <th>Transaction ID</th>
+                  <th className="w-24">Method</th>
+                  <th>Invoice ID</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div className="">
+            {leadDetails?.paymentHistories?.length > 0 ? (
+              <table
+                className="custom-table"
+                cellPadding="0"
+                cellSpacing="0"
+                border="0"
+              >
+                <tbody>
+                  {leadDetails?.paymentHistories?.map((payment, i) => (
+                    <tr key={i}>
+                      <td className="w-16">{i + 1}</td>
+                      <td>
+                        {new Date(payment.created_at).toString().slice(4, 21)}{" "}
+                        {new Date(payment.created_at).toString().slice(25, 31)}
+                      </td>
+                      <td className="w-24">{payment.payment_amount}</td>
+                      <td>{payment.transaction_id}</td>
+                      <td className="w-24">{payment.payment_method}</td>
+                      <td>{payment.invoice_id}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="py-20 flex justify-center items-center">
+                <h1 className="text-xl font-light">Not Paid Yet</h1>
+              </div>
+            )}
+          </div>
+        </Modal>
+
         {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
         {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
           <div className="flex items-center">
@@ -541,55 +656,7 @@ const LeadStatus = ({
             ) : null}
           </div>
         )}
-        {/* Amount History Details */}
-        <Modal
-          visible={isAmountHistoryOpen}
-          onCancel={() => setIsAmountHistoryOpen(false)}
-          footer={false}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Amount History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Date</th>
-                  <th className="w-32">Amount</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {leadDetails?.leadAmountHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {leadDetails?.leadAmountHistory?.map((history, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>
-                        {history.created_at.replace("T", " ").slice(0, 19)}
-                      </td>
-                      <td className="w-32">${history.amount}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Amount History</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
+
         {activeStatusTitle === "Suspended" && (
           <div>
             <div className="ml-3">
@@ -728,6 +795,7 @@ const LeadStatus = ({
                 "Not Yet"}
           </div>
         </div>
+
         <div className="w-full flex justify-between mt-7">
           <div className="flex">
             <div className="flex flex-col items-center">
@@ -766,6 +834,7 @@ const LeadStatus = ({
                 "Not Yet"}
           </div>
         </div>
+
         <div className="w-full flex justify-between mt-7 ">
           <div className="flex -ml-3">
             <div className="flex flex-col items-center">
@@ -790,6 +859,23 @@ const LeadStatus = ({
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
                 Paid
               </h6>
+
+              {userDetails?.userinfo?.role_id !== 1 ||
+              userDetails?.userinfo?.role_id !== 2 ? (
+                <div
+                  className="flex items-center my-2 cursor-pointer"
+                  onClick={() => setIsPaymentHistoryOpen(true)}
+                >
+                  <Icons.AmountHistory
+                    className="w-5 text-gray-700 mr-2 cursor-pointer"
+                    onClick={() => setIsAmountHistoryOpen(true)}
+                  />
+                  <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
+                    Payment History
+                  </h6>
+                </div>
+              ) : null}
+
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 0% paid
               </h6>

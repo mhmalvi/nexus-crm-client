@@ -1,10 +1,14 @@
 import React from "react";
-import bankLogo from "../../assets/Images/bank.png";
+// import bankLogo from "../../assets/Images/bank.png";
 
 const BankPaymentForm = () => {
   return (
     <div>
-      <div className="relative">
+      <h1>
+        <span className="text-red-500 text-xl">*</span> Feature Comming Soon...
+      </h1>
+
+      {/* <div className="relative">
         <img className="w-8" src={bankLogo} alt="" />
         <div className="absolute w-full h-full top-0"></div>
       </div>
@@ -56,7 +60,7 @@ const BankPaymentForm = () => {
             Confirm
           </button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

@@ -2,8 +2,17 @@ import React, { useEffect } from "react";
 import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
 import visa from "../../assets/Images/visa.png";
+import { Storage } from "../../Components/Shared/utils/store";
 
 const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
+  console.log(requestedLeadDetails);
+
+  useEffect(() => {
+    if (amount) {
+      Storage.setItem("l_Details", requestedLeadDetails?.leadDetails);
+    }
+  }, [amount, requestedLeadDetails?.leadDetails]);
+
   useEffect(() => {
     const scriptContainer = document.getElementById("e-way");
     scriptContainer.innerHTML = "";
@@ -24,7 +33,7 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
 
     script.async = true;
     scriptContainer.appendChild(script);
-  }, [amount, requestedLeadDetails?.leadDetails?.lead_id]);
+  }, [amount, requestedLeadDetails?.leadDetails?.client_id, requestedLeadDetails?.leadDetails?.lead_id]);
 
   console.log(requestedLeadDetails);
 
