@@ -19,6 +19,7 @@ import Overview from "../Overview";
 import Pay from "../Pay";
 import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
+import Invoice from "../Payments/Invoice";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
 
@@ -115,13 +116,14 @@ const LandingPage = () => {
       <div
         className="relative ml-auto"
         style={{
-          width: "calc(100vw - 277px)",
+          width: "calc(100vw - 260px)",
         }}
       >
         <Routes>
           <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
+          <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />

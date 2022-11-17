@@ -74,7 +74,10 @@ const Sidebar = ({
     <div
       className="bg-white"
       style={{
-        width: "277px",
+        // maxWidth: "277px",
+        width: "260px",
+        // width: "100%",
+        // paddingRight: "16px",
         overflowX: "hidden",
         overflowY: "scroll",
       }}

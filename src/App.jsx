@@ -16,6 +16,7 @@ import Overview from "./Pages/Overview";
 import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
+import Invoice from "./Pages/Payments/Invoice";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
@@ -34,6 +35,7 @@ function App() {
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
+          <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"success/:id"} element={<Success />} />

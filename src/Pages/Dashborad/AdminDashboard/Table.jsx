@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from "react-skeleton-loader";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
+import Icons from "../../../Components/Shared/Icons";
 
 const Table = ({
   title,
@@ -34,9 +35,11 @@ const Table = ({
       if (data?.length === 0) {
         setTimeout(() => {
           dispatch(setLoader(false));
-        }, 4000);
+        }, 3000);
       } else {
-        dispatch(setLoader(false));
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 1000);
       }
     })();
   }, [data, data?.length, dispatch]);
@@ -62,6 +65,12 @@ const Table = ({
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
+  };
+
+  const handleNavigateInvoiceDetails = (e, id) => {
+    e.stopPropagation();
+    console.log(list.id);
+    navigate(`/invoice/${id}`);
   };
 
   return (
@@ -99,17 +108,19 @@ const Table = ({
               </CSVLink>
             </div>
           </div>
-          {userDetails?.role_id !== 1 && (
-            <div className="mr-12">
-              <button
-                id="sync_leads"
-                className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
-                onClick={handleSyncLeadsReq}
-              >
-                Sync Leads
-              </button>
-            </div>
-          )}
+
+          {(userDetails?.role_id !== 1 || userDetails?.role_id !== 2) &&
+            title === "Lead List" && (
+              <div className="mr-12">
+                <button
+                  id="sync_leads"
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                  onClick={handleSyncLeadsReq}
+                >
+                  Sync Leads
+                </button>
+              </div>
+            )}
         </div>
 
         <div className="tbl-header">
@@ -137,124 +148,284 @@ const Table = ({
                 cellSpacing="0"
                 border="0"
               >
-                <tbody>
-                  {list?.map((list) => (
-                    <tr
-                      className="relative"
-                      key={list.lead_id}
-                      onClick={() => handleNavigate(list.lead_id)}
-                    >
-                      <td>
-                        {list.lead_id ? (
-                          list.lead_id
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-                      <td>
-                        {list.lead_apply_date ? (
-                          new Date(list.lead_apply_date)
-                            .toString()
-                            .slice(4, 21) +
-                          " " +
-                          new Date(list.lead_apply_date)
-                            .toString()
-                            .slice(25, 31)
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-                      <td>
-                        {list.course_code ? (
-                          list.course_code
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-                      <td>
-                        {list.full_name ? (
-                          list.full_name
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-                      <td className="uppercase">
-                        {list.work_location ? (
-                          list.work_location
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-                      <td>
-                        {list.campaign_id ? (
-                          list.campaign_id
-                        ) : (
-                          <Skeleton color="#F0EFEF" />
-                        )}
-                      </td>
-
-                      {statusColor.find(
-                        (status) => status.id === list?.lead_details_status
-                      ) ? (
-                        <td className="flex items-center">
-                          {statusColor
-                            .filter(
-                              (status) =>
-                                status.id === list?.lead_details_status
-                            )
-                            .map((lead_status, index) => (
-                              <div
-                                key={index}
-                                className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                              >
-                                <div
-                                  className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                                ></div>
-                                <div className="ml-1">{lead_status.title}</div>
-                              </div>
-                            ))}
-                          {(userDetails?.role_id === 3 ||
-                            userDetails?.role_id === 4) &&
-                          list?.sales_user_id ? (
-                            <div className="ml-3">
-                              <Avatar
-                                className="rounded-full shadow-sm cursor-pointer"
-                                size="30"
-                                color={Avatar.getRandomColor("sitebase", [
-                                  "red",
-                                  "green",
-                                  "#728FCE",
-                                  "violet",
-                                  "#2B547E",
-                                  "black",
-                                  "#87AFC7",
-                                  "Lime",
-                                  "#D5D6EA",
-                                  "#77BFC7",
-                                  "orange",
-                                  "#FDD017",
-                                  "#665D1E",
-                                ])}
-                                name={
-                                  companyEmployeeList.find(
-                                    (employee) =>
-                                      employee?.id === list?.sales_user_id
-                                  )?.full_name
-                                }
-                              />
-                            </div>
-                          ) : null}
+                {title === "Payment History" ? (
+                  <tbody>
+                    {list?.map((list) => (
+                      <tr
+                        className="relative"
+                        key={list.lead_id}
+                        onClick={() => handleNavigate(list.lead_id)}
+                      >
+                        <td>
+                          {list.lead_id ? (
+                            list.lead_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
                         </td>
-                      ) : (
-                        <td>{list?.payment_via}</td>
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
+
+                        <td>
+                          {list.created_at ? (
+                            new Date(list.created_at).toString().slice(4, 21) +
+                            " " +
+                            new Date(list.created_at).toString().slice(25, 31)
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td className="uppercase">
+                          {list.transaction_id ? (
+                            list.transaction_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td>
+                          {list.payment_amount ? (
+                            list.payment_amount
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td className="uppercase">
+                          {list.payment_method ? (
+                            list.payment_method
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td
+                          className={`font-semibold ${
+                            list.payment_status === "COMPLETED" &&
+                            "text-green-500"
+                          } ${
+                            list.payment_status === "FAILED" && "text-red-500"
+                          }`}
+                        >
+                          {list.payment_status ? (
+                            list.payment_status
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ) : title === "Invoice History" ? (
+                  <tbody>
+                    {list?.map((list) => (
+                      <tr
+                        className="relative"
+                        key={list.invoice_id}
+                        onClick={() => handleNavigate(list.lead_id)}
+                      >
+                        <td>
+                          {list.invoice_id ? (
+                            list.invoice_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td>
+                          {list.lead_id ? (
+                            list.lead_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td>
+                          {list.payer_name ? (
+                            list.payer_name
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td>
+                          {list.created_at ? (
+                            new Date(list.created_at).toString().slice(4, 21) +
+                            " " +
+                            new Date(list.created_at).toString().slice(25, 31)
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td>
+                          {list.course_code ? (
+                            list.course_code
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        {/* <td>
+                          {list.full_name ? (
+                            list.full_name
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td> */}
+
+                        <td>
+                          {list.payment_amount ? (
+                            list.payment_amount
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        <td className="uppercase flex items-center">
+                          {list.payment_method ? (
+                            list.payment_method
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+
+                          <button
+                            className="ml-10 text-black hover:text-brand-color font-semibold"
+                            onClick={(e) => {
+                              handleNavigateInvoiceDetails(e, list.id);
+                            }}
+                          >
+                            <Icons.Eye className="w-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ) : (
+                  <tbody>
+                    {list?.map((list) => (
+                      <tr
+                        className="relative"
+                        key={list.lead_id}
+                        onClick={() => handleNavigate(list.lead_id)}
+                      >
+                        <td>
+                          {list.lead_id ? (
+                            list.lead_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td>
+                          {list.lead_apply_date ? (
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(4, 21) +
+                            " " +
+                            new Date(list.lead_apply_date)
+                              .toString()
+                              .slice(25, 31)
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td>
+                          {list.course_code ? (
+                            list.course_code
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td>
+                          {list.full_name ? (
+                            list.full_name
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td className="uppercase">
+                          {list.work_location ? (
+                            list.work_location
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td>
+                          {list.campaign_id ? (
+                            list.campaign_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+
+                        {statusColor.find(
+                          (status) => status.id === list?.lead_details_status
+                        ) ? (
+                          <td className="flex items-center">
+                            {statusColor
+                              .filter(
+                                (status) =>
+                                  status.id === list?.lead_details_status
+                              )
+                              .map((lead_status, index) => (
+                                <div
+                                  key={index}
+                                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                                >
+                                  <div
+                                    className={`w-2 h-2 ${lead_status.color} rounded-full`}
+                                  ></div>
+                                  <div className="ml-1">
+                                    {lead_status.title}
+                                  </div>
+                                </div>
+                              ))}
+                            {(userDetails?.role_id === 3 ||
+                              userDetails?.role_id === 4) &&
+                            list?.sales_user_id ? (
+                              <div className="ml-3">
+                                <Avatar
+                                  className="rounded-full shadow-sm cursor-pointer"
+                                  size="30"
+                                  color={Avatar.getRandomColor("sitebase", [
+                                    "red",
+                                    "green",
+                                    "#728FCE",
+                                    "violet",
+                                    "#2B547E",
+                                    "black",
+                                    "#87AFC7",
+                                    "Lime",
+                                    "#D5D6EA",
+                                    "#77BFC7",
+                                    "orange",
+                                    "#FDD017",
+                                    "#665D1E",
+                                  ])}
+                                  name={
+                                    companyEmployeeList.find(
+                                      (employee) =>
+                                        employee?.id === list?.sales_user_id
+                                    )?.full_name
+                                  }
+                                />
+                              </div>
+                            ) : null}
+                          </td>
+                        ) : (
+                          <td>{list?.payment_via}</td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
               </table>
             ) : (
               <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Leads Yet</h1>
+                {title === "Payment List" ? (
+                  <h1 className="text-xl font-light">No Payments Yet</h1>
+                ) : (
+                  <h1 className="text-xl font-light">No Leads Yet</h1>
+                )}
               </div>
             )}
           </div>

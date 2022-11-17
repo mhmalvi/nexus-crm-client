@@ -206,3 +206,45 @@ export const handleFetchClientsPaymentHistory = async (companyId) => {
     return error.response;
   }
 };
+
+export const handleFetchStudentsInvoiceHistory = async (userId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        user_id: userId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchClientsInvoiceHistory = async (companyId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        company_id: companyId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchInvoiceDetails = async (invoiceId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        id: invoiceId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
