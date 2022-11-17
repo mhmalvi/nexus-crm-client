@@ -4,9 +4,8 @@ import {
   handleFetchClientsInvoiceHistory,
   handleFetchClientsPaymentHistory,
   handleFetchStudentsInvoiceHistory,
-  handleFetchStudentsPaymentHistory,
+  handleFetchStudentsPaymentHistory
 } from "../../Components/services/company";
-import { addPaymentsSlice } from "../../features/Leads/paymentsSlice";
 import { setLoader } from "../../features/user/userSlice";
 import Calendar from "../Dashborad/AdminDashboard/Calendar";
 import Filters from "../Dashborad/AdminDashboard/Filters";
@@ -17,7 +16,6 @@ const Payment = () => {
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user?.userInfo);
-  const payments = useSelector((state) => state?.payments?.payments);
 
   const [paymentData, setPaymentData] = useState([]);
   const [invoiceHistory, setInvoiceHistory] = useState([]);
@@ -25,8 +23,6 @@ const Payment = () => {
   const [toggleTabs, setToggleTabs] = useState("payment");
 
   useEffect(() => {
-    dispatch(setLoader(true));
-
     (async () => {
       if (
         userDetails?.role_id === 3 ||
@@ -41,28 +37,14 @@ const Payment = () => {
 
         if (paymentHistoryResponse?.status === true) {
           setPaymentData(paymentHistoryResponse?.data);
-          dispatch(addPaymentsSlice(paymentHistoryResponse?.data));
-          dispatch(setLoader(false));
-        } else {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 3000);
         }
       } else if (userDetails?.role_id === 6) {
         const paymentHistoryResponse = await handleFetchStudentsPaymentHistory(
           userDetails?.user_id
         );
 
-        console.log("paymentHistoryResponse", paymentHistoryResponse);
-
         if (paymentHistoryResponse?.status === true) {
           setPaymentData(paymentHistoryResponse?.data);
-          dispatch(addPaymentsSlice(paymentHistoryResponse?.data));
-          dispatch(setLoader(false));
-        } else {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 3000);
         }
       } else {
         return;
@@ -83,12 +65,7 @@ const Payment = () => {
 
         if (invoiceHistoryResponse?.status === true) {
           setInvoiceHistory(invoiceHistoryResponse?.data);
-          dispatch(addPaymentsSlice(invoiceHistoryResponse?.data));
           dispatch(setLoader(false));
-        } else {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 3000);
         }
       } else if (userDetails?.role_id === 6) {
         const invoiceHistoryResponse = await handleFetchStudentsInvoiceHistory(
@@ -99,12 +76,6 @@ const Payment = () => {
 
         if (invoiceHistoryResponse?.status === true) {
           setInvoiceHistory(invoiceHistoryResponse?.data);
-          dispatch(addPaymentsSlice(invoiceHistoryResponse?.data));
-          dispatch(setLoader(false));
-        } else {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 3000);
         }
       } else {
         return;
@@ -112,46 +83,8 @@ const Payment = () => {
     })();
   }, [dispatch, userDetails]);
 
-  useEffect(() => {
-    if (!searchInput.length) {
-      setPaymentData(payments);
-    } else {
-      setPaymentData(
-        payments.filter((lead) => lead?.lead_id.includes(searchInput))
-      );
-    }
-  }, [payments, searchInput]);
-
-  const paymentHistoryTableHeaders = [
-    "Lead ID",
-    "Date",
-    // "Coustomer Name",
-    // "Course Code",
-    "Transaction ID",
-    "Amount",
-    "Payment Via",
-    "Status",
-  ];
-
-  const invoiceHistoryTableHeaders = [
-    "Invoice ID",
-    "Lead ID",
-    "Payer Name",
-    "Date",
-    "Course Code",
-    // "Course Code",
-    // "Transaction ID",
-    "Amount",
-    "Payment Via",
-  ];
-
   return (
     <div className="mx-6 2xl:ml-12 2xl:mr-16 py-24">
-      {/* {loadingDetails && (
-        <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
-          <Loading />
-        </div>
-      )} */}
       <Calendar />
       <Filters layout="Payment" setSearchInput={setSearchInput} />
 
@@ -183,12 +116,16 @@ const Payment = () => {
           title="Payment History"
           tableHeaders={paymentHistoryTableHeaders}
           data={paymentData}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
         />
       ) : (
         <Table
           title="Invoice History"
           tableHeaders={invoiceHistoryTableHeaders}
           data={invoiceHistory}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
         />
       )}
     </div>
@@ -196,3 +133,26 @@ const Payment = () => {
 };
 
 export default Payment;
+
+const paymentHistoryTableHeaders = [
+  "Lead ID",
+  "Date",
+  // "Coustomer Name",
+  // "Course Code",
+  "Transaction ID",
+  "Amount",
+  "Payment Via",
+  "Status",
+];
+
+const invoiceHistoryTableHeaders = [
+  "Invoice ID",
+  "Lead ID",
+  "Payer Name",
+  "Date",
+  "Course Code",
+  // "Course Code",
+  // "Transaction ID",
+  "Amount",
+  "Payment Via",
+];

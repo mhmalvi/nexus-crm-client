@@ -27,7 +27,7 @@ const Table = ({
 
   const [list, setList] = useState([]);
 
-  console.log(companyEmployeeList);
+  console.log("data", data);
 
   useEffect(() => {
     (async () => {
@@ -150,10 +150,10 @@ const Table = ({
               >
                 {title === "Payment History" ? (
                   <tbody>
-                    {list?.map((list) => (
+                    {list?.map((list, i) => (
                       <tr
                         className="relative"
-                        key={list.lead_id}
+                        key={i}
                         onClick={() => handleNavigate(list.lead_id)}
                       >
                         <td>
