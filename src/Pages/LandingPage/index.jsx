@@ -10,6 +10,8 @@ import { Storage } from "../../Components/Shared/utils/store";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
 import Dashboard from "../Dashborad";
+import CompanyDetails from "../Dashborad/SuperAdminDashboard/CompanyDetails";
+import CampaignInfo from "../Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import Notifications from "../Notifications";
@@ -17,6 +19,7 @@ import Overview from "../Overview";
 import Pay from "../Pay";
 import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
+import Invoice from "../Payments/Invoice";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
 import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
@@ -116,17 +119,20 @@ const LandingPage = () => {
       <div
         className="relative ml-auto"
         style={{
-          width: "calc(100vw - 277px)",
+          width: "calc(100vw - 260px)",
         }}
       >
         <Routes>
           <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
+          <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"settings/company/:id"} element={<CompanyDetails />} />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
+          <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (

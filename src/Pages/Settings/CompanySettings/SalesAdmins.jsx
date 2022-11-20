@@ -1,21 +1,31 @@
 import { Badge, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
-import { handleUpdateUserStatus } from "../../../Components/services/auth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleUpdateUserStatus,
+  handleUserSuspendStatus,
+} from "../../../Components/services/auth";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
+import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
-const SalesAdmins = ({ clientId }) => {
+const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state.user);
+
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
   const [companyAdminEmployee, setCompanyAdminEmployee] = useState();
   const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
-  const [syncEmployees, setSyncEmployees] = useState(false);
+  // const [syncEmployees, setSyncEmployees] = useState(false);
   const [inactiveAdminEmployees, setInactiveAdminEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
 
   useEffect(() => {
+    dispatch(setLoader(true));
+
     (async () => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
@@ -24,26 +34,25 @@ const SalesAdmins = ({ clientId }) => {
 
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
-            (employee) => employee?.role_id === 4 && employee?.status === 1
+            (employee) => employee?.role_id === 4 && employee?.suspend === 0
           );
 
           const sales = (employeeResponse?.data).filter(
-            (employee) => employee?.role_id === 5 && employee?.status === 1
+            (employee) =>
+              (employee?.role_id === 2 || employee?.role_id === 5) &&
+              employee?.suspend === 0
           );
 
           setCompanyAdvisorEmployees(admins);
           setCompanySalesEmployees(sales);
 
-          console.log(
-            "LLLLL",
-            (employeeResponse?.data).find(
-              (employee) => employee?.role_id === 3 && employee?.status === 1
-            )
-          );
+          console.log("LLLLL", employeeResponse?.data);
 
           setCompanyAdminEmployee(
             (employeeResponse?.data).find(
-              (employee) => employee?.role_id === 3 && employee?.status === 1
+              (employee) =>
+                (employee?.role_id === 1 || employee?.role_id === 3) &&
+                employee?.suspend === 0
             )
           );
 
@@ -51,29 +60,30 @@ const SalesAdmins = ({ clientId }) => {
             (employeeResponse?.data).filter(
               (employee) =>
                 (employee?.role_id === 3 || employee?.role_id === 4) &&
-                employee?.status === 0
+                employee?.suspend === 1
             )
           );
 
           setInactiveSalesEmployees(
             (employeeResponse?.data).filter(
-              (employee) => employee?.role_id === 5 && employee?.status === 0
+              (employee) => employee?.role_id === 5 && employee?.suspend === 1
             )
           );
         }
+        dispatch(setLoader(false));
       }
     })();
-  }, [clientId, syncEmployees]);
+  }, [clientId, dispatch, syncEmployees]);
 
-  const handleActiveUser = async (userId) => {
-    const statusUpdateResponse = await handleUpdateUserStatus(userId, 1);
-    console.log(statusUpdateResponse);
+  // const handleActiveUser = async (userId) => {
+  //   const statusUpdateResponse = await handleUpdateUserStatus(userId, 1);
+  //   console.log(statusUpdateResponse);
 
-    if (statusUpdateResponse?.data?.status === true) {
-      message.success("User Added Successfully");
-      setSyncEmployees(!syncEmployees);
-    }
-  };
+  //   if (statusUpdateResponse?.data?.status === true) {
+  //     message.success("User Added Successfully");
+  //     setSyncEmployees(!syncEmployees);
+  //   }
+  // };
 
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
@@ -85,7 +95,31 @@ const SalesAdmins = ({ clientId }) => {
     }
   };
 
-  console.log(companyAdminEmployee);
+  const handleAddSuspendedEmployee = async (userId) => {
+    const statusUpdateResponse = await handleUserSuspendStatus(userId, 0);
+    console.log(statusUpdateResponse);
+
+    if (statusUpdateResponse?.data?.status === true) {
+      message.success("User Added Successfully");
+      setSyncEmployees(!syncEmployees);
+    }
+  };
+
+  const handleSuspendEmployee = async (userId) => {
+    const statusUpdateResponse = await handleUserSuspendStatus(userId, 1);
+    console.log(statusUpdateResponse);
+
+    if (statusUpdateResponse?.data?.status === true) {
+      message.success("User Remove Successfully");
+      setSyncEmployees(!syncEmployees);
+    }
+  };
+
+  console.log("companyAdminEmployee", companyAdminEmployee);
+  console.log("companyAdminEmployee", companyAdminEmployee);
+  console.log("companySalesEmployees", companySalesEmployees);
+  console.log("companyAdvisorEmployees", companyAdvisorEmployees);
+  console.log("inactiveSalesEmployees", inactiveSalesEmployees);
 
   return (
     <div className="flex justify-between 2xl:justify-evenly mt-12 pt-0.5">
@@ -119,7 +153,7 @@ const SalesAdmins = ({ clientId }) => {
           >
             <EmployeeRegistrationForm
               clientId={clientId}
-              roleId={5}
+              roleId={userDetails?.userInfo?.role_id === 1 ? 2 : 5}
               setActiveAddSupervisor={setActiveAddSupervisor}
               setActiveAddSeals={setActiveAddSeals}
               syncEmployees={syncEmployees}
@@ -131,16 +165,21 @@ const SalesAdmins = ({ clientId }) => {
             <h1 className="font-semibold text-xl leading-8 py-5 px-3 my-0">
               Admins
             </h1>
-            <div>
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ? (
               <div>
-                <button
-                  className="py-1 whitespace-nowrap px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color 2xl:ml-29"
-                  onClick={() => setActiveAddSupervisor(true)}
-                >
-                  Add Supervisor
-                </button>
+                <div>
+                  <button
+                    className="py-1 whitespace-nowrap px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color 2xl:ml-29"
+                    onClick={() => setActiveAddSupervisor(true)}
+                  >
+                    Add Supervisor
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
           <hr />
         </div>
@@ -169,7 +208,14 @@ const SalesAdmins = ({ clientId }) => {
                 ])}
                 name={companyAdminEmployee?.full_name}
               />
-              <Badge.Ribbon text="Admin" color="volcano" size="small">
+              <Badge.Ribbon
+                style={{
+                  fontSize: "16px",
+                }}
+                text="*"
+                color="volcano"
+                size="small"
+              >
                 <div className="ml-4 mt-4 w-52">
                   <h1 className="font-semibold text-lg leading-5 text-gray-600">
                     {companyAdminEmployee?.full_name}
@@ -212,12 +258,28 @@ const SalesAdmins = ({ clientId }) => {
                   <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
                     {employee?.email}
                   </p>
-                  <button
-                    className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                    onClick={() => handleRemoveUser(employee?.id)}
-                  >
-                    Remove
-                  </button>
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
+                    <div>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+                      <button
+                        className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                        onClick={() => handleSuspendEmployee(employee?.id)}
+                      >
+                        Suspend
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))
@@ -225,6 +287,7 @@ const SalesAdmins = ({ clientId }) => {
             <h1 className="font-semibold text-base">No Employee Added Yet</h1>
           )}
         </div>
+
         {inactiveAdminEmployees.length ? (
           <div className="mt-10">
             <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
@@ -269,9 +332,9 @@ const SalesAdmins = ({ clientId }) => {
                     </p>
                     <button
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => handleActiveUser(employee?.id)}
+                      onClick={() => handleAddSuspendedEmployee(employee?.id)}
                     >
-                      Add
+                      Add Employee
                     </button>
                   </div>
                 </div>
@@ -280,6 +343,7 @@ const SalesAdmins = ({ clientId }) => {
           </div>
         ) : null}
       </div>
+
       <div className="ml-2.5">
         <div>
           <hr />
@@ -288,14 +352,20 @@ const SalesAdmins = ({ clientId }) => {
               Sales Admins
             </h1>
 
-            <div>
-              <button
-                className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color ml-29"
-                onClick={() => setActiveAddSeals(true)}
-              >
-                Add Sales
-              </button>
-            </div>
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div>
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color ml-29"
+                  onClick={() => setActiveAddSeals(true)}
+                >
+                  Add Sales
+                </button>
+              </div>
+            ) : null}
           </div>
           <hr />
         </div>
@@ -337,12 +407,30 @@ const SalesAdmins = ({ clientId }) => {
                   <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
                     {employee?.email}
                   </p>
-                  <button
-                    className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                    onClick={() => handleRemoveUser(employee?.id)}
-                  >
-                    Remove
-                  </button>
+
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
+                    <div>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+
+                      <button
+                        className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                        onClick={() => handleSuspendEmployee(employee?.id)}
+                      >
+                        Suspend
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))
@@ -361,14 +449,6 @@ const SalesAdmins = ({ clientId }) => {
             <div className="mt-3 grid grid-cols-2 gap-6 px-4">
               {inactiveSalesEmployees.map((employee, i) => (
                 <div key={i} className="flex ">
-                  {/* <div
-                    className={`${
-                      avatarColor[Math.floor(Math.random() * 10) + 1]
-                    } w-7.5 h-7.5 p-3 border-2 text-red-500 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                  >
-                    {(employee?.full_name).slice(0, 2)}
-                  </div> */}
-
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
@@ -398,9 +478,9 @@ const SalesAdmins = ({ clientId }) => {
                     </p>
                     <button
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => handleActiveUser(employee?.id)}
+                      onClick={() => handleAddSuspendedEmployee(employee?.id)}
                     >
-                      Add
+                      Add Employee
                     </button>
                   </div>
                 </div>

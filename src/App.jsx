@@ -4,15 +4,19 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
+import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
+import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
+import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
 import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
+import Invoice from "./Pages/Payments/Invoice";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
@@ -24,7 +28,7 @@ import HomePage from "./Pages/Pilot";
 
 function App() {
   // useEffect(() => {
-  //   console.log = function () {};
+  //   console.log = () => {};
   // }, []);
 
   return (
@@ -32,15 +36,18 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
           <Route path="pay/:id" element={<Pay />} />
+          <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
+          <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="requisitions" element={<RequisitionTable />} />
-          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
+          {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}
           <Route path="settings" element={<Settings />} />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />

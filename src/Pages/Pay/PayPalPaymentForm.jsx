@@ -1,12 +1,13 @@
 import { message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
-import paypalLogo from "../../assets/Images/paypal.png";
+// import paypalLogo from "../../assets/Images/paypal.png";
 
 const key = "updatable";
 
 export default function PayPalPaymentForm() {
   const paypalRef = useRef();
   const [amount, setAmount] = useState(0);
+  console.log(setAmount);
 
   useEffect(() => {
     if (window.myButton) window.myButton.close();
@@ -57,7 +58,8 @@ export default function PayPalPaymentForm() {
 
   return (
     <div>
-      <div className="relative mb-6">
+      <span className="text-red-500 text-xl">*</span> Feature Comming Soon...
+      {/* <div className="relative mb-6">
         <img className="w-10" src={paypalLogo} alt="" />
         <div className="absolute w-full h-full top-0"></div>
       </div>
@@ -84,7 +86,7 @@ export default function PayPalPaymentForm() {
             </h1>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

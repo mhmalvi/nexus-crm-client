@@ -348,6 +348,19 @@ table.custom-table > tbody > tr:hover td {
   display: none;
 }
 
+.requisition_package .ant-select-selector {
+  position: relative;
+  background-color: #fff;
+  outline: none !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  border-bottom: 1px solid rgb(209 213 219 1) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
 @keyframes animloader {
   0% {
     top: 0;

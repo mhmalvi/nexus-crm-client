@@ -13,6 +13,7 @@ import { addMessages } from "../../features/user/messagesSlice";
 import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";
 import UserDashboard from "./UserDashboard";
+import SuperAdminDashboard from "./SuperAdminDashboard";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -170,12 +171,14 @@ const Dashboard = () => {
           </div>
         </div>
       </Modal>
+
       <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
-        {userDetails?.userInfo?.role_id === 6 ? (
-          <UserDashboard />
-        ) : (
-          <AdminDashboard />
-        )}
+        {(userDetails?.userInfo?.role_id === 1 ||
+          userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}
+        {(userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4 ||
+          userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
+        {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
       </div>
     </div>
   );

@@ -102,7 +102,10 @@ const Sidebar = ({
     <div
       className="bg-white"
       style={{
-        width: "277px",
+        // maxWidth: "277px",
+        width: "260px",
+        // width: "100%",
+        // paddingRight: "16px",
         overflowX: "hidden",
         overflowY: "scroll",
       }}
@@ -301,7 +304,7 @@ const Sidebar = ({
 
           {/* Requisitions section */}
           {(userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 3) && (
+            userDetails?.userInfo?.role_id === 2) && (
             <div>
               <NavLink
                 to={"/requisitions"}
@@ -323,6 +326,31 @@ const Sidebar = ({
           )}
 
           {/*           <div>
+          {(userDetails?.userInfo?.role_id === 1 ||
+            userDetails?.userInfo?.role_id === 2 ||
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4) && (
+            <div>
+              <NavLink
+                to={"/settings"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("settings")}
+              >
+                <Icons.Settings />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Settings
+                </span>
+                {active === "settings" && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </NavLink>
+            </div>
+          )}
+
+          {/* <div>
             <NavLink
               to={"/settings"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
@@ -333,7 +361,7 @@ const Sidebar = ({
             >
               <Icons.Settings />
               <span className="ml-4 leading-6 font-medium font-poppins">
-                Settings
+                Profile Settings
               </span>
               {active === "settings" && (
                 <div className="ml-auto active-option">|</div>

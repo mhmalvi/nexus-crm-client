@@ -152,18 +152,6 @@ export const handleFetchPackages = async () => {
   }
 };
 
-export const handleCreatePackage = async (packageDetails) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/store/package`,
-      packageDetails
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
-
 export const handleCreateCompanyRequisition = async (requisitionData) => {
   try {
     const result = await axios.post(
@@ -171,6 +159,91 @@ export const handleCreateCompanyRequisition = async (requisitionData) => {
       requisitionData
     );
     return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCompanyStatusUpdate = async (companyId, status) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/status`,
+      {
+        company_id: companyId,
+        active: status,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchStudentsPaymentHistory = async (userId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      {
+        user_id: userId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchClientsPaymentHistory = async (companyId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      {
+        company_id: companyId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchStudentsInvoiceHistory = async (userId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        user_id: userId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchClientsInvoiceHistory = async (companyId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        company_id: companyId,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchInvoiceDetails = async (invoiceId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      {
+        id: invoiceId,
+      }
+    );
+    return result?.data;
   } catch (error) {
     return error.response;
   }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { handleLeadDetails } from "../../Components/services/leads";
+import { Storage } from "../../Components/Shared/utils/store";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
 import PayPalPaymentForm from "./PayPalPaymentForm";
@@ -17,6 +18,10 @@ const Pay = () => {
 
   const [transactionsMethod, setTransactionsMethod] = useState(0);
   const [requestedLeadDetails, setRequestedLeadDetails] = useState();
+
+  useEffect(() => {
+    Storage.setItem("l_Details", requestedLeadDetails?.leadDetails);
+  }, [requestedLeadDetails?.leadDetails]);
 
   useEffect(() => {
     (async () => {
@@ -72,19 +77,22 @@ const Pay = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="text-lg leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
+                    <div className="w-60 text-end text-lg leading-8 font-poppins font-semibold mb-0 text-brand-color text-opacity-90">
                       {/* <span>Courses:&nbsp;</span> */}
-                      <span>Fashion Designing</span>
+                      <span>
+                        {requestedLeadDetails?.leadDetails?.course_title}
+                      </span>
                     </div>
                     <div>
-                      <h4 className="font-medium text-base leading-8 text-black text-center pb-6">
+                      <h4 className="text-end font-medium text-base leading-8 text-black pb-6">
                         Total Payable:{" "}
-                        <span className="text-red-600">
-                          {requestedLeadDetails?.leadAmountHistory?.length === 0
-                            ? "Not Set Yet"
-                            : requestedLeadDetails?.leadAmountHistory[0]
-                                ?.amount}
-                        </span>
+                        {requestedLeadDetails?.leadAmountHistory?.length ? (
+                          <span className="text-red-600">
+                            {requestedLeadDetails?.leadAmountHistory[0]?.amount}
+                          </span>
+                        ) : (
+                          <span className="text-red-600">Not Set Yet</span>
+                        )}
                       </h4>
                     </div>
                   </div>

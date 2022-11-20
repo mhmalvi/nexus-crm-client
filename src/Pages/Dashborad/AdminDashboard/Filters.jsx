@@ -48,7 +48,9 @@ const Filters = ({
                 </div>
               ))}
             </div>
-            {(userDetails?.role_id === 3) | (userDetails?.role_id === 4) ? (
+            {userDetails?.role_id === 1 ||
+            userDetails?.role_id === 3 ||
+            userDetails?.role_id === 4 ? (
               <div className="flex items-center mt-2">
                 {/* Star Filters */}
                 {ratings.map((rate) => (
