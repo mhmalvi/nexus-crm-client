@@ -75,7 +75,7 @@ const Table = ({
 
   return (
     <div className="mt-0.5">
-      <div className="border rounded-xl px-10 py-7.5 mt-5">
+      <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
         <div className="flex justify-between items-center">
           <div className="flex items-start">
             <div>
@@ -94,7 +94,7 @@ const Table = ({
                           (option) => option.id === activeFilter
                         )?.title
                       }.csv`
-                    : "Payment-lists.csv"
+                    : title
                 }
               >
                 <h1
@@ -127,9 +127,19 @@ const Table = ({
           <table cellPadding="0" cellSpacing="0" border="0">
             <thead>
               <tr>
-                {tableHeaders?.map((header, i) => (
-                  <th key={i}>{header}</th>
-                ))}
+                {tableHeaders?.map((header, i) =>
+                  header === "Location" ? (
+                    <th className="w-22" key={i}>
+                      {header}
+                    </th>
+                  ) : header === "Course Code" ? (
+                    <th className="w-29 float-left" key={i}>
+                      {header}
+                    </th>
+                  ) : (
+                    <th key={i}>{header}</th>
+                  )
+                )}
               </tr>
             </thead>
           </table>
@@ -328,7 +338,7 @@ const Table = ({
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td>
+                        <td className="w-24 float-left">
                           {list.course_code ? (
                             list.course_code
                           ) : (
@@ -342,7 +352,7 @@ const Table = ({
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td className="uppercase">
+                        <td className="uppercase w-16">
                           {list.work_location ? (
                             list.work_location
                           ) : (
@@ -402,7 +412,7 @@ const Table = ({
                                     "#665D1E",
                                   ])}
                                   name={
-                                    companyEmployeeList.find(
+                                    companyEmployeeList?.find(
                                       (employee) =>
                                         employee?.id === list?.sales_user_id
                                     )?.full_name

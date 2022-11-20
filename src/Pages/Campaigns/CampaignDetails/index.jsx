@@ -14,6 +14,7 @@ import Filters from "../../Dashborad/AdminDashboard/Filters";
 import Table from "../../Dashborad/AdminDashboard/Table";
 import data from "../../Dashborad/AdminDashboard/leadData.json";
 import { addCampaigns } from "../../../features/Leads/campaignSlice";
+import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 
 const CampaignDetails = () => {
   const { id } = useParams();
@@ -23,8 +24,10 @@ const CampaignDetails = () => {
   const campaignList = useSelector((state) => state.campaigns)?.campaigns;
 
   // const [campaignList, setCampaignDetails] = useState();
+
   const [campaignDetails, setCampaignDetails] = useState();
   const [campaignCourses, setCampaignCourses] = useState([]);
+  const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
@@ -128,9 +131,17 @@ const CampaignDetails = () => {
 
   console.log("campaignCourses", campaignCourses);
 
-  // useEffect(() => {
-  //   setCampaignCourses(leadList.filter(lead=>lead.campaign_id===id));
-  // }, [input]);
+  useEffect(() => {
+    (async () => {
+      const fetchEmployees = await handleFetchCompanyEmployees(
+        userDetails?.userInfo?.client_id
+      );
+
+      if (fetchEmployees?.status === true) {
+        setCompanyEmployeeList(fetchEmployees?.data);
+      }
+    })();
+  }, [userDetails?.userInfo?.client_id]);
 
   const handleFilterLeadList = (filterId) => {
     console.log("filterId....", filterId);
@@ -294,6 +305,7 @@ const CampaignDetails = () => {
         tableHeaders={tableHeaders}
         data={leadData}
         filterOptions={filterOptions}
+        companyEmployeeList={companyEmployeeList}
         ratings={ratings}
         activeFilter={activeFilter}
         searchInput={searchInput}
