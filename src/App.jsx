@@ -13,6 +13,7 @@ import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/Camp
 import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
+import RenewPackage from "./Pages/Package/RenewPackage";
 import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
@@ -34,6 +35,7 @@ function App() {
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
+          <Route path="renew-package" element={<RenewPackage/>} />
           <Route path="pay/:id" element={<Pay />} />
           <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />

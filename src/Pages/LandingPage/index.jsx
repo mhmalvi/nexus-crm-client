@@ -16,6 +16,7 @@ import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import Notifications from "../Notifications";
 import Overview from "../Overview";
+import RenewPackage from "../Package/RenewPackage";
 import Pay from "../Pay";
 import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
@@ -120,6 +121,7 @@ const LandingPage = () => {
         }}
       >
         <Routes>
+          <Route path="renew-package" element={<RenewPackage />} />
           <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
