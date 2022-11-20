@@ -6,6 +6,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
+import {
+  AppstoreOutlined,
+  CalendarOutlined,
+  LinkOutlined,
+  MailOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import { Menu, message } from "antd";
+
+/* function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+
+const items = [
+  getItem('Settings', 'sub1', <SettingOutlined/>, [
+    getItem('Profile', '1'),
+    getItem('Company settings', '2'),
+  ]),
+] */
 
 const Sidebar = ({
   active,
@@ -69,6 +93,10 @@ const Sidebar = ({
     Storage.removeItem("user_info");
     navigate("/login");
   };
+
+  const ToggleProfile = () => {
+    navigate("/user-profile");
+  }
 
   return (
     <div
@@ -294,7 +322,7 @@ const Sidebar = ({
             </div>
           )}
 
-          <div>
+          {/*           <div>
             <NavLink
               to={"/settings"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
@@ -311,7 +339,27 @@ const Sidebar = ({
                 <div className="ml-auto active-option">|</div>
               )}
             </NavLink>
-          </div>
+          </div> */}
+
+          <Menu
+            style={{
+              width: 226,
+              color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
+              fontSize: 16,
+            }}
+            onClick={ToggleProfile}
+            items={[
+              {
+                label: <span style={{color: "#7C8DB5"}}>Settings</span>,
+                key: "menu",
+                icon: <SettingOutlined style={{color: "#7C8DB5"}}/>,
+                children: [
+                  {label: "Profile", key: "profile" },
+                  {label: "Company Settings", key: "company"}
+                ],
+              },
+            ]}
+          />
 
           <div className="lg:mt-0 2xl:mt-36 pt-1.5">
             <div className="mr-4">

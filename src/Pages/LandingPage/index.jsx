@@ -20,6 +20,8 @@ import PaymentStatus from "../Payments";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
 import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
+import UserProfile from "../Profile/UserProfile";
+import EditProfile from "../Profile/EditProfile";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -123,6 +125,8 @@ const LandingPage = () => {
           <Route path={"pay/:id"} element={<Pay />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"settings/company/:id"} element={<CompanyDetails />} />
+          <Route path="user-profile" element={<UserProfile />} />
+          <Route path="edit-profile" element={<EditProfile />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (

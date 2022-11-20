@@ -42,6 +42,28 @@ import { ReactComponent as Bin } from "../../assets/Icons/bin.svg";
 import { ReactComponent as AddImage } from "../../assets/Icons/add_image.svg";
 import { ReactComponent as CallHistory } from "../../assets/Icons/Call_history.svg";
 import { ReactComponent as AmountHistory } from "../../assets/Icons/Amount_history.svg";
+import { ReactComponent as Equilizer } from "../../assets/Icons/Equalizer.svg";
+import { ReactComponent as Shield } from "../../assets/Icons/shield.svg";
+import { ReactComponent as Thumbs } from "../../assets/Icons/thumbs.svg";
+import { ReactComponent as Headphone } from "../../assets/Icons/headphone.svg";
+import { ReactComponent as SalesCircle } from "../../assets/Icons/sales-circle.svg";
+import { ReactComponent as ProjectCircle } from "../../assets/Icons/project-circle.svg";
+import { ReactComponent as ActivityCircle } from "../../assets/Icons/activity-circle.svg";
+import { ReactComponent as Regularpkg } from "../../assets/Icons/regularpkg.svg";
+import { ReactComponent as Platinumpkg } from "../../assets/Icons/platinumpkg.svg";
+import { ReactComponent as Standardpkg } from "../../assets/Icons/standardpkg.svg";
+import { ReactComponent as Phone } from "../../assets/Icons/phone.svg";
+import { ReactComponent as Email } from "../../assets/Icons/email.svg";
+import { ReactComponent as Envelope } from "../../assets/Icons/envelope.svg";
+import { ReactComponent as Facebook } from "../../assets/Icons/Facebook.svg";
+import { ReactComponent as Twitter } from "../../assets/Icons/Twitter.svg";
+import { ReactComponent as Instagram } from "../../assets/Icons/Instagram.svg";
+import { ReactComponent as LinkedIn } from "../../assets/Icons/LinkedIn.svg";
+import { ReactComponent as Authenticity } from "../../assets/Icons/authenticity.svg";
+import { ReactComponent as Discount } from "../../assets/Icons/discount.svg";
+import { ReactComponent as EmailSupport } from "../../assets/Icons/email-support.svg";
+import { ReactComponent as PowerMkt } from "../../assets/Icons/power-marketing.svg";
+import { ReactComponent as InventoryMgt } from "../../assets/Icons/inventory-mgt.svg";
 
 const Icons = {
   CompanyLogo,
@@ -88,6 +110,28 @@ const Icons = {
   CloseEye,
   CallHistory,
   AmountHistory,
+  Equilizer,
+  Shield,
+  Thumbs,
+  Headphone,
+  SalesCircle,
+  ProjectCircle,
+  ActivityCircle,
+  Regularpkg,
+  Platinumpkg,
+  Standardpkg,
+  Phone,
+  Email,
+  Envelope,
+  Facebook,
+  Twitter,
+  Instagram,
+  LinkedIn,
+  Authenticity,
+  Discount,
+  EmailSupport,
+  PowerMkt,
+  InventoryMgt
 };
 
 export default Icons;

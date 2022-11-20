@@ -34,6 +34,35 @@ export const handleLogin = async (loginDetails) => {
     return error;
   }
 };
+export const handleProfileDetails = async (user_id) => {
+  console.log("apiResultID", user_id);
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/${user_id}/details`,
+      user_id,
+    );
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const handleUpdateProfileDetails = async (user_id, profileData) => {
+  console.log(user_id);
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/user/update`,
+      user_id,
+      profileData
+    );
+    console.log("APIresult", result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const handlePasswordReset = async (userId, newPassword) => {
   try {
