@@ -94,9 +94,14 @@ const Sidebar = ({
     navigate("/login");
   };
 
-  const ToggleProfile = () => {
-    navigate("/user-profile");
-  }
+  const ToggleProfile = (e) => {
+    console.log(e);
+    if (e?.key === "profile") {
+      navigate("/user-profile");
+    } else if (e?.key === "company") {
+      navigate("/settings");
+    }
+  };
 
   return (
     <div
@@ -284,24 +289,6 @@ const Sidebar = ({
             </div>
           )}
 
-          {/* <div>
-            <div
-              className='flex items-center text-base cursor-pointer my-5 py-0.5'
-              style={{
-                color: `${active === "export-excel" ? "#7037FF" : "#7C8DB5"}`,
-              }}
-              onClick={() => setActive("export-excel")}
-            >
-              <Icons.Excel />
-              <span className='ml-4 leading-6 font-medium font-poppins'>
-                Export Excel
-              </span>
-              {active === "export-excel" && (
-                <div className='ml-auto active-option'>|</div>
-              )}
-            </div>
-          </div> */}
-
           {/* Requisitions section */}
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2) && (
@@ -378,12 +365,21 @@ const Sidebar = ({
             onClick={ToggleProfile}
             items={[
               {
-                label: <span style={{color: "#7C8DB5"}}>Settings</span>,
+                label: (
+                  <span style={{ color: "#7C8DB5" }} className="pl-1">
+                    Settings
+                  </span>
+                ),
                 key: "menu",
-                icon: <SettingOutlined style={{color: "#7C8DB5"}}/>,
+                // <SettingOutlined
+                icon: (
+                  <Icons.Settings className="inline text-gray-500 text-opacity-75" />
+                  //   style={{ color: "#7C8DB5", width: "16px" }}
+                  // />
+                ),
                 children: [
-                  {label: "Profile", key: "profile" },
-                  {label: "Company Settings", key: "company"}
+                  { label: "Profile Settings", key: "profile" },
+                  { label: "Company Settings", key: "company" },
                 ],
               },
             ]}

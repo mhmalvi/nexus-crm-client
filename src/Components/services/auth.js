@@ -41,7 +41,7 @@ export const handleProfileDetails = async (user_id) => {
       `${process.env?.REACT_APP_AUTH_URL}/api/user/${user_id}/details`,
       user_id,
     );
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return error;
