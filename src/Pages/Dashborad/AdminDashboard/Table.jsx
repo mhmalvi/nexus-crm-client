@@ -133,7 +133,7 @@ const Table = ({
                       {header}
                     </th>
                   ) : header === "Course Code" ? (
-                    <th className="w-29 float-left" key={i}>
+                    <th className="w-36" key={i}>
                       {header}
                     </th>
                   ) : (
@@ -338,7 +338,7 @@ const Table = ({
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td className="w-24 float-left">
+                        <td className="w-36 mr-auto">
                           {list.course_code ? (
                             list.course_code
                           ) : (
@@ -396,21 +396,22 @@ const Table = ({
                                 <Avatar
                                   className="rounded-full shadow-sm cursor-pointer"
                                   size="30"
-                                  color={Avatar.getRandomColor("sitebase", [
-                                    "red",
-                                    "green",
-                                    "#728FCE",
-                                    "violet",
-                                    "#2B547E",
-                                    "black",
-                                    "#87AFC7",
-                                    "Lime",
-                                    "#D5D6EA",
-                                    "#77BFC7",
-                                    "orange",
-                                    "#FDD017",
-                                    "#665D1E",
-                                  ])}
+                                  color="#1f262a"
+                                  // color={Avatar.getRandomColor("sitebase", [
+                                  //   "red",
+                                  //   "green",
+                                  //   "#728FCE",
+                                  //   "violet",
+                                  //   "#2B547E",
+                                  //   "black",
+                                  //   "#87AFC7",
+                                  //   "Lime",
+                                  //   "#D5D6EA",
+                                  //   "#77BFC7",
+                                  //   "orange",
+                                  //   "#FDD017",
+                                  //   "#665D1E",
+                                  // ])}
                                   name={
                                     companyEmployeeList?.find(
                                       (employee) =>
@@ -484,3 +485,20 @@ const statusColor = [
     color: "bg-red-500",
   },
 ];
+
+// const colorArray = [
+//   "red",
+//   "green",
+//   "#728FCE",
+//   "violet",
+//   "#2B547E",
+//   "black",
+//   "#87AFC7",
+//   "Lime",
+//   "#D5D6EA",
+//   "#77BFC7",
+//   "orange",
+//   "#FDD017",
+//   "#665D1E",
+// ];
+// const random = () => Math.floor(Math.random() * (30 - 0)) + 0;

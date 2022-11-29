@@ -21,11 +21,9 @@ import Invoice from "./Pages/Payments/Invoice";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
-import CompanyDetails from "./Pages/Settings/AdminSettings/CompanyDetails";
-import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
-import UserProfile from "./Pages/Profile/UserProfile";
-import EditProfile from "./Pages/Profile/EditProfile";
+import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import HomePage from "./Pages/Pilot";
+import UserProfile from "./Pages/Settings/Profile/UserProfile";
 
 function App() {
   // useEffect(() => {
@@ -40,7 +38,7 @@ function App() {
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
           <Route path="payments" element={<PaymentStatus />} />
-          <Route path="renew-package" element={<RenewPackage/>} />
+          <Route path="renew-package" element={<RenewPackage />} />
           <Route path="pay/:id" element={<Pay />} />
           <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />

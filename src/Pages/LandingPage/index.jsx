@@ -23,9 +23,9 @@ import PaymentStatus from "../Payments";
 import Invoice from "../Payments/Invoice";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
-import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
-import UserProfile from "../Profile/UserProfile";
-import EditProfile from "../Profile/EditProfile";
+import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
+import EditProfile from "../Settings/Profile/EditProfile";
+import UserProfile from "../Settings/Profile/UserProfile";
 
 const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -130,7 +130,10 @@ const LandingPage = () => {
           <Route path={"pay/:id"} element={<Pay />} />
           <Route path="invoice/:id" element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
-          <Route path={"settings/company/:id"} element={<CompanyDetails />} />
+          <Route
+            path={"settings/company/:id"}
+            element={<AdminCompanyDetails />}
+          />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />

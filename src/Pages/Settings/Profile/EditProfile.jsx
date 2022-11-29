@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileSettingForm from "./ProfileSettingEdit";
-import PasswordResetForm from "./PasswordResetEdit";
+import ProfileSettingForm from "./ProfileSettingForm";
+import PasswordResetForm from "./PasswordResetForm";
 
 function EditProfile() {
   return (

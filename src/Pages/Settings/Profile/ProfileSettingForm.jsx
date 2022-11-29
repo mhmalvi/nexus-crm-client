@@ -1,25 +1,15 @@
+import { message } from "antd";
 import React, { useEffect, useState } from "react";
-import { message, Popconfirm, Upload } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { handleUpdateProfileDetails, handleProfileDetails } from "../../Components/services/auth";
-import { setLoader } from "../../features/user/userSlice";
-import Icons from "../../Components/Shared/Icons";
+import { useSelector } from "react-redux";
+import {
+  handleProfileDetails,
+  handleUpdateProfileDetails,
+} from "../../../Components/services/auth";
+import Icons from "../../../Components/Shared/Icons";
 
 function ProfileSettingForm() {
   const ProfileDetails = useSelector((state) => state?.user);
-/*   const initialState = {
-    full_name: ProfileDetails.full_name,
-    date_of_birth: ProfileDetails.date_of_birth,
-    secondary_contact: ProfileDetails.secondary_contact,
-    location: ProfileDetails.location,
-    address: ProfileDetails.address,
-    region: ProfileDetails.region,
-    postcode: ProfileDetails.postcode,
-    profession: ProfileDetails.profession,
-    work_experiences: ProfileDetails.work_experiences,
-    qualification: ProfileDetails.qualification,
-  }; */
+
   const initialState = {
     full_name: "",
     date_of_birth: "",
@@ -38,16 +28,16 @@ function ProfileSettingForm() {
   // const [syncprofileData, setProfileData] = useState(initialState);
 
   useEffect(() => {
-
     (async () => {
       const userDetailResponse = await handleProfileDetails(
         ProfileDetails?.userInfo?.user_id
       );
 
-      if (userDetailResponse?.data) {
-        const user = userDetailResponse?.data?.data;
+      console.log("Onpage", userDetailResponse);
+
+      if (userDetailResponse?.status === true) {
+        const user = userDetailResponse?.data;
         setProfileData(user);
-        console.log("Onpage", profileData); 
         //dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -55,11 +45,11 @@ function ProfileSettingForm() {
         }, 3000);
       }
     })();
-  }, []);
+  }, [ProfileDetails?.userInfo?.user_id]);
 
   const userData = (e) => {
     const data = { ...profileData };
-    console.log("data",data);
+    console.log("data", data);
     data[e.target.id] = e.target.value;
     setProfileData(data);
   };
@@ -68,7 +58,7 @@ function ProfileSettingForm() {
   //   console.log(ProfileDetails);
   // }, [ProfileDetails])
 
-/*   console.log({
+  /*   console.log({
     user_id: ProfileDetails?.user_id,
     ...profileData
   }); */
@@ -76,22 +66,22 @@ function ProfileSettingForm() {
   const UpdateUserDetailsReq = async () => {
     const updateResponse = await handleUpdateProfileDetails({
       user_id: ProfileDetails?.user_id,
-      ...profileData
+      ...profileData,
     });
-    
+
     console.log("UpdateResponse", updateResponse);
 
-    if (updateResponse?.data?.status === true ) {
+    if (updateResponse?.data?.status === true) {
       setToggleEditDetails(false);
       message.success("Profile Update Success");
-    }else{
+    } else {
       message.warn("There was an error updating!");
     }
   };
 
   return (
     <div>
-      <div className="border rounded-lg bg-zinc-50 m-auto">
+      <div className="border rounded-lg bg-white m-auto shadow-sm py-6">
         <div className="w-4/5 font-poppins mt-6 m-auto">
           <div className="flex mb-4">
             <h1 className="text-2xl font-semibold">Profile Details</h1>
@@ -121,7 +111,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.full_name}
+                    {profileData?.full_name
+                      ? profileData?.full_name
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -140,17 +132,19 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.date_of_birth}
+                    {profileData?.date_of_birth
+                      ? profileData?.date_of_birth
+                      : "Not Added"}
                   </span>
                 )}
               </div>
               <div className="text-lg text-[#808080] leading-8 mb-4 tracking-wide">
-                <span>Work Phone &nbsp;</span>
+                <span>Contact No &nbsp;</span>
                 <br />
                 {toggleEditDetails ? (
                   <input
-                    id="contact_number"
-                    name="contact_number"
+                    id="secondary_contact"
+                    name="secondary_contact"
                     className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
@@ -159,7 +153,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.secondary_contact}
+                    {profileData?.secondary_contact
+                      ? profileData?.secondary_contact
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -178,7 +174,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.location}
+                    {profileData?.location
+                      ? profileData?.location
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -197,7 +195,7 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.address}
+                    {profileData?.address ? profileData?.address : "Not Added"}
                   </span>
                 )}
               </div>
@@ -218,7 +216,7 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.region}
+                    {profileData?.region ? profileData?.region : "Not Added"}
                   </span>
                 )}
               </div>
@@ -237,7 +235,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.postcode}
+                    {profileData?.postcode
+                      ? profileData?.postcode
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -256,7 +256,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.profession}
+                    {profileData?.profession
+                      ? profileData?.profession
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -275,7 +277,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.work_experiences}
+                    {profileData?.work_experiences
+                      ? profileData?.work_experiences
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -294,7 +298,9 @@ function ProfileSettingForm() {
                   />
                 ) : (
                   <span className="text-sm text-black">
-                    {profileData?.qualification}
+                    {profileData?.qualification
+                      ? profileData?.qualification
+                      : "Not Added"}
                   </span>
                 )}
               </div>
@@ -302,27 +308,26 @@ function ProfileSettingForm() {
           </div>
 
           {toggleEditDetails ? (
-          <div className="flex justify-center my-10 gap-1">
-            <div>
-              <button
-                className="h-10 px-5 w-full text-black bg-white border-2 border-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-brand-color hover:text-brand-color tracking-wide"
-                onClick={() => setToggleEditDetails(false)}
-              >
-                Cancel
-              </button>
+            <div className="flex justify-center my-10 gap-1">
+              <div>
+                <button
+                  className="h-10 px-5 w-full text-black bg-white border-2 border-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-brand-color hover:text-brand-color tracking-wide"
+                  onClick={() => setToggleEditDetails(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  onClick={UpdateUserDetailsReq}
+                  className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-brand-color tracking-wide"
+                >
+                  Save
+                </button>
+              </div>
             </div>
-            <div>
-              <button
-                type="submit"
-                onClick={UpdateUserDetailsReq}
-                className="h-10 px-5 w-full text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-brand-color tracking-wide"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-          ):null
-          }
+          ) : null}
         </div>
       </div>
     </div>

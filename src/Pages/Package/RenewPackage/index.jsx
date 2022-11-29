@@ -1,6 +1,4 @@
-import { Popconfirm } from "antd";
 import React, { useState } from "react";
-import Icons from "../../../Components/Shared/Icons";
 
 const RenewPackage = () => {
   //   const [Plans, setPlans] = useState([]);
@@ -24,17 +22,17 @@ const RenewPackage = () => {
               activePackages?.map((plan, i) => ( */}
             <div>
               <div
-                // className={`cursor-pointer ${
-                //   selected1.includes(plan.id)
-                //     ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
-                //     : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
-                // }`}
-                className={`cursor-pointer ${
-                  selected1.includes(plan.id)
-                    ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
-                    : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
-                }`}
-                // onClick={() => updateSelected1(plan.id)}
+              // className={`cursor-pointer ${
+              //   selected1.includes(plan.id)
+              //     ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
+              //     : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
+              // }`}
+              // className={`cursor-pointer ${
+              //   selected1.includes(plan.id)
+              //     ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
+              //     : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
+              // }`}
+              // onClick={() => updateSelected1(plan.id)}
               >
                 {/* {(userDetails?.userInfo?.role_id === 1 ||
                       userDetails?.userInfo?.role_id === 2) && ( */}
@@ -91,11 +89,11 @@ const RenewPackage = () => {
                 </div>
               </div>
             </div>
-            )) ) : (
+            {/* )) ) : ( */}
             <div className="font-poppins text-lg text-center">
               No Active Package
             </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>
