@@ -1,8 +1,6 @@
-import { Carousel } from "antd";
+import "antd/dist/antd.css";
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
-import businessLogos from "../../assets/Images/partner-logos.png";
-import "antd/dist/antd.css";
 
 /* const contentStyle = {
   margin: 0,

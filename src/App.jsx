@@ -10,7 +10,6 @@ import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
 import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
-import LandingPage from "./Pages/LandingPage";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
 import RenewPackage from "./Pages/Package/RenewPackage";
@@ -22,8 +21,9 @@ import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
-import HomePage from "./Pages/Pilot";
+import HomePage from "./Pages/LandingPage";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
+import Layout from "./Pages/Layout";
 
 function App() {
   // useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />}>
+        <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
@@ -52,10 +52,10 @@ function App() {
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="home" element={<HomePage />} />
+        <Route path="welcome" element={<HomePage />} />
         {/* <Route path="package-create" element={<Package />} /> */}
         {/* <Route
           path="subscription/edit-package/:id"

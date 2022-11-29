@@ -27,7 +27,7 @@ function Header() {
             </span>
           </div>
           <div className="w-1/2 m-auto my-8 py-10">
-            <div className="bg-white rounded-xl flex items-center px-2 m-0">
+            <div className="bg-white rounded-xl flex  items-center px-2 m-0">
               {/* <AiOutlineSearch size={25}/> */}
               <input
                 className="w-[70%] bg-transparent focus:outline-none text-lg py-4 xl:py-2 px-4"
@@ -50,7 +50,7 @@ function Header() {
                       alt=""
                     />
                   </div>
-                  <div className="inline-block">
+                  <div className="inline-block animate-pulse">
                     <img
                       src={flare}
                       className="inline-block w-1/3 mr-30 right-20"
