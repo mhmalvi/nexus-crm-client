@@ -10,19 +10,21 @@ function QualitySection() {
   return (
     <div className="w-full pb-30">
       <div className="items-center m-auto z-50 pt-80">
-        <div className="items-center m-auto pt-40 mx-8"> {/* w-2/3  */}
+        <div className="items-center m-auto pt-40 mx-8">
+          {" "}
+          {/* w-2/3  */}
           <div className="text-center m-auto pb-8">
             <span className="font-poppins text-4xl text-black font-bold justify-center text-center">
-              We have the Best Solution
-              <br /> for your Business
+              The Most Effective CRM <br /> Features for Your Business
             </span>
           </div>
           <div className="bg-home-color rounded-lg p-4">
+            {/* particles row */}
             <div className="grid grid-cols-4 font-poppins text-white">
               <div className="flex">
                 <div className="m-auto"></div>
                 <div className="m-auto">
-                  <img src={group269} className="" alt="" />
+                  <img src={group269} className="relative left-2" alt="" />
                 </div>
               </div>
               <div></div>
@@ -34,54 +36,58 @@ function QualitySection() {
                 <div></div>
               </div>
             </div>
+            {/* contents row */}
             <div className="flex justify-evenly font-poppins text-white p-4">
-              <div className="flex-col justify-start">
+              <div className="w-1/3 flex-col justify-start">
                 <div className="px-4">
                   <Icons.Shield width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  High security to protect from piracy
+                  Strong security to protect your data
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  Our multi-layered security features will protect your
+                  information and privacy from any threats
                 </div>
               </div>
-              <div className="flex-col justify-start">
+              <div className="w-1/3 flex-col justify-start">
                 <div className="px-4">
                   <Icons.Thumbs width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Premium quality performance
+                Superb performance  
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                Experience premium results with an amazing level of efficiency with our CRM
                 </div>
               </div>
-              <div className="flex-col justify-between">
+              <div className="w-1/3 flex-col justify-between">
                 <div className="px-4">
                   <Icons.Headphone width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Full time customer support - 24/7
+                24/7 customer support  
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                An expert team to give you full-time support at any stage of your operation  
                 </div>
               </div>
             </div>
+            {/* particles row */}
             <div className="grid grid-cols-6 font-poppins text-white p-4">
               <div className="flex justify-between gap-10">
-                <div className="m-auto">
-                  <img src={group277} className="" alt="" />
+                <div className="">
                 </div>
                 <div className="m-auto">
-                  <img src={Vector} className="" alt="" />
+                <img src={group277} className="" alt="" />
                 </div>
               </div>
-              <div></div>
+              <div className="flex justify-between gap-10">
+                <div className=""></div>
+                <div className="m-auto">
+                  <img src={Vector} className="relative top-8 " alt="" />
+                </div>
+              </div>
               <div></div>
               <div></div>
               <div></div>

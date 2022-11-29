@@ -2,7 +2,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { handlePasswordReset } from "../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
 

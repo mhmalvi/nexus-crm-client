@@ -1,19 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { Menu } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
-import {
-  AppstoreOutlined,
-  CalendarOutlined,
-  LinkOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Menu, message } from "antd";
 
 /* function getItem(label, key, icon, children) {
   return {

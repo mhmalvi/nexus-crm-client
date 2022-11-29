@@ -21,18 +21,15 @@ const PricingSection = () => {
     <div className="pb-40">
       <div className="text-center m-auto pb-10">
         <div className="font-poppins text-4xl text-black font-bold justify-center text-center">
-          We have the Best Solution
-          <br /> for your Business
+          Pricing plans to suit <br /> your specific needs  
         </div>{" "}
         <br />
-        <div className="text-sm">
-          Lorem ipsum dolor sit amet, consetetur <br /> sadipscing elitr, sed
-          diam nonumy eirmod tempor <br /> invidunt ut labore et dolore magna
-          aliquyam erat.
+        <div className="text-base">
+          Please take a look at the range of plans that we are offering  
         </div>
       </div>
       <div className="w-1/4 pb-10 m-auto">
-        <div className="hidden lg:flex items-center bg-[#E0E4FC] rounded-3xl p-2 text-[14px]">
+        <div className="hidden lg:flex items-center bg-[#E0E4FC] font-semibold rounded-3xl p-2">
           <p className="w-1/2 text-center p-2 m-auto">Monthly</p>
           <p className="w-1/2 bg-black text-white text-center rounded-2xl py-4 m-auto">
             Yearly
@@ -50,7 +47,7 @@ const PricingSection = () => {
               <div className="font-poppins text-4xl text-black font-bold">
                 Regular
               </div>
-              <div className="text-md pb-8">Starter Plan</div>
+              <div className="text-md font-semibold pb-8">Starter Plan</div>
             </div>
           </div>
           <div className="w-full border"></div>
@@ -79,7 +76,7 @@ const PricingSection = () => {
             </ul>
           </div>
           <div className="text-sm text-center pb-18">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+          Basic features at an affordable rate
           </div>
         </div>
         {/* Card2 */}
@@ -92,7 +89,7 @@ const PricingSection = () => {
               <div className="font-poppins text-4xl text-black font-bold">
                 Plantinum
               </div>
-              <div className="text-md pb-8">For the best results</div>
+              <div className="text-md font-semibold pb-8">For the best results</div>
             </div>
           </div>
           <div className="w-full border"></div>
@@ -121,7 +118,7 @@ const PricingSection = () => {
             </ul>
           </div>
           <div className="text-sm text-center pb-18">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+          A premium plan for top-notch results  
           </div>
         </div>
         {/* Card3 */}
@@ -134,7 +131,7 @@ const PricingSection = () => {
               <div className="font-poppins text-4xl text-black font-bold">
                 Standard
               </div>
-              <div className="text-md pb-8">Most popular</div>
+              <div className="text-md font-semibold pb-8">Most popular</div>
             </div>
           </div>
           <div className="w-full border"></div>
@@ -163,12 +160,12 @@ const PricingSection = () => {
             </ul>
           </div>
           <div className="text-sm text-center pb-18">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+          The most popular pricing plan
           </div>
         </div>
       </div>
       <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
-        <a className="text-md text-white font-semibold" href="">
+        <a className="text-md text-white font-semibold" href="/">
           Explore More
         </a>
       </div>
