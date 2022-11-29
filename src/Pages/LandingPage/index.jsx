@@ -22,7 +22,7 @@ import PaymentStatus from "../Payments";
 import Invoice from "../Payments/Invoice";
 import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
-import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
+//import CompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import UserProfile from "../Profile/UserProfile";
 import EditProfile from "../Profile/EditProfile";
 

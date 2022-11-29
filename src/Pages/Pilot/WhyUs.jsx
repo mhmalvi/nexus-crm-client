@@ -1,56 +1,54 @@
 import React from "react";
-//import Icons from "../../Components/Shared/Icons";
-//mport Vector from "../../assets/Images/Vector.svg";
-import { useLottie } from "lottie-react";
-import groovyWalkAnimation from "../../assets/Gif/growth-level.json";
+import Torch from "../../assets/Gif/growth-level.gif";
+import NumberOne from "../../assets/Gif/number-one.gif";
+import NumberTwo from "../../assets/Gif/number-two.gif";
+import Numberthree from "../../assets/Gif/number-three.gif";
 
 function WhyUsSectionSection() {
-  const options = {
-    animationData: groovyWalkAnimation,
-    loop: true
-  };
-  const { View } = useLottie(options);
-
   return (
     <div className="w-full pb-30">
       <div className="items-center">
         <div className="items-center m-auto">
           {/* w-2/3  */}
           <div className="flex font-poppins text-black p-4">
-            <div className="w-1/2 flex-col justify-start relative">
-              <div className="w-[100px]">{View}</div>
+            <div className="w-1/2 flex-col justify-start relative px-5">
+              <div className="w-[100px] absolute -top-4 -left-0"><img src={Torch} alt="" /></div>
               <div className="text-xl px-4 py-4 font-semibold text-center">
-                Why should you work with us?
+                Why Should You Choose Us?
               </div>
-              <div className="text-5xl font-bold px-4">
-                To upscale your business to the next level
+              <div className="text-5xl font-bold px-4 relative">
+                Revamp your business to elevate it to the next level
               </div>
               <div className="text-sm px-4 py-4">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua invidunt ut labore.
+                A powerful CRM package can significantly impact the overall
+                business performance. You can create a significant positive
+                impact on your business processes by using our CRM solutions.
               </div>
             </div>
-            <div className="w-1/2 flex-col justify-start">
-              <div className="flex">
-                <div></div>
-                <div className="text-xl px-4 py-4 font-semibold">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod.
+            <div className="w-1/2 flex-col justify-start pr-20">
+            <div className="flex py-4">
+                <div className="pr-4">
+                  <img src={NumberOne} width={60} alt="" />
+                </div>
+                <div className="text-xl font-semibold pr-10">
+                Increase your overall sales and nurture your leads  
                 </div>
               </div>
-              <div className="flex">
-                <div></div>
-                <div className="text-xl px-4 py-4 font-semibold">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod.
+              <div className="flex py-4">
+                <div className="pr-6">
+                  <img src={NumberTwo} width={60} alt="" />
+                </div>
+                <div className="text-xl font-semibold">
+                  Simplify the communication process with the prospective leads
                 </div>
               </div>
-              <div className="flex">
-                <div></div>
-                <div className="text-xl px-4 py-4 font-semibold">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod.
+              <div className="flex py-4">
+                <div className="pr-6">
+                  <img src={Numberthree} width={60} alt="" />
+                </div>
+                <div className="text-xl font-semibold">
+                  Maintain an accurate and secure information database and
+                  reports
                 </div>
               </div>
             </div>

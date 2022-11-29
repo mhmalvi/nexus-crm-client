@@ -2,6 +2,9 @@ import React from "react";
 import Icons from "../../Components/Shared/Icons";
 import Vector from "../../assets/Images/Vector.svg";
 import group259 from "../../assets/Images/group259.svg";
+import img46 from "../../assets/Images/img46.png";
+import group277 from "../../assets/Images/group277.svg";
+import group278 from "../../assets/Images/group278.svg";
 
 function AboutUsSection() {
   return (
@@ -15,7 +18,7 @@ function AboutUsSection() {
               About Us
             </div>
             <div className="font-poppins text-5xl text-black font-bold justify-center text-center pb-6">
-              We are here for your convenience
+              We will help you to reach your <br /> business goals
             </div>
             <div className="text-lg pb-16">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -24,34 +27,57 @@ function AboutUsSection() {
               et justo duo dolores et ea rebum.
             </div>
           </div>
-          <div className="bg-home-color rounded-lg p-4">
-            <div className="grid grid-cols-4 font-poppins text-white">
+          <div className="grid grid-cols-4 font-poppins text-white">
               <div className="flex">
-                <div className="m-auto"></div>
-                <div className="m-auto absolute">
-                  <img src={Vector} className="" alt="" />
-                </div>
-              </div>
-              <div></div>
-              <div></div>
-              <div className="grid grid-cols-2 justify-end">
-                <div className="">
-                  <img src={group259} className="w-full" alt="" />
-                </div>
+                <div></div>
                 <div></div>
               </div>
+              <div>
+                <img src={Vector} className="relative top-22" alt="" />
+              </div>
+              <div></div>
+              <div className="grid grid-cols-2 justify-end">
+                <div></div>
+                <div>
+                  <img
+                    src={group259}
+                    className="relative top-30 left-6"
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
+          <div className="bg-home-color rounded-lg p-4 pt-16">
+            {/* <div className="grid grid-cols-4 font-poppins text-white">
+              <div className="flex">
+                <div></div>
+                <div></div>
+              </div>
+              <div>
+                <img src={Vector} className="relative -top-14" alt="" />
+              </div>
+              <div></div>
+              <div className="grid grid-cols-2 justify-end">
+                <div></div>
+                <div>
+                  <img
+                    src={group259}
+                    className="relative -top-10 left-10"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div> */}
             <div className="flex justify-evenly font-poppins text-white px-16 pb-16">
               <div className="flex-col justify-start">
                 <div className="px-4">
                   <Icons.Thumbs width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Best in interaction
+                  Full-time support
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  A dedicated and passionate team to solve any issues
                 </div>
               </div>
               <div className="flex-col justify-start">
@@ -59,11 +85,10 @@ function AboutUsSection() {
                   <Icons.Authenticity width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Authenticity
+                  Affordable pricing
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  Affordable pricing plans according to your budget
                 </div>
               </div>
               <div className="flex-col justify-between">
@@ -71,11 +96,10 @@ function AboutUsSection() {
                   <Icons.EmailSupport width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Email Support
+                  Intuitive features
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  User-friendly features that get the job done
                 </div>
               </div>
             </div>
@@ -85,11 +109,10 @@ function AboutUsSection() {
                   <Icons.Discount width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Discounts Available
+                  Impactful Metrics
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  Useful metrics for a clear representation of your data
                 </div>
               </div>
               <div className="flex-col justify-start">
@@ -97,11 +120,10 @@ function AboutUsSection() {
                   <Icons.PowerMkt width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Powerful Marketing
+                  Powerful Technology
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  Built on the latest and most updated technology
                 </div>
               </div>
               <div className="flex-col justify-between">
@@ -109,14 +131,16 @@ function AboutUsSection() {
                   <Icons.InventoryMgt width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                  Inventory management
+                  Strong Security
                 </div>
                 <div className="text-xs px-4">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy.
+                  Powerful security measures for your information
                 </div>
               </div>
             </div>
+          </div>
+          <div className="right">
+            <img src={img46} className="relative float-right -top-24 left-10" alt="" />
           </div>
         </div>
       </div>
