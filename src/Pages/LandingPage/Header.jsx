@@ -1,6 +1,7 @@
 import React from "react";
 import Dashboard from "../../assets/Images/Dashboard.png";
-import flare from "../../assets/Images/firework.png";
+import flareBottom from "../../assets/Images/firework.png";
+import flareTop from "../../assets/Images/firework2.png";
 import headerGroup from "../../assets/Images/header-group.png";
 import AnimatedText from "react-animated-text-content";
 
@@ -67,6 +68,12 @@ function Header() {
             </div>
           </div>
           <div className="relative">
+            <img
+              src={flareTop}
+              className="absolute -top-24 -right-24 animate-pulse"
+              width={140}
+              alt="flare"
+            />
             <div className="bg-white p-4 rounded-lg z-60 bg-opacity-10">
               <div className="bg-white p-4 rounded-lg z-70 bg-opacity-20">
                 <div className="bg-white p-4 rounded-lg z-80 bg-opacity-30">
@@ -89,7 +96,7 @@ function Header() {
               </div>
             </div>
             <img
-              src={flare}
+              src={flareBottom}
               className="relative -top-44 -left-36 animate-pulse"
               width={303}
               alt="flare"

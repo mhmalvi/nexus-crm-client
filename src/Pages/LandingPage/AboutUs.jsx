@@ -13,14 +13,14 @@ function AboutUsSection() {
         <div className="items-center m-auto mx-8">
           {" "}
           {/* w-2/3  */}
-          <div className="text-center m-auto pb-8">
+          <div className="text-center m-auto">
             <div className="font-poppins text-6xl text-black font-bold justify-center text-center pb-6">
               About Us
             </div>
             <div className="font-poppins text-5xl text-black font-bold justify-center text-center pb-6">
               We will help you to reach your <br /> business goals
             </div>
-            <div className="text-lg pb-16">
+            <div className="text-lg">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy eirmod tempor <br /> invidunt ut labore et dolore magna
               aliquyam erat, sed diam voluptua. At vero eos et accusam <br />
@@ -33,7 +33,7 @@ function AboutUsSection() {
                 <div></div>
               </div>
               <div>
-                <img src={Vector} className="relative top-22" alt="" />
+                <img src={Vector} className="relative top-22 animate-pulse" alt="" />
               </div>
               <div></div>
               <div className="grid grid-cols-2 justify-end">
@@ -41,7 +41,7 @@ function AboutUsSection() {
                 <div>
                   <img
                     src={group259}
-                    className="relative top-30 left-6"
+                    className="relative top-30 left-6 animate-bounce"
                     alt=""
                   />
                 </div>

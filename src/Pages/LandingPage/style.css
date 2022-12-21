@@ -1,5 +1,10 @@
-*{
+/* *{
     background: rgb(237,236,255);
     background: linear-gradient(90deg, rgba(237,236,255,1) 2%, rgba(217,218,254,1) 26%, rgba(211,219,254,1) 50%, rgba(202,214,249,1) 71%, rgba(237,236,255,1) 98%);
     background-image: url("assets/Images/header-group.png")
+}
+ */
+
+.moreImpression {
+    background-image: "assets/Images/Backgroud-blur.png"
 }

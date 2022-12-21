@@ -1,10 +1,12 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
+import CurvyArrow from "../../assets/Images/curvy-arrow.png";
 
 function ContactSection() {
   return (
     <div className="pb-40">
-      <div className="font-poppins text-5xl text-black font-bold justify-center text-center pb-16">
+      <div className="relative flex font-poppins text-5xl text-black font-bold justify-center text-center pb-16">
+        <img src={CurvyArrow} alt="" className="absolute -top-20 right-52"/>
         Get in touch with us
       </div>
       {/* first row */}
