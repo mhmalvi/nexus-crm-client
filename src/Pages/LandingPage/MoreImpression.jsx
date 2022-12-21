@@ -1,19 +1,33 @@
 import React from "react";
 import background from "../../assets/Images/Background-blur.png";
 import impressions from "../../assets/Images/impressions.png";
+import AnimatedText from "react-animated-text-content";
+import { Bar, BarChart, Cell, Line, LineChart, Pie, PieChart } from "recharts";
+import Lottie from "react-lottie";
+import graph_diagram from "../../assets/Images/impression_graph.json";
 
 function MoreImpressionSection() {
   return (
     <div className="w-full m-auto">
-      <div className="w-full m-auto absolute">
-        <img src={background} className="w-3/4 h-full m-auto" alt="" />
+      <div className="w-11/12 m-auto absolute">
+        <img src={background} className="h-full m-auto" alt="" />
       </div>
-      <div className="items-center m-auto relative pb-30">
-        <div className="w-2/3 items-center m-auto">
+      <div className=" m-auto relative pb-30">
+        <div className="w-11/12 items-center m-auto p-6">
           <div className="flex justify-center font-poppins text-black p-6">
             <div className="w-1/2 flex-col justify-start m-auto">
               <div className="text-5xl px-4 py-4 font-semibold">
-                More high-quality leads, more conversions
+                <AnimatedText
+                  type="chars"
+                  interval={0.08}
+                  duration={0.75}
+                  animation={{
+                    ease: "ease-in",
+                    scale: 2,
+                  }}
+                >
+                  More high-quality leads, more conversions
+                </AnimatedText>
               </div>
               <div className="text-md px-4">
                 Regarding actual conversions, it’s the quality of leads that
@@ -21,14 +35,80 @@ function MoreImpressionSection() {
                 rate with our CRM.
               </div>
               <div className="w-2/5 bg-black rounded-xl text-center py-4 my-6">
-                <a className="text-md text-white" href="">
+                <a className="text-md text-white" href="/">
                   Get Free Trial
                 </a>
               </div>
             </div>
             <div className="w-1/2 flex-col justify-start">
               <div className="text-xl px-4 py-4 font-semibold">
-                <img src={impressions} className="w-full m-auto" alt="" />
+                <Lottie
+                  options={defaultOptions}
+                  isPaused={false}
+                  height={500}
+                  width={400}
+                />
+                {/* <img src={impressions} className="w-full m-auto" alt="" /> */}
+
+                {/* <div>
+                  <div className="p-6 bg-white rounded-2xl">
+                    <div>
+                      <PieChart width={200} height={200}>
+                        <Pie
+                          data={data}
+                          cx={100}
+                          cy={100}
+                          startAngle={-220}
+                          // endAngle={20}
+                          radius={60}
+                          innerRadius={40}
+                          outerRadius={60}
+                          dataKey="value"
+                          fill="#E0E4FC"
+                        >
+                          <Cell fill="#6B7CFF" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <PieChart width={1600} height={1600}>
+                        <Pie
+                          data={data1}
+                          cx={220}
+                          cy={400}
+                          startAngle={-180}
+                          // endAngle={0}
+                          radius={60}
+                          innerRadius={0}
+                          outerRadius={80}
+                          fill="#6B7CFF"
+                          dataKey="value"
+                        >
+                          <Cell fill="#E0E4FC" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <div>
+                      <LineChart width={100} height={100} data={data2}>
+                        <Line
+                          type="monotone"
+                          legendType="none"
+                          dot={false}
+                          dataKey="pv"
+                          stroke="#6B7CFF"
+                          strokeWidth={4}
+                        />
+                      </LineChart>
+                    </div>
+                    <div>
+                      <BarChart width={40} height={40} data={data3}>
+                        <Bar dataKey="pv" barSize={6} fill="#8884d8" />
+                      </BarChart>
+                    </div>
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -39,3 +119,55 @@ function MoreImpressionSection() {
 }
 
 export default MoreImpressionSection;
+
+const data = [
+  { name: "Group A", value: 98 },
+  { name: "Group A", value: 2 },
+];
+const data1 = [
+  { name: "Group A", value: 75 },
+  { name: "Group A", value: 25 },
+];
+
+const data2 = [
+  {
+    name: "Page Z",
+    pv: 1400,
+  },
+  {
+    name: "Page A",
+    pv: 7400,
+  },
+  {
+    name: "Page B",
+    pv: 5098,
+  },
+  {
+    name: "Page C",
+    pv: 9800,
+  },
+];
+
+const data3 = [
+  {
+    name: "Page A",
+    pv: 7200,
+  },
+  {
+    name: "Page B",
+    pv: 9998,
+  },
+  {
+    name: "Page C",
+    pv: 4000,
+  },
+];
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: graph_diagram,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};

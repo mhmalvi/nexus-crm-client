@@ -9,10 +9,8 @@ import group278 from "../../assets/Images/group278.svg";
 function QualitySection() {
   return (
     <div className="w-full pb-30">
-      <div className="items-center m-auto z-50 pt-80">
+      <div className="items-center m-auto z-50 lg:pt-32  xl:pt-44 2xl:pt-96 mt-14">
         <div className="items-center m-auto pt-40 mx-8">
-          {" "}
-          {/* w-2/3  */}
           <div className="text-center m-auto pb-8">
             <span className="font-poppins text-4xl text-black font-bold justify-center text-center">
               The Most Effective CRM <br /> Features for Your Business
@@ -24,14 +22,22 @@ function QualitySection() {
               <div className="flex">
                 <div className="m-auto"></div>
                 <div className="m-auto">
-                  <img src={group269} className="relative left-2" alt="" />
+                  <img
+                    src={group269}
+                    className="relative left-2 animate-bounce"
+                    alt=""
+                  />
                 </div>
               </div>
-              <div></div>
-              <div></div>
+              <div>&nbsp;</div>
+              <div>&nbsp;</div>
               <div className="grid grid-cols-2 justify-start">
                 <div className="m-auto">
-                  <img src={group268} className="w-full" alt="" />
+                  <img
+                    src={group268}
+                    className="w-full ml-auto animate-pulse"
+                    alt=""
+                  />
                 </div>
                 <div></div>
               </div>
@@ -55,10 +61,11 @@ function QualitySection() {
                   <Icons.Thumbs width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                Superb performance  
+                  Superb performance
                 </div>
                 <div className="text-xs px-4">
-                Experience premium results with an amazing level of efficiency with our CRM
+                  Experience premium results with an amazing level of efficiency
+                  with our CRM
                 </div>
               </div>
               <div className="w-1/3 flex-col justify-between">
@@ -66,26 +73,26 @@ function QualitySection() {
                   <Icons.Headphone width={40} />
                 </div>
                 <div className="text-xl px-4 py-4 font-semibold">
-                24/7 customer support  
+                  24/7 customer support
                 </div>
                 <div className="text-xs px-4">
-                An expert team to give you full-time support at any stage of your operation  
+                  An expert team to give you full-time support at any stage of
+                  your operation
                 </div>
               </div>
             </div>
             {/* particles row */}
             <div className="grid grid-cols-6 font-poppins text-white p-4">
               <div className="flex justify-between gap-10">
-                <div className="">
-                </div>
+                <div className=""></div>
                 <div className="m-auto">
-                <img src={group277} className="" alt="" />
+                  <img src={group277} className="animate-pulse" alt="" />
                 </div>
               </div>
               <div className="flex justify-between gap-10">
                 <div className=""></div>
                 <div className="m-auto">
-                  <img src={Vector} className="relative top-8 " alt="" />
+                  <img src={Vector} className="relative top-8" alt="" />
                 </div>
               </div>
               <div></div>
@@ -94,7 +101,11 @@ function QualitySection() {
               <div className="grid grid-cols-2 justify-start">
                 <div></div>
                 <div>
-                  <img src={group278} className="w-full" alt="" />
+                  <img
+                    src={group278}
+                    className="w-full animate-bounce"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>

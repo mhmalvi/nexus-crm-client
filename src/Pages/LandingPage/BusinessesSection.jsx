@@ -27,22 +27,8 @@ const BusinessSection = () => {
         </span>
       </div>
       <div className="pb-30">
-      <img src={businessLogos} className="m-auto" alt="" />
+        <img src={businessLogos} width="90%" className="m-auto" alt="" />
       </div>
-      {/*       <Carousel afterChange={onChange}>
-        <div>
-          <img src={impressions} style={contentStyle} className="m-auto" alt="" />
-        </div>
-        <div>
-          <img src={impressions} style={contentStyle} className="m-auto" alt="" />
-        </div>
-        <div>
-          <img src={impressions} style={contentStyle} className=" m-auto" alt="" />
-        </div>
-        <div>
-          <img src={impressions} style={contentStyle} className=" m-auto" alt="" />
-        </div>
-      </Carousel> */}
     </>
   );
 };

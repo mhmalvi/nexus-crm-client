@@ -21,31 +21,31 @@ function HomePage() {
       <div>
         <Header />
       </div>
-      <div>
+      <div className="px-20 mx-0.5">
         <QualitySection />
       </div>
-      <div>
+      <div className="px-20 mx-0.5">
         <WhyUsSection />
       </div>
-      <div>
+      <div className="px-20 mx-0.5">
         <MoreImpressionSection />
       </div>
-      <div>
+      <div className="px-8">
         <BusinessSection />
       </div>
-      <div>
+      <div className="px-8">
         <DiscoverMoreSection />
       </div>
-      <div>
+      <div className="px-8">
         <PricingSection />
       </div>
-      <div>
+      <div className="px-8">
         <AboutUsSection />
       </div>
-      <div>
+      <div className="px-8">
         <BlogsSection />
       </div>
-      <div>
+      <div className="px-8">
         <ContactSection />
       </div>
       <div>

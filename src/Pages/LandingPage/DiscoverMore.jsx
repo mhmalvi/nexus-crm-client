@@ -12,7 +12,7 @@ function DiscoverMoreSection() {
               <div className="text-xl px-4 py-4 font-semibold">
                 Discover More
               </div>
-              <div className="text-5xl font-bold px-4">
+              <div className="text-5xl font-bold px-4 text-brand-color text-opacity-80">
                 Analyze your sales and marketing leads
               </div>
               <div className="text-sm px-4 pr-18 py-4">

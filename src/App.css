@@ -380,10 +380,13 @@ table.custom-table > tbody > tr:hover td {
     color: #7944fd;
   }
 }
-
 /* -------------------------- */
 
 /* ------------- Animations------------ */
+.animate-slowbounce {
+  animation: bounce 3s infinite;
+}
+
 @keyframes ping {
   75%,
   100% {
@@ -393,4 +396,16 @@ table.custom-table > tbody > tr:hover td {
 }
 .animate-custom-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-2%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
 }
