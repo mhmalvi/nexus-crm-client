@@ -1,0 +1,32 @@
+.background-shadow-left {
+    position: absolute;
+    z-index: 1;
+    width: 400px;
+    height: 400px;
+    margin-top: 300px;
+    border-radius: 50%;
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #C9D4EF 56.53%, #CACFFA 65.69%);
+    filter: blur(300px);
+}
+
+.background-shadow-right {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    margin-top: 300px;
+    border-radius: 50%;
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #C9D4EF 56.53%, #CACFFA 65.69%);
+    filter: blur(300px);
+}
+
+.card-background {
+    background: conic-gradient(from 61.25deg at 52.47% 52.87%, #6804FD 0deg, #08F969 76.88deg, #100BF7 129.37deg, #F70ED2 232.5deg, #0BA2F7 360deg);
+    mix-blend-mode: normal;
+}
+
+.card:hover {
+    background: radial-gradient( 180px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%);
+}
+
