@@ -44,6 +44,7 @@ const CompanyDetails = () => {
 
     (async () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(id);
+      console.log("COOL", companyDetailsResponse);
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
 

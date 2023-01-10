@@ -5,14 +5,15 @@ import AnimatedText from "react-animated-text-content";
 import { Bar, BarChart, Cell, Line, LineChart, Pie, PieChart } from "recharts";
 import Lottie from "react-lottie";
 import graph_diagram from "../../assets/Images/impression_graph.json";
+import "./MoreImpression.css";
 
 function MoreImpressionSection() {
   return (
-    <div className="w-full m-auto">
-      <div className="w-11/12 m-auto absolute">
+    <div className="w-full m-auto rounded-3xl background_img">
+      {/* <div className="w-11/12 m-auto absolute">
         <img src={background} className="h-full m-auto" alt="" />
-      </div>
-      <div className=" m-auto relative pb-30">
+      </div> */}
+      <div className=" m-auto pb-30">
         <div className="w-11/12 items-center m-auto p-6">
           <div className="flex justify-center font-poppins text-black p-6">
             <div className="w-1/2 flex-col justify-start m-auto">
@@ -44,9 +45,9 @@ function MoreImpressionSection() {
               <div className="text-xl px-4 py-4 font-semibold">
                 <Lottie
                   options={defaultOptions}
-                  isPaused={false}
+                  isClickToPauseDisabled={true}
+                  width={"60%"}
                   height={500}
-                  width={400}
                 />
                 {/* <img src={impressions} className="w-full m-auto" alt="" /> */}
 

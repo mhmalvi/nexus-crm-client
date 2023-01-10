@@ -61,6 +61,22 @@ const Login = () => {
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
 
+      if (loginResponse?.data?.data?.flag === 1) {
+        Storage.setItem("crm_email", data.email);
+        Storage.setItem(
+          "crm_password",
+          data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3)
+        );
+      }
+
       message.success("Successfully Logged In");
       setTimeout(() => {
         navigate("/dashboard");
@@ -183,7 +199,7 @@ const Login = () => {
                 <ForgotPassword
                   visibility={tooglePasswordForget}
                   oncancel={(cancel) => setTooglePasswordForget(cancel)}
-                  emaildata ={data.email} 
+                  emaildata={data.email}
                 />
               </div>
               <Input.Password

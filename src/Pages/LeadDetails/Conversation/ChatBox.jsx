@@ -6,12 +6,12 @@ const ChatBox = ({ messageList, setMessageList, socket }) => {
   const filter = new Filter();
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    socket.on("history", (message) => {
-      console.log(message);
-      setMessages(message);
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.on("history", (message) => {
+  //     console.log(message);
+  //     setMessages(message);
+  //   });
+  // }, []);
 
   return (
     <div className="h-100 relative mr-auto mb-2 border py-5 px-2 rounded-2xl font-poppins flex flex-col justify-between">

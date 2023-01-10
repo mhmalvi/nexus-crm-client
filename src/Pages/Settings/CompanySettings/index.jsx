@@ -34,9 +34,9 @@ const CompanySettings = () => {
   const [packageEndTime, setpackageEndTime] = useState("");
 
   useEffect(() => {
-    const packageEnd = new Date(companyDetails?.package_date);
-    packageEnd.setDate(packageEnd.getDate() + 10);
-    setpackageEndTime(packageEnd.toString()?.slice(4, 15));
+    // const packageEnd = new Date(companyDetails?.package_date);
+    // packageEnd.setDate(packageEnd.getDate() + 10);
+    // setpackageEndTime(packageEnd.toString()?.slice(4, 15));
 
     dispatch(setLoader(true));
 
@@ -44,23 +44,32 @@ const CompanySettings = () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(
         userDetails?.userInfo?.client_id
       );
-      if (companyDetailsResponse?.data?.[0]?.logo_id) {
-        const fetchFile = await handleFetchFile(
-          parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
-        );
 
-        const filePath = fetchFile?.data?.[0];
-        setAvatarPreviewer(
-          (
-            process.env.REACT_APP_FILE_SERVER_URL +
-            "/" +
-            filePath?.document_name
-          ).toString()
-        );
-      }
+      console.log("Cooool", companyDetailsResponse);
+      // if (companyDetailsResponse?.data?.[0]?.logo_id) {
+      //   const fetchFile = await handleFetchFile(
+      //     parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
+      //   );
+
+      //   const filePath = fetchFile?.data?.[0];
+      //   setAvatarPreviewer(
+      //     (
+      //       process.env.REACT_APP_FILE_SERVER_URL +
+      //       "/" +
+      //       filePath?.document_name
+      //     ).toString()
+      //   );
+      // }
 
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
+
+        const packageEnd = new Date(
+          companyDetailsResponse?.data?.[0]?.package_date
+        );
+        packageEnd.setDate(packageEnd.getDate() + 10);
+        setpackageEndTime(packageEnd.toString()?.slice(4, 15));
+
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -69,7 +78,7 @@ const CompanySettings = () => {
       }
     })();
   }, [
-    companyDetails?.package_date,
+    // companyDetails?.package_date,
     dispatch,
     userDetails?.userInfo?.client_id,
   ]);

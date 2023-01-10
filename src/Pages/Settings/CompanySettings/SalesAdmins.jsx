@@ -30,7 +30,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
       if (employeeResponse?.status === true) {
-        console.log(employeeResponse?.data);
+        // console.log(employeeResponse?.data);
 
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
@@ -46,7 +46,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
           setCompanyAdvisorEmployees(admins);
           setCompanySalesEmployees(sales);
 
-          console.log("LLLLL", employeeResponse?.data);
+          // console.log("LLLLL", employeeResponse?.data);
 
           setCompanyAdminEmployee(
             (employeeResponse?.data).find(
@@ -87,7 +87,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
 
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
-    console.log(statusUpdateResponse);
+    // console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("User Remove Successfully");
@@ -97,7 +97,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
 
   const handleAddSuspendedEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 0);
-    console.log(statusUpdateResponse);
+    // console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("User Added Successfully");
@@ -107,7 +107,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
 
   const handleSuspendEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 1);
-    console.log(statusUpdateResponse);
+    // console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("User Remove Successfully");
@@ -115,11 +115,11 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
     }
   };
 
-  console.log("companyAdminEmployee", companyAdminEmployee);
-  console.log("companyAdminEmployee", companyAdminEmployee);
-  console.log("companySalesEmployees", companySalesEmployees);
-  console.log("companyAdvisorEmployees", companyAdvisorEmployees);
-  console.log("inactiveSalesEmployees", inactiveSalesEmployees);
+  // console.log("companyAdminEmployee", companyAdminEmployee);
+  // console.log("companyAdminEmployee", companyAdminEmployee);
+  // console.log("companySalesEmployees", companySalesEmployees);
+  // console.log("companyAdvisorEmployees", companyAdvisorEmployees);
+  // console.log("inactiveSalesEmployees", inactiveSalesEmployees);
 
   return (
     <div className="flex justify-between 2xl:justify-evenly mt-12 pt-0.5">

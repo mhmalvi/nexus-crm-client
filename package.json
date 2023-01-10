@@ -1,6 +1,7 @@
 {
   "name": "crm-system",
   "version": "0.1.0",
+  "homepage": "http://smartcrm.quadque.tech/",
   "private": true,
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.1",
@@ -32,6 +33,7 @@
     "react-slick": "^0.29.0",
     "react-stars": "^2.2.5",
     "recharts": "^2.1.13",
+    "serve": "^14.1.2",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.5.2",
     "use-react-screenshot": "^3.0.0",

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { Storage } from "../Shared/utils/store";
 
-const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 export const handleRegistration = async (registrationDetails) => {
   try {
@@ -145,18 +145,18 @@ export const handlefetchNotifications = async (userId) => {
   }
 };
 
-export const handleAddNotification = async (notificationData) => {
-  try {
-    await socket.emit("send_notification", notificationData);
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleAddNotification = async (notificationData) => {
+//   try {
+//     await socket.emit("send_notification", notificationData);
+//   } catch (error) {
+//     return error.response;
+//   }
+// };
 
-export const handleSetReminder = async (reminderData) => {
-  try {
-    await socket.emit("add_reminder", reminderData);
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleSetReminder = async (reminderData) => {
+//   try {
+//     await socket.emit("add_reminder", reminderData);
+//   } catch (error) {
+//     return error.response;
+//   }
+// };

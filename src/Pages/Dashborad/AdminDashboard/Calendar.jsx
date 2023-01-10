@@ -3,18 +3,18 @@ import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
-import { io } from "socket.io-client";
-import { handleAddNotification } from "../../../Components/services/auth";
+// import { io } from "socket.io-client";
+// import { handleAddNotification } from "../../../Components/services/auth";
 import {
   handleAddNotice,
   handleDeleteNotices,
   handleFetchNotices,
 } from "../../../Components/services/company";
-import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
-import { addNotifications } from "../../../features/user/notificationSlice";
+// import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
+// import { addNotifications } from "../../../features/user/notificationSlice";
 import Notice from "./Notice";
 
-const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Calendar = ({
   filterDate,
@@ -90,15 +90,15 @@ const Calendar = ({
     setCurrentDate(dayjs().date() - 1);
   }, []);
 
-  useEffect(() => {
-    socket.on("receive_notification", (data) => {
-      if (data) {
-        handleMessageAudio();
-        dispatch(() => addNotifications(data));
-        // setNotifications(data);
-      }
-    });
-  }, [dispatch, syncNotifications]);
+  // useEffect(() => {
+  //   socket.on("receive_notification", (data) => {
+  //     if (data) {
+  //       handleMessageAudio();
+  //       dispatch(() => addNotifications(data));
+  //       // setNotifications(data);
+  //     }
+  //   });
+  // }, [dispatch, syncNotifications]);
 
   // const dates = [
   //   dayjs().date() - 7 < 0
@@ -223,7 +223,7 @@ const Calendar = ({
         notification_type: "notice",
         status: 0,
       };
-      handleAddNotification(notificationData);
+      // handleAddNotification(notificationData);
 
       const handleAddNotile = await handleAddNotice(
         userDetails?.client_id,

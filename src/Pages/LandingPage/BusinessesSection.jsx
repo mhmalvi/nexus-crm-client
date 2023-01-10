@@ -20,7 +20,7 @@ const BusinessSection = () => {
   }; */
   return (
     <>
-      <div className="text-center m-auto pb-10">
+      <div className="text-center m-auto pb-10 mt-16">
         <span className="font-poppins text-4xl text-black font-bold justify-center text-center">
           We have the Best Solution
           <br /> for your Business

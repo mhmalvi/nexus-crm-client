@@ -18,6 +18,8 @@ const Table = ({
   handleSyncLeadsReq,
   companyEmployeeList,
 }) => {
+  console.log(companyEmployeeList);
+
   // const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
@@ -117,7 +119,7 @@ const Table = ({
                   className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
                   onClick={handleSyncLeadsReq}
                 >
-                  Sync Leads
+                  Sync Leadss
                 </button>
               </div>
             )}
@@ -397,21 +399,6 @@ const Table = ({
                                   className="rounded-full shadow-sm cursor-pointer"
                                   size="30"
                                   color="#1f262a"
-                                  // color={Avatar.getRandomColor("sitebase", [
-                                  //   "red",
-                                  //   "green",
-                                  //   "#728FCE",
-                                  //   "violet",
-                                  //   "#2B547E",
-                                  //   "black",
-                                  //   "#87AFC7",
-                                  //   "Lime",
-                                  //   "#D5D6EA",
-                                  //   "#77BFC7",
-                                  //   "orange",
-                                  //   "#FDD017",
-                                  //   "#665D1E",
-                                  // ])}
                                   name={
                                     companyEmployeeList?.find(
                                       (employee) =>

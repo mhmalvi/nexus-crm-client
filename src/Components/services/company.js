@@ -13,7 +13,7 @@ export const handleCreateCompany = async (companyDetails) => {
 };
 
 export const handleUpdateCompany = async (companyDetails) => {
-  console.log("companyDetails", companyDetails);
+  console.log("updatedCompanyDetails", companyDetails);
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/update`,
@@ -37,11 +37,11 @@ export const handleFetchCompanies = async () => {
 };
 
 export const handleFetchCompanyDetails = async (companyId) => {
-  console.log("companyId", companyId);
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/details`
     );
+    console.log("companyId", result.data);
     return result.data;
   } catch (error) {
     return error.response;

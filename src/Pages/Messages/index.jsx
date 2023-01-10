@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import { addMessages } from "../../features/user/messagesSlice";
 import Message from "./Message";
 
-const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Messages = () => {
   const dispatch = useDispatch();
@@ -16,23 +16,23 @@ const Messages = () => {
     console.log("userDetails", message);
     console.log("userDetails.userInfo.userId", userDetails.userInfo.user_id);
 
-    if (message.receiver_id === userDetails.userInfo.user_id) {
-      await socket.emit("read_message", message.id);
-      socket.on("updated_messages", (data) => {
-        if (data) {
-          console.log(data);
-          // dispatch(addNotifications(data));
-          dispatch(
-            addMessages(
-              data.filter(
-                (element, index) =>
-                  data.findIndex((obj) => obj.room === element.room) === index
-              )
-            )
-          );
-        }
-      });
-    }
+    // if (message.receiver_id === userDetails.userInfo.user_id) {
+    //   await socket.emit("read_message", message.id);
+    //   socket.on("updated_messages", (data) => {
+    //     if (data) {
+    //       console.log(data);
+    //       // dispatch(addNotifications(data));
+    //       dispatch(
+    //         addMessages(
+    //           data.filter(
+    //             (element, index) =>
+    //               data.findIndex((obj) => obj.room === element.room) === index
+    //           )
+    //         )
+    //       );
+    //     }
+    //   });
+    // }
 
     navigate(`/lead/${message?.room_id}`);
   };

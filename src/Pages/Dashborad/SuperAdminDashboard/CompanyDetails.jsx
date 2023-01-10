@@ -215,7 +215,7 @@ const CompanyDetails = () => {
     }
   };
 
-  console.log("companyDetails", companyDetails);
+  console.log("companyDetails for Super Admin", companyDetails);
 
   return (
     <div className="mx-6 py-12">

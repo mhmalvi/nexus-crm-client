@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import Icons from "../../Components/Shared/Icons";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
@@ -27,7 +27,7 @@ import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 
-const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -37,16 +37,16 @@ const Layout = () => {
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
 
-  useEffect(() => {
-    socket.on("receive_reminder", (data) => {
-      openNotification("topRight", data);
-      handleReminderAudio();
-    });
-    // unbind the event handler when the component gets unmounted
-    return () => {
-      socket.off("receive_reminder");
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on("receive_reminder", (data) => {
+  //     openNotification("topRight", data);
+  //     handleReminderAudio();
+  //   });
+  //   // unbind the event handler when the component gets unmounted
+  //   return () => {
+  //     socket.off("receive_reminder");
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (window.location.pathname.length <= 1) {

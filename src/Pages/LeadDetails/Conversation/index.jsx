@@ -6,16 +6,16 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import {
   handlefetchMessages,
-  handleSetReminder,
+  // handleSetReminder,
 } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
 import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";
 
-const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Conversation = ({ id }) => {
   const dispatch = useDispatch();
@@ -76,26 +76,26 @@ const Conversation = ({ id }) => {
       });
   }, [dispatch, id, sync, userDetails?.userInfo?.user_id]);
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      if (data) {
-        handleMessageAudio();
-        setMessageList(() => [...messageList, data]);
-        setSync(!sync);
-      }
-    });
-    socket.on("updated_messages", (data) => {
-      console.log("Message data", data);
-      dispatch(
-        addMessages(
-          data?.filter(
-            (element, index) =>
-              data.findIndex((obj) => obj.room === element.room) === index
-          )
-        )
-      );
-    });
-  }, [dispatch, messageList, sync]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     if (data) {
+  //       handleMessageAudio();
+  //       setMessageList(() => [...messageList, data]);
+  //       setSync(!sync);
+  //     }
+  //   });
+  //   socket.on("updated_messages", (data) => {
+  //     console.log("Message data", data);
+  //     dispatch(
+  //       addMessages(
+  //         data?.filter(
+  //           (element, index) =>
+  //             data.findIndex((obj) => obj.room === element.room) === index
+  //         )
+  //       )
+  //     );
+  //   });
+  // }, [dispatch, messageList, sync]);
 
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
@@ -136,7 +136,7 @@ const Conversation = ({ id }) => {
         message: e.target[0]?.value,
         date_time: dayjs().$d.toString().slice(4, 21),
       };
-      await socket.emit("send_message", messageData);
+      // await socket.emit("send_message", messageData);
       setMessageList(() => [...messageList, messageData]);
       document.getElementById("message").value = "";
       setSync(!sync);
@@ -222,7 +222,7 @@ const Conversation = ({ id }) => {
 
   // For deleting message
   const handleDeleteMessage = async (msgId) => {
-    await socket.emit("delete_message", msgId);
+    // await socket.emit("delete_message", msgId);
     setMessageList(messageList.filter((message) => message.id !== msgId));
     setSync(!sync);
   };
@@ -262,7 +262,7 @@ const Conversation = ({ id }) => {
       notification_type: "reminder",
       status: 0,
     };
-    handleSetReminder(reminderDetails);
+    // handleSetReminder(reminderDetails);
   };
 
   const props = {
