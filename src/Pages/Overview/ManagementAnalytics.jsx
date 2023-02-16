@@ -1,10 +1,31 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import Icons from "../../Components/Shared/Icons";
 import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
-const ManagementAnalytics = () => {
+const ManagementAnalytics = ({ comapnyEmployees }) => {
+  const campaigns = useSelector((state) => state.campaigns?.campaigns);
+  const leades = useSelector((state) => state.leads?.leads);
+  const campaignRatio = [];
+
+  campaigns.forEach((campaign) => {
+    campaignRatio.push({
+      campaign: campaign?.campaign_name,
+      rate:
+        (
+          leades
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status ===6
+            )?.length /
+          leades?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.length
+        ).toFixed(2) * 100,
+    });
+  });
+
   return (
     <div>
       <div className="flex items-start">
@@ -50,7 +71,7 @@ const ManagementAnalytics = () => {
             </div>
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">778</h1>
+                <h1 className="text-lg font-semibold ">{campaigns?.length}</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
                   Total Campaigns
                 </p>
@@ -73,7 +94,9 @@ const ManagementAnalytics = () => {
 
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">15</h1>
+                <h1 className="text-lg font-semibold ">
+                  {comapnyEmployees?.length}
+                </h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
                   Seals Team
                 </p>
@@ -126,7 +149,7 @@ const ManagementAnalytics = () => {
       <div className="mt-10">
         <div>
           <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
-            Lead Convertion Ratio
+            Lead Conversion Ratio
           </h1>
         </div>
         <div>
@@ -141,7 +164,8 @@ const ManagementAnalytics = () => {
             <rcElement.BarChart
               width={500}
               height={200}
-              data={chartData.LeadConvertionData}
+              // data={chartData.LeadConvertionData}
+              data={campaignRatio}
               margin={{
                 top: 50,
                 right: 30,

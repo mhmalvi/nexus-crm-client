@@ -102,7 +102,7 @@ const LeadDetails = () => {
             />
           </div>
           <div>
-            <Conversation id={id} />
+            <Conversation leadDetails={leadDetails} id={id} />
           </div>
           <div>
             <UserDetails

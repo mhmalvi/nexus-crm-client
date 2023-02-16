@@ -79,7 +79,7 @@ export const LeadStatusCustomizedLabel = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`${payload.status} ${value}`}</text>
+      >{`${payload.status}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}

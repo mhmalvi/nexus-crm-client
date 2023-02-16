@@ -5,19 +5,21 @@ import Filter from "bad-words";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ScrollToBottom from "react-scroll-to-bottom";
+// import ScrollToBottom from "react-scroll-to-bottom";
 // import io from "socket.io-client";
+
 import {
   handlefetchMessages,
   // handleSetReminder,
 } from "../../../Components/services/auth";
-import Icons from "../../../Components/Shared/Icons";
-import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
+// import Icons from "../../../Components/Shared/Icons";
+// import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";
+import whatsappLogo from "../../../assets/Images/whatsapp.png";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
-const Conversation = ({ id }) => {
+const Conversation = ({ leadDetails, id }) => {
   const dispatch = useDispatch();
   const filter = new Filter();
   let dayPickerDays = [];
@@ -48,13 +50,6 @@ const Conversation = ({ id }) => {
       const messages = await handlefetchMessages(
         userDetails?.userInfo?.user_id
       );
-      // console.log("messages ------- ", messages);
-      // console.log(
-      //   messages?.filter(
-      //     (element, index) =>
-      //       messages.findIndex((obj) => obj.room === element.room) === index
-      //   )
-      // );
       dispatch(
         addMessages(
           messages?.filter(
@@ -279,6 +274,11 @@ const Conversation = ({ id }) => {
     fileList,
   };
 
+  console.log(
+    "Number....",
+    leadDetails?.leadDetails?.phone_number.replace("+", "")
+  );
+
   return (
     <div className="min-h-full px-6 border-r">
       {userDetails?.userInfo?.role_id === 4 ||
@@ -343,7 +343,7 @@ const Conversation = ({ id }) => {
             Conversion
           </h1>
           {/* --------------- Messages --------------- */}
-          <form
+          {/* <form
             encType="multipart/form-data"
             onSubmit={(e) => {
               fileList.length === 0
@@ -452,22 +452,6 @@ const Conversation = ({ id }) => {
                   name=""
                   id="message"
                 />
-                {/* <div className="mr-2 cursor-pointer">
-                  <label htmlFor="file" className="cursor-pointer">
-                    <Icons.Clip />
-                  </label>
-                  <input
-                    className="hidden"
-                    type="file"
-                    name="file"
-                    id="file"
-                    multiple
-                    onChange={(e) => {
-                      handleSelectFiles(e);
-                    }}
-                  />
-                </div> */}
-
                 <div className="ml-2 flex items-center">
                   <Upload
                     {...props}
@@ -488,7 +472,41 @@ const Conversation = ({ id }) => {
                 </div>
               </div>
             ) : null}
-          </form>
+          </form> */}
+
+          <div>
+            {userDetails?.userInfo?.role_id === 6 ? (
+              <a
+                href={`https://api.whatsapp.com/send?phone=8801710895523`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center">
+                  <img className="w-6" src={whatsappLogo} alt="" />
+                  <span className="text-black font-semibold text-base ml-3">
+                    Open in Whatsapp
+                  </span>
+                </button>
+              </a>
+            ) : (
+              <a
+                href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
+                  "+",
+                  ""
+                )}`}
+                // href="https://wa.me/8801770347582"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center">
+                  <img className="w-6" src={whatsappLogo} alt="" />
+                  <span className="text-black font-semibold text-base ml-3">
+                    Open in Whatsapp
+                  </span>
+                </button>
+              </a>
+            )}
+          </div>
         </div>
         <script
           src="https://secure.ewaypayments.com/scripts/eCrypt.js"
