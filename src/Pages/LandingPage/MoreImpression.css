@@ -1,6 +1,417 @@
-.background_img{
-  background-image: url(../../assets/Images/Background-blur.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  
+.background{
+  background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #dbdaff 8.55%, #d9fedd 27.56%, #c8e0fe 49.89%, #C9D4EF 56.53%, #ced1ee 65.69%);
+  border-radius: 20px;
+  transition-duration: 1s;
 }
+
+.background:hover {
+  background: radial-gradient(220px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 70%);
+  transition-duration: 1s;
+}
+
+.card:hover {
+  background: radial-gradient(100% circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%);
+  transition-duration: 0.8s;
+  transition-delay: 5s;
+}
+
+.impression-effects .grid .grid-row-2 {
+  background-color: #D8FDDE;
+  z-index: 100;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(1) {
+  -moz-box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(1) {
+  /* background-color: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset -20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(2) {
+  /* background: red; */
+  -moz-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(2) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(3) {
+  /* background: red; */
+  -moz-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(3) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(4) {
+  -moz-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(4) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(5) {
+  -moz-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(5) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px -20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(6) {
+  /* background: red; */
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(6) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+.impression-effects .grid .grid-row-2:nth-child(7) {
+  /* background: red; */
+  -moz-box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+  box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(7) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+  box-shadow: inset -20px 20px 70px 70px #D8FDDE;
+}
+
+
+.impression-effects .grid .grid-row-2:nth-child(8) {
+  -moz-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(8) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(9) {
+  -moz-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(9) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(10) {
+  -moz-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(10) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(11) {
+  -moz-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(11) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:nth-child(12) {
+  -moz-box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+}
+
+.impression-effects .grid .grid-row-2:hover:nth-child(12) {
+  /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+  background: transparent;
+  -moz-box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+  -webkit-box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+  box-shadow: inset 20px 20px 70px 70px #D8FDDE;
+}
+/* *********************** */
+
+/* BACKGROUND EFFECT ON MOUSE HOVER */
+
+@property --a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 90deg;
+}
+
+@property --l {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 10%;
+}
+
+@property --c {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #a163ff;
+}
+
+.background-effect {
+  /*  needed for firefox to have a valid output */
+  --a: 20deg;
+  --l: 10%;
+  --c: #4d70ec;
+  /**/
+  transition: --a 0.5s 0.1s, --l 0.5s, --c 0.2s;
+  background: linear-gradient(var(--a), var(--c) var(--l), #41b7fb, var(--c) calc(100% - var(--l)));
+  border-radius: 20px;
+  /* background: conic-gradient(from 61.25deg at 52.47% 52.87%, #a163ff 0deg, #53fd97 76.88deg, #3355d0 129.37deg, #ff61e5 232.5deg, #41b7fb 360deg); */
+  animation: colorEffect 5s linear infinite alternate;
+}
+
+@keyframes colorEffect {
+    from {
+        --a: 20deg;
+        --l: 10%;
+        --c: #a163ff;
+    }
+
+    50% {
+        --c: #ff61e5;
+    }
+
+    to {
+        --a: 300deg;
+        --l: 40%;
+        --c: #53fd97;
+    }
+}
+
+/* MORE IMPRESSION PROGRESS BAR  */
+
+@property --opacity {
+  syntax: '<percentage>';
+  initial-value: 100%;
+  inherits: false;
+}
+
+.test {
+  display: inline-block;
+  border-radius: 100%;
+  background-image: conic-gradient(#6B7CFF var(--opacity),
+      #6B7CFF 10%,
+      rgba(107, 124, 255, var(--opacity)),
+      #e2e2e2,
+      transparent);
+  will-change: transform, background-image;
+  width: 200px;
+  height: 200px;
+  mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
+  -webkit-mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
+
+  animation:
+    conic-gradient 5.5s ease-out 0s infinite none running;
+}
+
+@keyframes conic-gradient {
+  0% {
+  --opacity:0%
+  }
+  50% {
+    --opacity: 0%;
+  }
+  80% {
+    --opacity: 80%;
+  }
+  100% {
+    --opacity: 0%;
+  }
+}
+
+/* MORE IMPRESSION PIE CHART */
+svg {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+circle {
+  fill: rgba(0, 0, 0, 0);
+  stroke-width: 31.8309886184;
+  stroke-dasharray: 0, 0, 0, 100;
+  stroke-dashoffset: 25;
+  -webkit-animation: pie1 3s infinite ease both;
+  animation: pie1 6s infinite ease both;
+}
+
+.pie1 {
+  stroke: hsl(233, 100%, 71%);
+}
+
+.pie2 {
+  stroke: hsl(233, 70%, 50%);
+  -webkit-animation-name: pie2;
+  animation-name: pie2;
+}
+
+.pie3 {
+  stroke: hsl(233, 100%, 20%);
+  -webkit-animation-name: pie3;
+  animation-name: pie3;
+}
+
+.pie4 {
+  stroke: hsl(233, 90%, 80%);
+  -webkit-animation-name: pie4;
+  animation-name: pie4;
+}
+
+/*
+ pie percentage made by stroke-dasharray.
+ stroke-dasharray format is...
+
+ keyframe 100% : 0 offset this-percentage rest
+
+ I added keyframe 50% for infinite presentation.
+*/
+
+/* 1st pie is 40% */
+@-webkit-keyframes pie1 {
+
+  50%,
+  100% {
+    stroke-dasharray: 40, 60, 0, 0;
+  }
+}
+
+@keyframes pie1 {
+
+  50%,
+  100% {
+    stroke-dasharray: 40, 60, 0, 0;
+  }
+}
+
+/* 2nd pie is 30% */
+@-webkit-keyframes pie2 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 40, 30, 30;
+  }
+}
+
+@keyframes pie2 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 40, 30, 30;
+  }
+}
+
+/* 3rd pie is 30% */
+@-webkit-keyframes pie3 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 70, 20, 10;
+  }
+}
+
+@keyframes pie3 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 70, 20, 10;
+  }
+}
+
+/* 4th pie is 10% */
+@-webkit-keyframes pie4 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 90, 10, 0;
+  }
+}
+
+@keyframes pie4 {
+
+  50%,
+  100% {
+    stroke-dasharray: 0, 90, 10, 0;
+  }
+}
+
+
+/* AMI PAGOLLLLLL */
+.additionalEffect {
+    -moz-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+    -webkit-box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+    box-shadow: inset 0px 0px 70px 70px #D8FDDE;
+  }
+
+  .impression-effects .grid .grid-row-2:hover:nth-child(10) {
+    /* background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #D8FDDE 80%); */
+    background: transparent;
+    -moz-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+    -webkit-box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+    box-shadow: inset 0px 20px 70px 70px #D8FDDE;
+  }

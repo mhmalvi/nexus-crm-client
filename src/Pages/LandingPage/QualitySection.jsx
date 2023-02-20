@@ -16,7 +16,7 @@ function QualitySection() {
               The Most Effective CRM <br /> Features for Your Business
             </span>
           </div>
-          <div className="bg-home-color rounded-lg p-4">
+          <div className="bg-home-color rounded-lg p-4 mx-auto">
             {/* particles row */}
             <div className="grid grid-cols-4 font-poppins text-white">
               <div className="flex">
@@ -92,7 +92,7 @@ function QualitySection() {
               <div className="flex justify-between gap-10">
                 <div className=""></div>
                 <div className="m-auto">
-                  <img src={Vector} className="relative top-8" alt="" />
+                  <img src={Vector} className="relative top-14" alt="" />
                 </div>
               </div>
               <div></div>

@@ -5,8 +5,8 @@
     height: 400px;
     margin-top: 300px;
     border-radius: 50%;
-    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #C9D4EF 56.53%, #CACFFA 65.69%);
-    filter: blur(300px);
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
+    filter: blur(200px);
 }
 
 .background-shadow-right {
@@ -17,16 +17,184 @@
     height: 400px;
     margin-top: 300px;
     border-radius: 50%;
-    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #C9D4EF 56.53%, #CACFFA 65.69%);
-    filter: blur(300px);
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
+    filter: blur(200px);
+}
+
+
+.card:hover {
+    background: radial-gradient( 260px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    transition-duration: .2s;
+    transition-delay: 0s;
+}
+
+.service-capbility .grid .grid-row-3{
+    background-color: #E6EBFA;
+    z-index: 100;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(1) {
+    -moz-box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+    box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(1){
+    background-color: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+    box-shadow: inset -20px -20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(2) {
+    /* background: red; */
+    -moz-box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+    box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(2) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+    box-shadow: inset 20px -20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(3) {
+    /* background: red; */
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(3) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(4) {
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(4) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(5) {
+    /* background: red; */
+    -moz-box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+    box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(5) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+    box-shadow: inset -20px 20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(6) {
+    /* background: red; */
+    -moz-box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+    box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(6) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+    box-shadow: inset 20px 20px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(7) {
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(7) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:nth-child(8) {
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+.service-capbility .grid .grid-row-3:hover:nth-child(8) {
+    background: radial-gradient(240px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, #E6EBFA 80%);
+    /* background: transparent; */
+    -moz-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    -webkit-box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+    box-shadow: inset 0px 0px 50px 40px #E6EBFA;
+}
+
+/* *********************** */
+
+@property --a {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 90deg;
+}
+
+@property --l {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 10%;
+}
+
+@property --c {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #a163ff;
 }
 
 .card-background {
-    background: conic-gradient(from 61.25deg at 52.47% 52.87%, #6804FD 0deg, #08F969 76.88deg, #100BF7 129.37deg, #F70ED2 232.5deg, #0BA2F7 360deg);
-    mix-blend-mode: normal;
+    /*  needed for firefox to have a valid output */
+    --a: 20deg;
+    --l: 10%;
+    --c: #4d70ec;
+    /**/
+    transition: --a 0.5s 0.1s, --l 0.5s, --c 0.2s;
+    background: linear-gradient(var(--a), var(--c) var(--l), #41b7fb, var(--c) calc(100% - var(--l)));
+    /* background: conic-gradient(from 61.25deg at 52.47% 52.87%, #a163ff 0deg, #53fd97 76.88deg, #3355d0 129.37deg, #ff61e5 232.5deg, #41b7fb 360deg); */
+    animation: danger 5s 5s linear infinite alternate;
 }
 
-.card:hover {
-    background: radial-gradient( 180px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%);
-}
+@keyframes danger {
+    from {
+        --a: 20deg;
+        --l: 10%;
+        --c: #a163ff;
+    }
 
+    50% {
+        --c: #ff61e5;
+    }
+
+    to {
+        --a: 300deg;
+        --l: 40%;
+        --c: #53fd97;
+    }
+}
