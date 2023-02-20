@@ -1,5 +1,6 @@
 import { Select } from "antd";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import * as chartData from "./data";
 import * as chartUtils from "./utils";
@@ -7,6 +8,12 @@ import * as chartUtils from "./utils";
 const CampaignAnalytics = () => {
   const { Option } = Select;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeCampaign, setActiveCampaign] = useState();
+  const [areawiseLeads, setAreawiseLeads] = useState([]);
+  const [activeCampaignSummary, setActiveCampaignSummary] = useState();
+  const [campaignSummary, setCampaignSummary] = useState([]);
+  const campaigns = useSelector((state) => state.campaigns?.campaigns);
+  const leads = useSelector((state) => state.leads?.leads);
 
   const COLORS = [
     "#34C759",
@@ -17,12 +24,17 @@ const CampaignAnalytics = () => {
     "#ff1c24",
   ];
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  useEffect(() => {
+    setActiveCampaign(campaigns?.[0]?.campaign_id);
+    setActiveCampaignSummary(campaigns?.[0]?.campaign_id);
+  }, [campaigns]);
+
+  const handleAreaChange = (value) => {
+    setActiveCampaign(value);
   };
 
   const handleCampaignSummary = (value) => {
-    console.log(`selected ${value}`);
+    setActiveCampaignSummary(value);
   };
 
   const onPieEnter = useCallback(
@@ -31,6 +43,240 @@ const CampaignAnalytics = () => {
     },
     [setActiveIndex]
   );
+
+  // For Lead Quality Ratio
+  const campaignQualityRatio = [];
+  campaigns.forEach((campaign) => {
+    campaignQualityRatio.push({
+      campaign: campaign?.campaign_name,
+      rate:
+        (
+          leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter((filteredCampaign) => filteredCampaign?.star_review > 2)
+            ?.length /
+          leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.length
+        ).toFixed(2) * 100,
+    });
+  });
+
+  useEffect(() => {
+    // For Areawise Lead Details
+    setAreawiseLeads([
+      {
+        city: "New South Wales",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "nsw"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#8884d8",
+      },
+      {
+        city: "Victoria",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "vic"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#83a6ed",
+      },
+      {
+        city: "Queensland",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "qld"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#8dd1e1",
+      },
+      {
+        city: "Western Australia",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "wa"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#82ca9d",
+      },
+      {
+        city: "South Australia",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "sa"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#d0ed57",
+      },
+      {
+        city: "Tasmania",
+        percentage:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) => filteredCampaign?.work_location === "tas"
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+        fill: "#a4de6c",
+      },
+    ]);
+
+    setCampaignSummary([
+      {
+        status: "New Lead",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 1
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+      {
+        status: "Skilled",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 2
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+      {
+        status: "Called",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 3
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+      {
+        status: "Paid",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 4
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+      {
+        status: "Verified",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 5
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+      {
+        status: "Completed",
+        value:
+          (
+            leads
+              ?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.filter(
+                (filteredCampaign) =>
+                  filteredCampaign?.lead_details_status === 6
+              )?.length /
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length
+          ).toFixed(2) * 100,
+      },
+    ]);
+  }, [activeCampaign, activeCampaignSummary, leads]);
+
+  // console.log("areawiseLeads", areawiseLeads);
+
+  // Campaigns Details
+  const campaignsDetails = [];
+  campaigns.forEach((campaign) => {
+    campaignsDetails.push({
+      campaign: campaign?.campaign_name,
+      "New Lead": leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 1
+        )?.length,
+      skilled: leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 2
+        )?.length,
+      called: leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 3
+        )?.length,
+      paid: leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 4
+        )?.length,
+      verified: leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 5
+        )?.length,
+      completed: leads
+        ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+        ?.filter(
+          (filteredCampaign) => filteredCampaign?.lead_details_status === 6
+        )?.length,
+    });
+  });
 
   return (
     <div className="mt-7 font-poppins">
@@ -48,7 +294,7 @@ const CampaignAnalytics = () => {
             <rcElement.BarChart
               width={500}
               height={300}
-              data={chartData.CampaignDetailsData}
+              data={campaignsDetails}
               margin={{
                 top: 0,
                 right: 28,
@@ -131,7 +377,7 @@ const CampaignAnalytics = () => {
             <rcElement.LineChart
               width={500}
               height={200}
-              data={chartData.campaignLeadQualityData}
+              data={campaignQualityRatio}
               margin={{
                 top: 10,
                 right: 30,
@@ -147,7 +393,7 @@ const CampaignAnalytics = () => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="revenue"
+                dataKey="rate"
                 stroke="#8884d8"
                 fill="#8884d8"
               />
@@ -166,16 +412,18 @@ const CampaignAnalytics = () => {
             </h1>
             <div className="absolute top-6 right-7 float-right font-light">
               <Select
-                defaultValue="#cmp1"
+                defaultValue={campaigns?.[0]?.campaign_name}
+                placeholder={campaigns?.[0]?.campaign_name}
                 style={{
-                  width: 120,
+                  width: 240,
                 }}
-                onChange={handleChange}
+                onChange={handleAreaChange}
               >
-                <Option value="#cmp1">#cmp1</Option>
-                <Option value="#cmp2">#cmp2</Option>
-                <Option value="#cmp3">#cmp3</Option>
-                <Option value="#cmp4">#cmp4</Option>
+                {campaigns?.map((campaign) => (
+                  <Option key={campaign?.id} value={campaign?.campaign_id}>
+                    {campaign?.campaign_name}
+                  </Option>
+                ))}
               </Select>
             </div>
           </div>
@@ -185,7 +433,7 @@ const CampaignAnalytics = () => {
                 cx="50%"
                 cy="50%"
                 outerRadius="90%"
-                data={chartData.AreawiseResponseData}
+                data={areawiseLeads}
               >
                 <rcElement.PolarGrid />
                 <rcElement.PolarAngleAxis dataKey="city" />
@@ -209,16 +457,18 @@ const CampaignAnalytics = () => {
             </h1>
             <div className="absolute top-6 right-7 float-right font-light">
               <Select
-                defaultValue="#cmp1"
+                defaultValue={campaigns?.[0]?.campaign_name}
+                placeholder={campaigns?.[0]?.campaign_name}
                 style={{
-                  width: 120,
+                  width: 240,
                 }}
                 onChange={handleCampaignSummary}
               >
-                <Option value="#cmp1">#cmp1</Option>
-                <Option value="#cmp2">#cmp2</Option>
-                <Option value="#cmp3">#cmp3</Option>
-                <Option value="#cmp4">#cmp4</Option>
+                {campaigns?.map((campaign) => (
+                  <Option key={campaign?.id} value={campaign?.campaign_id}>
+                    {campaign?.campaign_name}
+                  </Option>
+                ))}
               </Select>
             </div>
           </div>
@@ -232,7 +482,7 @@ const CampaignAnalytics = () => {
               <rcElement.Pie
                 activeIndex={activeIndex}
                 activeShape={chartUtils.LeadStatusCustomizedLabel}
-                data={chartData.LeadStatusSummaryData}
+                data={campaignSummary}
                 cx="50%"
                 cy="50%"
                 innerRadius={85}

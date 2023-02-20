@@ -32,12 +32,9 @@ const Campaigns = () => {
         userDetails?.userInfo?.client_id
       );
 
-      console.log("response", response);
-
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
         dispatch(setLoader(false));
-
         setCampaignList(response?.data);
       }
     })();

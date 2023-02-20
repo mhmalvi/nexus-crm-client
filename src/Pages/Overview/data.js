@@ -352,13 +352,11 @@ export const AreawiseResponseData = [
   {
     city: "New South Wales",
     percentage: 20,
-
     fill: "#8884d8",
   },
   {
     city: "Victoria",
     percentage: 26,
-
     fill: "#83a6ed",
   },
   {

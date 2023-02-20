@@ -119,7 +119,7 @@ const Table = ({
                   className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
                   onClick={handleSyncLeadsReq}
                 >
-                  Sync Leadss
+                  Sync Leads
                 </button>
               </div>
             )}

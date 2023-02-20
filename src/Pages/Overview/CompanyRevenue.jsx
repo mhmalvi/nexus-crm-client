@@ -19,7 +19,7 @@ const CompanyRevenue = () => {
             <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
               Company Monthly Revenue Details
             </h1>
-            <div className="absolute top-6 right-7 float-right font-light">
+            {/* <div className="absolute top-6 right-7 float-right font-light">
               <Select
                 defaultValue="ITEC"
                 style={{
@@ -31,7 +31,7 @@ const CompanyRevenue = () => {
                 <Option value="#cmp2">Tiger IT</Option>
                 <Option value="#cmp3">BS23</Option>
               </Select>
-            </div>
+            </div> */}
           </div>
         </div>
         <div>

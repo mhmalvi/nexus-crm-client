@@ -1,6 +1,20 @@
+import { Select } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createFileName, useScreenshot } from "use-react-screenshot";
+import {
+  handleFetchCompanies,
+  handleFetchCompanyEmployees,
+} from "../../Components/services/company";
+import {
+  handleFetchCampaigns,
+  handleFetchLeads,
+} from "../../Components/services/leads";
+import { addCampaigns } from "../../features/Leads/campaignSlice";
+import { addLeads } from "../../features/Leads/leadsSlice";
+import { setLoader } from "../../features/user/userSlice";
 import CampaignAnalytics from "./CampaignAnalytics";
 import CompanyRevenue from "./CompanyRevenue";
 import ManagementAnalytics from "./ManagementAnalytics";
@@ -8,9 +22,75 @@ import SalesAnalytics from "./SalesAnalytics";
 
 const Overview = () => {
   document.title = "Overview";
+  const { Option } = Select;
+
+  const handleChange = (value) => {
+    setActiveCompanies(value);
+    console.log(`selected ${value}`);
+  };
 
   const pdfRef = useRef(null);
   const [image, takeScreenShot] = useScreenshot();
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state.user);
+  const [comapnyEmployees, setComapnyEmployees] = useState();
+  const [activeCompany, setActiveCompanies] = useState("");
+  const [companies, setCompanies] = useState([]);
+  const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
+
+  useEffect(() => {
+    (async () => {
+      const companiesResponse = await handleFetchCompanies();
+      if (companiesResponse?.status === true) {
+        setCompanies(companiesResponse?.data);
+        setActiveCompanies(companiesResponse?.data?.[0]?.id);
+        setDefaultCompany(companiesResponse?.data?.[0]?.name);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    dispatch(setLoader(true));
+
+    (async () => {
+      dispatch(setLoader(true));
+      const response = await handleFetchCampaigns(
+        userDetails?.userInfo?.role === 1
+          ? activeCompany
+          : userDetails?.userInfo?.client_id
+      );
+      if (response?.data) {
+        dispatch(addCampaigns(response?.data));
+        dispatch(setLoader(false));
+      }
+    })();
+
+    (async () => {
+      dispatch(setLoader(true));
+      const leadsResponse = await handleFetchLeads({
+        client_id:
+          userDetails?.userInfo?.role === 1
+            ? activeCompany
+            : userDetails?.userInfo?.client_id,
+      });
+
+      if (leadsResponse?.data) {
+        dispatch(addLeads(leadsResponse?.data));
+        dispatch(setLoader(false));
+      }
+    })();
+
+    (async () => {
+      const employeeResponse = await handleFetchCompanyEmployees(
+        userDetails?.userInfo?.client_id
+      );
+
+      if (employeeResponse?.status === true) {
+        setComapnyEmployees(employeeResponse?.data);
+        dispatch(setLoader(false));
+      }
+    })();
+  }, [activeCompany, dispatch, userDetails?.userInfo]);
 
   useEffect(() => {
     if (
@@ -48,12 +128,32 @@ const Overview = () => {
         <span onClick={getImage}>Export Report</span>
       </div>
 
+      <div className="font-light">
+        <Select
+          id="companies"
+          // defaultValue={companies?.[0]?.name}
+          defaultValue={defaultCompany}
+          placeholder={defaultCompany}
+          // className="absolute top-16 right-0"
+          style={{
+            width: 250,
+          }}
+          onChange={handleChange}
+        >
+          {companies?.map((company) => (
+            <Option value={company?.id}>{company?.name}</Option>
+          ))}
+          {/* <Option value="#cmp2">Tiger IT</Option>
+          <Option value="#cmp3">BS23</Option> */}
+        </Select>
+      </div>
+
       <div ref={pdfRef}>
         {/* Comapny Analytics */}
         <CompanyRevenue />
 
         {/* Management Analitics */}
-        <ManagementAnalytics />
+        <ManagementAnalytics comapnyEmployees={comapnyEmployees} />
 
         {/* Campaign Analitics */}
         <CampaignAnalytics />
