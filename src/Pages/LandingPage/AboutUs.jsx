@@ -8,19 +8,19 @@ import group278 from "../../assets/Images/group278.svg";
 
 function AboutUsSection() {
   return (
-    <div className="w-full pb-36">
+    <div className="w-full pb-36 md:px-20">
       <div className="items-center m-auto z-50">
         <div className="items-center m-auto mx-8">
           {" "}
           {/* w-2/3  */}
           <div className="text-center m-auto">
-            <div className="font-poppins text-6xl text-black font-bold justify-center text-center pb-6">
+            <div className="font-poppins text-3xl md:text-6xl text-black font-bold justify-center text-center pb-6">
               About Us
             </div>
-            <div className="font-poppins text-5xl text-black font-bold justify-center text-center pb-6">
+            <div className="font-poppins text-2xl md:text-5xl text-black font-bold justify-center text-center pb-6">
               We will help you to reach your <br /> business goals
             </div>
-            <div className="text-lg">
+            <div className="text-sm md:text-lg">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy eirmod tempor <br /> invidunt ut labore et dolore magna
               aliquyam erat, sed diam voluptua. At vero eos et accusam <br />
@@ -28,25 +28,29 @@ function AboutUsSection() {
             </div>
           </div>
           <div className="grid grid-cols-4 font-poppins text-white">
-              <div className="flex">
-                <div></div>
-                <div></div>
-              </div>
-              <div>
-                <img src={Vector} className="relative top-22 animate-pulse" alt="" />
-              </div>
+            <div className="flex">
               <div></div>
-              <div className="grid grid-cols-2 justify-end">
-                <div></div>
-                <div>
-                  <img
-                    src={group259}
-                    className="relative top-30 left-6 animate-bounce"
-                    alt=""
-                  />
-                </div>
+              <div></div>
+            </div>
+            <div>
+              <img
+                src={Vector}
+                className="relative top-15 md:top-28 animate-pulse"
+                alt=""
+              />
+            </div>
+            <div></div>
+            <div className="grid grid-cols-2 justify-end">
+              <div></div>
+              <div>
+                <img
+                  src={group259}
+                  className="relative top-30 -left-6 animate-bounce"
+                  alt=""
+                />
               </div>
             </div>
+          </div>
           <div className="bg-home-color rounded-lg p-4 pt-16">
             {/* <div className="grid grid-cols-4 font-poppins text-white">
               <div className="flex">
@@ -68,8 +72,8 @@ function AboutUsSection() {
                 </div>
               </div>
             </div> */}
-            <div className="flex justify-evenly font-poppins text-white px-16 pb-16">
-              <div className="flex-col justify-start">
+            <div className="flex flex-col md:flex-row justify-evenly font-poppins text-white px-6 md:px-16 pb-6 md:pb-16">
+              <div className="flex-col justify-start pb-6 md:pb-0">
                 <div className="px-4">
                   <Icons.Thumbs width={40} />
                 </div>
@@ -80,7 +84,7 @@ function AboutUsSection() {
                   A dedicated and passionate team to solve any issues
                 </div>
               </div>
-              <div className="flex-col justify-start">
+              <div className="flex-col justify-start pb-6 md:pb-0">
                 <div className="px-4">
                   <Icons.Authenticity width={40} />
                 </div>
@@ -103,8 +107,8 @@ function AboutUsSection() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-evenly font-poppins text-white px-16 pb-16">
-              <div className="flex-col justify-start">
+            <div className="flex flex-col md:flex-row justify-evenly font-poppins text-white px-6 md:px-16 pb-16">
+              <div className="flex-col justify-start pb-6 md:pb-0">
                 <div className="px-4">
                   <Icons.Discount width={40} />
                 </div>
@@ -115,7 +119,7 @@ function AboutUsSection() {
                   Useful metrics for a clear representation of your data
                 </div>
               </div>
-              <div className="flex-col justify-start">
+              <div className="flex-col justify-start pb-6 md:pb-0">
                 <div className="px-4">
                   <Icons.PowerMkt width={40} />
                 </div>
@@ -140,7 +144,11 @@ function AboutUsSection() {
             </div>
           </div>
           <div className="right">
-            <img src={img46} className="relative float-right -top-24 left-10" alt="" />
+            <img
+              src={img46}
+              className="relative float-right -top-24 left-6 md:left-10"
+              alt=""
+            />
           </div>
         </div>
       </div>

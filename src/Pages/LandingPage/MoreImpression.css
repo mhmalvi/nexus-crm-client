@@ -1,3 +1,10 @@
+.MobileStableBackground {
+  background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #dbdaff 8.55%, #d9fedd 27.56%, #c8e0fe 49.89%, #C9D4EF 56.53%, #ced1ee 65.69%);
+  border-radius: 20px;
+  transition-duration: 1s;
+}
+
+/* ####### All EFFECTS START HERE ######### */
 .background{
   background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #dbdaff 8.55%, #d9fedd 27.56%, #c8e0fe 49.89%, #C9D4EF 56.53%, #ced1ee 65.69%);
   border-radius: 20px;
@@ -252,7 +259,7 @@
   inherits: false;
 }
 
-.test {
+.progressBar{
   display: inline-block;
   border-radius: 100%;
   background-image: conic-gradient(#6B7CFF var(--opacity),
@@ -263,6 +270,24 @@
   will-change: transform, background-image;
   width: 200px;
   height: 200px;
+  mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
+  -webkit-mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
+
+  animation:
+    conic-gradient 5.5s ease-out 0s infinite none running;
+}
+
+.progressBarMobile {
+  display: inline-block;
+  border-radius: 100%;
+  background-image: conic-gradient(#6B7CFF var(--opacity),
+      #6B7CFF 10%,
+      rgba(107, 124, 255, var(--opacity)),
+      #e2e2e2,
+      transparent);
+  will-change: transform, background-image;
+  width: 100px;
+  height: 100px;
   mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
   -webkit-mask: radial-gradient(circle, transparent 47%, white calc(47% + 1px));
 

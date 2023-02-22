@@ -1,12 +1,14 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../../Components/Shared/Navbar/Navbar";
 import Header from "./Header";
 import QualitySection from "./QualitySection";
 import WhyUsSection from "./WhyUs";
 import MoreImpressionSection from "./MoreImpression";
+import MoreImpressionMobileSection from "./MoreImpressionMobile";
 import BusinessSection from "./BusinessesSection";
 import DiscoverMoreSection from "./DiscoverMore";
 import PricingSection from "./PricingSection";
+import PricingSectionMobile from "./PricingSectionMobile";
 import AboutUsSection from "./AboutUs";
 import BlogsSection from "./BlogsSection";
 import ContactSection from "./ContactSection";
@@ -15,42 +17,32 @@ import Footer from "./Footer";
 function HomePage() {
   return (
     <>
+      <Navbar />
+      <Header />
+      <QualitySection />
+      <WhyUsSection />
       <div>
-        <Navbar />
+        <div className="hidden lg:block">
+          <MoreImpressionSection />
+        </div>
+        <div className="lg:hidden">
+          <MoreImpressionMobileSection />
+        </div>
       </div>
+      <BusinessSection />
+      <DiscoverMoreSection />
       <div>
-        <Header />
+        <div className="hidden lg:block">
+          <PricingSection />
+        </div>
+        <div className="lg:hidden">
+          <PricingSectionMobile />
+        </div>
       </div>
-      <div className="px-20 mx-0.5">
-        <QualitySection />
-      </div>
-      <div className="px-20 mx-0.5">
-        <WhyUsSection />
-      </div>
-      <div className="px-20 mx-0.5">
-        <MoreImpressionSection />
-      </div>
-      <div className="px-8">
-        <BusinessSection />
-      </div>
-      <div className="px-8">
-        <DiscoverMoreSection />
-      </div>
-      <div className="px-8">
-        <PricingSection />
-      </div>
-      <div className="px-8">
         <AboutUsSection />
-      </div>
-      <div className="px-8">
         <BlogsSection />
-      </div>
-      <div className="px-8">
         <ContactSection />
-      </div>
-      <div>
         <Footer />
-      </div>
     </>
   );
 }

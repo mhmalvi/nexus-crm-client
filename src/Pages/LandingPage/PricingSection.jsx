@@ -69,8 +69,8 @@ const PricingSection = () => {
           </p>
         </div>
       </div>
-      <div className="service-capbility flex justify-evenly px-18 gap-6 pb-18">
-        {/* Card */}
+      {/* <div className="service-capbility flex justify-evenly px-18 gap-6 pb-18">
+        
         <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 card-background">
           <div className="card flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
             {tooglePkg === 1 && <div></div>}
@@ -115,7 +115,7 @@ const PricingSection = () => {
             </div>
           </div>
         </div>
-        {/* Card */}
+        
         <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 card-background">
           <div className="card flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
             {tooglePkg === 2 && <div></div>}
@@ -162,7 +162,7 @@ const PricingSection = () => {
             </div>
           </div>
         </div>
-        {/* Card */}
+        
         <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 card-background">
           <div className="card flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
             {tooglePkg === 3 && <div></div>}
@@ -207,7 +207,7 @@ const PricingSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="service-capbility flex justify-evenly px-18 gap-6 pb-18">
         <div className="relative">
@@ -355,7 +355,7 @@ const PricingSection = () => {
       </div>
 
       <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
-        <a className="text-md text-white font-semibold" href="/">
+        <a className="text-md text-white font-semibold whitespace-nowrap" href="/">
           Explore More
         </a>
       </div>

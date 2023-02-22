@@ -8,43 +8,23 @@ import group278 from "../../assets/Images/group278.svg";
 
 function QualitySection() {
   return (
-    <div className="w-full pb-30">
+    <div className="w-full pb-20 md:pb-30 md:px-20">
       <div className="items-center m-auto z-50 lg:pt-32  xl:pt-44 2xl:pt-96 mt-14">
-        <div className="items-center m-auto pt-40 mx-8">
+        <div className="items-center m-auto pt-27 md:pt-40 mx-8">
           <div className="text-center m-auto pb-8">
-            <span className="font-poppins text-4xl text-black font-bold justify-center text-center">
+            <span className="font-poppins text-2xl md:text-4xl text-black font-bold justify-center text-center">
               The Most Effective CRM <br /> Features for Your Business
             </span>
           </div>
-          <div className="bg-home-color rounded-lg p-4 mx-auto">
-            {/* particles row */}
-            <div className="grid grid-cols-4 font-poppins text-white">
-              <div className="flex">
-                <div className="m-auto"></div>
-                <div className="m-auto">
-                  <img
-                    src={group269}
-                    className="relative left-2 animate-bounce"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div className="grid grid-cols-2 justify-start">
-                <div className="m-auto">
-                  <img
-                    src={group268}
-                    className="w-full ml-auto animate-pulse"
-                    alt=""
-                  />
-                </div>
-                <div></div>
-              </div>
-            </div>
-            {/* contents row */}
-            <div className="flex justify-evenly font-poppins text-white p-4">
-              <div className="w-1/3 flex-col justify-start">
+          <div className="bg-home-color rounded-lg p-4 mx-auto relative">
+            <img
+              src={group269}
+              className="relative top-0 md:left-2 animate-bounce"
+              alt=""
+            />
+            <img src={group268} className="ml-auto animate-pulse" alt="" />
+            <div className="flex flex-col md:flex-row justify-evenly font-poppins text-white p-4">
+              <div className="w-full md:w-1/3 flex-col justify-start pt-5">
                 <div className="px-4">
                   <Icons.Shield width={40} />
                 </div>
@@ -56,7 +36,7 @@ function QualitySection() {
                   information and privacy from any threats
                 </div>
               </div>
-              <div className="w-1/3 flex-col justify-start">
+              <div className="w-full md:w-1/3 flex-col justify-start pt-5">
                 <div className="px-4">
                   <Icons.Thumbs width={40} />
                 </div>
@@ -68,7 +48,7 @@ function QualitySection() {
                   with our CRM
                 </div>
               </div>
-              <div className="w-1/3 flex-col justify-between">
+              <div className="w-full md:w-1/3 flex-col justify-start pt-5">
                 <div className="px-4">
                   <Icons.Headphone width={40} />
                 </div>
@@ -82,7 +62,21 @@ function QualitySection() {
               </div>
             </div>
             {/* particles row */}
-            <div className="grid grid-cols-6 font-poppins text-white p-4">
+            <div>
+
+            <img
+              src={group277}
+              className="relative -top-32 animate-pulse"
+              alt=""
+              />
+            <img src={Vector} className="absolute -bottom-10 md:left-[50%]" alt="" />
+            <img
+              src={group278}
+              className="absolute -right-4 bottom-0 animate-bounce"
+              alt=""
+              />
+              </div>
+            {/* <div className="grid grid-cols-6 font-poppins text-white p-4">
               <div className="flex justify-between gap-10">
                 <div className=""></div>
                 <div className="m-auto">
@@ -108,7 +102,7 @@ function QualitySection() {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

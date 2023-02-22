@@ -225,7 +225,7 @@ function MoreImpressionSection() {
             >
               More high-quality leads, more conversions
             </AnimatedText>
-            <div className="w-1/3 absolute top-56 left-16 z-[100] text-lg">
+            <div className="w-1/3 absolute top-56 left-16 z-[100] text-lg pt-8">
               Regarding actual conversions, it’s the quality of leads that truly
               matter. Generate better leads and increase the conversion rate
               with our CRM.
@@ -236,12 +236,12 @@ function MoreImpressionSection() {
               </a>
             </div>
 
-            <div className="w-1/2 flex-col justify-start absolute top-[20%] right-0 z-[100]">
+            <div className="w-1/2 flex-col justify-start absolute top-[20%] right-10 z-[100]">
               <div className="px-4 py-4">
                 {/* Progress Bar */}
                 <div className="relative w-72 xl:w-86 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] m-auto rounded-xl z-[100] p-10 border shadow-lg">
                   <div className="relative flex justify-center">
-                    <div className="test"></div>
+                    <div className="progressBar"></div>
                     <div className="absolute top-20 text-3xl font-semibold">
                       {
                         <CountUp
