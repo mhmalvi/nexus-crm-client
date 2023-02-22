@@ -113,7 +113,7 @@ export default function Footer() {
         <div className="w-2/12 md:w-1/3 h-1 bg-white my-2"></div>
         <div className="w-full md:w-1/3 flex justify-evenly flex-col-reverse md:flex-row px-4">
           <div className="text-white text-center px-2">
-            © Copyright Quadque Technologies 2022
+            © Copyright Quadque Technologies 2022.
           </div>
           <div className="flex justify-evenly m-auto pb-6 md:pb-0">
             <a title="Facebook" className="px-2">

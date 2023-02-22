@@ -225,7 +225,7 @@ const PricingSection = () => {
               <div className="absolute top-12 left-10 z-[100]">
                 <Icons.Standardpkg width={40} />
               </div>
-              <div className="flex-col absolute top-12 left-20 z-[100]">
+              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
                 <div className=" text-4xl text-black font-bold">Regular</div>
                 <div className="text-md font-semibold pb-8">Starter Plan</div>
               </div>
@@ -272,7 +272,7 @@ const PricingSection = () => {
               <div className="absolute top-12 left-10 z-[100]">
                 <Icons.Standardpkg width={40} />
               </div>
-              <div className="flex-col absolute top-12 left-20 z-[100]">
+              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
                 <div className=" text-4xl text-black font-bold">Plantinum</div>
                 <div className="text-md font-semibold pb-8">
                   For the best results
@@ -321,7 +321,7 @@ const PricingSection = () => {
               <div className="absolute top-12 left-10 z-[100]">
                 <Icons.Standardpkg width={40} />
               </div>
-              <div className="flex-col absolute top-12 left-20 z-[100]">
+              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
                 <div className=" text-4xl text-black font-bold">Standard</div>
                 <div className="text-md font-semibold pb-8">Most popular</div>
               </div>
@@ -355,7 +355,10 @@ const PricingSection = () => {
       </div>
 
       <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
-        <a className="text-md text-white font-semibold whitespace-nowrap" href="/">
+        <a
+          className="text-md text-white font-semibold whitespace-nowrap"
+          href="/"
+        >
           Explore More
         </a>
       </div>

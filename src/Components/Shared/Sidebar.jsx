@@ -26,6 +26,7 @@ const Sidebar = ({
   active,
   setActive,
   Items2,
+  openSideBar,
   toggleMessage,
   setToggleMessage,
   toggleNotification,
@@ -96,10 +97,10 @@ const Sidebar = ({
 
   return (
     <div
-      className="bg-white"
+      className={`bg-white duration-300 ${openSideBar ? "w-0" : "w-[277px]"}`}
       style={{
         // maxWidth: "277px",
-        width: "260px",
+        //width: "260px",
         // width: "100%",
         // paddingRight: "16px",
         overflowX: "hidden",

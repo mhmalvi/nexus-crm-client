@@ -28,8 +28,6 @@ const PricingSectionMobile = () => {
     <div className="pb-20">
       <div className="background-shadow-left"></div>
       <div className="background-shadow-right"></div>
-      <div className="background-shadow-left"></div>
-      <div className="background-shadow-right"></div>
       <div className="text-center m-auto pb-10">
         <div className="font-poppins text-2xl text-black font-bold justify-center text-center">
           Pricing plans to suit <br /> your specific needs

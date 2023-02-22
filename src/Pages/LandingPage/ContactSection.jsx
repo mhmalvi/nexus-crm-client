@@ -68,7 +68,7 @@ function ContactSection() {
         <div className="w-full md:w-1/5 text-start text-black m-auto">
           <div className="flex text-black pb-9">
             <div className="my-auto">
-              <Icons.Phone className="bg-black" />
+              <Icons.Phone />
             </div>
             <div className="flex-col">
               <div className="lg:text-xl px-4 py-2 font-semibold whitespace-nowrap">
@@ -79,7 +79,7 @@ function ContactSection() {
           </div>
           <div className="flex text-black pb-9">
             <div className="my-auto">
-              <Icons.Email className="bg-black" />
+              <Icons.Email />
             </div>
             <div className="flex-col">
               <div className="lg:text-xl px-4 py-2 font-semibold">
@@ -90,7 +90,7 @@ function ContactSection() {
           </div>
           <div className="flex text-black pb-9">
             <div className="my-auto">
-              <Icons.Envelope className="bg-black" />
+              <Icons.Envelope />
             </div>
             <div className="flex-col">
               <div className="lg:text-xl px-4 py-2 font-semibold">
