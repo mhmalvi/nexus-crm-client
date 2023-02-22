@@ -134,6 +134,7 @@ const Icons = {
   PowerMkt,
   InventoryMgt,
   DownArrow,
+  // History
 };
 
 export default Icons;

@@ -34,7 +34,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [toggleApplication, setToggleApplication] = useState(false);
   const [rating, setRating] = useState();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("No Comments Yet");
 
   useEffect(() => {
     if (leadDetails?.leadSalesEmployeeHistory?.length) {
@@ -354,7 +354,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           <input
             className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-semibold font-poppins text-black text-opacity-75"
             onChange={(e) => handleCommentChange(e)}
-            value={comment ? comment : "No Remarks Yet"}
+            value={comment}
           />
           <input
             type="submit"
@@ -500,7 +500,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
         <div className="mt-7.5">
           <div>
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Chek list
+              Check List
             </h1>
           </div>
 
@@ -531,11 +531,11 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           borderRadius: "20px",
         }}
       >
-        <div className="border-b mb-0">
-          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
-            Comment
+        <div className="border-b flex mb-2">
+          <h1 className="text-xl leading-8 mb-0 font-semibold font-poppins text-black text-opacity-50">
+            Comments
           </h1>
-          <Icons.PenUnderLine className="cursor-pointer" />
+          <Icons.History className="w-6 ml-2 cursor-pointer" />
         </div>
         <form
           onSubmit={(e) => handleUpdateComment(e)}
@@ -555,7 +555,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
                 id="lead_comment"
                 className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75"
                 onChange={(e) => handleCommentChange(e)}
-                value={comment ? comment : "No Comments Yet"}
+                value={comment}
               />
               <input
                 type="submit"
