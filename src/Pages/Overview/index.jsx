@@ -24,25 +24,22 @@ const Overview = () => {
   document.title = "Overview";
   const { Option } = Select;
 
-  const handleChange = (value) => {
-    setActiveCompanies(value);
-    console.log(`selected ${value}`);
-  };
-
   const pdfRef = useRef(null);
   const [image, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
   const [comapnyEmployees, setComapnyEmployees] = useState();
-  const [activeCompany, setActiveCompanies] = useState("");
+  const [activeCompany, setActiveCompanies] = useState();
   const [companies, setCompanies] = useState([]);
   const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
 
   useEffect(() => {
     (async () => {
       const companiesResponse = await handleFetchCompanies();
+
       if (companiesResponse?.status === true) {
         setCompanies(companiesResponse?.data);
+
         setActiveCompanies(companiesResponse?.data?.[0]?.id);
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
@@ -55,11 +52,12 @@ const Overview = () => {
     (async () => {
       dispatch(setLoader(true));
       const response = await handleFetchCampaigns(
-        userDetails?.userInfo?.role === 1
+        userDetails?.userInfo?.role_id === 1
           ? activeCompany
           : userDetails?.userInfo?.client_id
       );
-      if (response?.data) {
+
+      if (response?.data?.length) {
         dispatch(addCampaigns(response?.data));
         dispatch(setLoader(false));
       }
@@ -69,7 +67,7 @@ const Overview = () => {
       dispatch(setLoader(true));
       const leadsResponse = await handleFetchLeads({
         client_id:
-          userDetails?.userInfo?.role === 1
+          userDetails?.userInfo?.role_id === 1
             ? activeCompany
             : userDetails?.userInfo?.client_id,
       });
@@ -82,7 +80,9 @@ const Overview = () => {
 
     (async () => {
       const employeeResponse = await handleFetchCompanyEmployees(
-        userDetails?.userInfo?.client_id
+        userDetails?.userInfo?.role_id === 1
+          ? activeCompany
+          : userDetails?.userInfo?.client_id
       );
 
       if (employeeResponse?.status === true) {
@@ -105,10 +105,15 @@ const Overview = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleChange = (value) => {
+    setActiveCompanies(value);
+    console.log(`selected ${value}`);
+  };
+
   const download = (
     image,
     {
-      name = `Overview (${dayjs().$D}-${dayjs().$M}-${dayjs().$y})`,
+      name = `Overview (${dayjs().$D}-${dayjs().$M + 1}-${dayjs().$y})`,
       extension = "jpg",
     } = {}
   ) => {
@@ -128,25 +133,25 @@ const Overview = () => {
         <span onClick={getImage}>Export Report</span>
       </div>
 
-      <div className="font-light">
-        <Select
-          id="companies"
-          // defaultValue={companies?.[0]?.name}
-          defaultValue={defaultCompany}
-          placeholder={defaultCompany}
-          // className="absolute top-16 right-0"
-          style={{
-            width: 250,
-          }}
-          onChange={handleChange}
-        >
-          {companies?.map((company) => (
-            <Option value={company?.id}>{company?.name}</Option>
-          ))}
-          {/* <Option value="#cmp2">Tiger IT</Option>
-          <Option value="#cmp3">BS23</Option> */}
-        </Select>
-      </div>
+      {userDetails?.userInfo?.role_id === 1 ? (
+        <div className="font-light">
+          <Select
+            id="companies"
+            // defaultValue={companies?.[0]?.name}
+            defaultValue={defaultCompany}
+            placeholder={defaultCompany}
+            // className="absolute top-16 right-0"
+            style={{
+              width: 250,
+            }}
+            onChange={handleChange}
+          >
+            {companies?.map((company) => (
+              <Option value={company?.id}>{company?.name}</Option>
+            ))}
+          </Select>
+        </div>
+      ) : null}
 
       <div ref={pdfRef}>
         {/* Comapny Analytics */}

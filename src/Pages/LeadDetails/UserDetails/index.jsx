@@ -414,12 +414,17 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button
-                className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
-                // onClick={handleLeadSuspend}
+              <Tooltip
+                placement="right"
+                title={"If it's a bad lead then you can Suspend it"}
               >
-                Suspend
-              </button>
+                <button
+                  className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
+                  // onClick={handleLeadSuspend}
+                >
+                  Suspend
+                </button>
+              </Tooltip>
             </Popconfirm>
           </div>
         )}
@@ -428,7 +433,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
         <div className="mt-7.5">
           <div>
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Application Form
+              Lead Generation Form
             </h1>
           </div>
           <div className="xl:ml-4 mt-5 flex">
@@ -441,6 +446,24 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             {/* <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
               Edit
             </button> */}
+          </div>
+        </div>
+        <div className="mt-7.5">
+          <div>
+            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+              Application Form
+            </h1>
+            <a
+              className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
+              href="http://smartcrm.quadque.tech/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button className="flex items-center justify-center">
+                <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
+                <span className="ml-2">Downlaod</span>
+              </button>
+            </a>
           </div>
         </div>
 

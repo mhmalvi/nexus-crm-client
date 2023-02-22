@@ -7,22 +7,29 @@ import * as chartUtils from "./utils";
 
 const ManagementAnalytics = ({ comapnyEmployees }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
-  const leades = useSelector((state) => state.leads?.leads);
+  const leads = useSelector((state) => state.leads?.leads);
   const campaignRatio = [];
 
-  campaigns.forEach((campaign) => {
+  campaigns?.forEach((campaign) => {
     campaignRatio.push({
-      campaign: campaign?.campaign_name,
+      // campaign: campaign?.campaign_name,
+      campaign_name: campaign?.campaign_name,
+      campaign: "Jan",
       rate:
-        (
-          leades
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status ===6
-            )?.length /
-          leades?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.length
-        ).toFixed(2) * 100,
+        leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+          ?.length > 0
+          ? (
+              leads
+                ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+                ?.filter(
+                  (filteredCampaign) =>
+                    filteredCampaign?.lead_details_status === 6
+                )?.length /
+              leads?.filter(
+                (lead) => lead?.campaign_id === campaign?.campaign_id
+              )?.length
+            ).toFixed(2) * 100
+          : 0,
     });
   });
 
@@ -174,7 +181,7 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
               }}
             >
               <rcElement.CartesianGrid strokeDasharray="3 3" />
-              <rcElement.XAxis dataKey="campaign" />
+              <rcElement.XAxis dataKey="campaign_name" />
               <rcElement.YAxis domain={[0, 100]} />
               <rcElement.Tooltip />
               <rcElement.Legend />
