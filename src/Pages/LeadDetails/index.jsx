@@ -91,8 +91,8 @@ const LeadDetails = () => {
         </div>
       )}
       <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
-        <div className="relative grid grid-cols-3">
-          <div>
+        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="px-2 xl:px-3">
             <LeadStatus
               leadStatus={leadStatusDetails}
               leadDetails={leadDetails}

@@ -129,20 +129,25 @@ const Layout = () => {
         className={`relative ml-auto duration-300 ${
           openSideBar ? "w-full" : "w-[calc(100vw-277px)]"
         }`}
-        style={
-          {
-            //width: "calc(100vw - 260px)",
-          }
-        }
       >
         <div
           onClick={() => ToogleSideBar(!openSideBar)}
           className="w-16 h-14 absolute top-3"
         >
           {openSideBar ? (
-            <img src={Ham} title="Show sidebar" alt="" className="w-8 m-auto" />
+            <img
+              src={Ham}
+              title="Show sidebar"
+              alt=""
+              className="w-8 m-auto cursor-pointer"
+            />
           ) : (
-            <img src={Cross} title="Hide sidebar" alt="" className="w-10 m-auto" />
+            <img
+              src={Cross}
+              title="Hide sidebar"
+              alt=""
+              className="w-10 m-auto cursor-pointer"
+            />
           )}
         </div>
         <Routes>
