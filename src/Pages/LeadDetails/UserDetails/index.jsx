@@ -349,6 +349,19 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           color1="#E9E9E9"
           color2="#8C64D2"
         />
+
+        <div>
+          <input
+            className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-semibold font-poppins text-black text-opacity-75"
+            onChange={(e) => handleCommentChange(e)}
+            value={comment ? comment : "No Remarks Yet"}
+          />
+          <input
+            type="submit"
+            className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer"
+            value="Save"
+          ></input>
+        </div>
       </div>
 
       {/* User info */}
@@ -522,7 +535,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
             Comment
           </h1>
-          {/* <Icons.PenUnderLine className="cursor-pointer" /> */}
+          <Icons.PenUnderLine className="cursor-pointer" />
         </div>
         <form
           onSubmit={(e) => handleUpdateComment(e)}

@@ -1,13 +1,8 @@
-import React from "react";
-import background from "../../assets/Images/Background-blur.png";
-import impressions from "../../assets/Images/impressions.png";
+import React, { useEffect } from "react";
 import AnimatedText from "react-animated-text-content";
-import { Bar, BarChart, Cell, Line, LineChart, Pie, PieChart } from "recharts";
-import Lottie from "react-lottie";
 import CountUp from "react-countup";
 import graph_diagram from "../../assets/Images/impression_graph.json";
 import "./MoreImpression.css";
-import { useState, useEffect } from "react";
 
 
 const handleOnMouseMove = e => {
@@ -281,28 +276,28 @@ function MoreImpressionSection() {
                   {/* PIE CHART */}
                   <div className="absolute top-10 left-[-35%] xl:left-[-40%] w-32 xl:w-44 h-28 xl:h-32 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] p-2 xl:p-6 rounded-xl border shadow-lg">
                     <div className="text-xs pb-2">Impression</div>
-                    <div className="grid grid-cols-2">
+                    <div className="custom_svg grid grid-cols-2">
                       <svg viewBox="0 0 20.6619772368 20.6619772368">
                         <circle
-                          className="pie1"
+                          className="custom_circle pie1"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie2"
+                          className="custom_circle pie2"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie3"
+                          className="custom_circle pie3"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie4"
+                          className="custom_circle pie4"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
@@ -316,31 +311,31 @@ function MoreImpressionSection() {
                   {/* PIE CHART */}
                   <div className="absolute bottom-1/4 right-[-35%] xl:right-[-40%] w-32 xl:w-44 h-28 xl:h-32 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] p-2 xl:p-6 rounded-xl border shadow-lg">
                     <div className="text-xs pb-2">Impression</div>
-                    <div className="grid grid-cols-2">
+                    <div className="custom_svg grid grid-cols-2">
                       <svg
                         viewBox="0 0 20.6619772368 20.6619772368"
                         width={100}
                       >
                         <circle
-                          className="pie1"
+                          className="custom_circle pie1"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie2"
+                          className="custom_circle pie2"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie3"
+                          className="custom_circle pie3"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"
                         />
                         <circle
-                          className="pie4"
+                          className="custom_circle pie4"
                           cx="31.8309886184"
                           cy="31.8309886184"
                           r="15.9154943092"

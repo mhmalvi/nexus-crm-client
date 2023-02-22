@@ -371,16 +371,16 @@ const LeadStatus = ({
             (userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
             userDetails?.userInfo?.role_id === 5 ? (
-                <Tooltip
-                  placement="top"
-                  title={"No. of phone calls you have made"}
-                >
-              <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
-                <div>
-                  <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
-                    {leadDetails?.leadCallHistory?.length}
-                  </h1>
-                </div>
+              <Tooltip
+                placement="top"
+                title={"No. of phone calls you have made"}
+              >
+                <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+                  <div>
+                    <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                      {leadDetails?.leadCallHistory?.length}
+                    </h1>
+                  </div>
                   <div className="ml-3 mb-0 flex justify-center items-center">
                     <button
                       className="px-1.5 py-0.5 rounded-md bg-black text-white"
@@ -389,8 +389,8 @@ const LeadStatus = ({
                       <Icons.PhoneVolume className="w-3 text-white py-1" />
                     </button>
                   </div>
-              </div>
-                </Tooltip>
+                </div>
+              </Tooltip>
             ) : null)}
 
           {/* For Call History */}
