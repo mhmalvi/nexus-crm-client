@@ -251,7 +251,7 @@ const PricingSection = () => {
                 <strong className="px-4">Ads Preview</strong>
               </li>
               <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
-                The most popular pricing plan
+                Basic features at an affordable rate
               </div>
             </div>
           </div>
@@ -300,7 +300,7 @@ const PricingSection = () => {
                 <strong className="px-4">Ads Preview</strong>
               </li>
               <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
-                The most popular pricing plan
+                A premium plan for top-notch results
               </div>
             </div>
           </div>
