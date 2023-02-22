@@ -97,7 +97,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
 
   const handleAddSuspendedEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 0);
-    // console.log(statusUpdateResponse);
+    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("User Added Successfully");

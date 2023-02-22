@@ -64,6 +64,7 @@ import { ReactComponent as Discount } from "../../assets/Icons/discount.svg";
 import { ReactComponent as EmailSupport } from "../../assets/Icons/email-support.svg";
 import { ReactComponent as PowerMkt } from "../../assets/Icons/power-marketing.svg";
 import { ReactComponent as InventoryMgt } from "../../assets/Icons/inventory-mgt.svg";
+import { ReactComponent as DownArrow } from "../../assets/Icons/down-arrow.svg";
 
 const Icons = {
   CompanyLogo,
@@ -131,7 +132,8 @@ const Icons = {
   Discount,
   EmailSupport,
   PowerMkt,
-  InventoryMgt
+  InventoryMgt,
+  DownArrow,
 };
 
 export default Icons;
