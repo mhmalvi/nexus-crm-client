@@ -33,6 +33,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
   const [prevSalesEmployeesName, setPrevSalesEmployeesName] = useState([]);
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [toggleApplication, setToggleApplication] = useState(false);
+  const [isCommentHistoryOpen, setIsCommentHistoryOpen] = useState(false);
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("No Comments Yet");
 
@@ -111,7 +112,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     document.getElementById("lead_comment").style.caretColor = "black";
   };
 
-  console.log(prevSalesEmployeesName);
+  const handleCommentHistory = () => {};
 
   const confirm = async (e) => {
     const statusUpdateResponse = await handleLeadStatusUpdate(
@@ -500,7 +501,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
         <div className="mt-7.5">
           <div>
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Check List
+              Check Lists
             </h1>
           </div>
 
@@ -525,6 +526,28 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
       </div>
 
       {/* Comments */}
+
+      {/* Comments History */}
+      <Modal
+        visible={isCommentHistoryOpen}
+        onCancel={() => setIsCommentHistoryOpen(false)}
+        footer={false}
+      >
+        <div>
+          <div className="">
+            <div className="font-poppins text-base font-semibold mb-6">
+              Comments History
+            </div>
+
+            <div className="flex items-end mb-4">
+              <div className="mr-4">
+                <h1 className="text-sm font-poppins">Commnet:</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <div
         className="mt-12 border py-3 px-7"
         style={{
@@ -535,7 +558,10 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           <h1 className="text-xl leading-8 mb-0 font-semibold font-poppins text-black text-opacity-50">
             Comments
           </h1>
-          <Icons.History className="w-6 ml-2 cursor-pointer" />
+          <Icons.History
+            className="w-6 ml-2 cursor-pointer"
+            onClick={() => setIsCommentHistoryOpen(true)}
+          />
         </div>
         <form
           onSubmit={(e) => handleUpdateComment(e)}

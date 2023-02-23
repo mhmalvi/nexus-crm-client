@@ -304,6 +304,29 @@ const Sidebar = ({
             </div>
           )}
 
+          {/* Gmail Module */}
+          {/* {(userDetails?.userInfo?.role_id === 1 ||
+            userDetails?.userInfo?.role_id === 2) && ( */}
+          <div>
+            <NavLink
+              to={"/mail"}
+              className="flex items-center text-base cursor-pointer my-5 py-0.5"
+              style={{
+                color: `${active === "requisitions" ? "#7037FF" : "#7C8DB5"}`,
+              }}
+              onClick={() => setActive("requisitions")}
+            >
+              <Icons.Pricing />
+              <span className="ml-4 leading-6 font-medium font-poppins">
+                Gmail
+              </span>
+              {active === "requisitions" && (
+                <div className="ml-auto active-option">|</div>
+              )}
+            </NavLink>
+          </div>
+          {/* )} */}
+
           {/*           <div>
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2 ||

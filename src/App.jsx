@@ -24,6 +24,7 @@ import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import HomePage from "./Pages/LandingPage";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Layout from "./Pages/Layout";
+import GmailModule from "./Pages/Gmail";
 
 function App() {
   // useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          <Route path="mail" element={<GmailModule />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="requisition" element={<RequisitionForm />} />

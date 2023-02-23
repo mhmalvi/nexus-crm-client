@@ -5,7 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
-import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
+// import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
@@ -28,6 +28,7 @@ import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Ham from "../../assets/Images/hamburger.png";
 import Cross from "../../assets/Images/cross.png";
+import GmailModule from "../Gmail";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -165,6 +166,7 @@ const Layout = () => {
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
+          <Route path="mail" element={<GmailModule />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
@@ -238,6 +240,14 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "requisitions",
     component: <Requisitions />,
+    count: 0,
+  },
+  {
+    key: "gmail",
+    name: "gmail",
+    // icon: <Icons.Settings />,
+    label: "Gmail",
+    component: <GmailModule />,
     count: 0,
   },
   {
