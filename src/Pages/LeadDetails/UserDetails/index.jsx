@@ -15,6 +15,7 @@ import {
   handleLeadCommentUpdate,
   handleLeadReviewUpdate,
   handleLeadStatusUpdate,
+  handleReviewRemarksSubmitReq,
 } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
 import CheckList from "./CheckList";
@@ -36,10 +37,11 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
   const [isCommentHistoryOpen, setIsCommentHistoryOpen] = useState(false);
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("No Comments Yet");
+  const [ratingRemarks, setRatingRemarks] = useState("");
 
   useEffect(() => {
+    console.log(leadDetails);
     if (leadDetails?.leadSalesEmployeeHistory?.length) {
-      console.log(leadDetails?.leadSalesEmployeeHistory);
       const salesman = leadDetails?.leadSalesEmployeeHistory?.find(
         (employee) =>
           employee?.sales_user_id === leadDetails?.leadDetails?.sales_user_id
@@ -67,6 +69,11 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
 
     setRating(leadDetails?.leadDetails?.star_review);
     setComment(leadDetails?.leadDetails?.lead_remarks);
+    setRatingRemarks(
+      leadDetails?.leadDetails?.comment === null
+        ? "No comments yet"
+        : leadDetails?.leadDetails?.comment
+    );
   }, [leadDetails]);
 
   const handleCancel = () => {
@@ -133,6 +140,20 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
 
   const cancel = (e) => {
     console.log(e);
+  };
+
+  const handleReviewRemarksSubmit = async () => {
+    const reviewRemarksResponse = await handleReviewRemarksSubmitReq(
+      ratingRemarks,
+      leadDetails?.leadDetails?.lead_id
+    );
+
+    if (reviewRemarksResponse?.status === 200) {
+      message.success("Remark added successfully");
+    } else {
+      message.warn("Something went wrong. Unable to add remark");
+    }
+    console.log("reviewRemarksResponse", reviewRemarksResponse);
   };
 
   return (
@@ -354,14 +375,15 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
         <div>
           <input
             className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-semibold font-poppins text-black text-opacity-75"
-            onChange={(e) => handleCommentChange(e)}
-            value={comment}
+            onChange={(e) => setRatingRemarks(e.currentTarget.value)}
+            value={ratingRemarks}
           />
-          <input
-            type="submit"
+          <span
             className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer"
-            value="Save"
-          ></input>
+            onClick={handleReviewRemarksSubmit}
+          >
+            Save
+          </span>
         </div>
       </div>
 
