@@ -4,21 +4,37 @@ import { IoMenuOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { GrAppsRounded } from "react-icons/gr";
 import guy from "../../assets/Images/guy.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  expandMailSidebar,
+  ContractMailSidebar, selectMailSidebarIsOpen,
+} from "./features/mailSlice";
 
 const GmailNavbar = () => {
+  const dispatch = useDispatch();
+  const isMailSidebarOpen = useSelector(selectMailSidebarIsOpen);
   return (
-    <div className="sticky top-0 flex items-center justify-between py-3 px-6 border-b bg-white">
+    <div className="flex items-center justify-between py-3 px-6">
       {/* Left Section */}
       <div className="flex items-center gap-3">
-        <IoMenuOutline className="hidden md:flex w-8 h-8 text-gray-600" />
-        <div className="w-14 h-[2.5rem] flex  rounded-[0.5rem]  b-red-600">
+        <IoMenuOutline
+          onClick={() => {
+            dispatch(
+              isMailSidebarOpen ? ContractMailSidebar() : expandMailSidebar()
+            );
+          }}
+          className="hidden md:flex w-8 h-8 text-gray-600"
+        />
+        <div className="w-14 h-[2.5rem] flex  rounded-[0.5rem]">
           <img
             src={logo}
             alt=""
             className="object-cover w-full h-full rounded-[0.5rem]"
           />
         </div>
-        <p className="text-[26px] font-semibold   text-gray-600">Gmail</p>
+        <p className="text-[26px] font-semibold   text-gray-600 m-auto">
+          Gmail
+        </p>
       </div>
       {/* Input */}
       <div className="hidden lg:block w-full  ">
@@ -35,13 +51,13 @@ const GmailNavbar = () => {
       </div>
       {/* Right Side */}
       <div className="flex items-center  gap-3">
-        <GrAppsRounded classN ame="w-6 h-6 text-[#98d4fa]" />{" "}
+        <GrAppsRounded className="w-6 h-6 text-[#98d4fa]" />{" "}
         <div className="flex items-center gap-3 border-2 rounded-full border-[#98d4fa]">
-          <div className="w-[35px] h-[35px] flex p-[2px] bg-[#98d4fa] rounded-full">
+          <div className="w-[40px] h-[40px] flex p-[2px] bg-[#98d4fa] rounded-full">
             <img src={guy} alt="" className="object-cover rounded-full" />
           </div>
-          <p className="whitespace-nowrap font-semibold text-[18px] pr-2">
-            Goose Dev
+          <p className="whitespace-nowrap font-semibold text-[14px] pr-2 m-auto">
+            Sunil Shetty
           </p>
         </div>
       </div>

@@ -65,6 +65,7 @@ import { ReactComponent as EmailSupport } from "../../assets/Icons/email-support
 import { ReactComponent as PowerMkt } from "../../assets/Icons/power-marketing.svg";
 import { ReactComponent as InventoryMgt } from "../../assets/Icons/inventory-mgt.svg";
 import { ReactComponent as DownArrow } from "../../assets/Icons/down-arrow.svg";
+import { ReactComponent as Gmail } from "../../assets/Icons/mail.svg";
 
 const Icons = {
   CompanyLogo,
@@ -134,6 +135,7 @@ const Icons = {
   PowerMkt,
   InventoryMgt,
   DownArrow,
+  Gmail,
   // History
 };
 

@@ -1,28 +1,40 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import Compose from "./Compose";
 import Emails from "./Emails";
-import Footer from "./Footer";
+import { selectSendMessageIsOpen } from "./features/mailSlice";
+import { selectMailUser } from "./features/mailUserSlice";
+/* import Footer from "./Footer"; */
+import GmailLogin from "./GmailLogin";
+import GmailNavbar from "./GmailNavbar";
 import Inbox from "./Inbox";
 import LeftSide from "./LeftSide";
-import GmailNavbar from "./GmailNavbar";
 
 const GmailModule = () => {
+  const isMessageOpen = useSelector(selectSendMessageIsOpen);
+  console.log(useSelector(selectSendMessageIsOpen));
+  const user = useSelector(selectMailUser);
+  console.log("mail user", user);
+
   return (
-    <div className="App">
-      {/* Navbar */}
-      <GmailNavbar />
-      <div className="flex">
-        {/* LeftSidebar */}
-        <LeftSide />
-        <div className="w-full">
-          {/* Inbox */}
-          <Inbox />
-          {/* Emails */}
-          <Emails />
-          {/* Footer */}
-          <Footer />
+    <>
+    {user ? (
+      <div className="App pt-16">
+        <GmailNavbar />
+        <div className="flex">
+          <LeftSide />
+          <div className="w-full">
+            <Inbox />
+            <Emails />
+            {/* <Footer /> */}
+            {isMessageOpen && <Compose />}
+          </div>
         </div>
       </div>
-    </div>
+        ) : (
+        <GmailLogin/>
+        )}
+    </>
   );
 };
 

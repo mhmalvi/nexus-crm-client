@@ -13,7 +13,7 @@ import Category from "./Category";
 const Inbox = () => {
   const categories = [
     {
-      logo: <IoMailOutline className="w-[1.3rem] h-[1.3rem]  " />,
+      logo: <IoMailOutline className="w-[1.3rem] h-[1.3rem]" />,
       title: "Important",
       css: "hover:text-yellow-500 focus:text-yellow-500",
     },
@@ -30,7 +30,7 @@ const Inbox = () => {
     {
       logo: <BiNews className="w-[1.3rem] h-[1.3rem]" />,
       title: "News",
-      css: "hover:text-gray-700 focus:text-gray-700",
+      css: "hover:text-red-700 focus:text-gray-700",
     },
     {
       logo: <BsCardChecklist className="w-[1.3rem] h-[1.3rem]" />,
@@ -59,7 +59,7 @@ const Inbox = () => {
       </div>
       {/* Categories */}
 
-      <div className="flex items-center justify-between px-6 border-b py-2 text-gray-500">
+      <div className="w-full flex items-center justify-between px-6 border-b py-2 text-gray-500">
         {categories.map((category) => (
           <Category
             logo={category.logo}

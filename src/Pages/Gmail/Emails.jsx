@@ -1,224 +1,78 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Email from "./Email";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./Firebase/firebase";
+import { Modal } from "antd";
+import EmailDetail from "./EmailDetail";
 
 const Emails = () => {
-  const emails = [
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-    {
-      expeditor: "Designmodo",
-      messageTitle: "Holiday Special!",
-      message: "North Woods Audio and Sound LLC 10% Off Products",
-      timestamp: "11:00 AM",
-    },
-    {
-      expeditor: "Codepen",
-      messageTitle: "Lorem!",
-      message: "Lorem ipsum dolor sit amet consectetur adipisicing",
-      timestamp: "9:00 AM ",
-    },
-    {
-      expeditor: "Corporate",
-      messageTitle: "Codepen!",
-      message: "Amet adipisci praesentium, id soluta ea sit rerum vero",
-      timestamp: "Dec 3",
-    },
-    {
-      expeditor: "Brother",
-      messageTitle: "Lorem!",
-      message: "Vero odio architecto aperiam voluptatum deleniti magnam",
-      timestamp: "Dec 2",
-    },
-  ];
+  const [emails, setEmails] = useState([]);
+  const [selectedEmailId, setSelectedEmailId] = useState();
+  const [selectedEmail, setSelectedEmail] = useState([]);
+  const userCollectionRef = collection(db, "emails");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const mails = [];
+      const querySnapshot = await getDocs(userCollectionRef, "time", "asc");
+      querySnapshot.forEach((doc) => mails.push({ id: doc.id, ...doc.data() }));
+      setEmails(mails);
+    })();
+  }, []);
+
+  useEffect(() => {
+    const selected = emails.find(
+      (doc) => doc.id.toString() === selectedEmailId.toString()
+    );
+    setSelectedEmail(selected);
+    console.log("selected email", selectedEmail);
+  }, [selectedEmailId]);
+
+  console.log("result", emails);
+
+  const showModal = (id) => {
+    setIsModalOpen(true);
+    setSelectedEmailId(id);
+    console.log("selected email id", selectedEmailId);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className=" ">
-      {emails.map((email) => (
-        <Email
-          expeditor={email.expeditor}
-          messageTitle={email.messageTitle}
-          message={email.message}
-          timestamp={email.timestamp}
-        />
-      ))}
-    </div>
+    <>
+      <div>
+        {emails?.map((email) => (
+          <div onClick={() => showModal(email?.id)}>
+            <Email
+              emailId={email?.id}
+              expeditor={email?.to}
+              messageTitle={email?.subject}
+              message={email?.body}
+              timestamp={email?.time}
+            />
+          </div>
+        ))}
+      </div>
+
+      <Modal
+        className=""
+        title={false}
+        footer={false}
+        visible={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={"70%"}
+        height={"80%"}
+      >
+        <EmailDetail selectedEmail={selectedEmail} />
+      </Modal>
+    </>
   );
 };
 

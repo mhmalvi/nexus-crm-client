@@ -133,7 +133,7 @@ const Layout = () => {
       >
         <div
           onClick={() => ToogleSideBar(!openSideBar)}
-          className="w-16 h-14 absolute top-3"
+          className="w-16 h-14 absolute top-3 z-[999999]"
         >
           {openSideBar ? (
             <img

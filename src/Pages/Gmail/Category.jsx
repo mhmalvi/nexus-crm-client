@@ -5,7 +5,7 @@ const Category = ({ logo, title, css }) => {
     <div className={` cursor-pointer flex items-center     `}>
       <button className={`flex items-center gap-2 ${css} `}>
         {logo}
-        <p className="font-semibold text-[17px]">{title}</p>
+        <p className="font-semibold text-[17px] my-auto">{title}</p>
       </button>
     </div>
   );

@@ -316,8 +316,8 @@ const Sidebar = ({
               }}
               onClick={() => setActive("requisitions")}
             >
-              <Icons.Pricing />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <Icons.Gmail />
+              <span className="ml-3 leading-6 font-medium font-poppins">
                 Gmail
               </span>
               {active === "requisitions" && (

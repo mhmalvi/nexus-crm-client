@@ -4,7 +4,7 @@ const SideBtn = ({ title, icon }) => {
   return (
     <div className="text-gray-600 flex items-center gap-2">
       {icon}
-      <p className="font-semibold">{title}</p>
+      <p className="font-semibold my-auto">{title}</p>
     </div>
   );
 };
