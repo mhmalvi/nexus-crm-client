@@ -16,9 +16,9 @@ const EmailDetail = ({ selectedEmail }) => {
             className="object-cover rounded-full w-[40px] h-[40px] "
           />
           <div className="flex-col pl-2">
-            <div className="font-semibold">Daily Star </div>
+            <div className="font-semibold">{selectedEmail?.FromUserName}</div>
             <a href="#" className="text-sm">
-              {selectedEmail?.to}
+              {selectedEmail?.from}
             </a>
           </div>
         </div>

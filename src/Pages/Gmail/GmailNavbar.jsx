@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "antd";
 import logo from "../../assets/Images/logo.png";
 import { IoMenuOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
@@ -9,10 +10,12 @@ import {
   expandMailSidebar,
   ContractMailSidebar, selectMailSidebarIsOpen,
 } from "./features/mailSlice";
+import { selectMailUser } from "./features/mailUserSlice";
 
 const GmailNavbar = () => {
   const dispatch = useDispatch();
   const isMailSidebarOpen = useSelector(selectMailSidebarIsOpen);
+  const mailUser = useSelector(selectMailUser)
   return (
     <div className="flex items-center justify-between py-3 px-6">
       {/* Left Section */}
@@ -54,11 +57,17 @@ const GmailNavbar = () => {
         <GrAppsRounded className="w-6 h-6 text-[#98d4fa]" />{" "}
         <div className="flex items-center gap-3 border-2 rounded-full border-[#98d4fa]">
           <div className="w-[40px] h-[40px] flex p-[2px] bg-[#98d4fa] rounded-full">
-            <img src={guy} alt="" className="object-cover rounded-full" />
+            <img
+              src={mailUser?.photoUrl}
+              alt=""
+              className="object-cover rounded-full"
+            />
           </div>
-          <p className="whitespace-nowrap font-semibold text-[14px] pr-2 m-auto">
-            Sunil Shetty
-          </p>
+          <Tooltip placement="bottom" title={mailUser?.email}>
+            <span className="whitespace-nowrap font-semibold text-[14px] pr-2 m-auto">
+              {mailUser?.displayName}
+            </span>
+          </Tooltip>
         </div>
       </div>
     </div>

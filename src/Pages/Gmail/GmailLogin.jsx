@@ -1,8 +1,27 @@
 import React from "react";
 import GoogleMail from "../../assets/Images/gmail-bg.png";
+import { useDispatch } from "react-redux";
+import { signin } from "./features/mailUserSlice";
+import { auth, provider } from "./Firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const GmailLogin = () => {
-  const Login = () => {};
+  const dispatch = useDispatch();
+  const Login = () => {
+    signInWithPopup(auth, provider)
+      .then(({ user }) => {
+        dispatch(signin({
+          displayName: user.displayName,
+          photoUrl: user.photoURL,
+          email: user.email
+      }))
+        // console.log("auth", user);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+  };
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
       <div>

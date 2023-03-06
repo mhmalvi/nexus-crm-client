@@ -3,13 +3,10 @@ import { BsPencilSquare } from "react-icons/bs";
 import { FaInbox, FaStar } from "react-icons/fa";
 import { MdLabelImportant } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import Compose from "./Compose";
 import {
-  closeSendMessage,
-  openSendMessage,
+  closeMessageBox,
+  openMessageBox,
   selectSendMessageIsOpen,
-  expandMailSidebar,
-  ContractMailSidebar,
   selectMailSidebarIsOpen,
 } from "./features/mailSlice";
 import SideBtn from "./SideBtn";
@@ -46,22 +43,28 @@ const LeftSide = () => {
     },
   ];
   return (
-    <div>
+    <div
+      /* className={`${
+        isMailSidebarOpen ? "hidden" : "w-[13rem]"
+      }`} */
+    >
       {/* <Compose/> */}
-      <div className={`hidden lg:block w-[13rem] p-4 sticky top-20 h-full`}>
+      <div
+        className="lg:block p-4 sticky top-20 h-full"
+      >
         {/* Write Message */}
         <div
           onClick={() => {
-            dispatch(isMessageOpen ? closeSendMessage() : openSendMessage());
+            dispatch(isMessageOpen ? closeMessageBox() : openMessageBox());
           }}
-          className="flex items-center justify-center rounded-full h-14 w-36 shadow-sm  shadow-gray-600 cursor-pointer"
+          className="flex items-center justify-center rounded-2xl h-14 shadow-sm  shadow-gray-600 cursor-pointer px-3"
         >
           <BsPencilSquare className="w-5 h-5 mr-2" />
-          <p className="my-auto">Compose</p>
+          <p className={`my-auto ${isMailSidebarOpen ? "hidden" : "block"}`}>Compose</p>
         </div>
 
         {/* Buttons */}
-        <div className="pl-6 pt-4 space-y-6">
+        <div className="pt-4 space-y-6">
           {buttons.map((button) => (
             <SideBtn icon={button.icon} title={button.title} />
           ))}

@@ -51,7 +51,7 @@ const Emails = () => {
           <div onClick={() => showModal(email?.id)}>
             <Email
               emailId={email?.id}
-              expeditor={email?.to}
+              expeditor={email?.FromUserName}
               messageTitle={email?.subject}
               message={email?.body}
               timestamp={email?.time}

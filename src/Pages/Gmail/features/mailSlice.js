@@ -4,14 +4,14 @@ export const mailSlice = createSlice({
     name: 'mail',
     initialState: {
         sendMessageIsOpen : false,
-        mailSidebarIsOpen : false,
+        mailSidebarIsOpen : true,
     },
     reducers: {
-        openSendMessage: (state) => {
+        openMessageBox: (state) => {
             state.sendMessageIsOpen = true;
             console.log("Top State", state);
         },
-        closeSendMessage: (state) => {
+        closeMessageBox: (state) => {
             state.sendMessageIsOpen = false;
             console.log("Bottom State", state);
         },
@@ -25,7 +25,7 @@ export const mailSlice = createSlice({
         },
     }
 });
- export const { openSendMessage, closeSendMessage, expandMailSidebar, ContractMailSidebar } = mailSlice.actions;
+ export const { openMessageBox, closeMessageBox, expandMailSidebar, ContractMailSidebar } = mailSlice.actions;
  export const selectSendMessageIsOpen = (state) => state.mail.sendMessageIsOpen;
  export const selectMailSidebarIsOpen = (state) => state.mail.mailSidebarIsOpen;
  export default mailSlice.reducer; 

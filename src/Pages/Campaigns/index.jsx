@@ -115,7 +115,7 @@ const Campaigns = () => {
         <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
           {campaignList?.map((campaign, i) => (
             <Campaign key={i} campaign={campaign} />
-          ))}
+          )).reverse()}
         </div>
       )}
     </div>

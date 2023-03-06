@@ -2,12 +2,14 @@ import { message } from "antd";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState } from "react";
 import { GrAttachment } from "react-icons/gr";
-import { useDispatch } from "react-redux";
-import { closeSendMessage } from "./features/mailSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { closeMessageBox } from "./features/mailSlice";
+import { selectMailUser } from "./features/mailUserSlice";
 import { db } from "./Firebase/firebase";
 
 const Compose = () => {
   const dispatch = useDispatch();
+  const mailUser = useSelector(selectMailUser);
   const userCollectionRef = collection(db, "emails");
   const [btnActive, setBtnActive] = useState(false);
 
@@ -20,16 +22,18 @@ const Compose = () => {
     if(to !== "" && body !== ""){
       await addDoc(userCollectionRef, {
         to: to,
+        from: mailUser?.email,
+        FromUserName: mailUser?.displayName,
         subject: subject,
         body: body,
-        time: (new Date()).toString(),
+        time: new Date().toString(),
       });
       setTo("");
       setSubject("");
       setBody("");
       setBtnActive(false);
       message.success("Email successfully sent.");
-      dispatch(closeSendMessage());
+      dispatch(closeMessageBox());
     }
   };
 
@@ -47,7 +51,7 @@ const Compose = () => {
           </div>
           <div
             onClick={() => {
-              dispatch(closeSendMessage());
+              dispatch(closeMessageBox());
             }}
             className="flex items-center pt-1.5 px-1 cursor-pointer hover:text-slate-300"
           >
@@ -62,7 +66,7 @@ const Compose = () => {
               name="receiptient"
               type="email"
               placeholder="Receipients"
-              className="w-full outline-none"
+              className="w-full outline-none px-2"
               value={to}
               onChange={(e) => setTo(e.target.value)}
               required
@@ -73,13 +77,13 @@ const Compose = () => {
               name="subject"
               type="text"
               placeholder="Subject"
-              className="w-full outline-none"
+              className="w-full outline-none px-2"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
           </div>
           <textarea
-            className="w-full h-[41vh] outline-none mt-1"
+            className="w-full h-[41vh] outline-none mt-1 p-2"
             name="body"
             id=""
             cols="30"

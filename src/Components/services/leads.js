@@ -71,14 +71,14 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
   }
 };
 
-export const handleLeadCommentUpdate = async (leadId, salesUserId, remarks) => {
+export const handleLeadCommentUpdate = async (leadId, /* salesUserId, */ remarks) => {
   try {
-    const result = await axios.put(
+    const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
       {
-        lead_id: leadId,
+        /* lead_id: leadId, */
         comments: remarks,
-        sales_user_id: salesUserId,
+        /* sales_user_id: salesUserId, */
       }
     );
     return result.data;

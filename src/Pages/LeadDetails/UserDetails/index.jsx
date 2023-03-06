@@ -36,7 +36,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
   const [toggleApplication, setToggleApplication] = useState(false);
   const [isCommentHistoryOpen, setIsCommentHistoryOpen] = useState(false);
   const [rating, setRating] = useState();
-  const [comment, setComment] = useState("No Comments Yet");
+  const [comment, setComment] = useState("No comments yet.");
   const [ratingRemarks, setRatingRemarks] = useState("");
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     setComment(leadDetails?.leadDetails?.lead_remarks);
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
-        ? "No comments yet"
+        ? "No comments yet."
         : leadDetails?.leadDetails?.comment
     );
   }, [leadDetails]);
@@ -104,7 +104,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
 
     const commentUpdateResponse = await handleLeadCommentUpdate(
       leadDetails?.leadDetails?.lead_id,
-      userDetails?.userInfo?.user_id,
+      /* userDetails?.userInfo?.user_id, */
       comment
     );
 
@@ -155,7 +155,6 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     }
     console.log("reviewRemarksResponse", reviewRemarksResponse);
   };
-
   return (
     <div className="mx-6">
       <div>
@@ -374,12 +373,12 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
 
         <div>
           <input
-            className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-semibold font-poppins text-black text-opacity-75"
+            className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-poppins text-black text-opacity-75"
             onChange={(e) => setRatingRemarks(e.currentTarget.value)}
             value={ratingRemarks}
           />
           <span
-            className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer"
+            className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
             onClick={handleReviewRemarksSubmit}
           >
             Save
@@ -497,7 +496,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             >
               <button className="flex items-center justify-center">
                 <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
-                <span className="ml-2">Downlaod</span>
+                <span className="ml-2">Download</span>
               </button>
             </a>
           </div>
@@ -562,8 +561,18 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             </div>
 
             <div className="flex items-end mb-4">
-              <div className="mr-4">
-                <h1 className="text-sm font-poppins">Commnet:</h1>
+              <div className="w-full">
+                {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
+                {leadDetails?.leadMultiComment?.length
+                  ? leadDetails?.leadMultiComment?.map((history) => (
+                      <div className="flex flex-col w-full border rounded-lg p-2 my-2 shadow">
+                        <span className="text-base">{history?.comments}</span>
+                        <span className="text-xs">
+                          {new Date(history.created_at).toLocaleString()}
+                        </span>
+                      </div>
+                    ))
+                  : "No comments yet."}
               </div>
             </div>
           </div>
@@ -582,7 +591,10 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           </h1>
           <Icons.History
             className="w-6 ml-2 cursor-pointer"
-            onClick={() => setIsCommentHistoryOpen(true)}
+            onClick={() => {
+              setIsCommentHistoryOpen(true);
+              setSyncDetails(!syncDetails);
+            }}
           />
         </div>
         <form
@@ -593,22 +605,28 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           userDetails?.userInfo?.role_id === 2 ||
           userDetails?.userInfo?.role_id === 6 ? (
             <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-              {leadDetails?.leadDetails?.lead_remarks
-                ? leadDetails?.leadDetails?.lead_remarks
-                : "No Comments Yet"}
+              {leadDetails?.leadMultiComment?.length
+                ? leadDetails?.leadMultiComment[
+                    leadDetails?.leadMultiComment.length - 1
+                  ].comments
+                : "No comments yet."}
             </h1>
           ) : (
             <>
               <input
                 id="lead_comment"
-                className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75"
+                className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
                 onChange={(e) => handleCommentChange(e)}
-                value={comment}
+                /* value={
+                  leadDetails?.leadMultiComment[
+                    leadDetails?.leadMultiComment.length - 1
+                  ].comments
+                } */
               />
               <input
                 type="submit"
-                className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer"
-                value="Save"
+                className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
+                value="Post"
               ></input>
             </>
           )}

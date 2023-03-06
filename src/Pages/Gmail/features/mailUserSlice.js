@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const mailUserSlice = createSlice({
     name: 'mailUser',
     initialState: {
-        value: "null",
+        value: null,
     },
     reducers: {
         signin: (state, action) => {

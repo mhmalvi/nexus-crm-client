@@ -17,6 +17,7 @@
     "dayjs": "^1.11.4",
     "env-cmd": "^10.1.0",
     "firebase": "^9.17.1",
+    "googleapis": "^112.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lottie-react": "^2.3.1",
