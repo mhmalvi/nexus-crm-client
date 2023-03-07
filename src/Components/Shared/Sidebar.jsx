@@ -162,7 +162,7 @@ const Sidebar = ({
             </div>
           )}
 
-          <div>
+          {/* <div>
             <div
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
@@ -187,7 +187,6 @@ const Sidebar = ({
                       background: "#FF3B30",
                     }}
                   >
-                    {/* Count of unread messages */}
                     {
                       userMessages?.messages?.filter(
                         (message) => message.status === 0
@@ -198,9 +197,9 @@ const Sidebar = ({
               )}
               {toggleMessage && <div className="ml-auto active-option">|</div>}
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <div
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
@@ -238,26 +237,27 @@ const Sidebar = ({
                 <div className="ml-auto active-option">|</div>
               )}
             </div>
-          </div>
-
-          <div>
-            <NavLink
-              to={"/payments"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
-              style={{
-                color: `${active === "payments" ? "#7037FF" : "#7C8DB5"}`,
-              }}
-              onClick={() => setActive("payments")}
-            >
-              <Icons.Payment />
-              <span className="ml-4 leading-6 font-medium font-poppins">
-                Payments
-              </span>
-              {active === "payments" && (
-                <div className="ml-auto active-option">|</div>
-              )}
-            </NavLink>
-          </div>
+          </div> */}
+          {userDetails?.userInfo?.role_id !== 6 && (
+            <div>
+              <NavLink
+                to={"/payments"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "payments" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("payments")}
+              >
+                <Icons.Payment />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Payments
+                </span>
+                {active === "payments" && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </NavLink>
+            </div>
+          )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
@@ -307,7 +307,7 @@ const Sidebar = ({
           {/* Gmail Module */}
           {/* {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2) && ( */}
-          <div>
+          {/* <div>
             <NavLink
               to={"/mail"}
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
@@ -324,7 +324,7 @@ const Sidebar = ({
                 <div className="ml-auto active-option">|</div>
               )}
             </NavLink>
-          </div>
+          </div> */}
           {/* )} */}
 
           {/*           <div>
@@ -394,7 +394,12 @@ const Sidebar = ({
                 ),
                 children: [
                   { label: "Profile Settings", key: "profile" },
-                  { label: "Company Settings", key: "company" },
+                  userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4
+                    ? { label: "Company Settings", key: "company" }
+                    : null,
                 ],
               },
             ]}
