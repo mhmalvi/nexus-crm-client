@@ -68,7 +68,10 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     }
 
     setRating(leadDetails?.leadDetails?.star_review);
-    setComment(leadDetails?.leadDetails?.lead_remarks);
+    setComment(
+      leadDetails?.leadMultiComment[leadDetails?.leadMultiComment?.length - 1]
+        ?.comments
+    );
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
         ? "No comments yet."
@@ -351,40 +354,42 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
           #{leadDetails?.leadDetails?.lead_id}
         </h1>
       </div>
-      <div>
-        <ReactStars
-          edit={
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5
-              ? true
-              : false
-          }
-          count={5}
-          onChange={ratingChanged}
-          size={24}
-          value={rating}
-          emptyIcon={<Icons.Star />}
-          half={false}
-          fullIcon={<Icons.Star />}
-          color1="#E9E9E9"
-          color2="#8C64D2"
-        />
-
+      {userDetails?.userInfo?.role_id !== 6 ? (
         <div>
-          <input
-            className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-poppins text-black text-opacity-75"
-            onChange={(e) => setRatingRemarks(e.currentTarget.value)}
-            value={ratingRemarks}
+          <ReactStars
+            edit={
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5
+                ? true
+                : false
+            }
+            count={5}
+            onChange={ratingChanged}
+            size={24}
+            value={rating}
+            emptyIcon={<Icons.Star />}
+            half={false}
+            fullIcon={<Icons.Star />}
+            color1="#E9E9E9"
+            color2="#8C64D2"
           />
-          <span
-            className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
-            onClick={handleReviewRemarksSubmit}
-          >
-            Save
-          </span>
+
+          <div>
+            <input
+              className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-poppins text-black text-opacity-75"
+              onChange={(e) => setRatingRemarks(e.currentTarget.value)}
+              value={ratingRemarks}
+            />
+            <span
+              className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
+              onClick={handleReviewRemarksSubmit}
+            >
+              Save
+            </span>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {/* User info */}
       <div className="mt-5">
@@ -579,6 +584,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
         </div>
       </Modal>
 
+      {userDetails?.userInfo?.role_id !== 6 ? (
       <div
         className="mt-12 border py-3 px-7"
         style={{
@@ -617,6 +623,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
                 id="lead_comment"
                 className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
                 onChange={(e) => handleCommentChange(e)}
+                value={comment}
                 /* value={
                   leadDetails?.leadMultiComment[
                     leadDetails?.leadMultiComment.length - 1
@@ -631,7 +638,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
             </>
           )}
         </form>
-      </div>
+      </div>):null}
     </div>
   );
 };

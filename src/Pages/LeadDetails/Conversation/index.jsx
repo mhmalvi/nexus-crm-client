@@ -16,6 +16,7 @@ import {
 // import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import { addMessages } from "../../../features/user/messagesSlice";
 import whatsappLogo from "../../../assets/Images/whatsapp.png";
+import mailLogo from "../../../assets/Images/gmail.png";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -475,20 +476,7 @@ const Conversation = ({ leadDetails, id }) => {
           </form> */}
 
           <div>
-            {userDetails?.userInfo?.role_id === 6 ? (
-              <a
-                href={`https://api.whatsapp.com/send?phone=8801710895523`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center">
-                  <img className="w-6" src={whatsappLogo} alt="" />
-                  <span className="text-black font-semibold text-base ml-3">
-                    Open in Whatsapp
-                  </span>
-                </button>
-              </a>
-            ) : (
+            {userDetails?.userInfo?.role_id !== 6 ? (
               <a
                 href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
                   "+",
@@ -498,14 +486,33 @@ const Conversation = ({ leadDetails, id }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center">
+                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center w-56">
                   <img className="w-6" src={whatsappLogo} alt="" />
                   <span className="text-black font-semibold text-base ml-3">
                     Open in Whatsapp
                   </span>
                 </button>
               </a>
-            )}
+            ) : null}
+          </div>
+
+          <div className=" mt-6">
+            {userDetails?.userInfo?.role_id !== 6 ? (
+              <a
+                // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
+                // href={`https://mail.google.com/mail/?view=cm&fs=1&to=${leadDetails?.leadDetails?.student_email}&su=SUBJECT&body=BODY`}
+                href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=&body=`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center w-56">
+                  <img className="w-6" src={mailLogo} alt="" />
+                  <span className="text-black font-semibold text-base ml-3">
+                    Open in Mail
+                  </span>
+                </button>
+              </a>
+            ) : null}
           </div>
         </div>
         <script

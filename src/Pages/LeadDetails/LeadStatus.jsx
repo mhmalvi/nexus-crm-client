@@ -7,6 +7,7 @@ import {
   Space,
   Tooltip,
   Upload,
+  Radio,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -59,6 +60,7 @@ const LeadStatus = ({
   const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("");
   const [certificate, setCertificate] = useState("");
+  const [callResponse, setCallResponse] = useState();
 
   const statusColor = [
     {
@@ -115,7 +117,7 @@ const LeadStatus = ({
       message: "If the student's documents are verified",
     },
     Completed: {
-      message: "If the certificate issued",
+      message: "If the user has completed the course and certificate issued",
     },
   };
 
@@ -173,6 +175,11 @@ const LeadStatus = ({
   const handleTooltipMessage = (e) => {
     console.log("key", e.target.outerText);
     setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
+  };
+
+  const onCallResponseChange = (e) => {
+    console.log("radio checked", e.target.value);
+    setCallResponse(e.target.value);
   };
 
   const menu = (
@@ -782,7 +789,12 @@ const LeadStatus = ({
             </div>
             <div className="ml-3">
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                New Lead
+                <span>New Lead</span>
+                <Tooltip placement="top" title={"Its an new arrival lead."}>
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6 mt-4">
                 # {leadDetails?.leadDetails?.course_code}
@@ -790,15 +802,11 @@ const LeadStatus = ({
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
-                ? new Date(leadDetails?.leadDetails?.lead_apply_date)
-                    .toString()
-                    .slice(4, 21) +
-                  " " +
-                  new Date(leadDetails?.leadDetails?.lead_apply_date)
-                    .toString()
-                    .slice(25, 31)
+                ? new Date(
+                    leadDetails?.leadDetails?.lead_apply_date?.toString()
+                  )?.toLocaleString()
                 : "Not Yet"}
             </div>
           </Tooltip>
@@ -826,7 +834,15 @@ const LeadStatus = ({
             </div>
             <div className="ml-3">
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                Skilled
+                <span>Skilled</span>
+                <Tooltip
+                  placement="top"
+                  title={"If the student is skilled enough"}
+                >
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 {leadStatus["Skilled"] ? (
@@ -838,19 +854,18 @@ const LeadStatus = ({
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {statusDateTime["Skilled"] !== "Not Yet"
-                ? new Date(statusDateTime["Skilled"]).toString().slice(4, 21) +
-                  " " +
-                  new Date(statusDateTime["Skilled"]).toString().slice(25, 31)
-                : // new Date(statusDateTime["Skilled"]).toString().slice(0, 31)
-                  "Not Yet"}
+                ? new Date(
+                    statusDateTime["Skilled"]?.toString()
+                  )?.toLocaleString()
+                : "Not Yet"}
             </div>
           </Tooltip>
         </div>
 
         <div className="w-full flex justify-between mt-7">
-          <div className="flex">
+          <div className="flex -ml-4">
             <div className="flex flex-col items-center">
               <div
                 className={`cursor-pointer w-5 h-5 rounded-full ${
@@ -866,25 +881,54 @@ const LeadStatus = ({
                 ></div>
               </div>
               <div className="">
-                <hr className="rotate-90 w-11 mt-7" />
+                <hr className="rotate-90 w-19 mt-12" />
               </div>
             </div>
-            <div className="ml-3">
+            <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                Called
+                <span>Called</span>
+                <Tooltip
+                  placement="top"
+                  title={"If you have communicated with the student"}
+                >
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 No. of Calls: {leadDetails?.leadCallHistory?.length}
               </h6>
+              {activeStatusTitle === "Called" ? (
+                <div className="my-2">
+                  <Radio.Group
+                    onChange={onCallResponseChange}
+                    value={callResponse}
+                    className="flex items-center"
+                  >
+                    <span>
+                      <Radio value={1}>Responeded</Radio>
+                    </span>
+                    <span>
+                      <Radio value={0}>Not Responeded</Radio>
+                    </span>
+                  </Radio.Group>
+                </div>
+              ) : (
+                <div>&nbsp;</div>
+              )}
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {statusDateTime["Called"] !== "Not Yet"
-                ? new Date(statusDateTime["Called"]).toString().slice(4, 21) +
-                  " " +
-                  new Date(statusDateTime["Called"]).toString().slice(25, 31)
-                : // new Date(statusDateTime["Called"]).toString().slice(0, 31)
+                ? new Date(
+                    statusDateTime["Called"]?.toString()
+                  )?.toLocaleString()
+                : // new Date(statusDateTime["Called"]).toString().slice(4, 21) +
+                  //   " " +
+                  //   new Date(statusDateTime["Called"]).toString().slice(25, 31)
+                  // new Date(statusDateTime["Called"]).toString().slice(0, 31)
                   "Not Yet"}
             </div>
           </Tooltip>
@@ -912,7 +956,15 @@ const LeadStatus = ({
             </div>
             <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                Paid
+                <span>Paid</span>
+                <Tooltip
+                  placement="top"
+                  title={"If the student have paid any fees"}
+                >
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
 
               {userDetails?.userinfo?.role_id !== 1 ||
@@ -940,12 +992,12 @@ const LeadStatus = ({
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {statusDateTime["Paid"] !== "Not Yet"
-                ? new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
-                  " " +
-                  new Date(statusDateTime["Paid"]).toString().slice(25, 31)
-                : // new Date(statusDateTime["Paid"]).toString().slice(0, 31)
+                ? new Date(statusDateTime["Paid"]?.toString())?.toLocaleString()
+                : // new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
+                  //   " " +
+                  //   new Date(statusDateTime["Paid"]).toString().slice(25, 31)
                   "Not Yet"}
             </div>
           </Tooltip>
@@ -972,7 +1024,15 @@ const LeadStatus = ({
             </div>
             <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                Verified
+                <span>Verified</span>
+                <Tooltip
+                  placement="top"
+                  title={"If the student's documents are verified"}
+                >
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 {leadStatus["Verified"] ? (
@@ -991,12 +1051,15 @@ const LeadStatus = ({
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {statusDateTime["Verified"] !== "Not Yet"
-                ? new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
-                  " " +
-                  new Date(statusDateTime["Verified"]).toString().slice(25, 31)
-                : // new Date(statusDateTime["Verified"]).toString().slice(0, 31)
+                ? new Date(
+                    statusDateTime["Verified"]?.toString()
+                  )?.toLocaleString()
+                : // new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
+                  //   " " +
+                  //   new Date(statusDateTime["Verified"]).toString().slice(25, 31)
+                  // new Date(statusDateTime["Verified"]).toString().slice(0, 31)
                   "Not Yet"}
             </div>
           </Tooltip>
@@ -1023,7 +1086,17 @@ const LeadStatus = ({
             </div>
             <div>
               <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                Completed
+                <span>Completed</span>
+                <Tooltip
+                  placement="top"
+                  title={
+                    "If the user has completed the course and certificate issued"
+                  }
+                >
+                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                    ?
+                  </span>
+                </Tooltip>
               </h6>
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 {leadDetails?.leadDetails?.document_certificate_id > 0
@@ -1077,14 +1150,17 @@ const LeadStatus = ({
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-xs">
+            <div className="text-[10px]">
               {statusDateTime["Completed"] !== "Not Yet"
-                ? new Date(statusDateTime["Completed"])
-                    .toString()
-                    .slice(4, 21) +
-                  " " +
-                  new Date(statusDateTime["Completed"]).toString().slice(25, 31)
-                : // new Date(statusDateTime["Completed"]).toString().slice(0, 31)
+                ? new Date(
+                    statusDateTime["Completed"]?.toString()
+                  )?.toLocaleString()
+                : // new Date(statusDateTime["Completed"])
+                  //     .toString()
+                  //     .slice(4, 21) +
+                  //   " " +
+                  //   new Date(statusDateTime["Completed"]).toString().slice(25, 31)
+                  // new Date(statusDateTime["Completed"]).toString().slice(0, 31)
                   "Not Yet"}
             </div>
           </Tooltip>

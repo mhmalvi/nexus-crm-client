@@ -12,6 +12,9 @@ const LeadDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const userDetails = useSelector((state) => state?.user)?.userInfo;
+
+  // console.log("userDetails", userDetails);
 
   const [leadDetails, setleadDetails] = useState();
   // const [statusDetails, setStatusDetails] = useState([]);
@@ -73,7 +76,8 @@ const LeadDetails = () => {
 
           statusTimeDate[
             `${Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status)]}`
-          ] = `${leadStatus?.updated_at?.replace("T", " ")?.slice(0, 15)}`;
+          ] = `${leadStatus?.updated_at}`;
+          // ] = `${leadStatus?.updated_at?.replace("T", " ")?.slice(0, 15)}`;
         });
 
         setLeadStatusDetails(status);
@@ -91,7 +95,11 @@ const LeadDetails = () => {
         </div>
       )}
       <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
-        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div
+          className={`relative grid grid-cols-1 gap-6 ${
+            userDetails?.role_id === 6 ? "lg:grid-cols-2" : "lg:grid-cols-3"
+          }`}
+        >
           <div className="px-2 xl:px-3">
             <LeadStatus
               leadStatus={leadStatusDetails}
@@ -101,9 +109,11 @@ const LeadDetails = () => {
               setSyncDetails={setSyncDetails}
             />
           </div>
-          <div>
-            <Conversation leadDetails={leadDetails} id={id} />
-          </div>
+          {userDetails?.role_id !== 6 && (
+            <div>
+              <Conversation leadDetails={leadDetails} id={id} />
+            </div>
+          )}
           <div>
             <UserDetails
               leadDetails={leadDetails}
