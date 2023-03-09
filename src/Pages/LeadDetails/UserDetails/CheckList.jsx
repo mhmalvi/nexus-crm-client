@@ -39,12 +39,12 @@ const CheckList = ({ leadDetails }) => {
     // }
 
     // console.log("uploadFileUpload", uploadFile);
-    console.log("DOCCUMENTS>>> ", {
-      checklist_id: checklistId,
-      lead_id: leadDetails?.lead_id,
-      document_id: uploadFile?.message?.data[0]?.id,
-      student_id: userDetails?.userInfo?.user_id,
-    });
+    // console.log("DOCCUMENTS>>> ", {
+    //   checklist_id: checklistId,
+    //   lead_id: leadDetails?.lead_id,
+    //   document_id: uploadFile?.message?.data[0]?.id,
+    //   student_id: userDetails?.userInfo?.user_id,
+    // });
 
     const saveDocumentDetails = await handleChecklistDocumentUpload({
       checklist_id: checklistId,
@@ -53,7 +53,7 @@ const CheckList = ({ leadDetails }) => {
       student_id: userDetails?.userInfo?.user_id,
     });
 
-    console.log("handleChecklistDocumentUpload", handleChecklistDocumentUpload);
+    // console.log("handleChecklistDocumentUpload", handleChecklistDocumentUpload);
 
     if (saveDocumentDetails?.status) {
       setSyncDocumentList(!syncDocumentList);

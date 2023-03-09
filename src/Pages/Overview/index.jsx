@@ -164,7 +164,7 @@ const Overview = () => {
         <CampaignAnalytics />
 
         {/* Sales Analitics */}
-        <SalesAnalytics />
+        <SalesAnalytics activeCompany={activeCompany}/>
       </div>
     </div>
   );
