@@ -2,6 +2,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Avatar from "react-avatar";
 import { useNavigate } from "react-router-dom";
 import {
   handlefetchMessages,
@@ -171,7 +172,39 @@ const Dashboard = () => {
           </div>
         </div>
       </Modal>
+      {/* {userDetails?.userInfo?.role_id === 6 && ( */}
+        <div className="absolute group right-0 mt-4 mr-4 p-1 rounded-full shadow-md">
+          <Avatar
+            className="rounded-full cursor-pointer mr-1"
+            size="38"
+            color={Avatar.getRandomColor("sitebase", [
+              "red",
+              "green",
+              "#728FCE",
+              "black",
+              "#FDD017",
+              "#665D1E",
+              "#87AFC7",
+              "#D5D6EA",
+              "Lime",
+              "#2B547E",
+              "violet",
+              "#77BFC7",
+              "orange",
+            ])}
+            name={userDetails?.userInfo?.full_name}
+          />
+          <span className="px-2">{userDetails?.userInfo?.full_name}</span>
 
+          <div className="hidden group-hover:block min-w-40 h-16 bg-white shadow-md absolute right-0 top-[52px] rounded-md">
+            <div className="flex flex-col p-2 text-xs">
+              <div>{userDetails?.userInfo?.full_name}</div>
+              <div>{userDetails?.userInfo?.email}</div>
+              <div>{userDetails?.userInfo?.contact_number}</div>
+            </div>
+          </div>
+        </div>
+     {/*  )} */}
       <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
         {(userDetails?.userInfo?.role_id === 1 ||
           userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}

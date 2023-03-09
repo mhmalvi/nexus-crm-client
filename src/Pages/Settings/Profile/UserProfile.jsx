@@ -62,9 +62,9 @@ function UserProfile() {
         </div>
       )}
       <div className="border rounded-md shadow-sm">
-        <div className="my-10 mx-20">
-          <Row gutter={[16, 30]}>
-            <Col className="gutter-row" span={12}>
+        <div className="my-10 mx-5 lg:mx-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <div>
               <div className="flex flex-wrap m-auto">
                 <div className="rounded-full mx-2">
                   <Avatar
@@ -103,8 +103,8 @@ function UserProfile() {
                   </div>
                 </div>
               </div>
-            </Col>
-            <Col className="gutter-row my-auto" span={12}>
+            </div>
+            <div>
               <div className="flex justify-end">
                 <button
                   className="bg-black text-white font-poppins text-sm rounded-md px-6 py-2 flex items-center"
@@ -114,73 +114,75 @@ function UserProfile() {
                   <span className="ml-2">Edit</span>
                 </button>
               </div>
-            </Col>
-          </Row>
-          <div className="my-10 mx-2 font-poppins">
-            <Row gutter={[16, 30]}>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Full Name</div>
-                  <div className="font-semibold">
-                    {ProfileDetails?.full_name}
-                  </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 my-10 mx-2 gap-8">
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Full Name</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.full_name}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Date of Birth</div>
-                  <div className="font-semibold">
-                    {ProfileDetails?.date_of_birth}
-                  </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Date of Birth</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.date_of_birth}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Work Phone</div>
-                  <div className="font-semibold">
-                    {ProfileDetails?.contact_number}
-                  </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Work Phone</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.contact_number}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Address</div>
-                  <div className="font-semibold">{ProfileDetails?.address}</div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Address</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.address}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Email Address</div>
-                  <div className="font-semibold">{ProfileDetails?.email}</div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Email Address</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.email}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Language</div>
-                  <div className="font-semibold">English(US)</div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Language</div>
+                <div className="font-semibold truncate">English(US)</div>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Mobile</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.secondary_contact}
                 </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Mobile</div>
-                  <div className="font-semibold">
-                    {ProfileDetails?.secondary_contact}
-                  </div>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div className="flex-col">
-                  <div className="text-xs text-[#808080]">Password</div>
-                  <div className="font-semibold">**************</div>
-                </div>
-              </Col>
-            </Row>
+              </div>
+            </div>
+            <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Password</div>
+                <div className="font-semibold truncate">**************</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="my-10">
-        <Row gutter={[16, 30]}>
-          <Col span={8}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="">
             <div className="bg-[#000000] h-full rounded-lg p-10 shadow-sm">
               <div className="mb-10">
                 <Icons.Equilizer className="w-20" />
@@ -191,7 +193,7 @@ function UserProfile() {
                   $88,500
                 </div>
               </div>
-              <div className="flex justify-between my-4">
+              <div className="flex flex-col lg:flex-row justify-between my-4">
                 <div>
                   <div className="text-md text-white">Total Sell</div>
                   <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
@@ -206,10 +208,10 @@ function UserProfile() {
                 </div>
               </div>
             </div>
-          </Col>
-          <Col span={16}>
+          </div>
+          <div className="sm:col-span-2 mt-8 sm:mt-0">
             <div className="h-full border rounded-lg p-5 shadow-sm">
-              <div className="flex justify-evenly font-poppins my-4">
+              <div className="flex flex-col lg:flex-row justify-evenly font-poppins my-4">
                 <div className="flex-col">
                   <div className="text-lg text-[#808080] leading-8 mb-4">
                     Monthly Sales
@@ -222,7 +224,7 @@ function UserProfile() {
                     <img src={xaxis} alt="Avatar" width={300} />
                   </div>
                 </div>
-                <div className="grid grid-col gap-2">
+                <div className="grid grid-col gap-2 mt-5 lg:mt-0">
                   <div>
                     <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
                       Monthly Sales Stats
@@ -248,8 +250,8 @@ function UserProfile() {
                 </div>
               </div>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </div>
   );
