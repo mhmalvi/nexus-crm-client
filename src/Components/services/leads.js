@@ -47,7 +47,32 @@ export const handleLeadStatusUpdate = async (
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
-      { lead_id: leadId, lead_status: newStatus, sales_user_id: salesUserId }
+      {
+        lead_id: leadId,
+        lead_status: newStatus,
+        sales_user_id: salesUserId,
+        response: null,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCallResponseUpdate = async (
+  leadId,
+  salesUserId,
+  response
+) => {
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
+      {
+        lead_id: leadId,
+        sales_user_id: salesUserId,
+        response: response,
+      }
     );
     return result.data;
   } catch (error) {
@@ -71,7 +96,10 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
   }
 };
 
-export const handleLeadCommentUpdate = async (leadId, /* salesUserId, */ remarks) => {
+export const handleLeadCommentUpdate = async (
+  leadId,
+  /* salesUserId, */ remarks
+) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
