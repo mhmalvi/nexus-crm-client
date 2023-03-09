@@ -15,6 +15,7 @@ import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
   handleAddCall,
+  handleCallResponseUpdate,
   handleLeadCertificatetDetailsUpdate,
   handleLeadStatusUpdate,
   handleLeadStudentDetailsUpdate,
@@ -151,6 +152,22 @@ const LeadStatus = ({
         );
       })();
     }
+
+    if (leadDetails?.leadDetails?.lead_details_status >= 3) {
+      
+      console.log(
+        leadDetails?.leadAllStatus?.filter(
+          (status) => status?.lead_status === 3
+        )?.[0]?.response
+      );
+
+      setCallResponse(
+        leadDetails?.leadAllStatus?.filter(
+          (status) => status?.lead_status === 3
+        )?.[0]?.response
+      );
+    }
+
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
@@ -177,10 +194,14 @@ const LeadStatus = ({
     setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
   };
 
-  const onCallResponseChange = (e) => {
+  const onCallResponseChange = async (e) => {
     console.log("radio checked", e.target.value);
     setCallResponse(e.target.value);
+        const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
+        console.log("called resp", response);
   };
+
+  
 
   const menu = (
     <Tooltip placement="top" title={tooltipMessage}>
@@ -907,12 +928,14 @@ const LeadStatus = ({
                     className="flex items-center"
                   >
                     <span>
-                      <Radio value={1}>Responeded</Radio>
+                      <Radio value={1}>Responded</Radio>
                     </span>
                     <span>
-                      <Radio value={0}>Not Responeded</Radio>
+                      <Radio value={0}>Not Responded</Radio>
                     </span>
                   </Radio.Group>
+
+                  <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose correct option only. </div>
                 </div>
               ) : (
                 <div>&nbsp;</div>
@@ -1101,7 +1124,7 @@ const LeadStatus = ({
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
                 {leadDetails?.leadDetails?.document_certificate_id > 0
                   ? "Certificate Provided"
-                  : "Certificate Has Not Provided Yet"}
+                  : "Certificate Not Provided Yet"}
               </h6>
               <div className="flex mt-1">
                 {leadStatus["Completed"] &&

@@ -62,15 +62,15 @@ export const handleLeadStatusUpdate = async (
 
 export const handleCallResponseUpdate = async (
   leadId,
-  salesUserId,
+  leadStatus,
   response
 ) => {
   try {
     const result = await axios.put(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/response`,
       {
         lead_id: leadId,
-        sales_user_id: salesUserId,
+        lead_status: leadStatus,
         response: response,
       }
     );
@@ -382,3 +382,4 @@ export const handleCommentsSubmitReq = async (remarks, leadId) => {
     return error.response;
   }
 };
+

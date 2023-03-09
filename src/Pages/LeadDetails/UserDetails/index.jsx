@@ -68,10 +68,12 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     }
 
     setRating(leadDetails?.leadDetails?.star_review);
-    setComment(
-      leadDetails?.leadMultiComment[leadDetails?.leadMultiComment?.length - 1]
+    if (leadDetails?.leadMultiComment?.length) {
+      setComment(
+        leadDetails?.leadMultiComment[leadDetails?.leadMultiComment?.length - 1]
         ?.comments
-    );
+        );
+      }
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
         ? "No comments yet."
