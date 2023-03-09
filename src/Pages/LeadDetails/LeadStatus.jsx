@@ -190,15 +190,16 @@ const LeadStatus = ({
   };
 
   const handleTooltipMessage = (e) => {
-    console.log("key", e.target.outerText);
     setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
   };
 
   const onCallResponseChange = async (e) => {
-    console.log("radio checked", e.target.value);
-    setCallResponse(e.target.value);
-        const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
-        console.log("called resp", response);
+    setCallResponse(e.target.value)
+    const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
+    
+    if(response.status===200){
+      setSyncDetails(!syncDetails);
+    }
   };
 
   
