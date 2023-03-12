@@ -58,7 +58,7 @@ function PasswordResetForm() {
   //   navigate("/user-profile");
   // };
   return (
-    <div className="border rounded-lg bg-white m-auto shadow-sm py-6">
+    <div className="w-11/12 border rounded-lg bg-white m-auto shadow-md py-6">
       <form className="w-3/5 font-poppins mt-6 m-auto">
         <div className="font-semibold text-2xl py-2">Reset Password</div>
         <div className="font-poppins">

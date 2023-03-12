@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "react-avatar";
@@ -7,7 +7,7 @@ import graphgif from "../../../assets/Images/graph.gif";
 import xaxis from "../../../assets/Images/x-axis.png";
 import yaxis from "../../../assets/Images/y-axis.png";
 import { useNavigate } from "react-router-dom";
-//import { handleUpdateProfileDetails } from "../../Components/services/auth";
+import { handleProfileDetails } from "../../../Components/services/auth";
 // import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 import Icons from "../../../Components/Shared/Icons";
@@ -16,7 +16,7 @@ import Loading from "../../../Components/Shared/Loader";
 function UserProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //const [userDetails, setUserDetails] = useState();
+  const [userDetails, setUserDetails] = useState();
   const loadingDetails = useSelector((state) => state?.user?.loading);
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -28,18 +28,18 @@ function UserProfile() {
     }, 3000);
   }, [dispatch, ProfileDetails?.userInfo]);
 
-  /*   useEffect(() => {
+    useEffect(() => {
     dispatch(setLoader(true));
 
     (async () => {
       const userDetailResponse = await handleProfileDetails(
-        ProfileDetails?.userInfo?.user_id
+        ProfileDetails?.user_id
       );
 
       if (userDetailResponse?.data) {
-        const user = userDetailResponse?.data?.data;
+        const user = userDetailResponse?.data;
         setUserDetails(user);
-        console.log("onpage", userDetails); 
+        console.log("onpage.w..", userDetails); 
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -47,7 +47,7 @@ function UserProfile() {
         }, 3000);
       }
     })();
-  }, [dispatch, ProfileDetails?.userInfo?.user_id]); */
+  }, [dispatch, ProfileDetails?.userInfo?.user_id]);
 
   const EditSettings = () => {
     navigate("/edit-profile");
@@ -61,7 +61,7 @@ function UserProfile() {
           <Loading />
         </div>
       )}
-      <div className="border rounded-md shadow-sm">
+      <div className="border rounded-md shadow-md">
         <div className="my-10 mx-5 lg:mx-20">
           <div className="grid grid-cols-1 sm:grid-cols-2">
             <div>
@@ -85,11 +85,11 @@ function UserProfile() {
                       "#FDD017",
                       "#665D1E",
                     ])}
-                    name={ProfileDetails?.full_name}
+                    name={userDetails?.full_name}
                   />
                 </div>
                 <div className="flex-col font-poppins my-auto">
-                  <div className="text-lg">{ProfileDetails?.full_name}</div>
+                  <div className="text-lg">{userDetails?.full_name}</div>
                   <div className="text-xs">
                     My role
                     <span className="font-semibold px-1">
@@ -121,7 +121,7 @@ function UserProfile() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Full Name</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.full_name}
+                  {userDetails?.full_name}
                 </div>
               </div>
             </div>
@@ -129,7 +129,7 @@ function UserProfile() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Date of Birth</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.date_of_birth}
+                  {userDetails?.date_of_birth}
                 </div>
               </div>
             </div>
@@ -137,7 +137,7 @@ function UserProfile() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Work Phone</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.contact_number}
+                  {userDetails?.contact_number}
                 </div>
               </div>
             </div>
@@ -145,7 +145,7 @@ function UserProfile() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Address</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.address}
+                  {userDetails?.address}
                 </div>
               </div>
             </div>
@@ -167,7 +167,7 @@ function UserProfile() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Mobile</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.secondary_contact}
+                  {userDetails?.secondary_contact}
                 </div>
               </div>
             </div>
@@ -180,79 +180,85 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="my-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div className="">
-            <div className="bg-[#000000] h-full rounded-lg p-10 shadow-sm">
-              <div className="mb-10">
-                <Icons.Equilizer className="w-20" />
-              </div>
-              <div className="flex-col font-poppins">
-                <div className="text-md text-white">Last month income</div>
-                <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
-                  $88,500
+      {(userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 2 ||
+        userDetails?.userInfo?.role_id === 3 ||
+        userDetails?.userInfo?.role_id === 4 ||
+        userDetails?.userInfo?.role_id === 5) && (
+        <div className="my-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="">
+              <div className="bg-[#000000] h-full rounded-lg p-10 shadow-md">
+                <div className="mb-10">
+                  <Icons.Equilizer className="w-20" />
                 </div>
-              </div>
-              <div className="flex flex-col lg:flex-row justify-between my-4">
-                <div>
-                  <div className="text-md text-white">Total Sell</div>
+                <div className="flex-col font-poppins">
+                  <div className="text-md text-white">Last month income</div>
                   <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
                     $88,500
                   </div>
                 </div>
-                <div>
-                  <div className="text-md text-white">Commission</div>
-                  <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
-                    15%
+                <div className="flex flex-col lg:flex-row justify-between my-4">
+                  <div>
+                    <div className="text-md text-white">Total Sell</div>
+                    <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
+                      $88,500
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-md text-white">Commission</div>
+                    <div className="text-white sm:text-lg xl:text-xl 2xl:text-3xl font-semibold">
+                      15%
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="sm:col-span-2 mt-8 sm:mt-0">
-            <div className="h-full border rounded-lg p-5 shadow-sm">
-              <div className="flex flex-col lg:flex-row justify-evenly font-poppins my-4">
-                <div className="flex-col">
-                  <div className="text-lg text-[#808080] leading-8 mb-4">
-                    Monthly Sales
-                  </div>
-                  <div className="flex mx-2">
-                    <img src={yaxis} alt="Avatar" />
-                    <img src={graphgif} alt="Avatar" width={300} />
-                  </div>
-                  <div className="mx-8">
-                    <img src={xaxis} alt="Avatar" width={300} />
-                  </div>
-                </div>
-                <div className="grid grid-col gap-2 mt-5 lg:mt-0">
-                  <div>
-                    <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
-                      Monthly Sales Stats
+            <div className="sm:col-span-2 mt-8 sm:mt-0">
+              <div className="h-full border rounded-lg p-5 shadow-md">
+                <div className="flex flex-col lg:flex-row justify-evenly font-poppins my-4">
+                  <div className="flex-col">
+                    <div className="text-lg text-[#808080] leading-8 mb-4">
+                      Monthly Sales
                     </div>
-                    <div className="text-xs text-[#808080]">
-                      55 Lead success
+                    <div className="flex mx-2">
+                      <img src={yaxis} alt="Avatar" />
+                      <img src={graphgif} alt="Avatar" width={300} />
+                    </div>
+                    <div className="mx-8">
+                      <img src={xaxis} alt="Avatar" width={300} />
                     </div>
                   </div>
-                  <div>
-                    <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
-                      Lead Accept
+                  <div className="grid grid-col gap-2 mt-5 lg:mt-0">
+                    <div>
+                      <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
+                        Monthly Sales Stats
+                      </div>
+                      <div className="text-xs text-[#808080]">
+                        55 Lead success
+                      </div>
                     </div>
-                    <div className="text-xs text-[#808080]">
-                      150 Lead success
+                    <div>
+                      <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
+                        Lead Accept
+                      </div>
+                      <div className="text-xs text-[#808080]">
+                        150 Lead success
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
-                      success percentage
+                    <div>
+                      <div className="text-lg sm:text-xs lg:text-sm font-semibold leading-6">
+                        success percentage
+                      </div>
+                      <div className="text-xs text-[#808080]">50%</div>
                     </div>
-                    <div className="text-xs text-[#808080]">50%</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,13 +1,15 @@
 import { message } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleProfileDetails,
   handleUpdateProfileDetails,
 } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
+import { addUserDetails } from "../../../features/user/userSlice";
 
 function ProfileSettingForm() {
+  const dispatch = useDispatch();
   const ProfileDetails = useSelector((state) => state?.user);
 
   const initialState = {
@@ -25,7 +27,7 @@ function ProfileSettingForm() {
 
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [profileData, setProfileData] = useState(initialState);
-  // const [syncprofileData, setProfileData] = useState(initialState);
+  // const [syncprofileData, setSyncProfileData] = useState(initialState);
 
   useEffect(() => {
     (async () => {
@@ -81,7 +83,7 @@ function ProfileSettingForm() {
 
   return (
     <div>
-      <div className="border rounded-lg bg-white m-auto shadow-sm py-6">
+      <div className="w-11/12 border rounded-lg bg-white m-auto shadow-md py-6">
         <div className="w-4/5 font-poppins mt-6 m-auto">
           <div className="flex mb-4">
             <h1 className="text-2xl font-semibold">Profile Details</h1>
@@ -103,7 +105,7 @@ function ProfileSettingForm() {
                   <input
                     id="full_name"
                     name="full_name"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -124,7 +126,7 @@ function ProfileSettingForm() {
                   <input
                     id="date_of_birth"
                     name="date_of_birth"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -145,7 +147,7 @@ function ProfileSettingForm() {
                   <input
                     id="secondary_contact"
                     name="secondary_contact"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -166,7 +168,7 @@ function ProfileSettingForm() {
                   <input
                     id="location"
                     name="location"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -187,7 +189,7 @@ function ProfileSettingForm() {
                   <input
                     id="address"
                     name="address"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -208,7 +210,7 @@ function ProfileSettingForm() {
                   <input
                     id="region"
                     name="region"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -227,7 +229,7 @@ function ProfileSettingForm() {
                   <input
                     id="postcode"
                     name="postcode"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -248,7 +250,7 @@ function ProfileSettingForm() {
                   <input
                     id="profession"
                     name="profession"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -269,7 +271,7 @@ function ProfileSettingForm() {
                   <input
                     id="work_experiences"
                     name="work_experiences"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
@@ -290,7 +292,7 @@ function ProfileSettingForm() {
                   <input
                     id="qualification"
                     name="qualification"
-                    className={`mt-1 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
                     type="text"
                     disabled={!toggleEditDetails ? "disabled" : ""}
                     onChange={userData}
