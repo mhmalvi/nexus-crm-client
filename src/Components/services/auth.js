@@ -12,7 +12,13 @@ export const handleRegistration = async (registrationDetails) => {
       registrationDetails
     );
 
-    Storage.setItem("CRD", result?.data?.data);
+    console.log("result", result);
+
+    // if (result?.status === 201) {
+    //   
+
+    //   Storage.setItem("CRD", result?.data?.data);
+    // }
 
     return result?.data;
   } catch (error) {
@@ -39,7 +45,7 @@ export const handleProfileDetails = async (user_id) => {
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/${user_id}/details`,
-      user_id,
+      user_id
     );
     return result.data;
   } catch (error) {

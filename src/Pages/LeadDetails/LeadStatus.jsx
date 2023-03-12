@@ -20,6 +20,7 @@ import {
   handleLeadStatusUpdate,
   handleLeadStudentDetailsUpdate,
 } from "../../Components/services/leads";
+import { handleConfirmRegistration } from "../../Components/services/mail";
 import {
   handleFetchFile,
   handleUploadFile,
@@ -154,7 +155,6 @@ const LeadStatus = ({
     }
 
     if (leadDetails?.leadDetails?.lead_details_status >= 3) {
-      
       console.log(
         leadDetails?.leadAllStatus?.filter(
           (status) => status?.lead_status === 3
@@ -167,7 +167,6 @@ const LeadStatus = ({
         )?.[0]?.response
       );
     }
-
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
@@ -196,13 +195,10 @@ const LeadStatus = ({
   const onCallResponseChange = async (e) => {
     setCallResponse(e.target.value)
     const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
-    
     if(response.status===200){
       setSyncDetails(!syncDetails);
     }
   };
-
-  
 
   const menu = (
     <Tooltip placement="top" title={tooltipMessage}>
@@ -326,14 +322,31 @@ const LeadStatus = ({
 
     const registrationResponse = await handleRegistration(registrationFormData);
 
+    console.log("registrationResponse::::", registrationResponse);
+
     if (registrationResponse?.status === true) {
+      // const lead
+      // leadDetails?.leadDetails?.student_id=
+
       const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
         leadDetails?.leadDetails.lead_id,
         registrationResponse?.data?.user_id
       );
       console.log("leadUpdateResponse", leadUpdateResponse);
+
       if (leadUpdateResponse?.status) {
         message.success("User Registered Successfully");
+
+        const confirmRegistrationResponse = await handleConfirmRegistration(
+          registrationResponse?.data?.user_name,
+          registrationResponse?.data?.email,
+          registrationResponse?.data?.password
+        );
+
+        if (confirmRegistrationResponse === "success") {
+          message.success("An email sent with credentials");
+        }
+
         setSyncDetails(!syncDetails);
       }
     } else {
@@ -935,7 +948,6 @@ const LeadStatus = ({
                       <Radio value={0}>Not Responded</Radio>
                     </span>
                   </Radio.Group>
-
                   <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose option carefully. </div>
                 </div>
               ) : (

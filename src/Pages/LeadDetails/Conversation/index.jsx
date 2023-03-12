@@ -46,31 +46,31 @@ const Conversation = ({ leadDetails, id }) => {
   //   socket.emit("join_room", id);
   // }, [id]);
 
-  useEffect(() => {
-    (async () => {
-      const messages = await handlefetchMessages(
-        userDetails?.userInfo?.user_id
-      );
-      dispatch(
-        addMessages(
-          messages?.filter(
-            (element, index) =>
-              messages.findIndex((obj) => obj.room === element.room) === index
-          )
-        )
-      );
-    })();
+  // useEffect(() => {
+  // (async () => {
+  //   const messages = await handlefetchMessages(
+  //     userDetails?.userInfo?.user_id
+  //   );
+  //   dispatch(
+  //     addMessages(
+  //       messages?.filter(
+  //         (element, index) =>
+  //           messages.findIndex((obj) => obj.room === element.room) === index
+  //       )
+  //     )
+  //   );
+  // })();
 
-    // For accessing roomwise messages
-    axios
-      .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/get-message/${id}`)
-      .then(function (response) {
-        setMessageList(response?.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [dispatch, id, sync, userDetails?.userInfo?.user_id]);
+  // For accessing roomwise messages
+  // axios
+  //   .get(`${process.env?.REACT_APP_CHAT_SERVER_URL}/get-message/${id}`)
+  //   .then(function (response) {
+  //     setMessageList(response?.data);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }, [dispatch, id, sync, userDetails?.userInfo?.user_id]);
 
   // useEffect(() => {
   //   socket.on("receive_message", (data) => {

@@ -175,6 +175,23 @@ export const handleChecklistDocumentUpload = async (documentDetails) => {
   }
 };
 
+export const handleChecklistDocumentDelete = async (checklistId, studentId) => {
+  console.log(checklistId);
+  console.log(studentId);
+  try {
+    const result = await axios.delete(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/${checklistId}/delete/documents`,
+      {
+        student_id: studentId,
+      }
+    );
+    console.log(result);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleFetchLeadCheckListDocuments = async (details) => {
   try {
     const result = await axios.post(
@@ -203,8 +220,8 @@ export const handleFetchCampaigns = async (clientId) => {
 
 export const handleDocumentDelete = async (documentId) => {
   try {
-    const result = await axios.delete(
-      `${process.env?.REACT_APP_FILE_SERVER_URL}/api/documents/delete/${documentId}`
+    const result = await axios.get(
+      `${process.env?.REACT_APP_FILE_SERVER_URL}/api/documents-delete/${documentId}`
     );
     return result.data;
   } catch (error) {
@@ -382,4 +399,3 @@ export const handleCommentsSubmitReq = async (remarks, leadId) => {
     return error.response;
   }
 };
-
