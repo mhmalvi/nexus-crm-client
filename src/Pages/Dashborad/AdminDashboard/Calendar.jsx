@@ -1,4 +1,4 @@
-import { DatePicker, Dropdown, Menu, Modal, Space } from "antd";
+import { DatePicker, Dropdown, Menu, message, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -233,6 +233,7 @@ const Calendar = ({
 
       if (handleAddNotile?.status) {
         setSyncNotices(!syncNotices);
+        message.success("Notice updated Successfully");
       }
       // await socket.emit("send_notification", notificationData);
       setSyncNotifications(!syncNotifications);
@@ -551,9 +552,9 @@ const Calendar = ({
                     value={noticeTitle}
                     onChange={(e) => setNoticeTitle(e.target.value)}
                   />
-                  <span className="text-xs font-normal font-poppins mb-0.5 ml-1.5">
+                  {/* <span className="text-xs font-normal font-poppins mb-0.5 ml-1.5">
                     Notice Details
-                  </span>
+                  </span> */}
                   <textarea
                     className="w-full outline-none border px-2 py-1 rounded-md bg-transparent"
                     name=""
@@ -562,11 +563,12 @@ const Calendar = ({
                     value={noticeDescription}
                     onChange={(e) => setNoticeDescription(e.target.value)}
                     rows="3"
+                    placeholder="Details"
                   ></textarea>
                   <input
                     className="px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md"
                     type="submit"
-                    value="Send"
+                    value="Post"
                   />
                 </form>
               </div>

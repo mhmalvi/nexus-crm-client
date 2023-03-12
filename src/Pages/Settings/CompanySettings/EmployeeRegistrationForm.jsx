@@ -136,10 +136,10 @@ const EmployeeRegistrationForm = ({
       </div>
       <div className="pt-10 pb-6">
         <button
-          className="float-right py-1 px-4 text-base leading-6 font-medium bg-black rounded-md text-white"
+          className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-white"
           onClick={handleAddEmployee}
         >
-          Send
+          Add
         </button>
       </div>
     </div>

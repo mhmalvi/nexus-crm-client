@@ -71,7 +71,7 @@ const RequisitionTable = ({
 
     if (approveRequisitionResponse?.key === "success") {
       setSyncRequisitionsData(!syncRequisitionsData);
-      message.success("Requisition Accepeted & Company Added Successfully");
+      message.success("Requisition Accepted & Company Added Successfully");
     }
 
     const reqDetails = data.find((requisition) => requisition?.id === id);

@@ -119,7 +119,7 @@ const LeadStatus = ({
       message: "If the student's documents are verified",
     },
     Completed: {
-      message: "If the user has completed the course and certificate issued",
+      message: "If the student has completed the course and certificate issued",
     },
   };
 
@@ -189,19 +189,15 @@ const LeadStatus = ({
   };
 
   const handleTooltipMessage = (e) => {
-    console.log("key", e.target.outerText);
     setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
   };
 
   const onCallResponseChange = async (e) => {
-    console.log("radio checked", e.target.value);
-    setCallResponse(e.target.value);
-    const response = await handleCallResponseUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      3,
-      e.target.value
-    );
-    console.log("called resp", response);
+    setCallResponse(e.target.value)
+    const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
+    if(response.status===200){
+      setSyncDetails(!syncDetails);
+    }
   };
 
   const menu = (
@@ -952,11 +948,7 @@ const LeadStatus = ({
                       <Radio value={0}>Not Responded</Radio>
                     </span>
                   </Radio.Group>
-
-                  <div className="text-xs text-red-500 m-2 rounded-md">
-                    Note: Selecting either option triggers sending email to the
-                    student instantly. Choose correct option only.{" "}
-                  </div>
+                  <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose option carefully. </div>
                 </div>
               ) : (
                 <div>&nbsp;</div>
