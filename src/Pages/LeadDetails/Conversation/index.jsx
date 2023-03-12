@@ -1,38 +1,30 @@
-import { DatePicker, Space, Upload } from "antd";
+import { DatePicker, Space } from "antd";
 import "antd/dist/antd.css";
-import axios from "axios";
-import Filter from "bad-words";
-import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import axios from "axios";
+// import dayjs from "dayjs";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 // import ScrollToBottom from "react-scroll-to-bottom";
-// import io from "socket.io-client";
-
-import {
-  handlefetchMessages,
-  // handleSetReminder,
-} from "../../../Components/services/auth";
 // import Icons from "../../../Components/Shared/Icons";
 // import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
-import { addMessages } from "../../../features/user/messagesSlice";
-import whatsappLogo from "../../../assets/Images/whatsapp.png";
 import mailLogo from "../../../assets/Images/gmail.png";
+import whatsappLogo from "../../../assets/Images/whatsapp.png";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Conversation = ({ leadDetails, id }) => {
-  const dispatch = useDispatch();
-  const filter = new Filter();
+  // const dispatch = useDispatch();
+  // const filter = new Filter();
   let dayPickerDays = [];
 
   const userDetails = useSelector((state) => state?.user);
 
   const [dateTime, setDateTime] = useState("");
-  const [fileList, setFileList] = useState([]);
+  // const [fileList, setFileList] = useState([]);
   // for storing all messages
-  const [messageList, setMessageList] = useState([]);
+  // const [messageList, setMessageList] = useState([]);
   // This state is a type of flag to sync message in again according to needs
-  const [sync, setSync] = useState(false);
+  // const [sync, setSync] = useState(false);
 
   const [reminderMessage, setReminderMessage] = useState("");
 
@@ -117,172 +109,172 @@ const Conversation = ({ leadDetails, id }) => {
   };
 
   // handeling send message to API
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (e.target[0]?.value !== "") {
-      const messageData = {
-        room: id,
-        // sender_id: parseInt(localStorage.getItem("userId")),
-        // sender_name: localStorage.getItem("username"),
-        sender_id: userDetails?.userInfo?.user_id,
-        sender_name:
-          userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
-        recever_id: parseInt(localStorage.getItem("receverId")),
-        recever_name: localStorage.getItem("reveicerName"),
-        message: e.target[0]?.value,
-        date_time: dayjs().$d.toString().slice(4, 21),
-      };
-      // await socket.emit("send_message", messageData);
-      setMessageList(() => [...messageList, messageData]);
-      document.getElementById("message").value = "";
-      setSync(!sync);
-    }
-  };
+  // const handleSendMessage = async (e) => {
+  //   e.preventDefault();
+  //   if (e.target[0]?.value !== "") {
+  //     const messageData = {
+  //       room: id,
+  //       // sender_id: parseInt(localStorage.getItem("userId")),
+  //       // sender_name: localStorage.getItem("username"),
+  //       sender_id: userDetails?.userInfo?.user_id,
+  //       sender_name:
+  //         userDetails.userInfo.firstName + " " + userDetails.userInfo.lastName,
+  //       recever_id: parseInt(localStorage.getItem("receverId")),
+  //       recever_name: localStorage.getItem("reveicerName"),
+  //       message: e.target[0]?.value,
+  //       date_time: dayjs().$d.toString().slice(4, 21),
+  //     };
+  //     // await socket.emit("send_message", messageData);
+  //     setMessageList(() => [...messageList, messageData]);
+  //     document.getElementById("message").value = "";
+  //     setSync(!sync);
+  //   }
+  // };
 
   // To convert written text to lisk
-  const messageConvertion = (text) => {
-    // Checking filetype and display according to the type
-    if (
-      text.includes(".jpg") ||
-      text.includes(".jpeg") ||
-      text.includes(".png") ||
-      text.includes(".tiff") ||
-      text.includes(".webp") ||
-      text.includes(".gif") ||
-      text.includes(".bmp")
-    ) {
-      return (
-        '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
-        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
-        text +
-        '">' +
-        '<img style="max-width:200px; height:auto;" src="' +
-        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
-        text +
-        '"/>' +
-        "</a>"
-      );
-    } else if (
-      text.includes(".mp4") ||
-      text.includes(".mp4a") ||
-      text.includes(".avc1") ||
-      text.includes(".mov") ||
-      text.includes(".wmv") ||
-      text.includes(".avi") ||
-      text.includes(".avchd") ||
-      text.includes(".webm") ||
-      text.includes(".mkv")
-    ) {
-      return (
-        '<video width="250" controls> <source type="video/mp4" src="' +
-        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
-        text +
-        '">' +
-        "</video>"
-      );
-    } else if (
-      text.includes(".txt") ||
-      text.includes(".doc") ||
-      text.includes(".pdf") ||
-      text.includes(".svg") ||
-      text.includes(".csv") ||
-      text.includes(".excel") ||
-      text.includes(".xlsx") ||
-      text.includes(".xlx") ||
-      text.includes(".ppt") ||
-      text.includes(".pptx")
-    ) {
-      return (
-        '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
-        `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
-        text +
-        '">' +
-        text +
-        "</a>"
-      );
-    } else {
-      var urlRegex =
-        // eslint-disable-next-line no-useless-escape
-        /(\b(https ?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-      return text.replace(urlRegex, function (url) {
-        return (
-          '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
-          url +
-          '">' +
-          url +
-          "</a>"
-        );
-      });
-    }
-  };
+  // const messageConvertion = (text) => {
+  //   // Checking filetype and display according to the type
+  //   if (
+  //     text.includes(".jpg") ||
+  //     text.includes(".jpeg") ||
+  //     text.includes(".png") ||
+  //     text.includes(".tiff") ||
+  //     text.includes(".webp") ||
+  //     text.includes(".gif") ||
+  //     text.includes(".bmp")
+  //   ) {
+  //     return (
+  //       '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+  //       `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+  //       text +
+  //       '">' +
+  //       '<img style="max-width:200px; height:auto;" src="' +
+  //       `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+  //       text +
+  //       '"/>' +
+  //       "</a>"
+  //     );
+  //   } else if (
+  //     text.includes(".mp4") ||
+  //     text.includes(".mp4a") ||
+  //     text.includes(".avc1") ||
+  //     text.includes(".mov") ||
+  //     text.includes(".wmv") ||
+  //     text.includes(".avi") ||
+  //     text.includes(".avchd") ||
+  //     text.includes(".webm") ||
+  //     text.includes(".mkv")
+  //   ) {
+  //     return (
+  //       '<video width="250" controls> <source type="video/mp4" src="' +
+  //       `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+  //       text +
+  //       '">' +
+  //       "</video>"
+  //     );
+  //   } else if (
+  //     text.includes(".txt") ||
+  //     text.includes(".doc") ||
+  //     text.includes(".pdf") ||
+  //     text.includes(".svg") ||
+  //     text.includes(".csv") ||
+  //     text.includes(".excel") ||
+  //     text.includes(".xlsx") ||
+  //     text.includes(".xlx") ||
+  //     text.includes(".ppt") ||
+  //     text.includes(".pptx")
+  //   ) {
+  //     return (
+  //       '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+  //       `${process.env.REACT_APP_CHAT_SERVER_URL}/public/static/` +
+  //       text +
+  //       '">' +
+  //       text +
+  //       "</a>"
+  //     );
+  //   } else {
+  //     var urlRegex =
+  //       // eslint-disable-next-line no-useless-escape
+  //       /(\b(https ?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  //     return text.replace(urlRegex, function (url) {
+  //       return (
+  //         '<a style="text-decoration: underline; max-width:150px; height:auto;" rel="noreferrer" target="_black" href="' +
+  //         url +
+  //         '">' +
+  //         url +
+  //         "</a>"
+  //       );
+  //     });
+  //   }
+  // };
 
   // For deleting message
-  const handleDeleteMessage = async (msgId) => {
-    // await socket.emit("delete_message", msgId);
-    setMessageList(messageList.filter((message) => message.id !== msgId));
-    setSync(!sync);
-  };
+  // const handleDeleteMessage = async (msgId) => {
+  //   // await socket.emit("delete_message", msgId);
+  //   setMessageList(messageList.filter((message) => message.id !== msgId));
+  //   setSync(!sync);
+  // };
 
-  const handleUploadFile = async (event) => {
-    event.preventDefault();
-    const url = `${process.env.REACT_APP_CHAT_SERVER_URL}/message/uploadfile`;
-    const formData = new FormData();
+  // const handleUploadFile = async (event) => {
+  //   event.preventDefault();
+  //   const url = `${process.env.REACT_APP_CHAT_SERVER_URL}/message/uploadfile`;
+  //   const formData = new FormData();
 
-    for (let i = 0; i < fileList.length; i++) {
-      formData.append("files", fileList[i]);
-    }
-    formData.append("room", 123);
-    formData.append("sender_id", parseInt(localStorage.getItem("userId")));
-    formData.append("recever_id", parseInt(localStorage.getItem("receverId")));
-    formData.append("date_time", dayjs().$d.toString().slice(4, 21));
+  //   for (let i = 0; i < fileList.length; i++) {
+  //     formData.append("files", fileList[i]);
+  //   }
+  //   formData.append("room", 123);
+  //   formData.append("sender_id", parseInt(localStorage.getItem("userId")));
+  //   formData.append("recever_id", parseInt(localStorage.getItem("receverId")));
+  //   formData.append("date_time", dayjs().$d.toString().slice(4, 21));
 
-    try {
-      const result = await axios.post(url, formData);
-      if (result?.data) {
-        setSync(!sync);
-        setFileList([]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const result = await axios.post(url, formData);
+  //     if (result?.data) {
+  //       setSync(!sync);
+  //       setFileList([]);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleAddReminder = () => {
-    const reminderDetails = {
-      user_id: 1,
-      client_id: 2,
-      lead_id: id,
-      email: "",
-      details: reminderMessage,
-      trigg_time: dateTime,
-      notification_type: "reminder",
-      status: 0,
-    };
-    // handleSetReminder(reminderDetails);
-  };
+  // const handleAddReminder = () => {
+  //   const reminderDetails = {
+  //     user_id: 1,
+  //     client_id: 2,
+  //     lead_id: id,
+  //     email: "",
+  //     details: reminderMessage,
+  //     trigg_time: dateTime,
+  //     notification_type: "reminder",
+  //     status: 0,
+  //   };
+  // handleSetReminder(reminderDetails);
+  // };
 
-  const props = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-      return false;
-    },
-    fileList,
-  };
+  // const props = {
+  //   onRemove: (file) => {
+  //     const index = fileList.indexOf(file);
+  //     const newFileList = fileList.slice();
+  //     newFileList.splice(index, 1);
+  //     setFileList(newFileList);
+  //   },
+  //   beforeUpload: (file) => {
+  //     setFileList([...fileList, file]);
+  //     return false;
+  //   },
+  //   fileList,
+  // };
 
-  console.log(
-    "Number....",
-    leadDetails?.leadDetails?.phone_number.replace("+", "")
-  );
+  // console.log(
+  //   "Number....",
+  //   leadDetails?.leadDetails?.phone_number.replace("+", "")
+  // );
 
   return (
     <div className="min-h-full px-6 border-r">
-      {userDetails?.userInfo?.role_id === 4 ||
+      {/* {userDetails?.userInfo?.role_id === 4 ||
       userDetails?.userInfo?.role_id === 5 ? (
         <div
           className="border py-3 px-7 mb-9 "
@@ -297,7 +289,7 @@ const Conversation = ({ leadDetails, id }) => {
           </div>
 
           {/* --------------- Add Reminder Section ------------------ */}
-          <div>
+      {/* <div>
             <Space
               className="w-40 border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
               direction="vertical"
@@ -331,7 +323,7 @@ const Conversation = ({ leadDetails, id }) => {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : null}  */}
 
       <div>
         {/* --------------- Conversion Section -------------- */}

@@ -1,3 +1,4 @@
+import { Tooltip } from "antd";
 import React, { useEffect } from "react";
 import amex from "../../assets/Images/amex.png";
 import master from "../../assets/Images/master.png";
@@ -66,7 +67,14 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
         </div>
       </div>
 
-      <button id="e-way"></button>
+      <div className="relative mt-2">
+        <button id="e-way"></button>
+        {!amount ? (
+          <Tooltip title="Firstly add amount" placement="left">
+            <div className="w-1/3 h-full cursor-not-allowed absolute top-0"></div>
+          </Tooltip>
+        ) : null}
+      </div>
 
       {/* <form action="">
         <div className="flex justify-between">

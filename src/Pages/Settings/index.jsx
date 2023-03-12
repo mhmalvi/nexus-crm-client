@@ -15,8 +15,9 @@ const Settings = () => {
       {/* {userDetails?.userInfo?.role_id === 1 && <AdminSettings />} */}
 
       {/* Company Profile Settings */}
-      {(userDetails?.userInfo?.role_id === 3 ||
-        userDetails?.userInfo?.role_id === 1 ||
+      {(userDetails?.userInfo?.role_id === 1 ||
+        userDetails?.userInfo?.role_id === 2 ||
+        userDetails?.userInfo?.role_id === 3 ||
         userDetails?.userInfo?.role_id === 5) && <CompanySettings />}
     </div>
   );

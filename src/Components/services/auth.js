@@ -1,6 +1,5 @@
 import axios from "axios";
 // import { io } from "socket.io-client";
-import { Storage } from "../Shared/utils/store";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
