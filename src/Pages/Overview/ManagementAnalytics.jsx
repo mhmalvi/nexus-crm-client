@@ -105,7 +105,7 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
                   {comapnyEmployees?.length}
                 </h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Seals Team
+                  Sales Team
                 </p>
               </div>
               <div>

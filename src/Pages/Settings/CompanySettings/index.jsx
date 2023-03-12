@@ -542,7 +542,7 @@ const CompanySettings = () => {
                     className="px-4 py-1 rounded-md bg-black text-white"
                     onClick={() => setToggleEditDetails(false)}
                   >
-                    Cancle
+                    Cancel
                   </button>
                   <button
                     className="px-4 py-1 ml-2 rounded-md bg-brand-color text-white"

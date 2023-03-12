@@ -10,7 +10,7 @@ import { handleFetchCompanyEmployees } from "../../../Components/services/compan
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
-const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
+const SalesAdmins = ({ clientId}) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
 
@@ -18,7 +18,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
   const [activeAddSeals, setActiveAddSeals] = useState(false);
   const [companyAdminEmployee, setCompanyAdminEmployee] = useState();
   const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
-  // const [syncEmployees, setSyncEmployees] = useState(false);
+  const [syncEmployees, setSyncEmployees] = useState(false);
   const [inactiveAdminEmployees, setInactiveAdminEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
@@ -87,11 +87,11 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
 
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
-    // console.log(statusUpdateResponse);
+    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
-      message.success("User Remove Successfully");
       setSyncEmployees(!syncEmployees);
+      message.success("Employee Removed Successfully");
     }
   };
 
@@ -100,8 +100,8 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
-      message.success("User Added Successfully");
       setSyncEmployees(!syncEmployees);
+      message.success("Employee reassigned Successfully");
     }
   };
 
@@ -110,7 +110,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
     // console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
-      message.success("User Remove Successfully");
+      message.success("Employee suspended Successfully");
       setSyncEmployees(!syncEmployees);
     }
   };
@@ -264,7 +264,8 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
                   userDetails?.userInfo?.role_id === 4 ? (
                     <div>
                       {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2) && (
+                        userDetails?.userInfo?.role_id === 2 ||
+                        userDetails?.userInfo?.role_id === 3) && (
                         <button
                           className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
                           onClick={() => handleRemoveUser(employee?.id)}
@@ -334,7 +335,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
                       onClick={() => handleAddSuspendedEmployee(employee?.id)}
                     >
-                      Add Employee
+                      Reassign
                     </button>
                   </div>
                 </div>
@@ -480,7 +481,7 @@ const SalesAdmins = ({ clientId, syncEmployees, setSyncEmployees }) => {
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
                       onClick={() => handleAddSuspendedEmployee(employee?.id)}
                     >
-                      Add Employee
+                      Reassign
                     </button>
                   </div>
                 </div>

@@ -118,7 +118,7 @@ const LeadStatus = ({
       message: "If the student's documents are verified",
     },
     Completed: {
-      message: "If the user has completed the course and certificate issued",
+      message: "If the student has completed the course and certificate issued",
     },
   };
 
@@ -936,7 +936,7 @@ const LeadStatus = ({
                     </span>
                   </Radio.Group>
 
-                  <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose correct option only. </div>
+                  <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose option carefully. </div>
                 </div>
               ) : (
                 <div>&nbsp;</div>
