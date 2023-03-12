@@ -33,7 +33,11 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
 
     script.async = true;
     scriptContainer.appendChild(script);
-  }, [amount, requestedLeadDetails?.leadDetails?.client_id, requestedLeadDetails?.leadDetails?.lead_id]);
+  }, [
+    amount,
+    requestedLeadDetails?.leadDetails?.client_id,
+    requestedLeadDetails?.leadDetails?.lead_id,
+  ]);
 
   console.log(requestedLeadDetails);
 

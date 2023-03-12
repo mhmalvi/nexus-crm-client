@@ -46,20 +46,20 @@ const CompanySettings = () => {
       );
 
       console.log("Cooool", companyDetailsResponse);
-      // if (companyDetailsResponse?.data?.[0]?.logo_id) {
-      //   const fetchFile = await handleFetchFile(
-      //     parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
-      //   );
+      if (companyDetailsResponse?.data?.[0]?.logo_id) {
+        const fetchFile = await handleFetchFile(
+          parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
+        );
 
-      //   const filePath = fetchFile?.data?.[0];
-      //   setAvatarPreviewer(
-      //     (
-      //       process.env.REACT_APP_FILE_SERVER_URL +
-      //       "/" +
-      //       filePath?.document_name
-      //     ).toString()
-      //   );
-      // }
+        // const filePath = fetchFile?.data;
+        setAvatarPreviewer(
+          (
+            process.env.REACT_APP_FILE_SERVER_URL +
+            "/public/" +
+            fetchFile?.data?.document_name
+          ).toString()
+        );
+      }
 
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
@@ -174,9 +174,8 @@ const CompanySettings = () => {
     //   console.log(value);
     // }
     const uploadFile = await handleUploadFile(fileFormData);
-    // console.log("uploadFile", uploadFile);
-    // console.log(uploadFile?.message?.data[0]?.id);
-    setFileId(uploadFile?.message?.data[0]?.id);
+    // setFileId(uploadFile?.message?.data[0]?.id);
+    setFileId(uploadFile?.data?.id);
   };
 
   return (

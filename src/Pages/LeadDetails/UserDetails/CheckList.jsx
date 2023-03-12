@@ -2,6 +2,7 @@ import { message, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  handleChecklistDocumentDelete,
   handleChecklistDocumentUpload,
   handleDocumentDelete,
   handleFetchLeadCheckListDocuments,
@@ -19,48 +20,6 @@ const CheckList = ({ leadDetails }) => {
 
   const userDetails = useSelector((state) => state?.user);
 
-  const handleChange = async (e, checklistId) => {
-    const fileFormData = new FormData();
-    fileFormData.append("user_id", userDetails?.userInfo?.user_id);
-    fileFormData.append("client_id", leadDetails.client_id);
-    fileFormData.append("document_name", e?.file?.originFileObj);
-    fileFormData.append("document_details", e?.file?.originFileObj?.name);
-
-    for (const value of fileFormData.values()) {
-      console.log(value);
-    }
-
-    const uploadFile = await handleUploadFile(fileFormData);
-
-    console.log("uploadFile", uploadFile);
-
-    // if (uploadFile?.message?.data.length) {
-    //   setSyncDocumentList(!syncDocumentList);
-    // }
-
-    // console.log("uploadFileUpload", uploadFile);
-    // console.log("DOCCUMENTS>>> ", {
-    //   checklist_id: checklistId,
-    //   lead_id: leadDetails?.lead_id,
-    //   document_id: uploadFile?.message?.data[0]?.id,
-    //   student_id: userDetails?.userInfo?.user_id,
-    // });
-
-    const saveDocumentDetails = await handleChecklistDocumentUpload({
-      checklist_id: checklistId,
-      lead_id: leadDetails?.lead_id,
-      document_id: uploadFile?.message?.data[0]?.id,
-      student_id: userDetails?.userInfo?.user_id,
-    });
-
-    // console.log("handleChecklistDocumentUpload", handleChecklistDocumentUpload);
-
-    if (saveDocumentDetails?.status) {
-      setSyncDocumentList(!syncDocumentList);
-      message.success("Document Updated Successfully");
-    }
-  };
-
   useEffect(() => {
     (async () => {
       const documentResponse = await handleFetchLeadCheckListDocuments({
@@ -73,14 +32,15 @@ const CheckList = ({ leadDetails }) => {
       if (documentResponse?.data) {
         documentResponse?.data.map(async (doc) => {
           const fetchFiledetails = await handleFetchFile(doc?.document_id);
-          if (doc?.document_id === "") {
+
+          if (!doc?.document_id) {
             document.getElementById(doc?.document_id).style.display = "none";
           }
 
-          if ((fetchFiledetails?.data).length) {
+          if (fetchFiledetails?.data) {
             document.getElementById(doc?.document_id).href = fetchFiledetails
-              ?.data[0]?.document_name
-              ? `${process.env.REACT_APP_FILE_SERVER_URL}/${fetchFiledetails?.data[0]?.document_name}`
+              ?.data?.document_name
+              ? `${process.env.REACT_APP_FILE_SERVER_URL}/public/${fetchFiledetails?.data?.document_name}`
               : "";
           }
         });
@@ -89,11 +49,53 @@ const CheckList = ({ leadDetails }) => {
     })();
   }, [leadDetails, userDetails?.userInfo?.user_id, syncDocumentList]);
 
-  const handleDocumentDeleteReq = async (documentId) => {
-    const deleteResponse = await handleDocumentDelete(documentId);
 
-    console.log(deleteResponse);
-    setSyncDocumentList(!syncDocumentList);
+    const handleChange = async (e, checklistId) => {
+      const fileFormData = new FormData();
+      fileFormData.append("user_id", userDetails?.userInfo?.user_id);
+      fileFormData.append("client_id", leadDetails.client_id);
+      fileFormData.append("document_name", e?.file?.originFileObj);
+      fileFormData.append("document_details", e?.file?.originFileObj?.name);
+
+      // for (const value of fileFormData.values()) {
+      //   console.log(value);
+      // }
+
+      const uploadFile = await handleUploadFile(fileFormData);
+
+      // if (uploadFile?.status === 200) {
+      //   setSyncDocumentList(!syncDocumentList);
+      // }
+
+      const saveDocumentDetails = await handleChecklistDocumentUpload({
+        checklist_id: checklistId,
+        lead_id: leadDetails?.lead_id,
+        document_id: uploadFile?.data?.id,
+        student_id: userDetails?.userInfo?.user_id,
+      });
+
+      // console.log("handleChecklistDocumentUpload", saveDocumentDetails);
+
+      if (saveDocumentDetails?.status) {
+        message.success("Document Added Successfully");
+        setSyncDocumentList(!syncDocumentList);
+      }
+    };
+
+  const handleDocumentDeleteReq = async (documentId, checklist_id) => {
+    const deleteCheckListDocument = await handleChecklistDocumentDelete(
+      checklist_id,
+      userDetails?.userInfo?.user_id
+    );
+
+    if (deleteCheckListDocument?.status) {
+      const deleteResponse = await handleDocumentDelete(documentId);
+
+      if (deleteResponse?.status === 200) {
+        message.success("Document Removed Successfully");
+      }
+      setSyncDocumentList(!syncDocumentList);
+    }
   };
 
   return (
@@ -139,7 +141,9 @@ const CheckList = ({ leadDetails }) => {
               <div>
                 <Icons.Cross
                   className="w-2.5 text-red-500 ml-2 cursor-pointer"
-                  onClick={() => handleDocumentDeleteReq(document.document_id)}
+                  onClick={() =>
+                    handleDocumentDeleteReq(document.document_id, document?.id)
+                  }
                 />
               </div>
             </div>
