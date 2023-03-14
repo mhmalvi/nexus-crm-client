@@ -9,8 +9,8 @@ import group278 from "../../assets/Images/group278.svg";
 function QualitySection() {
   return (
     <div className="w-full pb-20 md:pb-30 md:px-20">
-      <div className="items-center m-auto z-50 lg:pt-32  xl:pt-44 2xl:pt-96 mt-14">
-        <div className="items-center m-auto pt-27 md:pt-40 mx-8">
+      <div className="items-center m-auto z-50 lg:pt-32 xl:pt-44 2xl:pt-96">
+        <div className="items-center m-auto md:pt-40 mx-8">
           <div className="text-center m-auto pb-8">
             <span className="font-poppins text-2xl md:text-4xl text-black font-bold justify-center text-center">
               The Most Effective CRM <br /> Features for Your Business

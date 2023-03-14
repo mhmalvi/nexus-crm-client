@@ -29,14 +29,6 @@ const Navbar = () => {
               className="text-white hover:text-gray-300 hover:border-brand-color hover:border-b-2 duration-600"
               href="/"
             >
-              Pricing
-            </a>
-          </li>
-          <li className="md:ml-8 text-md">
-            <a
-              className="text-white hover:text-gray-300 hover:border-brand-color hover:border-b-2 duration-600"
-              href="/"
-            >
               About Us
             </a>
           </li>
@@ -54,6 +46,14 @@ const Navbar = () => {
               href="/"
             >
               Contact
+            </a>
+          </li>
+          <li className="md:ml-8 text-md">
+            <a
+              className="text-white hover:text-gray-300 hover:border-brand-color hover:border-b-2 duration-600"
+              href="/"
+            >
+              Login
             </a>
           </li>
           <li className="md:ml-8 text-md">

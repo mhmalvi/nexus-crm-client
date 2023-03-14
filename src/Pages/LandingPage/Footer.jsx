@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 
 export default function Footer() {
+  const [year, setYear] = useState("");
+
+  useEffect(() => {
+    const date = new Date();
+    setYear(date.getFullYear());
+  }, []);
+
   return (
     <div className="bg-[#1D2130]">
       <div className="w-full flex flex-col-reverse md:flex-row font-poppins px-6 md:px-20 pt-13 pb-10">
@@ -113,7 +120,7 @@ export default function Footer() {
         <div className="w-2/12 md:w-1/3 h-1 bg-white my-2"></div>
         <div className="w-full md:w-1/3 flex justify-evenly flex-col-reverse md:flex-row px-4">
           <div className="text-white text-center px-2">
-            © Copyright Quadque Technologies 2022.
+            © Copyright Quadque Technologies {year}.
           </div>
           <div className="flex justify-evenly m-auto pb-6 md:pb-0">
             <a title="Facebook" className="px-2">

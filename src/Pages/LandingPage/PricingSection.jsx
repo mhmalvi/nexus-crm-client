@@ -61,14 +61,14 @@ const PricingSection = () => {
           Please take a look at the range of plans that we are offering
         </div>
       </div>
-      <div className="w-1/4 pb-10 m-auto">
+      {/* <div className="w-1/4 pb-10 m-auto">
         <div className="hidden lg:flex items-center bg-[#E0E4FC] font-semibold rounded-3xl p-2">
           <p className="w-1/2 text-center p-2 m-auto">Monthly</p>
           <p className="w-1/2 bg-black text-white text-center rounded-2xl py-4 m-auto">
             Yearly
           </p>
         </div>
-      </div>
+      </div> */}
       {/* <div className="service-capbility flex justify-evenly px-18 gap-6 pb-18">
         
         <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 card-background">
@@ -354,14 +354,14 @@ const PricingSection = () => {
         </div>
       </div>
 
-      <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
+      {/* <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
         <a
           className="text-md text-white font-semibold whitespace-nowrap"
           href="/"
         >
           Explore More
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };

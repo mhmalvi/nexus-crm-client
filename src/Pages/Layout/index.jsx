@@ -55,9 +55,10 @@ const Layout = () => {
   //     socket.off("receive_reminder");
   //   };
   // }, []);
+  console.log("window.location.pathname", window.location.pathname);
 
   useEffect(() => {
-    if (window.location.pathname.length <= 1) {
+    if (window.location.pathname.length === "/") {
       if (Storage.getItem("auth_tok")) {
         navigate("/dashboard");
       } else {

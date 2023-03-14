@@ -21,10 +21,11 @@ function AboutUsSection() {
               We will help you to reach your <br /> business goals
             </div>
             <div className="text-sm md:text-lg">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor <br /> invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam <br />
-              et justo duo dolores et ea rebum.
+              We understand that affordability is key, which is why we offer
+              competitive and affordable pricing for all our services. Our
+              services are backed by impactful metrics. You can rest assured
+              that our team will always be there to assist you with any
+              questions or concerns you may have.
             </div>
           </div>
           <div className="grid grid-cols-4 font-poppins text-white">
