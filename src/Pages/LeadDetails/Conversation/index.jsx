@@ -493,7 +493,7 @@ const Conversation = ({ leadDetails, id }) => {
               <a
                 // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
                 // href={`https://mail.google.com/mail/?view=cm&fs=1&to=${leadDetails?.leadDetails?.student_email}&su=SUBJECT&body=BODY`}
-                href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=&body=`}
+                href={`mailto:${leadDetails?.leadDetails?.student_email}`}
                 target="_blank"
                 rel="noreferrer"
               >

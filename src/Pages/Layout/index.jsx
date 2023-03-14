@@ -57,7 +57,7 @@ const Layout = () => {
   // }, []);
 
   useEffect(() => {
-    if (window.location.pathname.length <= 1) {
+    if (window.location.pathname==="") {
       if (Storage.getItem("auth_tok")) {
         navigate("/dashboard");
       } else {
@@ -187,7 +187,6 @@ const Layout = () => {
           setToggleMessage={setToggleMessage}
         />
       )}
-
       {/* ----------- For notification pop up ------------- */}
       {toggleNotification && (
         <Notifications

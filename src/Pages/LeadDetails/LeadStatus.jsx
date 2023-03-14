@@ -4,10 +4,10 @@ import {
   Menu,
   message,
   Modal,
+  Radio,
   Space,
   Tooltip,
   Upload,
-  Radio,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -34,6 +34,8 @@ const LeadStatus = ({
   syncDetails,
   setSyncDetails,
   statusDateTime,
+  paymentHistory,
+  totalPaid,
 }) => {
   const statusData = [
     "Suspended",
@@ -140,7 +142,6 @@ const LeadStatus = ({
               ]
           ).class
     );
-
     if (leadDetails?.leadDetails?.document_certificate_id) {
       (async () => {
         const fetchCertificateFIle = await handleFetchFile(
@@ -153,7 +154,6 @@ const LeadStatus = ({
         );
       })();
     }
-
     if (leadDetails?.leadDetails?.lead_details_status >= 3) {
       console.log(
         leadDetails?.leadAllStatus?.filter(
@@ -167,7 +167,11 @@ const LeadStatus = ({
         )?.[0]?.response
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leadStatus, leadDetails, statusData]);
+
+  console.log("paymentHistory?.data", paymentHistory);
+  console.log("Total Paid", totalPaid);
 
   const onStatusChange = async ({ key }) => {
     leadStatus[statusData[key]] = true;
@@ -193,9 +197,13 @@ const LeadStatus = ({
   };
 
   const onCallResponseChange = async (e) => {
-    setCallResponse(e.target.value)
-    const response = await handleCallResponseUpdate( leadDetails?.leadDetails?.lead_id, 3, e.target.value)
-    if(response.status===200){
+    setCallResponse(e.target.value);
+    const response = await handleCallResponseUpdate(
+      leadDetails?.leadDetails?.lead_id,
+      3,
+      e.target.value
+    );
+    if (response.status === 200) {
       setSyncDetails(!syncDetails);
     }
   };
@@ -666,7 +674,7 @@ const LeadStatus = ({
             </table>
           </div>
           <div className="">
-            {leadDetails?.paymentHistories?.length > 0 ? (
+            {paymentHistory?.length > 0 ? (
               <table
                 className="custom-table"
                 cellPadding="0"
@@ -674,13 +682,10 @@ const LeadStatus = ({
                 border="0"
               >
                 <tbody>
-                  {leadDetails?.paymentHistories?.map((payment, i) => (
+                  {paymentHistory?.map((payment, i) => (
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
-                      <td>
-                        {new Date(payment.created_at).toString().slice(4, 21)}{" "}
-                        {new Date(payment.created_at).toString().slice(25, 31)}
-                      </td>
+                      <td>{new Date(payment.created_at).toLocaleString()}</td>
                       <td className="w-24">{payment.payment_amount}</td>
                       <td>{payment.transaction_id}</td>
                       <td className="w-24">{payment.payment_method}</td>
@@ -698,7 +703,8 @@ const LeadStatus = ({
         </Modal>
 
         {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
-        {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
+        {(activeStatusTitle !== "New Lead" ||
+          activeStatusTitle !== "Skilled") && (
           <div className="flex items-center">
             {userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
@@ -715,11 +721,7 @@ const LeadStatus = ({
                     className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
                     type="text"
                     name=""
-                    defaultValue={
-                      leadDetails?.leadAmountHistory[
-                        leadDetails?.leadAmountHistory?.length - 1
-                      ]?.amount
-                    }
+                    defaultValue={leadDetails?.leadAmountHistory[0]?.amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Amount"
                     id=""
@@ -783,19 +785,15 @@ const LeadStatus = ({
             )}
           </>
         ) : null}
-        {activeStatusTitle === "Called" &&
+        {(activeStatusTitle !== "New Lead" ||
+          activeStatusTitle !== "Skilled") &&
           (userDetails?.userInfo?.role_id === 6 ? (
             <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
               <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
                 Payable :
               </span>
               <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-                $
-                {
-                  leadDetails?.leadAmountHistory[
-                    leadDetails?.leadAmountHistory?.length - 1
-                  ]?.amount
-                }
+                ${leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
               </span>
             </div>
           ) : null)}
@@ -948,7 +946,10 @@ const LeadStatus = ({
                       <Radio value={0}>Not Responded</Radio>
                     </span>
                   </Radio.Group>
-                  <div className="text-xs text-red-500 m-2 rounded-md">Note: Selecting either option triggers sending email to the student instantly. Choose option carefully. </div>
+                  <div className="text-xs text-red-500 m-2 rounded-md">
+                    Note: Selecting either option triggers sending email to the
+                    student instantly. Choose option carefully.{" "}
+                  </div>
                 </div>
               ) : (
                 <div>&nbsp;</div>
@@ -1020,7 +1021,13 @@ const LeadStatus = ({
               ) : null}
 
               <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                0% paid
+                Paid ${totalPaid} of $
+                {leadDetails?.leadAmountHistory[0]?.amount}(
+                {(
+                  (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
+                  100
+                ).toFixed(2)}
+                %)
               </h6>
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
                 Bank

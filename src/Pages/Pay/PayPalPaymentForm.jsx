@@ -1,6 +1,7 @@
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
-// import paypalLogo from "../../assets/Images/paypal.png";
+import paypalLogo from "../../assets/Images/paypal.png";
 
 const key = "updatable";
 
@@ -9,57 +10,96 @@ export default function PayPalPaymentForm() {
   const [amount, setAmount] = useState(0);
   console.log(setAmount);
 
-  useEffect(() => {
-    if (window.myButton) window.myButton.close();
-    window.myButton = window.paypal.Buttons({
-      createOrder: (data, actions) => {
-        return actions.order.create({
-          purchase_units: [
-            {
-              description: "RLP Course",
-              amount: {
-                currency_code: "AUD",
-                value: amount,
-              },
+  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [orderId, setOrderId] = useState(false);
+
+  // useEffect(() => {
+  //   if (window.myButton) window.myButton.close();
+  //   window.myButton = window.paypal.Buttons({
+  //     createOrder: (data, actions) => {
+  //       return actions.order.create({
+  //         purchase_units: [
+  //           {
+  //             description: "RLP Course",
+  //             amount: {
+  //               currency_code: "AUD",
+  //               value: amount,
+  //             },
+  //           },
+  //         ],
+  //       });
+  //     },
+  //     onApprove: async (data, actions) => {
+  //       const order = await actions.order.capture();
+  //       console.log(data);
+  //       console.log(order);
+  //       if (order) {
+  //         message.loading({ content: "Paying...", key });
+  //         setTimeout(() => {
+  //           message.success({
+  //             content: `Successfully Paid $${amount}`,
+  //             key,
+  //             duration: 2,
+  //           });
+  //         }, 3000);
+  //       }
+  //     },
+  //     onError: (err) => {
+  //       if (err) {
+  //         message.loading({ content: "Paying...", key });
+  //         setTimeout(() => {
+  //           message.warning({
+  //             content: `Something went wrong check your PayPal account`,
+  //             key,
+  //             duration: 2,
+  //           });
+  //         }, 3000);
+  //       }
+  //     },
+  //   });
+  //   window.myButton.render(paypalRef.current);
+  // }, [amount]);
+
+  const createOrder = (data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            description: "This is the Book Worth 100",
+            amount: {
+              currency_code: "USD",
+              value: 100,
             },
-          ],
-        });
-      },
-      onApprove: async (data, actions) => {
-        const order = await actions.order.capture();
-        console.log(data);
-        console.log(order);
-        if (order) {
-          message.loading({ content: "Paying...", key });
-          setTimeout(() => {
-            message.success({
-              content: `Successfully Paid $${amount}`,
-              key,
-              duration: 2,
-            });
-          }, 3000);
-        }
-      },
-      onError: (err) => {
-        if (err) {
-          message.loading({ content: "Paying...", key });
-          setTimeout(() => {
-            message.warning({
-              content: `Something went wrong check your PayPal account`,
-              key,
-              duration: 2,
-            });
-          }, 3000);
-        }
-      },
+          },
+        ],
+        application_context: {
+          shipping_preference: "NO_SHIPPING",
+        },
+      })
+      .then((orderID) => {
+        setOrderId(orderID);
+        return orderID;
+      });
+  };
+
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then(function (details) {
+      const { payer } = details;
+      console.log("payer", payer);
+      setSuccess(true);
     });
-    window.myButton.render(paypalRef.current);
-  }, [amount]);
+  };
+
+  const onError = (data, actions) => {
+    setErrorMessage("An error occured with your payment");
+  };
 
   return (
     <div>
-      <span className="text-red-500 text-xl">*</span> Feature Comming Soon...
-      {/* <div className="relative mb-6">
+      {/* <span className="text-red-500 text-xl">*</span> Feature Comming Soon... */}
+      <div className="relative mb-6">
         <img className="w-10" src={paypalLogo} alt="" />
         <div className="absolute w-full h-full top-0"></div>
       </div>
@@ -76,17 +116,35 @@ export default function PayPalPaymentForm() {
         />
       </div>
       <div>
-        {amount > 0 ? (
-          <div ref={paypalRef} className="z-0"></div>
-        ) : (
-          <div>
-            <h1 className="font-poppins text-xs text-black text-opacity-80 font-medium">
-              <span className="text-red-600">*</span> Enter your payment amount
-              at first.
-            </h1>
-          </div>
-        )}
-      </div> */}
+        <PayPalScriptProvider
+          options={{
+            "client-id":
+              "AQ4Qra0icbx0sd67S7gW9KdZeIICbt44y-t2OivfBrR11PGyB1tmtoOk-LJV7i8z_wP-hWJ-1qnk0s0j",
+          }}
+        >
+          <PayPalButtons
+            style={{ layout: "vertical" }}
+            createOrder={createOrder}
+            onApprove={onApprove}
+            onError={onError}
+          />
+        </PayPalScriptProvider>
+      </div>
     </div>
   );
+}
+
+{
+  /* <div>
+    {amount > 0 ? (
+      <div ref={paypalRef} className="z-0"></div>
+    ) : (
+      <div>
+        <h1 className="font-poppins text-xs text-black text-opacity-80 font-medium">
+          <span className="text-red-600">*</span> Enter your payment amount
+          at first.
+        </h1>
+      </div>
+    )}
+  </div> */
 }

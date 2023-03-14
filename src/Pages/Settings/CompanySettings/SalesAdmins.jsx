@@ -10,7 +10,7 @@ import { handleFetchCompanyEmployees } from "../../../Components/services/compan
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
-const SalesAdmins = ({ clientId}) => {
+const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
 
@@ -264,8 +264,8 @@ const SalesAdmins = ({ clientId}) => {
                   userDetails?.userInfo?.role_id === 4 ? (
                     <div>
                       {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2 ||
-                        userDetails?.userInfo?.role_id === 3) && (
+                        userDetails?.userInfo?.role_id === 2) && (
+                        // userDetails?.userInfo?.role_id === 3
                         <button
                           className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
                           onClick={() => handleRemoveUser(employee?.id)}

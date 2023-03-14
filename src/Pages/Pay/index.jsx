@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { handleLeadDetails } from "../../Components/services/leads";
+import Icons from "../../Components/Shared/Icons";
 import { Storage } from "../../Components/Shared/utils/store";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
@@ -9,6 +10,7 @@ import PayPalPaymentForm from "./PayPalPaymentForm";
 
 const Pay = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const [amount, setAmount] = useState("");
   const [searchParams] = useSearchParams();
@@ -58,6 +60,15 @@ const Pay = () => {
 
   return (
     <div className="bg-white mt-18 2xl:mt-25 pt-1">
+      <div
+        className="ml-4 flex items-center cursor-pointer"
+        onClick={() => {
+          navigate(`../lead/${id}`);
+        }}
+      >
+        <Icons.DownArrow className="rotate-90" />
+        <span className="text-base font-semibold ml-2">Back</span>
+      </div>
       <div className="mx-auto 2xl:pb-0">
         <div className="rounded-2xl flex justify-center items-end">
           <div className="px-8 py-10 rounded-2xl border border-gray-400">
@@ -88,7 +99,8 @@ const Pay = () => {
                         Total Payable:{" "}
                         {requestedLeadDetails?.leadAmountHistory?.length ? (
                           <span className="text-red-600">
-                            {requestedLeadDetails?.leadAmountHistory[0]?.amount}
+                            {requestedLeadDetails?.leadAmountHistory[0]
+                              ?.amount - JSON.parse(Storage.getItem("_tp_"))}
                           </span>
                         ) : (
                           <span className="text-red-600">Not Set Yet</span>

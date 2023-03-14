@@ -178,10 +178,11 @@ const Table = ({
 
                         <td>
                           {list.created_at ? (
-                            new Date(list.created_at).toString().slice(4, 21) +
-                            " " +
-                            new Date(list.created_at).toString().slice(25, 31)
+                            new Date(list.created_at)?.toLocaleString()
                           ) : (
+                            // new Date(list.created_at).toString().slice(4, 21) +
+                            // " " +
+                            // new Date(list.created_at).toString().slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
@@ -261,10 +262,11 @@ const Table = ({
 
                         <td>
                           {list.created_at ? (
-                            new Date(list.created_at).toString().slice(4, 21) +
-                            " " +
-                            new Date(list.created_at).toString().slice(25, 31)
+                            new Date(list.created_at)?.toLocaleString()
                           ) : (
+                            // new Date(list.created_at).toString().slice(4, 21) +
+                            // " " +
+                            // new Date(list.created_at).toString().slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
@@ -329,14 +331,15 @@ const Table = ({
                         </td>
                         <td>
                           {list.lead_apply_date ? (
-                            new Date(list.lead_apply_date)
-                              .toString()
-                              .slice(4, 21) +
-                            " " +
-                            new Date(list.lead_apply_date)
-                              .toString()
-                              .slice(25, 31)
+                            new Date(list.lead_apply_date)?.toLocaleString()
                           ) : (
+                            // new Date(list.lead_apply_date)
+                            //   .toString()
+                            //   .slice(4, 21) +
+                            // " " +
+                            // new Date(list.lead_apply_date)
+                            //   .toString()
+                            //   .slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
