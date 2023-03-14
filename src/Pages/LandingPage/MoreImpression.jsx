@@ -225,11 +225,11 @@ function MoreImpressionSection() {
               matter. Generate better leads and increase the conversion rate
               with our CRM.
             </div>
-            <div className="w-1/5 bg-black rounded-xl text-center py-4 my-6 absolute top-[60%] left-16 z-[100]">
+            {/* <div className="w-1/5 bg-black rounded-xl text-center py-4 my-6 absolute top-[60%] left-16 z-[100]">
               <a className="text-white" href="/">
                 Get Free Trial
               </a>
-            </div>
+            </div> */}
 
             <div className="w-1/2 flex-col justify-start absolute top-[20%] right-10 z-[100]">
               <div className="px-4 py-4">
@@ -237,11 +237,11 @@ function MoreImpressionSection() {
                 <div className="relative w-72 xl:w-86 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] m-auto rounded-xl z-[100] p-10 border shadow-lg">
                   <div className="relative flex justify-center">
                     <div className="progressBar"></div>
-                    <div className="absolute top-20 text-3xl font-semibold">
+                    <div className="absolute top-16 text-center text-3xl font-semibold">
                       {
                         <CountUp
                           delay={7.5}
-                          start={80}
+                          start={90}
                           end={0}
                           duration={2}
                           onEnd={({ pauseResume, reset, start, update }) =>
@@ -250,6 +250,9 @@ function MoreImpressionSection() {
                         />
                       }
                       %
+                      <div className="text-xs text-center pb-2">
+                        Customer <br /> Satisfaction
+                      </div>
                     </div>
                   </div>
 
@@ -258,24 +261,30 @@ function MoreImpressionSection() {
                       <div className="w-6 h-6 bg-[#6B7CFF] rounded-md m-auto animate-pulse"></div>
                       <span className="m-auto pl-2 text-3xl font-semibold">
                         {" "}
-                        {<CountUp start={0} end={30} duration={2} />}%
+                        {<CountUp start={0} end={50} duration={2} />}%
+                        <div className="text-xs pb-2">
+                          Cycle-time <br /> decreased
+                        </div>
                       </span>
                     </div>
                     <div className="flex">
                       <div className="w-6 h-6 bg-[#CFCFCF] rounded-md m-auto animate-pulse"></div>
                       <span className="m-auto pl-2  text-3xl font-semibold">
                         {" "}
-                        {<CountUp start={0} end={68} duration={2} />}%
+                        {<CountUp start={0} end={200} duration={2} />}%
+                        <div className="text-xs pb-2">
+                          Increased <br /> productivity
+                        </div>
                       </span>
                     </div>
                   </div>
                   <div className="text-xs text-center">
-                    Get the best out of your customer support Finsweet
+                    Get the best out of your customer support
                   </div>
 
                   {/* PIE CHART */}
                   <div className="absolute top-10 left-[-35%] xl:left-[-40%] w-32 xl:w-44 h-28 xl:h-32 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] p-2 xl:p-6 rounded-xl border shadow-lg">
-                    <div className="text-xs pb-2">Impression</div>
+                    <div className="text-xs pb-2">Leads Generated</div>
                     <div className="custom_svg grid grid-cols-2">
                       <svg viewBox="0 0 20.6619772368 20.6619772368">
                         <circle
@@ -310,7 +319,7 @@ function MoreImpressionSection() {
                   </div>
                   {/* PIE CHART */}
                   <div className="absolute bottom-1/4 right-[-35%] xl:right-[-40%] w-32 xl:w-44 h-28 xl:h-32 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] p-2 xl:p-6 rounded-xl border shadow-lg">
-                    <div className="text-xs pb-2">Impression</div>
+                    <div className="text-xs pb-2">Conversion Rate</div>
                     <div className="custom_svg grid grid-cols-2">
                       <svg
                         viewBox="0 0 20.6619772368 20.6619772368"
@@ -342,7 +351,7 @@ function MoreImpressionSection() {
                         />
                       </svg>
                       <div className="text-2xl xl:text-3xl font-semibold py-3 pl-2">
-                        32K
+                        98%
                       </div>
                     </div>
                   </div>

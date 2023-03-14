@@ -30,17 +30,17 @@ function MoreImpressionMobileSection() {
               matter. Generate better leads and increase the conversion rate
               with our CRM.
             </div>
-            <div className="w-2/5 bg-black rounded-xl text-center py-4 my-6 mx-auto md:mx-0">
+            {/* <div className="w-2/5 bg-black rounded-xl text-center py-4 my-6 mx-auto md:mx-0">
               <a className="text-white" href="/">
                 Get Free Trial
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-full flex-col justify-start">
             <div className="px-4 py-4">
               {/* Progress Bar */}
-              <div className="relative w-56 bg-white m-auto rounded-xl z-[100] p-10 border shadow-lg">
+              <div className="relative w-56 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] m-auto rounded-xl z-[100] p-10 border shadow-lg">
                 <div className="relative flex justify-center">
                   <div className="progressBarMobile"></div>
                   <div className="absolute top-9 text-xl font-semibold">
@@ -75,7 +75,7 @@ function MoreImpressionMobileSection() {
                   </div>
                 </div>
                 <div className="text-xs text-center">
-                  Get the best out of your customer support Finsweet
+                  Get the best out of your customer support
                 </div>
                 {/* PIE CHART */}
                 {/* <div className="absolute top-5 left-[-30%] xl:left-[-40%] w-24 bg-white p-2 xl:p-6 rounded-xl border shadow-lg">

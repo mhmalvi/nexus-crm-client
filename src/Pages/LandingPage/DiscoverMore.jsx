@@ -61,19 +61,6 @@ function DiscoverMoreSection() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center">
-                <div>
-                  <Icons.ActivityCircle width={50} />
-                </div>
-                <div className="flex-col py-3">
-                  <div className="text-xl px-4 font-semibold">
-                    Payment Management
-                  </div>
-                  <div className="text-sm px-4">
-                    Maintain invoices and payment collections
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

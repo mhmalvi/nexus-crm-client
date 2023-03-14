@@ -4,6 +4,7 @@ import NavigationItems from "./NavLinks";
 import { Modal } from "antd";
 import "../../../App.css";
 import "./Navbar.css";
+import { customlinks } from "./MyLinks";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -94,29 +95,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-const customlinks = [
-  { name: "Home", link: "/welcome" },
-  { name: "Products", link: "/welcome" },
-  { name: "Pricing", link: "/welcome" },
-  { name: "About", link: "/welcome" },
-  { name: "Blogs", link: "/welcome" },
-  /* {
-    name: "More",
-    submenu: [
-      {
-        name: "Blogs",
-        sublink: "/blog",
-      },
-      {
-        name: "Gallery",
-        sublink: "/gallery",
-      },
-      {
-        name: "Stories",
-        sublink: "/stories",
-      },
-    ],
-  }, */
-  { name: "Contact", link: "/welcome" },
-  { name: "Free Trial", link: "/welcome" },
-];

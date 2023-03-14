@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { customlinks } from "./MyLinks";
 
 const NavigationItems = () => {
   const [toogleSubmenu, setToogleSubmenu] = useState("");
@@ -51,29 +52,3 @@ const NavigationItems = () => {
 };
 
 export default NavigationItems;
-const customlinks = [
-  { name: "Home", link: "/welcome" },
-  { name: "Products", link: "/welcome" },
-  { name: "Pricing", link: "/welcome" },
-  { name: "About", link: "/welcome" },
-  { name: "Blogs", link: "/welcome" },
-  /* {
-    name: "More",
-    submenu: [
-      {
-        name: "Blogs",
-        sublink: "/blog",
-      },
-      {
-        name: "Gallery",
-        sublink: "/gallery",
-      },
-      {
-        name: "Stories",
-        sublink: "/stories",
-      },
-    ],
-  }, */
-  { name: "Contact", link: "/welcome" },
-  { name: "Free Trial", link: "/welcome" },
-];
