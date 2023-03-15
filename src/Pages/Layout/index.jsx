@@ -188,7 +188,6 @@ const Layout = () => {
           setToggleMessage={setToggleMessage}
         />
       )}
-
       {/* ----------- For notification pop up ------------- */}
       {toggleNotification && (
         <Notifications

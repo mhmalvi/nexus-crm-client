@@ -18,11 +18,18 @@ import {
   handleReviewRemarksSubmitReq,
 } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
+import { Storage } from "../../../Components/Shared/utils/store";
 import CheckList from "./CheckList";
 import EmployeeHistory from "./EmployeeHistory";
 import SalesEmployees from "./SalesEmployees";
 
-const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
+const UserDetails = ({
+  leadDetails,
+  syncDetails,
+  setSyncDetails,
+  paymentHistory,
+  totalPaid,
+}) => {
   const userDetails = useSelector((state) => state?.user);
   const navigate = useNavigate();
 
@@ -71,9 +78,9 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     if (leadDetails?.leadMultiComment?.length) {
       setComment(
         leadDetails?.leadMultiComment[leadDetails?.leadMultiComment?.length - 1]
-        ?.comments
-        );
-      }
+          ?.comments
+      );
+    }
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
         ? "No comments yet."
@@ -124,7 +131,7 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
     document.getElementById("lead_comment").style.caretColor = "black";
   };
 
-  const handleCommentHistory = () => {};
+  // const handleCommentHistory = () => {};
 
   const confirm = async (e) => {
     const statusUpdateResponse = await handleLeadStatusUpdate(
@@ -516,7 +523,12 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
                 Payment
               </h1>
             </div>
-            <div className="ml-4 mt-5">
+            <div
+              className="ml-4 mt-5"
+              onClick={() => {
+                Storage.setItem("_tp_", totalPaid);
+              }}
+            >
               <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
                 <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
                   Pay
@@ -587,60 +599,61 @@ const UserDetails = ({ leadDetails, syncDetails, setSyncDetails }) => {
       </Modal>
 
       {userDetails?.userInfo?.role_id !== 6 ? (
-      <div
-        className="mt-12 border py-3 px-7"
-        style={{
-          borderRadius: "20px",
-        }}
-      >
-        <div className="border-b flex mb-2">
-          <h1 className="text-xl leading-8 mb-0 font-semibold font-poppins text-black text-opacity-50">
-            Comments
-          </h1>
-          <Icons.History
-            className="w-6 ml-2 cursor-pointer"
-            onClick={() => {
-              setIsCommentHistoryOpen(true);
-              setSyncDetails(!syncDetails);
-            }}
-          />
-        </div>
-        <form
-          onSubmit={(e) => handleUpdateComment(e)}
-          className="2xl:w-84 mt-5 "
+        <div
+          className="mt-12 border py-3 px-7"
+          style={{
+            borderRadius: "20px",
+          }}
         >
-          {userDetails?.userInfo?.role_id === 1 ||
-          userDetails?.userInfo?.role_id === 2 ||
-          userDetails?.userInfo?.role_id === 6 ? (
-            <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-              {leadDetails?.leadMultiComment?.length
-                ? leadDetails?.leadMultiComment[
-                    leadDetails?.leadMultiComment.length - 1
-                  ].comments
-                : "No comments yet."}
+          <div className="border-b flex mb-2">
+            <h1 className="text-xl leading-8 mb-0 font-semibold font-poppins text-black text-opacity-50">
+              Comments
             </h1>
-          ) : (
-            <>
-              <input
-                id="lead_comment"
-                className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
-                onChange={(e) => handleCommentChange(e)}
-                value={comment}
-                /* value={
+            <Icons.History
+              className="w-6 ml-2 cursor-pointer"
+              onClick={() => {
+                setIsCommentHistoryOpen(true);
+                setSyncDetails(!syncDetails);
+              }}
+            />
+          </div>
+          <form
+            onSubmit={(e) => handleUpdateComment(e)}
+            className="2xl:w-84 mt-5 "
+          >
+            {userDetails?.userInfo?.role_id === 1 ||
+            userDetails?.userInfo?.role_id === 2 ||
+            userDetails?.userInfo?.role_id === 6 ? (
+              <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
+                {leadDetails?.leadMultiComment?.length
+                  ? leadDetails?.leadMultiComment[
+                      leadDetails?.leadMultiComment.length - 1
+                    ].comments
+                  : "No comments yet."}
+              </h1>
+            ) : (
+              <>
+                <input
+                  id="lead_comment"
+                  className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
+                  onChange={(e) => handleCommentChange(e)}
+                  value={comment}
+                  /* value={
                   leadDetails?.leadMultiComment[
                     leadDetails?.leadMultiComment.length - 1
                   ].comments
                 } */
-              />
-              <input
-                type="submit"
-                className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
-                value="Post"
-              ></input>
-            </>
-          )}
-        </form>
-      </div>):null}
+                />
+                <input
+                  type="submit"
+                  className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
+                  value="Post"
+                ></input>
+              </>
+            )}
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 };

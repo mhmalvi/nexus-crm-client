@@ -29,7 +29,8 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
     script.setAttribute("data-submitform", "yes");
     script.setAttribute(
       "data-resulturl",
-      `${process.env.REACT_APP_CLIENT_URL}/success/${requestedLeadDetails?.leadDetails?.lead_id}-${requestedLeadDetails?.leadDetails?.client_id}`
+      `http://localhost:3000/success/${requestedLeadDetails?.leadDetails?.lead_id}-${requestedLeadDetails?.leadDetails?.client_id}`
+      // `${process.env.REACT_APP_CLIENT_URL}/success/${requestedLeadDetails?.leadDetails?.lead_id}-${requestedLeadDetails?.leadDetails?.client_id}`
     );
 
     script.async = true;
@@ -70,7 +71,7 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
       <div className="relative mt-2">
         <button id="e-way"></button>
         {!amount ? (
-          <Tooltip title="Firstly add amount" placement="left">
+          <Tooltip title="Oopps! No amount added" placement="left">
             <div className="w-1/3 h-full cursor-not-allowed absolute top-0"></div>
           </Tooltip>
         ) : null}

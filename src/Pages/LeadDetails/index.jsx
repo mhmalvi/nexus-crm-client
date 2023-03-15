@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { handleLeadDetails } from "../../Components/services/leads";
+import { handlePaymentDetails } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import Conversation from "./Conversation";
@@ -28,7 +29,6 @@ const LeadDetails = () => {
     Verified: false,
     Completed: false,
   });
-
   const [statusDateTime, setStatusDateTime] = useState({
     Suspended: "Not Yet",
     "New Lead": "Not Yet",
@@ -38,6 +38,8 @@ const LeadDetails = () => {
     Verified: "Not Yet",
     Completed: "Not Yet",
   });
+   const [paymentHistory, setPaymentHistory] = useState([]);
+   const [totalPaid, setTotalPaid] = useState(0);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -87,6 +89,25 @@ const LeadDetails = () => {
     })();
   }, [dispatch, id, syncDetails]);
 
+  useEffect(() => {
+    (async () => {
+      const paymentHistoryRes = await handlePaymentDetails(id);
+
+      if (paymentHistoryRes?.status === 200) {
+        setPaymentHistory(paymentHistoryRes?.data);
+        let totalAmount = 0;
+
+        paymentHistoryRes?.data?.forEach((payment) => {
+          totalAmount = (
+            parseFloat(totalAmount) + parseFloat(payment?.payment_amount)
+          ).toFixed(2);
+        });
+        setTotalPaid(totalAmount);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   return (
     <div>
       {loadingDetails && (
@@ -107,6 +128,8 @@ const LeadDetails = () => {
               statusDateTime={statusDateTime}
               syncDetails={syncDetails}
               setSyncDetails={setSyncDetails}
+              paymentHistory={paymentHistory}
+              totalPaid={totalPaid}
             />
           </div>
           {userDetails?.role_id !== 6 && (
@@ -119,6 +142,8 @@ const LeadDetails = () => {
               leadDetails={leadDetails}
               syncDetails={syncDetails}
               setSyncDetails={setSyncDetails}
+              paymentHistory={paymentHistory}
+              totalPaid={totalPaid}
             />
           </div>
           {leadDetails?.leadDetails?.lead_details_status === 0 && (
