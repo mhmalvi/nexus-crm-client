@@ -21,23 +21,13 @@ const Navbar = () => {
           >
             {/* Hamburger Animation */}
             <div
-              className={` ${genericHamburgerLine} ${
-                open
-                  ? "-translate-y-2 opacity-0"
-                  : "opacity-100 group-hover:opacity-100"
-              }`}
+              className={` ${genericHamburgerLine}`}
             />
             <div
-              className={`${genericHamburgerLine} ${
-                open ? "-translate-x-10 opacity-0" : "group-hover:opacity-100"
-              }`}
+              className={`${genericHamburgerLine}`}
             />
             <div
-              className={`${genericHamburgerLine} ${
-                open
-                  ? "translate-y-2  opacity-0"
-                  : "opacity-100 group-hover:opacity-100"
-              }`}
+              className={`${genericHamburgerLine}`}
             />
           </div>
           {/* Hamburger Animation end*/}

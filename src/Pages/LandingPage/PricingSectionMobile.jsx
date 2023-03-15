@@ -26,14 +26,14 @@ const PricingSectionMobile = () => {
 
   return (
     <div className="pb-20">
-      <div className="background-shadow-left"></div>
-      <div className="background-shadow-right"></div>
+      <div className="background-shadow-left-mob"></div>
+      <div className="background-shadow-right-mob"></div>
       <div className="text-center m-auto">
         <div className="font-poppins text-2xl text-black font-bold justify-center text-center">
           Pricing plans to suit <br /> your specific needs
         </div>{" "}
         <br />
-        <div className="text-base">
+        <div className="text-base px-4">
           Please take a look at the range of plans that we are offering
         </div>
       </div>
@@ -48,7 +48,7 @@ const PricingSectionMobile = () => {
       <div className="service-capbility">
         <Slider ref={CaseSlider} arrows={false} {...settings} className="mb-10">
           <div className="p-8">
-            <div className="bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5">
+            <div className="mobile-card-fatness bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5 mx-auto">
               <div className=" flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
                 {tooglePkg === 1 && <div></div>}
                 <div className="flex justify-evenly gap-6">
@@ -56,7 +56,7 @@ const PricingSectionMobile = () => {
                     <Icons.Regularpkg width={40} />
                   </div>
                   <div className="flex-col">
-                    <div className="font-poppins text-4xl text-black font-bold">
+                    <div className="font-poppins text-4xl text-black font-bold textShadow">
                       Regular
                     </div>
                     <div className="text-md font-semibold pb-8">
@@ -65,7 +65,7 @@ const PricingSectionMobile = () => {
                   </div>
                 </div>
                 <div className="w-full border"></div>
-                <div className="mx-4  pt-8">
+                <div className="pt-8">
                   <ul>
                     <li className="flex p-2">
                       <Icons.Tick />
@@ -97,7 +97,7 @@ const PricingSectionMobile = () => {
           </div>
 
           <div className="p-8">
-            <div className="bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5">
+            <div className="mobile-card-fatness bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5 mx-auto">
               <div className=" flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
                 {tooglePkg === 2 && <div></div>}
                 <div className="flex justify-evenly gap-6">
@@ -105,7 +105,7 @@ const PricingSectionMobile = () => {
                     <Icons.Regularpkg width={40} />
                   </div>
                   <div className="flex-col">
-                    <div className="font-poppins text-4xl text-black font-bold">
+                    <div className="font-poppins text-4xl text-black font-bold textShadow">
                       Platinum
                     </div>
                     <div className="text-md font-semibold pb-8">
@@ -115,7 +115,7 @@ const PricingSectionMobile = () => {
                 </div>
 
                 <div className="w-full border"></div>
-                <div className="mx-4  pt-8">
+                <div className="pt-8">
                   <ul>
                     <li className="flex p-2">
                       <Icons.Tick />
@@ -147,7 +147,7 @@ const PricingSectionMobile = () => {
           </div>
 
           <div className="p-8">
-            <div className="bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5">
+            <div className="mobile-card-fatness bg-brand-color border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 mb-5 mx-auto">
               <div className=" flex-col rounded-3xl pt-12 px-12 duration-300 z-50 bg-[#E6EBFA] backdrop:filter backdrop-blur-sm">
                 {tooglePkg === 3 && <div></div>}
                 <div className="flex justify-evenly gap-6">
@@ -155,7 +155,7 @@ const PricingSectionMobile = () => {
                     <Icons.Regularpkg width={40} />
                   </div>
                   <div className="flex-col">
-                    <div className="font-poppins text-4xl text-black font-bold">
+                    <div className="font-poppins text-4xl text-black font-bold textShadow">
                       Standard
                     </div>
                     <div className="text-md font-semibold pb-8">
@@ -164,7 +164,7 @@ const PricingSectionMobile = () => {
                   </div>
                 </div>
                 <div className="w-full border"></div>
-                <div className="mx-4  pt-8">
+                <div className="pt-8">
                   <ul>
                     <li className="flex p-2">
                       <Icons.Tick />

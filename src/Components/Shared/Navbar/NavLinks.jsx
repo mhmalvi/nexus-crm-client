@@ -6,6 +6,7 @@ const NavigationItems = () => {
   const [toogleSubmenu, setToogleSubmenu] = useState("");
   return (
     <>
+    {/* DESKTOP VIEW */}
       <div className="lg:flex z-[999] bg-white lg:bg-transparent border border-white border-opacity-30 lg:border-none shadow-2xl shadow-[#ffffff20] lg:shadow-none md:text-white text-center text-xl lg:text-base rounded-md cursor-pointer mx-2 my-6">
         {customlinks?.map((link) => (
           <>

@@ -10,7 +10,7 @@ function WhyUsSectionSection() {
       <div className="items-center">
         <div className="items-center m-auto">
           {/* w-2/3  */}
-          <div className="flex flex-col md:flex-row font-poppins text-black p-4">
+          <div className="flex flex-col md:flex-row items-center font-poppins text-black p-4">
             <div className="w-full md:w-1/2 flex-col justify-start relative px-5">
               <div className="w-[100px] absolute top-4 md:-top-4 -left-1 md:-left-0">
                 <img src={Torch} alt="" />
@@ -28,7 +28,7 @@ function WhyUsSectionSection() {
               </div>
             </div>
             <div className="w-full md:w-1/2 flex-col justify-start pl-6 md:pl-0">
-              <div className="flex py-4">
+              <div className="flex items-center py-4">
                 <div className="pr-4">
                   <img src={NumberOne} width={60} alt="" />
                 </div>
@@ -36,7 +36,7 @@ function WhyUsSectionSection() {
                   Increase your overall sales and nurture your leads
                 </div>
               </div>
-              <div className="flex py-4">
+              <div className="flex items-center py-4">
                 <div className="pr-6">
                   <img src={NumberTwo} width={60} alt="" />
                 </div>
@@ -44,7 +44,7 @@ function WhyUsSectionSection() {
                   Simplify the communication process with the prospective leads
                 </div>
               </div>
-              <div className="flex py-4">
+              <div className="flex items-center py-4">
                 <div className="pr-6">
                   <img src={Numberthree} width={60} alt="" />
                 </div>

@@ -5,11 +5,12 @@ import group268 from "../../assets/Images/group268.svg";
 import group269 from "../../assets/Images/group269.svg";
 import group277 from "../../assets/Images/group277.svg";
 import group278 from "../../assets/Images/group278.svg";
+import "./style.css"
 
 function QualitySection() {
   return (
     <div className="w-full pb-20 md:pb-30 md:px-20">
-      <div className="items-center m-auto z-50 lg:pt-32 xl:pt-44 2xl:pt-96">
+      <div className="items-center m-auto z-50 quality-space-top lg:pt-32 xl:pt-44 2xl:pt-96">
         <div className="items-center m-auto md:pt-40 mx-8">
           <div className="text-center m-auto pb-8">
             <span className="font-poppins text-2xl md:text-4xl text-black font-bold justify-center text-center">
@@ -63,19 +64,22 @@ function QualitySection() {
             </div>
             {/* particles row */}
             <div>
-
-            <img
-              src={group277}
-              className="relative -top-32 animate-pulse"
-              alt=""
+              <img
+                src={group277}
+                className="relative -top-32 animate-pulse"
+                alt=""
               />
-            <img src={Vector} className="absolute -bottom-10 md:left-[50%]" alt="" />
-            <img
-              src={group278}
-              className="absolute -right-4 bottom-0 animate-bounce"
-              alt=""
+              <img
+                src={Vector}
+                className="absolute -bottom-10 md:left-[50%]"
+                alt=""
               />
-              </div>
+              <img
+                src={group278}
+                className="absolute -right-4 bottom-0 animate-bounce"
+                alt=""
+              />
+            </div>
             {/* <div className="grid grid-cols-6 font-poppins text-white p-4">
               <div className="flex justify-between gap-10">
                 <div className=""></div>
