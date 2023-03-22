@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import { fetchCampaignwisePaymentDataOfCompany } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
-import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
 const CampaignAnalytics = ({ activeCompany }) => {

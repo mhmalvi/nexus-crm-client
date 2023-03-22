@@ -1,4 +1,3 @@
-import { Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
@@ -7,14 +6,14 @@ import Loading from "../../Components/Shared/Loader";
 import * as chartUtils from "./utils";
 
 const CompanyRevenue = ({ activeCompany }) => {
-  const { Option } = Select;
+  // const { Option } = Select;
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
 
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // const handleChange = (value) => {
+  //   console.log(`selected ${value}`);
+  // };
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
