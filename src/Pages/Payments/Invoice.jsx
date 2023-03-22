@@ -3,12 +3,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { createFileName, useScreenshot } from "use-react-screenshot";
 import { handleFetchInvoiceDetails } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
 import companyIcon from "../../assets/Images/company_icon.png";
 import Loading from "../../Components/Shared/Loader";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import dayjs from "dayjs";
 
 const Invoice = () => {
   const { id } = useParams();
@@ -17,6 +19,7 @@ const Invoice = () => {
   const loadingDetails = useSelector((state) => state.user.loading);
 
   const [invoiceDetails, setInvoiceDetails] = useState([]);
+  const [image, takeScreenShot] = useScreenshot();
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -61,7 +64,7 @@ const Invoice = () => {
         ? 220
         : 220
     );
-    pdf.save("print.pdf");
+    pdf.save(`${invoiceDetails?.payer_name?.replace(" ", "-")}-Invoice.pdf`);
   };
 
   return (
@@ -92,7 +95,9 @@ const Invoice = () => {
                 className="w-22"
                 src={`${
                   invoiceDetails?.company_logo
-                    ? invoiceDetails?.company_logo
+                    ? process.env.REACT_APP_FILE_SERVER_URL +
+                      "/public/" +
+                      invoiceDetails?.company_logo
                     : companyIcon
                 }`}
                 alt="Company Logo"
@@ -153,13 +158,7 @@ const Invoice = () => {
               <h6 className="font-bold">
                 Payment Date :{" "}
                 <span className="text-sm font-medium">
-                  {new Date(invoiceDetails?.created_at)
-                    .toString()
-                    .slice(4, 21) +
-                    " " +
-                    new Date(invoiceDetails?.created_at)
-                      .toString()
-                      .slice(25, 31)}
+                  {new Date(invoiceDetails?.created_at).toLocaleString()}
                 </span>
               </h6>
               <h6 className="font-bold">
@@ -231,7 +230,7 @@ const Invoice = () => {
                       1
                     </td>
                     <td className="w-79 p-4">
-                      <div className="text-sm text-gray-900 min-w-fit">
+                      <div className="text-sm text-gray-900 min-w-fit uppercase">
                         {invoiceDetails?.course_title ? (
                           invoiceDetails?.course_title
                         ) : (
@@ -240,7 +239,7 @@ const Invoice = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 uppercase">
                         {invoiceDetails?.course_code ? (
                           invoiceDetails?.course_code
                         ) : (
@@ -285,7 +284,11 @@ const Invoice = () => {
                     <td colSpan="3"></td>
                     <td className="text-sm font-bold">Sub Total</td>
                     <td className="text-sm font-bold tracking-wider">
-                      <b>${invoiceDetails?.payment_amount}</b>
+                      <b>
+                        $
+                        {invoiceDetails?.payment_amount -
+                          invoiceDetails?.payment_amount * 0.035}
+                      </b>
                     </td>
                   </tr>
                   <tr>
@@ -294,7 +297,7 @@ const Invoice = () => {
                       <b>Tax Rate</b>
                     </td>
                     <td className="text-sm font-bold">
-                      <b>$1.50%</b>
+                      <b>3.5%</b>
                     </td>
                   </tr>
                   <tr className="text-white bg-gray-800">
@@ -303,11 +306,7 @@ const Invoice = () => {
                       <b>Total</b>
                     </td>
                     <td className="text-sm font-bold text-white">
-                      <b>
-                        $
-                        {invoiceDetails?.payment_amount +
-                          invoiceDetails?.payment_amount * 0.015}
-                      </b>
+                      <b>${invoiceDetails?.payment_amount}</b>
                     </td>
                   </tr>
                 </tbody>

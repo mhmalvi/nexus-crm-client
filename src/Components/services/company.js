@@ -236,6 +236,7 @@ export const handleFetchClientsInvoiceHistory = async (companyId) => {
 };
 
 export const handleFetchInvoiceDetails = async (invoiceId) => {
+  console.log("invoiceId", invoiceId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,

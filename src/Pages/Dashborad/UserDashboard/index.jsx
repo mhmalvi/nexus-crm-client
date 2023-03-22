@@ -42,7 +42,7 @@ const UserDashboard = () => {
             Applied Courses
           </h4>
         </div>
-        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-7.5 mr-1">
+        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-7.5 mr-1">
           {leadData?.map((leadDetails, i) => (
             <AppliedCampaign key={i} leadDetails={leadDetails} />
           ))}

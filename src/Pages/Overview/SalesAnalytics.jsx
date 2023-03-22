@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
+import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import * as chartData from "./data";
 import * as chartUtils from "./utils";
@@ -12,11 +13,12 @@ const SalesAnalytics = ({ activeCompany }) => {
   const dispatch = useDispatch();
   const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user);
+  const loadingDetails = useSelector((state) => state.user)?.loading;
 
-  const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
+  // const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
 
-  console.log("User", userDetails?.userInfo?.id);
+  // console.log("User", userDetails?.userInfo?.id);
 
   useEffect(() => {
     (async () => {
@@ -78,10 +80,15 @@ const SalesAnalytics = ({ activeCompany }) => {
       // leads
       leads?.filter((lead) => lead?.sales_user_id === userDetails?.userInfo?.id)
     );
-  }, [leads, userDetails?.userInfo?.id]);
+  }, [activeCompany, dispatch, leads, userDetails]);
 
   return (
     <div className="mt-10">
+      {loadingDetails && (
+        <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      )}
       <div>
         <div className="relative">
           <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">

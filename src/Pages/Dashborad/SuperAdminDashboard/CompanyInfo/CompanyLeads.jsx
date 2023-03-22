@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFetchLeads } from "../../../../Components/services/leads";
+import {
+  handleFetchLeads,
+  handleSyncLeads,
+} from "../../../../Components/services/leads";
 import { addLeads } from "../../../../features/Leads/leadsSlice";
+import { setLoader } from "../../../../features/user/userSlice";
 import Filters from "../../AdminDashboard/Filters";
 import Table from "../../AdminDashboard/Table";
 
@@ -16,6 +20,7 @@ const CompanyLeads = ({ clientId }) => {
   );
   const [leads, setLeads] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [syncLeads, setSyncLeads] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -28,7 +33,7 @@ const CompanyLeads = ({ clientId }) => {
         setLeads(response.data);
       }
     })();
-  }, [clientId, dispatch]);
+  }, [clientId, dispatch, syncLeads]);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
@@ -74,6 +79,20 @@ const CompanyLeads = ({ clientId }) => {
     );
   };
 
+  const handleSyncLeadsReq = async () => {
+    dispatch(setLoader(true));
+
+    const syncResponse = await handleSyncLeads(
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.ac_k
+    );
+
+    if (syncResponse?.status) {
+      setSyncLeads(!syncLeads);
+      dispatch(setLoader(false));
+    }
+  };
+
   return (
     <div>
       <Filters
@@ -108,6 +127,7 @@ const CompanyLeads = ({ clientId }) => {
         ratings={ratings}
         activeFilter={activeFilter}
         searchInput={searchInput}
+        handleSyncLeadsReq={handleSyncLeadsReq}
       />
     </div>
   );

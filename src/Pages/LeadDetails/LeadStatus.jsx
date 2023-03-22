@@ -10,7 +10,7 @@ import {
   Upload,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
@@ -26,6 +26,7 @@ import {
   handleUploadFile,
 } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
+import { setLoader } from "../../features/user/userSlice";
 
 // ----Default Values----
 const LeadStatus = ({
@@ -37,6 +38,7 @@ const LeadStatus = ({
   paymentHistory,
   totalPaid,
 }) => {
+  const dispatch = useDispatch();
   const statusData = [
     "Suspended",
     "New Lead",
@@ -150,7 +152,8 @@ const LeadStatus = ({
 
         setCertificate(
           process.env.REACT_APP_FILE_SERVER_URL +
-            fetchCertificateFIle?.data?.[0]?.document_name
+            "/public/" +
+            fetchCertificateFIle?.data?.document_name
         );
       })();
     }
@@ -169,9 +172,6 @@ const LeadStatus = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leadStatus, leadDetails, statusData]);
-
-  console.log("paymentHistory?.data", paymentHistory);
-  console.log("Total Paid", totalPaid);
 
   const onStatusChange = async ({ key }) => {
     leadStatus[statusData[key]] = true;
@@ -197,6 +197,7 @@ const LeadStatus = ({
   };
 
   const onCallResponseChange = async (e) => {
+    dispatch(setLoader(true));
     setCallResponse(e.target.value);
     const response = await handleCallResponseUpdate(
       leadDetails?.leadDetails?.lead_id,
@@ -204,6 +205,7 @@ const LeadStatus = ({
       e.target.value
     );
     if (response.status === 200) {
+      dispatch(setLoader(false));
       setSyncDetails(!syncDetails);
     }
   };
@@ -288,12 +290,17 @@ const LeadStatus = ({
     if (amount.length) {
       const response = await handleAddAmount(
         leadDetails?.leadDetails?.lead_id,
-        parseInt(amount)
+        // parseFloat(amount)
+        parseFloat(amount) + parseFloat(amount * 0.035)
       );
-      if (response) {
+
+      console.log("Amount response", response);
+      if (response?.status) {
         setAmount("");
         setSyncDetails(!syncDetails);
         message.success("Amount Details Added Successfully");
+      } else {
+        message.warn("Something went wrong");
       }
     }
   };
@@ -373,23 +380,28 @@ const LeadStatus = ({
   const handleCertificateFileChange = async (e) => {
     const fileFormData = new FormData();
     fileFormData.append("user_id", userDetails?.userInfo?.user_id);
-    fileFormData.append("client_id", leadDetails.client_id);
+    fileFormData.append("client_id", leadDetails?.leadDetails?.client_id);
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
     const uploadFile = await handleUploadFile(fileFormData);
 
-    console.log("File", uploadFile?.message?.data[0]?.id);
+    console.log("File", uploadFile);
 
-    const certificateUploadResponse = await handleLeadCertificatetDetailsUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      uploadFile?.message?.data[0]?.id
-    );
+    if (uploadFile?.status === 200) {
+      const certificateUploadResponse =
+        await handleLeadCertificatetDetailsUpdate(
+          leadDetails?.leadDetails?.lead_id,
+          uploadFile?.data?.id
+        );
 
-    if (certificateUploadResponse?.status) {
-      setSyncDetails(!syncDetails);
+      if (certificateUploadResponse?.status) {
+        setSyncDetails(!syncDetails);
+      }
     }
   };
+
+  console.log("paymentHistory", paymentHistory);
 
   return (
     <div className="min-h-full pr-6 border-r">
@@ -574,14 +586,11 @@ const LeadStatus = ({
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
                       <td>
-                        {new Date(history.call_start_time)
-                          .toString()
-                          .slice(4, 21)}{" "}
-                        {new Date(history.call_start_time)
-                          .toString()
-                          .slice(25, 31)}
+                        {new Date(history.call_start_time).toLocaleString()}
                       </td>
-                      <td>{history.call_end_time}</td>
+                      <td>
+                        {new Date(history.call_end_time).toLocaleString()}
+                      </td>
                       <td>{history.call_remark}</td>
                     </tr>
                   ))}
@@ -667,7 +676,7 @@ const LeadStatus = ({
                   <th>Date Time</th>
                   <th className="w-24">Amount</th>
                   <th>Transaction ID</th>
-                  <th className="w-24">Method</th>
+                  {/* <th className="w-24">Method</th> */}
                   <th>Invoice ID</th>
                 </tr>
               </thead>
@@ -688,8 +697,8 @@ const LeadStatus = ({
                       <td>{new Date(payment.created_at).toLocaleString()}</td>
                       <td className="w-24">{payment.payment_amount}</td>
                       <td>{payment.transaction_id}</td>
-                      <td className="w-24">{payment.payment_method}</td>
-                      <td>{payment.invoice_id}</td>
+                      {/* <td className="w-24">{payment.payment_method}</td> */}
+                      <td>{payment.invoice_number}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -753,7 +762,8 @@ const LeadStatus = ({
             </div>
           </div>
         )}
-        {activeStatusTitle === "Called" &&
+        {(activeStatusTitle === "Called" ||
+          activeStatusTitle === "Skilled") &&
         (userDetails?.userInfo?.role_id === 3 ||
           userDetails?.userInfo?.role_id === 4 ||
           userDetails?.userInfo?.role_id === 5) ? (
@@ -793,7 +803,12 @@ const LeadStatus = ({
                 Payable :
               </span>
               <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-                ${leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
+                $
+                {leadDetails?.leadAmountHistory?.length
+                  ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid > 0
+                    ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid
+                    : 0
+                  : "Not Set Yet"}
               </span>
             </div>
           ) : null)}
@@ -1020,17 +1035,19 @@ const LeadStatus = ({
                 </div>
               ) : null}
 
-              <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                Paid ${totalPaid} of $
-                {leadDetails?.leadAmountHistory[0]?.amount}(
-                {(
-                  (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
-                  100
-                ).toFixed(2)}
-                %)
-              </h6>
+              {leadDetails?.leadAmountHistory?.length ? (
+                <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
+                  Paid ${totalPaid} of $
+                  {leadDetails?.leadAmountHistory[0]?.amount}(
+                  {(
+                    (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
+                    100
+                  ).toFixed(2)}
+                  %)
+                </h6>
+              ) : null}
               <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
-                Bank
+                Online Payment
               </h6>
             </div>
           </div>
@@ -1146,50 +1163,52 @@ const LeadStatus = ({
                   ? "Certificate Provided"
                   : "Certificate Not Provided Yet"}
               </h6>
-              <div className="flex mt-1">
-                {leadStatus["Completed"] &&
-                leadDetails?.leadDetails?.document_certificate_id === 0 ? (
-                  userDetails?.userInfo?.role_id === 3 ||
-                  userDetails?.userInfo?.role_id === 4 ||
-                  userDetails?.userInfo?.role_id === 5 ? (
-                    <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
-                      <Upload
-                        onChange={handleCertificateFileChange}
-                        fileList={fileList}
-                      >
-                        <div className="flex items-center">
-                          <Icons.PDF />
-                          <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                            Certificate
-                          </h6>
-                        </div>
-                      </Upload>
-                    </div>
+              {leadStatus["Completed"] && (
+                <div className="flex mt-1">
+                  {leadDetails?.leadDetails?.document_certificate_id === 0 ? (
+                    userDetails?.userInfo?.role_id === 3 ||
+                    userDetails?.userInfo?.role_id === 4 ||
+                    userDetails?.userInfo?.role_id === 5 ? (
+                      <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
+                        <Upload
+                          onChange={handleCertificateFileChange}
+                          fileList={fileList}
+                        >
+                          <div className="flex items-center">
+                            <Icons.PDF />
+                            <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                              Upload Certificate
+                            </h6>
+                          </div>
+                        </Upload>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <Icons.PDF />
+                        <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                          Not Provided Yet
+                        </h6>
+                      </div>
+                    )
                   ) : (
-                    <div className="flex items-center">
-                      <Icons.PDF />
-                      <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                        Not Provided Yet
-                      </h6>
+                    <div>
+                      <a
+                        id="certificate"
+                        className="flex items-center"
+                        href={certificate}
+                        download
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <Icons.PDF />
+                        <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                          Download Certificate
+                        </h6>
+                      </a>
                     </div>
-                  )
-                ) : (
-                  <div>
-                    <a
-                      id="certificate"
-                      className="flex items-center"
-                      href={certificate}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <Icons.PDF />
-                      <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                        Download Certificate
-                      </h6>
-                    </a>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
@@ -1198,13 +1217,7 @@ const LeadStatus = ({
                 ? new Date(
                     statusDateTime["Completed"]?.toString()
                   )?.toLocaleString()
-                : // new Date(statusDateTime["Completed"])
-                  //     .toString()
-                  //     .slice(4, 21) +
-                  //   " " +
-                  //   new Date(statusDateTime["Completed"]).toString().slice(25, 31)
-                  // new Date(statusDateTime["Completed"]).toString().slice(0, 31)
-                  "Not Yet"}
+                : "Not Yet"}
             </div>
           </Tooltip>
         </div>

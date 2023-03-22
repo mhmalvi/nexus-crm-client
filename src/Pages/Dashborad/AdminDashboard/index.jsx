@@ -44,6 +44,8 @@ const AdminDashboard = () => {
         userDetails?.userInfo?.client_id
       );
 
+      console.log("fetchEmployees......", fetchEmployees);
+
       if (fetchEmployees?.status === true) {
         setCompanyEmployeeList(fetchEmployees?.data);
       }
@@ -136,13 +138,7 @@ const AdminDashboard = () => {
   };
 
   const handleSyncLeadsReq = async () => {
-    console.log("Here", userDetails?.userInfo?.client_id);
-    console.log("Hereee", userDetails?.userInfo?.ac_k);
-
     dispatch(setLoader(true));
-    console.log(
-      (userDetails?.userInfo?.client_id, userDetails?.userInfo?.ac_k)
-    );
 
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,

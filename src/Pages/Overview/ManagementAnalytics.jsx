@@ -1,18 +1,76 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as rcElement from "recharts";
+import {
+  fetchAverageIncomeOfLastWeek,
+  fetchMonthPaymentDataOfCompany,
+} from "../../Components/services/payment";
 import Icons from "../../Components/Shared/Icons";
-import * as chartData from "./data";
+import Loading from "../../Components/Shared/Loader";
+import { setLoader } from "../../features/user/userSlice";
+
 import * as chartUtils from "./utils";
 
-const ManagementAnalytics = ({ comapnyEmployees }) => {
+const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
+  const dispatch = useDispatch();
+  const loadingDetails = useSelector((state) => state.user)?.loading;
+  const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const leads = useSelector((state) => state.leads?.leads);
   const campaignRatio = [];
 
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [lastWeekIncome, setLastWeekIncome] = useState([]);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalLastWeekIncome, setTotalLastWeekIncome] = useState(0);
+
+  useEffect(() => {
+    dispatch(setLoader(true));
+    (async () => {
+      const monthlyRevenueResp = await fetchMonthPaymentDataOfCompany(
+        userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+      );
+
+      if (monthlyRevenueResp?.status === 200) {
+        setMonthlyRevenue((monthlyRevenueResp?.data).reverse());
+      }
+
+      let totalMonthlyRevenue = 0;
+      monthlyRevenueResp?.data?.forEach((rev) => {
+        totalMonthlyRevenue += rev?.revenue;
+      });
+      setTotalRevenue(totalMonthlyRevenue);
+      dispatch(setLoader(false));
+    })();
+
+    (async () => {
+      const lastWeekIncomeResp = await fetchAverageIncomeOfLastWeek(
+        userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+      );
+
+      console.log("lastWeekIncomeResp", lastWeekIncomeResp);
+
+      if (lastWeekIncomeResp?.status === 200) {
+        setLastWeekIncome(lastWeekIncomeResp?.data);
+      }
+
+      let totalLastWeekIncome = 0;
+      lastWeekIncomeResp?.data?.forEach((rev) => {
+        totalLastWeekIncome += rev?.sum;
+      });
+      setTotalLastWeekIncome(totalLastWeekIncome);
+      dispatch(setLoader(false));
+    })();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCompany, userDetails]);
+
+  console.log("lastWeekIncome", lastWeekIncome);
+  console.log("totalLastWeekIncome", totalLastWeekIncome);
+
   campaigns?.forEach((campaign) => {
     campaignRatio.push({
-      // campaign: campaign?.campaign_name,
       campaign_name: campaign?.campaign_name,
       campaign: "Jan",
       rate:
@@ -38,6 +96,12 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
       <div className="flex items-start">
         {/* Overall Summary */}
 
+        {loadingDetails && (
+          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+            <Loading />
+          </div>
+        )}
+
         <div className="w-1/2 mr-10">
           <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
             Summary
@@ -45,7 +109,7 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
           <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6">
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">$ 22,880.8</h1>
+                <h1 className="text-lg font-semibold ">$ {totalRevenue}</h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
                   Total Revenue
                 </p>
@@ -56,9 +120,14 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
             </div>
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">$ 6099.5</h1>
+                <h1 className="text-lg font-semibold ">
+                  ${" "}
+                  {totalRevenue
+                    ? (totalRevenue / (dayjs().month() + 1)).toFixed(2)
+                    : 0}
+                </h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Average Income (Last Month)
+                  Average Income (Per Month)
                 </p>
               </div>
               <div>
@@ -67,9 +136,14 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
             </div>
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">$ 1009.5</h1>
+                <h1 className="text-lg font-semibold ">
+                  ${" "}
+                  {totalLastWeekIncome
+                    ? (totalLastWeekIncome / 7)?.toFixed(2)
+                    : 0}
+                </h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Average Income (Last Week)
+                  Average Income Per Day (Last Week)
                 </p>
               </div>
               <div>
@@ -89,7 +163,12 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
             </div>
             <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
               <div>
-                <h1 className="text-lg font-semibold ">$ 2,880.8</h1>
+                <h1 className="text-lg font-semibold ">
+                  ${" "}
+                  {totalRevenue > 0
+                    ? (totalRevenue / campaigns?.length).toFixed(2)
+                    : 0}
+                </h1>
                 <p className="text-xs font-medium text-black text-opacity-70 mb-0">
                   Average Income (Per Campaign)
                 </p>
@@ -119,14 +198,14 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
 
         <div className=" w-1/2">
           <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
-            Monthly Revenue
+            Last 7 Days Income
           </h1>
           <div>
             <rcElement.ResponsiveContainer width="100%" height={300}>
               <rcElement.LineChart
                 width={500}
                 height={200}
-                data={chartData.MonthlyRevenueData}
+                data={lastWeekIncome}
                 margin={{
                   top: 0,
                   right: 30,
@@ -135,20 +214,54 @@ const ManagementAnalytics = ({ comapnyEmployees }) => {
                 }}
               >
                 <rcElement.CartesianGrid strokeDasharray="3 3" />
-                <rcElement.XAxis dataKey="month" />
+                <rcElement.XAxis dataKey="dates" />
                 <rcElement.YAxis />
                 <rcElement.Tooltip />
                 <rcElement.Legend />
                 <rcElement.Line
                   connectNulls
                   type="monotone"
-                  dataKey="revenue"
+                  dataKey="sum"
                   stroke="#8884d8"
                   fill="#8884d8"
                 />
               </rcElement.LineChart>
             </rcElement.ResponsiveContainer>
           </div>
+        </div>
+      </div>
+
+      <div className="w-full mt-12">
+        <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
+          Monthly Revenue
+        </h1>
+        <div>
+          <rcElement.ResponsiveContainer width="100%" height={300}>
+            <rcElement.LineChart
+              width={500}
+              height={200}
+              data={monthlyRevenue}
+              margin={{
+                top: 0,
+                right: 30,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <rcElement.CartesianGrid strokeDasharray="3 3" />
+              <rcElement.XAxis dataKey="month" />
+              <rcElement.YAxis />
+              <rcElement.Tooltip />
+              <rcElement.Legend />
+              <rcElement.Line
+                connectNulls
+                type="monotone"
+                dataKey="revenue"
+                stroke="#8884d8"
+                fill="#8884d8"
+              />
+            </rcElement.LineChart>
+          </rcElement.ResponsiveContainer>
         </div>
       </div>
 

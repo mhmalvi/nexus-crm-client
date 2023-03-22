@@ -1,76 +1,53 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import successBlower from "../../assets/Images/success_blower.gif";
-import { handleAddEwayPaymentDetails } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
-import { Storage } from "../../Components/Shared/utils/store";
-import { setLoader } from "../../features/user/userSlice";
 
 const Success = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [leadInfo, setLeadInfo] = useState([]);
-  const userDetails = useSelector((state) => state.user)?.userInfo;
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const [leadInfo, setLeadInfo] = useState([]);
+  // const userDetails = useSelector((state) => state.user)?.userInfo;
   const loader = useSelector((state) => state.user)?.loading;
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
 
   // console.log(userDetails);
   // console.log(id.split("-"));
   // console.log(searchParams.get("AccessCode"));
-  console.log(id);
+  // console.log(id);
 
-  useEffect(() => {
-    console.log(Storage.getItem("l_Details"));
-    setLeadInfo(Storage.getItem("l_Details"));
-  }, [id]);
+  // useEffect(() => {
+  //   console.log(Storage.getItem("l_Details"));
+  //   setLeadInfo(Storage.getItem("l_Details"));
+  // }, [id]);
 
-  useEffect(() => {
-    // console.log({
-    //   user_id: userDetails?.user_id,
-    //   lead_id: id.split("-")?.[0],
-    //   company_id: parseInt(id.split("-")?.[1]),
-    //   payment_method: "eWay",
-    //   accessCode: searchParams.get("AccessCode"),
-    //   full_name: userDetails?.full_name,
-    //   user_email: userDetails?.email,
-    //   role_id: userDetails?.role_id,
-    //   course_code: leadInfo?.course_code,
-    //   course_title: leadInfo?.course_title,
-    // });
+  // useEffect(() => {
+  //   if (searchParams?.get("AccessCode")) {
+  //     dispatch(setLoader(true));
+  //     (async () => {
+  //       const addEwayPaymentHistory = await handleAddEwayPaymentDetails(
+  //         userDetails?.user_id,
+  //         parseInt(id.split("-")?.[0]),
+  //         parseInt(id.split("-")?.[1]),
+  //         "eWay",
+  //         searchParams.get("AccessCode"),
+  //         userDetails?.full_name,
+  //         userDetails?.email,
+  //         userDetails?.role_id,
+  //         leadInfo?.course_code,
+  //         leadInfo?.course_title
+  //       );
 
-    if (searchParams?.get("AccessCode")) {
-      dispatch(setLoader(true));
-      (async () => {
-        const addEwayPaymentHistory = await handleAddEwayPaymentDetails(
-          userDetails?.user_id,
-          parseInt(id.split("-")?.[0]),
-          parseInt(id.split("-")?.[1]),
-          "eWay",
-          searchParams.get("AccessCode"),
-          userDetails?.full_name,
-          userDetails?.email,
-          userDetails?.role_id,
-          leadInfo?.course_code,
-          leadInfo?.course_title
-        );
-
-        if (addEwayPaymentHistory?.key === "success") {
-          dispatch(setLoader(false));
-          Storage.removeItem("l_Details");
-          navigate(`/success/${id}`);
-        }
-      })();
-    }
-  }, [dispatch, id, leadInfo, navigate, searchParams, userDetails]);
+  //       if (addEwayPaymentHistory?.key === "success") {
+  //         dispatch(setLoader(false));
+  //         Storage.removeItem("l_Details");
+  //         navigate(`/success/${id}`);
+  //       }
+  //     })();
+  //   }
+  // }, [dispatch, id, leadInfo, navigate, searchParams, userDetails]);
 
   return (
     <>

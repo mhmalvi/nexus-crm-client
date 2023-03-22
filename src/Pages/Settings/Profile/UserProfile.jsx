@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "antd";
-import { useDispatch, useSelector } from "react-redux";
 import Avatar from "react-avatar";
+import { useDispatch, useSelector } from "react-redux";
 // import picture from "./../../assets/Images/paypal.png";
+import { useNavigate } from "react-router-dom";
 import graphgif from "../../../assets/Images/graph.gif";
 import xaxis from "../../../assets/Images/x-axis.png";
 import yaxis from "../../../assets/Images/y-axis.png";
-import { useNavigate } from "react-router-dom";
 import { handleProfileDetails } from "../../../Components/services/auth";
 // import Loading from "../../Components/Shared/Loader";
-import { setLoader } from "../../../features/user/userSlice";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
+import { setLoader } from "../../../features/user/userSlice";
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ function UserProfile() {
         }, 3000);
       }
     })();
-  }, [dispatch, ProfileDetails?.userInfo?.user_id]);
+  }, [dispatch, ProfileDetails.userInfo.user_id, ProfileDetails?.user_id, userDetails]);
 
   const EditSettings = () => {
     navigate("/edit-profile");

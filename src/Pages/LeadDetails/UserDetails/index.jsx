@@ -439,7 +439,7 @@ const UserDetails = ({
             </div>
             <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mt-2 flex flex-wrap">
               <span>Courses:&nbsp;&nbsp;</span>
-              <span className="text-xs">
+              <span className="text-xs uppercase">
                 {leadDetails?.leadDetails?.course_title}
               </span>
             </div>
@@ -582,8 +582,8 @@ const UserDetails = ({
             <div className="flex items-end mb-4">
               <div className="w-full">
                 {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
-                {leadDetails?.leadMultiComment?.length
-                  ? leadDetails?.leadMultiComment?.map((history) => (
+                {leadDetails?.leadComments?.length
+                  ? leadDetails?.leadComments?.map((history) => (
                       <div className="flex flex-col w-full border rounded-lg p-2 my-2 shadow">
                         <span className="text-base">{history?.comments}</span>
                         <span className="text-xs">
@@ -613,7 +613,7 @@ const UserDetails = ({
               className="w-6 ml-2 cursor-pointer"
               onClick={() => {
                 setIsCommentHistoryOpen(true);
-                setSyncDetails(!syncDetails);
+                // setSyncDetails(!syncDetails);
               }}
             />
           </div>
@@ -638,11 +638,6 @@ const UserDetails = ({
                   className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
                   onChange={(e) => handleCommentChange(e)}
                   value={comment}
-                  /* value={
-                  leadDetails?.leadMultiComment[
-                    leadDetails?.leadMultiComment.length - 1
-                  ].comments
-                } */
                 />
                 <input
                   type="submit"

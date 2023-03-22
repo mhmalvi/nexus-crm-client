@@ -1,12 +1,13 @@
+import { Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Skeleton from "react-skeleton-loader";
+import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
-import Icons from "../../../Components/Shared/Icons";
 
 const Table = ({
   title,
@@ -29,7 +30,7 @@ const Table = ({
 
   const [list, setList] = useState([]);
 
-  console.log("data", data);
+  // console.log("data", data);
 
   useEffect(() => {
     (async () => {
@@ -99,19 +100,19 @@ const Table = ({
                     : title
                 }
               >
-                <h1
+                <div
                   className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                   style={{
                     fontSize: "10px",
                   }}
                 >
                   Export CSV
-                </h1>
+                </div>
               </CSVLink>
             </div>
           </div>
 
-          {(userDetails?.role_id !== 1 || userDetails?.role_id !== 2) &&
+          {(userDetails?.role_id !== 5 || userDetails?.role_id !== 6) &&
             title === "Lead List" && (
               <div className="mr-12">
                 <button
@@ -121,6 +122,14 @@ const Table = ({
                 >
                   Sync Leads
                 </button>
+                <Tooltip
+                  align={"top"}
+                  title="Please do not press multiple times. Sync Leads 3/4 time in a day."
+                >
+                  <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                    ?
+                  </span>
+                </Tooltip>
               </div>
             )}
         </div>
@@ -134,11 +143,21 @@ const Table = ({
                     <th className="w-22" key={i}>
                       {header}
                     </th>
-                  ) : header === "Course Code" ? (
-                    <th className="w-36" key={i}>
-                      {header}
-                    </th>
                   ) : (
+                    // : header === "Course Code" ? (
+                    //   <th className="w-36" key={i}>
+                    //     {header}
+                    //   </th>
+                    // )
+                    // : header === "Payment Via" ? (
+                    //   <th className="w-[100px]" key={i}>
+                    //     {header}
+                    //   </th>
+                    // ) : header === "Amount" ? (
+                    //   <th className="w-[100px]" key={i}>
+                    //     {header}
+                    //   </th>
+                    // )
                     <th key={i}>{header}</th>
                   )
                 )}
@@ -187,9 +206,16 @@ const Table = ({
                           )}
                         </td>
 
-                        <td className="uppercase">
+                        <td className="break-words ">
                           {list.transaction_id ? (
                             list.transaction_id
+                          ) : (
+                            <Skeleton width={"100px"} color="#F0EFEF" />
+                          )}
+                        </td>
+                        <td className="uppercase">
+                          {list.payment_method ? (
+                            list.payment_method
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
@@ -203,24 +229,21 @@ const Table = ({
                           )}
                         </td>
 
-                        <td className="uppercase">
-                          {list.payment_method ? (
-                            list.payment_method
-                          ) : (
-                            <Skeleton width={"100px"} color="#F0EFEF" />
-                          )}
-                        </td>
-
                         <td
+                          // className={`font-semibold ${
+                          //   list.payment_status === "succeeded" &&
+                          //   "text-green-500"
+                          // } ${
+                          //   list.payment_status === "FAILED" && "text-red-500"
+                          // }`}
                           className={`font-semibold ${
-                            list.payment_status === "COMPLETED" &&
-                            "text-green-500"
-                          } ${
-                            list.payment_status === "FAILED" && "text-red-500"
+                            list.payment_status === "succeeded"
+                              ? "text-green-500"
+                              : "text-red-500"
                           }`}
                         >
                           {list.payment_status ? (
-                            list.payment_status
+                            list.payment_status.toUpperCase()
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
@@ -271,7 +294,7 @@ const Table = ({
                           )}
                         </td>
 
-                        <td>
+                        <td className="uppercase">
                           {list.course_code ? (
                             list.course_code
                           ) : (
@@ -279,15 +302,7 @@ const Table = ({
                           )}
                         </td>
 
-                        {/* <td>
-                          {list.full_name ? (
-                            list.full_name
-                          ) : (
-                            <Skeleton width={"100px"} color="#F0EFEF" />
-                          )}
-                        </td> */}
-
-                        <td>
+                        <td className="ml-4">
                           {list.payment_amount ? (
                             list.payment_amount
                           ) : (
@@ -295,21 +310,23 @@ const Table = ({
                           )}
                         </td>
 
-                        <td className="uppercase flex items-center">
+                        <td className="uppercase flex items-center relative">
                           {list.payment_method ? (
                             list.payment_method
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
 
-                          <button
-                            className="ml-10 text-black hover:text-brand-color font-semibold"
-                            onClick={(e) => {
-                              handleNavigateInvoiceDetails(e, list.id);
-                            }}
-                          >
-                            <Icons.Eye className="w-4" />
-                          </button>
+                          <span className="absolute">
+                            <button
+                              className="ml-10 text-black hover:text-brand-color font-semibold"
+                              onClick={(e) => {
+                                handleNavigateInvoiceDetails(e, list.id);
+                              }}
+                            >
+                              <Icons.Eye className="w-4" />
+                            </button>
+                          </span>
                         </td>
                       </tr>
                     ))}

@@ -25,7 +25,7 @@ const Overview = () => {
   const { Option } = Select;
 
   const pdfRef = useRef(null);
-  const [image, takeScreenShot] = useScreenshot();
+  const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
   const [comapnyEmployees, setComapnyEmployees] = useState();
@@ -155,16 +155,19 @@ const Overview = () => {
 
       <div ref={pdfRef}>
         {/* Comapny Analytics */}
-        <CompanyRevenue />
+        <CompanyRevenue activeCompany={activeCompany} />
 
         {/* Management Analitics */}
-        <ManagementAnalytics comapnyEmployees={comapnyEmployees} />
+        <ManagementAnalytics
+          comapnyEmployees={comapnyEmployees}
+          activeCompany={activeCompany}
+        />
 
         {/* Campaign Analitics */}
-        <CampaignAnalytics />
+        <CampaignAnalytics activeCompany={activeCompany} />
 
         {/* Sales Analitics */}
-        <SalesAnalytics activeCompany={activeCompany}/>
+        <SalesAnalytics activeCompany={activeCompany} />
       </div>
     </div>
   );

@@ -57,7 +57,8 @@ const CompanyCampaigns = ({ clientId }) => {
       );
       setCampaignList(campaign);
     }
-  }, [activeFilter, campaignList, campaigns, searchCampaign]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter, campaigns, searchCampaign]);
 
   return (
     <div>
@@ -72,7 +73,7 @@ const CompanyCampaigns = ({ clientId }) => {
         <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
           {campaignList?.map((campaign, i) => (
             <a
-              href={`${process.env.REACT_APP_CLIENT_URL}/campaign-details/${campaign?.client_id}_${campaign?.campaign_id}`}
+              href={`${window.location.origin}/campaign-details/${campaign?.client_id}_${campaign?.campaign_id}`}
               target="_blank"
               rel="noreferrer"
               key={i}

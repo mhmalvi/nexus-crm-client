@@ -1,18 +1,42 @@
-import React from "react";
-import * as rcElement from "recharts";
-import * as chartData from "./data";
-import * as chartUtils from "./utils";
 import { Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import * as rcElement from "recharts";
+import { fetchMonthPaymentDataOfCompany } from "../../Components/services/payment";
+import Loading from "../../Components/Shared/Loader";
+import * as chartUtils from "./utils";
 
-const CompanyRevenue = () => {
+const CompanyRevenue = ({ activeCompany }) => {
   const { Option } = Select;
+  const userDetails = useSelector((state) => state.user)?.userInfo;
+  const loadingDetails = useSelector((state) => state.user)?.loading;
+
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
 
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const monthlyRevenue = await fetchMonthPaymentDataOfCompany(
+        userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+      );
+
+      if (monthlyRevenue?.status === 200) {
+        setMonthlyRevenue((monthlyRevenue?.data).reverse());
+      }
+    })();
+  }, [activeCompany, userDetails]);
+
   return (
     <div className="py-10">
+      {loadingDetails && (
+        <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      )}
       <div className="mt-4">
         <div className="relative">
           <div className="relative">
@@ -39,7 +63,7 @@ const CompanyRevenue = () => {
             <rcElement.LineChart
               width={500}
               height={200}
-              data={chartData.MonthlyRevenueData}
+              data={monthlyRevenue}
               margin={{
                 top: 20,
                 right: 30,

@@ -7,13 +7,21 @@ import { Storage } from "../../Components/Shared/utils/store";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
 import PayPalPaymentForm from "./PayPalPaymentForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Loading from "../../Components/Shared/Loader";
 
 const Pay = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user)?.userInfo;
-  const [amount, setAmount] = useState("");
+  const loadingDetails = useSelector((state) => state.user)?.loading;
+  const [amount, setAmount] = useState();
   const [searchParams] = useSearchParams();
+
+  const stripePromise = loadStripe(
+    process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
+  );
 
   console.log(userDetails);
   console.log(searchParams.get("AccessCode"));
@@ -37,13 +45,15 @@ const Pay = () => {
   const paymentOptions = [
     {
       id: 0,
-      title: "E-way",
+      title: "Card",
       component: (
-        <CardPaymentForm
-          requestedLeadDetails={requestedLeadDetails}
-          amount={amount}
-          setAmount={setAmount}
-        />
+        <Elements stripe={stripePromise}>
+          <CardPaymentForm
+            requestedLeadDetails={requestedLeadDetails}
+            amount={amount}
+            setAmount={setAmount}
+          />
+        </Elements>
       ),
     },
     {
@@ -69,6 +79,13 @@ const Pay = () => {
         <Icons.DownArrow className="rotate-90" />
         <span className="text-base font-semibold ml-2">Back</span>
       </div>
+
+      {loadingDetails ? (
+        <div className="absolute top-0 w-full h-full z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      ) : null}
+
       <div className="mx-auto 2xl:pb-0">
         <div className="rounded-2xl flex justify-center items-end">
           <div className="px-8 py-10 rounded-2xl border border-gray-400">

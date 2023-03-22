@@ -2,10 +2,12 @@ import { Select } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
+import { fetchCampaignwisePaymentDataOfCompany } from "../../Components/services/payment";
+import Loading from "../../Components/Shared/Loader";
 import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
-const CampaignAnalytics = () => {
+const CampaignAnalytics = ({ activeCompany }) => {
   const { Option } = Select;
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeCampaign, setActiveCampaign] = useState();
@@ -14,8 +16,13 @@ const CampaignAnalytics = () => {
   const [campaignSummary, setCampaignSummary] = useState([]);
   const [campaignsDetails, setCampaignsDetails] = useState([]);
   const [campaignQualityRatio, setCampaignQualityRatio] = useState([]);
+  const [campaignwiseRevenue, setCampaignwiseRevenue] = useState([]);
+  // const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+
+  const userDetails = useSelector((state) => state.user?.userInfo);
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const leads = useSelector((state) => state.leads?.leads);
+  const loadingDetails = useSelector((state) => state.user)?.loading;
 
   const COLORS = [
     "#34C759",
@@ -280,8 +287,6 @@ const CampaignAnalytics = () => {
     ]);
   }, [activeCampaign, activeCampaignSummary, leads]);
 
-  // console.log("areawiseLeads", areawiseLeads);
-
   useEffect(() => {
     // Campaigns Details
     const campaignsDetailsArray = [];
@@ -326,10 +331,6 @@ const CampaignAnalytics = () => {
     // For Lead Quality Ratio
     const campaignQualityRatioArray = [];
     campaigns?.forEach((campaign) => {
-      console.log(
-        leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.length
-      );
       campaignQualityRatioArray.push({
         campaign: campaign?.campaign_name,
         rate:
@@ -351,13 +352,47 @@ const CampaignAnalytics = () => {
       });
     });
 
-    console.log("campaignQualityRatioArray", campaignQualityRatioArray);
-
     setCampaignQualityRatio(campaignQualityRatioArray);
   }, [campaigns, leads]);
 
+  useEffect(() => {
+    const campaignwiseRevenueData = [];
+
+    (async () => {
+      const campaignwiseRevenueResp =
+        await fetchCampaignwisePaymentDataOfCompany(
+          userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+        );
+
+      if (campaignwiseRevenueResp?.status === 200) {
+        campaigns?.forEach((campaign) => {
+          campaignwiseRevenueData.push({
+            campaign: campaign?.campaign_name,
+            revenue: campaignwiseRevenueResp?.data?.find(
+              (camp) =>
+                parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
+            )
+              ? campaignwiseRevenueResp?.data?.find(
+                  (camp) =>
+                    parseInt(camp?.campaigns) ===
+                    parseInt(campaign?.campaign_id)
+                )?.sums
+              : 0,
+          });
+        });
+
+        setCampaignwiseRevenue(campaignwiseRevenueData);
+      }
+    })();
+  }, [activeCompany, campaigns, userDetails]);
+
   return (
     <div className="mt-7 font-poppins">
+      {loadingDetails && (
+        <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      )}
       <div>
         <div className="relative">
           <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
@@ -415,7 +450,7 @@ const CampaignAnalytics = () => {
             <rcElement.LineChart
               width={500}
               height={200}
-              data={chartData.campaignRevenueData}
+              data={campaignwiseRevenue}
               margin={{
                 top: 10,
                 right: 30,
@@ -558,8 +593,8 @@ const CampaignAnalytics = () => {
           </div>
 
           <rcElement.ResponsiveContainer
-            className="-ml-6"
-            width="90%"
+            className="mx-auto"
+            width="80%"
             height={450}
           >
             <rcElement.PieChart width={"100%"} height={500}>
