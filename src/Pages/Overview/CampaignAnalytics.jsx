@@ -421,12 +421,12 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Tooltip />
               <rcElement.Legend />
               <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#34C759" />
-              <rcElement.Bar dataKey="skilled" stackId="lead" fill="#FF9500" />
-              <rcElement.Bar dataKey="called" stackId="lead" fill="#4F8DEA" />
-              <rcElement.Bar dataKey="paid" stackId="lead" fill="#17CDD9" />
-              <rcElement.Bar dataKey="verified" stackId="lead" fill="#7037FF" />
+              <rcElement.Bar dataKey="Skilled" stackId="lead" fill="#FF9500" />
+              <rcElement.Bar dataKey="Called" stackId="lead" fill="#4F8DEA" />
+              <rcElement.Bar dataKey="Paid" stackId="lead" fill="#17CDD9" />
+              <rcElement.Bar dataKey="Verified" stackId="lead" fill="#7037FF" />
               <rcElement.Bar
-                dataKey="completed"
+                dataKey="Completed"
                 stackId="lead"
                 fill="#ff1c24"
               />
@@ -465,7 +465,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="revenue"
+                dataKey="Income ($)"
                 stroke="#8884d8"
                 fill="#8884d8"
                 label={<chartUtils.CampaignRevenueCustomizedLabel />}
@@ -505,7 +505,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="rate"
+                dataKey="Rate (%)"
                 stroke="#8884d8"
                 dot={true}
                 activeDot={"dot"}
@@ -560,7 +560,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
                   fill="#8884d8"
                   activeDot={"dot"}
                   dot={true}
-                  fillOpacity={0.7}
+                  fillOpacity={0.8}
                 />
               </rcElement.RadarChart>
             </rcElement.ResponsiveContainer>

@@ -75,11 +75,11 @@ const SalesAnalytics = ({ activeCompany }) => {
       }
     })();
 
-    console.log(
-      "leads",
-      // leads
-      leads?.filter((lead) => lead?.sales_user_id === userDetails?.userInfo?.id)
-    );
+    // console.log(
+    //   "leads",
+    //   // leads
+    //   leads?.filter((lead) => lead?.sales_user_id === userDetails?.userInfo?.id)
+    // );
   }, [activeCompany, dispatch, leads, userDetails]);
 
   return (

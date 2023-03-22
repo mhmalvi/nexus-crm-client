@@ -221,7 +221,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                 <rcElement.Line
                   connectNulls
                   type="monotone"
-                  dataKey="sum"
+                  dataKey="Income ($)"
                   stroke="#8884d8"
                   fill="#8884d8"
                 />
@@ -256,7 +256,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="revenue"
+                dataKey="Income ($)"
                 stroke="#8884d8"
                 fill="#8884d8"
               />
@@ -298,7 +298,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               <rcElement.YAxis domain={[0, 100]} />
               <rcElement.Tooltip />
               <rcElement.Legend />
-              <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
+              <rcElement.Bar dataKey="Rate (%)" fill="#8884d8" minPointSize={5}>
                 <rcElement.LabelList
                   dataKey="rate"
                   content={chartUtils.LeadConvertionCustomizedLabel}
