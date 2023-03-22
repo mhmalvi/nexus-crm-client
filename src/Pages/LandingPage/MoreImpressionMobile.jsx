@@ -40,45 +40,57 @@ function MoreImpressionMobileSection() {
           <div className="w-full flex-col justify-start">
             <div className="px-4 py-4">
               {/* Progress Bar */}
-              <div className="relative w-56 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] m-auto rounded-xl z-[100] p-10 border shadow-lg">
+              <div className="relative w-56 bg-white bg-opacity-70 backdrop:filter backdrop-blur-[1px] m-auto rounded-xl z-[100] py-10 px-5 border shadow-lg">
                 <div className="relative flex justify-center">
                   <div className="progressBarMobile"></div>
-                  <div className="absolute top-9 text-xl font-semibold">
-                    {
+                  <div className="absolute top-6 text-center font-semibold">
+                    {/* {
                       <CountUp
                         delay={7.5}
-                        start={80}
+                        start={90}
                         end={0}
                         duration={2}
                         onEnd={({ pauseResume, reset, start, update }) =>
                           start()
                         }
                       />
-                    }
-                    %
+                    } */}
+                    90%
+                    <div className="text-[8px] leading-0 text-center pb-2">
+                      Customer <br /> Satisfaction
+                    </div>
                   </div>
                 </div>
-                <div className="flex justify-evenly py-5 gap-4">
+                <div className="flex justify-evenly pt-5 gap-6">
                   <div className="flex">
                     <div className="w-6 h-6 bg-[#6B7CFF] rounded-md m-auto animate-pulse"></div>
-                    <span className="m-auto pl-2 text-xl md:text-3xl font-semibold">
+                    <span className="m-auto pl-2 font-semibold">
                       {" "}
-                      {<CountUp start={0} end={30} duration={2} />}%
+                      {<CountUp start={0} end={50} duration={2} />}%
                     </span>
                   </div>
                   <div className="flex">
                     <div className="w-6 h-6 bg-[#CFCFCF] rounded-md m-auto animate-pulse"></div>
-                    <span className="m-auto pl-2 text-xl md:text-3xl font-semibold">
+                    <span className="m-auto pl-2 font-semibold">
                       {" "}
-                      {<CountUp start={0} end={68} duration={2} />}%
+                      {<CountUp start={0} end={200} duration={2} />}%
                     </span>
                   </div>
                 </div>
-                <div className="text-xs text-center">
+                <div className="flex justify-evenly pt-1 pb-5 gap-2">
+                  <div className="text-[8px] pb-2 whitespace-nowrap">
+                    Cycle-time decreased
+                  </div>
+                  <div className="text-[8px] pb-2 whitespace-nowrap">
+                    Increased productivity
+                  </div>
+                </div>
+                <div className="text-[10px] text-center">
                   Get the best out of your customer support
                 </div>
                 {/* PIE CHART */}
-                {/* <div className="absolute top-5 left-[-30%] xl:left-[-40%] w-24 bg-white p-2 xl:p-6 rounded-xl border shadow-lg">
+                <div className="hidden md:block absolute top-5 left-[-40%] w-28 bg-white p-2 rounded-xl border shadow-lg">
+                  <div className="text-[8px] pb-2">Leads Generated</div>
                   <div className="custom_svg">
                     <svg viewBox="0 0 20.6619772368 20.6619772368" width={50}>
                       <circle
@@ -107,50 +119,45 @@ function MoreImpressionMobileSection() {
                       />
                     </svg>
                   </div>
-                  <div className="font-semibold py-3 pl-12 relative -bottom-4 left-2">
+                  <div className="font-semibold py-3 pl-12 relative -bottom-4 left-4">
                     32K
                   </div>
-                </div> */}
+                </div>
                 {/* PIE CHART */}
-                {/* <div className="absolute top-10 right-[-35%] xl:right-[-40%] w-32 xl:w-44 h-28 xl:h-32 bg-white p-2 xl:p-6 rounded-xl border shadow-lg">
-                    <div className="text-xs pb-2">Impression</div>
-                    <div className="flex">
-                      <figure>
-                        <svg
-                          viewBox="0 0 20.6619772368 20.6619772368"
-                          width={100}
-                        >
-                          <circle
-                            className="pie1"
-                            cx="31.8309886184"
-                            cy="31.8309886184"
-                            r="15.9154943092"
-                          />
-                          <circle
-                            className="pie2"
-                            cx="31.8309886184"
-                            cy="31.8309886184"
-                            r="15.9154943092"
-                          />
-                          <circle
-                            className="pie3"
-                            cx="31.8309886184"
-                            cy="31.8309886184"
-                            r="15.9154943092"
-                          />
-                          <circle
-                            className="pie4"
-                            cx="31.8309886184"
-                            cy="31.8309886184"
-                            r="15.9154943092"
-                          />
-                        </svg>
-                      </figure>
-                      <div className="text-xl xl:text-3xl font-semibold py-3 pl-12">
-                        32K
-                      </div>
-                    </div>
-                  </div> */}
+                <div className="hidden md:block absolute top-14 right-[-40%] w-28 bg-white p-2 rounded-xl border shadow-lg">
+                  <div className="text-[8px] pb-2">Conversion Rate</div>
+                  <div className="custom_svg">
+                    <svg viewBox="0 0 20.6619772368 20.6619772368" width={50}>
+                      <circle
+                        className="custom_circle pie1"
+                        cx="31.8309886184"
+                        cy="31.8309886184"
+                        r="15.9154943092"
+                      />
+                      <circle
+                        className="custom_circle pie2"
+                        cx="31.8309886184"
+                        cy="31.8309886184"
+                        r="15.9154943092"
+                      />
+                      <circle
+                        className="custom_circle pie3"
+                        cx="31.8309886184"
+                        cy="31.8309886184"
+                        r="15.9154943092"
+                      />
+                      <circle
+                        className="custom_circle pie4"
+                        cx="31.8309886184"
+                        cy="31.8309886184"
+                        r="15.9154943092"
+                      />
+                    </svg>
+                  </div>
+                  <div className="font-semibold py-3 pl-12 relative -bottom-4 left-4">
+                    98%
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -10,8 +10,8 @@ function Header() {
   return (
     <div>
       <div className="min-h-[100vh] min-w-full">
-        <div className=" header-backbround min-w-full bg-home-color">&nbsp;</div>
-        <div className="h-[5vh] min-w-full bg-white">&nbsp;</div>
+        <div className="header-backbround min-w-full bg-home-color">&nbsp;</div>
+        <div className="min-w-full bg-white">&nbsp;</div>
       </div>
       <div className="min-w-full overflow-x-hidden bg-transparent absolute top-0">
         <img
@@ -20,7 +20,7 @@ function Header() {
           alt="Cover_Image"
         />
         <div className="items-center m-auto z-50">
-          <div className="w-11/12 md:w-2/3 items-center m-auto pt-40">
+          <div className="w-11/12 md:w-9/12 items-center m-auto pt-40">
             <div className="text-center mx-auto mb-4">
               <span className="font-poppins text-2xl md:text-4xl text-white font-bold justify-center text-center">
                 <AnimatedText
@@ -84,16 +84,16 @@ function Header() {
                 className="w-[60px] md:w-[140px] absolute -top-10 md:-top-24 -right-10 md:-right-24 animate-pulse"
                 alt="flare"
               />
-              <div className="bg-white p-4 rounded-lg z-60 bg-opacity-10">
-                <div className="bg-white p-4 rounded-lg z-70 bg-opacity-20">
-                  <div className="bg-white p-4 rounded-lg z-80 bg-opacity-30">
-                    <div className="-z-10">
+              <div className="bg-white p-2 lg:p-4 rounded-lg z-60 bg-opacity-10 backdrop:filter backdrop-blur-sm">
+                <div className="bg-white p-2 lg:p-4 rounded-lg z-70 bg-opacity-20 backdrop:filter backdrop-blur-sm">
+                  <div className="bg-white lg:p-4 rounded-lg z-80 bg-opacity-30 backdrop:filter backdrop-blur-sm">
+                    {/* <div className="-z-10 border-2 rounded-md"> */}
                       <img
                         src={Dashboard}
                         className="w-full rounded-tl rounded-tr"
                         alt=""
                       />
-                    </div>
+                    {/* </div> */}
                   </div>
                 </div>
               </div>

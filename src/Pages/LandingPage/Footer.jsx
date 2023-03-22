@@ -29,7 +29,7 @@ export default function Footer() {
                 <a className="text-xs text-white px-4">Pricing</a>
               </li>
               <li className="flex p-2">
-                <a className="text-xs text-white px-4">Testimonial</a>
+                <a className="text-xs text-white px-4">Contact Us</a>
               </li>
             </ul>
             {/* Column 2 */}
@@ -46,14 +46,11 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex p-2">
-                <a className="text-xs text-white px-4">Blog</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Contact Us</a>
+                <a className="text-xs text-white px-4">Blogs</a>
               </li>
             </ul>
             {/* Column 3 HIDDEN IN MOBILE VIEW*/}
-            <ul className="hidden md:block">
+            {/* <ul className="hidden md:block">
               <li className="flex p-2">
                 <a className="text-white font-bold px-4">CRM tutorial</a>
               </li>
@@ -72,11 +69,11 @@ export default function Footer() {
               <li className="flex p-2">
                 <a className="text-xs text-white px-4">Remote Collaboration</a>
               </li>
-            </ul>
+            </ul> */}
           </div>
 
           {/* Column 3 FOR MOBILE VIEW */}
-          <div className="w-full flex justify-center md:hidden">
+          {/* <div className="w-full flex justify-center md:hidden">
             <ul>
               <li className="flex p-2">
                 <a className="text-white font-bold px-4">CRM tutorial</a>
@@ -97,10 +94,10 @@ export default function Footer() {
                 <a className="text-xs text-white px-4">Remote Collaboration</a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="w-full md:w-2/5 font-poppins">
-          <div className="text-4xl text-white pb-1">LOGO</div>
+          <div className="text-4xl text-white pb-1">SMART CRM</div>
           <div className="text-base text-white pb-4">Go To Free Trial</div>
           <div className="pb-10 m-auto">
             <div className=" md:flex items-center bg-[#2B2E3C] rounded-xl text-[14px]">
@@ -116,7 +113,7 @@ export default function Footer() {
         </div>
       </div>
       {/* copyright section */}
-      <div className="flex justify-evenly md:pb-16">
+      <div className="flex justify-evenly items-center md:pb-16">
         <div className="w-2/12 md:w-1/3 h-1 bg-white my-2"></div>
         <div className="w-full md:w-1/3 flex justify-evenly flex-col-reverse md:flex-row px-4">
           <div className="text-white text-center px-2">

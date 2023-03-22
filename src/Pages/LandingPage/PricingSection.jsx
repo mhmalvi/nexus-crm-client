@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Icons from "../../Components/Shared/Icons";
 import "./PricingSection.css";
+import "./style.css";
 
 /* const contentStyle = {
   margin: 0,
@@ -209,145 +210,157 @@ const PricingSection = () => {
         </div>
       </div> */}
 
-      <div className="service-capbility flex justify-evenly px-18 gap-6 pb-18">
+      <div className="service-capbility flex flex-wrap justify-evenly px-18 gap-6 pb-18">
         <div className="relative">
-          <div className="overflow-hidden rounded-3xl shadow-lg border">
-            <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
+          <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 bg-violet-400">
+            <div className="overflow-hidden rounded-3xl shadow-lg border">
+              <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
 
-            <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
+              <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
 
-              <div className="absolute top-12 left-10 z-[100]">
-                <Icons.Standardpkg width={40} />
-              </div>
-              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
-                <div className=" text-4xl text-black font-bold">Regular</div>
-                <div className="text-md font-semibold pb-8">Starter Plan</div>
-              </div>
-              <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
-              <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Limited Projects</strong>
-              </li>
-              <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Regular Support Business</strong>
-              </li>
-              <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">1 Month Free Trial</strong>
-              </li>
-              <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">3GB storage</strong>
-              </li>
-              <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Ads Preview</strong>
-              </li>
-              <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
-                Basic features at an affordable rate
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="overflow-hidden rounded-3xl shadow-lg border">
-            <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
-
-            <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-
-              <div className="absolute top-12 left-10 z-[100]">
-                <Icons.Standardpkg width={40} />
-              </div>
-              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
-                <div className=" text-4xl text-black font-bold">Plantinum</div>
-                <div className="text-md font-semibold pb-8">
-                  For the best results
+                <div className="absolute top-12 left-10 z-[100]">
+                  <Icons.Standardpkg width={40} />
+                </div>
+                <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
+                  <div className=" text-4xl text-black font-bold textShadow">
+                    Regular
+                  </div>
+                  <div className="text-md font-semibold pb-8">Starter Plan</div>
+                </div>
+                <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
+                <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Limited Projects</strong>
+                </li>
+                <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Regular Support Business</strong>
+                </li>
+                <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">1 Month Free Trial</strong>
+                </li>
+                <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">3GB storage</strong>
+                </li>
+                <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Ads Preview</strong>
+                </li>
+                <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
+                  Basic features at an affordable rate
                 </div>
               </div>
-              <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
-              <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Limited Projects</strong>
-              </li>
-              <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Regular Support Business</strong>
-              </li>
-              <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">1 Month Free Trial</strong>
-              </li>
-              <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">3GB storage</strong>
-              </li>
-              <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Ads Preview</strong>
-              </li>
-              <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
-                A premium plan for top-notch results
+            </div>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 bg-violet-400">
+            <div className="overflow-hidden rounded-3xl shadow-lg border">
+              <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
+
+              <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+
+                <div className="absolute top-12 left-10 z-[100]">
+                  <Icons.Standardpkg width={40} />
+                </div>
+                <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
+                  <div className=" text-4xl text-black font-bold textShadow">
+                    Plantinum
+                  </div>
+                  <div className="text-md font-semibold pb-8">
+                    For the best results
+                  </div>
+                </div>
+                <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
+                <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Limited Projects</strong>
+                </li>
+                <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Regular Support Business</strong>
+                </li>
+                <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">1 Month Free Trial</strong>
+                </li>
+                <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">3GB storage</strong>
+                </li>
+                <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Ads Preview</strong>
+                </li>
+                <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
+                  A premium plan for top-notch results
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="relative">
-          <div className="overflow-hidden rounded-3xl shadow-lg border">
-            <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
+          <div className="border shadow-lg rounded-3xl z-10 pl-0.5 pb-0.5 duration-300 bg-violet-400">
+            <div className="overflow-hidden rounded-3xl shadow-lg border">
+              <div className="w-[350px] h-[460px] card-background absolute rounded-3xl z-30"></div>
 
-            <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
-              <div className="card grid-row-3"></div>
+              <div className="card w-[350px] h-[460px] grid grid-cols-2 rounded-3xl relative z-40">
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
+                <div className="card grid-row-3"></div>
 
-              <div className="absolute top-12 left-10 z-[100]">
-                <Icons.Standardpkg width={40} />
-              </div>
-              <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
-                <div className=" text-4xl text-black font-bold">Standard</div>
-                <div className="text-md font-semibold pb-8">Most popular</div>
-              </div>
-              <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
-              <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Limited Projects</strong>
-              </li>
-              <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Regular Support Business</strong>
-              </li>
-              <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">1 Month Free Trial</strong>
-              </li>
-              <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">3GB storage</strong>
-              </li>
-              <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
-                <Icons.Tick />
-                <strong className="px-4">Ads Preview</strong>
-              </li>
-              <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
-                The most popular pricing plan
+                <div className="absolute top-12 left-10 z-[100]">
+                  <Icons.Standardpkg width={40} />
+                </div>
+                <div className="flex-col absolute top-12 left-20 z-[100] pl-5">
+                  <div className=" text-4xl text-black font-bold textShadow">
+                    Standard
+                  </div>
+                  <div className="text-md font-semibold pb-8">Most popular</div>
+                </div>
+                <div className="w-64 border absolute top-36 left-12 z-[100]"></div>
+                <li className="flex absolute bottom-[239px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Limited Projects</strong>
+                </li>
+                <li className="flex absolute bottom-[202px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Regular Support Business</strong>
+                </li>
+                <li className="flex absolute bottom-[166px] left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">1 Month Free Trial</strong>
+                </li>
+                <li className="flex absolute bottom-32 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">3GB storage</strong>
+                </li>
+                <li className="flex absolute bottom-22 left-16 z-[100] bg-transparent">
+                  <Icons.Tick />
+                  <strong className="px-4">Ads Preview</strong>
+                </li>
+                <div className="absolute bottom-16 left-16 z-[100] bg-transparent text-sm text-center">
+                  The most popular pricing plan
+                </div>
               </div>
             </div>
           </div>

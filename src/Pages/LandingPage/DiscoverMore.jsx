@@ -7,7 +7,7 @@ function DiscoverMoreSection() {
     <div className="w-full pb-20 md:pb-40 md:px-20">
       <div className="items-center m-auto z-50">
         <div className="items-center m-auto">
-          <div className="flex flex-col md:flex-row font-poppins text-black p-4">
+          <div className="flex flex-col md:flex-row items-center font-poppins text-black p-4">
             <div className="w-full md:w-3/5 flex-col justify-start">
               <div className="md:text-xl md:px-4 py-4 font-semibold">
                 Discover More

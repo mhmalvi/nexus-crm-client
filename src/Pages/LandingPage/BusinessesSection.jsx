@@ -68,7 +68,7 @@ const BusinessSection = () => {
     console.log(currentSlide);
   }; */
   return (
-    <>
+    <div className="pb-10 md:pb-30">
       <div className="text-center m-auto pb-10">
         <span className="font-poppins text-2xl md:text-4xl text-black font-bold justify-center text-center">
           We have the Best Solution
@@ -134,7 +134,7 @@ const BusinessSection = () => {
           />
         </div>
       </Slider>
-    </>
+    </div>
   );
 };
 export default BusinessSection;

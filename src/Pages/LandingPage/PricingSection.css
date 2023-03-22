@@ -1,24 +1,50 @@
 .background-shadow-left {
     position: absolute;
     z-index: -10;
-    width: 50%;
+    width: 60%;
+    left: 0%;
     height: 400px;
     margin-top: 100px;
-    border-radius: 50%;
+    border-radius: 10%;
     background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
-    filter: blur(200px);
+    filter: blur(220px);
+    transform: rotate(90deg);
 }
 
 .background-shadow-right {
     position: absolute;
     z-index: -10;
-    right: 0;
-    width: 50%  ;
+    right: 0%;
+    width: 60%  ;
     height: 400px;
     margin-top: 600px;
+    border-radius: 10%;
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
+    filter: blur(220px);
+    transform: rotate(90deg);
+}
+
+.background-shadow-left-mob {
+    position: absolute;
+    z-index: -10;
+    width: 50%;
+    height: 400px;
+    margin-top: 100px;
     border-radius: 50%;
     background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
-    filter: blur(200px);
+    filter: blur(110px);
+}
+
+.background-shadow-right-mob {
+    position: absolute;
+    z-index: -10;
+    right: 0;
+    width: 50%;
+    height: 400px;
+    margin-top: 400px;
+    border-radius: 50%;
+    background: radial-gradient(483.9% 2719.65% at -49.5% -250%, #D798E1 17.55%, #8C64D2 27.56%, #AED3FF 49.89%, #55e2fa 56.53%, #CACFFA 65.69%);
+    filter: blur(120px);
 }
 
 
@@ -196,5 +222,17 @@
         --a: 300deg;
         --l: 40%;
         --c: #53fd97;
+    }
+}
+
+/* FOR MOBILE VERSiON */
+
+.mobile-card-fatness {
+    width: 350px;
+}
+
+@media screen and (max-width: 400px) {
+    .mobile-card-fatness {
+        width: 300px;
     }
 }

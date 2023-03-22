@@ -36,7 +36,7 @@ function AboutUsSection() {
             <div>
               <img
                 src={Vector}
-                className="relative top-15 md:top-28 animate-pulse"
+                className="relative top-10 md:top-28 animate-pulse"
                 alt=""
               />
             </div>
