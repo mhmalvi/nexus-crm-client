@@ -421,12 +421,12 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Tooltip />
               <rcElement.Legend />
               <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#34C759" />
-              <rcElement.Bar dataKey="Skilled" stackId="lead" fill="#FF9500" />
-              <rcElement.Bar dataKey="Called" stackId="lead" fill="#4F8DEA" />
-              <rcElement.Bar dataKey="Paid" stackId="lead" fill="#17CDD9" />
-              <rcElement.Bar dataKey="Verified" stackId="lead" fill="#7037FF" />
+              <rcElement.Bar dataKey="skilled" stackId="lead" fill="#FF9500" />
+              <rcElement.Bar dataKey="called" stackId="lead" fill="#4F8DEA" />
+              <rcElement.Bar dataKey="paid" stackId="lead" fill="#17CDD9" />
+              <rcElement.Bar dataKey="verified" stackId="lead" fill="#7037FF" />
               <rcElement.Bar
-                dataKey="Completed"
+                dataKey="completed"
                 stackId="lead"
                 fill="#ff1c24"
               />
@@ -465,7 +465,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="Income ($)"
+                dataKey="revenue"
                 stroke="#8884d8"
                 fill="#8884d8"
                 label={<chartUtils.CampaignRevenueCustomizedLabel />}
@@ -505,7 +505,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="Rate (%)"
+                dataKey="rate"
                 stroke="#8884d8"
                 dot={true}
                 activeDot={"dot"}

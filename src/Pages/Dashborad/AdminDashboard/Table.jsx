@@ -124,7 +124,7 @@ const Table = ({
                 </button>
                 <Tooltip
                   align={"top"}
-                  title="Please do not press multiple times. Sync Leads 3/4 time in a day."
+                  title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
                 >
                   <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
                     ?

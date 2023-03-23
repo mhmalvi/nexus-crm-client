@@ -469,22 +469,23 @@ const Conversation = ({ leadDetails, id }) => {
 
           <div>
             {userDetails?.userInfo?.role_id !== 6 ? (
-              <a
-                href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
-                  "+",
-                  ""
-                )}`}
-                // href="https://wa.me/8801770347582"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <button className="px-4 py-2 bg-white rounded-full shadow-md flex items-center w-56">
+              <button className="px-4 py-2 bg-white rounded-full shadow-md w-56">
+                <a
+                  className="flex items-center "
+                  href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
+                    "+",
+                    ""
+                  )}`}
+                  // href="https://wa.me/8801770347582"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img className="w-6" src={whatsappLogo} alt="" />
                   <span className="text-black font-semibold text-base ml-3">
                     Open in Whatsapp
                   </span>
-                </button>
-              </a>
+                </a>
+              </button>
             ) : null}
           </div>
 

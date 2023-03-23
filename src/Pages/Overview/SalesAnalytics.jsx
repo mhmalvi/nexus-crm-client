@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
+import { fetchSalesEmployeesSale } from "../../Components/services/leads";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import * as chartData from "./data";
@@ -17,8 +18,22 @@ const SalesAnalytics = ({ activeCompany }) => {
 
   // const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
+  const [employeesSales, setEmployeesSales] = useState([]);
 
   // console.log("User", userDetails?.userInfo?.id);
+
+  useEffect(() => {
+    (async () => {
+      const salesResponse = await fetchSalesEmployeesSale(
+        userDetails?.userInfo?.role_id === 3
+          ? userDetails?.userInfo?.client_id
+          : activeCompany
+      );
+
+      console.log("salesResponse", salesResponse?.data);
+      setCompanySalesEmployees(salesResponse?.data);
+    })();
+  }, [activeCompany, userDetails]);
 
   useEffect(() => {
     (async () => {
@@ -38,14 +53,40 @@ const SalesAnalytics = ({ activeCompany }) => {
 
           const sales = (employeeResponse?.data).filter(
             (employee) =>
-              (employee?.role_id === 2 || employee?.role_id === 5) &&
+              (employee?.role_id === 3 ||
+                employee?.role_id === 4 ||
+                employee?.role_id === 5) &&
               employee?.suspend === 0
           );
 
-          console.log("Sales From Overview", sales);
+          let employees = [];
 
-          // setCompanyAdvisorEmployees(admins);
-          setCompanySalesEmployees(sales);
+          console.log("sales>>>>>", sales);
+          console.log("companySalesEmployees", companySalesEmployees);
+
+          sales?.forEach((employee) => {
+            console.log(
+              "FINDDD",
+              companySalesEmployees?.filter(
+                (salesEmployee) => salesEmployee?.sales === employee?.id
+              )
+            );
+
+            employees?.push({
+              id: employee?.user_id,
+              name: employee?.full_name,
+              amount: companySalesEmployees?.filter(
+                (salesEmployee) => salesEmployee?.sales === employee?.id
+              )?.length
+                ? companySalesEmployees?.filter(
+                    (salesEmployee) => salesEmployee?.sales === employee?.id
+                  )?.[0]?.amounts
+                : 0,
+            });
+          });
+
+          console.log("Sales From Overview", employees);
+          setEmployeesSales(employees);
 
           // console.log("LLLLL", employeeResponse?.data);
 
@@ -74,13 +115,9 @@ const SalesAnalytics = ({ activeCompany }) => {
         dispatch(setLoader(false));
       }
     })();
+  }, [activeCompany, dispatch, userDetails, companySalesEmployees]);
 
-    // console.log(
-    //   "leads",
-    //   // leads
-    //   leads?.filter((lead) => lead?.sales_user_id === userDetails?.userInfo?.id)
-    // );
-  }, [activeCompany, dispatch, leads, userDetails]);
+  console.log("employeesSales", employeesSales);
 
   return (
     <div className="mt-10">
@@ -103,7 +140,7 @@ const SalesAnalytics = ({ activeCompany }) => {
             <rcElement.BarChart
               width={500}
               height={300}
-              data={chartData.SalesTeamDetails}
+              data={employeesSales}
               margin={{
                 top: 20,
                 right: 30,

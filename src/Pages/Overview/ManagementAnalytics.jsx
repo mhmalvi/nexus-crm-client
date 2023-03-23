@@ -32,13 +32,15 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
       );
 
+      console.log("monthlyRevenueResp", monthlyRevenueResp);
+
       if (monthlyRevenueResp?.status === 200) {
         setMonthlyRevenue((monthlyRevenueResp?.data).reverse());
       }
 
       let totalMonthlyRevenue = 0;
       monthlyRevenueResp?.data?.forEach((rev) => {
-        totalMonthlyRevenue += rev?.revenue;
+        totalMonthlyRevenue += rev?.Income;
       });
       setTotalRevenue(totalMonthlyRevenue);
       dispatch(setLoader(false));
@@ -57,7 +59,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
 
       let totalLastWeekIncome = 0;
       lastWeekIncomeResp?.data?.forEach((rev) => {
-        totalLastWeekIncome += rev?.sum;
+        totalLastWeekIncome += rev?.Income;
       });
       setTotalLastWeekIncome(totalLastWeekIncome);
       dispatch(setLoader(false));
@@ -66,8 +68,9 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCompany, userDetails]);
 
-  console.log("lastWeekIncome", lastWeekIncome);
-  console.log("totalLastWeekIncome", totalLastWeekIncome);
+  // console.log("lastWeekIncome", lastWeekIncome);
+  // console.log("totalLastWeekIncome", totalLastWeekIncome);
+  // console.log("totalRevenue", totalRevenue);
 
   campaigns?.forEach((campaign) => {
     campaignRatio.push({
@@ -221,7 +224,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                 <rcElement.Line
                   connectNulls
                   type="monotone"
-                  dataKey="Income ($)"
+                  dataKey="Income"
                   stroke="#8884d8"
                   fill="#8884d8"
                 />
@@ -256,7 +259,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="Income ($)"
+                dataKey="Income"
                 stroke="#8884d8"
                 fill="#8884d8"
               />
@@ -298,7 +301,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               <rcElement.YAxis domain={[0, 100]} />
               <rcElement.Tooltip />
               <rcElement.Legend />
-              <rcElement.Bar dataKey="Rate (%)" fill="#8884d8" minPointSize={5}>
+              <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
                 <rcElement.LabelList
                   dataKey="rate"
                   content={chartUtils.LeadConvertionCustomizedLabel}

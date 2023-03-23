@@ -1,16 +1,16 @@
 import { message } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   handleProfileDetails,
-  handleUpdateProfileDetails,
+  handleUpdateProfileDetails
 } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
-import { addUserDetails } from "../../../features/user/userSlice";
+// import { addUserDetails } from "../../../features/user/userSlice";
 
 function ProfileSettingForm() {
-  const dispatch = useDispatch();
-  const ProfileDetails = useSelector((state) => state?.user);
+  // const dispatch = useDispatch();
+  const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
   const initialState = {
     full_name: "",
@@ -47,7 +47,7 @@ function ProfileSettingForm() {
         }, 3000);
       }
     })();
-  }, [ProfileDetails?.userInfo?.user_id]);
+  }, []);
 
   const userData = (e) => {
     const data = { ...profileData };

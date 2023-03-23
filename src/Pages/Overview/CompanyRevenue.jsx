@@ -9,8 +9,6 @@ const CompanyRevenue = ({ activeCompany }) => {
   // const { Option } = Select;
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
-
-
   // const handleChange = (value) => {
   //   console.log(`selected ${value}`);
   // };
@@ -28,6 +26,7 @@ const CompanyRevenue = ({ activeCompany }) => {
       }
     })();
   }, [activeCompany, userDetails]);
+
 
   return (
     <div className="py-10">
@@ -78,7 +77,7 @@ const CompanyRevenue = ({ activeCompany }) => {
               <rcElement.Line
                 connectNulls
                 type="monotone"
-                dataKey="revenue"
+                dataKey="Income"
                 stroke="#8884d8"
                 label={<chartUtils.CampaignRevenueCustomizedLabel />}
                 activeDot={{ r: 5.5 }}

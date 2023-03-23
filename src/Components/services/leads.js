@@ -365,3 +365,18 @@ export const handleCommentsSubmitReq = async (remarks, leadId) => {
     return error.response;
   }
 };
+
+export const fetchSalesEmployeesSale = async (companyId) => {
+  console.log("companyId", companyId);
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/sales-wise-lead-amount`,
+      {
+        company_id: companyId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

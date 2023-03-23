@@ -25,10 +25,11 @@ import HomePage from "./Pages/LandingPage";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Layout from "./Pages/Layout";
 import GmailModule from "./Pages/Gmail";
+import { useEffect } from "react";
 
 function App() {
   // useEffect(() => {
-  //   console.log = () => {};
+  //   if (process.env.REACT_APP_PRODUCTION) console.log = () => {};
   // }, []);
 
   return (
