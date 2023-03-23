@@ -20,5 +20,5 @@ export const store = configureStore({
     mailUser: mailUserReducer,
     // packages: packagesReducer,
   },
-  devTools: process.env.REACT_APP_PRODUCTION,
+  devTools: process.env.REACT_APP_PRODUCTION ? true : false,
 });

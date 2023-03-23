@@ -27,7 +27,7 @@ function UserProfile() {
     }, 3000);
   }, [dispatch, ProfileDetails?.userInfo]);
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(setLoader(true));
 
     (async () => {
@@ -38,7 +38,6 @@ function UserProfile() {
       if (userDetailResponse?.data) {
         const user = userDetailResponse?.data;
         setUserDetails(user);
-        console.log("onpage.w..", userDetails); 
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -46,7 +45,7 @@ function UserProfile() {
         }, 3000);
       }
     })();
-  }, [dispatch, ProfileDetails.userInfo.user_id, ProfileDetails?.user_id, userDetails]);
+  }, [dispatch, ProfileDetails]);
 
   const EditSettings = () => {
     navigate("/edit-profile");

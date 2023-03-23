@@ -98,8 +98,10 @@ export default function PayPalPaymentForm() {
 
   return (
     <div>
-      {/* <span className="text-red-500 text-xl">*</span> Feature Comming Soon... */}
-      <div className="relative mb-6">
+      <h1>
+        <span className="text-red-500 text-xl">*</span> Feature Comming Soon...
+      </h1>
+      {/* <div className="relative mb-6">
         <img className="w-10" src={paypalLogo} alt="" />
         <div className="absolute w-full h-full top-0"></div>
       </div>
@@ -129,22 +131,7 @@ export default function PayPalPaymentForm() {
             onError={onError}
           />
         </PayPalScriptProvider>
-      </div>
+      </div> */}
     </div>
   );
-}
-
-{
-  /* <div>
-    {amount > 0 ? (
-      <div ref={paypalRef} className="z-0"></div>
-    ) : (
-      <div>
-        <h1 className="font-poppins text-xs text-black text-opacity-80 font-medium">
-          <span className="text-red-600">*</span> Enter your payment amount
-          at first.
-        </h1>
-      </div>
-    )}
-  </div> */
 }
