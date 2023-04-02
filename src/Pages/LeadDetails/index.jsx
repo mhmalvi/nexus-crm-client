@@ -1,7 +1,11 @@
+import { message, Popconfirm, Tooltip } from "antd";
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { handleLeadDetails } from "../../Components/services/leads";
+import {
+  handleLeadDetails,
+  handleLeadStatusUpdate,
+} from "../../Components/services/leads";
 import { handlePaymentDetails } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
@@ -38,8 +42,8 @@ const LeadDetails = () => {
     Verified: "Not Yet",
     Completed: "Not Yet",
   });
-   const [paymentHistory, setPaymentHistory] = useState([]);
-   const [totalPaid, setTotalPaid] = useState(0);
+  const [paymentHistory, setPaymentHistory] = useState([]);
+  const [totalPaid, setTotalPaid] = useState(0);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -108,6 +112,29 @@ const LeadDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
+  const confirm = async (e) => {
+    console.log(
+      "STATUSSS",
+      leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
+        ?.lead_status
+    );
+    const statusUpdateResponse = await handleLeadStatusUpdate(
+      leadDetails?.leadDetails?.lead_id,
+      0,
+      // leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
+      //   ?.lead_status,
+      userDetails?.user_id
+    );
+
+    if (statusUpdateResponse?.status) {
+      message.success("Lead Has Been Released Successfully");
+      setSyncDetails(!syncDetails);
+    }
+  };
+  const cancel = (e) => {
+    console.log(e);
+  };
+
   return (
     <div>
       {loadingDetails && (
@@ -147,8 +174,31 @@ const LeadDetails = () => {
             />
           </div>
           {leadDetails?.leadDetails?.lead_details_status === 0 && (
-            <div className="w-full h-full bg-white bg-opacity-50 absolute flex justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
-              Lead has been suspended
+            <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+              <div>Lead has been suspended</div>
+              <div className="xl:ml-4 mt-8">
+                <Popconfirm
+                  title="Do you want to Release this lead from the Suspension?"
+                  onConfirm={confirm}
+                  onCancel={cancel}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Tooltip
+                    placement="right"
+                    title={
+                      "If you think to Release the lead from the Suspension"
+                    }
+                  >
+                    <button
+                      className={`w-32 px-1.5 py-2 border border-green-600 text-green-600 text-xs font-medium leading-4 font-poppins rounded-md`}
+                      // onClick={handleLeadSuspend}
+                    >
+                      Release
+                    </button>
+                  </Tooltip>
+                </Popconfirm>
+              </div>
             </div>
           )}
         </div>

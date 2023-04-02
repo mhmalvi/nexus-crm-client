@@ -1,17 +1,48 @@
-import React from "react";
+import { Select } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Icons from "../../../Components/Shared/Icons";
+// import Icons from "../../../Components/Shared/Icons";
 
 const Filters = ({
   activeFilter,
   filterOptions,
   ratings,
   layout,
-  setSearchInput,
+  // setSearchInput,
+  companyEmployeeList,
   handleFilterLeadList,
   handleStaredLeadsFilter,
+  handleFilterAssignedEmployee,
 }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
+
+  const [employeeOptions, setEmployeeOptions] = useState([]);
+
+  useEffect(() => {
+    const options = [
+      {
+        key: null,
+        value: "All",
+        label: "All",
+      },
+    ];
+
+    if (companyEmployeeList?.length) {
+      companyEmployeeList?.map((employee) =>
+        options.push({
+          key: employee?.user_id,
+          value: employee?.full_name,
+          label: employee?.full_name,
+        })
+      );
+    }
+
+    setEmployeeOptions(options);
+  }, [companyEmployeeList]);
+
+  const handleEmployeeChange = (name) => {
+    handleFilterAssignedEmployee(name);
+  };
 
   return (
     <div className="flex justify-between ">
@@ -79,7 +110,7 @@ const Filters = ({
       </div>
 
       {/* Search Option */}
-      <div
+      {/* <div
         className="border px-7 py-8 mt-5 ml-6"
         style={{
           borderRadius: "20px",
@@ -111,7 +142,37 @@ const Filters = ({
             <Icons.Send />
           </div>
         </div>
-      </div>
+      </div> */}
+
+      {/* Search with Sales Employee  */}
+
+      {(userDetails?.role_id === 1 ||
+        userDetails?.role_id === 2 ||
+        userDetails?.role_id === 3 ||
+        userDetails?.role_id === 4) && (
+        <div
+          className="border px-7 py-8 mt-5 ml-6"
+          style={{
+            borderRadius: "20px",
+          }}
+        >
+          <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+            Search with Assigned Employee
+          </h1>
+
+          <div>
+            <Select
+              defaultValue="All"
+              placeholder="Select Employee"
+              onChange={handleEmployeeChange}
+              style={{
+                width: 200,
+              }}
+              options={employeeOptions}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

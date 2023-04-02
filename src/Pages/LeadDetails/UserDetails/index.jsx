@@ -43,7 +43,8 @@ const UserDetails = ({
   const [toggleApplication, setToggleApplication] = useState(false);
   const [isCommentHistoryOpen, setIsCommentHistoryOpen] = useState(false);
   const [rating, setRating] = useState();
-  const [comment, setComment] = useState("No comments yet.");
+  const [comment, setComment] = useState("");
+  const [allComents, setAllComents] = useState([]);
   const [ratingRemarks, setRatingRemarks] = useState("");
 
   useEffect(() => {
@@ -75,15 +76,13 @@ const UserDetails = ({
     }
 
     setRating(leadDetails?.leadDetails?.star_review);
+    
     if (leadDetails?.leadMultiComment?.length) {
-      setComment(
-        leadDetails?.leadMultiComment[leadDetails?.leadMultiComment?.length - 1]
-          ?.comments
-      );
+      setAllComents(leadDetails?.leadCallHistory);
     }
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
-        ? "No comments yet."
+        ? "No comments yet"
         : leadDetails?.leadDetails?.comment
     );
   }, [leadDetails]);
@@ -121,6 +120,7 @@ const UserDetails = ({
     );
 
     if (commentUpdateResponse?.status) {
+      setAllComents(commentUpdateResponse?.data);
       message.success("Comment Added Successfully");
       document.getElementById("lead_comment").style.caretColor = "transparent";
     }
@@ -437,7 +437,7 @@ const UserDetails = ({
               <span>Email:&nbsp;&nbsp;</span>
               <span>{leadDetails?.leadDetails?.student_email}</span>
             </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mt-2 flex flex-wrap">
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mt-2 flex flex-wrap items-center">
               <span>Courses:&nbsp;&nbsp;</span>
               <span className="text-xs uppercase">
                 {leadDetails?.leadDetails?.course_title}
@@ -582,8 +582,8 @@ const UserDetails = ({
             <div className="flex items-end mb-4">
               <div className="w-full">
                 {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
-                {leadDetails?.leadComments?.length
-                  ? leadDetails?.leadComments?.map((history) => (
+                {allComents?.length
+                  ? allComents?.map((history) => (
                       <div className="flex flex-col w-full border rounded-lg p-2 my-2 shadow">
                         <span className="text-base">{history?.comments}</span>
                         <span className="text-xs">
@@ -591,7 +591,7 @@ const UserDetails = ({
                         </span>
                       </div>
                     ))
-                  : "No comments yet."}
+                  : "No comments yet"}
               </div>
             </div>
           </div>
@@ -617,19 +617,16 @@ const UserDetails = ({
               }}
             />
           </div>
-          <form
-            onSubmit={(e) => handleUpdateComment(e)}
-            className="2xl:w-84 mt-5 "
-          >
+          <form onSubmit={handleUpdateComment} className="2xl:w-84 mt-5 ">
             {userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2 ||
             userDetails?.userInfo?.role_id === 6 ? (
               <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-                {leadDetails?.leadMultiComment?.length
-                  ? leadDetails?.leadMultiComment[
-                      leadDetails?.leadMultiComment.length - 1
-                    ].comments
-                  : "No comments yet."}
+                {leadDetails?.leadComments?.length
+                  ? leadDetails?.leadComments[
+                      leadDetails?.leadComments.length - 1
+                    ]?.comments
+                  : "No comments yet"}
               </h1>
             ) : (
               <>
@@ -637,6 +634,7 @@ const UserDetails = ({
                   id="lead_comment"
                   className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
                   onChange={(e) => handleCommentChange(e)}
+                  placeholder={"Write you comment"}
                   value={comment}
                 />
                 <input

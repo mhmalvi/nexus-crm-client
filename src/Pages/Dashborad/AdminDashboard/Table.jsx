@@ -112,7 +112,10 @@ const Table = ({
             </div>
           </div>
 
-          {(userDetails?.role_id !== 5 || userDetails?.role_id !== 6) &&
+          {(userDetails?.role_id === 1 ||
+            userDetails?.role_id === 2 ||
+            userDetails?.role_id === 3 ||
+            userDetails?.role_id === 4) &&
             title === "Lead List" && (
               <div className="mr-12">
                 <button

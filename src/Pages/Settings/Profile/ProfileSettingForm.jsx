@@ -47,6 +47,7 @@ function ProfileSettingForm() {
         }, 3000);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const userData = (e) => {
