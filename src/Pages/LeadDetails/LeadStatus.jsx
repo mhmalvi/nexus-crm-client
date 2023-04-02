@@ -11,16 +11,16 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleRegistration } from "../../Components/services/auth";
+// import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
   handleAddCall,
   handleCallResponseUpdate,
   handleLeadCertificatetDetailsUpdate,
   handleLeadStatusUpdate,
-  handleLeadStudentDetailsUpdate,
+  // handleLeadStudentDetailsUpdate,
 } from "../../Components/services/leads";
-import { handleConfirmRegistration } from "../../Components/services/mail";
+// import { handleConfirmRegistration } from "../../Components/services/mail";
 import {
   handleFetchFile,
   handleUploadFile,
@@ -29,15 +29,19 @@ import Icons from "../../Components/Shared/Icons";
 import { setLoader } from "../../features/user/userSlice";
 
 // ----Default Values----
-const LeadStatus = ({
-  leadStatus,
-  leadDetails,
-  syncDetails,
-  setSyncDetails,
-  statusDateTime,
-  paymentHistory,
-  totalPaid,
-}) => {
+const LeadStatus = (props) => {
+  const {
+    leadStatus,
+    leadDetails,
+    syncDetails,
+    setSyncDetails,
+    statusDateTime,
+    paymentHistory,
+    totalPaid,
+  } = props;
+
+  console.log("Lead Details", leadDetails);
+
   const dispatch = useDispatch();
   const statusData = [
     "Suspended",
@@ -128,21 +132,27 @@ const LeadStatus = ({
   };
 
   useEffect(() => {
+    console.log(
+      "Object.values(leadStatus).reduce((a, item) => a + item, 0)",
+      Object.values(leadStatus).reduce((a, item) => a + item, 0)
+    );
     setActiveStatusTitle(
       leadDetails?.leadDetails?.lead_details_status === 0
         ? "Suspended"
-        : statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0)]
+        : // : statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0)]
+          statusData[leadDetails?.leadDetails?.lead_details_status]
     );
     setLeadStatusColor(
       leadDetails?.leadDetails?.lead_details_status === 0
         ? "color-black"
-        : statusColor.find(
-            (i) =>
-              i.lable ===
-              statusData[
-                Object.values(leadStatus).reduce((a, item) => a + item, 0)
-              ]
-          ).class
+        : statusColor[leadDetails?.leadDetails?.lead_details_status]?.class
+      //  statusColor?.find(
+      //     (i) =>
+      //       i.lable ===
+      //       statusData[
+      //         Object.values(leadStatus).reduce((a, item) => a + item, 0)
+      //       ]
+      //   ).class
     );
     if (leadDetails?.leadDetails?.document_certificate_id) {
       (async () => {
@@ -192,9 +202,9 @@ const LeadStatus = ({
     }
   };
 
-  const handleTooltipMessage = (e) => {
-    setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
-  };
+  // const handleTooltipMessage = (e) => {
+  //   setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
+  // };
 
   const onCallResponseChange = async (e) => {
     dispatch(setLoader(true));
@@ -211,11 +221,11 @@ const LeadStatus = ({
   };
 
   const menu = (
-    <Tooltip placement="top" title={tooltipMessage}>
+    <Tooltip placement="top" title={"Selecent the stage"}>
       <Menu
         className="text-center text-base font-semibold"
         onClick={onStatusChange}
-        onMouseOver={handleTooltipMessage}
+        // onMouseOver={handleTooltipMessage}
         items={[
           {
             label: "New Lead",
@@ -290,8 +300,8 @@ const LeadStatus = ({
     if (amount.length) {
       const response = await handleAddAmount(
         leadDetails?.leadDetails?.lead_id,
-        // parseFloat(amount)
-        parseFloat(amount) + parseFloat(amount * 0.035)
+        amount
+        // parseFloat(amount) + parseFloat(amount * 0.035)
       );
 
       console.log("Amount response", response);
@@ -305,73 +315,73 @@ const LeadStatus = ({
     }
   };
 
-  const handleRegistrationReq = async () => {
-    // For Registering Students
-    const registrationFormData = new FormData();
+  // const handleRegistrationReq = async () => {
+  //   // For Registering Students
+  //   const registrationFormData = new FormData();
 
-    registrationFormData.append(
-      "email",
-      leadDetails?.leadDetails?.student_email
-    );
-    registrationFormData.append("role_id", 6);
-    registrationFormData.append(
-      "contact_number",
-      leadDetails?.leadDetails?.phone_number
-    );
-    registrationFormData.append(
-      "full_name",
-      leadDetails?.leadDetails?.full_name
-    );
-    registrationFormData.append(
-      "qualification",
-      leadDetails?.leadDetails?.form_data[6]?.values[0].replace("_", " ")
-    );
-    registrationFormData.append(
-      "work_experiences",
-      leadDetails?.leadDetails?.form_data[8]?.values[0].replace("_", " ")
-    );
-    registrationFormData.append(
-      "location",
-      leadDetails?.leadDetails?.work_location
-    );
+  //   registrationFormData.append(
+  //     "email",
+  //     leadDetails?.leadDetails?.student_email
+  //   );
+  //   registrationFormData.append("role_id", 6);
+  //   registrationFormData.append(
+  //     "contact_number",
+  //     leadDetails?.leadDetails?.phone_number
+  //   );
+  //   registrationFormData.append(
+  //     "full_name",
+  //     leadDetails?.leadDetails?.full_name
+  //   );
+  //   registrationFormData.append(
+  //     "qualification",
+  //     leadDetails?.leadDetails?.form_data[6]?.values[0].replace("_", " ")
+  //   );
+  //   registrationFormData.append(
+  //     "work_experiences",
+  //     leadDetails?.leadDetails?.form_data[8]?.values[0].replace("_", " ")
+  //   );
+  //   registrationFormData.append(
+  //     "location",
+  //     leadDetails?.leadDetails?.work_location
+  //   );
 
-    const registrationResponse = await handleRegistration(registrationFormData);
+  //   const registrationResponse = await handleRegistration(registrationFormData);
 
-    console.log("registrationResponse::::", registrationResponse);
+  //   console.log("registrationResponse::::", registrationResponse);
 
-    if (registrationResponse?.status === true) {
-      // const lead
-      // leadDetails?.leadDetails?.student_id=
+  //   if (registrationResponse?.status === true) {
+  //     // const lead
+  //     // leadDetails?.leadDetails?.student_id=
 
-      const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
-        leadDetails?.leadDetails.lead_id,
-        registrationResponse?.data?.user_id
-      );
-      console.log("leadUpdateResponse", leadUpdateResponse);
+  //     const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
+  //       leadDetails?.leadDetails.lead_id,
+  //       registrationResponse?.data?.user_id
+  //     );
+  //     console.log("leadUpdateResponse", leadUpdateResponse);
 
-      if (leadUpdateResponse?.status) {
-        message.success("User Registered Successfully");
+  //     if (leadUpdateResponse?.status) {
+  //       message.success("User Registered Successfully");
 
-        const confirmRegistrationResponse = await handleConfirmRegistration(
-          registrationResponse?.data?.user_name,
-          registrationResponse?.data?.email,
-          registrationResponse?.data?.password
-        );
+  //       const confirmRegistrationResponse = await handleConfirmRegistration(
+  //         registrationResponse?.data?.user_name,
+  //         registrationResponse?.data?.email,
+  //         registrationResponse?.data?.password
+  //       );
 
-        if (confirmRegistrationResponse === "success") {
-          message.success("An email sent with credentials");
-        }
+  //       if (confirmRegistrationResponse === "success") {
+  //         message.success("An email sent with credentials");
+  //       }
 
-        setSyncDetails(!syncDetails);
-      }
-    } else {
-      message.warning("Email Already Exist");
-    }
+  //       setSyncDetails(!syncDetails);
+  //     }
+  //   } else {
+  //     message.warning("Email Already Exist");
+  //   }
 
-    for (const value of registrationFormData.values()) {
-      console.log(value);
-    }
-  };
+  //   for (const value of registrationFormData.values()) {
+  //     console.log(value);
+  //   }
+  // };
 
   const handleCancel = () => {
     setIsCallDetailsOpen(false);
@@ -640,8 +650,9 @@ const LeadStatus = ({
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
                       <td>
-                        {new Date(history.created_at).toString().slice(4, 21)}{" "}
-                        {new Date(history.created_at).toString().slice(25, 31)}
+                        {new Date(history.created_at)?.toLocaleString()}
+                        {/* {new Date(history.created_at).toString().slice(4, 21)}{" "}
+                        {new Date(history.created_at).toString().slice(25, 31)} */}
                       </td>
                       <td className="w-32">${history.amount}</td>
                     </tr>
@@ -762,8 +773,8 @@ const LeadStatus = ({
             </div>
           </div>
         )}
-        {(activeStatusTitle === "Called" ||
-          activeStatusTitle === "Skilled") &&
+
+        {/* {(activeStatusTitle === "Called" || activeStatusTitle === "Skilled") &&
         (userDetails?.userInfo?.role_id === 3 ||
           userDetails?.userInfo?.role_id === 4 ||
           userDetails?.userInfo?.role_id === 5) ? (
@@ -794,7 +805,8 @@ const LeadStatus = ({
               </div>
             )}
           </>
-        ) : null}
+        ) : null} */}
+
         {(activeStatusTitle !== "New Lead" ||
           activeStatusTitle !== "Skilled") &&
           (userDetails?.userInfo?.role_id === 6 ? (
@@ -944,31 +956,36 @@ const LeadStatus = ({
                   </span>
                 </Tooltip>
               </h6>
-              <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                No. of Calls: {leadDetails?.leadCallHistory?.length}
-              </h6>
-              {activeStatusTitle === "Called" ? (
-                <div className="my-2">
-                  <Radio.Group
-                    onChange={onCallResponseChange}
-                    value={callResponse}
-                    className="flex items-center"
-                  >
-                    <span>
-                      <Radio value={1}>Responded</Radio>
-                    </span>
-                    <span>
-                      <Radio value={0}>Not Responded</Radio>
-                    </span>
-                  </Radio.Group>
-                  <div className="text-xs text-red-500 m-2 rounded-md">
-                    Note: Selecting either option triggers sending email to the
-                    student instantly. Choose option carefully.{" "}
+              <div>
+                <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
+                  No. of Calls: {leadDetails?.leadCallHistory?.length}
+                </h6>
+                {activeStatusTitle === "Called" &&
+                (userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ||
+                  userDetails?.userInfo?.role_id === 5) ? (
+                  <div className="my-2">
+                    <Radio.Group
+                      onChange={onCallResponseChange}
+                      value={callResponse}
+                      className="flex items-center"
+                    >
+                      <span>
+                        <Radio value={1}>Responded</Radio>
+                      </span>
+                      <span>
+                        <Radio value={0}>Not Responded</Radio>
+                      </span>
+                    </Radio.Group>
+                    <div className="text-xs text-red-500 m-2 rounded-md">
+                      Note: Selecting either option triggers sending email to
+                      the student instantly. Choose option carefully.{" "}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div>&nbsp;</div>
-              )}
+                ) : (
+                  <div>&nbsp;</div>
+                )}
+              </div>
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
