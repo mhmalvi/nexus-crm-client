@@ -91,7 +91,7 @@ const Courses = () => {
       <div className="w-8/12 pb-10 pt-6 flex justify-center items-center">
         <div>
           <div className="flex items-center">
-            <h1 className="px-2 bg-gray-100 py-1 mb-0 border">Course Code: </h1>
+            <h1 className="px-2 bg-gray-100 py-1 mb-0 border">Course Name: </h1>
             <AutoComplete
               style={{
                 width: 300,

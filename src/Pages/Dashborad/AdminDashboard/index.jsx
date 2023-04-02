@@ -433,13 +433,13 @@ const AdminDashboard = () => {
     <div>
       {/* Add Lead Modal */}
       <Modal
-        title="Title"
+        title="Add Lead"
         visible={isAddLeadFormOpen}
         onOk={handleAddLeadReq}
         onCancel={() => setIsAddLeadFormOpen(false)}
         footer={false}
       >
-        <AddLeadForm />
+        <AddLeadForm setIsAddLeadFormOpen={setIsAddLeadFormOpen} />
       </Modal>
 
       <Calendar
