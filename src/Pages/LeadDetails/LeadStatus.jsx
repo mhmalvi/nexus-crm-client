@@ -221,7 +221,7 @@ const LeadStatus = (props) => {
   };
 
   const menu = (
-    <Tooltip placement="top" title={"Selecent the stage"}>
+    <Tooltip placement="top" title={"Select the stage"}>
       <Menu
         className="text-center text-base font-semibold"
         onClick={onStatusChange}

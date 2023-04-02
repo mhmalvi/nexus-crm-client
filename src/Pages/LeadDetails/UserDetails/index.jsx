@@ -76,7 +76,7 @@ const UserDetails = ({
     }
 
     setRating(leadDetails?.leadDetails?.star_review);
-    
+
     if (leadDetails?.leadMultiComment?.length) {
       setAllComents(leadDetails?.leadCallHistory);
     }
@@ -184,6 +184,40 @@ const UserDetails = ({
             <EmployeeHistory
               employeeList={leadDetails?.leadSalesEmployeeHistory}
             />
+          </Modal>
+          
+          {/* Application Form Modal */}
+          <Modal
+            visible={toggleApplication}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <div>
+              <h1 className="font-poppins text-xl font-extrabold">
+                Answer of all Questions
+              </h1>
+            </div>
+            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
+            <div className="py-6">
+              {/* {JSON.parse(leadDetails?.leadDetails?.form_data).map((question) => ( */}
+              <div className="my-2">
+                {leadDetails?.leadDetails?.form_data?.map((question, i) => (
+                  <div key={i} className="ml-2 font-poppins">
+                    <li className="text-base list-disc font-semibold">
+                      {/* for removing underscores and capitalize the first letter of the Question */}
+                      {(question?.name).charAt(0).toUpperCase() +
+                        (question?.name).replaceAll("_", " ").slice(1)}
+                    </li>
+                    <p className="ml-6 mt-2 font-normal">
+                      -{" "}
+                      {(question?.values[0]).charAt(0).toUpperCase() +
+                        (question?.values[0]).replaceAll("_", " ").slice(1)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              {/* // ))} */}
+            </div>
           </Modal>
 
           <div className="relative flex items-center">
@@ -324,39 +358,7 @@ const UserDetails = ({
             setSyncDetails={setSyncDetails}
           />
 
-          {/* Application Form Modal */}
-          <Modal
-            visible={toggleApplication}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <div>
-              <h1 className="font-poppins text-xl font-extrabold">
-                Answer of all Questions
-              </h1>
-            </div>
-            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
-            <div className="py-6">
-              {/* {JSON.parse(leadDetails?.leadDetails?.form_data).map((question) => ( */}
-              <div className="my-2">
-                {leadDetails?.leadDetails?.form_data?.map((question, i) => (
-                  <div key={i} className="ml-2 font-poppins">
-                    <li className="text-base list-disc font-semibold">
-                      {/* for removing underscores and capitalize the first letter of the Question */}
-                      {(question?.name).charAt(0).toUpperCase() +
-                        (question?.name).replaceAll("_", " ").slice(1)}
-                    </li>
-                    <p className="ml-6 mt-2 font-normal">
-                      -{" "}
-                      {(question?.values[0]).charAt(0).toUpperCase() +
-                        (question?.values[0]).replaceAll("_", " ").slice(1)}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              {/* // ))} */}
-            </div>
-          </Modal>
+          
         </div>
 
         <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
@@ -408,7 +410,7 @@ const UserDetails = ({
           </h4>
           <hr />
         </div>
-        <div className="flex pt-4 pb-2">
+        <div className="relative flex pt-4 pb-2">
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
             userDetails?.userInfo?.role_id === 5) && (
@@ -428,7 +430,7 @@ const UserDetails = ({
               </div>
             </div>
           )}
-          <div className="w-2/3 ml-5">
+          <div className=" w-2/3 ml-5">
             <div className="font-normal text-sm 2xl:text-base leading-6 flex flex-wrap font-poppins">
               <span>Contact:&nbsp;&nbsp;</span>
               <span> {leadDetails?.leadDetails?.phone_number}</span>
@@ -449,6 +451,10 @@ const UserDetails = ({
                 {leadDetails?.leadDetails?.work_location}
               </span>
             </div>
+          </div>
+
+          <div className="absolute top-2 right-6 hover:text-brand-color cursor-pointer">
+            <Icons.Edit />
           </div>
         </div>
 

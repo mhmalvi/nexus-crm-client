@@ -1,5 +1,19 @@
 import axios from "axios";
 
+export const handleAddLead = async (leadData) => {
+  // console.log(clientId);
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/create-lead`,
+      leadData
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
 export const handleFetchLeads = async (details) => {
   // console.log(clientId);
   try {
