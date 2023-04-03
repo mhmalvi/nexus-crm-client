@@ -1,4 +1,4 @@
-import { Table, Tooltip } from "antd";
+import { Table, Tooltip, Upload } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -27,6 +27,7 @@ const UpdatedTable = ({
   const dispatch = useDispatch();
 
   const [list, setList] = useState([]);
+  // const [leadFile, setLeadFile] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -59,6 +60,10 @@ const UpdatedTable = ({
     }
     console.log(data);
   }, [data, searchInput, activeFilter, userDetails?.role_id]);
+
+  const handleLeadFileUploadReq = (e) => {
+    console.log("Lead File", e);
+  };
 
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
@@ -97,6 +102,27 @@ const UpdatedTable = ({
           </div>
 
           <div className="flex items-center">
+            {/* <div className="mr-4">
+              <Upload
+                onChange={(e) => handleLeadFileUploadReq(e)}
+                // fileList={leadFile}
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              >
+                <div
+                  htmlFor="upload_lead_file"
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                >
+                  Upload File
+                </div>
+              </Upload>
+
+              <Tooltip align={"top"} title="Add lead by uploading file">
+                <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                  ?
+                </span>
+              </Tooltip>
+            </div> */}
+
             <div className="mr-4">
               <button
                 id="add_leads"

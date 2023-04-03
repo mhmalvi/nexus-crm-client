@@ -95,7 +95,7 @@ const EditDetails = ({
 
   return (
     <div>
-      <h1>EditDetails</h1>
+      <h1 className="text-lg font-semibold mb-8 mt-4">Edit Contact Details</h1>
 
       <div>
         <div className="flex items-center gap-6">
@@ -196,7 +196,17 @@ const EditDetails = ({
         <div className="flex items-center justify-end py-4">
           <div
             className="px-4 py-1.5 mr-4 bg-red-600 text-white text-sm font-normal font-poppins rounded-md cursor-pointer shadow"
-            //   onClick={() => setIsAddLeadFormOpen(false)}
+            onClick={() => {
+              // setContactDetails({
+              //   contact: "",
+              //   email: "",
+              //   campaign_id: "",
+              //   course_id: "",
+              //   course_name: "",
+              //   work_location: "",
+              // });
+              setToggleEditDetials(false);
+            }}
           >
             Cancle
           </div>

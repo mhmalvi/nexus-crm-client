@@ -163,6 +163,42 @@ const CampaignAnalytics = ({ activeCompany }) => {
             : 0,
         fill: "#a4de6c",
       },
+      {
+        city: "Capital Territory",
+        percentage:
+          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+            ?.length > 0
+            ? (
+                leads
+                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                  ?.filter(
+                    (filteredCampaign) =>
+                      filteredCampaign?.work_location === "act"
+                  )?.length /
+                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                  ?.length
+              ).toFixed(2) * 100
+            : 0,
+        fill: "#a4de6c",
+      },
+      {
+        city: "Northern Territory",
+        percentage:
+          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+            ?.length > 0
+            ? (
+                leads
+                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                  ?.filter(
+                    (filteredCampaign) =>
+                      filteredCampaign?.work_location === "nt"
+                  )?.length /
+                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                  ?.length
+              ).toFixed(2) * 100
+            : 0,
+        fill: "#a4de6c",
+      },
     ]);
 
     setCampaignSummary([
