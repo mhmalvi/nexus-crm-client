@@ -20,6 +20,7 @@ import {
 import Icons from "../../../Components/Shared/Icons";
 import { Storage } from "../../../Components/Shared/utils/store";
 import CheckList from "./CheckList";
+import EditDetails from "./EditDetails";
 import EmployeeHistory from "./EmployeeHistory";
 import SalesEmployees from "./SalesEmployees";
 
@@ -41,6 +42,7 @@ const UserDetails = ({
   const [prevSalesEmployeesName, setPrevSalesEmployeesName] = useState([]);
   const [toggleChcekList, setToggleChcekList] = useState(false);
   const [toggleApplication, setToggleApplication] = useState(false);
+  const [toggleEditDetials, setToggleEditDetials] = useState(false);
   const [isCommentHistoryOpen, setIsCommentHistoryOpen] = useState(false);
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
@@ -167,6 +169,7 @@ const UserDetails = ({
     }
     console.log("reviewRemarksResponse", reviewRemarksResponse);
   };
+
   return (
     <div className="mx-6">
       <div>
@@ -185,7 +188,21 @@ const UserDetails = ({
               employeeList={leadDetails?.leadSalesEmployeeHistory}
             />
           </Modal>
-          
+
+          {/* Edit Lead Contact Details Section */}
+          <Modal
+            visible={toggleEditDetials}
+            onCancel={() => setToggleEditDetials(false)}
+            footer={false}
+          >
+            <EditDetails
+              leadDetails={leadDetails}
+              setToggleEditDetials={setToggleEditDetials}
+              setSyncDetails={setSyncDetails}
+              syncDetails={syncDetails}
+            />
+          </Modal>
+
           {/* Application Form Modal */}
           <Modal
             visible={toggleApplication}
@@ -357,8 +374,6 @@ const UserDetails = ({
             syncDetails={syncDetails}
             setSyncDetails={setSyncDetails}
           />
-
-          
         </div>
 
         <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
@@ -453,7 +468,10 @@ const UserDetails = ({
             </div>
           </div>
 
-          <div className="absolute top-2 right-6 hover:text-brand-color cursor-pointer">
+          <div
+            className="absolute top-2 right-6 hover:text-brand-color cursor-pointer"
+            onClick={() => setToggleEditDetials(true)}
+          >
             <Icons.Edit />
           </div>
         </div>
