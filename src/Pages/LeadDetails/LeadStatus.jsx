@@ -11,6 +11,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { handleLeadStatusChange } from "../../Components/services/gmail";
 // import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
@@ -68,7 +69,7 @@ const LeadStatus = (props) => {
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
   const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
   const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
-  const [tooltipMessage, setTooltipMessage] = useState("");
+  // const [tooltipMessage, setTooltipMessage] = useState("");
   const [certificate, setCertificate] = useState("");
   const [callResponse, setCallResponse] = useState();
 
@@ -110,32 +111,28 @@ const LeadStatus = (props) => {
     },
   ];
 
-  const tooltipMessages = {
-    "New Lead": {
-      message: "It's a new arrival",
-    },
-    Skilled: {
-      message: "If the student is skilled enough",
-    },
-    Called: {
-      message: "If you have communicated with the student",
-    },
-    Paid: {
-      message: "If the student have paid any fee",
-    },
-    Verified: {
-      message: "If the student's documents are verified",
-    },
-    Completed: {
-      message: "If the student has completed the course and certificate issued",
-    },
-  };
+  // const tooltipMessages = {
+  //   "New Lead": {
+  //     message: "It's a new arrival",
+  //   },
+  //   Skilled: {
+  //     message: "If the student is skilled enough",
+  //   },
+  //   Called: {
+  //     message: "If you have communicated with the student",
+  //   },
+  //   Paid: {
+  //     message: "If the student have paid any fee",
+  //   },
+  //   Verified: {
+  //     message: "If the student's documents are verified",
+  //   },
+  //   Completed: {
+  //     message: "If the student has completed the course and certificate issued",
+  //   },
+  // };
 
   useEffect(() => {
-    console.log(
-      "Object.values(leadStatus).reduce((a, item) => a + item, 0)",
-      Object.values(leadStatus).reduce((a, item) => a + item, 0)
-    );
     setActiveStatusTitle(
       leadDetails?.leadDetails?.lead_details_status === 0
         ? "Suspended"
@@ -199,6 +196,21 @@ const LeadStatus = (props) => {
     if (statusUpdateResponse?.status) {
       message.success("Status Updated Successfully");
       setSyncDetails(!syncDetails);
+
+      const sendMailResponse = await handleLeadStatusChange({
+        // to: leadDetails?.leadDetails?.student_email,
+        to: "megatanjib@gmail.com",
+        lead_id: leadDetails?.leadDetails?.lead_id,
+        name: leadDetails?.leadDetails?.full_name,
+        student_id: leadDetails?.leadDetails?.student_id,
+        lead_status: parseInt(key) + 1,
+      });
+
+      if (sendMailResponse === "success") {
+        message.success("An email has been sent");
+      } else {
+        message.success("Something went wrong");
+      }
     }
   };
 

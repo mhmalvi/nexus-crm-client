@@ -168,7 +168,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               <div>
                 <h1 className="text-lg font-semibold ">
                   ${" "}
-                  {totalRevenue > 0
+                  {(totalRevenue > 0 && campaigns?.length>0)
                     ? (totalRevenue / campaigns?.length).toFixed(2)
                     : 0}
                 </h1>

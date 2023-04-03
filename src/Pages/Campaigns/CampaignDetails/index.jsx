@@ -218,6 +218,9 @@ const CampaignDetails = () => {
               <h1 className="text-xl leading-8 font-poppins font-semibold">
                 {campaignDetails?.campaign_name}
               </h1>
+              <h1 className="text-base leading-8 font-poppins font-medium">
+                Campaign ID: {campaignDetails?.campaign_id}
+              </h1>
               <div className="mt-8">
                 <h1 className="text-base leading-8 font-poppins font-medium">
                   Started Time: {campaignDetails?.start_time}
