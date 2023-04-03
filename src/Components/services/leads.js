@@ -13,13 +13,26 @@ export const handleAddLead = async (leadData) => {
   }
 };
 
-
 export const handleFetchLeads = async (details) => {
   // console.log(clientId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
       details
+      // { client_id: clientId }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
+  // console.log(clientId);
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead-update/${leadId}`,
+      updatedDetails
       // { client_id: clientId }
     );
     return result.data;

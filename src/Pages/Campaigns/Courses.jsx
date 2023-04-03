@@ -1,15 +1,16 @@
-import { AutoComplete, message } from "antd";
+import { AutoComplete } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   handleCreateChecklist,
   handleDeleteChecklist,
   handleFetchCourseCheckList,
-  handleFetchCourses,
+  handleFetchCourses
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 
 const Courses = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const options = [];
 
   const [courseId, setCourseId] = useState();

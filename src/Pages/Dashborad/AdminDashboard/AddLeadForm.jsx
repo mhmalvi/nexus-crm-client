@@ -64,11 +64,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         });
         setCampaignList(campaignResponse?.data);
       }
-
-      // if (response?.data) {
-      //   dispatch(addCampaigns(response?.data));
-      //   setCampaignList(response?.data);
-      // }
     })();
 
     setCourses(courseOption);
