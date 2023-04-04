@@ -22,3 +22,28 @@ export const handleConfirmRegistration = async (full_name, email, password) => {
     return error.response;
   }
 };
+
+export const handleLeadStatusChange = async (mailDetails) => {
+  console.log("mailDetails", mailDetails);
+  try {
+    const result = await axios.post(
+      `${process.env.REACT_APP_EMAIL_URL}/api/send-mail`,
+      mailDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCallResponseMail = async (mailDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_EMAIL_URL}/api/send-responded-mail`,
+      mailDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

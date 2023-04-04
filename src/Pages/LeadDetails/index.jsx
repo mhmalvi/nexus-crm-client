@@ -113,11 +113,11 @@ const LeadDetails = () => {
   }, [id]);
 
   const confirm = async (e) => {
-    console.log(
-      "STATUSSS",
-      leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
-        ?.lead_status
-    );
+    // console.log(
+    //   "STATUSSS",
+    //   leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
+    //     ?.lead_status
+    // );
     const statusUpdateResponse = await handleLeadStatusUpdate(
       leadDetails?.leadDetails?.lead_id,
       0,

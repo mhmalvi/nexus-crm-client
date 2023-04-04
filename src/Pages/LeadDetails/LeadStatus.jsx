@@ -11,7 +11,10 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleLeadStatusChange } from "../../Components/services/gmail";
+import {
+  handleCallResponseMail,
+  handleLeadStatusChange,
+} from "../../Components/services/mail";
 // import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
@@ -40,8 +43,6 @@ const LeadStatus = (props) => {
     paymentHistory,
     totalPaid,
   } = props;
-
-  console.log("Lead Details", leadDetails);
 
   const dispatch = useDispatch();
   const statusData = [
@@ -165,12 +166,6 @@ const LeadStatus = (props) => {
       })();
     }
     if (leadDetails?.leadDetails?.lead_details_status >= 3) {
-      console.log(
-        leadDetails?.leadAllStatus?.filter(
-          (status) => status?.lead_status === 3
-        )?.[0]?.response
-      );
-
       setCallResponse(
         leadDetails?.leadAllStatus?.filter(
           (status) => status?.lead_status === 3
@@ -181,7 +176,7 @@ const LeadStatus = (props) => {
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
-    leadStatus[statusData[key]] = true;
+    // leadStatus[`${statusData[key]}`] = true;
     setActiveStatusTitle(statusData[key]);
     setLeadStatusColor(
       statusColor.find((i) => i.lable === statusData[key])?.class
@@ -192,24 +187,33 @@ const LeadStatus = (props) => {
       parseInt(key) + 1,
       userDetails?.userInfo?.user_id
     );
-    // console.log("statusUpdateResponse", statusUpdateResponse);
+
     if (statusUpdateResponse?.status) {
       message.success("Status Updated Successfully");
       setSyncDetails(!syncDetails);
 
-      const sendMailResponse = await handleLeadStatusChange({
-        // to: leadDetails?.leadDetails?.student_email,
-        to: "megatanjib@gmail.com",
-        lead_id: leadDetails?.leadDetails?.lead_id,
-        name: leadDetails?.leadDetails?.full_name,
-        student_id: leadDetails?.leadDetails?.student_id,
-        lead_status: parseInt(key) + 1,
-      });
-
-      if (sendMailResponse === "success") {
-        message.success("An email has been sent");
+      if (
+        leadDetails?.leadAllStatus?.filter(
+          (status) => status?.lead_status === parseInt(key) + 1
+        )?.length
+      ) {
+        console.log("Already Sent");
+        return;
       } else {
-        message.success("Something went wrong");
+        const sendMailResponse = await handleLeadStatusChange({
+          // to: leadDetails?.leadDetails?.student_email,
+          to: "megatanjib@gmail.com",
+          lead_id: leadDetails?.leadDetails?.lead_id,
+          name: leadDetails?.leadDetails?.full_name,
+          student_id: leadDetails?.leadDetails?.student_id,
+          lead_status: parseInt(key) + 1,
+        });
+
+        if (sendMailResponse === "success") {
+          message.success("An email has been sent");
+        } else {
+          message.warn("Something went wrong");
+        }
       }
     }
   };
@@ -229,6 +233,20 @@ const LeadStatus = (props) => {
     if (response.status === 200) {
       dispatch(setLoader(false));
       setSyncDetails(!syncDetails);
+
+      const sendResponseMail = await handleCallResponseMail({
+        to: leadDetails?.leadDetails?.student_email,
+        lead_id: leadDetails?.leadDetails?.lead_id,
+        name: leadDetails?.leadDetails?.full_name,
+        student_id: leadDetails?.leadDetails?.student_id,
+        response: e.target.value,
+      });
+
+      if (sendResponseMail === "success") {
+        message.success("An email has been sent");
+      } else {
+        message.warn("Someting went wrong");
+      }
     }
   };
 
@@ -316,7 +334,6 @@ const LeadStatus = (props) => {
         // parseFloat(amount) + parseFloat(amount * 0.035)
       );
 
-      console.log("Amount response", response);
       if (response?.status) {
         setAmount("");
         setSyncDetails(!syncDetails);
@@ -359,8 +376,6 @@ const LeadStatus = (props) => {
 
   //   const registrationResponse = await handleRegistration(registrationFormData);
 
-  //   console.log("registrationResponse::::", registrationResponse);
-
   //   if (registrationResponse?.status === true) {
   //     // const lead
   //     // leadDetails?.leadDetails?.student_id=
@@ -369,7 +384,6 @@ const LeadStatus = (props) => {
   //       leadDetails?.leadDetails.lead_id,
   //       registrationResponse?.data?.user_id
   //     );
-  //     console.log("leadUpdateResponse", leadUpdateResponse);
 
   //     if (leadUpdateResponse?.status) {
   //       message.success("User Registered Successfully");
@@ -391,7 +405,6 @@ const LeadStatus = (props) => {
   //   }
 
   //   for (const value of registrationFormData.values()) {
-  //     console.log(value);
   //   }
   // };
 
@@ -408,8 +421,6 @@ const LeadStatus = (props) => {
 
     const uploadFile = await handleUploadFile(fileFormData);
 
-    console.log("File", uploadFile);
-
     if (uploadFile?.status === 200) {
       const certificateUploadResponse =
         await handleLeadCertificatetDetailsUpdate(
@@ -422,8 +433,6 @@ const LeadStatus = (props) => {
       }
     }
   };
-
-  console.log("paymentHistory", paymentHistory);
 
   return (
     <div className="min-h-full pr-6 border-r">

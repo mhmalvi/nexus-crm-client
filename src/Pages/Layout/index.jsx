@@ -29,6 +29,7 @@ import UserProfile from "../Settings/Profile/UserProfile";
 import Ham from "../../assets/Images/hamburger.png";
 import Cross from "../../assets/Images/cross.png";
 import GmailModule from "../Gmail";
+import Calender from "../Calender";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -68,27 +69,27 @@ const Layout = () => {
     }
   }, [navigate]);
 
-  const openNotification = (placement, details) => {
-    notification.warn({
-      message: "Reminder",
-      duration: 0,
-      description: (
-        <div>
-          <h4 className="text-sm font-normal">
-            {details?.details} on Lead id {details?.lead_id}
-          </h4>
-          <a
-            className="text-brand-color font-medium"
-            href={`/lead/${details?.lead_id}`}
-            target="__blank"
-          >
-            Click Here
-          </a>
-        </div>
-      ),
-      placement,
-    });
-  };
+  // const openNotification = (placement, details) => {
+  //   notification.warn({
+  //     message: "Reminder",
+  //     duration: 0,
+  //     description: (
+  //       <div>
+  //         <h4 className="text-sm font-normal">
+  //           {details?.details} on Lead id {details?.lead_id}
+  //         </h4>
+  //         <a
+  //           className="text-brand-color font-medium"
+  //           href={`/lead/${details?.lead_id}`}
+  //           target="__blank"
+  //         >
+  //           Click Here
+  //         </a>
+  //       </div>
+  //     ),
+  //     placement,
+  //   });
+  // };
 
   // const handleClose = () => {
   //   setReminderVisible(false);
@@ -231,6 +232,13 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "Campaigns",
     component: <Campaigns />,
+    count: 0,
+  },
+  {
+    key: "calender",
+    name: "calender",
+    label: "Calender",
+    component: <Calender />,
     count: 0,
   },
   {
