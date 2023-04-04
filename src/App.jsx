@@ -5,11 +5,15 @@ import "slick-carousel/slick/slick.css";
 import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
 import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
+import Calender from "./Pages/Calender";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashborad";
 import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
+import GmailModule from "./Pages/Gmail";
+import HomePage from "./Pages/LandingPage";
+import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
 import RenewPackage from "./Pages/Package/RenewPackage";
@@ -21,11 +25,7 @@ import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
-import HomePage from "./Pages/LandingPage";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
-import Layout from "./Pages/Layout";
-import GmailModule from "./Pages/Gmail";
-import { useEffect } from "react";
 
 function App() {
   // useEffect(() => {
@@ -48,6 +48,7 @@ function App() {
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
+          <Route path="calender" element={<Calender />} />
           <Route path="requisitions" element={<RequisitionTable />} />
           {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}
           <Route path="settings" element={<Settings />} />

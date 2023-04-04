@@ -20,21 +20,3 @@ export const handleFetchEmailDetails = async (id) => {
     return error.response;
   }
 };
-
-export const handleLeadStatusChange = async (mailDetails) => {
-  console.log("mailDetails", mailDetails);
-  try {
-    const result = await axios.post(
-      `${process.env.REACT_APP_EMAIL_URL}/api/send-mail`,
-      mailDetails,
-      {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000",
-        "Access-Control-Request-Headers": "Content-Type, Authorization",
-      }
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
