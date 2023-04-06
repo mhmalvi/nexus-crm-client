@@ -48,6 +48,7 @@ function App() {
           <Route path={"success/:id"} element={<Success />} />
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
+          <Route path="courses" element={<Campaigns />} />
           <Route path="calender" element={<Calender />} />
           <Route path="requisitions" element={<RequisitionTable />} />
           {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}

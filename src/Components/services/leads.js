@@ -27,6 +27,19 @@ export const handleFetchLeads = async (details) => {
   }
 };
 
+export const handleUploadLeadFile = async (fileDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/excel-read`,
+      fileDetails
+    );
+    console.log(result);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
   // console.log(clientId);
   try {
@@ -260,6 +273,30 @@ export const handleFetchCourses = async () => {
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/courses`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleClientwiseCourseDetails = async (clientId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/course-details-by-client`,
+      { client_id: clientId }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCoursewiseSalesAssign = async (requestData) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/assign-sales-to-lead`,
+      requestData
     );
     return result.data;
   } catch (error) {

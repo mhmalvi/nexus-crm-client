@@ -52,17 +52,16 @@ const UserDetails = ({
   useEffect(() => {
     console.log(leadDetails);
     if (leadDetails?.leadSalesEmployeeHistory?.length) {
-      const salesman = leadDetails?.leadSalesEmployeeHistory?.find(
-        (employee) =>
-          employee?.sales_user_id === leadDetails?.leadDetails?.sales_user_id
-      );
-      // const previousSalesman = leadDetails?.leadSalesEmployeeHistory?.filter(
-      //   (employee) =>
-      //     employee?.sales_user_id !== leadDetails?.leadDetails?.sales_user_id
-      // );
+      if (leadDetails?.leadDetails?.sales_user_id) {
+        const salesman = leadDetails?.leadSalesEmployeeHistory?.find(
+          (employee) =>
+            employee?.sales_user_id === leadDetails?.leadDetails?.sales_user_id
+        );
+        setSalesEmployeeName(salesman?.sales_user_name);
+        setCloseSealsman(true);
+      }
 
       const previousSalesmans = [];
-
       leadDetails?.leadSalesEmployeeHistory?.forEach((employee) => {
         if (
           employee?.sales_user_id !== leadDetails?.leadDetails?.sales_user_id
@@ -72,9 +71,6 @@ const UserDetails = ({
       });
 
       setPrevSalesEmployeesName(previousSalesmans);
-      // setSalesEmployeeName(salesman?.sales_user_id);
-      setCloseSealsman(true);
-      setSalesEmployeeName(salesman?.sales_user_name);
     }
 
     setRating(leadDetails?.leadDetails?.star_review);
@@ -89,6 +85,7 @@ const UserDetails = ({
     );
   }, [leadDetails]);
 
+
   const handleCancel = () => {
     setToggleChcekList(false);
     setToggleApplication(false);
@@ -101,8 +98,6 @@ const UserDetails = ({
       newRating,
       userDetails?.userInfo?.user_id
     );
-
-    console.log("reviewResponse", reviewResponse);
 
     if (reviewResponse?.status === true) {
       message.success("Rating Added Successfully");

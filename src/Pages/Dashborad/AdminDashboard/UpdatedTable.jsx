@@ -1,4 +1,4 @@
-import { Table, Tooltip, Upload } from "antd";
+import { Table, Tooltip, Upload, message } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
+import { handleUploadLeadFile } from "../../../Components/services/leads";
 
 const UpdatedTable = ({
   table_title,
@@ -27,7 +28,7 @@ const UpdatedTable = ({
   const dispatch = useDispatch();
 
   const [list, setList] = useState([]);
-  // const [leadFile, setLeadFile] = useState([]);
+  const [leadFile, setLeadFile] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -61,8 +62,21 @@ const UpdatedTable = ({
     console.log(data);
   }, [data, searchInput, activeFilter, userDetails?.role_id]);
 
-  const handleLeadFileUploadReq = (e) => {
-    console.log("Lead File", e);
+  const handleLeadFileUploadReq = async (e) => {
+    const fileData = new FormData();
+
+    fileData.append("file", e?.file?.originFileObj);
+    fileData.append("client_id", userDetails?.client_id);
+
+    const leadFileUploadResp = await handleUploadLeadFile(fileData);
+
+    if (leadFileUploadResp?.status === 200) {
+      message.success("Lead uploaded successfully");
+    } else if (leadFileUploadResp?.status === 403) {
+      message.warn("Data already exists");
+    } else {
+      message.warn("Someting went wrong. Please try again");
+    }
   };
 
   return (
@@ -102,10 +116,10 @@ const UpdatedTable = ({
           </div>
 
           <div className="flex items-center">
-            {/* <div className="mr-4">
+            <div className="mr-4">
               <Upload
                 onChange={(e) => handleLeadFileUploadReq(e)}
-                // fileList={leadFile}
+                fileList={leadFile}
                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               >
                 <div
@@ -121,7 +135,7 @@ const UpdatedTable = ({
                   ?
                 </span>
               </Tooltip>
-            </div> */}
+            </div>
 
             <div className="mr-4">
               <button

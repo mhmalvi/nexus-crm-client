@@ -239,6 +239,7 @@ const AdminDashboard = () => {
     ];
 
     setTableHeaders([...headers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyEmployeeList, userDetails?.userInfo]);
 
   const handleFilterLeadList = (filterId) => {
@@ -427,15 +428,12 @@ const AdminDashboard = () => {
       ),
   });
 
-  const handleAddLeadReq = () => {};
-
   return (
     <div>
       {/* Add Lead Modal */}
       <Modal
         title="Add Lead"
         visible={isAddLeadFormOpen}
-        onOk={handleAddLeadReq}
         onCancel={() => setIsAddLeadFormOpen(false)}
         footer={false}
       >

@@ -66,7 +66,9 @@ import { ReactComponent as PowerMkt } from "../../assets/Icons/power-marketing.s
 import { ReactComponent as InventoryMgt } from "../../assets/Icons/inventory-mgt.svg";
 import { ReactComponent as DownArrow } from "../../assets/Icons/down-arrow.svg";
 import { ReactComponent as Gmail } from "../../assets/Icons/mail.svg";
-import { ReactComponent as Calender } from "../../assets/Icons/calendar.svg";
+import { ReactComponent as Calender } from "../../assets/Icons/calender.svg";
+import { ReactComponent as Courses } from "../../assets/Icons/courses.svg";
+import { ReactComponent as Bookmark } from "../../assets/Icons/bookmark.svg";
 
 const Icons = {
   CompanyLogo,
@@ -138,7 +140,8 @@ const Icons = {
   DownArrow,
   Gmail,
   Calender,
-  // History
+  Courses,
+  Bookmark,
 };
 
 export default Icons;

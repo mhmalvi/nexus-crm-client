@@ -30,6 +30,7 @@ import Ham from "../../assets/Images/hamburger.png";
 import Cross from "../../assets/Images/cross.png";
 import GmailModule from "../Gmail";
 import Calender from "../Calender";
+import Courses from "../Courses";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -232,6 +233,14 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "Campaigns",
     component: <Campaigns />,
+    count: 0,
+  },
+  {
+    key: "courses",
+    name: "courses",
+    // icon: <Icons.Campaigns />,
+    label: "Courses",
+    component: <Courses />,
     count: 0,
   },
   {
