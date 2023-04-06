@@ -13,9 +13,9 @@ const UpdatedTable = ({
   table_title,
   tableHeaders,
   data,
-  companyEmployeeList,
   filterOptions,
-  ratings,
+  setSyncLeads,
+  syncLeads,
   activeFilter,
   setIsAddLeadFormOpen,
   searchInput,
@@ -72,6 +72,7 @@ const UpdatedTable = ({
 
     if (leadFileUploadResp?.status === 200) {
       message.success("Lead uploaded successfully");
+      setSyncLeads(!syncLeads);
     } else if (leadFileUploadResp?.status === 403) {
       message.warn("Data already exists");
     } else {

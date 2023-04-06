@@ -486,6 +486,8 @@ const AdminDashboard = () => {
         searchInput={searchInput}
         handleSyncLeadsReq={handleSyncLeadsReq}
         setIsAddLeadFormOpen={setIsAddLeadFormOpen}
+        setSyncLeads={setSyncLeads}
+        syncLeads={syncLeads}
       />
 
       {/* <Table
