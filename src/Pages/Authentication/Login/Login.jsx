@@ -1,4 +1,4 @@
-import { Input, message } from "antd";
+import { Input, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ import { addUserDetails, setLoader } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 
 const Login = () => {
-  document.title = "CRM -Log In";
+  document.title = "Login";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
@@ -139,7 +139,7 @@ const Login = () => {
           <Loading />
         </div>
       )}
-      <div className="container max-w-md border border-gray-200 rounded-md p-3 bg-white">
+      <div className="container relative max-w-md border border-gray-200 rounded-md p-3 bg-white">
         <div className="pb-3 pt-8">
           <div className="flex flex-col items-center">
             <Icons.CompanyLogo className="w-40" />
@@ -251,6 +251,14 @@ const Login = () => {
                 </Link>
               </p> */}
           </form>
+        </div>
+
+        {/* Saved Accounts */}
+        <div className="absolute right-6 top-6">
+          <Tooltip title="Book marked accounts" placement="right">
+            <Icons.Bookmark className="w-6 cursor-pointer hover:text-brand-color" />
+          </Tooltip>
+          <div></div>
         </div>
       </div>
     </div>

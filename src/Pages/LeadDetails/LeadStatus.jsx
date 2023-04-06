@@ -762,7 +762,11 @@ const LeadStatus = (props) => {
                     className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
                     type="text"
                     name=""
-                    defaultValue={leadDetails?.leadAmountHistory[0]?.amount}
+                    defaultValue={
+                      leadDetails?.leadAmountHistory.length
+                        ? leadDetails?.leadAmountHistory[0]?.amount
+                        : 0
+                    }
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Amount"
                     id=""

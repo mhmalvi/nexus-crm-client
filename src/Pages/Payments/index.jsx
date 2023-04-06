@@ -4,7 +4,7 @@ import {
   handleFetchClientsInvoiceHistory,
   handleFetchClientsPaymentHistory,
   handleFetchStudentsInvoiceHistory,
-  handleFetchStudentsPaymentHistory
+  handleFetchStudentsPaymentHistory,
 } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
 import Calendar from "../Dashborad/AdminDashboard/Calendar";
@@ -88,7 +88,7 @@ const Payment = () => {
       <Calendar />
       <Filters layout="Payment" setSearchInput={setSearchInput} />
 
-      <div>
+      <div className="mt-10">
         <button
           className={`${
             toggleTabs === "payment"

@@ -34,8 +34,8 @@ const Sidebar = ({
 }) => {
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
-  const userMessages = useSelector((state) => state.messages);
-  const userNotification = useSelector((state) => state.notifications);
+  // const userMessages = useSelector((state) => state.messages);
+  // const userNotification = useSelector((state) => state.notifications);
 
   const [companyName, setCompanyName] = useState("");
 
@@ -284,7 +284,29 @@ const Sidebar = ({
             </div>
           )}
 
-          {/* {(userDetails?.userInfo?.role_id === 1 ||
+          {(userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4) && (
+            <div>
+              <NavLink
+                to={"/courses"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "courses" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("courses")}
+              >
+                <Icons.Courses className="w-5" />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Courses
+                </span>
+                {active === "courses" && (
+                  <div className="ml-auto active-option">|</div>
+                )}
+              </NavLink>
+            </div>
+          )}
+
+          {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2 ||
             userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
@@ -298,11 +320,7 @@ const Sidebar = ({
                 }}
                 onClick={() => setActive("calender")}
               >
-                <Icons.Calender
-                  className={`w-5 ${
-                    active === "calender" ? "text-brand-color" : "text-gray-400"
-                  }`}
-                />
+                <Icons.Calender className="w-5" />
                 <span className="ml-4 leading-6 font-medium font-poppins">
                   Calender
                 </span>
@@ -311,7 +329,7 @@ const Sidebar = ({
                 )}
               </NavLink>
             </div>
-          )} */}
+          )}
 
           {/* Requisitions section */}
           {(userDetails?.userInfo?.role_id === 1 ||

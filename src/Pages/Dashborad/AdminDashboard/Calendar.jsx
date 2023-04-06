@@ -1,7 +1,7 @@
 import { DatePicker, Dropdown, Menu, message, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 // import { io } from "socket.io-client";
 // import { handleAddNotification } from "../../../Components/services/auth";
@@ -27,8 +27,6 @@ const Calendar = ({
   selectedYear,
   // layout,
 }) => {
-  const dispatch = useDispatch();
-
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
@@ -212,17 +210,17 @@ const Calendar = ({
   const handleSendNotice = async (e) => {
     e.preventDefault();
     if (noticeDescription !== "") {
-      const notificationData = {
-        user_id: 1,
-        client_id: 2,
-        lead_id: "",
-        email: "",
-        contact: "",
-        details: noticeDescription,
-        trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
-        notification_type: "notice",
-        status: 0,
-      };
+      // const notificationData = {
+      //   user_id: 1,
+      //   client_id: 2,
+      //   lead_id: "",
+      //   email: "",
+      //   contact: "",
+      //   details: noticeDescription,
+      //   trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
+      //   notification_type: "notice",
+      //   status: 0,
+      // };
       // handleAddNotification(notificationData);
 
       const handleAddNotile = await handleAddNotice(

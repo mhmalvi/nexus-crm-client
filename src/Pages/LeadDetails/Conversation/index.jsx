@@ -19,14 +19,14 @@ const Conversation = ({ leadDetails, id }) => {
 
   const userDetails = useSelector((state) => state?.user);
 
-  const [dateTime, setDateTime] = useState("");
+  // const [dateTime, setDateTime] = useState("");
   // const [fileList, setFileList] = useState([]);
   // for storing all messages
   // const [messageList, setMessageList] = useState([]);
   // This state is a type of flag to sync message in again according to needs
   // const [sync, setSync] = useState(false);
 
-  const [reminderMessage, setReminderMessage] = useState("");
+  // const [reminderMessage, setReminderMessage] = useState("");
 
   // const [previewOpen, setPreviewOpen] = useState(false);
   // const [previewImage, setPreviewImage] = useState("");
@@ -104,9 +104,9 @@ const Conversation = ({ leadDetails, id }) => {
   //   );
   // };
 
-  const onOk = (value) => {
-    setDateTime(value._d.toString().slice(4, 24));
-  };
+  // const onOk = (value) => {
+  //   setDateTime(value._d.toString().slice(4, 24));
+  // };
 
   // handeling send message to API
   // const handleSendMessage = async (e) => {
@@ -326,14 +326,14 @@ const Conversation = ({ leadDetails, id }) => {
       ) : null}  */}
 
       <div>
-        {/* --------------- Conversion Section -------------- */}
+        {/* --------------- Conversation Section -------------- */}
         <div
           style={{
             height: "500px",
           }}
         >
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-            Conversion
+            Contact
           </h1>
           {/* --------------- Messages --------------- */}
           {/* <form
