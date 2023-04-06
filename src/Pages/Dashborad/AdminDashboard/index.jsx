@@ -67,13 +67,7 @@ const AdminDashboard = () => {
 
       setLeadData(response.data);
     })();
-  }, [
-    dispatch,
-    userDetails?.userInfo?.client_id,
-    syncLeads,
-    userDetails?.userInfo.role_id,
-    userDetails?.client_id,
-  ]);
+  }, [dispatch, userDetails, syncLeads]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
