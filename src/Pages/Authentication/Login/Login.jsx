@@ -1,14 +1,14 @@
-import { Input, Tooltip, message } from "antd";
+import { Input, Modal, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
+import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleLogin } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
+import { handleLogin } from "../../../Components/services/auth";
 import { addUserDetails, setLoader } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
-import Avatar from "react-avatar";
 
 const Login = () => {
   document.title = "Login";
@@ -17,6 +17,9 @@ const Login = () => {
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [tooglePasswordForget, setTooglePasswordForget] = useState(false);
   const [bookMarkOpen, setBookMarkOpen] = useState(false);
+  const [addBookMarkOpen, setAddBookMarkOpen] = useState(false);
+  const [syncBookMarked, setSyncBookMarked] = useState(false);
+  const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
 
   const [data, setData] = useState({
     email: "",
@@ -28,13 +31,19 @@ const Login = () => {
       navigate("/dashboard");
     }
 
-    if (Storage.getItem("crm_email") && Storage.getItem("crm_password")) {
+    if (Storage.getItem("__ce__") && Storage.getItem("__cp__")) {
       setData({
-        email: Storage.getItem("crm_email"),
-        password: Storage.getItem("crm_password")?.split("_")[0],
+        email: Storage.getItem("__ce__"),
+        password: Storage.getItem("__cp__")?.split("_")[0],
       });
     }
-  }, [navigate]);
+
+    if (Storage.getItem("__b__")) {
+      setBookMarkedAccounts(JSON.parse(Storage.getItem("__b__")));
+    }
+  }, [navigate, syncBookMarked]);
+
+  console.log("bookMarkedAccounts", bookMarkedAccounts);
 
   const userData = (e) => {
     const userdata = { ...data };
@@ -64,9 +73,9 @@ const Login = () => {
       dispatch(addUserDetails(loginResponse?.data?.data));
 
       if (loginResponse?.data?.data?.flag === 1) {
-        Storage.setItem("crm_email", data.email);
+        Storage.setItem("__ce__", data.email);
         Storage.setItem(
-          "crm_password",
+          "__cp__",
           data.password +
             "_" +
             makeid(3) +
@@ -78,6 +87,62 @@ const Login = () => {
             makeid(3)
         );
       }
+
+      message.success("Successfully Logged In");
+
+      if (
+        !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
+          ?.length
+      ) {
+        setAddBookMarkOpen(true);
+      } else {
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
+      }
+    } else {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 2000);
+      message.warning("Oopps Wrong! Check You Email or Password");
+    }
+  };
+
+  const handleOneClickLogin = async (credentials) => {
+    dispatch(setLoader(true));
+
+    const loginFormData = new FormData();
+    loginFormData.append("email", credentials?._ue_);
+    loginFormData.append("password", credentials?._up_?.split("_")[0]);
+
+    const loginResponse = await handleLogin(loginFormData);
+
+    console.log("loginResponse", loginResponse);
+
+    if (loginResponse?.status === 200) {
+      Storage.setItem("user_info", loginResponse?.data?.data);
+      Storage.setItem("auth_tok", loginResponse?.data?.token);
+
+      dispatch(setLoader(false));
+      dispatch(addUserDetails(loginResponse?.data?.data));
+
+      if (loginResponse?.data?.data?.flag === 1) {
+        Storage.setItem("__ce__", data.email);
+        Storage.setItem(
+          "__cp__",
+          data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3)
+        );
+      }
+
+      dispatch(setLoader(false));
 
       message.success("Successfully Logged In");
       setTimeout(() => {
@@ -104,9 +169,9 @@ const Login = () => {
 
   const handleRememberMe = (e) => {
     if (e.target.checked) {
-      Storage.setItem("crm_email", data.email);
+      Storage.setItem("__ce__", data.email);
       Storage.setItem(
-        "crm_password",
+        "__cp__",
         data.password +
           "_" +
           makeid(3) +
@@ -120,9 +185,54 @@ const Login = () => {
     }
   };
 
+  const handleAddToBookMark = () => {
+    setBookMarkedAccounts([
+      ...bookMarkedAccounts,
+      {
+        _ue_: data.email,
+        _up_:
+          data.password +
+          "_" +
+          makeid(3) +
+          "_" +
+          makeid(3) +
+          "_" +
+          makeid(3) +
+          "_" +
+          makeid(3),
+      },
+    ]);
+    Storage.setItem(
+      "__b__",
+      JSON.stringify([
+        ...bookMarkedAccounts,
+        {
+          _ue_: data.email,
+          _up_:
+            data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3),
+        },
+      ])
+    );
+    setAddBookMarkOpen(false);
+
+    message.success("Added to the Bookmark");
+
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1500);
+  };
+
   const ForgotPasswordModal = () => {
-    const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const regex = /^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i;
+    // /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (data.email !== "") {
       if (regex.test(data.email) === true) {
         setTooglePasswordForget(true);
@@ -134,6 +244,23 @@ const Login = () => {
     }
   };
 
+  const handleRemoverBookmarkedAccount = (acoountDetials) => {
+    console.log(acoountDetials?._ue_);
+
+    setBookMarkedAccounts(
+      bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
+    );
+
+    Storage.setItem(
+      "__b__",
+      JSON.stringify(
+        bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
+      )
+    );
+
+    setSyncBookMarked(!syncBookMarked);
+  };
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       {loadingDetails && (
@@ -141,6 +268,32 @@ const Login = () => {
           <Loading />
         </div>
       )}
+
+      <Modal visible={addBookMarkOpen} footer={false} closable={false} centered>
+        <div className="py-10 px-4 flex items-center justify-between">
+          <div className="text-lg font-poppins font-semibold mb-6?">
+            Add to Bookmark?
+          </div>
+          <div className="flex items-center">
+            <div
+              className="px-6 py-1 rounded-full shadow text-sm font-poppins font-light border border-brand-color text-brand-color cursor-pointer"
+              onClick={handleAddToBookMark}
+            >
+              Yes
+            </div>
+            <div
+              className="px-6 py-1 ml-2 rounded-full shadow text-sm font-poppins font-light border border-red-600 text-red-600 cursor-pointer"
+              onClick={() => {
+                setAddBookMarkOpen(false);
+                navigate("/dashboard");
+              }}
+            >
+              No
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <div className="container relative max-w-md border border-gray-200 rounded-md p-3 bg-white">
         <div>
           <div className="pb-3 pt-8">
@@ -177,14 +330,6 @@ const Login = () => {
                   onChange={userData}
                   required
                 />
-                {/* <input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Enter Your Username"
-                className="w-full px-3 py-2 placeholder-gray-600 border bg-gray-100 rounded-md focus:outline-none focus:border-brand-color"
-                required
-              /> */}
               </div>
               <div className="mb-4 font-poppins">
                 {/* Forgot password */}
@@ -206,7 +351,6 @@ const Login = () => {
                   />
                 </div>
                 <Input.Password
-                  // type="password"
                   size="large"
                   name="password"
                   id="password"
@@ -218,18 +362,20 @@ const Login = () => {
                 />
               </div>
 
-              <div className="mb-6 font-poppins flex items-center">
-                <input
-                  className="cursor-pointer mr-2"
-                  type="checkbox"
-                  name="remember me"
-                  id="remember_me"
-                  defaultValue="off"
-                  onChange={handleRememberMe}
-                />
-                <label className="cursor-pointer" htmlFor="remember_me">
-                  Remember Me
-                </label>
+              <div className="mb-6 font-poppins flex items-center justify-between">
+                <div className="">
+                  <input
+                    className="cursor-pointer mr-2"
+                    type="checkbox"
+                    name="remember me"
+                    id="remember_me"
+                    defaultValue="off"
+                    onChange={handleRememberMe}
+                  />
+                  <label className="cursor-pointer" htmlFor="remember_me">
+                    Remember Me
+                  </label>
+                </div>
               </div>
 
               <div className="mb-6">
@@ -262,29 +408,47 @@ const Login = () => {
           <div
             className={`${
               !bookMarkOpen
-                ? "text-transparent transition-all delay-100 duration-100"
-                : "text-black transition-all delay-1000 duration-200"
-            } mt-2 ml-2 flex flex-col justify-start items-start`}
+                ? "delay-100 duration-100 opacity-0"
+                : "delay-1000 duration-200 opacity-100"
+            } transition-all mt-2 ml-2 flex flex-col justify-start items-start`}
           >
-            <div className="text-xl font-semibold ">Bookmarked Accounts</div>
-
-            <div className="grou mt-4 mr-4 p-1 rounded-full shadow-md">
-              <Avatar
-                className="rounded-full cursor-pointer mr-1"
-                size="38"
-                name={"Sourav"}
-              />
-              <span className="pl-2 pr-4">Sourav</span>
-
-              <div className="hidden group-hover:block min-w-40 bg-white shadow-md absolute -right-8 top-[52px] rounded-md">
-                <div className="flex flex-col p-4 text-xs">
-                  <div>Sourav</div>
-                  <div>Sourav</div>
-                </div>
-              </div>
+            <div className="text-xl font-semibold mb-4">
+              Bookmarked Accounts
             </div>
+
+            {bookMarkedAccounts?.length ? (
+              bookMarkedAccounts?.map((account, i) => (
+                <div
+                  key={i}
+                  className="relative mt-4 mr-4 p-1 rounded-full shadow-md cursor-pointer flex items-center justify-between"
+                  onClick={() => handleOneClickLogin(account)}
+                >
+                  <div>
+                    <Avatar
+                      className="rounded-full cursor-pointer mr-1"
+                      size={38}
+                      name={account?._ue_}
+                    />
+                    <span className="pl-2 pr-4">{account?._ue_}</span>
+                  </div>
+
+                  <div
+                    className="absolute top-0 -right-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Icons.Cross
+                      className="w-3.5 bg-red-500 py-0.5 px-1 rounded-full text-white"
+                      onClick={() => handleRemoverBookmarkedAccount(account)}
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="w-full flex justify-center items-center">
+                <h1 className="mt-28 text-base">No Accounts Bookmarked Yet</h1>
+              </div>
+            )}
           </div>
-          {/* Book Mark */}
         </div>
 
         {/* Saved Accounts */}
@@ -297,11 +461,11 @@ const Login = () => {
               />
             </Tooltip>
           ) : (
-            <div
-              className="text-2xl font-bold text-red-600 cursor-pointer"
-              onClick={() => setBookMarkOpen(false)}
-            >
-              x
+            <div>
+              <Icons.Cross
+                className="w-3 mr-1 font-bold text-red-600 cursor-pointer"
+                onClick={() => setBookMarkOpen(false)}
+              />
             </div>
           )}
         </div>

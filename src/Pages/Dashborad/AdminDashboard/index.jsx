@@ -51,6 +51,7 @@ const AdminDashboard = () => {
       const response = await handleFetchLeads({
         client_id: userDetails?.userInfo?.client_id,
       });
+
       if (response?.data) {
         dispatch(addLeads(response.data));
       }
@@ -67,7 +68,9 @@ const AdminDashboard = () => {
 
       setLeadData(response.data);
     })();
-  }, [dispatch, userDetails, syncLeads]);
+  }, [dispatch, syncLeads, userDetails?.userInfo?.client_id]);
+
+  // dispatch, userDetails, syncLeads;
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
@@ -287,6 +290,8 @@ const AdminDashboard = () => {
       userDetails?.userInfo?.client_id,
       userDetails?.userInfo?.ac_k
     );
+
+    console.log(syncResponse);
 
     if (syncResponse?.status) {
       setSyncLeads(!syncLeads);

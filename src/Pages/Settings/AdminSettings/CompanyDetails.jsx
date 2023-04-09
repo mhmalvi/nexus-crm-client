@@ -144,8 +144,10 @@ const CompanyDetails = () => {
     const finaldate = new Date(result);
     const futureDate = finaldate.toString().slice(0, 15);
 
-    Storage.setItem("refresh_tok", futureDate);
+    console.log("refreshResponse", refreshResponse);
+
     if (refreshResponse?.status === true) {
+      Storage.setItem("refresh_tok", futureDate);
       setCompanyDetails(refreshResponse?.data);
       message.success("Facebook Token Updated Successfully");
     }
