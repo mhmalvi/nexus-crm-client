@@ -163,7 +163,7 @@ const UpdatedTable = ({
                     <button
                       id="sync_leads"
                       className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
-                      onClick={handleSyncLeadsReq}
+                      onClick={() => handleSyncLeadsReq()}
                     >
                       Sync Leads
                     </button>
