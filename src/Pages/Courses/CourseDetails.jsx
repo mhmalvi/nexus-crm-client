@@ -91,7 +91,7 @@ const CourseDetails = ({ selectedCourse }) => {
   const handleEmployeeChange = (name, details) => {
     setSelectedEmployees([...selectedEmployees, details]);
     setCompanyEmployeeList(
-      companyEmployeeList?.filter((e) => e?.key !== details?.key)
+      companyEmployeeList?.filter((employee) => employee?.key !== details?.key)
     );
   };
 

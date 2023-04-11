@@ -123,7 +123,7 @@ const AdminDashboard = () => {
         // ...getColumnSearchProps("lead_apply_date"),
         render: (lead_apply_date) => (
           <h4 className="cursor-pointer">
-            {new Date(lead_apply_date).toLocaleString()}
+            {new Date(lead_apply_date)?.toGMTString()?.replace("GMT", "")}
           </h4>
         ),
         width: 150,
@@ -192,9 +192,9 @@ const AdminDashboard = () => {
           <div className="flex items-center">
             {statusColor
               .filter((status) => status.id === lead_details_status)
-              .map((lead_status, index) => (
+              .map((lead_status, i) => (
                 <div
-                  key={index}
+                  key={i}
                   className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
                 >
                   <div
