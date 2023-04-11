@@ -891,7 +891,9 @@ const LeadStatus = (props) => {
               {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
                 ? new Date(
                     leadDetails?.leadDetails?.lead_apply_date?.toString()
-                  )?.toLocaleString()
+                  )
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : "Not Yet"}
             </div>
           </Tooltip>
@@ -941,9 +943,9 @@ const LeadStatus = (props) => {
           <Tooltip placement="top" title={"Activity Time"}>
             <div className="text-[10px]">
               {statusDateTime["Skilled"] !== "Not Yet"
-                ? new Date(
-                    statusDateTime["Skilled"]?.toString()
-                  )?.toLocaleString()
+                ? new Date(statusDateTime["Skilled"]?.toString())
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : "Not Yet"}
             </div>
           </Tooltip>
@@ -1016,9 +1018,9 @@ const LeadStatus = (props) => {
           <Tooltip placement="top" title={"Activity Time"}>
             <div className="text-[10px]">
               {statusDateTime["Called"] !== "Not Yet"
-                ? new Date(
-                    statusDateTime["Called"]?.toString()
-                  )?.toLocaleString()
+                ? new Date(statusDateTime["Called"]?.toString())
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : // new Date(statusDateTime["Called"]).toString().slice(4, 21) +
                   //   " " +
                   //   new Date(statusDateTime["Called"]).toString().slice(25, 31)
@@ -1096,7 +1098,9 @@ const LeadStatus = (props) => {
           <Tooltip placement="top" title={"Activity Time"}>
             <div className="text-[10px]">
               {statusDateTime["Paid"] !== "Not Yet"
-                ? new Date(statusDateTime["Paid"]?.toString())?.toLocaleString()
+                ? new Date(statusDateTime["Paid"]?.toString())
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : // new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
                   //   " " +
                   //   new Date(statusDateTime["Paid"]).toString().slice(25, 31)
@@ -1155,9 +1159,9 @@ const LeadStatus = (props) => {
           <Tooltip placement="top" title={"Activity Time"}>
             <div className="text-[10px]">
               {statusDateTime["Verified"] !== "Not Yet"
-                ? new Date(
-                    statusDateTime["Verified"]?.toString()
-                  )?.toLocaleString()
+                ? new Date(statusDateTime["Verified"]?.toString())
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : // new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
                   //   " " +
                   //   new Date(statusDateTime["Verified"]).toString().slice(25, 31)
@@ -1256,9 +1260,9 @@ const LeadStatus = (props) => {
           <Tooltip placement="top" title={"Activity Time"}>
             <div className="text-[10px]">
               {statusDateTime["Completed"] !== "Not Yet"
-                ? new Date(
-                    statusDateTime["Completed"]?.toString()
-                  )?.toLocaleString()
+                ? new Date(statusDateTime["Completed"]?.toString())
+                    ?.toGMTString()
+                    ?.replace("GMT", "")
                 : "Not Yet"}
             </div>
           </Tooltip>

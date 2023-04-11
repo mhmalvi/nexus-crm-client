@@ -85,7 +85,6 @@ const UserDetails = ({
     );
   }, [leadDetails]);
 
-
   const handleCancel = () => {
     setToggleChcekList(false);
     setToggleApplication(false);
@@ -217,13 +216,15 @@ const UserDetails = ({
                   <div key={i} className="ml-2 font-poppins">
                     <li className="text-base list-disc font-semibold">
                       {/* for removing underscores and capitalize the first letter of the Question */}
-                      {(question?.name).charAt(0).toUpperCase() +
-                        (question?.name).replaceAll("_", " ").slice(1)}
+                      {question?.name?.charAt(0)?.toUpperCase() +
+                        question?.name?.replaceAll("_", " ")?.slice(1)}
                     </li>
                     <p className="ml-6 mt-2 font-normal">
                       -{" "}
-                      {(question?.values[0]).charAt(0).toUpperCase() +
-                        (question?.values[0]).replaceAll("_", " ").slice(1)}
+                      {question?.values[0]?.includes("_")
+                        ? question?.values[0]?.charAt(0)?.toUpperCase() +
+                          question?.values[0]?.replaceAll("_", " ")?.slice(1)
+                        : question?.values[0]}
                     </p>
                   </div>
                 ))}
@@ -332,7 +333,8 @@ const UserDetails = ({
                     &nbsp;
                   </div>
                 </div>
-              ) : (
+              ) : userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ? (
                 <div
                   className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
                   onClick={() => {
@@ -341,7 +343,7 @@ const UserDetails = ({
                 >
                   +
                 </div>
-              ))}
+              ) : null)}
 
             {closeSealsman &&
             (userDetails?.userInfo?.role_id === 3 ||

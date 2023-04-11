@@ -214,7 +214,8 @@ const AdminDashboard = () => {
         render: (sales_user_id) => (
           <div className="flex items-center">
             {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4) &&
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) &&
             sales_user_id !== 0 ? (
               <div className="ml-3">
                 <Avatar
@@ -246,12 +247,36 @@ const AdminDashboard = () => {
         leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
       );
     } else if (filterId === 8) {
+      console.log(leadList);
+
+      console.log(
+        "My Leads",
+        leadList
+          .filter(
+            (lead) =>
+              parseInt(lead.sales_user_id) ===
+                parseInt(userDetails?.userInfo?.user_id) ||
+              (lead?.assignedHistory?.includes(
+                userDetails?.userInfo?.user_id
+              ) &&
+                lead.sales_user_id === 0)
+          )
+          ?.sort(
+            (date1, date2) =>
+              new Date(date2.updated_at) - new Date(date1.updated_at)
+          )
+      );
+
       setLeadData(
         leadList
           .filter(
             (lead) =>
               parseInt(lead.sales_user_id) ===
-              parseInt(userDetails?.userInfo?.user_id)
+                parseInt(userDetails?.userInfo?.user_id) ||
+              (lead?.assignedHistory?.includes(
+                userDetails?.userInfo?.user_id
+              ) &&
+                lead.sales_user_id === 0)
           )
           ?.sort(
             (date1, date2) =>
@@ -431,7 +456,6 @@ const AdminDashboard = () => {
     <div>
       {/* Add Lead Modal */}
       <Modal
-        title="Add Lead"
         visible={isAddLeadFormOpen}
         onCancel={() => setIsAddLeadFormOpen(false)}
         footer={false}

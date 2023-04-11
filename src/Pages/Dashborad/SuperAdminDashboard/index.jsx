@@ -152,7 +152,7 @@ const SuperAdminDashboard = () => {
           onCancel={() => setToggleAddCompany(false)}
           footer={[
             <Button key="back" onClick={handleCancel}>
-              Cancle
+              Cancel
             </Button>,
             <Button key="submit" type="primary" onClick={handleSubmit}>
               Submit
