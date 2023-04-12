@@ -1,20 +1,18 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Avatar from "react-avatar";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   handlefetchMessages,
-  handlefetchNotifications,
-  handlePasswordReset,
+  handlePasswordReset
 } from "../../Components/services/auth";
 import { Storage } from "../../Components/Shared/utils/store";
 import { addMessages } from "../../features/user/messagesSlice";
-import { addNotifications } from "../../features/user/notificationSlice";
 import AdminDashboard from "./AdminDashboard";
-import UserDashboard from "./UserDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
+import UserDashboard from "./UserDashboard";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -63,23 +61,23 @@ const Dashboard = () => {
     })();
 
     // API Request for fetching notifiaction
-    (async () => {
-      const response = await handlefetchNotifications(
-        userDetails?.userInfo?.user_id
-      );
+    // (async () => {
+    //   const response = await handlefetchNotifications(
+    //     userDetails?.userInfo?.user_id
+    //   );
 
-      if (response) {
-        response?.forEach((notification) => {
-          if (
-            userNotifications?.filter(
-              (notific) => notific.id !== notification.id
-            ).length === 0
-          ) {
-            dispatch(addNotifications(notification));
-          }
-        });
-      }
-    })();
+    //   if (response) {
+    //     response?.forEach((notification) => {
+    //       if (
+    //         userNotifications?.filter(
+    //           (notific) => notific.id !== notification.id
+    //         ).length === 0
+    //       ) {
+    //         dispatch(addNotifications(notification));
+    //       }
+    //     });
+    //   }
+    // })();
   }, [dispatch, userDetails?.userInfo?.user_id, userNotifications]);
 
   const handleOk = () => {

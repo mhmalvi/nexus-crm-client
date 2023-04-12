@@ -318,6 +318,18 @@ export const handleFetchCourseCheckList = async (courseId) => {
   }
 };
 
+export const handleFetchCoursewiseAssignedEmployees = async (courseDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/course-details-by-course-id`,
+      courseDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleCreateChecklist = async (
   clientId,
   userId,

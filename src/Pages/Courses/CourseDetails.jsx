@@ -6,6 +6,7 @@ import {
   handleCreateChecklist,
   handleDeleteChecklist,
   handleFetchCourseCheckList,
+  handleFetchCoursewiseAssignedEmployees,
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 import { useEffect } from "react";
@@ -17,11 +18,14 @@ const CourseDetails = ({ selectedCourse }) => {
   const [checklist, setChecklist] = useState([]);
   const [checklistTitle, setChecklistTitle] = useState("");
   const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
+  const [employeeList, setEmployeeList] = useState([]);
+  const [assignedEmployees, setAssignedEmployees] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const userDetails = useSelector((state) => state.user?.userInfo);
 
   useEffect(() => {
+    console.log("companyEmployeeList", companyEmployeeList);
     (async () => {
       const courseCheckList = await handleFetchCourseCheckList(
         selectedCourse?.id
@@ -30,7 +34,7 @@ const CourseDetails = ({ selectedCourse }) => {
         setChecklist(courseCheckList?.data);
       }
     })();
-  }, [selectedCourse]);
+  }, [companyEmployeeList, selectedCourse, userDetails]);
 
   useEffect(() => {
     (async () => {
@@ -53,9 +57,44 @@ const CourseDetails = ({ selectedCourse }) => {
         });
 
         setCompanyEmployeeList(options);
+        setEmployeeList(options);
       }
     })();
   }, [userDetails]);
+
+  useEffect(() => {
+    const assignedSalesEmployees = [];
+
+    (async () => {
+      const assignedEmployeesresp =
+        await handleFetchCoursewiseAssignedEmployees({
+          course_id: selectedCourse?.id,
+          client_id: userDetails?.client_id,
+        });
+      if (assignedEmployeesresp?.status === 200) {
+        // console.log("assignedEmployees", assignedEmployees);
+        assignedEmployeesresp?.data?.forEach((emp) => {
+          const selectedCompanyEmployees = companyEmployeeList.find(
+            (employee) => employee?.key === emp?.sales_id
+          );
+          assignedSalesEmployees.push(selectedCompanyEmployees);
+          // console.log("selectedCompanyEmployees", selectedCompanyEmployees);
+        });
+
+        var uniqueEmployees = companyEmployeeList.filter(function (obj) {
+          return assignedSalesEmployees.indexOf(obj) === -1;
+        });
+
+        console.log("array3", uniqueEmployees);
+
+        setEmployeeList(uniqueEmployees);
+
+        setAssignedEmployees(assignedSalesEmployees);
+      } else {
+        setAssignedEmployees([]);
+      }
+    })();
+  }, [companyEmployeeList, selectedCourse, userDetails]);
 
   const handleAddCheckList = async () => {
     if (checklistTitle.length) {
@@ -163,6 +202,15 @@ const CourseDetails = ({ selectedCourse }) => {
           </div>
 
           <div className="mb-4">
+            {assignedEmployees?.map((aemployee, i) => (
+              <span key={i} className="mx-1">
+                <Avatar
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="30"
+                  name={aemployee?.value}
+                />
+              </span>
+            ))}
             {selectedEmployees?.map((employee, i) => (
               <span key={i} className="mx-1">
                 <Avatar
@@ -188,7 +236,7 @@ const CourseDetails = ({ selectedCourse }) => {
                   style={{
                     width: 200,
                   }}
-                  options={companyEmployeeList}
+                  options={employeeList}
                 />
               </div>
             </div>
