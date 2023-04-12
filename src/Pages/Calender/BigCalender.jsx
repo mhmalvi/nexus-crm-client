@@ -5,14 +5,19 @@ import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Modal } from "antd";
 import DayDetails from "./DayDetails";
+import { useEffect } from "react";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
   const [open, setOpen] = useState(false);
-  const [eventsData, setEventsData] = useState(events);
+  const [eventsData, setEventsData] = useState();
   const [selectedEventTime, setSelectedEventTime] = useState();
+
+  useEffect(() => {
+    setEventsData(events);
+  }, []);
 
   const handleSelect = ({ start, end }) => {
     console.log(start);
