@@ -1,12 +1,35 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space, TimePicker } from "antd";
-import React, { useState } from "react";
-import events from "./events";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
+import events from "./events1";
 
-const DayDetails = ({ handleCancel }) => {
-  const [time, setTime] = useState("Not Selected");
-  const [selectedPriority, setselectedPriority] = useState(priorityList[0]);
+const DayDetails = ({
+  handleOpenDayDetailsCancel,
+  selectedEventTime,
+  eventDetails,
+}) => {
+  const [time, setTime] = useState("");
+  const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
+  const [currentDayEvents, setCurrentDayEvents] = useState([]);
+
+  useEffect(() => {
+    console.log("selectedEventTime", selectedEventTime);
+    console.log("eventDetails", eventDetails);
+
+    setCurrentDayEvents(
+      events?.filter(
+        (event) =>
+          event?.start?.toLocaleDateString() ===
+          selectedEventTime?.start?.toLocaleDateString()
+      )
+    );
+    console.log("events", selectedEventTime?.start?.toLocaleDateString());
+    // console.log(
+    //   "Timeeeee>>>",
+    //   new Date("Thu Apr 13 2023 12:00:30 GMT+0600").getHours()
+    // );
+    // console.log("Timeeeee>>>", new Date().getMinutes());
+  }, [selectedEventTime, eventDetails]);
 
   const onTimeChange = (time, timeString) => {
     console.log(time);
@@ -16,7 +39,7 @@ const DayDetails = ({ handleCancel }) => {
 
   const handlePriorityChange = (selected) => {
     console.log(selected);
-    setselectedPriority(selected);
+    setSelectedPriority(selected);
   };
 
   console.log("events", events);
@@ -41,8 +64,16 @@ const DayDetails = ({ handleCancel }) => {
 
   return (
     <div className="py-10">
-      <div>
-        <div className="w-10/12 mx-auto flex gap-6 items-center mb-6">
+      <div className="text-lg font-semibold pb-10 w-11/12 mx-auto">
+        Selected Date:{" "}
+        {new Date(selectedEventTime?.start)
+          .toGMTString()
+          ?.replace("00 GMT", "")}{" "}
+        - {new Date(selectedEventTime?.end).toGMTString()}
+      </div>
+
+      <div className="w-11/12 mx-auto">
+        <div className="flex gap-6 items-center mb-6">
           <div className="w-full">
             <div className="text-lg font-semibold">Enter Task:</div>
             <div className="flex items-center">
@@ -82,7 +113,9 @@ const DayDetails = ({ handleCancel }) => {
           <div className="w-3/12">
             <div className="text-lg font-semibold">Select Time:</div>
             <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
-              <div>{time}</div>
+              <div>
+                {time ? time : selectedEventTime?.start?.toLocaleTimeString()}
+              </div>
               <TimePicker
                 use12Hours
                 format="h:mm a"
@@ -94,7 +127,7 @@ const DayDetails = ({ handleCancel }) => {
         </div>
         <div className="flex justify-end">
           <div
-            onClick={handleCancel}
+            onClick={handleOpenDayDetailsCancel}
             className="bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer"
           >
             Cancel
@@ -109,7 +142,7 @@ const DayDetails = ({ handleCancel }) => {
       </div>
 
       <div>
-        {events?.map((event) => (
+        {currentDayEvents?.map((event) => (
           <div>
             <div className="flex items-center">
               <div
@@ -122,8 +155,8 @@ const DayDetails = ({ handleCancel }) => {
               <ul className="list-disc">
                 <li>
                   <div>{event.title}</div>
-                  <div>{event.start}</div>
-                  <div>{event.end}</div>
+                  <div>{event.start?.toLocaleString()}</div>
+                  <div>{event.end?.toLocaleString()}</div>
                 </li>
               </ul>
             </div>
