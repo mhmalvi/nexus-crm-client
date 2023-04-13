@@ -416,3 +416,23 @@ table.custom-table > tbody > tr:hover td {
   width: 4px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
+.rbc-event,
+.rbc-day-slot .rbc-background-event {
+  background-color: #7037ff !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+.rbc-show-more {
+  color: #7037ff !important;
+}
+
+.rbc-today {
+  border: 1px solid #7037ff8f !important;
+}
+
+.rbc-off-range-bg,
+.rbc-active {
+  background-color: #d5c7f6ad !important;
+}

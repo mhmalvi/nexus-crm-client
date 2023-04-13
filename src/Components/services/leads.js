@@ -304,6 +304,18 @@ export const handleCoursewiseSalesAssign = async (requestData) => {
   }
 };
 
+export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/delete-sales-employee-by-user-id`,
+      requestData
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const handleFetchCourseCheckList = async (courseId) => {
   try {
     const result = await axios.post(

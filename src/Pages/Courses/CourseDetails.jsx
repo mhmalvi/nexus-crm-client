@@ -5,6 +5,7 @@ import {
   handleCoursewiseSalesAssign,
   handleCreateChecklist,
   handleDeleteChecklist,
+  handleDeleteCoursewiseSalesAssign,
   handleFetchCourseCheckList,
   handleFetchCoursewiseAssignedEmployees,
 } from "../../Components/services/leads";
@@ -25,7 +26,7 @@ const CourseDetails = ({ selectedCourse }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
 
   useEffect(() => {
-    console.log("companyEmployeeList", companyEmployeeList);
+    setSelectedEmployees([]);
     (async () => {
       const courseCheckList = await handleFetchCourseCheckList(
         selectedCourse?.id
@@ -34,7 +35,7 @@ const CourseDetails = ({ selectedCourse }) => {
         setChecklist(courseCheckList?.data);
       }
     })();
-  }, [companyEmployeeList, selectedCourse, userDetails]);
+  }, [selectedCourse, userDetails]);
 
   useEffect(() => {
     (async () => {
@@ -72,26 +73,22 @@ const CourseDetails = ({ selectedCourse }) => {
           client_id: userDetails?.client_id,
         });
       if (assignedEmployeesresp?.status === 200) {
-        // console.log("assignedEmployees", assignedEmployees);
         assignedEmployeesresp?.data?.forEach((emp) => {
           const selectedCompanyEmployees = companyEmployeeList.find(
             (employee) => employee?.key === emp?.sales_id
           );
           assignedSalesEmployees.push(selectedCompanyEmployees);
-          // console.log("selectedCompanyEmployees", selectedCompanyEmployees);
         });
 
         var uniqueEmployees = companyEmployeeList.filter(function (obj) {
           return assignedSalesEmployees.indexOf(obj) === -1;
         });
 
-        console.log("array3", uniqueEmployees);
-
         setEmployeeList(uniqueEmployees);
-
         setAssignedEmployees(assignedSalesEmployees);
       } else {
         setAssignedEmployees([]);
+        setEmployeeList(companyEmployeeList);
       }
     })();
   }, [companyEmployeeList, selectedCourse, userDetails]);
@@ -129,12 +126,16 @@ const CourseDetails = ({ selectedCourse }) => {
 
   const handleEmployeeChange = (name, details) => {
     setSelectedEmployees([...selectedEmployees, details]);
-    setCompanyEmployeeList(
-      companyEmployeeList?.filter((employee) => employee?.key !== details?.key)
+    setEmployeeList(
+      employeeList?.filter((employee) => employee?.key !== details?.key)
     );
   };
 
   const handleCoursewiseSalesAssignReq = async () => {
+    if (!selectedEmployees?.length) {
+      message.warning("Please Select an employee first");
+      return;
+    }
     const salesAssignResponse = await handleCoursewiseSalesAssign({
       course_id: selectedCourse?.id,
       sales_id: [selectedEmployees?.map((details) => details.key)].toString(),
@@ -143,10 +144,42 @@ const CourseDetails = ({ selectedCourse }) => {
     });
 
     if (salesAssignResponse?.status === 201) {
+      setAssignedEmployees([...assignedEmployees, ...selectedEmployees]);
+      setSelectedEmployees([]);
+      // setSyncAssignedEmployees(!syncAssignedEmployees);
+
       message.success("Employee assigned successfully");
     } else {
       message.warn("Something went wrong. Please try again");
     }
+  };
+
+  console.log("selectedEmployees", selectedEmployees);
+
+  const handleRemoveAssignedEmployee = async (userDetails) => {
+    console.log("userID", userDetails);
+
+    const deleteSalesAssign = await handleDeleteCoursewiseSalesAssign({
+      sales_user_id: userDetails?.key,
+      course_id: selectedCourse?.id,
+    });
+
+    if (deleteSalesAssign?.status === 200) {
+      message.success("Assigned user has been removed");
+      setAssignedEmployees(
+        assignedEmployees.filter(
+          (employee) => employee?.key !== userDetails?.key
+        )
+      );
+      setEmployeeList([...employeeList, userDetails]);
+    }
+  };
+
+  const handleRemoveSelectedEmployee = (userDetails) => {
+    setSelectedEmployees(
+      selectedEmployees.filter((employee) => employee?.key !== userDetails?.key)
+    );
+    setEmployeeList([...employeeList, userDetails]);
   };
 
   return (
@@ -201,22 +234,30 @@ const CourseDetails = ({ selectedCourse }) => {
             Assign Sales Employee
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 flex items-center">
             {assignedEmployees?.map((aemployee, i) => (
-              <span key={i} className="mx-1">
+              <span key={i} className="relative mx-1">
                 <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
+                  className="rounded-full shadow-sm"
+                  size="36"
                   name={aemployee?.value}
+                />
+                <Icons.Cross
+                  className="cursor-pointer absolute -right-0.5 -top-1 w-3.5 font-bold text-red-600 bg-gray-50/80 px-0.5 rounded-full border border-red-600"
+                  onClick={() => handleRemoveAssignedEmployee(aemployee)}
                 />
               </span>
             ))}
-            {selectedEmployees?.map((employee, i) => (
-              <span key={i} className="mx-1">
+            {selectedEmployees?.map((semployee, i) => (
+              <span key={i} className="relative mx-1">
                 <Avatar
                   className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  name={employee?.value}
+                  size="36"
+                  name={semployee?.value}
+                />
+                <Icons.Cross
+                  className="cursor-pointer absolute -right-0.5 -top-1 w-3.5 font-bold text-red-600 bg-gray-50/80 px-0.5 rounded-full border border-red-600"
+                  onClick={() => handleRemoveSelectedEmployee(semployee)}
                 />
               </span>
             ))}
@@ -230,7 +271,7 @@ const CourseDetails = ({ selectedCourse }) => {
 
               <div>
                 <Select
-                  defaultValue="All"
+                  // defaultValue={employeeList[0]}
                   placeholder="Select Employee"
                   onChange={handleEmployeeChange}
                   style={{
