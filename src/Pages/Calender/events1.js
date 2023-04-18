@@ -5,8 +5,8 @@ export default [
     id: 0,
     title: "All Day Event very long title",
     allDay: true,
-    start: new Date(2015, 3, 0),
-    end: new Date(2015, 3, 1),
+    start: new Date(2023, 3, 0),
+    end: new Date(2023, 3, 0),
   },
   {
     id: 1,
@@ -45,8 +45,8 @@ export default [
   {
     id: 6,
     title: "Meeting",
-    start: new Date(2015, 3, 12, 10, 30, 0, 0),
-    end: new Date(2015, 3, 12, 12, 30, 0, 0),
+    start: new Date(2023, 3, 12, 12, 30, 0, 0),
+    end: new Date(2023, 3, 12, 12, 30, 0, 0),
     desc: "Pre-meeting meeting, to prepare for the meeting",
   },
   {
@@ -133,13 +133,13 @@ export default [
   {
     id: 141,
     title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 3)),
+    start: new Date(new Date().setHours(new Date().getHours() + 3)),
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
   {
     id: 140,
     title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 3)),
+    start: new Date(new Date().setHours(new Date().getHours() + 3)),
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
   {

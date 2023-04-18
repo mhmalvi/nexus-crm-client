@@ -1,0 +1,40 @@
+import axios from "axios";
+
+export const handleAddFollowUp = async (followUpData) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/follow-up`,
+      followUpData
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
+  console.log("updatedFollowUpData", updatedFollowUpData);
+  try {
+    const result = await axios.put(
+      `${process.env?.REACT_APP_AUTH_URL}/api/follow-up-update/${id}`,
+      updatedFollowUpData
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchFollowUp = async (userID) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_AUTH_URL}/api/follow-up-by-user`,
+      {
+        user_id: userID,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
