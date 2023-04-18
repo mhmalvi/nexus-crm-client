@@ -320,7 +320,11 @@ const Sidebar = ({
                 }}
                 onClick={() => setActive("calender")}
               >
-                <Icons.Calender className="w-5" />
+                <Icons.Calender
+                  className={`${
+                    active === "calender" ? "text-[#7037FF]" : "text-[#7C8DB5]"
+                  } w-5`}
+                />
                 <span className="ml-4 leading-6 font-medium font-poppins">
                   Calender
                 </span>

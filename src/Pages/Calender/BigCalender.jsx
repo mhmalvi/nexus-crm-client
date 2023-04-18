@@ -1,36 +1,62 @@
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import events from "./events1";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Modal } from "antd";
 import DayDetails from "./DayDetails";
 import { useEffect } from "react";
 import EventDetails from "./EventDetails";
+import Loading from "../../Components/Shared/Loader";
+import { handleFetchFollowUp } from "../../Components/services/reminder";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../features/user/userSlice";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
+  const dispatch = useDispatch();
+  const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const userDetails = useSelector((state) => state.user.userInfo);
   const [openDayDetails, setOpenDayDetails] = useState(false);
   const [openEventDetails, setOpenEventDetails] = useState(false);
   const [eventsData, setEventsData] = useState();
-  const [selectedEventTime, setSelectedEventTime] = useState();
+  const [selectedEventTime, setSelectedEventTime] = useState({});
   const [eventDetails, setEventDetails] = useState({});
+  const [synEvents, setSynEvents] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    setEventsData(events);
-    // console.log(selectedEventTime);
-  }, [selectedEventTime]);
+    dispatch(setLoader(true));
+    (async () => {
+      const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+
+      if (featFollowUp.status === 200) {
+        featFollowUp?.data?.forEach((event) => {
+          event.start = new Date(event.start);
+          event.end = new Date(event.end);
+        });
+        setEventsData(featFollowUp?.data);
+        dispatch(setLoader(false));
+      }
+    })();
+  }, [dispatch, selectedEventTime, synEvents, userDetails]);
+
+  console.log("eventsData", eventsData);
 
   const handleSelect = ({ start, end }) => {
-    // console.log(start);
-    // console.log(end);
-
+    console.log("{ start, end }", { start, end });
+    setSelectedEventTime({});
     setOpenDayDetails(true);
     setSelectedEventTime({
       start: start,
-      end: end,
+      end:
+        Math.ceil(
+          (new Date(end).getTime() - new Date(start).getTime()) /
+            (1000 * 3600 * 24)
+        ) === 0
+          ? end
+          : new Date(end.setDate(end.getDate() - 1)),
     });
     setEventDetails({});
   };
@@ -45,11 +71,17 @@ const BigCalendar = () => {
   };
 
   const handleEventDetailsCancel = () => {
-    setOpenDayDetails(false);
+    setIsEdit(false);
+    setOpenEventDetails(false);
   };
 
   return (
-    <div className="App">
+    <div>
+      {loadingDetails && (
+        <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <Loading />
+        </div>
+      )}
       <Calendar
         views={["day", "work_week", "month"]}
         selectable
@@ -57,6 +89,7 @@ const BigCalendar = () => {
         defaultDate={new Date()}
         defaultView="month"
         events={eventsData}
+        // events={events}
         style={{ height: "90vh" }}
         onSelectEvent={(e) => handleUpdateEvent(e)}
         onSelectSlot={handleSelect}
@@ -73,7 +106,13 @@ const BigCalendar = () => {
         <DayDetails
           handleOpenDayDetailsCancel={handleOpenDayDetailsCancel}
           selectedEventTime={selectedEventTime}
+          setSelectedEventTime={setSelectedEventTime}
           eventDetails={eventDetails}
+          eventsData={eventsData}
+          setEventsData={setEventsData}
+          synEvents={synEvents}
+          setSynEvents={setSynEvents}
+          userDetails={userDetails}
         />
       </Modal>
 
@@ -83,13 +122,20 @@ const BigCalendar = () => {
         centered
         visible={openEventDetails}
         onOk={() => setOpenEventDetails(false)}
-        onCancel={() => setOpenEventDetails(false)}
+        onCancel={() => {
+          setIsEdit(false);
+          setOpenEventDetails(false);
+        }}
         footer={false}
         width="50%"
       >
         <EventDetails
           handleEventDetailsCancel={handleEventDetailsCancel}
           eventDetails={eventDetails}
+          isEdit={isEdit}
+          setEventsData={setEventsData}
+          eventsData={eventsData}
+          setIsEdit={setIsEdit}
         />
       </Modal>
     </div>

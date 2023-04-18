@@ -69,6 +69,7 @@ import { ReactComponent as Gmail } from "../../assets/Icons/mail.svg";
 import { ReactComponent as Calender } from "../../assets/Icons/calender.svg";
 import { ReactComponent as Courses } from "../../assets/Icons/courses.svg";
 import { ReactComponent as Bookmark } from "../../assets/Icons/bookmark.svg";
+import { ReactComponent as Flag } from "../../assets/Icons/flag.svg";
 
 const Icons = {
   CompanyLogo,
@@ -142,6 +143,7 @@ const Icons = {
   Calender,
   Courses,
   Bookmark,
+  Flag,
 };
 
 export default Icons;

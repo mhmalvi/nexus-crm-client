@@ -271,9 +271,11 @@ const CourseDetails = ({ selectedCourse }) => {
 
               <div>
                 <Select
-                  // defaultValue={employeeList[0]}
+                  allowClear={true}
+                  autoClearSearchValue={true}
                   placeholder="Select Employee"
                   onChange={handleEmployeeChange}
+                  value={null}
                   style={{
                     width: 200,
                   }}
