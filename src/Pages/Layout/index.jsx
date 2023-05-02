@@ -1,4 +1,3 @@
-import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 // import { io } from "socket.io-client";
@@ -7,11 +6,16 @@ import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute
 import Sidebar from "../../Components/Shared/Sidebar";
 // import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
+import Cross from "../../assets/Images/cross.png";
+import Ham from "../../assets/Images/hamburger.png";
+import Calender from "../Calender";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
+import Courses from "../Courses";
 import Dashboard from "../Dashborad";
 import CompanyDetails from "../Dashborad/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "../Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
+import GmailModule from "../Gmail";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
 import Notifications from "../Notifications";
@@ -26,11 +30,6 @@ import Settings from "../Settings";
 import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
-import Ham from "../../assets/Images/hamburger.png";
-import Cross from "../../assets/Images/cross.png";
-import GmailModule from "../Gmail";
-import Calender from "../Calender";
-import Courses from "../Courses";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 

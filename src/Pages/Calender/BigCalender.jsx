@@ -1,29 +1,26 @@
-import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Modal } from "antd";
-import DayDetails from "./DayDetails";
-import { useEffect } from "react";
-import EventDetails from "./EventDetails";
-import Loading from "../../Components/Shared/Loader";
-import { handleFetchFollowUp } from "../../Components/services/reminder";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useDispatch, useSelector } from "react-redux";
+import { handleFetchFollowUp } from "../../Components/services/reminder";
 import { setLoader } from "../../features/user/userSlice";
+import DayDetails from "./DayDetails";
+import EventDetails from "./EventDetails";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
   const dispatch = useDispatch();
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
   const userDetails = useSelector((state) => state.user.userInfo);
   const [openDayDetails, setOpenDayDetails] = useState(false);
   const [openEventDetails, setOpenEventDetails] = useState(false);
   const [eventsData, setEventsData] = useState();
   const [selectedEventTime, setSelectedEventTime] = useState({});
   const [eventDetails, setEventDetails] = useState({});
-  const [synEvents, setSynEvents] = useState(false);
+  // const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -38,9 +35,13 @@ const BigCalendar = () => {
         });
         setEventsData(featFollowUp?.data);
         dispatch(setLoader(false));
+      } else {
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 3000);
       }
     })();
-  }, [dispatch, selectedEventTime, synEvents, userDetails]);
+  }, [dispatch, selectedEventTime, userDetails]);
 
   console.log("eventsData", eventsData);
 
@@ -77,11 +78,6 @@ const BigCalendar = () => {
 
   return (
     <div>
-      {loadingDetails && (
-        <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
-          <Loading />
-        </div>
-      )}
       <Calendar
         views={["day", "work_week", "month"]}
         selectable
@@ -110,8 +106,8 @@ const BigCalendar = () => {
           eventDetails={eventDetails}
           eventsData={eventsData}
           setEventsData={setEventsData}
-          synEvents={synEvents}
-          setSynEvents={setSynEvents}
+          // synEvents={synEvents}
+          // setSynEvents={setSynEvents}
           userDetails={userDetails}
         />
       </Modal>

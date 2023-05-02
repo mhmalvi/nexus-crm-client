@@ -45,20 +45,24 @@ const CompanySettings = () => {
         userDetails?.userInfo?.client_id
       );
 
-      console.log("Cooool", companyDetailsResponse);
-      if (companyDetailsResponse?.data?.[0]?.logo_id) {
-        const fetchFile = await handleFetchFile(
-          parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
-        );
+      console.log("Cooool", companyDetailsResponse?.data?.[0].logo_id);
+      if (companyDetailsResponse?.status) {
+        if (companyDetailsResponse?.data?.[0]?.logo_id) {
+          const fetchFile = await handleFetchFile(
+            companyDetailsResponse?.data?.[0].logo_id
+          );
 
-        // const filePath = fetchFile?.data;
-        setAvatarPreviewer(
-          (
-            process.env.REACT_APP_FILE_SERVER_URL +
-            "/public/" +
-            fetchFile?.data?.document_name
-          ).toString()
-        );
+          console.log("fetchFile", fetchFile);
+          if (fetchFile?.status === 200) {
+            setAvatarPreviewer(
+              (
+                process.env.REACT_APP_FILE_SERVER_URL +
+                "/public/" +
+                fetchFile?.data?.document_name
+              ).toString()
+            );
+          }
+        }
       }
 
       if (companyDetailsResponse?.status) {

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 // import { io } from "socket.io-client";
-// import { handleAddNotification } from "../../../Components/services/auth";
+
 import {
   handleAddNotice,
   handleDeleteNotices,
@@ -15,6 +15,8 @@ import {
 import Notice from "./Notice";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+
+
 
 const Calendar = ({
   filterDate,

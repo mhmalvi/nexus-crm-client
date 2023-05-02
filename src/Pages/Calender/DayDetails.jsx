@@ -10,9 +10,7 @@ const DayDetails = ({
   setSelectedEventTime,
   eventDetails,
   eventsData,
-  synEvents,
   setEventsData,
-  setSynEvents,
   userDetails,
 }) => {
   const [time, setTime] = useState("Select Time");

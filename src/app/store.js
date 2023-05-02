@@ -6,6 +6,7 @@ import leadsReducer from "../features/Leads/leadsSlice";
 import campaignsReducer from "../features/Leads/campaignSlice";
 import mailReducer from "../Pages/Gmail/features/mailSlice";
 import mailUserReducer from "../Pages/Gmail/features/mailUserSlice";
+import companyReducer from "../features/Company/companySlice";
 // import packagesReducer from "../features/utils/packagesSlice";
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     campaigns: campaignsReducer,
     mail: mailReducer,
     mailUser: mailUserReducer,
+    company: companyReducer,
     // packages: packagesReducer,
   },
   devTools: process.env.REACT_APP_PRODUCTION ? true : false,
