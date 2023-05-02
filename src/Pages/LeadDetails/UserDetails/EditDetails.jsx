@@ -136,8 +136,9 @@ const EditDetails = ({
             options={courses}
             placeholder="Search with course name"
             filterOption={(inputValue, option) =>
-              option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1
+              option?.value
+                ?.toLowerCase()
+                ?.indexOf(inputValue?.toLowerCase()) !== -1
             }
           />
         </div>
@@ -151,44 +152,12 @@ const EditDetails = ({
             id="work_location"
             value={contactDetails?.work_location}
             onChange={handleLocationSearch}
-            options={[
-              {
-                id: 1,
-                value: "NSW",
-              },
-              {
-                id: 2,
-                value: "WA",
-              },
-              {
-                id: 3,
-                value: "VIC",
-              },
-              {
-                id: 4,
-                value: "QLD",
-              },
-              {
-                id: 5,
-                value: "SA",
-              },
-              {
-                id: 6,
-                value: "ACT",
-              },
-              {
-                id: 7,
-                value: "NT",
-              },
-              {
-                id: 8,
-                value: "TAS",
-              },
-            ]}
+            options={cityOptions}
             placeholder="Search with location initial"
             filterOption={(inputValue, option) =>
-              option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1
+              option?.value
+                ?.toLowerCase()
+                ?.indexOf(inputValue?.toLowerCase()) !== -1
             }
           />
         </div>
@@ -223,3 +192,38 @@ const EditDetails = ({
 };
 
 export default EditDetails;
+
+const cityOptions = [
+  {
+    id: 1,
+    value: "NSW",
+  },
+  {
+    id: 2,
+    value: "WA",
+  },
+  {
+    id: 3,
+    value: "VIC",
+  },
+  {
+    id: 4,
+    value: "QLD",
+  },
+  {
+    id: 5,
+    value: "SA",
+  },
+  {
+    id: 6,
+    value: "ACT",
+  },
+  {
+    id: 7,
+    value: "NT",
+  },
+  {
+    id: 8,
+    value: "TAS",
+  },
+];

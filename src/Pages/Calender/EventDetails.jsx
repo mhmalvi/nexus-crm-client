@@ -209,20 +209,22 @@ const EventDetails = ({
             <div>{updateEventData?.description}</div>
           )}
         </div>
-        <div className="flex justify-end">
-          <div
-            onClick={handleEventDetailsCancel}
-            className="bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer"
-          >
-            Cancel
+        {isEdit ? (
+          <div className="flex justify-end">
+            <div
+              onClick={handleEventDetailsCancel}
+              className="bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer"
+            >
+              Cancel
+            </div>
+            <button
+              className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+              onClick={handleUpdateFollowUpReq}
+            >
+              Save
+            </button>
           </div>
-          <button
-            className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
-            onClick={handleUpdateFollowUpReq}
-          >
-            Save
-          </button>
-        </div>
+        ) : null}
       </div>
     </div>
   );
