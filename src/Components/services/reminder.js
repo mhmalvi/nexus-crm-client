@@ -13,7 +13,6 @@ export const handleAddFollowUp = async (followUpData) => {
 };
 
 export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
-  console.log("updatedFollowUpData", updatedFollowUpData);
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_AUTH_URL}/api/follow-up-update/${id}`,
@@ -29,6 +28,21 @@ export const handleFetchFollowUp = async (userID) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/follow-up-by-user`,
+      {
+        user_id: userID,
+      }
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleFetchReminder = async (userID) => {
+  try {
+    const result = await axios.get(
+      // `${process.env?.REACT_APP_AUTH_URL}/api/follow-up-by-user`,
+      `https://crmnotification.quadque.digital/api/follow`,
       {
         user_id: userID,
       }

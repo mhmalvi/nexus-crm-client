@@ -31,8 +31,8 @@ const Sidebar = ({
   openSideBar,
   // toggleMessage,
   // setToggleMessage,
-  // toggleNotification,
-  // setToggleNotification,
+  toggleNotification,
+  setToggleNotification,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,11 +40,11 @@ const Sidebar = ({
   // const userMessages = useSelector((state) => state.messages);
   // const userNotification = useSelector((state) => state.notifications);
 
-  const [companyName, setCompanyName] = useState("");
 
-  // useEffect(() => {
-  //   console.log("From Sidebar");
-  // }, [userMessages]);
+  const [companyDetails, setCompanyDetails] = useState({
+    company_name: null,
+    company_logo: null,
+  });
 
   // const userDetails = useSelector((state) => state?.user);
   // const dispatch = useDispatch();
@@ -73,19 +73,19 @@ const Sidebar = ({
 
   useEffect(() => {
     (async () => {
-      const companyName = await handleFetchCompanyDetails(
+      const companyDetailsResp = await handleFetchCompanyDetails(
         userDetails?.userInfo?.client_id
       );
 
       const companyLogo = await handleFetchFile(
-        companyName?.data?.[0]?.logo_id
+        companyDetailsResp?.data?.[0]?.logo_id
       );
 
       if (companyLogo?.status === 200) {
         dispatch(
           addCompanyDetails({
-            ...companyName?.data?.[0],
-            logo:
+            ...companyDetailsResp?.data?.[0],
+            company_logo:
               process.env.REACT_APP_FILE_SERVER_URL +
               "/public/" +
               companyLogo?.data?.document_name,
@@ -93,9 +93,9 @@ const Sidebar = ({
         );
       }
 
-      setCompanyName({
-        company_name: companyName?.data?.[0]?.name
-          ? companyName?.data?.[0]?.name
+      setCompanyDetails({
+        company_name: companyDetailsResp?.data?.[0]?.name
+          ? companyDetailsResp?.data?.[0]?.name
           : " ",
         company_logo:
           process.env.REACT_APP_FILE_SERVER_URL +
@@ -134,9 +134,9 @@ const Sidebar = ({
     >
       <div className="ml-10">
         <div className="pb-2 pt-10 flex flex-col items-center justify-center -ml-28">
-          <img src={companyName?.company_logo} className="w-32" alt="" />
+          <img src={companyDetails?.company_logo} className="w-32" alt="" />
           {/* <h1 className="font-poppins text-xl font-semibold text-black text-opacity-70 pt-2">
-            {companyName?.company_name}
+            {companyDetails?.company_name}
           </h1> */}
         </div>
         <div
@@ -226,14 +226,14 @@ const Sidebar = ({
             </div>
           </div> */}
 
-          {/* <div>
+          <div>
             <div
               className="flex items-center text-base cursor-pointer my-5 py-0.5"
               style={{
                 color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
               }}
               onClick={(e) => {
-                setToggleMessage(false);
+                // setToggleMessage(false);
                 setToggleNotification(!toggleNotification);
                 e.stopPropagation();
               }}
@@ -242,29 +242,30 @@ const Sidebar = ({
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Notification
               </span>
-              {userNotification?.notifications?.filter(
+              {/* {userNotification?.notifications?.filter(
                 (notification) => notification.status === 0
-              )?.length !== 0 && (
-                <div className="relative right-0 flex justify-center items-center">
-                  <div
-                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                    style={{
-                      background: "#FF3B30",
-                    }}
-                  >
-                    {
+              )?.length !== 0 && ( */}
+              <div className="relative right-0 flex justify-center items-center">
+                <div
+                  className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                  style={{
+                    background: "#FF3B30",
+                  }}
+                >
+                  2
+                  {/* {
                       userNotification?.notifications?.filter(
                         (notification) => notification.status === 0
                       )?.length
-                    }
-                  </div>
+                    } */}
                 </div>
-              )}
+              </div>
+              {/* )} */}
               {toggleNotification && (
                 <div className="ml-auto active-option">|</div>
               )}
             </div>
-          </div> */}
+          </div>
           {userDetails?.userInfo?.role_id !== 6 && (
             <div>
               <NavLink
@@ -491,9 +492,9 @@ const Sidebar = ({
                 }}
               />
             </div>
-            {Items2.map((item) => (
+            {Items2.map((item, i) => (
               <div
-                key={item.key}
+                key={i}
                 className="flex items-center text-base cursor-pointer my-5 py-0.5"
                 style={{
                   color: `${active === item.name ? "#7037FF" : "#7C8DB5"}`,
