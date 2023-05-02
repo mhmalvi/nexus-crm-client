@@ -53,14 +53,15 @@ const CompanyDetails = () => {
             parseInt(companyDetailsResponse?.data?.[0]?.logo_id)
           );
 
-          const filePath = fetchFile?.data?.[0];
-          setAvatarPreviewer(
-            (
-              process.env.REACT_APP_FILE_SERVER_URL +
-              "/" +
-              filePath?.document_name
-            ).toString()
-          );
+          if (fetchFile?.status === 200) {
+            setAvatarPreviewer(
+              (
+                process.env.REACT_APP_FILE_SERVER_URL +
+                "/public/" +
+                fetchFile?.data?.[0]?.document_name
+              ).toString()
+            );
+          }
         }
 
         dispatch(setLoader(false));

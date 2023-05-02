@@ -1,10 +1,12 @@
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
+import { addCompanyDetails } from "../../features/Company/companySlice";
+import { handleFetchFile } from "../services/utils";
 
 /* function getItem(label, key, icon, children) {
   return {
@@ -27,11 +29,12 @@ const Sidebar = ({
   setActive,
   Items2,
   openSideBar,
-  toggleMessage,
-  setToggleMessage,
-  toggleNotification,
-  setToggleNotification,
+  // toggleMessage,
+  // setToggleMessage,
+  // toggleNotification,
+  // setToggleNotification,
 }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   // const userMessages = useSelector((state) => state.messages);
@@ -74,11 +77,33 @@ const Sidebar = ({
         userDetails?.userInfo?.client_id
       );
 
-      setCompanyName(
-        companyName?.data?.[0]?.name ? companyName?.data?.[0]?.name : " "
+      const companyLogo = await handleFetchFile(
+        companyName?.data?.[0]?.logo_id
       );
+
+      if (companyLogo?.status === 200) {
+        dispatch(
+          addCompanyDetails({
+            ...companyName?.data?.[0],
+            logo:
+              process.env.REACT_APP_FILE_SERVER_URL +
+              "/public/" +
+              companyLogo?.data?.document_name,
+          })
+        );
+      }
+
+      setCompanyName({
+        company_name: companyName?.data?.[0]?.name
+          ? companyName?.data?.[0]?.name
+          : " ",
+        company_logo:
+          process.env.REACT_APP_FILE_SERVER_URL +
+          "/public/" +
+          companyLogo?.data?.document_name,
+      });
     })();
-  }, [userDetails?.userInfo?.client_id]);
+  }, [dispatch, userDetails]);
 
   const handleLogout = () => {
     Storage.removeItem("auth_tok");
@@ -108,15 +133,14 @@ const Sidebar = ({
       }}
     >
       <div className="ml-10">
-        <div className="pb-4 pt-12">
-          <Icons.CompanyLogo
-            style={{
-              width: "122px",
-            }}
-          />
+        <div className="pb-2 pt-10 flex flex-col items-center justify-center -ml-28">
+          <img src={companyName?.company_logo} className="w-32" alt="" />
+          {/* <h1 className="font-poppins text-xl font-semibold text-black text-opacity-70 pt-2">
+            {companyName?.company_name}
+          </h1> */}
         </div>
         <div
-          className="border-r 2xl:pt-8 pb-20 overflow-y-scroll"
+          className="border-r 2xl:pt-0 pb-20 overflow-y-scroll"
           style={{
             height: `calc(100vh - 100px)`,
             overflowX: "hidden",
@@ -461,9 +485,11 @@ const Sidebar = ({
 
           <div className="lg:mt-0 2xl:mt-36 pt-1.5">
             <div className="mr-4">
-              <h1 className="font-poppins text-lg font-semibold text-black text-opacity-70 pt-6 pb-2">
-                {companyName}
-              </h1>
+              <Icons.CompanyLogo
+                style={{
+                  width: "122px",
+                }}
+              />
             </div>
             {Items2.map((item) => (
               <div

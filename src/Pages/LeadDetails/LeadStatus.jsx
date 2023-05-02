@@ -56,6 +56,7 @@ const LeadStatus = (props) => {
   ];
 
   const userDetails = useSelector((state) => state?.user);
+  const companyDetails = useSelector((state) => state?.company.companyDetails);
   // const [activeStatus, setActiveStatus] = useState(
   //   Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
   // );
@@ -201,9 +202,15 @@ const LeadStatus = (props) => {
         return;
       } else {
         const sendMailResponse = await handleLeadStatusChange({
-          // to: leadDetails?.leadDetails?.student_email,
-          to: "megatanjib@gmail.com",
+          to: leadDetails?.leadDetails?.student_email,
           lead_id: leadDetails?.leadDetails?.lead_id,
+          course: leadDetails?.leadDetails?.course_title,
+          client: companyDetails?.name,
+          // logo: companyDetails?.logo,
+          logo: (companyDetails?.logo).replace(
+            `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
+            ""
+          ),
           name: leadDetails?.leadDetails?.full_name,
           student_id: leadDetails?.leadDetails?.student_id,
           lead_status: parseInt(key) + 1,
@@ -238,6 +245,12 @@ const LeadStatus = (props) => {
         to: leadDetails?.leadDetails?.student_email,
         lead_id: leadDetails?.leadDetails?.lead_id,
         name: leadDetails?.leadDetails?.full_name,
+        course: leadDetails?.leadDetails?.course_title,
+        client: companyDetails?.name,
+        logo: (companyDetails?.logo).replace(
+          `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
+          ""
+        ),
         student_id: leadDetails?.leadDetails?.student_id,
         response: e.target.value,
       });
