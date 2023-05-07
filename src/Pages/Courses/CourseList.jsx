@@ -124,29 +124,43 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
       ),
   });
 
-  const tableHeaders = [
+  const courseLinstTableHeaders = [
     {
       title: "Course Code",
       dataIndex: "course_code",
       key: "course_code",
-      render: (course_code) => (
-        <h4 className="cursor-pointer uppercase">{course_code}</h4>
+      render: (course_code, i) => (
+        <h4
+          key={i}
+          className="cursor-pointer uppercase"
+          style={{
+            textTransform: "uppercase",
+          }}
+        >
+          {course_code?.toUpperCase()}
+        </h4>
       ),
-      // width: 150,
       ...getColumnSearchProps("course_code"),
     },
     {
       title: "Course Title",
       dataIndex: "course_title",
       key: "course_title",
-
-      render: (course_title) => (
-        <h4 className="cursor-pointer uppercase">{course_title}</h4>
+      ...getColumnSearchProps("course_title"),
+      render: (course_title, i) => (
+        <h4 key={i} className="cursor-pointer uppercase">
+          {course_title}
+        </h4>
       ),
       // width: 150,
-      ...getColumnSearchProps("course_title"),
     },
   ];
+
+  // useEffect(() => {
+  //   document
+  //     .getElementsByClassName("ant-table-cell")
+  //     ?.classList?.add("uppercase");
+  // }, []);
 
   return (
     <div>
@@ -174,7 +188,10 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
       {/* Courses */}
       <div>
         <Table
-          columns={tableHeaders}
+          style={{
+            textTransform: "uppercase",
+          }}
+          columns={courseLinstTableHeaders}
           dataSource={courses}
           pagination={false}
           // loading

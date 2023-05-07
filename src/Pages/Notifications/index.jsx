@@ -1,23 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // import io from "socket.io-client";
-import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
-import { addNotifications } from "../../features/user/notificationSlice";
+// import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
+// import { addNotifications } from "../../features/user/notificationSlice";
+import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 import Notification from "./Notification";
+import { useNavigate } from "react-router-dom";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Notifications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [syncNotification, setSyncNotification] = useState(false);
   const userDetails = useSelector((state) => state?.user);
   const userNotifications = useSelector(
     (state) => state?.notifications
   ).notifications;
 
-  // const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const notificationRes = await handleFetchFollowUpNotification(
+        userDetails?.userInfo?.user_id
+      );
+      console.log("notificationRes", notificationRes);
+    })();
+  }, [userDetails]);
 
   const handleNotificationNavigation = async (notification) => {
     console.log("userDetails", notification.receiver_id);
@@ -52,6 +59,7 @@ const Notifications = () => {
         width: "341px",
         left: "290px",
         boxShadow: "4px 2px 10px rgba(112, 55, 255, 0.05)",
+        zIndex: "99999",
       }}
     >
       <div className="px-4 pt-13" onClick={(e) => e.stopPropagation()}>

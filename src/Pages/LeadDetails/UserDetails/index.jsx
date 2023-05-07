@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ReactStars from "react-stars";
 import {
+  handleDeleteComment,
   handleLeadCommentUpdate,
   handleLeadReviewUpdate,
   handleLeadStatusUpdate,
@@ -75,8 +76,8 @@ const UserDetails = ({
 
     setRating(leadDetails?.leadDetails?.star_review);
 
-    if (leadDetails?.leadMultiComment?.length) {
-      setAllComents(leadDetails?.leadCallHistory);
+    if (leadDetails?.leadComments?.length) {
+      setAllComents(leadDetails?.leadComments);
     }
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
@@ -117,6 +118,7 @@ const UserDetails = ({
 
     if (commentUpdateResponse?.status) {
       setAllComents(commentUpdateResponse?.data);
+      setComment("");
       message.success("Comment Added Successfully");
       document.getElementById("lead_comment").style.caretColor = "transparent";
     }
@@ -162,6 +164,15 @@ const UserDetails = ({
       message.warn("Something went wrong. Unable to add remark");
     }
     console.log("reviewRemarksResponse", reviewRemarksResponse);
+  };
+
+  const handleDeleteCommentReq = async (id) => {
+    const commentDeleteRes = await handleDeleteComment(id);
+    if (commentDeleteRes?.status === 200) {
+      message.success("Comment Deleted Successfully");
+      const currentComments = [...allComents]?.filter((c) => c.id !== id);
+      setAllComents(currentComments);
+    }
   };
 
   return (
@@ -605,11 +616,19 @@ const UserDetails = ({
                 {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
                 {allComents?.length
                   ? allComents?.map((history) => (
-                      <div className="flex flex-col w-full border rounded-lg p-2 my-2 shadow">
-                        <span className="text-base">{history?.comments}</span>
-                        <span className="text-xs">
-                          {new Date(history.created_at).toLocaleString()}
-                        </span>
+                      <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">
+                        <div>
+                          <div className="text-base">{history?.comments}</div>
+                          <div className="text-xs">
+                            {new Date(history.created_at).toLocaleString()}
+                          </div>
+                        </div>
+                        <div
+                          className="mr-2"
+                          onClick={() => handleDeleteCommentReq(history?.id)}
+                        >
+                          <Icons.Cross className="w-3 text-red-600 hover:text-red-500 cursor-pointer" />
+                        </div>
                       </div>
                     ))
                   : "No comments yet"}

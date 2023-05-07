@@ -71,7 +71,7 @@ const LeadStatus = (props) => {
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
   const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
   const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
-  // const [tooltipMessage, setTooltipMessage] = useState("");
+  const [tooltipMessage, setTooltipMessage] = useState("");
   const [certificate, setCertificate] = useState("");
   const [callResponse, setCallResponse] = useState();
 
@@ -113,26 +113,26 @@ const LeadStatus = (props) => {
     },
   ];
 
-  // const tooltipMessages = {
-  //   "New Lead": {
-  //     message: "It's a new arrival",
-  //   },
-  //   Skilled: {
-  //     message: "If the student is skilled enough",
-  //   },
-  //   Called: {
-  //     message: "If you have communicated with the student",
-  //   },
-  //   Paid: {
-  //     message: "If the student have paid any fee",
-  //   },
-  //   Verified: {
-  //     message: "If the student's documents are verified",
-  //   },
-  //   Completed: {
-  //     message: "If the student has completed the course and certificate issued",
-  //   },
-  // };
+  const tooltipMessages = {
+    "New Lead": {
+      message: "It's a new arrival",
+    },
+    Skilled: {
+      message: "If the student is skilled enough",
+    },
+    Called: {
+      message: "If you have communicated with the student",
+    },
+    Paid: {
+      message: "If the student have paid any fee",
+    },
+    Verified: {
+      message: "If the student's documents are verified",
+    },
+    Completed: {
+      message: "If the student has completed the course and certificate issued",
+    },
+  };
 
   useEffect(() => {
     setActiveStatusTitle(
@@ -225,9 +225,10 @@ const LeadStatus = (props) => {
     }
   };
 
-  // const handleTooltipMessage = (e) => {
-  //   setTooltipMessage(tooltipMessages[e.target.outerText]?.message);
-  // };
+  const handleTooltipMessage = (e) => {
+    console.log("e.target", e.target?.outerText);
+    setTooltipMessage(tooltipMessages[`${e.target.outerText}`]?.message);
+  };
 
   const onCallResponseChange = async (e) => {
     dispatch(setLoader(true));
@@ -264,11 +265,11 @@ const LeadStatus = (props) => {
   };
 
   const menu = (
-    <Tooltip placement="top" title={"Select the stage"}>
+    <Tooltip placement="top" title={tooltipMessage}>
       <Menu
         className="text-center text-base font-semibold"
         onClick={onStatusChange}
-        // onMouseOver={handleTooltipMessage}
+        onMouseOver={handleTooltipMessage}
         items={[
           {
             label: "New Lead",

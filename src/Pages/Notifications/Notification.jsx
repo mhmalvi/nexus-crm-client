@@ -1,7 +1,14 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
+import { handleReadNotification } from "../../Components/services/notification";
 
 const Notification = ({ notifications, handleNotificationNavigation }) => {
+  const handleReadMessageReq = async (id) => {
+    console.log(id);
+    const messageReadRes = await handleReadNotification(id);
+    console.log("messageReadRes", messageReadRes);
+  };
+
   return (
     <div>
       <div
@@ -17,19 +24,28 @@ const Notification = ({ notifications, handleNotificationNavigation }) => {
         )}
         {notifications?.map((notification, i) => (
           <div
-            onClick={() =>
+            onClick={() => {
               handleNotificationNavigation({
                 id: notification.id,
                 receiver_id: notification.receiver_id,
                 type: notification.notification_type,
-              })
-            }
+              });
+              handleReadMessageReq(notification.id);
+            }}
             key={i}
-            className="pt-5 px-4 cursor-pointer hover:bg-gray-50 hover:delay-200"
+            className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >
-            <div className="flex justify-between items-start">
-              <h1 className="text-lg leading-7 font-poppins font-semibold uppercase">
-                {notification.notification_type}
+            {/* <div className="bg-brand-color/20 px-2 py-0.5 rounded"> */}
+            <div className="flex justify-between items-start ">
+              <h1 className="text-lg leading-7 font-poppins font-semibold ">
+                <span
+                  className={`${
+                    priorityList[notification?.priority - 1]?.className
+                  }`}
+                >
+                  {notification?.priority ? "Reminder: " : null}
+                </span>
+                <span>{notification?.title}</span>
               </h1>
 
               {/* Date & Time */}
@@ -47,19 +63,20 @@ const Notification = ({ notifications, handleNotificationNavigation }) => {
             <div className="flex justify-between items-start mb-5">
               <div>
                 <p className="text-sm leading-6 font-medium font-poppins mb-0">
-                  {notification.details}
+                  {notification?.description}
                 </p>
               </div>
               <div>
                 <Icons.Read
-                  className={`${
-                    notification.status
+                  className={` ${
+                    !notification.status
                       ? "text-brand-color"
                       : "text-black text-opacity-25"
                   }`}
                 />
               </div>
             </div>
+            {/* </div> */}
             <hr onClick={(e) => e.stopPropagation()} />
           </div>
         ))}
@@ -69,3 +86,26 @@ const Notification = ({ notifications, handleNotificationNavigation }) => {
 };
 
 export default Notification;
+
+const priorityList = [
+  {
+    key: 1,
+    lable: "Important",
+    className: "text-red-600",
+  },
+  {
+    key: 2,
+    lable: "Average",
+    className: "text-orange-600",
+  },
+  {
+    key: 3,
+    lable: "Low",
+    className: "text-violet-600",
+  },
+  {
+    key: 4,
+    lable: "Very Low",
+    className: "text-yellow-600",
+  },
+];
