@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Icons from "../../Components/Shared/Icons";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
-// import { handleReminderAudio } from "../../Components/Shared/utils/sounds";
+import { io } from "socket.io-client";
 import { Storage } from "../../Components/Shared/utils/store";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
@@ -30,13 +30,17 @@ import Settings from "../Settings";
 import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
-
-// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
+import { useDispatch, useSelector } from "react-redux";
+import { addNotifications } from "../../features/user/notificationSlice";
+import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 
 const Layout = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const userDetails = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state?.user);
+  const userNotifications = useSelector(
+    (state) => state?.notifications?.notifications
+  );
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
@@ -46,16 +50,29 @@ const Layout = () => {
     setOpenSideBar(index);
   };
 
-  // useEffect(() => {
-  //   socket.on("receive_reminder", (data) => {
-  //     openNotification("topRight", data);
-  //     handleReminderAudio();
-  //   });
-  //   // unbind the event handler when the component gets unmounted
-  //   return () => {
-  //     socket.off("receive_reminder");
-  //   };
-  // }, []);
+  useEffect(() => {
+    const socket = io(`${process.env.REACT_APP_EVENTS_URL}`);
+
+    setInterval(() => {
+      socket.emit("message", {
+        user_id: userDetails?.userInfo?.user_id,
+      });
+
+      socket.on("message", function (msg) {
+        msg.forEach((notification) => {
+          if (
+            userNotifications.filter((prev) => prev?.id === notification?.id)
+              ?.length === 0
+          ) {
+            dispatch(addNotifications(notification));
+            handleMessageAudio();
+          }
+        });
+
+        console.log("msg", msg);
+      });
+    }, 60000);
+  }, []);
 
   useEffect(() => {
     if (window.location.pathname === "/") {

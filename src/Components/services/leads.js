@@ -454,6 +454,20 @@ export const handleCommentsSubmitReq = async (remarks, leadId) => {
   }
 };
 
+export const handleDeleteComment = async (commentId) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/delete-lead-comments`,
+      {
+        comment_id: commentId,
+      }
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const fetchSalesEmployeesSale = async (companyId) => {
   console.log("companyId", companyId);
   try {

@@ -8,11 +8,8 @@ export const notificationsSlice = createSlice({
   reducers: {
     addNotifications: (state, actions) => {
       state.notifications.push(actions.payload);
-      // state.notifications = actions.payload;
     },
     addReminders: (state, actions) => {
-      // state.notifications.push(actions.payload);
-      // state.notifications = actions.payload;
       state.notifications.push(actions.payload);
     },
   },

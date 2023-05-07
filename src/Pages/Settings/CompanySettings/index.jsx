@@ -100,7 +100,7 @@ const CompanySettings = () => {
       id: companyDetails?.cid,
       name: companyDetails?.name,
       description: document.getElementById("description").innerText,
-      logo_id: fileId,
+      logo_id: fileId ? fileId : companyDetails?.logo_id,
       contact: companyDetails?.contact,
       business_email: companyDetails?.business_email,
       address: companyDetails?.address,

@@ -3,27 +3,13 @@ import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
-// import Echo from "laravel-echo";
 
-// import { io } from "socket.io-client";
 import {
   handleAddNotice,
   handleDeleteNotices,
   handleFetchNotices,
 } from "../../../Components/services/company";
-// import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
-// import { addNotifications } from "../../../features/user/notificationSlice";
 import Notice from "./Notice";
-
-// const socket = io.connect("https://crmnotification.quadque.digital/api/follow");
-
-// const options = {
-//   broadcaster: "pusher",
-//   key: "544bfe6a4d936254490a",
-//   cluster: "ap2",
-//   forceTLS: true,
-//   // authEndpoint: "https://crmnotification.quadque.digital/broadcasting/auth",
-// };
 
 const Calendar = ({
   filterDate,
@@ -36,8 +22,6 @@ const Calendar = ({
   selectedYear,
   // layout,
 }) => {
-  // const echo = new Echo(options);
-
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
@@ -55,15 +39,6 @@ const Calendar = ({
   const [syncNotices, setSyncNotices] = useState(true);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await echo.channel(`event`).notification((data) => {
-  //       console.log(data);
-  //     });
-  //     console.log("res", res);
-  //   })();
-  // }, []);
 
   useEffect(() => {
     //   if (userDetails.role !== "admin") {

@@ -37,9 +37,13 @@ const Sidebar = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
+  const notifications = useSelector(
+    (state) => state?.notifications?.notifications
+  );
   // const userMessages = useSelector((state) => state.messages);
   // const userNotification = useSelector((state) => state.notifications);
 
+  // console.log("notifications", notifications);
 
   const [companyDetails, setCompanyDetails] = useState({
     company_name: null,
@@ -70,6 +74,8 @@ const Sidebar = ({
   //     );
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     (async () => {
@@ -240,27 +246,22 @@ const Sidebar = ({
             >
               <Icons.Bell className="w-4" />
               <span className="ml-4 leading-6 font-medium font-poppins">
-                Notification
+                Notifications
               </span>
-              {/* {userNotification?.notifications?.filter(
-                (notification) => notification.status === 0
-              )?.length !== 0 && ( */}
-              <div className="relative right-0 flex justify-center items-center">
-                <div
-                  className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                  style={{
-                    background: "#FF3B30",
-                  }}
-                >
-                  2
-                  {/* {
-                      userNotification?.notifications?.filter(
-                        (notification) => notification.status === 0
-                      )?.length
-                    } */}
+
+              {notifications?.length ? (
+                <div className="relative right-0 flex justify-center items-center">
+                  <div
+                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                    style={{
+                      background: "#FF3B30",
+                    }}
+                  >
+                    {notifications?.length}
+                  </div>
                 </div>
-              </div>
-              {/* )} */}
+              ) : null}
+
               {toggleNotification && (
                 <div className="ml-auto active-option">|</div>
               )}

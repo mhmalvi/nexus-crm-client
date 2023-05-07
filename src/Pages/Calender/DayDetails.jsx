@@ -195,6 +195,7 @@ const DayDetails = ({
                 format="HH:mm"
                 bordered={false}
                 onChange={onTimeChange}
+                onOk={onTimeChange}
               />
             </div>
           </div>

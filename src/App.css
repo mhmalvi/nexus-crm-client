@@ -436,3 +436,7 @@ table.custom-table > tbody > tr:hover td {
 .rbc-active {
   background-color: #d5c7f6ad !important;
 }
+
+#course_code {
+  text-transform: uppercase !important;
+}
