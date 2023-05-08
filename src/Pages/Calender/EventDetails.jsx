@@ -80,7 +80,7 @@ const EventDetails = ({
           key={priority?.key}
           onClick={() => handlePriorityChange(priority)}
         >
-          <div className="flex items-center">
+          <div className='flex items-center'>
             <Icons.Flag className={`w-4 h-4 mr-2 ${priority?.className}`} />
             <div>{priority?.lable}</div>
           </div>
@@ -90,17 +90,17 @@ const EventDetails = ({
   );
 
   return (
-    <div className="px-10 py-4 font-poppins">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="text-xl list-item list-disc font-semibold py-6">
-            <div className="flex items-center">
+    <div className='px-10 py-4 font-poppins'>
+      <div className='flex justify-between items-center'>
+        <div className='flex items-center'>
+          <div className='text-xl list-item list-disc font-semibold py-6'>
+            <div className='flex items-center'>
               {isEdit ? (
                 <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  className="outline-none bg-gray-100 px-3 py-0.5 rounded-full mr-2 shadow-sm"
+                  type='text'
+                  name='title'
+                  id='title'
+                  className='outline-none bg-gray-100 px-3 py-0.5 rounded-full mr-2 shadow-sm'
                   value={updateEventData?.title}
                   onChange={handleEventDetailsChange}
                 />
@@ -115,14 +115,14 @@ const EventDetails = ({
               <Dropdown
                 overlay={menu}
                 trigger={["click"]}
-                className="cursor-pointer ml-4"
+                className='cursor-pointer ml-4'
               >
                 <Space>
-                  <div className="flex items-center">
+                  <div className='flex items-center'>
                     <Icons.Flag
                       className={`w-4 h-4 mr-2 ${selectedPriority?.className}`}
                     />
-                    <div className="whitespace-nowrap w-16">
+                    <div className='whitespace-nowrap w-16'>
                       {selectedPriority?.lable}
                     </div>
                   </div>
@@ -130,7 +130,7 @@ const EventDetails = ({
                 </Space>
               </Dropdown>
             ) : (
-              <div className="flex items-center ml-4 px-2.5 py-0.5 border bg-slate-200 rounded-full shadow-sm">
+              <div className='flex items-center ml-4 px-2.5 py-0.5 border bg-slate-200 rounded-full shadow-sm'>
                 <div>
                   <Icons.Flag
                     className={`w-3.5 ${
@@ -140,7 +140,7 @@ const EventDetails = ({
                     }`}
                   />
                 </div>
-                <div className="text-sm font-semibold ml-1.5">
+                <div className='text-sm font-semibold ml-1.5'>
                   {
                     priorityList?.find(
                       (priority) => priority.key === eventDetails?.priority
@@ -153,15 +153,15 @@ const EventDetails = ({
         </div>
         <div>
           <Icons.Edit
-            className="hover:text-brand-color cursor-pointer transition-colors delay-200 duration-200"
+            className='hover:text-brand-color cursor-pointer transition-colors delay-200 duration-200'
             onClick={() => setIsEdit(!isEdit)}
           />
         </div>
       </div>
 
-      <div className="flex flex-col justify-start items-start">
+      <div className='flex flex-col justify-start items-start'>
         {isEdit ? (
-          <div className="flex items-center">
+          <div className='flex items-center'>
             <span>
               {startDateTime
                 ? new Date(startDateTime)
@@ -171,7 +171,7 @@ const EventDetails = ({
                     .toString()
                     .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
             </span>
-            <span className="mx-2">-</span>
+            <span className='mx-2'>-</span>
             <span>
               {endDateTime
                 ? new Date(endDateTime)
@@ -190,18 +190,18 @@ const EventDetails = ({
             />
           </div>
         ) : (
-          <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
+          <div className='float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm'>
             {new Date(eventDetails?.start)?.toDateString()} -{" "}
             {new Date(eventDetails?.end)?.toDateString()}
           </div>
         )}
-        <div className="text-base font-light my-8">
+        <div className='text-base font-light my-8'>
           {isEdit ? (
             <textarea
-              className="min-w-full bg-gray-100 outline-none p-2 rounded-xl shadow-sm"
+              className='w-[42vw] bg-gray-100 outline-none p-2 rounded-xl shadow-sm'
               rows={3}
-              cols={110}
-              id="description"
+              // cols={110}
+              id='description'
               onChange={handleEventDetailsChange}
               value={updateEventData?.description}
             />
@@ -210,15 +210,15 @@ const EventDetails = ({
           )}
         </div>
         {isEdit ? (
-          <div className="flex justify-end">
+          <div className='flex justify-end'>
             <div
               onClick={handleEventDetailsCancel}
-              className="bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer"
+              className='bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer'
             >
               Cancel
             </div>
             <button
-              className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+              className='bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer'
               onClick={handleUpdateFollowUpReq}
             >
               Save
