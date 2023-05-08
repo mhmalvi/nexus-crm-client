@@ -33,6 +33,7 @@ import UserProfile from "../Settings/Profile/UserProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotifications } from "../../features/user/notificationSlice";
 import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
+import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -72,6 +73,32 @@ const Layout = () => {
         console.log("msg", msg);
       });
     }, 60000);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const notificationRes = await handleFetchFollowUpNotification(
+        userDetails?.userInfo?.user_id
+      );
+
+      console.log("notificationRes", notificationRes);
+
+      if (notificationRes.status === 200) {
+        notificationRes?.data?.forEach((notification) => {
+          console.log(
+            "UNIQUE",
+            userNotifications?.filter((n) => n.id === notification.id)
+          );
+
+          if (
+            userNotifications?.filter((n) => n.id === notification.id)
+              ?.length === 0
+          ) {
+            dispatch(addNotifications(notification));
+          }
+        });
+      }
+    })();
   }, []);
 
   useEffect(() => {

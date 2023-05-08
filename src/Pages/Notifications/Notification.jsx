@@ -1,12 +1,32 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
 import { handleReadNotification } from "../../Components/services/notification";
+import { setNotifications } from "../../features/user/notificationSlice";
 
-const Notification = ({ notifications, handleNotificationNavigation }) => {
+const Notification = ({ handleNotificationNavigation }) => {
+  const dispatch = useDispatch();
+  const notifications = useSelector(
+    (state) => state?.notifications
+  ).notifications;
+
   const handleReadMessageReq = async (id) => {
     console.log(id);
-    const messageReadRes = await handleReadNotification(id);
-    console.log("messageReadRes", messageReadRes);
+    // const messageReadRes = await handleReadNotification(id);
+    // console.log("messageReadRes", messageReadRes);
+    // if (messageReadRes?.status === 201) {
+    //   const allNotifications = [...notifications];
+
+    //   const updatedNotifications = allNotifications?.map((notification) => {
+    //     if (notification.id === id) {
+    //       return { ...notification, status: 0 };
+    //     }
+    //     return notification;
+    //   });
+
+    //   console.log("updatedNotifications", updatedNotifications);
+    //   dispatch(setNotifications(updatedNotifications));
+    // }
   };
 
   return (

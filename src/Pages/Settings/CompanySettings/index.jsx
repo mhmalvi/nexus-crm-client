@@ -13,8 +13,10 @@ import {
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
-import { setLoader } from "../../../features/user/userSlice";
+import { setLoader, updateFbToken } from "../../../features/user/userSlice";
 import SalesAdmins from "./SalesAdmins";
+import { addUserDetails } from "../../../features/user/userSlice";
+import { Storage } from "../../../Components/Shared/utils/store";
 
 const CompanySettings = () => {
   const dispatch = useDispatch();
@@ -95,8 +97,10 @@ const CompanySettings = () => {
     setCompanyDetails(data);
   };
 
+  console.log("companyDetails", companyDetails);
+
   const handleUpdateCompanyDetailsReq = async () => {
-    const createCompany = await handleUpdateCompany({
+    const updateCompany = await handleUpdateCompany({
       id: companyDetails?.cid,
       name: companyDetails?.name,
       description: document.getElementById("description").innerText,
@@ -118,7 +122,9 @@ const CompanySettings = () => {
       business_type: 1,
     });
 
-    if (createCompany?.key === "success") {
+    console.log("updateCompany", updateCompany);
+
+    if (updateCompany?.key === "success") {
       setToggleEditDetails(false);
 
       dispatch(setLoader(true));
@@ -128,6 +134,8 @@ const CompanySettings = () => {
       );
       if (syncResponse?.status) {
         dispatch(setLoader(false));
+        Storage.setItem("fac_t", companyDetails?.fb_ac_credential);
+        dispatch(updateFbToken(companyDetails?.fb_ac_credential));
       }
 
       message.success("Company Details updated Successfully");

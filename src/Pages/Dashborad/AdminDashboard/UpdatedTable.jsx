@@ -138,46 +138,50 @@ const UpdatedTable = ({
               </Tooltip>
             </div>
 
-            <div className="mr-4">
-              <button
-                id="add_leads"
-                className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
-                onClick={() => setIsAddLeadFormOpen(true)}
-              >
-                Add Lead
-              </button>
-              <Tooltip align={"top"} title="Add lead manually">
-                <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
-                  ?
-                </span>
-              </Tooltip>
-            </div>
+            {setIsAddLeadFormOpen ? (
+              <div className="mr-4">
+                <button
+                  id="add_leads"
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                  onClick={() => setIsAddLeadFormOpen(true)}
+                >
+                  Add Lead
+                </button>
+                <Tooltip align={"top"} title="Add lead manually">
+                  <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                    ?
+                  </span>
+                </Tooltip>
+              </div>
+            ) : null}
 
-            <div>
-              {(userDetails?.role_id === 1 ||
-                userDetails?.role_id === 2 ||
-                userDetails?.role_id === 3 ||
-                userDetails?.role_id === 4) &&
-                table_title === "Lead List" && (
-                  <div className="mr-12">
-                    <button
-                      id="sync_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
-                      onClick={() => handleSyncLeadsReq()}
-                    >
-                      Sync Leads
-                    </button>
-                    <Tooltip
-                      align={"top"}
-                      title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
-                    >
-                      <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
-                        ?
-                      </span>
-                    </Tooltip>
-                  </div>
-                )}
-            </div>
+            {handleSyncLeadsReq ? (
+              <div>
+                {(userDetails?.role_id === 1 ||
+                  userDetails?.role_id === 2 ||
+                  userDetails?.role_id === 3 ||
+                  userDetails?.role_id === 4) &&
+                  table_title === "Lead List" && (
+                    <div className="mr-12">
+                      <button
+                        id="sync_leads"
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                        onClick={() => handleSyncLeadsReq()}
+                      >
+                        Sync Leads
+                      </button>
+                      <Tooltip
+                        align={"top"}
+                        title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
+                      >
+                        <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                          ?
+                        </span>
+                      </Tooltip>
+                    </div>
+                  )}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

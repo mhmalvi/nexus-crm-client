@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleCallResponseMail,
-  handleLeadStatusChange,
+  handleLeadStatusChangeEmail,
 } from "../../Components/services/mail";
 // import { handleRegistration } from "../../Components/services/auth";
 import {
@@ -22,7 +22,6 @@ import {
   handleCallResponseUpdate,
   handleLeadCertificatetDetailsUpdate,
   handleLeadStatusUpdate,
-  // handleLeadStudentDetailsUpdate,
 } from "../../Components/services/leads";
 // import { handleConfirmRegistration } from "../../Components/services/mail";
 import {
@@ -31,6 +30,7 @@ import {
 } from "../../Components/services/utils";
 import Icons from "../../Components/Shared/Icons";
 import { setLoader } from "../../features/user/userSlice";
+import AddPaymentHistory from "./AddPaymentHistory";
 
 // ----Default Values----
 const LeadStatus = (props) => {
@@ -71,6 +71,7 @@ const LeadStatus = (props) => {
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
   const [isAmountHistoryOpen, setIsAmountHistoryOpen] = useState(false);
   const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
+  const [isAddPaymentHistoryOpen, setIsAddPaymentHistoryOpen] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("");
   const [certificate, setCertificate] = useState("");
   const [callResponse, setCallResponse] = useState();
@@ -201,7 +202,7 @@ const LeadStatus = (props) => {
         console.log("Already Sent");
         return;
       } else {
-        const sendMailResponse = await handleLeadStatusChange({
+        const sendMailResponse = await handleLeadStatusChangeEmail({
           to: leadDetails?.leadDetails?.student_email,
           lead_id: leadDetails?.leadDetails?.lead_id,
           course: leadDetails?.leadDetails?.course_title,
@@ -757,9 +758,19 @@ const LeadStatus = (props) => {
           </div>
         </Modal>
 
-        {/* {(activeStatus === "Called" || activeStatus === "Paid") && ( */}
-        {(activeStatusTitle !== "New Lead" ||
-          activeStatusTitle !== "Skilled") && (
+        {/* Add Payment History */}
+        <Modal
+          visible={isAddPaymentHistoryOpen}
+          onCancel={() => setIsAddPaymentHistoryOpen(false)}
+          footer={false}
+          width={900}
+        >
+          <AddPaymentHistory />
+        </Modal>
+
+        {/* {(activeStatusTitle !== "New Lead" ||
+          activeStatusTitle !== "Skilled") && ( */}
+        {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
           <div className="flex items-center">
             {userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4 ||
@@ -1104,9 +1115,19 @@ const LeadStatus = (props) => {
                   %)
                 </h6>
               ) : null}
-              <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
+
+              {/* <div>
+                <button
+                  className="text-sm mt-2 font-medium bg-gray-100 px-2 py-1 rounded-sm border border-gray-200"
+                  onClick={() => setIsAddPaymentHistoryOpen(true)}
+                >
+                  Add Payment History
+                </button>
+              </div> */}
+
+              {/* <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
                 Online Payment
-              </h6>
+              </h6> */}
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>

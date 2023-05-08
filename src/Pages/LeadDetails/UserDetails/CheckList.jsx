@@ -49,38 +49,37 @@ const CheckList = ({ leadDetails }) => {
     })();
   }, [leadDetails, userDetails?.userInfo?.user_id, syncDocumentList]);
 
+  const handleChange = async (e, checklistId) => {
+    const fileFormData = new FormData();
+    fileFormData.append("user_id", userDetails?.userInfo?.user_id);
+    fileFormData.append("client_id", leadDetails.client_id);
+    fileFormData.append("document_name", e?.file?.originFileObj);
+    fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
-    const handleChange = async (e, checklistId) => {
-      const fileFormData = new FormData();
-      fileFormData.append("user_id", userDetails?.userInfo?.user_id);
-      fileFormData.append("client_id", leadDetails.client_id);
-      fileFormData.append("document_name", e?.file?.originFileObj);
-      fileFormData.append("document_details", e?.file?.originFileObj?.name);
+    // for (const value of fileFormData.values()) {
+    //   console.log(value);
+    // }
 
-      // for (const value of fileFormData.values()) {
-      //   console.log(value);
-      // }
+    const uploadFile = await handleUploadFile(fileFormData);
 
-      const uploadFile = await handleUploadFile(fileFormData);
+    // if (uploadFile?.status === 200) {
+    //   setSyncDocumentList(!syncDocumentList);
+    // }
 
-      // if (uploadFile?.status === 200) {
-      //   setSyncDocumentList(!syncDocumentList);
-      // }
+    const saveDocumentDetails = await handleChecklistDocumentUpload({
+      checklist_id: checklistId,
+      lead_id: leadDetails?.lead_id,
+      document_id: uploadFile?.data?.id,
+      student_id: userDetails?.userInfo?.user_id,
+    });
 
-      const saveDocumentDetails = await handleChecklistDocumentUpload({
-        checklist_id: checklistId,
-        lead_id: leadDetails?.lead_id,
-        document_id: uploadFile?.data?.id,
-        student_id: userDetails?.userInfo?.user_id,
-      });
+    // console.log("handleChecklistDocumentUpload", saveDocumentDetails);
 
-      // console.log("handleChecklistDocumentUpload", saveDocumentDetails);
-
-      if (saveDocumentDetails?.status) {
-        message.success("Document Added Successfully");
-        setSyncDocumentList(!syncDocumentList);
-      }
-    };
+    if (saveDocumentDetails?.status) {
+      message.success("Document Added Successfully");
+      setSyncDocumentList(!syncDocumentList);
+    }
+  };
 
   const handleDocumentDeleteReq = async (documentId, checklist_id) => {
     const deleteCheckListDocument = await handleChecklistDocumentDelete(
@@ -108,48 +107,58 @@ const CheckList = ({ leadDetails }) => {
       <div>
         <h1 className="text-xl font-medium mb-6">Documents :</h1>
       </div>
-      {documentList?.map((document, i) => (
-        <div key={i} className="flex text-sm mb-4 ml-6">
-          <span>{i + 1}.</span>
-          <span className="mx-2">{document?.title} : </span>
-          {!document.document_id ? (
-            <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
-              <Upload
-                onChange={(e) => handleChange(e, document?.checklist_id)}
-                id={document?.id}
-                fileList={fileList}
-              >
-                <div className="flex items-center">
-                  <Icons.Clip className="w-3 mr-1.5" />
-                  <div className="text-sm font-light">File</div>
+
+      {documentList?.length ? (
+        <div>
+          {documentList?.map((document, i) => (
+            <div key={i} className="flex text-sm mb-4 ml-6">
+              <span>{i + 1}.</span>
+              <span className="mx-2">{document?.title} : </span>
+              {!document.document_id ? (
+                <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
+                  <Upload
+                    onChange={(e) => handleChange(e, document?.checklist_id)}
+                    id={document?.id}
+                    fileList={fileList}
+                  >
+                    <div className="flex items-center">
+                      <Icons.Clip className="w-3 mr-1.5" />
+                      <div className="text-sm font-light">File</div>
+                    </div>
+                  </Upload>
                 </div>
-              </Upload>
+              ) : (
+                <div className="flex font-poppins mt-0.5">
+                  {/* <h1>{document.document_id}</h1> */}
+                  <div>
+                    <a
+                      href="null"
+                      target="_blank"
+                      id={document.document_id}
+                      rel="noreferrer"
+                    >
+                      <Icons.Eye className="w-4 text-black hover:text-brand-color" />
+                    </a>
+                  </div>
+                  <div>
+                    <Icons.Cross
+                      className="w-2.5 text-red-500 ml-2 cursor-pointer"
+                      onClick={() =>
+                        handleDocumentDeleteReq(
+                          document.document_id,
+                          document?.id
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="flex font-poppins mt-0.5">
-              {/* <h1>{document.document_id}</h1> */}
-              <div>
-                <a
-                  href="null"
-                  target="_blank"
-                  id={document.document_id}
-                  rel="noreferrer"
-                >
-                  <Icons.Eye className="w-4 text-black hover:text-brand-color" />
-                </a>
-              </div>
-              <div>
-                <Icons.Cross
-                  className="w-2.5 text-red-500 ml-2 cursor-pointer"
-                  onClick={() =>
-                    handleDocumentDeleteReq(document.document_id, document?.id)
-                  }
-                />
-              </div>
-            </div>
-          )}
+          ))}
         </div>
-      ))}
+      ) : (
+        <div>No Document List Added Yet</div>
+      )}
     </div>
   );
 };

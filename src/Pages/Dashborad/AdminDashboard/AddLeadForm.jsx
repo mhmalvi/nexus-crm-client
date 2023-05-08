@@ -1,4 +1,4 @@
-import { AutoComplete, message } from "antd";
+import { AutoComplete, Dropdown, Menu, Radio, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -202,6 +202,68 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     }
   };
 
+  const handleWorkLocationChange = (e) => {
+    const data = { ...leadData };
+    data.work_experiences_location = e.key;
+    setLeadData(data);
+  };
+
+  const handleLeadSourceChange = (e) => {
+    const data = { ...leadData };
+    data.lead_from = e.key;
+    setLeadData(data);
+  };
+
+  const handleIndustryChange = (e) => {
+    const data = { ...leadData };
+    data.industry = e.key;
+    setLeadData(data);
+  };
+
+  const onIndustryWorkExperience = (e) => {
+    const data = { ...leadData };
+    data.industry_work_experience = e.target.value;
+    setLeadData(data);
+  };
+
+  const isIndustryQualified = (e) => {
+    const data = { ...leadData };
+    data.industry_qualified_immediately = e.target.value;
+    setLeadData(data);
+  };
+
+  const ifAcademicQalification = (e) => {
+    const data = { ...leadData };
+    data.academic_qualifications = e.target.value;
+    setLeadData(data);
+  };
+
+  const workLocation = (
+    <Menu onClick={handleWorkLocationChange}>
+      <Menu.Item key="Australia">Australia</Menu.Item>
+      <Menu.Item key="Overseas">Overseas</Menu.Item>
+      <Menu.Item key="Others">Others</Menu.Item>
+    </Menu>
+  );
+
+  const leadSource = (
+    <Menu onClick={handleLeadSourceChange}>
+      {leadSourceOption?.map((source) => (
+        <Menu.Item key={source}>{source}</Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const industy = (
+    <Menu className="w-56" onClick={handleIndustryChange}>
+      {industyData?.map((ind) => (
+        <Menu.Item title={ind} key={ind}>
+          {ind}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <div>
       <div>
@@ -248,7 +310,14 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
           </div>
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
             <h1 className="text-sm mb-1">Industry:</h1>
-            <input
+
+            <Dropdown overlay={industy} trigger={["click"]}>
+              <div className="cursor-pointer py-2 px-1 text-base text-[#808080] bg-zinc-50 border-b border-gray-300 outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm">
+                {leadData?.industry ? leadData?.industry : "Select Industry"}
+              </div>
+            </Dropdown>
+
+            {/* <input
               id="industry"
               name="industry"
               className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -256,7 +325,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               placeholder="Trade/Hospitality/Health"
               value={leadData.industry}
               onChange={handleInputData}
-            />
+            /> */}
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -275,7 +344,16 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
             <h1 className="text-sm mb-1">Work Location</h1>
-            <input
+
+            <Dropdown overlay={workLocation} trigger={["click"]}>
+              <div className="cursor-pointer py-2 px-1 text-base text-[#808080] bg-zinc-50 border-b border-gray-300 outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm">
+                {leadData?.work_experiences_location
+                  ? leadData?.work_experiences_location
+                  : "Select Location"}
+              </div>
+            </Dropdown>
+
+            {/* <input
               id="work_experiences_location"
               name="work_experiences_location"
               className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -283,14 +361,21 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               placeholder="Australia, Overseas, Other"
               value={leadData.work_experiences_location}
               onChange={handleInputData}
-            />
+            /> */}
           </div>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
             <h1 className="text-sm mb-1">Academic Qualifications</h1>
-            <input
+            <Radio.Group
+              onChange={ifAcademicQalification}
+              value={leadData?.academic_qualifications}
+            >
+              <Radio value={"Yes"}>Yes</Radio>
+              <Radio value={"No"}>No</Radio>
+            </Radio.Group>
+            {/* <input
               id="academic_qualifications"
               name="academic_qualifications"
               className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -298,12 +383,22 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               placeholder="Yes/No"
               value={leadData.academic_qualifications}
               onChange={handleInputData}
-            />
+            /> */}
           </div>
 
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
             <h1 className="text-sm mb-1">Industry Work Experience</h1>
-            <input
+
+            <div>
+              <Radio.Group
+                onChange={onIndustryWorkExperience}
+                value={leadData?.industry_work_experience}
+              >
+                <Radio value={"Yes"}>Yes</Radio>
+                <Radio value={"No"}>No</Radio>
+              </Radio.Group>
+            </div>
+            {/* <input
               id="industry_work_experience"
               name="industry_work_experience"
               className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -311,7 +406,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               placeholder="Yes/No (Reference letters, pay slips, pictures, videos and more)"
               value={leadData.industry_work_experience}
               onChange={handleInputData}
-            />
+            /> */}
           </div>
         </div>
 
@@ -319,7 +414,14 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
           <h1 className="text-sm mb-1">
             Ready For Industry Qualified Immediately
           </h1>
-          <input
+          <Radio.Group
+            onChange={isIndustryQualified}
+            value={leadData.industry_qualified_immediately}
+          >
+            <Radio value={"Yes"}>Yes</Radio>
+            <Radio value={"No"}>No</Radio>
+          </Radio.Group>
+          {/* <input
             id="industry_qualified_immediately"
             name="industry_qualified_immediately"
             className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -327,7 +429,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
             placeholder="Yes/No (Reference letters, pay slips, pictures, videos and more)"
             value={leadData.industry_qualified_immediately}
             onChange={handleInputData}
-          />
+          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -335,6 +437,9 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
           <AutoComplete
             style={{
               width: 400,
+              borderTop: 0,
+              borderLeft: 0,
+              borderRight: 0,
             }}
             id="work_location"
             value={leadData.work_location}
@@ -383,7 +488,13 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 
         <div className="w-1/2 mb-4">
           <h1 className="mb-1">Lead Source:</h1>
-          <input
+
+          <Dropdown overlay={leadSource} trigger={["click"]}>
+            <div className="cursor-pointer py-2 px-1 text-base text-[#808080] bg-zinc-50 border-b border-gray-300 outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm">
+              {leadData?.lead_from ? leadData?.lead_from : "Select Source"}
+            </div>
+          </Dropdown>
+          {/* <input
             id="lead_from"
             name="lead_from"
             className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
@@ -391,7 +502,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
             placeholder="Onsite, Instagram, Tiktok,"
             value={leadData.lead_from}
             onChange={handleInputData}
-          />
+          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -410,8 +521,9 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
             options={courses}
             placeholder="Search with course name"
             filterOption={(inputValue, option) =>
-              option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1
+              option?.value
+                ?.toLowerCase()
+                ?.indexOf(inputValue?.toLowerCase()) !== -1
             }
           />
         </div>
@@ -436,3 +548,27 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 };
 
 export default AddLeadForm;
+
+const industyData = [
+  "Trade Courses",
+  "Hospitality/Commercial Cookery Services",
+  "Health and Support/Community Services",
+  "Air Conditioning & Electrician",
+  "Real Estate",
+  "Business",
+  "Automotive",
+  "Meat Processing",
+  "Beauty therapy and fitness services",
+  "Short Courses",
+];
+
+const leadSourceOption = [
+  "Google",
+  "Website contact form",
+  "Landing page",
+  "Tikto",
+  "FB messenger",
+  "Whatsap",
+  "Instagra",
+  "Others",
+];

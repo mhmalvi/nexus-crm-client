@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 import Notification from "./Notification";
 import { useNavigate } from "react-router-dom";
+import { addNotifications } from "../../features/user/notificationSlice";
+import { useState } from "react";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -13,18 +15,32 @@ const Notifications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
+
   const userNotifications = useSelector(
     (state) => state?.notifications
   ).notifications;
+  const [syncNotification, setSyncNotification] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      const notificationRes = await handleFetchFollowUpNotification(
-        userDetails?.userInfo?.user_id
-      );
-      console.log("notificationRes", notificationRes);
-    })();
-  }, [userDetails]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const notificationRes = await handleFetchFollowUpNotification(
+  //       userDetails?.userInfo?.user_id
+  //     );
+
+  //     console.log("notificationRes", notificationRes);
+
+  //     if (notificationRes.status === 200) {
+  //       notificationRes?.data?.forEach((notification) => {
+  //         if (
+  //           userNotifications?.filter((n) => n.id === notification.id)
+  //             ?.length === 0
+  //         ) {
+  //           dispatch(addNotifications(notification));
+  //         }
+  //       });
+  //     }
+  //   })();
+  // }, [syncNotification]);
 
   const handleNotificationNavigation = async (notification) => {
     console.log("userDetails", notification.receiver_id);
@@ -69,7 +85,8 @@ const Notifications = () => {
       </div>
 
       <Notification
-        notifications={userNotifications}
+        syncNotification={syncNotification}
+        setSyncNotification={setSyncNotification}
         handleNotificationNavigation={handleNotificationNavigation}
       />
     </div>

@@ -123,7 +123,13 @@ const AdminDashboard = () => {
         // ...getColumnSearchProps("lead_apply_date"),
         render: (lead_apply_date) => (
           <h4 className="cursor-pointer">
-            {new Date(lead_apply_date)?.toGMTString()?.replace("GMT", "")}
+            {/* {new Date(lead_apply_date)
+              ?.toString()
+              .slice(4, 33)
+              ?.replace("GMT", "")} */}
+            {new Date(new Date(lead_apply_date).getTime() + 6 * 60 * 60 * 1000)
+              ?.toString()
+              ?.slice(0, 24)}
           </h4>
         ),
         width: 150,
@@ -313,10 +319,10 @@ const AdminDashboard = () => {
 
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.ac_k
+      userDetails?.fbToken
     );
 
-    console.log(syncResponse);
+    console.log("leadSyncResponse", syncResponse);
 
     if (syncResponse?.status) {
       setSyncLeads(!syncLeads);
@@ -330,7 +336,10 @@ const AdminDashboard = () => {
     setSearchedColumn(dataIndex);
   };
 
-  const handleReset = (clearFilters) => {
+  const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
     clearFilters();
     setSearchText("");
   };
@@ -389,7 +398,10 @@ const AdminDashboard = () => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
+            onClick={() =>
+              clearFilters &&
+              handleReset(clearFilters, confirm, selectedKeys, dataIndex)
+            }
             size="small"
             style={{
               width: 90,
@@ -397,7 +409,7 @@ const AdminDashboard = () => {
           >
             Reset
           </Button>
-          <Button
+          {/* <Button
             type="link"
             size="small"
             onClick={() => {
@@ -418,7 +430,7 @@ const AdminDashboard = () => {
             }}
           >
             close
-          </Button>
+          </Button> */}
         </Space>
       </div>
     ),

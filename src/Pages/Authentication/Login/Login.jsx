@@ -7,7 +7,11 @@ import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { handleLogin } from "../../../Components/services/auth";
-import { addUserDetails, setLoader } from "../../../features/user/userSlice";
+import {
+  addUserDetails,
+  setLoader,
+  updateFbToken,
+} from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 
 const Login = () => {
@@ -66,8 +70,12 @@ const Login = () => {
     if (loginResponse?.status === 200) {
       // if ()
 
+      console.log("loginResponse?.data?.data", loginResponse?.data?.data);
+
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem("auth_tok", loginResponse?.data?.token);
+      Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
 
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
