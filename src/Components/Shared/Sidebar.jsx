@@ -114,6 +114,7 @@ const Sidebar = ({
   const handleLogout = () => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
+    Storage.removeItem("fac_t");
     navigate("/login");
   };
 
@@ -257,7 +258,7 @@ const Sidebar = ({
                       background: "#FF3B30",
                     }}
                   >
-                    {notifications?.length}
+                    {notifications?.filter((notifi) => notifi?.status)?.length}
                   </div>
                 </div>
               ) : null}
@@ -267,7 +268,7 @@ const Sidebar = ({
               )}
             </div>
           </div>
-          {userDetails?.userInfo?.role_id !== 6 && (
+          {/* {userDetails?.userInfo?.role_id !== 6 && (
             <div>
               <NavLink
                 to={"/payments"}
@@ -286,7 +287,7 @@ const Sidebar = ({
                 )}
               </NavLink>
             </div>
-          )}
+          )} */}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (

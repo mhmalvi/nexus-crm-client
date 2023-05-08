@@ -17,6 +17,7 @@ const initialState = {
   //   room: parseInt(localStorage.getItem("room")),
   // },
   userToken: null,
+  fbToken: Storage.getItem("fac_t"),
   error: null,
   success: false,
 };
@@ -40,6 +41,9 @@ export const userSlice = createSlice({
     updateUserDetails: (state) => {
       state.value -= 1;
     },
+    updateFbToken: (state, actions) => {
+      state.fbToken = actions.payload;
+    },
     setLoader: (state, actions) => {
       state.loading = actions.payload;
     },
@@ -47,7 +51,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addUserDetails, updateUserDetails, setLoader } =
+export const { addUserDetails, updateUserDetails, updateFbToken, setLoader } =
   userSlice.actions;
 
 export default userSlice.reducer;

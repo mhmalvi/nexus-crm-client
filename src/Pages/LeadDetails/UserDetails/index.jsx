@@ -81,7 +81,7 @@ const UserDetails = ({
     }
     setRatingRemarks(
       leadDetails?.leadDetails?.comment === null
-        ? "No comments yet"
+        ? ""
         : leadDetails?.leadDetails?.comment
     );
   }, [leadDetails]);
@@ -414,6 +414,7 @@ const UserDetails = ({
               className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-poppins text-black text-opacity-75"
               onChange={(e) => setRatingRemarks(e.currentTarget.value)}
               value={ratingRemarks}
+              placeholder="No comments yet"
             />
             <span
               className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"

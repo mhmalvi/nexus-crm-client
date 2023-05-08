@@ -23,7 +23,7 @@ export const handleConfirmRegistration = async (full_name, email, password) => {
   }
 };
 
-export const handleLeadStatusChange = async (mailDetails) => {
+export const handleLeadStatusChangeEmail = async (mailDetails) => {
   console.log("mailDetails", mailDetails);
   try {
     const result = await axios.post(
