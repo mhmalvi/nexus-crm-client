@@ -486,7 +486,7 @@ const Sidebar = ({
             ]}
           />
 
-          <div className="lg:mt-0 2xl:mt-36 pt-1.5">
+          <div className="lg:mt-20 2xl:mt-36 pt-1.5">
             <div className="mr-4">
               <Icons.CompanyLogo
                 style={{

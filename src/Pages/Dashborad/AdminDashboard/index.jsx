@@ -112,7 +112,7 @@ const AdminDashboard = () => {
         dataIndex: "lead_id",
         key: "lead_id",
         fixed: true,
-        render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
+        render: (lead_id) => <h4 className='cursor-pointer'>{lead_id}</h4>,
         width: 150,
         ...getColumnSearchProps("lead_id"),
       },
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
         key: "lead_apply_date",
         // ...getColumnSearchProps("lead_apply_date"),
         render: (lead_apply_date) => (
-          <h4 className="cursor-pointer">
+          <h4 className='cursor-pointer'>
             {/* {new Date(lead_apply_date)
               ?.toString()
               .slice(4, 33)
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
         dataIndex: "course_code",
         key: "course_code",
         ...getColumnSearchProps("course_code"),
-        render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
+        render: (code) => <h4 className='cursor-pointer uppercase'>{code}</h4>,
         width: 150,
       },
       {
@@ -148,7 +148,7 @@ const AdminDashboard = () => {
         key: "course_title",
         ...getColumnSearchProps("course_title"),
         render: (title) => (
-          <h4 className="cursor-pointer uppercase">{title}</h4>
+          <h4 className='cursor-pointer uppercase'>{title}</h4>
         ),
         width: 300,
       },
@@ -157,7 +157,7 @@ const AdminDashboard = () => {
         dataIndex: "full_name",
         key: "full_name",
         ...getColumnSearchProps("full_name"),
-        render: (full_name) => <h4 className="cursor-pointer">{full_name}</h4>,
+        render: (full_name) => <h4 className='cursor-pointer'>{full_name}</h4>,
         width: 150,
       },
       {
@@ -166,7 +166,7 @@ const AdminDashboard = () => {
         key: "phone_number",
         ...getColumnSearchProps("phone_number"),
         render: (phone_number) => (
-          <h4 className="cursor-pointer">{phone_number}</h4>
+          <h4 className='cursor-pointer'>{phone_number}</h4>
         ),
         width: 150,
       },
@@ -176,7 +176,7 @@ const AdminDashboard = () => {
         key: "work_location",
         ...getColumnSearchProps("work_location"),
         render: (location) => (
-          <h4 className="cursor-pointer uppercase">{location}</h4>
+          <h4 className='cursor-pointer uppercase'>{location}</h4>
         ),
         width: 100,
       },
@@ -186,7 +186,7 @@ const AdminDashboard = () => {
         key: "campaign_id",
         ...getColumnSearchProps("campaign_id"),
         render: (campaign_id) => (
-          <h4 className="cursor-pointer">{campaign_id}</h4>
+          <h4 className='cursor-pointer'>{campaign_id}</h4>
         ),
         width: 150,
       },
@@ -195,18 +195,18 @@ const AdminDashboard = () => {
         dataIndex: "lead_details_status",
         key: "lead_details_status",
         render: (lead_details_status) => (
-          <div className="flex items-center">
+          <div className='flex items-center'>
             {statusColor
               .filter((status) => status.id === lead_details_status)
               .map((lead_status, i) => (
                 <div
                   key={i}
-                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                  className='w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md'
                 >
                   <div
                     className={`w-2 h-2 ${lead_status.color} rounded-full`}
                   ></div>
-                  <div className="ml-1">{lead_status.title}</div>
+                  <div className='ml-1'>{lead_status.title}</div>
                 </div>
               ))}
           </div>
@@ -218,16 +218,16 @@ const AdminDashboard = () => {
         dataIndex: "sales_user_id",
         key: "sales_user_id",
         render: (sales_user_id) => (
-          <div className="flex items-center">
+          <div className='flex items-center'>
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4 ||
               userDetails?.userInfo?.role_id === 5) &&
             sales_user_id !== 0 ? (
-              <div className="ml-3">
+              <div className='ml-3'>
                 <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
+                  className='rounded-full shadow-sm cursor-pointer'
+                  size='30'
+                  color='#1f262a'
                   name={
                     companyEmployeeList?.find(
                       (employee) => employee?.id === sales_user_id
@@ -337,7 +337,7 @@ const AdminDashboard = () => {
   };
 
   const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
-    confirm();
+    // confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
     clearFilters();
@@ -387,10 +387,10 @@ const AdminDashboard = () => {
         />
         <Space>
           <Button
-            type="primary"
+            type='primary'
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
-            size="small"
+            size='small'
             style={{
               width: 90,
             }}
@@ -399,10 +399,9 @@ const AdminDashboard = () => {
           </Button>
           <Button
             onClick={() =>
-              clearFilters &&
-              handleReset(clearFilters, confirm, selectedKeys, dataIndex)
+              clearFilters && handleReset(clearFilters, selectedKeys, dataIndex)
             }
-            size="small"
+            size='small'
             style={{
               width: 90,
             }}
@@ -486,7 +485,7 @@ const AdminDashboard = () => {
         setSelectedYear={setSelectedYear}
       />
       <Filters
-        layout="Dashboard"
+        layout='Dashboard'
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
@@ -506,7 +505,7 @@ const AdminDashboard = () => {
       />
 
       <UpdatedTable
-        table_title="Lead List"
+        table_title='Lead List'
         tableHeaders={tableHeaders}
         data={leadData}
         companyEmployeeList={companyEmployeeList}

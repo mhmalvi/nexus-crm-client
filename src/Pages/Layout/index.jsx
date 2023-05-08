@@ -152,13 +152,13 @@ const Layout = () => {
 
   return (
     <div
-      className="flex justify-start items-start font-poppins overflow-x-hidden"
+      className='flex justify-start items-start font-poppins overflow-x-hidden'
       onClick={() => {
         setToggleMessage(false);
         setToggleNotification(false);
       }}
     >
-      <div className="fixed top-0 left-0 overflow-x-hidden">
+      <div className='fixed top-0 left-0 overflow-x-hidden'>
         <Sidebar
           Items={Items}
           Items2={Items2}
@@ -178,45 +178,45 @@ const Layout = () => {
       >
         <div
           onClick={() => ToogleSideBar(!openSideBar)}
-          className="w-16 h-14 absolute top-3 z-[999999]"
+          className='w-16 h-14 absolute top-3 z-[999999]'
         >
           {openSideBar ? (
             <img
               src={Ham}
-              title="Show sidebar"
-              alt=""
-              className="w-8 m-auto cursor-pointer"
+              title='Show sidebar'
+              alt=''
+              className='w-8 m-auto cursor-pointer'
             />
           ) : (
             <img
               src={Cross}
-              title="Hide sidebar"
-              alt=""
-              className="w-10 m-auto cursor-pointer"
+              title='Hide sidebar'
+              alt=''
+              className='w-10 m-auto cursor-pointer'
             />
           )}
         </div>
         <Routes>
-          <Route path="renew-package" element={<RenewPackage />} />
+          <Route path='renew-package' element={<RenewPackage />} />
           <Route path={"success/:id"} element={<Success />} />
           <Route path={"lead/:id"} element={<LeadDetails />} />
           <Route path={"pay/:id"} element={<Pay />} />
-          <Route path="invoice/:id" element={<Invoice />} />
+          <Route path='invoice/:id' element={<Invoice />} />
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route
             path={"settings/company/:id"}
             element={<AdminCompanyDetails />}
           />
-          <Route path="user-profile" element={<UserProfile />} />
-          <Route path="edit-profile" element={<EditProfile />} />
+          <Route path='user-profile' element={<UserProfile />} />
+          <Route path='edit-profile' element={<EditProfile />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
-          <Route path="mail" element={<GmailModule />} />
+          <Route path='mail' element={<GmailModule />} />
         </Routes>
 
         {Items.filter((item) => item.key === active).map((navItem, i) => (
           <Routes key={i}>
-            <Route path="/*" element={<ProtectedRoute />}>
+            <Route path='/*' element={<ProtectedRoute />}>
               <Route
                 key={navItem.key}
                 path={`${navItem.key}`}
@@ -336,12 +336,12 @@ const Items2 = [
   //   component: <PaymentStatus />,
   //   count: 0,
   // },
-  {
-    key: "help-centre",
-    name: "help-centre",
-    icon: <Icons.Info />,
-    label: "Help Centre",
-    component: <Dashboard />,
-    count: 0,
-  },
+  // {
+  //   key: "help-centre",
+  //   name: "help-centre",
+  //   icon: <Icons.Info />,
+  //   label: "Help Centre",
+  //   component: <Dashboard />,
+  //   count: 0,
+  // },
 ];
