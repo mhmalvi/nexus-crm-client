@@ -261,21 +261,6 @@ const UserDetails = ({
                       <Avatar
                         className="rounded-full shadow-sm cursor-pointer"
                         size="30"
-                        color={Avatar.getRandomColor("sitebase", [
-                          "red",
-                          "green",
-                          "#728FCE",
-                          "violet",
-                          "#2B547E",
-                          "black",
-                          "#87AFC7",
-                          "Lime",
-                          "#D5D6EA",
-                          "#77BFC7",
-                          "orange",
-                          "#FDD017",
-                          "#665D1E",
-                        ])}
                         name={prevSalesEmployeesName?.[0]}
                       />
                       {prevSalesEmployeesName?.length > 1 ? (
@@ -288,21 +273,6 @@ const UserDetails = ({
                               key={i}
                               className="rounded-full shadow-sm cursor-pointer"
                               size="30"
-                              color={Avatar.getRandomColor("sitebase", [
-                                "red",
-                                "green",
-                                "#728FCE",
-                                "violet",
-                                "#2B547E",
-                                "black",
-                                "#87AFC7",
-                                "Lime",
-                                "#D5D6EA",
-                                "#77BFC7",
-                                "orange",
-                                "#FDD017",
-                                "#665D1E",
-                              ])}
                               name={name}
                             />
                           ))}
@@ -323,21 +293,6 @@ const UserDetails = ({
                   <Avatar
                     className="rounded-full shadow-sm cursor-pointer"
                     size="45"
-                    color={Avatar.getRandomColor("sitebase", [
-                      "red",
-                      "green",
-                      "#728FCE",
-                      "violet",
-                      "#2B547E",
-                      "black",
-                      "#87AFC7",
-                      "Lime",
-                      "#D5D6EA",
-                      "#77BFC7",
-                      "orange",
-                      "#FDD017",
-                      "#665D1E",
-                    ])}
                     name={salesEmployeeName}
                   />
                   <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">

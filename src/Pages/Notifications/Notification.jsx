@@ -1,8 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
-import { handleReadNotification } from "../../Components/services/notification";
-import { setNotifications } from "../../features/user/notificationSlice";
+import {
+  handleFetchFollowUpNotification,
+  handleReadNotification,
+} from "../../Components/services/notification";
+import {
+  addNotifications,
+  setNotifications,
+} from "../../features/user/notificationSlice";
 
 const Notification = ({ handleNotificationNavigation }) => {
   const dispatch = useDispatch();
@@ -10,23 +16,44 @@ const Notification = ({ handleNotificationNavigation }) => {
     (state) => state?.notifications
   ).notifications;
 
+  const userDetails = useSelector((state) => state?.user);
+
   const handleReadMessageReq = async (id) => {
     console.log(id);
-    // const messageReadRes = await handleReadNotification(id);
-    // console.log("messageReadRes", messageReadRes);
-    // if (messageReadRes?.status === 201) {
-    //   const allNotifications = [...notifications];
+    const messageReadRes = await handleReadNotification(id);
+    console.log("messageReadRes", messageReadRes);
 
-    //   const updatedNotifications = allNotifications?.map((notification) => {
-    //     if (notification.id === id) {
-    //       return { ...notification, status: 0 };
-    //     }
-    //     return notification;
-    //   });
+    const notificationRes = await handleFetchFollowUpNotification(
+      userDetails?.userInfo?.user_id
+    );
 
-    //   console.log("updatedNotifications", updatedNotifications);
-    //   dispatch(setNotifications(updatedNotifications));
-    // }
+    console.log("notificationRes", notificationRes);
+
+    if (messageReadRes?.status === 201) {
+      dispatch(setNotifications([]));
+
+      const allNotifications = [...notifications];
+
+      if (notificationRes.status === 200) {
+        notificationRes?.data?.forEach((notification) => {
+          if (
+            notifications?.filter((n) => n.id === notification.id)?.length === 0
+          ) {
+            dispatch(addNotifications(notification));
+          }
+        });
+      }
+
+      const updatedNotifications = allNotifications?.map((notification) => {
+        if (notification.id === id) {
+          return { ...notification, status: 0 };
+        }
+        return notification;
+      });
+
+      console.log("updatedNotifications", updatedNotifications);
+      dispatch(setNotifications(updatedNotifications));
+    }
   };
 
   return (
