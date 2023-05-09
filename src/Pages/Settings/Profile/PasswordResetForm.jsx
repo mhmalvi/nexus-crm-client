@@ -1,34 +1,24 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Input, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { handlePasswordReset } from "../../../Components/services/auth";
+import { useNavigate } from "react-router-dom";
 import { Storage } from "../../../Components/Shared/utils/store";
+import { handlePasswordReset } from "../../../Components/services/auth";
 
 function PasswordResetForm() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state?.user);
 
-  const [passwordDetails, setPasswordDetails] = useState("");
-
-  useEffect(() => {
-    if (Storage.getItem("crm_password")) {
-      setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
-    }
-  }, [passwordDetails, userDetails?.userInfo?.flag]);
-
   const handleOk = async () => {
-    // setTimeout(async () => {
     const newPassword = document.getElementById("new_password").value;
     const rewNewPassword = document.getElementById("re_new_password").value;
 
     if (newPassword === rewNewPassword) {
-      if (passwordDetails) {
-        if (newPassword === passwordDetails) {
-          message.success("Password is same as previous");
-          return;
-        }
+      if (!newPassword?.length && !rewNewPassword?.length) {
+        message.warn("Please enter a valid password");
+        return;
       }
 
       const passwordChangeResponse = await handlePasswordReset(
@@ -40,41 +30,40 @@ function PasswordResetForm() {
 
       if (passwordChangeResponse?.status === 205) {
         // Storage.setItem("crm_password", newPassword);
-        message.success("Password Changed Successfully");
+        message.success("Password changed successfully");
 
         Storage.removeItem("auth_tok");
         Storage.removeItem("user_info");
-        // navigate("/login");
+        navigate("/login");
+      } else {
+        message.warn("Wrong Password");
       }
+    } else {
+      message.warn("Passwords are not matched");
     }
-    // }, 2000);
   };
-
-  // const handleChange = (e) => {
-  //   setPasswordDetails(e?.target?.value);
-  // };
 
   // const CancelEditSettings = () => {
   //   navigate("/user-profile");
   // };
   return (
     <div className="w-11/12 border rounded-lg bg-white m-auto shadow-md py-6">
-      <form className="w-3/5 font-poppins mt-6 m-auto">
-        <div className="font-semibold text-2xl py-2">Reset Password</div>
+      <div className="w-3/5 font-poppins mt-6 m-auto">
+        <div className="font-semibold text-2xl py-2">Change Password</div>
         <div className="font-poppins">
           <div>
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <span className="text-sm mb-0.5 font-light">Old Password</span>
               <Input.Password
                 required
                 value={passwordDetails}
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder="Old Password"
                 prefix={<UserOutlined />}
               />
-            </div>
+            </div> */}
             <div className="mb-3">
-              <span className="text-sm mb-0.5 font-light">New Password</span>
+              <span className="text-sm mb-1 font-light">New Password</span>
               <Input.Password
                 required
                 id="new_password"
@@ -84,7 +73,7 @@ function PasswordResetForm() {
               />
             </div>
             <div>
-              <span className="text-sm mb-0.5 font-light">
+              <span className="text-sm mb-1 font-light">
                 Re-Type New Password
               </span>
               <Input.Password
@@ -117,7 +106,7 @@ function PasswordResetForm() {
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

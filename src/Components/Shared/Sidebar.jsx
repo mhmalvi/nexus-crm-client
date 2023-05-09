@@ -268,7 +268,7 @@ const Sidebar = ({
               )}
             </div>
           </div>
-          {/* {userDetails?.userInfo?.role_id !== 6 && (
+          {userDetails?.userInfo?.role_id !== 6 && (
             <div>
               <NavLink
                 to={"/payments"}
@@ -287,7 +287,7 @@ const Sidebar = ({
                 )}
               </NavLink>
             </div>
-          )} */}
+          )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (

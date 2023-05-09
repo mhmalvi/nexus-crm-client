@@ -1,12 +1,11 @@
-import { message } from "antd";
+import { DatePicker, Dropdown, Menu, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   handleProfileDetails,
-  handleUpdateProfileDetails
+  handleUpdateProfileDetails,
 } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
-// import { addUserDetails } from "../../../features/user/userSlice";
 
 function ProfileSettingForm() {
   // const dispatch = useDispatch();
@@ -14,7 +13,7 @@ function ProfileSettingForm() {
 
   const initialState = {
     full_name: "",
-    date_of_birth: "",
+    date_of_birth: "Select Date",
     secondary_contact: "",
     location: "",
     address: "",
@@ -32,13 +31,14 @@ function ProfileSettingForm() {
   useEffect(() => {
     (async () => {
       const userDetailResponse = await handleProfileDetails(
-        ProfileDetails?.userInfo?.user_id
+        ProfileDetails?.user_id
       );
 
       console.log("Onpage", userDetailResponse);
 
       if (userDetailResponse?.status === true) {
         const user = userDetailResponse?.data;
+
         setProfileData(user);
         //dispatch(setLoader(false));
       } else {
@@ -47,7 +47,7 @@ function ProfileSettingForm() {
         }, 3000);
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const userData = (e) => {
@@ -81,6 +81,38 @@ function ProfileSettingForm() {
       message.warn("There was an error updating!");
     }
   };
+
+  const onChange = (value, dateString) => {
+    const selectedDate =
+      dateString?.split("/")[0] +
+      "-" +
+      dateString?.split("/")[1] +
+      "-" +
+      dateString?.split("/")[2];
+
+    const currentData = { ...profileData };
+    currentData["date_of_birth"] = selectedDate;
+    setProfileData(currentData);
+  };
+
+  const onOk = (value) => {
+    console.log("onOk: ", value);
+  };
+
+  const handleWorkLocationChange = (e) => {
+    const data = { ...profileData };
+    data.work_experiences = e.key;
+    setProfileData(data);
+  };
+
+  const workExperience = (
+    <Menu onClick={handleWorkLocationChange}>
+      <Menu.Item key="1 Year">1 Year</Menu.Item>
+      <Menu.Item key="2 Years">2 Years</Menu.Item>
+      <Menu.Item key="5+ Years">5+ Years</Menu.Item>
+      <Menu.Item key="10+ Years">10+ Years</Menu.Item>
+    </Menu>
+  );
 
   return (
     <div>
@@ -123,17 +155,27 @@ function ProfileSettingForm() {
               <div className="text-lg text-[#808080] leading-8 mb-4 tracking-wide">
                 <span>Date of Birth &nbsp;</span>
                 <br />
+
                 {toggleEditDetails ? (
-                  <input
-                    id="date_of_birth"
-                    name="date_of_birth"
-                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-                    type="text"
-                    disabled={!toggleEditDetails ? "disabled" : ""}
-                    onChange={userData}
-                    defaultValue={profileData?.date_of_birth}
-                  />
+                  <div className="mt-1 px-2 w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm flex items-center justify-between">
+                    <div>{profileData?.date_of_birth}</div>
+                    <DatePicker
+                      bordered={false}
+                      onChange={onChange}
+                      onOk={onOk}
+                      format={"DD/MM/YYYY"}
+                    />
+                  </div>
                 ) : (
+                  // <input
+                  //   id="date_of_birth"
+                  //   name="date_of_birth"
+                  //   className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                  //   type="text"
+                  //   disabled={!toggleEditDetails ? "disabled" : ""}
+                  //   onChange={userData}
+                  //   defaultValue={profileData?.date_of_birth}
+                  // />
                   <span className="text-sm text-black">
                     {profileData?.date_of_birth
                       ? profileData?.date_of_birth
@@ -269,16 +311,23 @@ function ProfileSettingForm() {
                 <span>Work Experience &nbsp;</span>
                 <br />
                 {toggleEditDetails ? (
-                  <input
-                    id="work_experiences"
-                    name="work_experiences"
-                    className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-                    type="text"
-                    disabled={!toggleEditDetails ? "disabled" : ""}
-                    onChange={userData}
-                    defaultValue={profileData?.work_experiences}
-                  />
+                  <Dropdown overlay={workExperience} trigger={["click"]}>
+                    <div className="cursor-pointer py-2 px-1 text-base text-[#808080] bg-zinc-50 border-b border-gray-300 outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm">
+                      {profileData?.work_experiences
+                        ? profileData?.work_experiences
+                        : "Select Location"}
+                    </div>
+                  </Dropdown>
                 ) : (
+                  // <input
+                  //   id="work_experiences"
+                  //   name="work_experiences"
+                  //   className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
+                  //   type="text"
+                  //   disabled={!toggleEditDetails ? "disabled" : ""}
+                  //   onChange={userData}
+                  //   defaultValue={profileData?.work_experiences}
+                  // />
                   <span className="text-sm text-black">
                     {profileData?.work_experiences
                       ? profileData?.work_experiences

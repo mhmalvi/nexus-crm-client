@@ -3,7 +3,7 @@ import axios from "axios";
 export const handleAddFollowUp = async (followUpData) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_NOTIFICATION_SERVER_URL}/api/follow-up`,
+      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow-up`,
       followUpData
     );
     return result?.data;
@@ -15,7 +15,7 @@ export const handleAddFollowUp = async (followUpData) => {
 export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
   try {
     const result = await axios.put(
-      `${process.env?.REACT_APP_NOTIFICATION_SERVER_URL}/api/follow-up-update/${id}`,
+      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow-up-update/${id}`,
       updatedFollowUpData
     );
     return result?.data;
@@ -27,7 +27,7 @@ export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
 export const handleFetchFollowUp = async (userID) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_NOTIFICATION_SERVER_URL}/api/follow-up-by-user`,
+      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow-up-by-user`,
       {
         user_id: userID,
       }
@@ -41,7 +41,7 @@ export const handleFetchFollowUp = async (userID) => {
 export const handleFetchReminder = async (userID) => {
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_NOTIFICATION_SERVER_URL}/api/follow`,
+      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow`,
       {
         user_id: userID,
       }
@@ -51,4 +51,3 @@ export const handleFetchReminder = async (userID) => {
     return error.response;
   }
 };
-
