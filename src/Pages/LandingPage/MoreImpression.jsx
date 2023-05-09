@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AnimatedText from "react-animated-text-content";
 import CountUp from "react-countup";
-import graph_diagram from "../../assets/Images/impression_graph.json";
+// import graph_diagram from "../../assets/Images/impression_graph.json";
 import "./MoreImpression.css";
 
 
@@ -365,54 +365,54 @@ function MoreImpressionSection() {
 
 export default MoreImpressionSection;
 
-const data = [
-  { name: "Group A", value: 98 },
-  { name: "Group A", value: 2 },
-];
-const data1 = [
-  { name: "Group A", value: 75 },
-  { name: "Group A", value: 25 },
-];
+// const data = [
+//   { name: "Group A", value: 98 },
+//   { name: "Group A", value: 2 },
+// ];
+// const data1 = [
+//   { name: "Group A", value: 75 },
+//   { name: "Group A", value: 25 },
+// ];
 
-const data2 = [
-  {
-    name: "Page Z",
-    pv: 1400,
-  },
-  {
-    name: "Page A",
-    pv: 7400,
-  },
-  {
-    name: "Page B",
-    pv: 5098,
-  },
-  {
-    name: "Page C",
-    pv: 9800,
-  },
-];
+// const data2 = [
+//   {
+//     name: "Page Z",
+//     pv: 1400,
+//   },
+//   {
+//     name: "Page A",
+//     pv: 7400,
+//   },
+//   {
+//     name: "Page B",
+//     pv: 5098,
+//   },
+//   {
+//     name: "Page C",
+//     pv: 9800,
+//   },
+// ];
 
-const data3 = [
-  {
-    name: "Page A",
-    pv: 7200,
-  },
-  {
-    name: "Page B",
-    pv: 9998,
-  },
-  {
-    name: "Page C",
-    pv: 4000,
-  },
-];
+// const data3 = [
+//   {
+//     name: "Page A",
+//     pv: 7200,
+//   },
+//   {
+//     name: "Page B",
+//     pv: 9998,
+//   },
+//   {
+//     name: "Page C",
+//     pv: 4000,
+//   },
+// ];
 
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: graph_diagram,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
+// const defaultOptions = {
+//   loop: true,
+//   autoplay: true,
+//   animationData: graph_diagram,
+//   rendererSettings: {
+//     preserveAspectRatio: "xMidYMid slice",
+//   },
+// };

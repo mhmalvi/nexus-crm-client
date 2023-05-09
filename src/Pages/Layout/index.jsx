@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 // import { io } from "socket.io-client";
-import Icons from "../../Components/Shared/Icons";
+import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
-import { io } from "socket.io-client";
+import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
+import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
+import { addNotifications } from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
@@ -30,10 +33,6 @@ import Settings from "../Settings";
 import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
-import { useDispatch, useSelector } from "react-redux";
-import { addNotifications } from "../../features/user/notificationSlice";
-import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
-import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 
 const Layout = () => {
   const navigate = useNavigate();

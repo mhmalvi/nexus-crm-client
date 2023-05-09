@@ -22,6 +22,7 @@ const BigCalendar = () => {
   const [eventDetails, setEventDetails] = useState({});
   // const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [time, setTime] = useState("Select Time");
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -69,6 +70,7 @@ const BigCalendar = () => {
 
   const handleOpenDayDetailsCancel = () => {
     setOpenDayDetails(false);
+    setTime("Select Time");
   };
 
   const handleEventDetailsCancel = () => {
@@ -94,8 +96,14 @@ const BigCalendar = () => {
         className="cross_btn"
         centered
         visible={openDayDetails}
-        onOk={() => setOpenDayDetails(false)}
-        onCancel={() => setOpenDayDetails(false)}
+        onOk={() => {
+          setOpenDayDetails(false);
+          setTime("Select Time");
+        }}
+        onCancel={() => {
+          setOpenDayDetails(false);
+          setTime("Select Time");
+        }}
         footer={false}
         width="50%"
       >
@@ -108,6 +116,8 @@ const BigCalendar = () => {
           setEventsData={setEventsData}
           // synEvents={synEvents}
           // setSynEvents={setSynEvents}
+          time={time}
+          setTime={setTime}
           userDetails={userDetails}
         />
       </Modal>
@@ -131,6 +141,7 @@ const BigCalendar = () => {
           isEdit={isEdit}
           setEventsData={setEventsData}
           eventsData={eventsData}
+          setOpenEventDetails={setOpenEventDetails}
           setIsEdit={setIsEdit}
         />
       </Modal>

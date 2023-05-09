@@ -3,6 +3,7 @@ import { Dropdown, Menu, Space, TimePicker, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { handleAddFollowUp } from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
+import lazyImage from "../../assets/Images/lazy.png";
 
 const DayDetails = ({
   handleOpenDayDetailsCancel,
@@ -12,8 +13,9 @@ const DayDetails = ({
   eventsData,
   setEventsData,
   userDetails,
+  time,
+  setTime,
 }) => {
-  const [time, setTime] = useState("Select Time");
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
   const [taskDetails, setTaskDetails] = useState(initialData);
@@ -26,12 +28,16 @@ const DayDetails = ({
       eventsData?.filter(
         (event) =>
           event?.start?.toLocaleDateString() ===
-          selectedEventTime?.start?.toLocaleDateString()
+            selectedEventTime?.start?.toLocaleDateString() ||
+          event?.end?.toLocaleDateString() ===
+            selectedEventTime?.end?.toLocaleDateString()
       )
     );
   }, [selectedEventTime, eventDetails, eventsData]);
 
   const onTimeChange = (time, timeString) => {
+    console.log("timeString", timeString);
+
     setTime(timeString);
     const data = { ...taskDetails };
 
@@ -191,11 +197,10 @@ const DayDetails = ({
                 {time ? time : selectedEventTime?.start?.toLocaleTimeString()}
               </div>
               <TimePicker
-                // use12Hours
                 format="HH:mm"
                 bordered={false}
                 onChange={onTimeChange}
-                onOk={onTimeChange}
+                // onOk={onTimeChange}
               />
             </div>
           </div>
@@ -230,27 +235,54 @@ const DayDetails = ({
         </div>
       </div>
 
-      <div>
-        {currentDayEvents?.map((event) => (
+      <div className="w-11/12 mx-auto">
+        <div className="text-lg font-semibold my-4">Tasks For Today</div>
+        {currentDayEvents?.length ? (
           <div>
-            <div className="flex items-center">
-              <div
-                className={`w-4 h-4 mr-2 rounded-full ${
-                  priorityList[event.priority - 1]
-                }`}
-              >
-                &nbsp;
+            {currentDayEvents?.map((event) => (
+              <div>
+                <div className="flex items-center">
+                  <div
+                    className={`w-4 h-4 mr-2 rounded-full ${
+                      priorityList[event.priority - 1]
+                    }`}
+                  >
+                    &nbsp;
+                  </div>
+                  <ul className="list-disc">
+                    <li>
+                      <div className="text-base font-semibold">
+                        {event.title}
+                      </div>
+                      {event.start?.toLocaleString() !==
+                      event.end?.toLocaleString() ? (
+                        <>
+                          <div>{event.start?.toLocaleString()}</div>
+                          <div>{event.end?.toLocaleString()}</div>
+                        </>
+                      ) : (
+                        <div>{event.start?.toLocaleString()}</div>
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <ul className="list-disc">
-                <li>
-                  <div>{event.title}</div>
-                  <div>{event.start?.toLocaleString()}</div>
-                  <div>{event.end?.toLocaleString()}</div>
-                </li>
-              </ul>
+            ))}
+          </div>
+        ) : (
+          <div className="w-full flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
+              <img src={lazyImage} className="w-1/2" alt="" />
+              <div className="text-lg font-semibold mt-4 mb-2">
+                Woohoo, No task for today
+              </div>
+              <div className="text-sm">
+                Tasks and Reminders that are scheduled for Today will appear
+                here.
+              </div>
             </div>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

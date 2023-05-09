@@ -98,11 +98,11 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   //   setLeadData(data);
   // };
 
-  const handleLocationSearch = async (value) => {
-    const data = { ...leadData };
-    data.work_location = value;
-    setLeadData(data);
-  };
+  // const handleLocationSearch = async (value) => {
+  //   const data = { ...leadData };
+  //   data.work_location = value;
+  //   setLeadData(data);
+  // };
 
   const handleInputData = (e) => {
     const data = { ...leadData };
@@ -220,6 +220,12 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     setLeadData(data);
   };
 
+  const handleLivingLocationChange = (e) => {
+    const data = { ...leadData };
+    data.work_location = e.key;
+    setLeadData(data);
+  };
+
   const onIndustryWorkExperience = (e) => {
     const data = { ...leadData };
     data.industry_work_experience = e.target.value;
@@ -259,6 +265,16 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
       {industyData?.map((ind) => (
         <Menu.Item title={ind} key={ind}>
           {ind}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const livingLocationOption = (
+    <Menu className="w-56" onClick={handleLivingLocationChange}>
+      {livingLocation?.map((location) => (
+        <Menu.Item title={location} key={location}>
+          {location}
         </Menu.Item>
       ))}
     </Menu>
@@ -434,7 +450,15 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 
         <div className="w-1/2 mb-4">
           <h1 className="mb-1">Enter Living Location:</h1>
-          <AutoComplete
+
+          <Dropdown overlay={livingLocationOption} trigger={["click"]}>
+            <div className="cursor-pointer py-2 px-1 text-base text-[#808080] bg-zinc-50 border-b border-gray-300 outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm">
+              {leadData?.work_location
+                ? leadData?.work_location
+                : "Select Location"}
+            </div>
+          </Dropdown>
+          {/* <AutoComplete
             style={{
               width: 400,
               borderTop: 0,
@@ -483,7 +507,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !==
               -1
             }
-          />
+          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -564,11 +588,12 @@ const industyData = [
 
 const leadSourceOption = [
   "Google",
-  "Website contact form",
-  "Landing page",
-  "Tikto",
-  "FB messenger",
-  "Whatsap",
-  "Instagra",
+  "Website",
+  "Tiktok",
+  "Messenger",
+  "Whatsapp",
+  "Instagram",
   "Others",
 ];
+
+const livingLocation = ["NSW", "WA", "VIC", "QLD", "SA", "ACT", "NT", "TAS"];

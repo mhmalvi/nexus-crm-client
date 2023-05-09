@@ -44,6 +44,7 @@ const LeadDetails = () => {
   });
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [totalPaid, setTotalPaid] = useState(0);
+  const [syncTotalPaid, setSyncTotalPaid] = useState(false);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -110,7 +111,7 @@ const LeadDetails = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, syncTotalPaid]);
 
   const confirm = async (e) => {
     // console.log(
@@ -157,6 +158,8 @@ const LeadDetails = () => {
               setSyncDetails={setSyncDetails}
               paymentHistory={paymentHistory}
               totalPaid={totalPaid}
+              syncTotalPaid={syncTotalPaid}
+              setSyncTotalPaid={setSyncTotalPaid}
             />
           </div>
           {userDetails?.role_id !== 6 && (

@@ -35,6 +35,8 @@ function UserProfile() {
         ProfileDetails?.user_id
       );
 
+      console.log("userDetailResponse", userDetailResponse);
+
       if (userDetailResponse?.data) {
         const user = userDetailResponse?.data;
         setUserDetails(user);
@@ -68,21 +70,21 @@ function UserProfile() {
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="80"
-                    color={Avatar.getRandomColor("sitebase", [
-                      "red",
-                      "green",
-                      "#728FCE",
-                      "violet",
-                      "#2B547E",
-                      "black",
-                      "#87AFC7",
-                      "Lime",
-                      "#D5D6EA",
-                      "#77BFC7",
-                      "orange",
-                      "#FDD017",
-                      "#665D1E",
-                    ])}
+                    // color={Avatar.getRandomColor("sitebase", [
+                    //   "red",
+                    //   "green",
+                    //   "#728FCE",
+                    //   "violet",
+                    //   "#2B547E",
+                    //   "black",
+                    //   "#87AFC7",
+                    //   "Lime",
+                    //   "#D5D6EA",
+                    //   "#77BFC7",
+                    //   "orange",
+                    //   "#FDD017",
+                    //   "#665D1E",
+                    // ])}
                     name={userDetails?.full_name}
                   />
                 </div>
@@ -133,9 +135,12 @@ function UserProfile() {
             </div>
             <div>
               <div className="flex-col">
-                <div className="text-xs text-[#808080]">Work Phone</div>
-                <div className="font-semibold truncate">
-                  {userDetails?.contact_number}
+                <div className="text-xs text-[#808080]">Address</div>
+                <div
+                  className="font-semibold truncate pr-8"
+                  title={userDetails?.location}
+                >
+                  {userDetails?.location}
                 </div>
               </div>
             </div>
@@ -157,8 +162,10 @@ function UserProfile() {
             </div>
             <div>
               <div className="flex-col">
-                <div className="text-xs text-[#808080]">Language</div>
-                <div className="font-semibold truncate">English(US)</div>
+                <div className="text-xs text-[#808080]">Country</div>
+                <div className="font-semibold truncate">
+                  {userDetails?.region}
+                </div>
               </div>
             </div>
             <div>
@@ -171,8 +178,10 @@ function UserProfile() {
             </div>
             <div>
               <div className="flex-col">
-                <div className="text-xs text-[#808080]">Password</div>
-                <div className="font-semibold truncate">**************</div>
+                <div className="text-xs text-[#808080]">Postcode</div>
+                <div className="font-semibold truncate">
+                  {userDetails?.postcode}
+                </div>
               </div>
             </div>
           </div>

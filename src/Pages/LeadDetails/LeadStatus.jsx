@@ -42,6 +42,8 @@ const LeadStatus = (props) => {
     statusDateTime,
     paymentHistory,
     totalPaid,
+    syncTotalPaid,
+    setSyncTotalPaid,
   } = props;
 
   const dispatch = useDispatch();
@@ -765,7 +767,14 @@ const LeadStatus = (props) => {
           footer={false}
           width={900}
         >
-          <AddPaymentHistory />
+          <AddPaymentHistory
+            leadDetails={leadDetails}
+            setIsAddPaymentHistoryOpen={setIsAddPaymentHistoryOpen}
+            syncDetails={syncDetails}
+            setSyncDetails={setSyncDetails}
+            syncTotalPaid={syncTotalPaid}
+            setSyncTotalPaid={setSyncTotalPaid}
+          />
         </Modal>
 
         {/* {(activeStatusTitle !== "New Lead" ||
@@ -1116,14 +1125,14 @@ const LeadStatus = (props) => {
                 </h6>
               ) : null}
 
-              {/* <div>
+              <div>
                 <button
                   className="text-sm mt-2 font-medium bg-gray-100 px-2 py-1 rounded-sm border border-gray-200"
                   onClick={() => setIsAddPaymentHistoryOpen(true)}
                 >
                   Add Payment History
                 </button>
-              </div> */}
+              </div>
 
               {/* <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
                 Online Payment
