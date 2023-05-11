@@ -10,7 +10,10 @@ import { Storage } from "../../Components/Shared/utils/store";
 import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
-import { addNotifications } from "../../features/user/notificationSlice";
+import {
+  addNotifications,
+  setNotifications,
+} from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
@@ -41,6 +44,9 @@ const Layout = () => {
   const userNotifications = useSelector(
     (state) => state?.notifications?.notifications
   );
+
+  console.log("userNotifications 45", userNotifications);
+
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
@@ -49,7 +55,6 @@ const Layout = () => {
   const ToogleSideBar = (index) => {
     setOpenSideBar(index);
   };
-  
 
   useEffect(() => {
     const socket = io(`https://crm-notification.onrender.com`);
@@ -60,15 +65,31 @@ const Layout = () => {
       });
 
       socket.on("message", function (msg) {
-        msg.forEach((notification) => {
-          if (
-            userNotifications.filter((prev) => prev?.id === notification?.id)
-              ?.length === 0
-          ) {
-            dispatch(addNotifications(notification));
-            handleMessageAudio();
-          }
-        });
+        if (msg.length) {
+          handleMessageAudio();
+          fetchFollowUpNotification();
+        }
+        // msg.forEach((notification) => {
+        //   console.log("notification", notification);
+        //   console.log("userNotifications", userNotifications);
+        //   console.log(
+        //     "FOUNDDD",
+        //     [...userNotifications].filter(
+        //       (n) => parseInt(n?.id) === parseInt(notification?.id)
+        //     )
+        //   );
+
+        //   const allNotifiations = [...userNotifications];
+
+        //   if (
+        //     allNotifiations.filter(
+        //       (n) => parseInt(n?.id) === parseInt(notification?.id)
+        //     )?.length === 0
+        //   ) {
+        //     dispatch(addNotifications(notification));
+        //     handleMessageAudio();
+        //   }
+        // });
 
         console.log("msg", msg);
       });
@@ -76,30 +97,32 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const notificationRes = await handleFetchFollowUpNotification(
-        userDetails?.userInfo?.user_id
-      );
-
-      console.log("notificationRes", notificationRes);
-
-      if (notificationRes.status === 200) {
-        notificationRes?.data?.forEach((notification) => {
-          console.log(
-            "UNIQUE",
-            userNotifications?.filter((n) => n.id === notification.id)
-          );
-
-          if (
-            userNotifications?.filter((n) => n.id === notification.id)
-              ?.length === 0
-          ) {
-            dispatch(addNotifications(notification));
-          }
-        });
-      }
-    })();
+    fetchFollowUpNotification();
   }, []);
+
+  const fetchFollowUpNotification = async () => {
+    const notificationRes = await handleFetchFollowUpNotification(
+      userDetails?.userInfo?.user_id
+    );
+
+    console.log("notificationRes", notificationRes);
+
+    if (notificationRes.status === 200) {
+      dispatch(setNotifications(notificationRes?.data));
+
+      // notificationRes?.data?.forEach((notification) => {
+      //   console.log(
+      //     "UNIQUE",
+      //     userNotifications?.filter((n) => n.id === notification.id)
+      //   );
+
+      //   if (
+      //     !userNotifications?.filter((n) => n.id === notification.id)?.length
+      //   ) {
+      //   }
+      // });
+    }
+  };
 
   useEffect(() => {
     if (window.location.pathname === "/") {

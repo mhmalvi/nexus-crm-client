@@ -440,3 +440,7 @@ table.custom-table > tbody > tr:hover td {
 #course_code {
   text-transform: uppercase !important;
 }
+
+.ant-select-dropdown {
+  text-transform: uppercase !important;
+}

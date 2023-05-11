@@ -71,6 +71,8 @@ import { ReactComponent as Courses } from "../../assets/Icons/courses.svg";
 import { ReactComponent as Bookmark } from "../../assets/Icons/bookmark.svg";
 import { ReactComponent as Flag } from "../../assets/Icons/flag.svg";
 import { ReactComponent as Download } from "../../assets/Icons/down-arrow-download.svg";
+import { ReactComponent as Volume } from "../../assets/Icons/volume.svg";
+import { ReactComponent as Correct } from "../../assets/Icons/correct.svg";
 
 const Icons = {
   CompanyLogo,
@@ -146,6 +148,8 @@ const Icons = {
   Bookmark,
   Flag,
   Download,
+  Volume,
+  Correct,
 };
 
 export default Icons;

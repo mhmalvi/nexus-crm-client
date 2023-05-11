@@ -21,7 +21,7 @@ const Notification = ({ handleNotificationNavigation }) => {
   const handleReadMessageReq = async (id) => {
     console.log(id);
     const messageReadRes = await handleReadNotification(id);
-    console.log("messageReadRes", messageReadRes);
+    // console.log("messageReadRes", messageReadRes);
 
     const notificationRes = await handleFetchFollowUpNotification(
       userDetails?.userInfo?.user_id
@@ -84,16 +84,18 @@ const Notification = ({ handleNotificationNavigation }) => {
           >
             {/* <div className="bg-brand-color/20 px-2 py-0.5 rounded"> */}
             <div className="flex justify-between items-start ">
-              <h1 className="text-lg leading-7 font-poppins font-semibold ">
-                <span
-                  className={`${
-                    priorityList[notification?.priority - 1]?.className
-                  }`}
-                >
-                  {notification?.priority ? "Reminder: " : null}
+              <div className="text-lg leading-7 font-poppins font-semibold flex items-center">
+                <span>
+                  {notification?.priority ? (
+                    <Icons.Bell
+                      className={`w-5 animate-pulse mr-3 ${
+                        priorityList[notification?.priority - 1]?.className
+                      }`}
+                    />
+                  ) : null}
                 </span>
                 <span>{notification?.title}</span>
-              </h1>
+              </div>
 
               {/* Date & Time */}
               <div>
@@ -103,11 +105,11 @@ const Notification = ({ handleNotificationNavigation }) => {
                     fontSize: "10px",
                   }}
                 >
-                  {notification.trigg_time}
+                  {notification.start?.slice(0, 16)}
                 </span>
               </div>
             </div>
-            <div className="flex justify-between items-start mb-5">
+            <div className="flex justify-between items-start mb-5 mt-2">
               <div>
                 <p className="text-sm leading-6 font-medium font-poppins mb-0">
                   {notification?.description}

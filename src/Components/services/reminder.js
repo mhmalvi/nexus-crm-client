@@ -38,12 +38,26 @@ export const handleFetchFollowUp = async (userID) => {
   }
 };
 
-export const handleFetchReminder = async (userID) => {
+// export const handleFetchReminder = async (userID) => {
+//   try {
+//     const result = await axios.get(
+//       `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow`,
+//       {
+//         user_id: userID,
+//       }
+//     );
+//     return result?.data;
+//   } catch (error) {
+//     return error.response;
+//   }
+// };
+
+export const handleDeleteFollowUp = async (followupID) => {
   try {
-    const result = await axios.get(
-      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/follow`,
+    const result = await axios.post(
+      `${process.env?.REACT_APP_FOLLOWUP_URL}/api/delete-notification`,
       {
-        user_id: userID,
+        id: followupID,
       }
     );
     return result?.data;

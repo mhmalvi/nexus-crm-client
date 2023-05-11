@@ -1099,30 +1099,38 @@ const LeadStatus = (props) => {
 
               {userDetails?.userinfo?.role_id !== 1 ||
               userDetails?.userinfo?.role_id !== 2 ? (
-                <div
-                  className="flex items-center my-2 cursor-pointer"
-                  onClick={() => setIsPaymentHistoryOpen(true)}
-                >
-                  <Icons.AmountHistory
-                    className="w-5 text-gray-700 mr-2 cursor-pointer"
-                    onClick={() => setIsAmountHistoryOpen(true)}
-                  />
-                  <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
-                    Payment History
-                  </h6>
-                </div>
+                <Tooltip title="All Payment Histories">
+                  <div
+                    className="flex items-center my-2 cursor-pointer"
+                    onClick={() => setIsPaymentHistoryOpen(true)}
+                  >
+                    <Icons.AmountHistory
+                      className="w-5 text-gray-700 mr-2 cursor-pointer"
+                      onClick={() => setIsAmountHistoryOpen(true)}
+                    />
+                    <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
+                      Payment History
+                    </h6>
+                  </div>
+                </Tooltip>
               ) : null}
 
               {leadDetails?.leadAmountHistory?.length ? (
-                <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                  Paid ${totalPaid} of $
-                  {leadDetails?.leadAmountHistory[0]?.amount}(
-                  {(
-                    (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
-                    100
-                  ).toFixed(2)}
-                  %)
-                </h6>
+                <>
+                  <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
+                    Paid ${totalPaid} of $
+                    {leadDetails?.leadAmountHistory[0]?.amount}(
+                    {(
+                      (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
+                      100
+                    ).toFixed(2)}
+                    %)
+                  </h6>
+                  <h6 className="text-sm font-normal font-poppins leading-6 my-1">
+                    Due: $
+                    {leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
+                  </h6>
+                </>
               ) : null}
 
               <div>

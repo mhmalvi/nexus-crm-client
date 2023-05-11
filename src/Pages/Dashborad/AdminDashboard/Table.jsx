@@ -442,10 +442,12 @@ const Table = ({
               </table>
             ) : (
               <div className="py-20 flex justify-center items-center">
-                {title === "Payment List" ? (
-                  <h1 className="text-xl font-light">No Payments Yet</h1>
+                {title?.toLowerCase()?.includes("payment") ? (
+                  <h1 className="text-xl font-light">
+                    No Payment History to Show
+                  </h1>
                 ) : (
-                  <h1 className="text-xl font-light">No Leads Yet</h1>
+                  <h1 className="text-xl font-light">No Leads to Show</h1>
                 )}
               </div>
             )}

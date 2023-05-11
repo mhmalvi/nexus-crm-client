@@ -21,9 +21,6 @@ const DayDetails = ({
   const [taskDetails, setTaskDetails] = useState(initialData);
 
   useEffect(() => {
-    // console.log("selectedEventTime", selectedEventTime);
-    // console.log("eventDetails", eventDetails);
-
     setCurrentDayEvents(
       eventsData?.filter(
         (event) =>
@@ -35,9 +32,9 @@ const DayDetails = ({
     );
   }, [selectedEventTime, eventDetails, eventsData]);
 
-  const onTimeChange = (time, timeString) => {
-    console.log("timeString", timeString);
+  console.log("currentDayEvents >>>>>>>>>>", currentDayEvents);
 
+  const onTimeChange = (time, timeString) => {
     setTime(timeString);
     const data = { ...taskDetails };
 
@@ -82,8 +79,6 @@ const DayDetails = ({
     setTaskDetails(data);
   };
 
-  console.log("taskDetails Data", taskDetails);
-
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
     data.priority = selected?.key;
@@ -103,11 +98,10 @@ const DayDetails = ({
       user_id: userDetails?.id,
     });
 
-    console.log("addFollowUpRes", addFollowUpRes);
-
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
       setTaskDetails(initialData);
+      handleOpenDayDetailsCancel();
       setSelectedEventTime();
       setTime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
@@ -239,8 +233,8 @@ const DayDetails = ({
         <div className="text-lg font-semibold my-4">Tasks For Today</div>
         {currentDayEvents?.length ? (
           <div>
-            {currentDayEvents?.map((event) => (
-              <div>
+            {currentDayEvents?.map((event, i) => (
+              <div key={i}>
                 <div className="flex items-center">
                   <div
                     className={`w-4 h-4 mr-2 rounded-full ${
@@ -254,6 +248,7 @@ const DayDetails = ({
                       <div className="text-base font-semibold">
                         {event.title}
                       </div>
+
                       {event.start?.toLocaleString() !==
                       event.end?.toLocaleString() ? (
                         <>

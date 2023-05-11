@@ -490,7 +490,15 @@ const UserDetails = ({
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
               Application Form
             </h1>
-            <a
+            <div className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
+            onClick={()=>message.success("No file available")}
+            >
+              <button className="flex items-center justify-center">
+                <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
+                <span className="ml-2">Download</span>
+              </button>
+            </div>
+            {/* <a
               className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
               href="http://smartcrm.quadque.tech/"
               target="_blank"
@@ -500,7 +508,7 @@ const UserDetails = ({
                 <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
                 <span className="ml-2">Download</span>
               </button>
-            </a>
+            </a> */}
           </div>
         </div>
 

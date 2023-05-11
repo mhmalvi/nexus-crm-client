@@ -10,7 +10,7 @@ const AddPaymentHistory = ({
   syncTotalPaid,
   setSyncTotalPaid,
 }) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   console.log("leadDetails", leadDetails);
 
   const handleAddPaymentHistoryReq = async () => {

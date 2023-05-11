@@ -282,7 +282,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 
   return (
     <div>
-      <div>
+      <div id="add_lead_manually">
         <div className="text-xl font-semibold font-poppins mb-6">Add Lead</div>
         <div className="flex items-center gap-4">
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
@@ -535,6 +535,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
           <AutoComplete
             style={{
               width: 400,
+              textTransform: "uppercase",
             }}
             id="course_id"
             // value={

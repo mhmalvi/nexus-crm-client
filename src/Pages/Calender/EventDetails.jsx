@@ -1,8 +1,11 @@
 import { DownOutlined } from "@ant-design/icons";
-import { DatePicker, Dropdown, Menu, Space, message } from "antd";
+import { DatePicker, Dropdown, Menu, Space, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Icons from "../../Components/Shared/Icons";
-import { handleUpdateFollowUp } from "../../Components/services/reminder";
+import {
+  handleDeleteFollowUp,
+  handleUpdateFollowUp,
+} from "../../Components/services/reminder";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD HH:mm";
@@ -15,6 +18,8 @@ const EventDetails = ({
   eventsData,
   setEventsData,
   setOpenEventDetails,
+  synEvents,
+  setSynEvents,
 }) => {
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [startDateTime, setStartDateTime] = useState("");
@@ -98,6 +103,8 @@ const EventDetails = ({
     }
   };
 
+  console.log("eventDetails", eventDetails);
+
   const menu = (
     <Menu defaultSelectedKeys={[1]}>
       {priorityList?.map((priority) => (
@@ -114,6 +121,18 @@ const EventDetails = ({
     </Menu>
   );
 
+  const handleDeleteFollowUpReq = async (id) => {
+    console.log("id", id);
+
+    const deleteResp = await handleDeleteFollowUp(id);
+
+    if (deleteResp?.status === 201) {
+      message.success("Event has been completed");
+      setSynEvents(!synEvents);
+      setOpenEventDetails(false);
+    }
+  };
+
   return (
     <div className="px-10 py-4 font-poppins">
       <div className="flex justify-between items-center">
@@ -129,8 +148,10 @@ const EventDetails = ({
                   value={updateEventData?.title}
                   onChange={handleEventDetailsChange}
                 />
-              ) : (
+              ) : eventDetails?.status ? (
                 <div>{eventDetails?.title}</div>
+              ) : (
+                <del>{eventDetails?.title}</del>
               )}
               <div>-Details</div>
             </div>
@@ -175,6 +196,14 @@ const EventDetails = ({
               </div>
             )}
           </div>
+          <div>
+            <Tooltip title="If you have completed the Task">
+              <Icons.Correct
+                className="w-6 ml-4 text-green-600 hover:text-green-500 cursor-pointer transition-colors delay-200 duration-200"
+                onClick={() => handleDeleteFollowUpReq(eventDetails?.id)}
+              />
+            </Tooltip>
+          </div>
         </div>
         <div>
           <Icons.Edit
@@ -216,8 +245,13 @@ const EventDetails = ({
           </div>
         ) : (
           <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
-            {new Date(eventDetails?.start)?.toDateString()} -{" "}
-            {new Date(eventDetails?.end)?.toDateString()}
+            {new Date(eventDetails?.start)
+              ?.toString()
+              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+            -{" "}
+            {new Date(eventDetails?.end)
+              ?.toString()
+              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
           </div>
         )}
         <div className="text-base font-light my-8">

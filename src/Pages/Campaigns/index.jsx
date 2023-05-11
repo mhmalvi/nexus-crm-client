@@ -56,14 +56,29 @@ const Campaigns = () => {
         setCampaignList(closedCampaigns);
       }
     } else {
-      const campaign = campaignList.filter((campaign) =>
+      const searchedCampaign = campaigns.filter((campaign) =>
         campaign.campaign_name
           .toLowerCase()
           .includes(searchCampaign.toLowerCase())
       );
-      setCampaignList(campaign);
+
+      if (activeFilter === 0) {
+        setCampaignList(searchedCampaign);
+      } else if (activeFilter === 1) {
+        const runningCampaigns = searchedCampaign.filter(
+          (campaign) => campaign?.campaign_status === "ACTIVE"
+        );
+        setCampaignList(runningCampaigns);
+      } else if (activeFilter === 2) {
+        const closedCampaigns = searchedCampaign.filter(
+          (campaign) => campaign?.campaign_status === "PAUSED"
+        );
+        setCampaignList(closedCampaigns);
+      }
+
+      // setCampaignList(campaign);
     }
-  }, [activeFilter, searchCampaign]);
+  }, [activeFilter, campaigns, searchCampaign]);
 
   const handleCancelCourseModal = () => {
     setToggleCourses(false);
@@ -113,9 +128,9 @@ const Campaigns = () => {
         </div>
       ) : (
         <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
-          {campaignList?.map((campaign, i) => (
-            <Campaign key={i} campaign={campaign} />
-          )).reverse()}
+          {campaignList
+            ?.map((campaign, i) => <Campaign key={i} campaign={campaign} />)
+            .reverse()}
         </div>
       )}
     </div>

@@ -132,7 +132,7 @@ const SalesAnalytics = ({ activeCompany }) => {
             Sales Team Total Sales Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
-            Last 30 days
+            This Month
           </p>
         </div>
         <div>

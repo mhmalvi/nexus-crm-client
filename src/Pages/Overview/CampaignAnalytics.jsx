@@ -5,6 +5,7 @@ import * as rcElement from "recharts";
 import { fetchCampaignwisePaymentDataOfCompany } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
 import * as chartUtils from "./utils";
+import moment from "moment";
 
 const CampaignAnalytics = ({ activeCompany }) => {
   const { Option } = Select;
@@ -16,7 +17,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
   const [campaignsDetails, setCampaignsDetails] = useState([]);
   const [campaignQualityRatio, setCampaignQualityRatio] = useState([]);
   const [campaignwiseRevenue, setCampaignwiseRevenue] = useState([]);
-  // const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
 
   const userDetails = useSelector((state) => state.user?.userInfo);
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
@@ -33,9 +34,20 @@ const CampaignAnalytics = ({ activeCompany }) => {
   ];
 
   useEffect(() => {
-    setActiveCampaign(campaigns?.[0]?.campaign_id);
-    setActiveCampaignSummary(campaigns?.[0]?.campaign_id);
+    const curCampaign = [];
+
+    campaigns.forEach((cam) => {
+      if (cam?.start_time?.toString()?.includes(new Date().getFullYear())) {
+        curCampaign.push(cam);
+      }
+    });
+    setCurrentYearCampaign(curCampaign);
   }, [campaigns]);
+
+  useEffect(() => {
+    setActiveCampaign(currentYearCampaign?.[0]?.campaign_id);
+    setActiveCampaignSummary(currentYearCampaign?.[0]?.campaign_id);
+  }, [currentYearCampaign]);
 
   const handleAreaChange = (value) => {
     setActiveCampaign(value);
@@ -326,39 +338,52 @@ const CampaignAnalytics = ({ activeCompany }) => {
     // Campaigns Details
     const campaignsDetailsArray = [];
     campaigns?.forEach((campaign) => {
-      campaignsDetailsArray.push({
-        campaign: campaign?.campaign_name,
-        "New Lead": leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 1
-          )?.length,
-        skilled: leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 2
-          )?.length,
-        called: leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 3
-          )?.length,
-        paid: leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 4
-          )?.length,
-        verified: leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 5
-          )?.length,
-        completed: leads
-          ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-          ?.filter(
-            (filteredCampaign) => filteredCampaign?.lead_details_status === 6
-          )?.length,
-      });
+      // let dur = moment.duration({ from: new Date(), to: campaign?.start_time });
+
+      // console.log(
+      //   "campaign",
+      //   campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+      // );
+      // console.log("new Date().getFullYear", new Date().getFullYear());
+      // console.log("campaign", campaign?.start_time);
+      // console.log("campaign", dur);
+      if (
+        campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+      ) {
+        campaignsDetailsArray.push({
+          campaign: campaign?.campaign_name,
+          "New Lead": leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 1
+            )?.length,
+          skilled: leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 2
+            )?.length,
+          called: leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 3
+            )?.length,
+          paid: leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 4
+            )?.length,
+          verified: leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 5
+            )?.length,
+          completed: leads
+            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+            ?.filter(
+              (filteredCampaign) => filteredCampaign?.lead_details_status === 6
+            )?.length,
+        });
+      }
     });
 
     setCampaignsDetails(campaignsDetailsArray);
@@ -366,25 +391,26 @@ const CampaignAnalytics = ({ activeCompany }) => {
     // For Lead Quality Ratio
     const campaignQualityRatioArray = [];
     campaigns?.forEach((campaign) => {
-      campaignQualityRatioArray.push({
-        campaign: campaign?.campaign_name,
-        rate:
-          leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+      if (campaign?.start_time?.toString()?.includes(new Date().getFullYear()))
+        campaignQualityRatioArray.push({
+          campaign: campaign?.campaign_name,
+          rate:
+            leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === campaign?.campaign_id
+                    )
+                    ?.filter(
+                      (filteredCampaign) => filteredCampaign?.star_review > 2
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === campaign?.campaign_id
-                  )
-                  ?.filter(
-                    (filteredCampaign) => filteredCampaign?.star_review > 2
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === campaign?.campaign_id
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      });
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        });
     });
 
     setCampaignQualityRatio(campaignQualityRatioArray);
@@ -401,19 +427,23 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
       if (campaignwiseRevenueResp?.status === 200) {
         campaigns?.forEach((campaign) => {
-          campaignwiseRevenueData.push({
-            campaign: campaign?.campaign_name,
-            revenue: campaignwiseRevenueResp?.data?.find(
-              (camp) =>
-                parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
-            )
-              ? campaignwiseRevenueResp?.data?.find(
-                  (camp) =>
-                    parseInt(camp?.campaigns) ===
-                    parseInt(campaign?.campaign_id)
-                )?.sums
-              : 0,
-          });
+          if (
+            campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+          ) {
+            campaignwiseRevenueData.push({
+              campaign: campaign?.campaign_name,
+              revenue: campaignwiseRevenueResp?.data?.find(
+                (camp) =>
+                  parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
+              )
+                ? campaignwiseRevenueResp?.data?.find(
+                    (camp) =>
+                      parseInt(camp?.campaigns) ===
+                      parseInt(campaign?.campaign_id)
+                  )?.sums
+                : 0,
+            });
+          }
         });
 
         setCampaignwiseRevenue(campaignwiseRevenueData);
@@ -434,7 +464,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
             Campaigns Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
-            Last 30 days
+            This Year
           </p>
         </div>
         <div>
@@ -477,7 +507,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
             Campaigns Revenue
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
-            Last 30 days
+            This Year
           </p>
         </div>
         <div>
@@ -517,7 +547,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
             Lead Quality Ratio
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
-            Last 30 days
+            This Year
           </p>
         </div>
         <div>
@@ -562,14 +592,14 @@ const CampaignAnalytics = ({ activeCompany }) => {
             </h1>
             <div className="absolute top-6 right-7 float-right font-light">
               <Select
-                defaultValue={campaigns?.[0]?.campaign_name}
-                placeholder={campaigns?.[0]?.campaign_name}
+                defaultValue={currentYearCampaign?.[0]?.campaign_name}
+                placeholder={currentYearCampaign?.[0]?.campaign_name}
                 style={{
                   width: 240,
                 }}
                 onChange={handleAreaChange}
               >
-                {campaigns?.map((campaign) => (
+                {currentYearCampaign?.map((campaign) => (
                   <Option key={campaign?.id} value={campaign?.campaign_id}>
                     {campaign?.campaign_name}
                   </Option>
@@ -611,14 +641,14 @@ const CampaignAnalytics = ({ activeCompany }) => {
             </h1>
             <div className="absolute top-6 right-7 float-right font-light">
               <Select
-                defaultValue={campaigns?.[0]?.campaign_name}
-                placeholder={campaigns?.[0]?.campaign_name}
+                defaultValue={currentYearCampaign?.[0]?.campaign_name}
+                placeholder={currentYearCampaign?.[0]?.campaign_name}
                 style={{
                   width: 240,
                 }}
                 onChange={handleCampaignSummary}
               >
-                {campaigns?.map((campaign) => (
+                {currentYearCampaign?.map((campaign) => (
                   <Option key={campaign?.id} value={campaign?.campaign_id}>
                     {campaign?.campaign_name}
                   </Option>
