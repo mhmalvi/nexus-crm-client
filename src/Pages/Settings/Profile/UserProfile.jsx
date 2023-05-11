@@ -20,6 +20,7 @@ function UserProfile() {
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
   useEffect(() => {
+    document.title = `Profile Settings | Queleads`;
     dispatch(setLoader(true));
 
     setTimeout(() => {

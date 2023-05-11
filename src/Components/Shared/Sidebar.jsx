@@ -170,7 +170,9 @@ const Sidebar = ({
                 Dashboard
               </span>
               {active === "dashboard" && (
-                <div className="ml-auto active-option">|</div>
+                <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  |
+                </div>
               )}
             </NavLink>
           </div>
@@ -193,7 +195,9 @@ const Sidebar = ({
                   Overview
                 </span>
                 {active === "overview" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -232,7 +236,7 @@ const Sidebar = ({
                   </div>
                 </div>
               )}
-              {toggleMessage && <div className="ml-auto active-option">|</div>}
+              {toggleMessage && <div className="ml-auto active-option text-brand-color bg-brand-color">|</div>}
             </div>
           </div> */}
 
@@ -268,7 +272,9 @@ const Sidebar = ({
               ) : null}
 
               {toggleNotification && (
-                <div className="ml-auto active-option">|</div>
+                <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  |
+                </div>
               )}
             </div>
           </div>
@@ -287,7 +293,9 @@ const Sidebar = ({
                   Payments
                 </span>
                 {active === "payments" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -309,7 +317,9 @@ const Sidebar = ({
                   Campaigns
                 </span>
                 {active === "campaigns" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -331,7 +341,9 @@ const Sidebar = ({
                   Courses
                 </span>
                 {active === "courses" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -360,7 +372,9 @@ const Sidebar = ({
                   Calender
                 </span>
                 {active === "calender" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -383,7 +397,9 @@ const Sidebar = ({
                   Requisitions
                 </span>
                 {active === "requisitions" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </NavLink>
             </div>
@@ -406,7 +422,7 @@ const Sidebar = ({
                 Gmail
               </span>
               {active === "requisitions" && (
-                <div className="ml-auto active-option">|</div>
+                <div className="ml-auto active-option text-brand-color bg-brand-color">|</div>
               )}
             </NavLink>
           </div> */}
@@ -431,7 +447,7 @@ const Sidebar = ({
                   Settings
                 </span>
                 {active === "settings" && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">|</div>
                 )}
               </NavLink>
             </div>
@@ -451,7 +467,7 @@ const Sidebar = ({
                 Profile Settings
               </span>
               {active === "settings" && (
-                <div className="ml-auto active-option">|</div>
+                <div className="ml-auto active-option text-brand-color bg-brand-color">|</div>
               )}
             </NavLink>
           </div> */}
@@ -494,7 +510,7 @@ const Sidebar = ({
             <div className="mr-4">
               <Icons.CompanyLogo
                 style={{
-                  width: "122px",
+                  width: "180px",
                 }}
               />
             </div>
@@ -512,7 +528,9 @@ const Sidebar = ({
                   {item.label}
                 </span>
                 {active === item.name && (
-                  <div className="ml-auto active-option">|</div>
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
                 )}
               </div>
             ))}
@@ -524,7 +542,7 @@ const Sidebar = ({
               }}
               onClick={handleLogout}
             >
-              <Icons.LogOut />
+              <Icons.LogOut className="text-[#7C8DB5]" />
               <span className="ml-4 leading-6 font-medium font-poppins">
                 Log out
               </span>

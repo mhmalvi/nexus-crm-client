@@ -10,7 +10,7 @@ import { addUserDetails, setLoader } from "../../../features/user/userSlice";
 import picture from "../../../assets/Images/paypal.png";
 
 const ResetPassword = () => {
-  document.title = "CRM -Log In";
+  document.title = "Log In | Queleads";
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [passwordMatch, setPasswordMatch] = useState(0);
 

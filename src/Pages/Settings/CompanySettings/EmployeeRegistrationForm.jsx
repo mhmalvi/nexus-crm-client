@@ -6,6 +6,7 @@ import { handleAddCompanyEmployees } from "../../../Components/services/company"
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../../features/user/userSlice";
 import Loading from "../../../Components/Shared/Loader";
+import { handleRegistrationResponseMail } from "../../../Components/services/mail";
 
 const EmployeeRegistrationForm = ({
   roleId,
@@ -50,13 +51,21 @@ const EmployeeRegistrationForm = ({
     // });
 
     if (registrationResponse?.status === true) {
-      dispatch(setLoader(false));
       const employeeAddResponse = await handleAddCompanyEmployees({
         company_id: clientId,
         user_id: registrationResponse?.data?.user_id,
       });
-
       console.log("employeeAddResponse", employeeAddResponse);
+
+      const sendRegistrationMail = await handleRegistrationResponseMail({
+        full_name: registrationResponse?.data?.user_name,
+        email: registrationResponse?.data?.user_email,
+        password: registrationResponse?.data?.password,
+      });
+
+      if (sendRegistrationMail === "success") {
+        dispatch(setLoader(false));
+      }
 
       if (employeeAddResponse?.status === true) {
         message.success("Employee Added Successfully");
@@ -87,7 +96,7 @@ const EmployeeRegistrationForm = ({
     <div className="py-8 px-6">
       {loadingDetails && (
         <div className="w-full h-full text-7xl absolute top-0 left-0 z-50 flex justify-center items-center bg-white bg-opacity-70">
-          {/* <Loading /> */}
+          <Loading />
           &nbsp;
         </div>
       )}

@@ -17,7 +17,7 @@ const CompanyCampaigns = ({ clientId }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
 
   useEffect(() => {
-    document.title = `Campaigns`;
+    document.title = `Campaigns | Queleads`;
 
     (async () => {
       dispatch(setLoader(true));

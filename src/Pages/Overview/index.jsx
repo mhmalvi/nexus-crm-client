@@ -21,7 +21,7 @@ import ManagementAnalytics from "./ManagementAnalytics";
 import SalesAnalytics from "./SalesAnalytics";
 
 const Overview = () => {
-  document.title = "Overview";
+  document.title = "Overview | Queleads";
   const { Option } = Select;
 
   const pdfRef = useRef(null);

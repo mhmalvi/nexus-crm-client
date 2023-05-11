@@ -79,7 +79,7 @@ const LeadDetails = () => {
             `${Object.keys(status)[parseInt(leadStatus?.lead_status)]}`
           ] = true;
 
-          document.title = `Details - ${response?.leadDetails?.full_name}`;
+          document.title = `Details - ${response?.leadDetails?.full_name} | Queleads`;
 
           statusTimeDate[
             `${Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status)]}`
