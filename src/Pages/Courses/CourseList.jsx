@@ -38,9 +38,10 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
           ref={tableSearchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
@@ -60,13 +61,17 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
+            onClick={() => {
+              clearFilters();
+              confirm({ closeDropdown: false });
+              handleReset(clearFilters);
+            }}
             size="small"
             style={{
               width: 90,
             }}
           >
-            Reset
+            Clear
           </Button>
         </Space>
       </div>

@@ -537,13 +537,10 @@ const Sidebar = ({
 
             <div
               className="flex items-center text-base cursor-pointer my-4 py-1.5"
-              style={{
-                color: "#FF3B30",
-              }}
               onClick={handleLogout}
             >
               <Icons.LogOut className="text-[#7C8DB5]" />
-              <span className="ml-4 leading-6 font-medium font-poppins">
+              <span className="ml-4 leading-6 font-medium font-poppins text-[#7C8DB5]">
                 Log out
               </span>
             </div>
