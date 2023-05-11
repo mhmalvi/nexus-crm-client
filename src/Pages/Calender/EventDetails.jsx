@@ -84,8 +84,11 @@ const EventDetails = ({
   };
 
   const handleUpdateFollowUpReq = async () => {
+    const requestData = { ...updateEventData };
+    requestData.status = 1;
+
     const updateFollowUpRes = await handleUpdateFollowUp(
-      updateEventData,
+      requestData,
       eventDetails?.id
     );
 
@@ -93,6 +96,7 @@ const EventDetails = ({
 
     if (updateFollowUpRes?.status === 201) {
       message.success("Reminder Updated Successfully");
+      setIsEdit(false);
 
       const restFllowUpEvents = eventsData?.filter(
         (envent) => envent.id !== eventDetails?.id

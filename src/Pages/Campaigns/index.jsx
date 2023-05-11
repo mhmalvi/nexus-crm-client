@@ -23,7 +23,7 @@ const Campaigns = () => {
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   useEffect(() => {
-    document.title = `Campaigns`;
+    document.title = `Campaigns | Queleads`;
 
     (async () => {
       dispatch(setLoader(true));

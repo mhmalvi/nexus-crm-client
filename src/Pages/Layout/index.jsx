@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-// import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
@@ -11,8 +10,7 @@ import { handleFetchFollowUpNotification } from "../../Components/services/notif
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
 import {
-  addNotifications,
-  setNotifications,
+  setNotifications
 } from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
@@ -93,7 +91,7 @@ const Layout = () => {
 
         console.log("msg", msg);
       });
-    }, 60000);
+    }, 120000);
   }, []);
 
   useEffect(() => {

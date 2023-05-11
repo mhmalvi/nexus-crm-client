@@ -47,3 +47,15 @@ export const handleCallResponseMail = async (mailDetails) => {
     return error.response;
   }
 };
+
+export const handleRegistrationResponseMail = async (mailDetails) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_EMAIL_URL}/api/send-registration-mail`,
+      mailDetails
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

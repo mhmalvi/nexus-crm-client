@@ -307,21 +307,21 @@ const SalesAdmins = ({ clientId }) => {
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
-                    color={Avatar.getRandomColor("sitebase", [
-                      "red",
-                      "green",
-                      "#728FCE",
-                      "violet",
-                      "#2B547E",
-                      "black",
-                      "#87AFC7",
-                      "Lime",
-                      "#D5D6EA",
-                      "#77BFC7",
-                      "orange",
-                      "#FDD017",
-                      "#665D1E",
-                    ])}
+                    // color={Avatar.getRandomColor("sitebase", [
+                    //   "red",
+                    //   "green",
+                    //   "#728FCE",
+                    //   "violet",
+                    //   "#2B547E",
+                    //   "black",
+                    //   "#87AFC7",
+                    //   "Lime",
+                    //   "#D5D6EA",
+                    //   "#77BFC7",
+                    //   "orange",
+                    //   "#FDD017",
+                    //   "#665D1E",
+                    // ])}
                     name={employee?.full_name}
                   />
                   <div className="ml-4">
@@ -384,21 +384,21 @@ const SalesAdmins = ({ clientId }) => {
                 <Avatar
                   className="rounded-full cursor-pointer"
                   size="38"
-                  color={Avatar.getRandomColor("sitebase", [
-                    "red",
-                    "green",
-                    "#728FCE",
-                    "violet",
-                    "#2B547E",
-                    "black",
-                    "#87AFC7",
-                    "Lime",
-                    "#D5D6EA",
-                    "#77BFC7",
-                    "orange",
-                    "#FDD017",
-                    "#665D1E",
-                  ])}
+                  // color={Avatar.getRandomColor("sitebase", [
+                  //   "red",
+                  //   "green",
+                  //   "#728FCE",
+                  //   "violet",
+                  //   "#2B547E",
+                  //   "black",
+                  //   "#87AFC7",
+                  //   "Lime",
+                  //   "#D5D6EA",
+                  //   "#77BFC7",
+                  //   "orange",
+                  //   "#FDD017",
+                  //   "#665D1E",
+                  // ])}
                   name={employee?.full_name}
                 />
                 <div className="ml-4">

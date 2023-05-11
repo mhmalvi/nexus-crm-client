@@ -16,7 +16,7 @@ import Highlighter from "react-highlight-words";
 import { Avatar, Button, Input, Space } from "antd";
 
 const Payment = () => {
-  document.title = `Payments`;
+  document.title = `Payments | Queleads`;
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user?.userInfo);

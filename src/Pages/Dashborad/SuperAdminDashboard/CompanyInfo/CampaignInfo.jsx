@@ -101,7 +101,7 @@ const CampaignInfo = () => {
       campaignList?.find(
         (campaign) => parseInt(campaign.campaign_id) === parseInt(campaignId)
       )?.campaign_name
-    }`;
+    } | Queleads`;
 
     const unique = [
       ...new Set(

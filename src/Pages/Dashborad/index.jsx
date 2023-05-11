@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [passwordDetails, userDetails?.userInfo?.flag]);
 
   useEffect(() => {
-    document.title = `Dashboard`;
+    document.title = `Dashboard | Queleads`;
 
     // API Request for fetching messages
     (async () => {

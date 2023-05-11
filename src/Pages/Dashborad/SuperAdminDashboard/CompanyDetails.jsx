@@ -64,7 +64,7 @@ const CompanyDetails = () => {
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
 
-        document.title = `${companyDetailsResponse?.data?.[0]?.name}`;
+        document.title = `${companyDetailsResponse?.data?.[0]?.name} | Queleads`;
 
         if (companyDetailsResponse?.data?.[0]?.logo_id) {
           const fetchFile = await handleFetchFile(

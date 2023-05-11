@@ -13,10 +13,9 @@ import {
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
+import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader, updateFbToken } from "../../../features/user/userSlice";
 import SalesAdmins from "./SalesAdmins";
-import { addUserDetails } from "../../../features/user/userSlice";
-import { Storage } from "../../../Components/Shared/utils/store";
 
 const CompanySettings = () => {
   const dispatch = useDispatch();

@@ -1099,20 +1099,27 @@ const LeadStatus = (props) => {
 
               {userDetails?.userinfo?.role_id !== 1 ||
               userDetails?.userinfo?.role_id !== 2 ? (
-                <Tooltip title="All Payment Histories">
-                  <div
-                    className="flex items-center my-2 cursor-pointer"
-                    onClick={() => setIsPaymentHistoryOpen(true)}
-                  >
-                    <Icons.AmountHistory
-                      className="w-5 text-gray-700 mr-2 cursor-pointer"
-                      onClick={() => setIsAmountHistoryOpen(true)}
-                    />
-                    <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
-                      Payment History
-                    </h6>
+                activeStatusTitle !== "New Lead" &&
+                activeStatusTitle !== "Skilled" ? (
+                  <Tooltip title="All Payment Histories">
+                    <div
+                      className="flex items-center my-2 cursor-pointer"
+                      onClick={() => setIsPaymentHistoryOpen(true)}
+                    >
+                      <Icons.AmountHistory
+                        className="w-5 text-gray-700 mr-2 cursor-pointer"
+                        onClick={() => setIsAmountHistoryOpen(true)}
+                      />
+                      <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
+                        Payment History
+                      </h6>
+                    </div>
+                  </Tooltip>
+                ) : (
+                  <div className="text-sm font-poppins leading-6 my-4">
+                    Amount Not Set Yet/ Not Paid Yet
                   </div>
-                </Tooltip>
+                )
               ) : null}
 
               {leadDetails?.leadAmountHistory?.length ? (
@@ -1133,14 +1140,17 @@ const LeadStatus = (props) => {
                 </>
               ) : null}
 
-              <div>
-                <button
-                  className="text-sm mt-2 font-medium bg-gray-100 px-2 py-1 rounded-sm border border-gray-200"
-                  onClick={() => setIsAddPaymentHistoryOpen(true)}
-                >
-                  Add Payment History
-                </button>
-              </div>
+              {activeStatusTitle !== "New Lead" &&
+              activeStatusTitle !== "Skilled" ? (
+                <div>
+                  <button
+                    className="text-sm mt-2 font-medium bg-gray-100 px-2 py-1 rounded-sm border border-gray-200"
+                    onClick={() => setIsAddPaymentHistoryOpen(true)}
+                  >
+                    Add Payment History
+                  </button>
+                </div>
+              ) : null}
 
               {/* <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
                 Online Payment
