@@ -1,6 +1,7 @@
 import { Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Icons from "../../../Components/Shared/Icons";
 // import Icons from "../../../Components/Shared/Icons";
 
 const Filters = ({
@@ -8,7 +9,7 @@ const Filters = ({
   filterOptions,
   ratings,
   layout,
-  // setSearchInput,
+  setSearchInput,
   companyEmployeeList,
   handleFilterLeadList,
   handleStaredLeadsFilter,
@@ -110,46 +111,7 @@ const Filters = ({
       </div>
 
       {/* Search Option */}
-      {/* <div
-        className="border px-7 py-8 mt-5 ml-6"
-        style={{
-          borderRadius: "20px",
-        }}
-      >
-        <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-          Search Lead
-        </h1>
-        <div
-          className="w-58 px-4 py-2.5 mx-0.5 flex items-center bg-gray-100"
-          style={{
-            borderRadius: "10px",
-          }}
-        >
-          <div>
-            <Icons.Search />
-          </div>
-          <div>
-            <input
-              className="outline-none text-xs bg-gray-100 leading-5 font-medium font-poppins ml-4"
-              type="text"
-              name="search-code"
-              id=""
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Search Code"
-            />
-          </div>
-          <div>
-            <Icons.Send />
-          </div>
-        </div>
-      </div> */}
-
-      {/* Search with Sales Employee  */}
-
-      {(userDetails?.role_id === 1 ||
-        userDetails?.role_id === 2 ||
-        userDetails?.role_id === 3 ||
-        userDetails?.role_id === 4) && (
+      {layout.toLowerCase()?.includes("payment") ? (
         <div
           className="border px-7 py-8 mt-5 ml-6"
           style={{
@@ -157,20 +119,61 @@ const Filters = ({
           }}
         >
           <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-            Search with Assigned Employee
+            Search Lead
           </h1>
-
-          <div>
-            <Select
-              defaultValue="All"
-              placeholder="Select Employee"
-              onChange={handleEmployeeChange}
-              style={{
-                width: 200,
-              }}
-              options={employeeOptions}
-            />
+          <div
+            className="w-58 px-4 py-2.5 mx-0.5 flex items-center bg-gray-100"
+            style={{
+              borderRadius: "10px",
+            }}
+          >
+            <div>
+              <Icons.Search />
+            </div>
+            <div>
+              <input
+                className="outline-none text-xs bg-gray-100 leading-5 font-medium font-poppins ml-4"
+                type="text"
+                name="search-code"
+                id=""
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Search Code"
+              />
+            </div>
+            <div>
+              <Icons.Send />
+            </div>
           </div>
+        </div>
+      ) : (
+        <div>
+          {(userDetails?.role_id === 1 ||
+            userDetails?.role_id === 2 ||
+            userDetails?.role_id === 3 ||
+            userDetails?.role_id === 4) && (
+            <div
+              className="border px-7 py-8 mt-5 ml-6"
+              style={{
+                borderRadius: "20px",
+              }}
+            >
+              <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+                Search with Assigned Employee
+              </h1>
+
+              <div>
+                <Select
+                  defaultValue="All"
+                  placeholder="Select Employee"
+                  onChange={handleEmployeeChange}
+                  style={{
+                    width: 200,
+                  }}
+                  options={employeeOptions}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

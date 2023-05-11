@@ -4,7 +4,7 @@ import Icons from "../../Components/Shared/Icons";
 const Filter = ({
   activeFilter,
   setActiveFilter,
-//   searchCampaign,
+  //   searchCampaign,
   setSearchCampaign,
 }) => {
   const filterOptions = [
@@ -52,7 +52,7 @@ const Filter = ({
       {/* Search Option */}
       <div>
         <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-          Search Lead
+          Search Campaign
         </h1>
         <div
           className="w-58 px-4 py-2.5 mx-0.5 flex items-center bg-gray-100"
@@ -66,7 +66,7 @@ const Filter = ({
           <div>
             <input
               className="outline-none text-xs bg-gray-100 leading-5 font-medium font-poppins ml-4"
-              type="text"
+              type="search"
               name="search-code"
               id=""
               placeholder="Search Campaign"

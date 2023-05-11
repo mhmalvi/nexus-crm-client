@@ -20,7 +20,7 @@ const BigCalendar = () => {
   const [eventsData, setEventsData] = useState();
   const [selectedEventTime, setSelectedEventTime] = useState({});
   const [eventDetails, setEventDetails] = useState({});
-  // const [synEvents, setSynEvents] = useState(false);
+  const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [time, setTime] = useState("Select Time");
 
@@ -28,6 +28,8 @@ const BigCalendar = () => {
     dispatch(setLoader(true));
     (async () => {
       const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+
+      console.log("featFollowUp", featFollowUp);
 
       if (featFollowUp.status === 200) {
         featFollowUp?.data?.forEach((event) => {
@@ -42,7 +44,7 @@ const BigCalendar = () => {
         }, 3000);
       }
     })();
-  }, [dispatch, selectedEventTime, userDetails]);
+  }, [dispatch, selectedEventTime, userDetails, synEvents]);
 
   console.log("eventsData", eventsData);
 
@@ -143,6 +145,8 @@ const BigCalendar = () => {
           eventsData={eventsData}
           setOpenEventDetails={setOpenEventDetails}
           setIsEdit={setIsEdit}
+          synEvents={synEvents}
+          setSynEvents={setSynEvents}
         />
       </Modal>
     </div>

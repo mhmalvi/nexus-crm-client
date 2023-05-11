@@ -75,7 +75,10 @@ const Sidebar = ({
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
 
-  useEffect(() => {}, []);
+  console.log(
+    "notifications",
+    notifications?.filter((notifi) => notifi?.status)
+  );
 
   useEffect(() => {
     (async () => {
@@ -250,7 +253,8 @@ const Sidebar = ({
                 Notifications
               </span>
 
-              {notifications?.length ? (
+              {notifications?.filter((notifi) => notifi?.status)?.length !==
+              0 ? (
                 <div className="relative right-0 flex justify-center items-center">
                   <div
                     className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
