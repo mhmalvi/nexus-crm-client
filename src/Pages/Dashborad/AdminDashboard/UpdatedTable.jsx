@@ -46,21 +46,25 @@ const UpdatedTable = ({
   }, [data, data?.length, dispatch]);
 
   useEffect(() => {
-    if (!searchInput?.length) {
-      setList(
-        userDetails?.role_id === 5 && activeFilter !== 8
-          ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
-          : data
-      );
+    if (table_title !== "Payment History") {
+      if (!searchInput?.length) {
+        setList(
+          userDetails?.role_id === 5 && activeFilter !== 8
+            ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
+            : data
+        );
+      } else {
+        setList(
+          data?.filter((lead) =>
+            (lead?.lead_id).toString().includes(searchInput.toString())
+          )
+        );
+      }
     } else {
-      setList(
-        data?.filter((lead) =>
-          (lead?.lead_id).toString().includes(searchInput.toString())
-        )
-      );
+      setList(data);
     }
     console.log(data);
-  }, [data, searchInput, activeFilter, userDetails?.role_id]);
+  }, [data, searchInput, activeFilter, userDetails, table_title]);
 
   const handleLeadFileUploadReq = async (e) => {
     const fileData = new FormData();
@@ -117,26 +121,28 @@ const UpdatedTable = ({
           </div>
 
           <div className="flex items-center">
-            <div className="mr-4">
-              <Upload
-                onChange={(e) => handleLeadFileUploadReq(e)}
-                fileList={leadFile}
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              >
-                <div
-                  htmlFor="upload_lead_file"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+            {table_title === "Lead List" ? (
+              <div className="mr-4">
+                <Upload
+                  onChange={(e) => handleLeadFileUploadReq(e)}
+                  fileList={leadFile}
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 >
-                  Upload File
-                </div>
-              </Upload>
+                  <div
+                    htmlFor="upload_lead_file"
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                  >
+                    Upload File
+                  </div>
+                </Upload>
 
-              <Tooltip align={"top"} title="Add lead by uploading file">
-                <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
-                  ?
-                </span>
-              </Tooltip>
-            </div>
+                <Tooltip align={"top"} title="Add lead by uploading file">
+                  <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                    ?
+                  </span>
+                </Tooltip>
+              </div>
+            ) : null}
 
             {setIsAddLeadFormOpen ? (
               <div className="mr-4">

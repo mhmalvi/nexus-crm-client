@@ -158,7 +158,7 @@ const CampaignDetails = () => {
         dataIndex: "lead_id",
         key: "lead_id",
         fixed: true,
-        render: (lead_id) => <h4 className='cursor-pointer'>{lead_id}</h4>,
+        render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
         width: 150,
         ...getColumnSearchProps("lead_id"),
       },
@@ -168,7 +168,7 @@ const CampaignDetails = () => {
         key: "lead_apply_date",
         // ...getColumnSearchProps("lead_apply_date"),
         render: (lead_apply_date) => (
-          <h4 className='cursor-pointer'>
+          <h4 className="cursor-pointer">
             {new Date(lead_apply_date)?.toGMTString()?.replace("GMT", "")}
           </h4>
         ),
@@ -179,7 +179,7 @@ const CampaignDetails = () => {
         dataIndex: "course_code",
         key: "course_code",
         ...getColumnSearchProps("course_code"),
-        render: (code) => <h4 className='cursor-pointer uppercase'>{code}</h4>,
+        render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
         width: 150,
       },
       {
@@ -188,7 +188,7 @@ const CampaignDetails = () => {
         key: "course_title",
         ...getColumnSearchProps("course_title"),
         render: (title) => (
-          <h4 className='cursor-pointer uppercase'>{title}</h4>
+          <h4 className="cursor-pointer uppercase">{title}</h4>
         ),
         width: 300,
       },
@@ -197,7 +197,7 @@ const CampaignDetails = () => {
         dataIndex: "full_name",
         key: "full_name",
         ...getColumnSearchProps("full_name"),
-        render: (full_name) => <h4 className='cursor-pointer'>{full_name}</h4>,
+        render: (full_name) => <h4 className="cursor-pointer">{full_name}</h4>,
         width: 150,
       },
       {
@@ -206,7 +206,7 @@ const CampaignDetails = () => {
         key: "phone_number",
         ...getColumnSearchProps("phone_number"),
         render: (phone_number) => (
-          <h4 className='cursor-pointer'>{phone_number}</h4>
+          <h4 className="cursor-pointer">{phone_number}</h4>
         ),
         width: 150,
       },
@@ -216,7 +216,7 @@ const CampaignDetails = () => {
         key: "work_location",
         ...getColumnSearchProps("work_location"),
         render: (location) => (
-          <h4 className='cursor-pointer uppercase'>{location}</h4>
+          <h4 className="cursor-pointer uppercase">{location}</h4>
         ),
         width: 100,
       },
@@ -226,7 +226,7 @@ const CampaignDetails = () => {
         key: "campaign_id",
         ...getColumnSearchProps("campaign_id"),
         render: (campaign_id) => (
-          <h4 className='cursor-pointer'>{campaign_id}</h4>
+          <h4 className="cursor-pointer">{campaign_id}</h4>
         ),
         width: 150,
       },
@@ -235,18 +235,18 @@ const CampaignDetails = () => {
         dataIndex: "lead_details_status",
         key: "lead_details_status",
         render: (lead_details_status) => (
-          <div className='flex items-center'>
+          <div className="flex items-center">
             {statusColor
               .filter((status) => status.id === lead_details_status)
               .map((lead_status, i) => (
                 <div
                   key={i}
-                  className='w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md'
+                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
                 >
                   <div
                     className={`w-2 h-2 ${lead_status.color} rounded-full`}
                   ></div>
-                  <div className='ml-1'>{lead_status.title}</div>
+                  <div className="ml-1">{lead_status.title}</div>
                 </div>
               ))}
           </div>
@@ -258,16 +258,16 @@ const CampaignDetails = () => {
         dataIndex: "sales_user_id",
         key: "sales_user_id",
         render: (sales_user_id) => (
-          <div className='flex items-center'>
+          <div className="flex items-center">
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4 ||
               userDetails?.userInfo?.role_id === 5) &&
             sales_user_id !== 0 ? (
-              <div className='ml-3'>
+              <div className="ml-3">
                 <Avatar
-                  className='rounded-full shadow-sm cursor-pointer'
-                  size='30'
-                  color='#1f262a'
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="30"
+                  color="#1f262a"
                   name={
                     companyEmployeeList?.find(
                       (employee) => employee?.id === sales_user_id
@@ -365,9 +365,10 @@ const CampaignDetails = () => {
           ref={tableSearchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
@@ -376,10 +377,10 @@ const CampaignDetails = () => {
         />
         <Space>
           <Button
-            type='primary'
+            type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
-            size='small'
+            size="small"
             style={{
               width: 90,
             }}
@@ -387,13 +388,17 @@ const CampaignDetails = () => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size='small'
+            onClick={() => {
+              clearFilters();
+              confirm({ closeDropdown: false });
+              handleReset(clearFilters);
+            }}
+            size="small"
             style={{
               width: 90,
             }}
           >
-            Reset
+            Clear
           </Button>
           {/* <Button
             type="link"
@@ -439,7 +444,7 @@ const CampaignDetails = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: "#ffc069",
+            backgroundColor: "#8250FF",
             padding: 0,
           }}
           searchWords={[searchText]}
@@ -452,48 +457,48 @@ const CampaignDetails = () => {
   });
 
   return (
-    <div className='bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins'>
+    <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">
       {/* Campaign Details */}
       <div
-        className='rounded-xl mb-16'
+        className="rounded-xl mb-16"
         style={{
           backgroundImage: `url(${campaignBg})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className='h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl'>
-          <div className='border rounded-2xl p-6 bg-white bg-opacity-75 mr-4'>
+        <div className="h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl">
+          <div className="border rounded-2xl p-6 bg-white bg-opacity-75 mr-4">
             <div>
-              <h1 className='text-xl leading-8 font-poppins font-semibold'>
+              <h1 className="text-xl leading-8 font-poppins font-semibold">
                 {campaignDetails?.campaign_name}
               </h1>
-              <h1 className='text-base leading-8 font-poppins font-medium'>
+              <h1 className="text-base leading-8 font-poppins font-medium">
                 Campaign ID: {campaignDetails?.campaign_id}
               </h1>
-              <div className='mt-8'>
-                <h1 className='text-base leading-8 font-poppins font-medium'>
+              <div className="mt-8">
+                <h1 className="text-base leading-8 font-poppins font-medium">
                   Started Time: {campaignDetails?.start_time}
                 </h1>
-                <h1 className='text-base leading-8 font-poppins font-medium'>
+                <h1 className="text-base leading-8 font-poppins font-medium">
                   End Time: {campaignDetails?.stop_time}
                 </h1>
 
-                <div className='flex items-center'>
-                  <span className='text-base leading-8 font-poppins font-medium mr-2'>
+                <div className="flex items-center">
+                  <span className="text-base leading-8 font-poppins font-medium mr-2">
                     Status:
                   </span>
                   {campaignDetails?.campaign_status === "ACTIVE" ? (
-                    <img className='w-6' src={activeImg} alt='' />
+                    <img className="w-6" src={activeImg} alt="" />
                   ) : (
-                    <img className='w-6' src={inactiveImg} alt='' />
+                    <img className="w-6" src={inactiveImg} alt="" />
                   )}
-                  <h1 className='block text-base leading-8 font-poppins font-medium ml-1 mb-0'>
+                  <h1 className="block text-base leading-8 font-poppins font-medium ml-1 mb-0">
                     {campaignDetails?.campaign_status}
                   </h1>
                 </div>
 
-                <h1 className='block text-lg text-brand-color leading-8 font-poppins font-semibold pt-6'>
+                <h1 className="block text-lg text-brand-color leading-8 font-poppins font-semibold pt-6">
                   Total Leads:{" "}
                   {
                     leadList?.filter(
@@ -505,12 +510,12 @@ const CampaignDetails = () => {
             </div>
           </div>
           {campaignCourses?.length > 0 ? (
-            <div className='border rounded-2xl p-6 bg-white bg-opacity-75 ml-4'>
+            <div className="border rounded-2xl p-6 bg-white bg-opacity-75 ml-4">
               {campaignCourses?.map((course) => (
                 <div onClick={() => handleCourseWiseLeads(course)}>
-                  <li className='list-disc rounded-lg font-poppins text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer'>
+                  <li className="list-disc rounded-lg font-poppins uppercase text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer">
                     <span>{course}</span>
-                    <span className='text-brand-color ml-12 float-right italic'>
+                    <span className="text-brand-color ml-12 float-right italic">
                       {
                         leadList
                           ?.filter(
@@ -541,7 +546,7 @@ const CampaignDetails = () => {
       />
 
       <Filters
-        layout='Campaign'
+        layout="Campaign"
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
@@ -554,7 +559,7 @@ const CampaignDetails = () => {
       />
 
       <UpdatedTable
-        table_title='Lead List'
+        table_title="Leads"
         tableHeaders={tableHeaders}
         data={leadData}
         companyEmployeeList={companyEmployeeList}
@@ -591,6 +596,10 @@ export default CampaignDetails;
 
 const filterOptions = [
   {
+    id: 0,
+    title: "All",
+  },
+  {
     id: 1,
     title: "New Lead",
   },
@@ -617,10 +626,6 @@ const filterOptions = [
   {
     id: 8,
     title: "My Leads",
-  },
-  {
-    id: 0,
-    title: "All",
   },
 ];
 

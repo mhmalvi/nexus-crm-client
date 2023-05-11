@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFetchClientsInvoiceHistory,
@@ -12,8 +14,7 @@ import { setLoader } from "../../features/user/userSlice";
 import Calendar from "../Dashborad/AdminDashboard/Calendar";
 import Filters from "../Dashborad/AdminDashboard/Filters";
 import Table from "../Dashborad/AdminDashboard/Table";
-import Highlighter from "react-highlight-words";
-import { Avatar, Button, Input, Space } from "antd";
+import UpdatedTable from "../Dashborad/AdminDashboard/UpdatedTable";
 
 const Payment = () => {
   document.title = `Payments | Queleads`;
@@ -32,6 +33,9 @@ const Payment = () => {
 
   // For Search Table Data
   const [searchText, setSearchText] = useState("");
+  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const tableSearchInput = useRef(null);
 
@@ -43,9 +47,9 @@ const Payment = () => {
 
   const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
     // confirm();
+    clearFilters();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
-    clearFilters();
     setSearchText("");
   };
 
@@ -67,9 +71,10 @@ const Payment = () => {
           ref={tableSearchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
@@ -89,15 +94,17 @@ const Payment = () => {
             Search
           </Button>
           <Button
-            onClick={() =>
-              clearFilters && handleReset(clearFilters, selectedKeys, dataIndex)
-            }
+            onClick={() => {
+              clearFilters();
+              confirm({ closeDropdown: false });
+              handleReset(clearFilters, selectedKeys, dataIndex);
+            }}
             size="small"
             style={{
               width: 90,
             }}
           >
-            Reset
+            Clear
           </Button>
           {/* <Button
             type="link"
@@ -142,7 +149,7 @@ const Payment = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: "#ffc069",
+            backgroundColor: "#8250FF",
             padding: 0,
           }}
           searchWords={[searchText]}
@@ -156,11 +163,16 @@ const Payment = () => {
 
   useEffect(() => {
     (async () => {
-      if (
-        userDetails?.role_id === 3 ||
-        userDetails?.role_id === 4 ||
-        userDetails?.role_id === 5
-      ) {
+      if (userDetails?.role_id === 6) {
+        const paymentHistoryResponse = await handleFetchStudentsPaymentHistory(
+          userDetails?.user_id
+        );
+
+        if (paymentHistoryResponse?.status === true) {
+          setPaymentData(paymentHistoryResponse?.data);
+          setAllPayments(paymentHistoryResponse?.data);
+        }
+      } else {
         const paymentHistoryResponse = await handleFetchClientsPaymentHistory(
           userDetails?.client_id
         );
@@ -171,17 +183,6 @@ const Payment = () => {
           setPaymentData(paymentHistoryResponse?.data);
           setAllPayments(paymentHistoryResponse?.data);
         }
-      } else if (userDetails?.role_id === 6) {
-        const paymentHistoryResponse = await handleFetchStudentsPaymentHistory(
-          userDetails?.user_id
-        );
-
-        if (paymentHistoryResponse?.status === true) {
-          setPaymentData(paymentHistoryResponse?.data);
-          setAllPayments(paymentHistoryResponse?.data);
-        }
-      } else {
-        return;
       }
     })();
 
@@ -225,26 +226,22 @@ const Payment = () => {
         key: "lead_id",
         fixed: true,
         render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
-        width: 150,
+        width: 100,
         ...getColumnSearchProps("lead_id"),
       },
       {
         title: "Date",
-        dataIndex: "lead_apply_date",
-        key: "lead_apply_date",
+        dataIndex: "created_at",
+        key: "created_at",
         // ...getColumnSearchProps("lead_apply_date"),
-        render: (lead_apply_date) => (
+        render: (created_at) => (
           <h4 className="cursor-pointer">
-            {/* {new Date(lead_apply_date)
-              ?.toString()
-              .slice(4, 33)
-              ?.replace("GMT", "")} */}
-            {new Date(new Date(lead_apply_date).getTime() + 6 * 60 * 60 * 1000)
+            {new Date(new Date(created_at).getTime() + 6 * 60 * 60 * 1000)
               ?.toString()
               ?.slice(0, 24)}
           </h4>
         ),
-        width: 150,
+        width: 120,
       },
       {
         title: "Course Code",
@@ -252,112 +249,82 @@ const Payment = () => {
         key: "course_code",
         ...getColumnSearchProps("course_code"),
         render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
-        width: 150,
+        width: 80,
       },
       {
-        title: "Course Name",
+        title: "Course Title",
         dataIndex: "course_title",
         key: "course_title",
         ...getColumnSearchProps("course_title"),
         render: (title) => (
           <h4 className="cursor-pointer uppercase">{title}</h4>
         ),
-        width: 300,
+        width: 200,
       },
       {
-        title: "Customer Name",
-        dataIndex: "full_name",
-        key: "full_name",
-        ...getColumnSearchProps("full_name"),
-        render: (full_name) => <h4 className="cursor-pointer">{full_name}</h4>,
-        width: 150,
+        title: "Amount",
+        dataIndex: "payment_amount",
+        key: "payment_amount",
+        ...getColumnSearchProps("payment_amount"),
+        render: (payment_amount) => (
+          <h4 className="cursor-pointer uppercase">{payment_amount}</h4>
+        ),
+        width: 50,
       },
       {
-        title: "Phone Number",
-        dataIndex: "phone_number",
-        key: "phone_number",
-        ...getColumnSearchProps("phone_number"),
-        render: (phone_number) => (
-          <h4 className="cursor-pointer">{phone_number}</h4>
+        title: "Transaction ID",
+        dataIndex: "transaction_id",
+        key: "transaction_id",
+        ...getColumnSearchProps("transaction_id"),
+        render: (transaction_id) => (
+          <h4 className="cursor-pointer">{transaction_id}</h4>
         ),
         width: 150,
       },
       {
-        title: "Location",
-        dataIndex: "work_location",
-        key: "work_location",
-        ...getColumnSearchProps("work_location"),
-        render: (location) => (
-          <h4 className="cursor-pointer uppercase">{location}</h4>
-        ),
-        width: 100,
-      },
-      {
-        title: "Campaign ID",
-        dataIndex: "campaign_id",
-        key: "campaign_id",
-        ...getColumnSearchProps("campaign_id"),
-        render: (campaign_id) => (
-          <h4 className="cursor-pointer">{campaign_id}</h4>
+        title: "Payment Via",
+        dataIndex: "payment_method",
+        key: "payment_method",
+        ...getColumnSearchProps("payment_method"),
+        render: (payment_method) => (
+          <h4 className="cursor-pointer">{payment_method}</h4>
         ),
         width: 150,
       },
-      {
-        title: "Lead Status",
-        dataIndex: "lead_details_status",
-        key: "lead_details_status",
-        render: (lead_details_status) => (
-          <div className="flex items-center">
-            {statusColor
-              .filter((status) => status.id === lead_details_status)
-              .map((lead_status, i) => (
-                <div
-                  key={i}
-                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
-                >
-                  <div
-                    className={`w-2 h-2 ${lead_status.color} rounded-full`}
-                  ></div>
-                  <div className="ml-1">{lead_status.title}</div>
-                </div>
-              ))}
-          </div>
-        ),
-        width: 120,
-      },
-      {
-        title: "Assigned To",
-        dataIndex: "sales_user_id",
-        key: "sales_user_id",
-        render: (sales_user_id) => (
-          <div className="flex items-center">
-            {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) &&
-            sales_user_id !== 0 ? (
-              <div className="ml-3">
-                <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
-                  name={
-                    companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
-                    )?.full_name
-                  }
-                />
-              </div>
-            ) : null}
-          </div>
-        ),
-        width: 120,
-      },
+
+      // {
+      //   title: "Assigned To",
+      //   dataIndex: "sales_user_id",
+      //   key: "sales_user_id",
+      //   render: (sales_user_id) => (
+      //     <div className="flex items-center">
+      //       {(userDetails?.userInfo?.role_id === 3 ||
+      //         userDetails?.userInfo?.role_id === 4 ||
+      //         userDetails?.userInfo?.role_id === 5) &&
+      //       sales_user_id !== 0 ? (
+      //         <div className="ml-3">
+      //           <Avatar
+      //             className="rounded-full shadow-sm cursor-pointer"
+      //             size="30"
+      //             color="#1f262a"
+      //             name={
+      //               companyEmployeeList?.find(
+      //                 (employee) => employee?.id === sales_user_id
+      //               )?.full_name
+      //             }
+      //           />
+      //         </div>
+      //       ) : null}
+      //     </div>
+      //   ),
+      //   width: 120,
+      // },
     ];
 
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyEmployeeList, userDetails?.userInfo]);
-  
+
   useEffect(() => {
     if (filterDate.length) {
       setPaymentData(
@@ -373,19 +340,47 @@ const Payment = () => {
   }, [allPayments, filterDate]);
 
   useEffect(() => {
-    (async()=>{
-       const fetchEmployees = await handleFetchCompanyEmployees(
-         userDetails?.userInfo?.client_id
-       );
-       if (fetchEmployees?.status === true) {
-         setCompanyEmployeeList(fetchEmployees?.data);
-       }
-    })()
+    const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
+
+    console.log("seletedDate", seletedDate);
+
+    if (selectedDay && selectedMonth && selectedYear) {
+      setPaymentData(
+        allPayments.filter(
+          (payment) => payment?.created_at?.slice(0, 10) === seletedDate
+        )
+      );
+    } else {
+      setPaymentData(allPayments);
+    }
+  }, [allPayments, selectedDay, selectedMonth, selectedYear]);
+
+  useEffect(() => {
+    (async () => {
+      const fetchEmployees = await handleFetchCompanyEmployees(
+        userDetails?.userInfo?.client_id
+      );
+      if (fetchEmployees?.status === true) {
+        setCompanyEmployeeList(fetchEmployees?.data);
+      }
+    })();
   }, [userDetails]);
+
+  console.log("allPayments", allPayments);
+  console.log("paymentData ++++++", paymentData);
 
   return (
     <div className="mx-6 2xl:ml-12 2xl:mr-16 py-24">
-      <Calendar filterDate={filterDate} setFilterDate={setFilterDate} />
+      <Calendar
+        filterDate={filterDate}
+        setFilterDate={setFilterDate}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+      />
       <Filters layout="Payment" setSearchInput={setSearchInput} />
 
       {/* <div className="mt-10">
@@ -412,14 +407,28 @@ const Payment = () => {
       </div> */}
 
       {toggleTabs === "payment" ? (
-        <Table
-          title="Payment History"
-          tableHeaders={paymentHistoryTableHeaders}
+        <UpdatedTable
+          table_title="Payment History"
+          tableHeaders={tableHeaders}
           data={paymentData}
+          companyEmployeeList={companyEmployeeList}
+          filterOptions={null}
+          ratings={null}
+          activeFilter={1}
           searchInput={searchInput}
-          setSearchInput={setSearchInput}
+          handleSyncLeadsReq={null}
+          setIsAddLeadFormOpen={null}
+          setSyncLeads={null}
+          syncLeads={null}
         />
       ) : (
+        // <Table
+        //   title="Payment History"
+        //   tableHeaders={paymentHistoryTableHeaders}
+        //   data={paymentData}
+        //   searchInput={searchInput}
+        //   setSearchInput={setSearchInput}
+        // />
         <Table
           title="Invoice History"
           tableHeaders={invoiceHistoryTableHeaders}
@@ -434,16 +443,16 @@ const Payment = () => {
 
 export default Payment;
 
-const paymentHistoryTableHeaders = [
-  "Lead ID",
-  "Date",
-  // "Coustomer Name",
-  // "Course Code",
-  "Transaction ID",
-  "Payment Via",
-  "Amount",
-  "Status",
-];
+// const paymentHistoryTableHeaders = [
+//   "Lead ID",
+//   "Date",
+//   // "Coustomer Name",
+//   // "Course Code",
+//   "Transaction ID",
+//   "Payment Via",
+//   "Amount",
+//   "Status",
+// ];
 
 const invoiceHistoryTableHeaders = [
   "Invoice ID",
@@ -457,41 +466,40 @@ const invoiceHistoryTableHeaders = [
   "Payment Via",
 ];
 
-
-const statusColor = [
-  {
-    id: 0,
-    title: "Suspended",
-    color: "bg-black",
-  },
-  {
-    id: 1,
-    title: "New Lead",
-    color: "bg-green-500",
-  },
-  {
-    id: 2,
-    title: "Skilled",
-    color: "bg-orange-500",
-  },
-  {
-    id: 3,
-    title: "Called",
-    color: "bg-blue-500",
-  },
-  {
-    id: 4,
-    title: "Paid",
-    color: "bg-teal-500",
-  },
-  {
-    id: 5,
-    title: "Verified",
-    color: "bg-violet-500",
-  },
-  {
-    id: 6,
-    title: "Completed",
-    color: "bg-red-500",
-  },
-];
+// const statusColor = [
+//   {
+//     id: 0,
+//     title: "Suspended",
+//     color: "bg-black",
+//   },
+//   {
+//     id: 1,
+//     title: "New Lead",
+//     color: "bg-green-500",
+//   },
+//   {
+//     id: 2,
+//     title: "Skilled",
+//     color: "bg-orange-500",
+//   },
+//   {
+//     id: 3,
+//     title: "Called",
+//     color: "bg-blue-500",
+//   },
+//   {
+//     id: 4,
+//     title: "Paid",
+//     color: "bg-teal-500",
+//   },
+//   {
+//     id: 5,
+//     title: "Verified",
+//     color: "bg-violet-500",
+//   },
+//   {
+//     id: 6,
+//     title: "Completed",
+//     color: "bg-red-500",
+//   },
+// ];

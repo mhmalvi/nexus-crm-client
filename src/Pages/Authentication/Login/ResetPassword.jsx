@@ -148,7 +148,7 @@ const ResetPassword = () => {
                   type="submit"
                   className="w-full p-3 text-white font-medium bg-brand-color bg-opacity-80 hover:bg-primary-800 rounded-md focus:outline-none font-poppins"
                 >
-                  Reset
+                  Clear
                 </button>
               </div>
             ) : (

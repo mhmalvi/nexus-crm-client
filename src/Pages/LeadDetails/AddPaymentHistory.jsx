@@ -5,8 +5,8 @@ import { handleAddLeadPaymentHistory } from "../../Components/services/payment";
 const AddPaymentHistory = ({
   leadDetails,
   setIsAddPaymentHistoryOpen,
-  syncDetails,
-  setSyncDetails,
+  // syncDetails,
+  // setSyncDetails,
   syncTotalPaid,
   setSyncTotalPaid,
 }) => {
@@ -30,6 +30,8 @@ const AddPaymentHistory = ({
       email: leadDetails?.leadDetails?.student_email,
       phone: "",
       mobile: "",
+      course_title: leadDetails?.leadDetails?.course_title,
+      course_code: leadDetails?.leadDetails?.course_code,
     });
 
     if (resp?.status === 201) {
