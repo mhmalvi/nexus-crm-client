@@ -65,13 +65,22 @@ export const fetchAverageIncomeOfLastWeek = async (companyId) => {
   }
 };
 
-
-
 export const handleAddLeadPaymentHistory = async (data) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_PAYMENT_URL}/api/store-payment-history`,
       data
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleDeletePaymentHistory = async (id) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment-history-delete/${id}`
     );
     return result.data;
   } catch (error) {

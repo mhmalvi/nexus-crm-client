@@ -98,6 +98,8 @@ const LeadDetails = () => {
     (async () => {
       const paymentHistoryRes = await handlePaymentDetails(id);
 
+      console.log("paymentHistoryRes", paymentHistoryRes);
+
       if (paymentHistoryRes?.status === 200) {
         setPaymentHistory(paymentHistoryRes?.data);
         let totalAmount = 0;
@@ -108,6 +110,9 @@ const LeadDetails = () => {
           ).toFixed(2);
         });
         setTotalPaid(totalAmount);
+      } else {
+        setPaymentHistory([]);
+        setTotalPaid(0);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,17 +144,17 @@ const LeadDetails = () => {
   return (
     <div>
       {loadingDetails && (
-        <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+        <div className='w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70'>
           <Loading />
         </div>
       )}
-      <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
+      <div className='lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10'>
         <div
           className={`relative grid grid-cols-1 gap-6 ${
             userDetails?.role_id === 6 ? "lg:grid-cols-2" : "lg:grid-cols-3"
           }`}
         >
-          <div className="px-2 xl:px-3">
+          <div className='px-2 xl:px-3'>
             <LeadStatus
               leadStatus={leadStatusDetails}
               leadDetails={leadDetails}
@@ -177,18 +182,18 @@ const LeadDetails = () => {
             />
           </div>
           {leadDetails?.leadDetails?.lead_details_status === 0 && (
-            <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+            <div className='w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic'>
               <div>Lead has been suspended</div>
-              <div className="xl:ml-4 mt-8">
+              <div className='xl:ml-4 mt-8'>
                 <Popconfirm
-                  title="Do you want to Release this lead from the Suspension?"
+                  title='Do you want to Release this lead from the Suspension?'
                   onConfirm={confirm}
                   onCancel={cancel}
-                  okText="Yes"
-                  cancelText="No"
+                  okText='Yes'
+                  cancelText='No'
                 >
                   <Tooltip
-                    placement="right"
+                    placement='right'
                     title={
                       "If you think to Release the lead from the Suspension"
                     }
