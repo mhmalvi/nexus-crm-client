@@ -21,7 +21,7 @@ import ManagementAnalytics from "./ManagementAnalytics";
 import SalesAnalytics from "./SalesAnalytics";
 
 const Overview = () => {
-  document.title = "Overview | Queleads";
+  document.title = "Overview | Queleads CRM";
   const { Option } = Select;
 
   const pdfRef = useRef(null);
@@ -34,19 +34,23 @@ const Overview = () => {
   const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
 
   useEffect(() => {
+    console.log("HWERRREEE");
     (async () => {
       const companiesResponse = await handleFetchCompanies();
-
-      if (companiesResponse?.status === true) {
+      if (companiesResponse?.status) {
         setCompanies(companiesResponse?.data);
 
         setActiveCompanies(companiesResponse?.data?.[0]?.id);
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
+
+      
     })();
+    console.log("companiesResponse", companiesResponse);
   }, []);
 
   useEffect(() => {
+    console.log("activeCompany activeCompany", activeCompany);
     dispatch(setLoader(true));
 
     (async () => {
@@ -110,6 +114,7 @@ const Overview = () => {
     console.log(`selected ${value}`);
   };
 
+  // For Generate Rport and Download
   const download = (
     image,
     {

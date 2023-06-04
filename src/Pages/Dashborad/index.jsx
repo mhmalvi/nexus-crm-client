@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   handlefetchMessages,
-  handlePasswordReset
+  handlePasswordReset,
 } from "../../Components/services/auth";
 import { Storage } from "../../Components/Shared/utils/store";
 import { addMessages } from "../../features/user/messagesSlice";
@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [passwordDetails, userDetails?.userInfo?.flag]);
 
   useEffect(() => {
-    document.title = `Dashboard | Queleads`;
+    document.title = `Dashboard | Queleads CRM`;
 
     // API Request for fetching messages
     (async () => {
