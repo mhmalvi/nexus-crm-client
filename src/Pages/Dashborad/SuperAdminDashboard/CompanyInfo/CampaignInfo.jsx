@@ -101,7 +101,7 @@ const CampaignInfo = () => {
       campaignList?.find(
         (campaign) => parseInt(campaign.campaign_id) === parseInt(campaignId)
       )?.campaign_name
-    } | Queleads`;
+    } | Queleads CRM`;
 
     const unique = [
       ...new Set(
@@ -204,44 +204,44 @@ const CampaignInfo = () => {
   console.log("campaignCourses", campaignCourses?.length);
 
   return (
-    <div className='bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins'>
+    <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">
       {/* Campaign Details */}
       <div
-        className='rounded-xl mb-16'
+        className="rounded-xl mb-16"
         style={{
           backgroundImage: `url(${campaignBg})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className='h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl'>
-          <div className='border rounded-2xl p-6 bg-white bg-opacity-75'>
+        <div className="h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl">
+          <div className="border rounded-2xl p-6 bg-white bg-opacity-75">
             <div>
-              <h1 className='text-xl leading-8 font-poppins font-semibold'>
+              <h1 className="text-xl leading-8 font-poppins font-semibold">
                 {campaignDetails?.campaign_name}
               </h1>
-              <div className='mt-8'>
-                <h1 className='text-base leading-8 font-poppins font-medium'>
+              <div className="mt-8">
+                <h1 className="text-base leading-8 font-poppins font-medium">
                   Started Time: {campaignDetails?.start_time}
                 </h1>
-                <h1 className='text-base leading-8 font-poppins font-medium'>
+                <h1 className="text-base leading-8 font-poppins font-medium">
                   End Time: {campaignDetails?.stop_time}
                 </h1>
-                <div className='flex items-center'>
-                  <span className='text-base leading-8 font-poppins font-medium mr-2'>
+                <div className="flex items-center">
+                  <span className="text-base leading-8 font-poppins font-medium mr-2">
                     Status:
                   </span>
                   {campaignDetails?.campaign_status === "ACTIVE" ? (
-                    <img className='w-6' src={activeImg} alt='' />
+                    <img className="w-6" src={activeImg} alt="" />
                   ) : (
-                    <img className='w-6' src={inactiveImg} alt='' />
+                    <img className="w-6" src={inactiveImg} alt="" />
                   )}
-                  <h1 className='text-base leading-8 font-poppins font-medium ml-1 mb-0'>
+                  <h1 className="text-base leading-8 font-poppins font-medium ml-1 mb-0">
                     {campaignDetails?.campaign_status}
                   </h1>
                 </div>
 
-                <h1 className='text-lg text-brand-color leading-8 font-poppins font-semibold pt-6'>
+                <h1 className="text-lg text-brand-color leading-8 font-poppins font-semibold pt-6">
                   Total Leads:{" "}
                   {
                     leadList?.filter(
@@ -256,12 +256,12 @@ const CampaignInfo = () => {
 
           {/* Courses */}
           {campaignCourses?.length > 0 ? (
-            <div className='border rounded-2xl p-6 bg-white bg-opacity-75'>
+            <div className="border rounded-2xl p-6 bg-white bg-opacity-75">
               {campaignCourses?.map((course) => (
                 <div onClick={() => handleCourseWiseLeads(course)}>
-                  <li className='list-disc rounded-lg font-poppins text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer'>
+                  <li className="list-disc rounded-lg font-poppins text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer">
                     <span>{course}</span>
-                    <span className='text-brand-color ml-12 float-right italic'>
+                    <span className="text-brand-color ml-12 float-right italic">
                       {
                         leadList
                           ?.filter(
@@ -293,7 +293,7 @@ const CampaignInfo = () => {
       />
 
       <Filters
-        layout='Campaign'
+        layout="Campaign"
         handleFilterLeadList={handleFilterLeadList}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
@@ -306,7 +306,7 @@ const CampaignInfo = () => {
       />
 
       <Table
-        title='Lead List'
+        title="Lead List"
         tableHeaders={tableHeaders}
         data={leadData}
         filterOptions={filterOptions}

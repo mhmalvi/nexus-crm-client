@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import CompanySettings from "./CompanySettings";
 
 const Settings = () => {
-  document.title = `Settings | Queleads`;
+  document.title = `Settings | Queleads CRM`;
 
   const userDetails = useSelector((state) => state?.user);
 

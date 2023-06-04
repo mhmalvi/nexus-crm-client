@@ -2,10 +2,9 @@ import { Select } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
-import { fetchCampaignwisePaymentDataOfCompany } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
+import { fetchCampaignwisePaymentDataOfCompany } from "../../Components/services/payment";
 import * as chartUtils from "./utils";
-import moment from "moment";
 
 const CampaignAnalytics = ({ activeCompany }) => {
   const { Option } = Select;
@@ -36,7 +35,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
   useEffect(() => {
     const curCampaign = [];
 
-    campaigns.forEach((cam) => {
+    campaigns?.forEach((cam) => {
       if (cam?.start_time?.toString()?.includes(new Date().getFullYear())) {
         curCampaign.push(cam);
       }
@@ -66,272 +65,274 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
   useEffect(() => {
     // For Areawise Lead Details
-    setAreawiseLeads([
-      {
-        city: "New South Wales",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "nsw"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#8884d8",
-      },
-      {
-        city: "Victoria",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "vic"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#83a6ed",
-      },
-      {
-        city: "Queensland",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "qld"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#8dd1e1",
-      },
-      {
-        city: "Western Australia",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "wa"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#82ca9d",
-      },
-      {
-        city: "South Australia",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "sa"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#d0ed57",
-      },
-      {
-        city: "Tasmania",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "tas"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#a4de6c",
-      },
-      {
-        city: "Capital Territory",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "act"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#a4de6c",
-      },
-      {
-        city: "Northern Territory",
-        percentage:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.work_location === "nt"
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-        fill: "#a4de6c",
-      },
-    ]);
+    if (userDetails?.userInfo?.role_id !== 1) {
+      setAreawiseLeads([
+        {
+          city: "New South Wales",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "nsw"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#8884d8",
+        },
+        {
+          city: "Victoria",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "vic"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#83a6ed",
+        },
+        {
+          city: "Queensland",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "qld"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#8dd1e1",
+        },
+        {
+          city: "Western Australia",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "wa"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#82ca9d",
+        },
+        {
+          city: "South Australia",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "sa"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#d0ed57",
+        },
+        {
+          city: "Tasmania",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "tas"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#a4de6c",
+        },
+        {
+          city: "Capital Territory",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "act"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#a4de6c",
+        },
+        {
+          city: "Northern Territory",
+          percentage:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.work_location === "nt"
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+          fill: "#a4de6c",
+        },
+      ]);
 
-    setCampaignSummary([
-      {
-        status: "New Lead",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+      setCampaignSummary([
+        {
+          status: "New Lead",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === activeCampaignSummary
+                    )
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 1
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === activeCampaignSummary
-                  )
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 1
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === activeCampaignSummary
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-      {
-        status: "Skilled",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+        {
+          status: "Skilled",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === activeCampaignSummary
+                    )
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 2
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === activeCampaignSummary
-                  )
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 2
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === activeCampaignSummary
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-      {
-        status: "Called",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 3
-                  )?.length /
-                leads?.filter((lead) => lead?.campaign_id === activeCampaign)
-                  ?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-      {
-        status: "Paid",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+        {
+          status: "Called",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 3
+                    )?.length /
+                  leads?.filter((lead) => lead?.campaign_id === activeCampaign)
+                    ?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+        {
+          status: "Paid",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === activeCampaignSummary
+                    )
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 4
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === activeCampaignSummary
-                  )
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 4
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === activeCampaignSummary
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-      {
-        status: "Verified",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+        {
+          status: "Verified",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === activeCampaignSummary
+                    )
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 5
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === activeCampaignSummary
-                  )
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 5
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === activeCampaignSummary
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-      {
-        status: "Completed",
-        value:
-          leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
-            ?.length > 0
-            ? (
-                leads
-                  ?.filter(
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+        {
+          status: "Completed",
+          value:
+            leads?.filter((lead) => lead?.campaign_id === activeCampaignSummary)
+              ?.length > 0
+              ? (
+                  leads
+                    ?.filter(
+                      (lead) => lead?.campaign_id === activeCampaignSummary
+                    )
+                    ?.filter(
+                      (filteredCampaign) =>
+                        filteredCampaign?.lead_details_status === 6
+                    )?.length /
+                  leads?.filter(
                     (lead) => lead?.campaign_id === activeCampaignSummary
-                  )
-                  ?.filter(
-                    (filteredCampaign) =>
-                      filteredCampaign?.lead_details_status === 6
-                  )?.length /
-                leads?.filter(
-                  (lead) => lead?.campaign_id === activeCampaignSummary
-                )?.length
-              ).toFixed(2) * 100
-            : 0,
-      },
-    ]);
+                  )?.length
+                ).toFixed(2) * 100
+              : 0,
+        },
+      ]);
+    }
   }, [activeCampaign, activeCampaignSummary, leads]);
 
   useEffect(() => {
@@ -348,7 +349,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
       // console.log("campaign", campaign?.start_time);
       // console.log("campaign", dur);
       if (
-        campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+        campaign?.start_time?.toString()?.includes(new Date().getFullYear()) 
       ) {
         campaignsDetailsArray.push({
           campaign: campaign?.campaign_name,

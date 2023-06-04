@@ -7,7 +7,7 @@ import { addLeads } from "../../../features/Leads/leadsSlice";
 import AppliedCampaign from "./AppliedCampaign";
 
 const UserDashboard = () => {
-  document.title = "Dashboard | Queleads";
+  document.title = "Dashboard | Queleads CRM";
 
   const dispatch = useDispatch();
 

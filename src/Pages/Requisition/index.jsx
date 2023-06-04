@@ -39,7 +39,7 @@ const Requisition = () => {
   };
 
   useEffect(() => {
-    document.title = "Requisition | Queleads";
+    document.title = "Requisition | Queleads CRM";
 
     (async () => {
       const cityDetails = [];

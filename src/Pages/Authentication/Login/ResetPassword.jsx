@@ -1,16 +1,12 @@
-import { Input, message } from "antd";
+import { Input } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { handleLogin } from "../../../Components/services/auth";
+import { useSelector } from "react-redux";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
-import { Storage } from "../../../Components/Shared/utils/store";
-import { addUserDetails, setLoader } from "../../../features/user/userSlice";
 import picture from "../../../assets/Images/paypal.png";
 
 const ResetPassword = () => {
-  document.title = "Log In | Queleads";
+  document.title = "Log In | Queleads CRM";
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [passwordMatch, setPasswordMatch] = useState(0);
 
@@ -50,7 +46,9 @@ const ResetPassword = () => {
       setPasswordMatch(passwordCheckMsg[0]);
       console.log(passwordMatch);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleChange = (e) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });

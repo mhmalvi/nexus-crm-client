@@ -17,7 +17,7 @@ import Table from "../Dashborad/AdminDashboard/Table";
 import UpdatedTable from "../Dashborad/AdminDashboard/UpdatedTable";
 
 const Payment = () => {
-  document.title = `Payments | Queleads`;
+  document.title = `Payments | Queleads CRM`;
 
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user?.userInfo);
