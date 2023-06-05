@@ -87,7 +87,7 @@ const Campaigns = () => {
 
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
-      <div className="flex items-center mb-6 mt-10">
+      {/* <div className="flex items-center mb-6 mt-10">
         <div
           onClick={() => {
             setActiveSection(1);
@@ -104,7 +104,7 @@ const Campaigns = () => {
             Show Courses
           </h1>
         </div>
-      </div>
+      </div> */}
 
       <Modal
         visible={toggleCourses}
