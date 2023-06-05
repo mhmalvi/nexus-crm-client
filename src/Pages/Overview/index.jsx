@@ -44,9 +44,8 @@ const Overview = () => {
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
 
-      
+      console.log("companiesResponse", companiesResponse);
     })();
-    console.log("companiesResponse", companiesResponse);
   }, []);
 
   useEffect(() => {
@@ -133,15 +132,15 @@ const Overview = () => {
   };
 
   return (
-    <div className="py-16 px-6 font-poppins">
-      <div className="float-right text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black text-xs">
+    <div className='py-16 px-6 font-poppins'>
+      <div className='float-right text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black text-xs'>
         <span onClick={getImage}>Export Report</span>
       </div>
 
       {userDetails?.userInfo?.role_id === 1 ? (
-        <div className="font-light">
+        <div className='font-light'>
           <Select
-            id="companies"
+            id='companies'
             // defaultValue={companies?.[0]?.name}
             defaultValue={defaultCompany}
             placeholder={defaultCompany}
