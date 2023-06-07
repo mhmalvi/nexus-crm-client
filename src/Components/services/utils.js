@@ -11,6 +11,18 @@ export const handleUploadFile = async (fileDetails) => {
     return error.response;
   }
 };
+export const handleLeadMailUpload = async (data) => {
+  console.log("data: ", data);
+  try {
+    const result = await axios.post(
+      `https://crmleads.quadque.digital/api/lead/mail`,
+      data
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const handleFetchFile = async (fileId) => {
   try {
