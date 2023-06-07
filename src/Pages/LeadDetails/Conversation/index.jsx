@@ -1,4 +1,15 @@
-import { DatePicker, Space } from "antd";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  Form,
+  Button,
+  DatePicker,
+  Space,
+  Upload,
+  Select,
+  Cascader,
+  message,
+} from "antd";
+
 import "antd/dist/antd.css";
 // import axios from "axios";
 // import dayjs from "dayjs";
@@ -9,6 +20,7 @@ import { useSelector } from "react-redux";
 // import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import mailLogo from "../../../assets/Images/gmail.png";
 import whatsappLogo from "../../../assets/Images/whatsapp.png";
+import { handleLeadMailUpload } from "../../../Components/services/utils";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -18,6 +30,90 @@ const Conversation = ({ leadDetails, id }) => {
   let dayPickerDays = [];
 
   const userDetails = useSelector((state) => state?.user);
+
+  // const [fileList, setFileList] = useState([]);
+  // const [selectedFile, setSelectedFile] = useState({});
+  const [tData, setTData] = useState("");
+  // const [ uploading, setUploading ] = useState(false);
+  const [file, setFile] = useState();
+
+  function handleFile(event) {
+    setFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+  }
+
+  function handleSubmit() {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("template", tData);
+    fetch("https://crmleads.quadque.digital/api/lead/mail", {
+      method: "POST",
+      body: formData
+    })
+      .then((res) => res.json())
+      .then((result) => console.log("success", result))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const handleTdata = (value) => {
+    setTData(value);
+  };
+  // const handleUpload = (e) => {
+  //   console.log("e: ", e?.file?.originFileObj);
+
+  //   const formData = new FormData();
+  //   formData.append("file", e?.file?.originFileObj);
+  //   console.log("orgfile: ", formData);
+  //   setSelectedFile(formData);
+  //   // console.log(formData);
+
+  // console.log("s: ", selectedFile);
+  // fileList.forEach((file) => {
+  //   formData.append("files[]", file);
+  // });
+
+  // setUploading(true);
+  // // You can use any AJAX library you like
+  // fetch("https://www.mocky.io/v2/5cc8019d300000980a055e76", {
+  //   method: "POST",
+  //   body: formData,
+  // })
+  //   .then((res) => res.json())
+  //   .then(() => {
+  //     setFileList([]);
+  //     message.success("upload successfully.");
+  //   })
+  //   .catch(() => {
+  //     message.error("upload failed.");
+  //   })
+  //   .finally(() => {
+  //     setUploading(false);
+  //   });
+  // };
+  // console.log("selected file: ", selectedFile);
+  // const handleSubmit = async (tdata) => {
+
+  //   const data = {
+  //     template: tdata,
+  //     checklist: selectedFile,
+  //   };
+  //   const getMail = await handleLeadMailUpload(data);
+  //   console.log(getMail);
+  // };
+  // const props = {
+  //   onRemove: (file) => {
+  //     const index = fileList.indexOf(file);
+  //     const newFileList = fileList.slice();
+  //     newFileList.splice(index, 1);
+  //     setFileList(newFileList);
+  //   },
+  //   beforeUpload: (file) => {
+  //     setFileList([...fileList, file]);
+  //     return false;
+  //   },
+  //   fileList,
+  // };
 
   // const [dateTime, setDateTime] = useState("");
   // const [fileList, setFileList] = useState([]);
@@ -489,7 +585,7 @@ const Conversation = ({ leadDetails, id }) => {
             ) : null}
           </div>
 
-          <div className=" mt-6">
+          {/* <div className=" mt-6">
             {userDetails?.userInfo?.role_id !== 6 ? (
               <a
                 // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
@@ -506,6 +602,78 @@ const Conversation = ({ leadDetails, id }) => {
                 </button>
               </a>
             ) : null}
+          </div> */}
+
+          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
+            Email
+          </h1>
+
+          <div className=" mt-6">
+            <Form
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 14 }}
+              layout="vertical"
+              // disabled={componentDisabled}
+              style={{ maxWidth: 700 }}
+              onFinish={handleSubmit}
+            >
+              <Form.Item>
+                <Select
+                  placeholder="Select Email template"
+                  style={{
+                    width: 240,
+                    borderRadius: "25px",
+                  }}
+                  onChange={handleTdata}
+                  options={[
+                    {
+                      value: "jack",
+                      label: "Jack",
+                    },
+                    {
+                      value: "lucy",
+                      label: "Lucy",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              {/* <Form.Item
+                valuePropName="fileList"
+                // getValueFromEvent={normFile}
+              >
+                <Upload
+                  {...props}
+                  onChange={(e) => handleUpload(e)}
+                  // fileList={fileList}
+                  // accept=".pdf"
+                  // name="files"
+                  type="file"
+                >
+                  <Button
+                    icon={<UploadOutlined />}
+                    onClick={handleSubmit(tData)}
+                    
+                    style={{ fontSize: "13.5px", color: "lightgray" }}
+                  >
+                    Attach CheckList (PDF only)
+                  </Button>
+                </Upload>
+              </Form.Item> */}
+              <input type="file" name="file" onChange={handleFile} />
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  // onClick={handleUpload}
+                  // loading={uploading}
+
+                  style={{ marginTop: 16 }}
+                >
+                  Send Email
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </div>
         <script
