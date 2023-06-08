@@ -597,4 +597,14 @@ const leadSourceOption = [
   "Others",
 ];
 
-const livingLocation = ["NSW", "WA", "VIC", "QLD", "SA", "ACT", "NT", "TAS"];
+const livingLocation = [
+  "NSW",
+  "WA",
+  "VIC",
+  "QLD",
+  "SA",
+  "ACT",
+  "NT",
+  "TAS",
+  "OVERSEAS",
+];
