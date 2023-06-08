@@ -33,32 +33,34 @@ const Conversation = ({ leadDetails, id }) => {
 
   // const [fileList, setFileList] = useState([]);
   // const [selectedFile, setSelectedFile] = useState({});
-  const [tData, setTData] = useState("");
-  // const [ uploading, setUploading ] = useState(false);
-  const [file, setFile] = useState();
+  // Implemented mailing By Mahadi
+  // const [tData, setTData] = useState("");
+  // // const [ uploading, setUploading ] = useState(false);
+  // const [file, setFile] = useState();
 
-  function handleFile(event) {
-    setFile(event.target.files[0]);
-    console.log(event.target.files[0]);
-  }
+  // function handleFile(event) {
+  //   setFile(event.target.files[0]);
+  //   console.log(event.target.files[0]);
+  // }
 
-  function handleSubmit() {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("template", tData);
-    fetch("https://crmleads.quadque.digital/api/lead/mail", {
-      method: "POST",
-      body: formData
-    })
-      .then((res) => res.json())
-      .then((result) => console.log("success", result))
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  const handleTdata = (value) => {
-    setTData(value);
-  };
+  // function handleSubmit() {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("template", tData);
+  //   fetch("https://crmleads.quadque.digital/api/lead/mail", {
+  //     method: "POST",
+  //     body: formData
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => console.log("success", result))
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+  // const handleTdata = (value) => {
+  //   setTData(value);
+  // };
+  //mailing implimentation end by mahadi
   // const handleUpload = (e) => {
   //   console.log("e: ", e?.file?.originFileObj);
 
@@ -585,7 +587,7 @@ const Conversation = ({ leadDetails, id }) => {
             ) : null}
           </div>
 
-          {/* <div className=" mt-6">
+          <div className=" mt-6">
             {userDetails?.userInfo?.role_id !== 6 ? (
               <a
                 // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
@@ -602,13 +604,13 @@ const Conversation = ({ leadDetails, id }) => {
                 </button>
               </a>
             ) : null}
-          </div> */}
-
-          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
+          </div>
+{/* Mailing designed by Mahadi */}
+          {/* <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
             Email
-          </h1>
+          </h1> */}
 
-          <div className=" mt-6">
+          {/* <div className=" mt-6">
             <Form
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 14 }}
@@ -616,8 +618,8 @@ const Conversation = ({ leadDetails, id }) => {
               // disabled={componentDisabled}
               style={{ maxWidth: 700 }}
               onFinish={handleSubmit}
-            >
-              <Form.Item>
+            > */}
+              {/* <Form.Item>
                 <Select
                   placeholder="Select Email template"
                   style={{
@@ -636,7 +638,7 @@ const Conversation = ({ leadDetails, id }) => {
                     },
                   ]}
                 />
-              </Form.Item>
+              </Form.Item> */}
 
               {/* <Form.Item
                 valuePropName="fileList"
@@ -660,7 +662,7 @@ const Conversation = ({ leadDetails, id }) => {
                   </Button>
                 </Upload>
               </Form.Item> */}
-              <input type="file" name="file" onChange={handleFile} />
+              {/* <input type="file" name="file" onChange={handleFile} />
               <Form.Item>
                 <Button
                   type="primary"
@@ -673,8 +675,9 @@ const Conversation = ({ leadDetails, id }) => {
                   Send Email
                 </Button>
               </Form.Item>
-            </Form>
-          </div>
+            </Form> */}
+          {/* </div> */}
+        {/* mailing designed end my Mahadi */}
         </div>
         <script
           src="https://secure.ewaypayments.com/scripts/eCrypt.js"

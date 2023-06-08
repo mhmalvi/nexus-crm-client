@@ -575,16 +575,16 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 export default AddLeadForm;
 
 const industyData = [
-  "Trade Courses",
-  "Hospitality/Commercial Cookery Services",
-  "Health and Support/Community Services",
-  "Air Conditioning & Electrician",
-  "Real Estate",
-  "Business",
   "Automotive",
-  "Meat Processing",
+  "Air Conditioning & Electrician",
+  "Business",
   "Beauty therapy and fitness services",
+  "Health and Support/Community Services",
+  "Hospitality/Commercial Cookery Services",
+  "Meat Processing",
+  "Real Estate",
   "Short Courses",
+  "Trade Courses",
 ];
 
 const leadSourceOption = [
