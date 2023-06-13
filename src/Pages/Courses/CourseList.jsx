@@ -1,11 +1,18 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import EditCourseDetails from "./EditCourseDetails";
 
 const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
   const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
+  const [ searchedColumn, setSearchedColumn ] = useState("");
+  const [ courseId, setCourseId ] = useState(0);
+  // edit course details modal funtionality
+  const [open, setOpen] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
 
   const tableSearchInput = useRef(null);
 
@@ -137,6 +144,39 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
       ),
       // width: 150,
     },
+
+    {
+      title: "Action",
+      dataIndex: "course_title",
+      key: "course_title",
+      align: "center",
+      // ...getColumnSearchProps("course_title"),
+      render: (_, record, i) => {
+        console.log("record",record);
+        return (
+          <div key={i} className="flex gap-2 justify-center">
+            <Button
+              key={i}
+              icon={<EyeOutlined />}
+              onClick={() => {
+                setCourseDetailsOpen(true);
+                setSelectedCourse(record);
+              }}
+            ></Button>
+            <Button
+              key={i}
+              icon={<EditOutlined />}
+              onClick={() => {
+                showModal()
+                setCourseId(record?.id)
+              }}
+            ></Button>
+            
+          </div>
+        );
+      },
+      // width: 150,
+    },
   ];
 
   // useEffect(() => {
@@ -144,7 +184,7 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
   //     .getElementsByClassName("ant-table-cell")
   //     ?.classList?.add("uppercase");
   // }, []);
-
+ 
   return (
     <div>
       <div className="w-full flex items-center justify-between mb-12">
@@ -183,16 +223,18 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
             x: 600,
             y: 600,
           }}
-          onRow={(record) => {
-            return {
-              onClick: () => {
-                setCourseDetailsOpen(true);
-                setSelectedCourse(record);
-              },
-            };
-          }}
+          // Do not need to use on row view course detais by onClick in onRow it is used in Clicked by view button on colum list
+          // onRow={(record) => {
+          //   return {
+          //     onClick: () => {
+          //       setCourseDetailsOpen(true);
+          //       setSelectedCourse(record);
+          //     },
+          //   };
+          // }}
         />
       </div>
+      <EditCourseDetails open={open} setOpen={setOpen} id={courseId} />
     </div>
   );
 };
