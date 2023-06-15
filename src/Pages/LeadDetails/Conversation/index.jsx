@@ -14,13 +14,17 @@ import "antd/dist/antd.css";
 // import axios from "axios";
 // import dayjs from "dayjs";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 // import ScrollToBottom from "react-scroll-to-bottom";
 // import Icons from "../../../Components/Shared/Icons";
 // import { handleMessageAudio } from "../../../Components/Shared/utils/sounds";
 import mailLogo from "../../../assets/Images/gmail.png";
 import whatsappLogo from "../../../assets/Images/whatsapp.png";
+import { handleLeadDetails } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
+import Comments from "./Comments";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -36,13 +40,15 @@ const Conversation = ({ leadDetails, id }) => {
   // Implemented mailing By Mahadi
   const [tData, setTData] = useState("");
   // const [ uploading, setUploading ] = useState(false);
-  const [ file, setFile ] = useState();
-  const [ fileName, setFileName ] = useState("");
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState("");
+  const [leadDtls, setLeadDtls] = useState({});
+  const params = useParams();
 
   function handleFile(event) {
     setFile(event.target.files[0]);
-    console.log("fdatas: ", event?.target?.files[ 0 ]);
-    setFileName(event?.target?.files[0]?.name)
+    console.log("fdatas: ", event?.target?.files[0]);
+    setFileName(event?.target?.files[0]?.name);
   }
 
   function handleSubmit() {
@@ -51,7 +57,7 @@ const Conversation = ({ leadDetails, id }) => {
     formData.append("template", tData);
     fetch("https://crmleads.quadque.digital/api/lead/mail", {
       method: "POST",
-      body: formData
+      body: formData,
     })
       .then((res) => res.json())
       .then((result) => console.log("success", result))
@@ -62,6 +68,19 @@ const Conversation = ({ leadDetails, id }) => {
   const handleTdata = (value) => {
     setTData(value);
   };
+
+  // Show comments from leadComments in leadDetails.
+
+  useEffect(() => {
+    (async () => {
+      const lDtails = await handleLeadDetails(params?.id);
+      if (lDtails) {
+        setLeadDtls(lDtails);
+      }
+    })();
+  }, [params?.id]);
+  console.log("ldetails: ", leadDtls);
+
   //mailing implimentation end by mahadi
   // const handleUpload = (e) => {
   //   console.log("e: ", e?.file?.originFileObj);
@@ -589,7 +608,7 @@ const Conversation = ({ leadDetails, id }) => {
             ) : null}
           </div>
 
-          {/* <div className=" mt-6">
+          <div className=" mt-6">
             {userDetails?.userInfo?.role_id !== 6 ? (
               <a
                 // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
@@ -606,13 +625,16 @@ const Conversation = ({ leadDetails, id }) => {
                 </button>
               </a>
             ) : null}
-          </div> */}
-          {/* Mailing designed by Mahadi */}
-          <div className="flex items-center justify-between">
+          </div>
+          {/* Mailing part start */}
+          {/* <div className="flex items-center justify-between">
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
               Email
             </h1>
-            <Button type="link" className="mt-3 mr-4 text-[5px]  flex justify-center items-center">
+            <Button
+              type="link"
+              className="mt-3 mr-4 text-[5px]  flex justify-center items-center"
+            >
               <p className="text-[13px]">Add new Template</p>
             </Button>
           </div>
@@ -678,9 +700,15 @@ const Conversation = ({ leadDetails, id }) => {
                 </Button>
               </Form.Item>
             </Form>
+          </div> */}
+          {/* mailing part end */}
+
+          {/* Coments and Comments history*/}
+          <div className="lead-comments mt-12">
+            <Comments Comments={leadDtls?.leadComments} />
           </div>
-          {/* mailing designed end my Mahadi */}
         </div>
+
         <script
           src="https://secure.ewaypayments.com/scripts/eCrypt.js"
           className="eway-paynow-button"
