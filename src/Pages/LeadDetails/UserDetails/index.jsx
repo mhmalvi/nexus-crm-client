@@ -122,6 +122,7 @@ const UserDetails = ({
       message.success("Comment Added Successfully");
       document.getElementById("lead_comment").style.caretColor = "transparent";
     }
+    window.location.reload();
   };
 
   const handleCommentChange = (e) => {
