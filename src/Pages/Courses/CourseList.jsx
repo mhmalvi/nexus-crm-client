@@ -172,16 +172,17 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
                 setSelectedCourse(record);
               }}
             ></Button>
-            {userData?.last_name === "Admin" && (
-              <Button
-                key={i}
-                icon={<EditOutlined />}
-                onClick={() => {
-                  showModal();
-                  setCourseId(record?.id);
-                }}
-              ></Button>
-            )}
+            {userData?.role_id === 1 ||
+              (userData?.role_id === 3 && (
+                <Button
+                  key={i}
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    showModal();
+                    setCourseId(record?.id);
+                  }}
+                ></Button>
+              ))}
           </div>
         );
       },
