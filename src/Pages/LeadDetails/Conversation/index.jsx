@@ -8,6 +8,7 @@ import {
   Select,
   Cascader,
   message,
+  Modal,
 } from "antd";
 
 import "antd/dist/antd.css";
@@ -25,6 +26,7 @@ import whatsappLogo from "../../../assets/Images/whatsapp.png";
 import { handleLeadDetails } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
 import Comments from "./Comments";
+import MailModal from "./MailModal";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -43,8 +45,12 @@ const Conversation = ({ leadDetails, id }) => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [leadDtls, setLeadDtls] = useState({});
+  const [openMailModal, setOpenMailModal] = useState(false);
   const params = useParams();
 
+  const showMailModal = () => {
+    setOpenMailModal(true);
+  };
   function handleFile(event) {
     setFile(event.target.files[0]);
     console.log("fdatas: ", event?.target?.files[0]);
@@ -608,7 +614,7 @@ const Conversation = ({ leadDetails, id }) => {
             ) : null}
           </div>
 
-          <div className=" mt-6">
+          {/* <div className=" mt-6">
             {userDetails?.userInfo?.role_id !== 6 ? (
               <a
                 // href={`mailto:${leadDetails?.leadDetails?.student_email}?subject=Subject&body=message%20goes%20here`}
@@ -625,6 +631,20 @@ const Conversation = ({ leadDetails, id }) => {
                 </button>
               </a>
             ) : null}
+          </div> */}
+          {/* Custom click to open modal message */}
+          <div className=" mt-6">
+            {/* {userDetails?.userInfo?.role_id !== 6 ? ( */}
+            <button
+              className="px-4 py-2 bg-white rounded-full shadow-md flex items-center w-56"
+              onClick={showMailModal}
+            >
+              <img className="w-6" src={mailLogo} alt="" />
+              <span className="text-black font-semibold text-base ml-3">
+                Open in Mail
+              </span>
+            </button>
+            {/* ) : null} */}
           </div>
           {/* Mailing part start */}
           {/* <div className="flex items-center justify-between">
@@ -716,6 +736,10 @@ const Conversation = ({ leadDetails, id }) => {
           data-amount="10000"
           data-currency="AUD"
         ></script>
+        <MailModal
+          openMailModal={openMailModal}
+          setOpenMailModal={setOpenMailModal}
+        />
       </div>
     </div>
   );
