@@ -489,7 +489,6 @@ export const fetchEmailTemplatList = async () => {
     const result = await axios.get(
       `${process.env?.REACT_APP_LEAD_URL}/api/mail-templates`
     );
-    console.log("tmpList: ", result);
     return result.data;
   } catch (error) {
     return error.response;
