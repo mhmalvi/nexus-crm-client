@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { fetchEmailTemplatList } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
+import AddNewTemplate from "./AddNewTemplate";
 
 const MailModal = ({ openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -11,7 +12,8 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
   const [fileName, setFileName] = useState("");
   const [tData, setTData] = useState("");
   const [templateList, setTemplateList] = useState([]);
-  console.log("mopen: ", openMailModal);
+  const [tempOpen, setTempOpen] = useState(false);
+  const [staticTempListData, setStaticTempListData] = useState("");
 
   const handleTdata = (value) => {
     setTData(value);
@@ -57,9 +59,13 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
       res?.data?.map((itm, idx) =>
         tempList.push({ value: itm?.template_name, label: itm.template_name })
       );
+      staticTempListData && tempList.push(staticTempListData);
       setTemplateList(tempList);
     })();
-  }, []);
+  }, [staticTempListData]);
+  const showAddNewTemplateModal = () => {
+    setTempOpen(true);
+  };
   console.log("set temp data: ", templateList);
   return (
     <div>
@@ -70,6 +76,7 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
         visible={openMailModal}
         onOk={handleSendMail}
         confirmLoading={confirmLoading}
+        width="80%"
         onCancel={handleMailCancel}
       >
         <div className="flex items-center justify-between">
@@ -80,7 +87,9 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
             type="link"
             className="mt-3 mr-4 text-[5px]  flex justify-center items-center"
           >
-            <p className="text-[13px]">Add new Template</p>
+            <p className="text-[13px]" onClick={showAddNewTemplateModal}>
+              Add new Template
+            </p>
           </Button>
         </div>
 
@@ -138,6 +147,11 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
           </Form>
         </div>
       </Modal>
+      <AddNewTemplate
+        setStaticTempListData={setStaticTempListData}
+        tempOpen={tempOpen}
+        setTempOpen={setTempOpen}
+      />
     </div>
   );
 };

@@ -442,3 +442,6 @@ table.custom-table > tbody > tr:hover td {
 .ant-select-dropdown {
   text-transform: uppercase !important;
 }
+.tox-statusbar__branding {
+  display: none;
+}
