@@ -1,4 +1,4 @@
-import { Input, Modal } from "antd";
+import { Input, message, Modal } from "antd";
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { AddNewTemplateList } from "../../../Components/services/leads";
@@ -20,8 +20,8 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
       label: templateTitle,
     });
     const res = await AddNewTemplateList(data);
-    console.log("Api hit template: ", res);
     if (res?.status === 201) {
+      message.success(res?.message || "Template added successfully");
       setTempOpen(false);
       setConfirmLoading(false);
     }
