@@ -1,6 +1,8 @@
 import { Button, Form, message, Modal, Select } from "antd";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { fetchEmailTemplatList } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
 
 const MailModal = ({ openMailModal, setOpenMailModal }) => {
@@ -8,6 +10,7 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [tData, setTData] = useState("");
+  const [templateList, setTemplateList] = useState([]);
   console.log("mopen: ", openMailModal);
 
   const handleTdata = (value) => {
@@ -46,6 +49,18 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
     console.log("Clicked cancel button");
     setOpenMailModal(false);
   };
+  useEffect(() => {
+    (async () => {
+      let res = await fetchEmailTemplatList();
+      console.log("list temp: ", res);
+      let tempList = [];
+      res?.data?.map((itm, idx) =>
+        tempList.push({ value: itm?.template_name, label: itm.template_name })
+      );
+      setTemplateList(tempList);
+    })();
+  }, []);
+  console.log("set temp data: ", templateList);
   return (
     <div>
       <Modal
@@ -86,16 +101,7 @@ const MailModal = ({ openMailModal, setOpenMailModal }) => {
                   borderRadius: "25px",
                 }}
                 onChange={handleTdata}
-                options={[
-                  {
-                    value: "jack",
-                    label: "Jack",
-                  },
-                  {
-                    value: "lucy",
-                    label: "Lucy",
-                  },
-                ]}
+                options={templateList || []}
               />
             </Form.Item>
 
