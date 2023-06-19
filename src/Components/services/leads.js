@@ -494,3 +494,16 @@ export const fetchEmailTemplatList = async () => {
     return error.response;
   }
 };
+//Add new Template
+
+export const AddNewTemplateList = async (data) => {
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/save-mail-template`,
+      data
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
