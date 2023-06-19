@@ -122,6 +122,7 @@ const UserDetails = ({
       message.success("Comment Added Successfully");
       document.getElementById("lead_comment").style.caretColor = "transparent";
     }
+    window.location.reload();
   };
 
   const handleCommentChange = (e) => {
@@ -490,8 +491,9 @@ const UserDetails = ({
             <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
               Application Form
             </h1>
-            <div className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
-            onClick={()=>message.success("No file available")}
+            <div
+              className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
+              onClick={() => message.success("No file available")}
             >
               <button className="flex items-center justify-center">
                 <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
