@@ -737,6 +737,7 @@ const Conversation = ({ leadDetails, id }) => {
           data-currency="AUD"
         ></script>
         <MailModal
+          leadDetails={leadDetails}
           openMailModal={openMailModal}
           setOpenMailModal={setOpenMailModal}
         />

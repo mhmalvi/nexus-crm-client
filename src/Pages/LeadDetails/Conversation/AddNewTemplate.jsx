@@ -13,21 +13,32 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
       template_description:
         editorRef?.current && editorRef?.current?.getContent(),
     };
-    console.log("template Data: ", data);
-    setConfirmLoading(true);
+
     setStaticTempListData({
       value: templateTitle,
       label: templateTitle,
     });
-    const res = await AddNewTemplateList(data);
-    if (res?.status === 201) {
-      message.success(res?.message || "Template added successfully");
-      setTempOpen(false);
-      setConfirmLoading(false);
+    if (!templateTitle || !editorRef?.current?.getContent()) {
+      if (!templateTitle) {
+        message.warning("Template Title missing!");
+      }
+      if (!editorRef?.current?.getContent()) {
+        message.warning("Template Description missing!");
+      }
+    } else {
+      setConfirmLoading(true);
+      const res = await AddNewTemplateList(data);
+      if (res?.status === 201) {
+        message.success(res?.message || "Template added successfully");
+        setTempOpen(false);
+        setConfirmLoading(false);
+      } else {
+        message.warn(res?.message || "Something went wrong");
+        setConfirmLoading(false);
+      }
     }
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setTempOpen(false);
   };
   return (
