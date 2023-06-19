@@ -1,1 +1,1 @@
-export const environment_dev = "http://localhost:8000";
+export const environment_dev = "https://crmleads.quadque.digital";

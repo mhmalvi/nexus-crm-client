@@ -1,15 +1,17 @@
 import { EditOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 
 const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
   const [searchText, setSearchText] = useState("");
-  const [ searchedColumn, setSearchedColumn ] = useState("");
-  const [ courseId, setCourseId ] = useState(0);
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const [courseId, setCourseId] = useState(0);
   // edit course details modal funtionality
   const [open, setOpen] = useState(false);
+  const [userData, setUserData] = useState({});
   const showModal = () => {
     setOpen(true);
   };
@@ -26,7 +28,14 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
     clearFilters();
     setSearchText("");
   };
-
+  //get daat from localStorage for hide te edit button
+  useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("user_info"));
+    if (userDetails) {
+      setUserData(userDetails);
+    }
+  }, []);
+  console.log("udata: ", userData);
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -152,7 +161,7 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
       align: "center",
       // ...getColumnSearchProps("course_title"),
       render: (_, record, i) => {
-        console.log("record",record);
+        console.log("record", record);
         return (
           <div key={i} className="flex gap-2 justify-center">
             <Button
@@ -163,15 +172,17 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
                 setSelectedCourse(record);
               }}
             ></Button>
-            <Button
-              key={i}
-              icon={<EditOutlined />}
-              onClick={() => {
-                showModal()
-                setCourseId(record?.id)
-              }}
-            ></Button>
-            
+            {userData?.role_id === 1 ||
+              (userData?.role_id === 3 && (
+                <Button
+                  key={i}
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    showModal();
+                    setCourseId(record?.id);
+                  }}
+                ></Button>
+              ))}
           </div>
         );
       },
@@ -184,7 +195,7 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
   //     .getElementsByClassName("ant-table-cell")
   //     ?.classList?.add("uppercase");
   // }, []);
- 
+
   return (
     <div>
       <div className="w-full flex items-center justify-between mb-12">

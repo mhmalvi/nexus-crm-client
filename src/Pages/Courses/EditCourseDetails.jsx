@@ -1,69 +1,68 @@
-
-import {  Form, Input, message, Modal, Spin } from "antd";
+import { Form, Input, message, Modal, Spin } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getCourseDetailById, updateCourseDetailById } from "../../Components/services/course";
+import {
+  getCourseDetailById,
+  updateCourseDetailById,
+} from "../../Components/services/course";
 
 const EditCourseDetails = ({ open, setOpen, id }) => {
   const [title, setTitle] = useState("");
-//   const [desc, setDesc] = useState("");
-    const [ confirmLoading, setConfirmLoading ] = useState(false);
-    const [ titleShow, setTitleShow ] = useState(false);
-    const [ Loading, setLoading ] = useState(false);
-    const [updating,setUpdating ] = useState(false);
+  //   const [desc, setDesc] = useState("");
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [titleShow, setTitleShow] = useState(false);
+  const [Loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   console.log("modal record: ", id);
-    const handleUpdate = () => {
-      setUpdating(true);
+  const handleUpdate = () => {
+    setUpdating(true);
     // setModalText("The modal will be closed after two seconds");
-      if (title) { 
-          const data = {
-              title,
-          }
-          updateCourseDetailById(id, data);
-          setConfirmLoading(true);
-          
-          setTimeout(() => {
-            setOpen(false);
-              setConfirmLoading(false);
-              setUpdating(false);
-              message.success("Successfully updated!");
-          }, 1500);
-      } else {
-          setTitleShow(true);
-          setTimeout(() => {
-            setTitleShow(false);
-          }, 2000);
-      }
-    
+    if (title) {
+      const data = {
+        title,
+      };
+      updateCourseDetailById(id, data);
+      setConfirmLoading(true);
+
+      setTimeout(() => {
+        setOpen(false);
+        setConfirmLoading(false);
+        setUpdating(false);
+        message.success("Successfully updated!");
+      }, 1500);
+    } else {
+      setTitleShow(true);
+      setTimeout(() => {
+        setTitleShow(false);
+      }, 2000);
+    }
+
+    window.location.reload();
   };
   const handleCancel = () => {
     setOpen(false);
-    };
-    
-    useEffect(() => {
-        ( async () => {
-            
-            
-            console.log("rId: ", id);
-            setLoading(true);
-            const result = await getCourseDetailById(id);
-            // setTimeout(() => {
-              if (result) {
-                setTitle(result?.data?.course_title);
-                  setLoading(false);
-              } else {
-                  setLoading(true);
-              }
-            
-            // }, 1000);
-            
-            
-    })()
-        
-        // const result = getCourseDetailById(id);
-        // setSingleData(result);
-    }, [id])
+  };
+
+  useEffect(() => {
+    (async () => {
+      console.log("rId: ", id);
+      setLoading(true);
+      const result = await getCourseDetailById(id);
+      // setTimeout(() => {
+      if (result) {
+        setTitle(result?.data?.course_title);
+        setLoading(false);
+      } else {
+        setLoading(true);
+      }
+
+      // }, 1000);
+    })();
+
+    // const result = getCourseDetailById(id);
+    // setSingleData(result);
+  }, [id]);
   return (
     <>
       <Modal
