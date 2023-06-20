@@ -57,3 +57,15 @@ export const handleFetchLeadsBySalesId = async (id) => {
     return error.response;
   }
 };
+// fetch unassigned lead list
+
+export const handleFetchUnassignedLeadList = async () => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_LEAD_URL}/api/unassigned-lead-list`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

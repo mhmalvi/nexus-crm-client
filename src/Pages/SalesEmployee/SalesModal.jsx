@@ -1,15 +1,19 @@
-import { Button, Modal, Table } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Modal, Popover, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { FaLessThanEqual } from "react-icons/fa";
-import { handleFetchLeadsBySalesId } from "../../Components/services/utils";
+import {
+  handleFetchLeadsBySalesId,
+  handleFetchUnassignedLeadList,
+} from "../../Components/services/utils";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [isChecked, setIsChecked] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
+  const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
-  const [isNotByMe, setIsNotByMe] = useState(false);
   const handleOk = () => {
     setConfirmLoading(true);
     setTimeout(() => {
@@ -22,14 +26,20 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   };
 
   // leads data by sales employee id
+  const assignedByLeadsDataId = async () => {
+    const res = await handleFetchLeadsBySalesId(salesEmployeeId);
+    setLeadsData(res ? (res?.data ? res?.data : []) : []);
+  };
+  const notAssignedLeadsDataId = async () => {
+    const res = await handleFetchUnassignedLeadList();
+    setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
+  };
   useEffect(() => {
-    (async () => {
-      const res = await handleFetchLeadsBySalesId(salesEmployeeId);
-      console.log("leads res: ", res);
-      setLeadsData(res ? (res?.data ? res?.data : []) : []);
-    })();
+    assignedByLeadsDataId();
   }, [salesEmployeeId]);
-  console.log("leads by sales: ", leadsData);
+  useEffect(() => {
+    notAssignedLeadsDataId();
+  }, [salesEmployeeId]);
 
   const leadColumn = [
     {
@@ -40,11 +50,28 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       title: "Lead Id",
       dataIndex: "lead_id",
     },
+    {
+      title: "Action",
+      dataIndex: "",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className=" cursor-pointer">
+              <Popover content={isByMe ? "Remove" : "Assign"}>
+                {isByMe ? <MinusOutlined /> : <PlusOutlined />}
+              </Popover>
+            </div>
+          </>
+        );
+      },
+    },
     //   {
     //     title: "Address",
     //     dataIndex: "address",
     //   },
   ];
+
   return (
     <div>
       <Modal
@@ -62,22 +89,25 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
               type={`${isByMe ? "primary" : "default"}`}
               onClick={() => {
                 setIsByMe(true);
-                setIsNotByMe(false);
+                // setIsNotByMe(false);
               }}
             >
               Assigned
             </Button>
             <Button
-              type={`${isNotByMe ? "primary" : "default"}`}
+              type={`${!isByMe ? "primary" : "default"}`}
               onClick={() => {
-                setIsNotByMe(true);
+                // setIsNotByMe(true);
                 setIsByMe(false);
               }}
             >
               Not Assigned
             </Button>
           </div>
-          <Table columns={leadColumn || []} dataSource={[]} />
+          <Table
+            columns={leadColumn || []}
+            dataSource={isByMe ? leadsData : notAssignedLeadsData || []}
+          />
         </div>
       </Modal>
     </div>
