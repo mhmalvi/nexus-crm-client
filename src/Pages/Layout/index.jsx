@@ -9,9 +9,7 @@ import { Storage } from "../../Components/Shared/utils/store";
 import { handleFetchFollowUpNotification } from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
-import {
-  setNotifications
-} from "../../features/user/notificationSlice";
+import { setNotifications } from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
@@ -34,6 +32,7 @@ import Settings from "../Settings";
 import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
+import Sales from "../SalesEmployee";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -299,12 +298,21 @@ const Items = [
     component: <Campaigns />,
     count: 0,
   },
+
   {
     key: "courses",
     name: "courses",
     // icon: <Icons.Campaigns />,
     label: "Courses",
     component: <Courses />,
+    count: 0,
+  },
+  {
+    key: "salesEmployee",
+    name: "salesEmployee",
+    // icon: <Icons.Campaigns />,
+    label: "Sales Employee",
+    component: <Sales />,
     count: 0,
   },
   {

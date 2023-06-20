@@ -34,3 +34,26 @@ export const handleFetchFile = async (fileId) => {
     return error.response;
   }
 };
+// Fetch Sales Employees
+export const handleFetchSales = async () => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Fetch Leqds data by id of sales employee
+
+export const handleFetchLeadsBySalesId = async (id) => {
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_LEAD_URL}/api/assigned-lead-list/${id}`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
