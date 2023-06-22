@@ -10,29 +10,36 @@ import {
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [isChecked, setIsChecked] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [leadsData, setLeadsData] = useState([]);
   const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
   const handleOk = () => {
     setConfirmLoading(true);
-    setTimeout(() => {
-      setOpenSalesModel(false);
-      setConfirmLoading(false);
-    }, 2000);
+    // setTimeout(() => {
+    setOpenSalesModel(false);
+    setConfirmLoading(false);
+    // }, 1000);
+    setIsByMe(true);
   };
   const handleCancel = () => {
     setOpenSalesModel(false);
+    setIsByMe(true);
   };
+  console.log("selsId: ", salesEmployeeId);
 
   // leads data by sales employee id
   const assignedByLeadsDataId = async () => {
+    setIsLoading(true);
     const res = await handleFetchLeadsBySalesId(salesEmployeeId);
     setLeadsData(res ? (res?.data ? res?.data : []) : []);
+    setIsLoading(false);
   };
   const notAssignedLeadsDataId = async () => {
+    setIsLoading(true);
     const res = await handleFetchUnassignedLeadList();
     setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
+    setIsLoading(false);
   };
   useEffect(() => {
     assignedByLeadsDataId();
@@ -107,6 +114,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
           <Table
             columns={leadColumn || []}
             dataSource={isByMe ? leadsData : notAssignedLeadsData || []}
+            loading={isLoading}
           />
         </div>
       </Modal>
