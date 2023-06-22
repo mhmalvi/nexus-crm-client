@@ -2,7 +2,6 @@ import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, Popover, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { FaLessThanEqual } from "react-icons/fa";
 import {
   handleFetchLeadsBySalesId,
   handleFetchUnassignedLeadList,
@@ -73,10 +72,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
         );
       },
     },
-    //   {
-    //     title: "Address",
-    //     dataIndex: "address",
-    //   },
   ];
 
   return (

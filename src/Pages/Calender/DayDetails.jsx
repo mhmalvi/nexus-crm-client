@@ -19,7 +19,8 @@ const DayDetails = ({
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
   const [taskDetails, setTaskDetails] = useState(initialData);
-
+  const [notifyDate, setNotiFyDate] = useState("");
+  const [rmTime, setRmtime] = useState("");
   useEffect(() => {
     setCurrentDayEvents(
       eventsData?.filter(
@@ -79,6 +80,22 @@ const DayDetails = ({
     setTaskDetails(data);
   };
 
+  const onRemiderTimeChange = (time, timeString) => {
+    setRmtime(timeString);
+    const DateString = (selectedEventTime?.start).toLocaleDateString();
+    const rmDate =
+      DateString?.split("/")[2] +
+      "-" +
+      DateString?.split("/")[0] +
+      "-" +
+      DateString?.split("/")[1] +
+      " " +
+      timeString;
+    setNotiFyDate(rmDate);
+    console.log("time : ", rmDate);
+  };
+  console.log("rmTimeValue: ", notifyDate);
+
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
     data.priority = selected?.key;
@@ -96,6 +113,7 @@ const DayDetails = ({
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
+      notification_time: notifyDate,
     });
 
     if (addFollowUpRes?.status === 201) {
@@ -191,7 +209,7 @@ const DayDetails = ({
                 {time ? time : selectedEventTime?.start?.toLocaleTimeString()}
               </div>
               <TimePicker
-                format="HH:mm"
+                format="HH:mm:ss"
                 bordered={false}
                 onChange={onTimeChange}
                 // onOk={onTimeChange}
@@ -201,17 +219,38 @@ const DayDetails = ({
         </div>
 
         <div className="mb-8">
-          <div className="text-lg font-semibold">Enter Task Description:</div>
-          <input
-            required
-            className="outline-none border-b-2 px-2 py-1 my-4 w-full"
-            type="text"
-            name="description"
-            placeholder="Task Description"
-            id="description"
-            value={taskDetails?.description}
-            onChange={handleTextInputFieldChange}
-          />
+          <div className="flex items-center gap-2 w-full ">
+            <div className=" flex-1">
+              <div className="text-lg font-semibold">
+                Enter Task Description:
+              </div>
+              <input
+                required
+                className="outline-none border-b-2 px-2 py-1 my-4 w-full"
+                type="text"
+                name="description"
+                placeholder="Task Description"
+                id="description"
+                value={taskDetails?.description}
+                onChange={handleTextInputFieldChange}
+              />
+            </div>
+            <div className="w-4/12">
+              <div className=" text-lg font-semibold">Set Reminder Time:</div>
+              <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+                <div>{rmTime}</div>
+                <TimePicker
+                  format="HH:mm:ss"
+                  bordered={false}
+                  onChange={onRemiderTimeChange}
+                  // defaultValue={dayjs("00:00:00", "HH:mm:ss")}
+
+                  // onOk={onTimeChange}
+                />
+                {/* <Input type="date"></Input> */}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex justify-end">
           <div
