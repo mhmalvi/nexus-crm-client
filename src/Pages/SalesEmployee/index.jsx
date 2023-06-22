@@ -10,15 +10,18 @@ const Sales = () => {
   const [userData, setUserData] = useState({});
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const showSalesModal = () => {
     setOpenSalesModel(true);
   };
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await handleFetchSales();
       console.log("res: ", response);
       setSalesData(response ? (response?.data ? response.data : []) : []);
+      setIsLoading(false);
     })();
   }, []);
   useEffect(() => {
@@ -112,6 +115,7 @@ const Sales = () => {
               x: 600,
               y: 600,
             }}
+            loading={isLoading}
           />
         </div>
       </div>
