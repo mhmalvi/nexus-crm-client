@@ -1,11 +1,13 @@
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Modal, Popover, Table } from "antd";
+import { Button, Modal, Popover, Table, message } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
   handleFetchLeadsBySalesId,
   handleFetchUnassignedLeadList,
+  handleSalesAssignLead,
 } from "../../Components/services/utils";
+import { shallowEqual, useSelector } from "react-redux";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -13,6 +15,8 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [leadsData, setLeadsData] = useState([]);
   const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
+  const userDetails = JSON.parse(localStorage.getItem("user_info"));
+  const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const handleOk = () => {
     setConfirmLoading(true);
     // setTimeout(() => {
@@ -36,7 +40,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   };
   const notAssignedLeadsDataId = async () => {
     setIsLoading(true);
-    const res = await handleFetchUnassignedLeadList();
+    const res = await handleFetchUnassignedLeadList(user?.client_id);
     setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
     setIsLoading(false);
   };
@@ -46,6 +50,28 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   useEffect(() => {
     notAssignedLeadsDataId();
   }, [salesEmployeeId]);
+
+  const LeadAssign = async (leadId) => {
+    const data = {
+      lead_id: leadId,
+      sales_user_id: salesEmployeeId,
+      assign_by: userDetails?.user_id,
+    };
+    let res = await handleSalesAssignLead(data);
+    if (res?.status === 201) {
+      message.success(res?.message);
+      assignedByLeadsDataId();
+      setIsByMe(true);
+    } else {
+      message.error(res?.message);
+    }
+    console.log("assignLead: ", res);
+  };
+
+  const LeadRemove = async () => {
+    let res = await handleSalesAssignLead();
+    console.log("Remove Lead: ", res);
+  };
 
   const leadColumn = [
     {
@@ -65,7 +91,15 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
           <>
             <div className=" cursor-pointer">
               <Popover content={isByMe ? "Remove" : "Assign"}>
-                {isByMe ? <MinusOutlined /> : <PlusOutlined />}
+                {isByMe ? (
+                  <MinusOutlined onClick={LeadRemove} />
+                ) : (
+                  <PlusOutlined
+                    onClick={() => {
+                      LeadAssign(record?.lead_id);
+                    }}
+                  />
+                )}
               </Popover>
             </div>
           </>

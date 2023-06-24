@@ -54,7 +54,8 @@ const Layout = () => {
   };
 
   useEffect(() => {
-    const socket = io(`https://crm-notification.onrender.com`);
+    // const socket = io(`https://crm-notification.onrender.com`);
+    const socket = io(`http://170.64.176.218:7000`);
 
     setInterval(() => {
       socket.emit("message", {
@@ -62,6 +63,7 @@ const Layout = () => {
       });
 
       socket.on("message", function (msg) {
+        // let msgs = [{ id: 0, name: "mahadi" }];
         if (msg.length) {
           handleMessageAudio();
           fetchFollowUpNotification();
@@ -90,8 +92,8 @@ const Layout = () => {
 
         console.log("msg", msg);
       });
-    }, 120000);
-  }, []);
+    }, 100000);
+  }, [userDetails?.userInfo?.user_id]);
 
   useEffect(() => {
     fetchFollowUpNotification();
@@ -104,7 +106,7 @@ const Layout = () => {
 
     console.log("notificationRes", notificationRes);
 
-    if (notificationRes.status === 200) {
+    if (notificationRes?.message === "success") {
       dispatch(setNotifications(notificationRes?.data));
 
       // notificationRes?.data?.forEach((notification) => {

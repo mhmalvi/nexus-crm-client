@@ -209,7 +209,7 @@ const DayDetails = ({
                 {time ? time : selectedEventTime?.start?.toLocaleTimeString()}
               </div>
               <TimePicker
-                format="HH:mm:ss"
+                format="HH:mm"
                 bordered={false}
                 onChange={onTimeChange}
                 // onOk={onTimeChange}
@@ -240,7 +240,7 @@ const DayDetails = ({
               <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
                 <div>{rmTime}</div>
                 <TimePicker
-                  format="HH:mm:ss"
+                  format="HH:mm"
                   bordered={false}
                   onChange={onRemiderTimeChange}
                   // defaultValue={dayjs("00:00:00", "HH:mm:ss")}

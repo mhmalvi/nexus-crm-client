@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { handleFetchSales } from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
+import { shallowEqual, useSelector } from "react-redux";
 
 const Sales = () => {
   const [salesData, setSalesData] = useState([]);
@@ -15,10 +16,12 @@ const Sales = () => {
     setOpenSalesModel(true);
   };
 
+  const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await handleFetchSales();
+      const response = await handleFetchSales(user?.client_id);
       console.log("res: ", response);
       setSalesData(response ? (response?.data ? response.data : []) : []);
       setIsLoading(false);
