@@ -61,7 +61,11 @@ const SalesEmployees = ({
         }, 3000);
       }
     })();
-  }, [dispatch, userDetails?.userInfo?.client_id]);
+  }, [
+    dispatch,
+    leadDetails?.leadSalesEmployeeHistory,
+    userDetails?.userInfo?.client_id,
+  ]);
 
   console.log(leadDetails?.leadDetails);
   console.log(companySalesEmployees.length);
