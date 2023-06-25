@@ -6,6 +6,7 @@ import {
   handleFetchLeadsBySalesId,
   handleFetchUnassignedLeadList,
   handleSalesAssignLead,
+  handleSalesRemoveLead,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 
@@ -38,6 +39,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setLeadsData(res ? (res?.data ? res?.data : []) : []);
     setIsLoading(false);
   };
+  // leads data these are not assigned by anybody
   const notAssignedLeadsDataId = async () => {
     setIsLoading(true);
     const res = await handleFetchUnassignedLeadList(user?.client_id);
@@ -51,6 +53,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     notAssignedLeadsDataId();
   }, [salesEmployeeId]);
 
+  //assigned leads by sales employee
   const LeadAssign = async (leadId) => {
     const data = {
       lead_id: leadId,
@@ -65,11 +68,21 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     } else {
       message.error(res?.message);
     }
-    console.log("assignLead: ", res);
   };
 
-  const LeadRemove = async () => {
-    let res = await handleSalesAssignLead();
+  // delete leads from selected employees
+  const LeadRemove = async (leadId) => {
+    const data = {
+      lead_id: leadId,
+      sales_user_id: salesEmployeeId,
+    };
+    let res = await handleSalesRemoveLead(data);
+    if (res?.status === 201) {
+      message.success(res?.message);
+      assignedByLeadsDataId();
+    } else {
+      message.error(res?.message);
+    }
     console.log("Remove Lead: ", res);
   };
 
@@ -92,7 +105,11 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
             <div className=" cursor-pointer">
               <Popover content={isByMe ? "Remove" : "Assign"}>
                 {isByMe ? (
-                  <MinusOutlined onClick={LeadRemove} />
+                  <MinusOutlined
+                    onClick={() => {
+                      LeadRemove(record.lead_id);
+                    }}
+                  />
                 ) : (
                   <PlusOutlined
                     onClick={() => {
@@ -112,7 +129,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     <div>
       <Modal
         width={1000}
-        title="Title"
+        title={isByMe ? "Assigned Leads" : "Un-Assigned Leads"}
         open={openSalesModel}
         visible={openSalesModel}
         onOk={handleOk}
