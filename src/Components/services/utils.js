@@ -73,7 +73,6 @@ export const handleFetchUnassignedLeadList = async (id) => {
 
 // Sales Lead assign
 export const handleSalesAssignLead = async (data) => {
-  console.log("data: ", data);
   try {
     const result = await axios.post(
       `${environment_dev}/api/assign-leads`,
@@ -86,12 +85,11 @@ export const handleSalesAssignLead = async (data) => {
 };
 // Sales remove assign
 
-export const handleSalesRemoveLead = async (id) => {
-  console.log("data: ", id);
+export const handleSalesRemoveLead = async (data) => {
   try {
     const result = await axios.post(
-      `https://crmleads.quadque.digital/api/lead/mail`,
-      id
+      `${environment_dev}/api/unassign-leads`,
+      data
     );
     return result.data;
   } catch (error) {
