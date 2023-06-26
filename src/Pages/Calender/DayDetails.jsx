@@ -50,6 +50,15 @@ const DayDetails = ({
       startToDateString?.split("/")[1] +
       " " +
       timeString;
+    // minuse 1 houre from start australia
+    let frms = data?.start.split(" ");
+    let getfs = String(frms[0]).split("-");
+    getfs[2] = String(parseInt(getfs[2] - 1));
+    let newgetfs = String(getfs.join("-"));
+    frms[0] = newgetfs;
+    let newfrms = String(frms.join(" "));
+    data.start = newfrms;
+    // end it
     data.end =
       endToDateString?.split("/")[2] +
       "-" +
@@ -58,6 +67,15 @@ const DayDetails = ({
       endToDateString?.split("/")[1] +
       " " +
       timeString;
+    // minuse 1 houre from end fro australia
+    let frme = data?.end.split(" ");
+    let getfe = String(frme[0]).split("-");
+    getfe[2] = String(parseInt(getfe[2] - 1));
+    let newgetfe = String(getfe.join("-"));
+    frme[0] = newgetfe;
+    let newfrme = String(frme.join(" "));
+    data.end = newfrme;
+    // end it
     // } else {
     //   data.start =
     //     startToDateString?.split("/")[2] +
@@ -91,8 +109,17 @@ const DayDetails = ({
       DateString?.split("/")[1] +
       " " +
       timeString;
-    setNotiFyDate(rmDate);
-    console.log("time : ", rmDate);
+    // minus 1 from rmDate for australia
+    let frm = rmDate.split(" ");
+    let getf = String(frm[0]).split("-");
+    getf[2] = String(parseInt(getf[2] - 1));
+    let newgetf = String(getf.join("-"));
+    frm[0] = newgetf;
+    let newfrm = String(frm.join(" "));
+    // end it
+    setNotiFyDate(newfrm);
+    // setNotiFyDate(rmDate) // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
+    console.log("time : ", newfrm);
   };
   console.log("rmTimeValue: ", notifyDate);
 

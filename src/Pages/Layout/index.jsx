@@ -33,6 +33,8 @@ import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
+import { handleFetchFollowUp } from "../../Components/services/reminder";
+import moment from "moment";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -47,67 +49,149 @@ const Layout = () => {
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
+  const [notificationLoading, setNotificationLoading] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
 
   const ToogleSideBar = (index) => {
     setOpenSideBar(index);
   };
 
-  useEffect(() => {
-    // const socket = io(`https://crm-notification.onrender.com`);
-    const socket = io(`http://170.64.176.218:7000`);
+  // useEffect(() => {
+  //   // const socket = io(`https://crm-notification.onrender.com`);
+  //   const socket = io(`http://170.64.176.218:7000`);
 
+  //   setInterval(() => {
+  //     socket.emit("message", {
+  //       user_id: userDetails?.userInfo?.user_id,
+  //     });
+
+  //     socket.on("message", function (msg) {
+  //       // let msgs = [{ id: 0, name: "mahadi" }];
+  //       if (msg.length) {
+  //         handleMessageAudio();
+  //         fetchFollowUpNotification();
+  //       }
+  //       // msg.forEach((notification) => {
+  //       //   console.log("notification", notification);
+  //       //   console.log("userNotifications", userNotifications);
+  //       //   console.log(
+  //       //     "FOUNDDD",
+  //       //     [...userNotifications].filter(
+  //       //       (n) => parseInt(n?.id) === parseInt(notification?.id)
+  //       //     )
+  //       //   );
+
+  //       //   const allNotifiations = [...userNotifications];
+
+  //       //   if (
+  //       //     allNotifiations.filter(
+  //       //       (n) => parseInt(n?.id) === parseInt(notification?.id)
+  //       //     )?.length === 0
+  //       //   ) {
+  //       //     dispatch(addNotifications(notification));
+  //       //     handleMessageAudio();
+  //       //   }
+  //       // });
+
+  //       console.log("msg", msg);
+  //     });
+  //   }, 100000);
+  // }, [userDetails?.userInfo?.user_id]);
+
+  useEffect(() => {
     setInterval(() => {
-      socket.emit("message", {
-        user_id: userDetails?.userInfo?.user_id,
-      });
-
-      socket.on("message", function (msg) {
-        // let msgs = [{ id: 0, name: "mahadi" }];
-        if (msg.length) {
-          handleMessageAudio();
-          fetchFollowUpNotification();
-        }
-        // msg.forEach((notification) => {
-        //   console.log("notification", notification);
-        //   console.log("userNotifications", userNotifications);
-        //   console.log(
-        //     "FOUNDDD",
-        //     [...userNotifications].filter(
-        //       (n) => parseInt(n?.id) === parseInt(notification?.id)
-        //     )
-        //   );
-
-        //   const allNotifiations = [...userNotifications];
-
-        //   if (
-        //     allNotifiations.filter(
-        //       (n) => parseInt(n?.id) === parseInt(notification?.id)
-        //     )?.length === 0
-        //   ) {
-        //     dispatch(addNotifications(notification));
-        //     handleMessageAudio();
-        //   }
-        // });
-
-        console.log("msg", msg);
-      });
-    }, 100000);
-  }, [userDetails?.userInfo?.user_id]);
-
-  useEffect(() => {
-    fetchFollowUpNotification();
+      fetchFollowUpNotification();
+    }, 5000);
   }, []);
 
+  function MinutesDate(date, minutes) {
+    date.setMinutes(date.getMinutes() - minutes);
+
+    return date;
+  }
+  function HouresDate(date, hours) {
+    date.setHours(date.getHours() - hours);
+
+    return date;
+  }
+  function DayDate(date, day) {
+    let dy = date.getDate() - day;
+    date.setDate(dy);
+
+    return date;
+  }
+
   const fetchFollowUpNotification = async () => {
-    const notificationRes = await handleFetchFollowUpNotification(
+    // const notificationRes = await handleFetchFollowUpNotification(
+    //   userDetails?.userInfo?.user_id
+    // );
+    const notificationRes = await handleFetchFollowUp(
       userDetails?.userInfo?.user_id
     );
 
     console.log("notificationRes", notificationRes);
 
     if (notificationRes?.message === "success") {
-      dispatch(setNotifications(notificationRes?.data));
+      let notifyData = [];
+      let today = new Date();
+
+      let newToday = DayDate(new Date(), 1);
+
+      console.log("today t: ", newToday);
+
+      let currentDate =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      notificationRes?.data?.forEach((item, idx) => {
+        console.log("item.start date: ", item?.start);
+        // let iDate = item?.start;
+        let date = new Date(item?.start);
+        let checkPush = HouresDate(new Date(item?.start), 10);
+        let customNotifyTime = HouresDate(
+          new Date(item?.notification_time),
+          10
+        );
+        let gotnotifyDate = MinutesDate(new Date(checkPush), 10);
+
+        // date = new Date(date.setHours(date.getHours() - 6)).toISOString();
+        console.log("changed date: ", checkPush);
+        console.log("custom time: ", customNotifyTime);
+        console.log("minus date: ", gotnotifyDate);
+        var date_from_db =
+          date.getFullYear() +
+          "-" +
+          (date.getMonth() + 1) +
+          "-" +
+          date.getDate();
+        if (currentDate === date_from_db) {
+          console.log("we entered");
+          // let mstr = new Date(
+          //   date.setMinutes(date.getMinutes() - 10)
+          // ).toISOString();
+          // console.log("mstr: ", mstr);
+          // if (newToday < checkPush && newToday >= gotnotifyDate) {
+          //   console.log("logic ok");
+          //   notifyData.push(item);
+          // }
+          if (newToday > customNotifyTime) {
+            if (customNotifyTime < checkPush) {
+              console.log("logic ok");
+              notifyData.push(item);
+            } else {
+              notifyData = [];
+            }
+          } else {
+            console.log("something went wrong");
+          }
+        }
+      });
+
+      console.log("current date: ", currentDate);
+
+      dispatch(setNotifications(notifyData));
 
       // notificationRes?.data?.forEach((notification) => {
       //   console.log(
@@ -191,6 +275,8 @@ const Layout = () => {
           setToggleMessage={setToggleMessage}
           toggleNotification={toggleNotification}
           setToggleNotification={setToggleNotification}
+          notificationLoading={notificationLoading}
+          setNotificationLoading={setNotificationLoading}
         />
       </div>
       <div
@@ -259,6 +345,8 @@ const Layout = () => {
         <Notifications
           toggleNotification={toggleNotification}
           setToggleNotification={setToggleNotification}
+          notificationLoading={notificationLoading}
+          setNotificationLoading={setNotificationLoading}
         />
       )}
     </div>
