@@ -19,7 +19,8 @@ const DayDetails = ({
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
   const [taskDetails, setTaskDetails] = useState(initialData);
-
+  const [notifyDate, setNotiFyDate] = useState("");
+  const [rmTime, setRmtime] = useState("");
   useEffect(() => {
     setCurrentDayEvents(
       eventsData?.filter(
@@ -49,6 +50,15 @@ const DayDetails = ({
       startToDateString?.split("/")[1] +
       " " +
       timeString;
+    // minuse 1 houre from start australia
+    let frms = data?.start.split(" ");
+    let getfs = String(frms[0]).split("-");
+    getfs[2] = String(parseInt(getfs[2] - 1));
+    let newgetfs = String(getfs.join("-"));
+    frms[0] = newgetfs;
+    let newfrms = String(frms.join(" "));
+    data.start = newfrms;
+    // end it
     data.end =
       endToDateString?.split("/")[2] +
       "-" +
@@ -57,6 +67,15 @@ const DayDetails = ({
       endToDateString?.split("/")[1] +
       " " +
       timeString;
+    // minuse 1 houre from end fro australia
+    let frme = data?.end.split(" ");
+    let getfe = String(frme[0]).split("-");
+    getfe[2] = String(parseInt(getfe[2] - 1));
+    let newgetfe = String(getfe.join("-"));
+    frme[0] = newgetfe;
+    let newfrme = String(frme.join(" "));
+    data.end = newfrme;
+    // end it
     // } else {
     //   data.start =
     //     startToDateString?.split("/")[2] +
@@ -79,6 +98,31 @@ const DayDetails = ({
     setTaskDetails(data);
   };
 
+  const onRemiderTimeChange = (time, timeString) => {
+    setRmtime(timeString);
+    const DateString = (selectedEventTime?.start).toLocaleDateString();
+    const rmDate =
+      DateString?.split("/")[2] +
+      "-" +
+      DateString?.split("/")[0] +
+      "-" +
+      DateString?.split("/")[1] +
+      " " +
+      timeString;
+    // minus 1 from rmDate for australia
+    let frm = rmDate.split(" ");
+    let getf = String(frm[0]).split("-");
+    getf[2] = String(parseInt(getf[2] - 1));
+    let newgetf = String(getf.join("-"));
+    frm[0] = newgetf;
+    let newfrm = String(frm.join(" "));
+    // end it
+    setNotiFyDate(newfrm);
+    // setNotiFyDate(rmDate) // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
+    console.log("time : ", newfrm);
+  };
+  console.log("rmTimeValue: ", notifyDate);
+
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
     data.priority = selected?.key;
@@ -96,6 +140,7 @@ const DayDetails = ({
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
+      notification_time: notifyDate,
     });
 
     if (addFollowUpRes?.status === 201) {
@@ -201,17 +246,38 @@ const DayDetails = ({
         </div>
 
         <div className="mb-8">
-          <div className="text-lg font-semibold">Enter Task Description:</div>
-          <input
-            required
-            className="outline-none border-b-2 px-2 py-1 my-4 w-full"
-            type="text"
-            name="description"
-            placeholder="Task Description"
-            id="description"
-            value={taskDetails?.description}
-            onChange={handleTextInputFieldChange}
-          />
+          <div className="flex items-center gap-2 w-full ">
+            <div className=" flex-1">
+              <div className="text-lg font-semibold">
+                Enter Task Description:
+              </div>
+              <input
+                required
+                className="outline-none border-b-2 px-2 py-1 my-4 w-full"
+                type="text"
+                name="description"
+                placeholder="Task Description"
+                id="description"
+                value={taskDetails?.description}
+                onChange={handleTextInputFieldChange}
+              />
+            </div>
+            <div className="w-4/12">
+              <div className=" text-lg font-semibold">Set Reminder Time:</div>
+              <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+                <div>{rmTime}</div>
+                <TimePicker
+                  format="HH:mm"
+                  bordered={false}
+                  onChange={onRemiderTimeChange}
+                  // defaultValue={dayjs("00:00:00", "HH:mm:ss")}
+
+                  // onOk={onTimeChange}
+                />
+                {/* <Input type="date"></Input> */}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex justify-end">
           <div

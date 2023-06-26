@@ -23,6 +23,7 @@ import PaymentStatus from "./Pages/Payments";
 import Invoice from "./Pages/Payments/Invoice";
 import RequisitionForm from "./Pages/Requisition";
 import RequisitionTable from "./Pages/Requisition/Table";
+import Sales from "./Pages/SalesEmployee";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
@@ -49,6 +50,7 @@ function App() {
           <Route path="overview" element={<Overview />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="courses" element={<Campaigns />} />
+          <Route path="salesEmployee" element={<Sales />} />
           <Route path="calender" element={<Calender />} />
           <Route path="requisitions" element={<RequisitionTable />} />
           {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}

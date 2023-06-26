@@ -33,6 +33,7 @@ const Sidebar = ({
   // setToggleMessage,
   toggleNotification,
   setToggleNotification,
+  setNotificationLoading,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -249,6 +250,7 @@ const Sidebar = ({
               onClick={(e) => {
                 // setToggleMessage(false);
                 setToggleNotification(!toggleNotification);
+                setNotificationLoading(true);
                 e.stopPropagation();
               }}
             >
@@ -349,6 +351,32 @@ const Sidebar = ({
             </div>
           )}
 
+          {(userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4) && (
+            <div>
+              <NavLink
+                to={"/salesEmployee"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${
+                    active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
+                  }`,
+                }}
+                onClick={() => setActive("salesEmployee")}
+              >
+                <Icons.MoneyCheck className="w-5" />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  sales Employee
+                </span>
+                {active === "salesEmployee" && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </NavLink>
+            </div>
+          )}
+
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2 ||
             userDetails?.userInfo?.role_id === 3 ||
@@ -357,7 +385,7 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/calender"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="flex items-center text-base cursor-pointer mt-1 my-5 py-0.5"
                 style={{
                   color: `${active === "calender" ? "#7037FF" : "#7C8DB5"}`,
                 }}
