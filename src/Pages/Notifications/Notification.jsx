@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
 import {
@@ -9,12 +9,24 @@ import {
   addNotifications,
   setNotifications,
 } from "../../features/user/notificationSlice";
+import { Spin } from "antd";
 
-const Notification = ({ handleNotificationNavigation }) => {
+const Notification = ({
+  handleNotificationNavigation,
+  toggleNotification,
+  notificationLoading,
+  setNotificationLoading,
+}) => {
+  const [notifications, setNotificationss] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const notifications = useSelector(
-    (state) => state?.notifications
-  ).notifications;
+  const notify = useSelector((state) => state?.notifications).notifications;
+
+  useEffect(() => {
+    setInterval(() => {
+      setNotificationss(notify);
+    }, 5000);
+  }, [notify]);
 
   const userDetails = useSelector((state) => state?.user);
 
@@ -42,6 +54,7 @@ const Notification = ({ handleNotificationNavigation }) => {
             dispatch(addNotifications(notification));
           }
         });
+        setNotificationss(notify);
       }
 
       const updatedNotifications = allNotifications?.map((notification) => {
@@ -56,6 +69,13 @@ const Notification = ({ handleNotificationNavigation }) => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setNotificationLoading(false);
+    }, 5000);
+  }, [setNotificationLoading]);
+  console.log("nLoading notification:", notificationLoading);
+
   return (
     <div>
       <div
@@ -64,10 +84,18 @@ const Notification = ({ handleNotificationNavigation }) => {
           maxHeight: "65vh",
         }}
       >
-        {!notifications?.length && (
-          <div className="text-lg font-poppins text-center my-6">
-            No Notification Yet
+        {notificationLoading ? (
+          <div className=" mt-6 h-8">
+            <Spin tip="Loading">
+              <div className="content" />
+            </Spin>
           </div>
+        ) : (
+          !notifications?.length && (
+            <div className="text-lg font-poppins text-center my-6">
+              No Notification Yet
+            </div>
+          )
         )}
         {notifications?.map((notification, i) => (
           <div

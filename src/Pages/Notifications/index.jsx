@@ -11,7 +11,11 @@ import { useState } from "react";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
-const Notifications = () => {
+const Notifications = ({
+  toggleNotification,
+  notificationLoading,
+  setNotificationLoading,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
@@ -85,6 +89,9 @@ const Notifications = () => {
       </div>
 
       <Notification
+        notificationLoading={notificationLoading}
+        setNotificationLoading={setNotificationLoading}
+        toggleNotification={toggleNotification}
         syncNotification={syncNotification}
         setSyncNotification={setSyncNotification}
         handleNotificationNavigation={handleNotificationNavigation}

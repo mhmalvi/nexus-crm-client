@@ -33,6 +33,7 @@ const Sidebar = ({
   // setToggleMessage,
   toggleNotification,
   setToggleNotification,
+  setNotificationLoading,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -249,6 +250,7 @@ const Sidebar = ({
               onClick={(e) => {
                 // setToggleMessage(false);
                 setToggleNotification(!toggleNotification);
+                setNotificationLoading(true);
                 e.stopPropagation();
               }}
             >
