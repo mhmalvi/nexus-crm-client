@@ -1,7 +1,7 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Space, TimePicker, message } from "antd";
+import { DeleteOutlined, DownOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, Popover, Space, TimePicker, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { handleAddFollowUp } from "../../Components/services/reminder";
+import { handleAddFollowUp, handleDeleteFollowUp } from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
 import lazyImage from "../../assets/Images/lazy.png";
 
@@ -51,13 +51,13 @@ const DayDetails = ({
       " " +
       timeString;
     // minuse 1 houre from start australia
-    let frms = data?.start.split(" ");
-    let getfs = String(frms[0]).split("-");
-    getfs[2] = String(parseInt(getfs[2] - 1));
-    let newgetfs = String(getfs.join("-"));
-    frms[0] = newgetfs;
-    let newfrms = String(frms.join(" "));
-    data.start = newfrms;
+    // let frms = data?.start.split(" ");
+    // let getfs = String(frms[0]).split("-");
+    // getfs[2] = String(parseInt(getfs[2] - 1));
+    // let newgetfs = String(getfs.join("-"));
+    // frms[0] = newgetfs;
+    // let newfrms = String(frms.join(" "));
+    // data.start = newfrms;
     // end it
     data.end =
       endToDateString?.split("/")[2] +
@@ -68,13 +68,13 @@ const DayDetails = ({
       " " +
       timeString;
     // minuse 1 houre from end fro australia
-    let frme = data?.end.split(" ");
-    let getfe = String(frme[0]).split("-");
-    getfe[2] = String(parseInt(getfe[2] - 1));
-    let newgetfe = String(getfe.join("-"));
-    frme[0] = newgetfe;
-    let newfrme = String(frme.join(" "));
-    data.end = newfrme;
+    // let frme = data?.end.split(" ");
+    // let getfe = String(frme[0]).split("-");
+    // getfe[2] = String(parseInt(getfe[2] - 1));
+    // let newgetfe = String(getfe.join("-"));
+    // frme[0] = newgetfe;
+    // let newfrme = String(frme.join(" "));
+    // data.end = newfrme;
     // end it
     // } else {
     //   data.start =
@@ -110,16 +110,17 @@ const DayDetails = ({
       " " +
       timeString;
     // minus 1 from rmDate for australia
-    let frm = rmDate.split(" ");
-    let getf = String(frm[0]).split("-");
-    getf[2] = String(parseInt(getf[2] - 1));
-    let newgetf = String(getf.join("-"));
-    frm[0] = newgetf;
-    let newfrm = String(frm.join(" "));
+    // let frm = rmDate.split(" ");
+    // let getf = String(frm[0]).split("-");
+    // getf[2] = String(parseInt(getf[2] - 1));
+    // let newgetf = String(getf.join("-"));
+    // frm[0] = newgetf;
+    // let newfrm = String(frm.join(" "));
     // end it
-    setNotiFyDate(newfrm);
-    // setNotiFyDate(rmDate) // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
-    console.log("time : ", newfrm);
+    // setNotiFyDate(newfrm);
+    // console.log("time : ", newfrm);
+    // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
+    setNotiFyDate(rmDate);
   };
   console.log("rmTimeValue: ", notifyDate);
 
@@ -153,6 +154,23 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
     }
   };
+  const deleteReminder = async (fid) => {
+    const res = await handleDeleteFollowUp(fid);
+    if(res?.status===201){
+      message.success(res?.message || "Successfully deleted");
+      setCurrentDayEvents(
+        eventsData?.filter(
+          (event) =>
+            event?.start?.toLocaleDateString() ===
+              selectedEventTime?.start?.toLocaleDateString() ||
+            event?.end?.toLocaleDateString() ===
+              selectedEventTime?.end?.toLocaleDateString()
+        )
+      );
+    }else{
+      message.error(res?.message);
+    }
+  }
 
   const menu = (
     <Menu defaultSelectedKeys={[1]}>
@@ -300,7 +318,7 @@ const DayDetails = ({
         {currentDayEvents?.length ? (
           <div>
             {currentDayEvents?.map((event, i) => (
-              <div key={i}>
+              <div key={i} className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div
                     className={`w-4 h-4 mr-2 rounded-full ${
@@ -326,6 +344,11 @@ const DayDetails = ({
                       )}
                     </li>
                   </ul>
+                </div>
+                <div>
+                  <Popover content={"Remove"}>
+                    <DeleteOutlined className="cursor-pointer" onClick={()=>{deleteReminder(event?.id)}}/>
+                  </Popover>
                 </div>
               </div>
             ))}
