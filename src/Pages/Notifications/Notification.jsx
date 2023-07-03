@@ -4,6 +4,7 @@ import Icons from "../../Components/Shared/Icons";
 import {
   handleFetchFollowUpNotification,
   handleReadNotification,
+  handleChangeNotificationStatus
 } from "../../Components/services/notification";
 import {
   addNotifications,
@@ -21,7 +22,8 @@ const Notification = ({
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
-
+ 
+  
   useEffect(() => {
     setInterval(() => {
       setNotificationss(notify);
@@ -32,7 +34,8 @@ const Notification = ({
 
   const handleReadMessageReq = async (id) => {
     console.log(id);
-    const messageReadRes = await handleReadNotification(id);
+    // const messageReadRes = await handleReadNotification(id);
+    const messageReadRes = await handleChangeNotificationStatus(id);
     // console.log("messageReadRes", messageReadRes);
 
     const notificationRes = await handleFetchFollowUpNotification(
@@ -123,6 +126,7 @@ const Notification = ({
                   ) : null}
                 </span>
                 <span>{notification?.title}</span>
+                
               </div>
 
               {/* Date & Time */}
@@ -152,6 +156,8 @@ const Notification = ({
                   }`}
                 />
               </div>
+              {/* <div>
+                <div/> */}
             </div>
             {/* </div> */}
             <hr onClick={(e) => e.stopPropagation()} />

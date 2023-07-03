@@ -6,7 +6,7 @@ import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute
 import Sidebar from "../../Components/Shared/Sidebar";
 import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
-import { handleFetchFollowUpNotification } from "../../Components/services/notification";
+import { handleFetchFollowUpNotification, handleFetchNotificationList } from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
 import { setNotifications } from "../../features/user/notificationSlice";
@@ -125,9 +125,10 @@ const Layout = () => {
     // const notificationRes = await handleFetchFollowUpNotification(
     //   userDetails?.userInfo?.user_id
     // );
-    const notificationRes = await handleFetchFollowUp(
-      userDetails?.userInfo?.user_id
-    );
+    // const notificationRes = await handleFetchFollowUp(
+    //   userDetails?.userInfo?.user_id
+    // );
+    const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
 
     console.log("notificationRes", notificationRes);
 
@@ -139,59 +140,61 @@ const Layout = () => {
 
       console.log("today t: ", newToday);
 
-      let currentDate =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      notificationRes?.data?.forEach((item, idx) => {
-        console.log("item.start date: ", item?.start);
-        // let iDate = item?.start;
-        let date = new Date(item?.start);
-        let checkPush = HouresDate(new Date(item?.start), 10);
-        let customNotifyTime = HouresDate(
-          new Date(item?.notification_time),
-          10
-        );
-        let gotnotifyDate = MinutesDate(new Date(checkPush), 10);
+      // let currentDate =
+      //   today.getFullYear() +
+      //   "-" +
+      //   (today.getMonth() + 1) +
+      //   "-" +
+      //   today.getDate();
+      // notificationRes?.data?.forEach((item, idx) => {
+      //   console.log("item.start date: ", item?.start);
+      //   // let iDate = item?.start;
+      //   let date = new Date(item?.start);
+      //   let checkPush = HouresDate(new Date(item?.start), 10);
+      //   let customNotifyTime = HouresDate(
+      //     new Date(item?.notification_time),
+      //     10
+      //   );
+      //   let gotnotifyDate = MinutesDate(new Date(checkPush), 10);
 
-        // date = new Date(date.setHours(date.getHours() - 6)).toISOString();
-        console.log("changed date: ", checkPush);
-        console.log("custom time: ", customNotifyTime);
-        console.log("minus date: ", gotnotifyDate);
-        var date_from_db =
-          date.getFullYear() +
-          "-" +
-          (date.getMonth() + 1) +
-          "-" +
-          date.getDate();
-        if (currentDate === date_from_db) {
-          console.log("we entered");
-          // let mstr = new Date(
-          //   date.setMinutes(date.getMinutes() - 10)
-          // ).toISOString();
-          // console.log("mstr: ", mstr);
-          // if (newToday < checkPush && newToday >= gotnotifyDate) {
-          //   console.log("logic ok");
-          //   notifyData.push(item);
-          // }
-          if (newToday > customNotifyTime) {
-            if (customNotifyTime < checkPush) {
-              console.log("logic ok");
-              notifyData.push(item);
-            } else {
-              notifyData = [];
-            }
-          } else {
-            console.log("something went wrong");
-          }
-        }
-      });
+      //   // date = new Date(date.setHours(date.getHours() - 6)).toISOString();
+      //   console.log("changed date: ", checkPush);
+      //   console.log("custom time: ", customNotifyTime);
+      //   console.log("minus date: ", gotnotifyDate);
+      //   var date_from_db =
+      //     date.getFullYear() +
+      //     "-" +
+      //     (date.getMonth() + 1) +
+      //     "-" +
+      //     date.getDate();
+      //   if (currentDate === date_from_db) {
+      //     console.log("we entered");
+      //     // let mstr = new Date(
+      //     //   date.setMinutes(date.getMinutes() - 10)
+      //     // ).toISOString();
+      //     // console.log("mstr: ", mstr);
+      //     // if (newToday < checkPush && newToday >= gotnotifyDate) {
+      //     //   console.log("logic ok");
+      //     //   notifyData.push(item);
+      //     // }
+      //     if (newToday > customNotifyTime) {
+      //       if (customNotifyTime < checkPush) {
+      //         console.log("logic ok");
+      //         notifyData.push(item);
+      //       } else {
+      //         // notifyData = [];
+      //         notifyData.push(item);
+      //       }
+      //     } else {
+      //       notifyData.push(item);
+      //       console.log("something went wrong");
+      //     }
+      //   }
+      // });
 
-      console.log("current date: ", currentDate);
+      // console.log("notify data: ", notifyData);
 
-      dispatch(setNotifications(notifyData));
+      dispatch(setNotifications(notificationRes?.data));
 
       // notificationRes?.data?.forEach((notification) => {
       //   console.log(
