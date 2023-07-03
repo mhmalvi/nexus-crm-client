@@ -1,7 +1,7 @@
 import { DeleteOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Popover, Space, TimePicker, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { handleAddFollowUp, handleDeleteFollowUp } from "../../Components/services/reminder";
+import { handleAddFollowUp, handleDeleteFollowUp, handleFetchFollowUp } from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
 import lazyImage from "../../assets/Images/lazy.png";
 
@@ -31,7 +31,7 @@ const DayDetails = ({
             selectedEventTime?.end?.toLocaleDateString()
       )
     );
-  }, [selectedEventTime, eventDetails, eventsData]);
+  }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
   console.log("currentDayEvents >>>>>>>>>>", currentDayEvents);
 
@@ -158,21 +158,21 @@ const DayDetails = ({
     const res = await handleDeleteFollowUp(fid);
     if(res?.status===201){
       message.success(res?.message || "Successfully deleted");
-      setCurrentDayEvents(
-        eventsData?.filter(
-          (event) =>
-            event?.start?.toLocaleDateString() ===
-              selectedEventTime?.start?.toLocaleDateString() ||
-            event?.end?.toLocaleDateString() ===
-              selectedEventTime?.end?.toLocaleDateString()
-        )
-      );
+      const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+      if (featFollowUp.status === 200) {
+        featFollowUp?.data?.forEach((event) => {
+          event.start = new Date(event.start);
+          event.end = new Date(event.end);
+        });
+        setEventsData(featFollowUp?.data);
+      }
+      
     }else{
       message.error(res?.message);
     }
   }
 
-  const menu = (
+  const menu = (    
     <Menu defaultSelectedKeys={[1]}>
       {priorityList?.map((priority) => (
         <Menu.Item
