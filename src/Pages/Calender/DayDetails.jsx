@@ -1,7 +1,11 @@
 import { DeleteOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Popover, Space, TimePicker, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { handleAddFollowUp, handleDeleteFollowUp, handleFetchFollowUp } from "../../Components/services/reminder";
+import {
+  handleAddFollowUp,
+  handleDeleteFollowUp,
+  handleFetchFollowUp,
+} from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
 import lazyImage from "../../assets/Images/lazy.png";
 
@@ -21,6 +25,7 @@ const DayDetails = ({
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
   const [rmTime, setRmtime] = useState("");
+  const [isSaveDisable, setIsSaveDisable] = useState(false);
   useEffect(() => {
     setCurrentDayEvents(
       eventsData?.filter(
@@ -138,6 +143,7 @@ const DayDetails = ({
   };
 
   const handleAddFollowUpReq = async () => {
+    setIsSaveDisable(true);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
@@ -153,29 +159,27 @@ const DayDetails = ({
       setRmtime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
       handleOpenDayDetailsCancel();
+      setIsSaveDisable(false);
+    } else {
+      setIsSaveDisable(false);
     }
   };
   const deleteReminder = async (fid) => {
     const res = await handleDeleteFollowUp(fid);
-    if(res?.status===201){
+    if (res?.status === 201) {
       message.success(res?.message || "Successfully deleted");
       const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
-      if (featFollowUp.status === 200) {
-        featFollowUp?.data?.forEach((event) => {
-          event.start = new Date(event.start);
-          event.end = new Date(event.end);
-        });
-        setEventsData(featFollowUp?.data);
-      }
-      
-    }else{
+      featFollowUp?.data?.forEach((event) => {
+        event.start = new Date(event.start);
+        event.end = new Date(event.end);
+      });
+      setEventsData(featFollowUp?.data);
+    } else {
       message.error(res?.message);
     }
-  }
+  };
 
-  
-
-  const menu = (    
+  const menu = (
     <Menu defaultSelectedKeys={[1]}>
       {priorityList?.map((priority) => (
         <Menu.Item
@@ -307,12 +311,18 @@ const DayDetails = ({
           >
             Cancel
           </div>
-          <button
-            className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
-            onClick={handleAddFollowUpReq}
-          >
-            Save
-          </button>
+          {!isSaveDisable ? (
+            <button
+              className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+              onClick={handleAddFollowUpReq}
+            >
+              Save
+            </button>
+          ) : (
+            <button className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer">
+              Saving...
+            </button>
+          )}
         </div>
       </div>
 
@@ -350,7 +360,12 @@ const DayDetails = ({
                 </div>
                 <div>
                   <Popover content={"Remove"}>
-                    <DeleteOutlined className="cursor-pointer" onClick={()=>{deleteReminder(event?.id)}}/>
+                    <DeleteOutlined
+                      className="cursor-pointer"
+                      onClick={() => {
+                        deleteReminder(event?.id);
+                      }}
+                    />
                   </Popover>
                 </div>
               </div>

@@ -366,7 +366,7 @@ const Sidebar = ({
               >
                 <Icons.MoneyCheck className="w-5" />
                 <span className="ml-4 leading-6 font-medium font-poppins">
-                  sales Employee
+                  Sales Employee
                 </span>
                 {active === "salesEmployee" && (
                   <div className="ml-auto active-option text-brand-color bg-brand-color">

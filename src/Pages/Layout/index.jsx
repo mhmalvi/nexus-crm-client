@@ -133,7 +133,7 @@ const Layout = () => {
     console.log("notificationRes", notificationRes);
     // console.log("custom check: ",Intl.DateTimeFormat().resolvedOptions().timeZone)
 
-    if (notificationRes?.message === "success") {
+    if (notificationRes?.message === "success" || notificationRes?.status === 200) {
       let notifyData = [];
       let today = new Date();
 
