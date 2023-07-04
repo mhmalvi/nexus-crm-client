@@ -27,6 +27,7 @@ const Notification = ({
   useEffect(() => {
     setInterval(() => {
       setNotificationss(notify);
+     
     }, 5000);
   }, [notify]);
 
@@ -43,6 +44,7 @@ const Notification = ({
     );
 
     console.log("notificationRes", notificationRes);
+    
 
     if (messageReadRes?.status === 201) {
       dispatch(setNotifications([]));

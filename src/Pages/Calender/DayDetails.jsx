@@ -173,6 +173,8 @@ const DayDetails = ({
     }
   }
 
+  
+
   const menu = (    
     <Menu defaultSelectedKeys={[1]}>
       {priorityList?.map((priority) => (
