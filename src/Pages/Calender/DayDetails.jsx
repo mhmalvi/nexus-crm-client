@@ -100,7 +100,7 @@ const DayDetails = ({
 
   const onRemiderTimeChange = (time, timeString) => {
     setRmtime(timeString);
-    const DateString = (selectedEventTime?.notification_time).toLocaleDateString();
+    const DateString = (selectedEventTime?.start).toLocaleDateString();
     const rmDate =
       DateString?.split("/")[2] +
       "-" +
@@ -150,6 +150,7 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
       setSelectedEventTime();
       setTime("Select Time");
+      setRmtime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
       handleOpenDayDetailsCancel();
     }
@@ -283,7 +284,7 @@ const DayDetails = ({
             <div className="w-4/12">
               <div className=" text-lg font-semibold">Set Reminder Time:</div>
               <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
-                <div>{rmTime}</div>
+                <div>{rmTime || "Select Time"}</div>
                 <TimePicker
                   format="HH:mm"
                   bordered={false}
