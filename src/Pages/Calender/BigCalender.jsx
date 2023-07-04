@@ -26,24 +26,26 @@ const BigCalendar = () => {
 
   useEffect(() => {
     dispatch(setLoader(true));
-    (async () => {
-      const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+    setInterval(() => {
+      (async () => {
+        const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
 
-      console.log("featFollowUp", featFollowUp);
+        console.log("featFollowUp", featFollowUp);
 
-      if (featFollowUp.status === 200) {
-        featFollowUp?.data?.forEach((event) => {
-          event.start = new Date(event.start);
-          event.end = new Date(event.end);
-        });
-        setEventsData(featFollowUp?.data);
-        dispatch(setLoader(false));
-      } else {
-        setTimeout(() => {
+        if (featFollowUp.status === 200) {
+          featFollowUp?.data?.forEach((event) => {
+            event.start = new Date(event.start);
+            event.end = new Date(event.end);
+          });
+          setEventsData(featFollowUp?.data);
           dispatch(setLoader(false));
-        }, 3000);
-      }
-    })();
+        } else {
+          setTimeout(() => {
+            dispatch(setLoader(false));
+          }, 3000);
+        }
+      })();
+    }, 6000);
   }, [dispatch, selectedEventTime, userDetails, synEvents]);
 
   console.log("eventsData", eventsData);

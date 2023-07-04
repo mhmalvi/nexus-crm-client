@@ -104,7 +104,7 @@ const Sales = () => {
           <div className="text-xl font-semibold">All Sales Employees</div>
         </div>
         {/* Sales Employees */}
-        <div className="">
+        <div className="mb-6">
           <Table
             style={{
               textTransform: "uppercase",
