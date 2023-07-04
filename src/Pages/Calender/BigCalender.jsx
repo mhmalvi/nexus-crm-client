@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
@@ -8,6 +8,7 @@ import { handleFetchFollowUp } from "../../Components/services/reminder";
 import { setLoader } from "../../features/user/userSlice";
 import DayDetails from "./DayDetails";
 import EventDetails from "./EventDetails";
+import Loader from "../../Components/Shared/Loader.jsx";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
@@ -23,14 +24,14 @@ const BigCalendar = () => {
   const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [time, setTime] = useState("Select Time");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    
     dispatch(setLoader(true));
     setInterval(() => {
       (async () => {
         const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
-
-        
 
         if (featFollowUp.status === 200) {
           featFollowUp?.data?.forEach((event) => {
@@ -38,17 +39,24 @@ const BigCalendar = () => {
             event.end = new Date(event.end);
           });
           setEventsData(featFollowUp?.data);
-          dispatch(setLoader(false));
+          
+            dispatch(setLoader(false));
+          
         } else {
           setTimeout(() => {
             dispatch(setLoader(false));
           }, 3000);
         }
       })();
-    }, 10000);
+    }, 6000);
+    
   }, [dispatch, selectedEventTime, userDetails, synEvents]);
-
- 
+  useEffect(()=>{
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 8000);
+  },[])
 
   const handleSelect = ({ start, end }) => {
     setSelectedEventTime({});
@@ -83,73 +91,87 @@ const BigCalendar = () => {
 
   return (
     <div>
-      <Calendar
-        views={["day", "work_week", "month"]}
-        selectable
-        localizer={localizer}
-        defaultDate={new Date()}
-        defaultView="month"
-        events={eventsData}
-        // events={events}
-        style={{ height: "90vh" }}
-        onSelectEvent={(e) => handleUpdateEvent(e)}
-        onSelectSlot={handleSelect}
-      />
-      <Modal
-        className="cross_btn"
-        centered
-        visible={openDayDetails}
-        onOk={() => {
-          setOpenDayDetails(false);
-          setTime("Select Time");
-        }}
-        onCancel={() => {
-          setOpenDayDetails(false);
-          setTime("Select Time");
-        }}
-        footer={false}
-        width="50%"
-      >
-        <DayDetails
-          handleOpenDayDetailsCancel={handleOpenDayDetailsCancel}
-          selectedEventTime={selectedEventTime}
-          setSelectedEventTime={setSelectedEventTime}
-          eventDetails={eventDetails}
-          eventsData={eventsData}
-          setEventsData={setEventsData}
-          // synEvents={synEvents}
-          // setSynEvents={setSynEvents}
-          time={time}
-          setTime={setTime}
-          userDetails={userDetails}
-        />
-      </Modal>
+      {loading ? (
+        <>
+          <div className="w-full h-[100vh] flex justify-center items-center">
+            {/* <Spin
+              size="larger"
+              
+            /> */}
+            <Loader />
+          </div>
+        </>
+      ) : (
+        <>
+          <Calendar
+            views={["day", "work_week", "month"]}
+            selectable
+            localizer={localizer}
+            defaultDate={new Date()}
+            defaultView="month"
+            events={eventsData}
+            // events={events}
+            style={{ height: "90vh" }}
+            onSelectEvent={(e) => handleUpdateEvent(e)}
+            onSelectSlot={handleSelect}
+          />
+          <Modal
+            className="cross_btn"
+            centered
+            visible={openDayDetails}
+            onOk={() => {
+              setOpenDayDetails(false);
+              setTime("Select Time");
+            }}
+            onCancel={() => {
+              setOpenDayDetails(false);
+              setTime("Select Time");
+            }}
+            footer={false}
+            width="50%"
+          >
+            <DayDetails
+              handleOpenDayDetailsCancel={handleOpenDayDetailsCancel}
+              selectedEventTime={selectedEventTime}
+              setSelectedEventTime={setSelectedEventTime}
+              eventDetails={eventDetails}
+              eventsData={eventsData}
+              setEventsData={setEventsData}
+              // synEvents={synEvents}
+              // setSynEvents={setSynEvents}
+              time={time}
+              setTime={setTime}
+              userDetails={userDetails}
+            />
+          </Modal>
 
-      {/* For A Single Event */}
-      <Modal
-        className="cross_btn"
-        centered
-        visible={openEventDetails}
-        onOk={() => setOpenEventDetails(false)}
-        onCancel={() => {
-          setIsEdit(false);
-          setOpenEventDetails(false);
-        }}
-        footer={false}
-        width="50%"
-      >
-        <EventDetails
-          handleEventDetailsCancel={handleEventDetailsCancel}
-          eventDetails={eventDetails}
-          isEdit={isEdit}
-          setEventsData={setEventsData}
-          eventsData={eventsData}
-          setOpenEventDetails={setOpenEventDetails}
-          setIsEdit={setIsEdit}
-          synEvents={synEvents}
-          setSynEvents={setSynEvents}
-        />
-      </Modal>
+          {/* For A Single Event */}
+          <Modal
+            className="cross_btn"
+            centered
+            visible={openEventDetails}
+            onOk={() => setOpenEventDetails(false)}
+            onCancel={() => {
+              setIsEdit(false);
+              setOpenEventDetails(false);
+            }}
+            footer={false}
+            width="50%"
+          >
+            <EventDetails
+              handleEventDetailsCancel={handleEventDetailsCancel}
+              eventDetails={eventDetails}
+              isEdit={isEdit}
+              setEventsData={setEventsData}
+              eventsData={eventsData}
+              setOpenEventDetails={setOpenEventDetails}
+              setIsEdit={setIsEdit}
+              synEvents={synEvents}
+              setSynEvents={setSynEvents}
+            />
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
