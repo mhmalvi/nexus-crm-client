@@ -44,7 +44,7 @@ const Layout = () => {
     (state) => state?.notifications?.notifications
   );
 
-  console.log("userNotifications 45", userNotifications);
+
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
@@ -130,7 +130,7 @@ const Layout = () => {
     // );
     const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
 
-    console.log("notificationRes", notificationRes);
+ 
     // console.log("custom check: ",Intl.DateTimeFormat().resolvedOptions().timeZone)
 
     if (notificationRes?.message === "success" || notificationRes?.status === 200) {
@@ -139,7 +139,7 @@ const Layout = () => {
 
       let newToday = DayDate(new Date(), 1);
 
-      console.log("today t: ", newToday);
+    
 
       // let currentDate =
       //   today.getFullYear() +

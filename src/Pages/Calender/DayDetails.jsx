@@ -38,7 +38,7 @@ const DayDetails = ({
     );
   }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
-  console.log("currentDayEvents >>>>>>>>>>", currentDayEvents);
+  
 
   const onTimeChange = (time, timeString) => {
     setTime(timeString);
@@ -127,7 +127,7 @@ const DayDetails = ({
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setNotiFyDate(rmDate);
   };
-  console.log("rmTimeValue: ", notifyDate);
+ 
 
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };

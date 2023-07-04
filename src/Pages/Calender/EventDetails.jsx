@@ -24,6 +24,7 @@ const EventDetails = ({
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
+  const [notifyTime, setNotifyTime] = useState("");
   const [updateEventData, setUpdateEventData] = useState({});
 
   console.log("eventDetails", eventDetails);
@@ -66,8 +67,6 @@ const EventDetails = ({
   };
 
   const handleDateTimeChange = (_, dateTimeString) => {
-    console.log(dateTimeString);
-
     const eventData = { ...updateEventData };
     eventData.start = dateTimeString[0];
     eventData.end = dateTimeString[1];
@@ -75,6 +74,16 @@ const EventDetails = ({
     setUpdateEventData(eventData);
     setStartDateTime(dateTimeString[0]);
     setEndDateTime(dateTimeString[1]);
+  };
+
+  const handleReminderDateTimeChange = (_, dateTimeString) => {
+    console.log("notify update: ", dateTimeString[0]);
+
+    const eventData = { ...updateEventData };
+    eventData.notification_time = dateTimeString[0];
+
+    setUpdateEventData(eventData);
+    setNotifyTime(dateTimeString[0]);
   };
 
   const handleEventDetailsChange = (e) => {
@@ -105,6 +114,7 @@ const EventDetails = ({
       setOpenEventDetails(false);
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
     }
+    // window.location.reload();
   };
 
   console.log("eventDetails", eventDetails);
@@ -219,35 +229,68 @@ const EventDetails = ({
 
       <div className="flex flex-col justify-start items-start">
         {isEdit ? (
-          <div className="flex items-center">
-            <span>
-              {startDateTime
-                ? new Date(startDateTime)
-                    .toString()
-                    .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
-                : (eventDetails?.start)
-                    .toString()
-                    .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-            </span>
-            <span className="mx-2">-</span>
-            <span>
-              {endDateTime
-                ? new Date(endDateTime)
-                    .toString()
-                    .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
-                : (eventDetails?.end)
-                    .toString()
-                    .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-            </span>
-            <RangePicker
-              showTime
-              bordered={false}
-              onChange={handleDateTimeChange}
-              format={dateFormat}
-              separator={null}
-            />
+          <div className="">
+            <h2 className="mt-6 text-[18px] text-[bold]">
+              Set Task Start Time:
+            </h2>
+            <div className="flex items-center">
+              <span>
+                {startDateTime
+                  ? new Date(startDateTime)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
+                  : (eventDetails?.start)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+              </span>
+              <span className="mx-2">-</span>
+              <span>
+                {endDateTime
+                  ? new Date(endDateTime)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
+                  : (eventDetails?.end)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+              </span>
+              <RangePicker
+                showTime
+                bordered={false}
+                onChange={handleDateTimeChange}
+                format={dateFormat}
+                separator={null}
+              />
+            </div>
+            {/* for notification */}
+
+            <h2 className="mt-6 text-[18px] text-[bold]">
+              Set Reminder Time:
+            </h2>
+            <div className="flex items-center">
+              <span>
+                {notifyTime
+                  ? new Date(notifyTime)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
+                  : (eventDetails?.notification_time)
+                      .toString()
+                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+              </span>
+              <span className="mx-2">-</span>
+              <RangePicker
+                showTime
+                bordered={false}
+                onChange={handleReminderDateTimeChange}
+                format={dateFormat}
+                separator={null}
+              />
+            </div>
           </div>
         ) : (
+          <>
+          <h2 className="mt-6 text-[18px] text-[bold]">
+              Task Start Time:
+            </h2>
           <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
             {new Date(eventDetails?.start)
               ?.toString()
@@ -257,6 +300,17 @@ const EventDetails = ({
               ?.toString()
               .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
           </div>
+          <h2 className="mt-6 text-[18px] text-[bold]">
+              Reminder Time:
+            </h2>
+          <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
+            {new Date(eventDetails?.notification_time)
+              ?.toString()
+              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+           
+          </div>
+          </>
+          
         )}
         <div className="text-base font-light my-8">
           {isEdit ? (
