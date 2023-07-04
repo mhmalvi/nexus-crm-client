@@ -131,6 +131,7 @@ const Layout = () => {
     const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
 
     console.log("notificationRes", notificationRes);
+    // console.log("custom check: ",Intl.DateTimeFormat().resolvedOptions().timeZone)
 
     if (notificationRes?.message === "success") {
       let notifyData = [];

@@ -34,8 +34,11 @@ export const handleReadNotification = async (notificationID) => {
 
 export const handleFetchNotificationList = async (uid) => {
   try {
-    const result = await axios.get(
-      `${crmNotification_dev}/api/${uid}/notifications-list`
+    const result = await axios.post(
+      `${crmNotification_dev}/api/${uid}/notifications-list`,
+      {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
     );
     return result?.data;
   } catch (error) {
