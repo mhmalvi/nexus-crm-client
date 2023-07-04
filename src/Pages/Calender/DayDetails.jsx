@@ -100,7 +100,7 @@ const DayDetails = ({
 
   const onRemiderTimeChange = (time, timeString) => {
     setRmtime(timeString);
-    const DateString = (selectedEventTime?.start).toLocaleDateString();
+    const DateString = (selectedEventTime?.notification_time).toLocaleDateString();
     const rmDate =
       DateString?.split("/")[2] +
       "-" +
