@@ -26,6 +26,7 @@ const EventDetails = ({
   const [endDateTime, setEndDateTime] = useState("");
   const [notifyTime, setNotifyTime] = useState("");
   const [updateEventData, setUpdateEventData] = useState({});
+  const [isSaveDisable, setIsSaveDisable] = useState(false);
 
   console.log("eventDetails", eventDetails);
   console.log("updateEventData", updateEventData);
@@ -77,13 +78,13 @@ const EventDetails = ({
   };
 
   const handleReminderDateTimeChange = (_, dateTimeString) => {
-    console.log("notify update: ", dateTimeString[0]);
+    console.log("notify update: ", dateTimeString);
 
     const eventData = { ...updateEventData };
-    eventData.notification_time = dateTimeString[0];
+    eventData.notification_time = dateTimeString;
 
     setUpdateEventData(eventData);
-    setNotifyTime(dateTimeString[0]);
+    setNotifyTime(dateTimeString);
   };
 
   const handleEventDetailsChange = (e) => {
@@ -113,6 +114,9 @@ const EventDetails = ({
 
       setOpenEventDetails(false);
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
+      setIsSaveDisable(false);
+    } else {
+      setIsSaveDisable(false);
     }
     // window.location.reload();
   };
@@ -263,9 +267,7 @@ const EventDetails = ({
             </div>
             {/* for notification */}
 
-            <h2 className="mt-6 text-[18px] text-[bold]">
-              Set Reminder Time:
-            </h2>
+            <h2 className="mt-6 text-[18px] text-[bold]">Set Reminder Time:</h2>
             <div className="flex items-center">
               <span>
                 {notifyTime
@@ -276,8 +278,7 @@ const EventDetails = ({
                       .toString()
                       .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
               </span>
-              <span className="mx-2">-</span>
-              <RangePicker
+              <DatePicker
                 showTime
                 bordered={false}
                 onChange={handleReminderDateTimeChange}
@@ -288,29 +289,23 @@ const EventDetails = ({
           </div>
         ) : (
           <>
-          <h2 className="mt-6 text-[18px] text-[bold]">
-              Task Start Time:
-            </h2>
-          <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
-            {new Date(eventDetails?.start)
-              ?.toString()
-              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
-            -{" "}
-            {new Date(eventDetails?.end)
-              ?.toString()
-              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-          </div>
-          <h2 className="mt-6 text-[18px] text-[bold]">
-              Reminder Time:
-            </h2>
-          <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
-            {new Date(eventDetails?.notification_time)
-              ?.toString()
-              .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
-           
-          </div>
+            <h2 className="mt-6 text-[18px] text-[bold]">Task Start Time:</h2>
+            <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
+              {new Date(eventDetails?.start)
+                ?.toString()
+                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+              -{" "}
+              {new Date(eventDetails?.end)
+                ?.toString()
+                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+            </div>
+            <h2 className="mt-6 text-[18px] text-[bold]">Reminder Time:</h2>
+            <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
+              {new Date(eventDetails?.notification_time)
+                ?.toString()
+                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+            </div>
           </>
-          
         )}
         <div className="text-base font-light my-8">
           {isEdit ? (
@@ -334,12 +329,19 @@ const EventDetails = ({
             >
               Cancel
             </div>
-            <button
-              className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
-              onClick={handleUpdateFollowUpReq}
-            >
-              Save
-            </button>
+
+            {!isSaveDisable ? (
+              <button
+                className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+                onClick={handleUpdateFollowUpReq}
+              >
+                Save
+              </button>
+            ) : (
+              <button className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer">
+                Saving...
+              </button>
+            )}
           </div>
         ) : null}
       </div>
