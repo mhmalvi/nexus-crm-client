@@ -47,8 +47,7 @@ const Notifications = ({
   // }, [syncNotification]);
 
   const handleNotificationNavigation = async (notification) => {
-    console.log("userDetails", notification.receiver_id);
-    console.log("userDetails.userInfo.userId", userDetails.userInfo.user_id);
+   
 
     // await socket.emit("read_notification", notification.id);
     // socket.on("updated_notification", (data) => {

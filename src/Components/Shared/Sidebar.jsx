@@ -76,10 +76,7 @@ const Sidebar = ({
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
 
-  console.log(
-    "notifications",
-    notifications?.filter((notifi) => notifi?.status)
-  );
+ 
 
   useEffect(() => {
     (async () => {
@@ -123,7 +120,7 @@ const Sidebar = ({
   };
 
   const ToggleProfile = (e) => {
-    console.log(e);
+    
     if (e?.key === "profile") {
       navigate("/user-profile");
     } else if (e?.key === "company") {

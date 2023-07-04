@@ -34,7 +34,7 @@ const Notification = ({
   const userDetails = useSelector((state) => state?.user);
 
   const handleReadMessageReq = async (id) => {
-    console.log(id);
+    
     // const messageReadRes = await handleReadNotification(id);
     const messageReadRes = await handleChangeNotificationStatus(id);
     // console.log("messageReadRes", messageReadRes);
@@ -43,7 +43,7 @@ const Notification = ({
       userDetails?.userInfo?.user_id
     );
 
-    console.log("notificationRes", notificationRes);
+    
     
 
     if (messageReadRes?.status === 201) {
@@ -69,7 +69,7 @@ const Notification = ({
         return notification;
       });
 
-      console.log("updatedNotifications", updatedNotifications);
+      
       dispatch(setNotifications(updatedNotifications));
     }
   };
@@ -79,7 +79,7 @@ const Notification = ({
       setNotificationLoading(false);
     }, 5000);
   }, [setNotificationLoading]);
-  console.log("nLoading notification:", notificationLoading);
+
 
   return (
     <div>

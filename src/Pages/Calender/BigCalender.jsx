@@ -30,7 +30,7 @@ const BigCalendar = () => {
       (async () => {
         const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
 
-        console.log("featFollowUp", featFollowUp);
+        
 
         if (featFollowUp.status === 200) {
           featFollowUp?.data?.forEach((event) => {
@@ -45,13 +45,12 @@ const BigCalendar = () => {
           }, 3000);
         }
       })();
-    }, 6000);
+    }, 10000);
   }, [dispatch, selectedEventTime, userDetails, synEvents]);
 
-  console.log("eventsData", eventsData);
+ 
 
   const handleSelect = ({ start, end }) => {
-    console.log("{ start, end }", { start, end });
     setSelectedEventTime({});
     setOpenDayDetails(true);
     setSelectedEventTime({
