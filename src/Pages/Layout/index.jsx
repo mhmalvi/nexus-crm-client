@@ -132,9 +132,20 @@ const Layout = () => {
     //   userDetails?.userInfo?.user_id
     // );
     const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
+     
+    
+    const soundSize = JSON.parse(localStorage.getItem('notifySound'));
 
+    if(!soundSize){
+      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    }else if(soundSize<notificationRes?.data?.length){
+      handleMessageAudio();
+      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    }else{
+      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    }
  
-    // console.log("custom check: ",Intl.DateTimeFormat().resolvedOptions().timeZone)
+    console.log("custom check: ",notificationRes);
 
     if (notificationRes?.message === "success" || notificationRes?.status === 200) {
       let notifyData = [];
