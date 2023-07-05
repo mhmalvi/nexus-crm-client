@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import moment from "moment";
 const NotifyModal = ({ isNotifyOpen, setIsNotifyOpen, notificationData }) => {
-  console.log("the notifify data: ", notificationData);
-  console.log("isNotifyOpen: ", isNotifyOpen);
 
   const handleOk = () => {
     setIsNotifyOpen(false);
