@@ -35,6 +35,7 @@ import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
+import NotifyModal from "../Notifications/NotifyModal.jsx"
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ const Layout = () => {
   const [toggleNotification, setToggleNotification] = useState(false);
   const [notificationLoading, setNotificationLoading] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
+  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState({});
 
   const ToogleSideBar = (index) => {
     setOpenSideBar(index);
@@ -351,8 +354,11 @@ const Layout = () => {
           setToggleNotification={setToggleNotification}
           notificationLoading={notificationLoading}
           setNotificationLoading={setNotificationLoading}
+          setIsNotifyOpen={setIsNotifyOpen}
+          setNotificationData = {setNotificationData}
         />
       )}
+      <NotifyModal notificationData={notificationData} isNotifyOpen={isNotifyOpen} setIsNotifyOpen={setIsNotifyOpen}/>
     </div>
   );
 };

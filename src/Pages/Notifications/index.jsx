@@ -8,6 +8,7 @@ import Notification from "./Notification";
 import { useNavigate } from "react-router-dom";
 import { addNotifications } from "../../features/user/notificationSlice";
 import { useState } from "react";
+import NotifyModal from "./NotifyModal";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -15,6 +16,9 @@ const Notifications = ({
   toggleNotification,
   notificationLoading,
   setNotificationLoading,
+  setToggleNotification,
+  setNotificationData,
+  setIsNotifyOpen
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -94,7 +98,11 @@ const Notifications = ({
         syncNotification={syncNotification}
         setSyncNotification={setSyncNotification}
         handleNotificationNavigation={handleNotificationNavigation}
+        setNotificationData = {setNotificationData}
+        setIsNotifyOpen={setIsNotifyOpen}
+        setToggleNotification={setToggleNotification}
       />
+      
     </div>
   );
 };

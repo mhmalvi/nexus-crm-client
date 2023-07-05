@@ -96,6 +96,10 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       dataIndex: "lead_id",
     },
     {
+      title: "Course",
+      dataIndex: "course",
+    },
+    {
       title: "Action",
       dataIndex: "",
       align: "center",

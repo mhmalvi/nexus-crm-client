@@ -4,6 +4,7 @@ import Icons from "../../Components/Shared/Icons";
 import {
   handleFetchFollowUpNotification,
   handleReadNotification,
+  handleFetchNotificationList,
   handleChangeNotificationStatus
 } from "../../Components/services/notification";
 import {
@@ -12,14 +13,18 @@ import {
 } from "../../features/user/notificationSlice";
 import { Spin } from "antd";
 
+
 const Notification = ({
   handleNotificationNavigation,
   toggleNotification,
   notificationLoading,
   setNotificationLoading,
+  setNotificationData,
+  setIsNotifyOpen
 }) => {
   const [notifications, setNotificationss] = useState([]);
   const [loading, setLoading] = useState(false);
+  
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
  
@@ -39,7 +44,10 @@ const Notification = ({
     const messageReadRes = await handleChangeNotificationStatus(id);
     // console.log("messageReadRes", messageReadRes);
 
-    const notificationRes = await handleFetchFollowUpNotification(
+    // const notificationRes = await handleFetchFollowUpNotification(
+    //   userDetails?.userInfo?.user_id
+    // );
+    const notificationRes = await handleFetchNotificationList(
       userDetails?.userInfo?.user_id
     );
 
@@ -80,6 +88,14 @@ const Notification = ({
     }, 5000);
   }, [setNotificationLoading]);
 
+  // const sendPropsNotification = (data) =>{
+  //   setNotificationData(data);
+  //   setIsNotifyOpen(true);
+  // }
+  const showNotifyModal = () => {
+    setIsNotifyOpen(true);
+  };
+
 
   return (
     <div>
@@ -111,6 +127,9 @@ const Notification = ({
                 type: notification.notification_type,
               });
               handleReadMessageReq(notification.id);
+              setNotificationData(notification || {});
+              setIsNotifyOpen(true);
+              
             }}
             key={i}
             className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
@@ -139,7 +158,7 @@ const Notification = ({
                     fontSize: "10px",
                   }}
                 >
-                  {notification.start?.slice(0, 16)}
+                  {notification.notification_time?.slice(0, 16)}
                 </span>
               </div>
             </div>
@@ -166,6 +185,7 @@ const Notification = ({
           </div>
         ))}
       </div>
+      
     </div>
   );
 };
