@@ -140,9 +140,12 @@ const Layout = () => {
       localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
     }else if(soundSize<notificationRes?.data?.length){
       handleMessageAudio();
-      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+      setTimeout(()=>{
+        localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+      },500)
+      
     }else{
-      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+      localStorage.setItem('notifySound', JSON.stringify(0));
     }
  
     console.log("custom check: ",notificationRes);

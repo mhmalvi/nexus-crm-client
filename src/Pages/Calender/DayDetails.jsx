@@ -235,7 +235,7 @@ const DayDetails = ({
                 value={taskDetails?.title}
                 onChange={handleTextInputFieldChange}
               />
-              <Dropdown
+              {/* <Dropdown
                 overlay={menu}
                 trigger={["click"]}
                 className="cursor-pointer ml-4"
@@ -251,7 +251,7 @@ const DayDetails = ({
                   </div>
                   <DownOutlined />
                 </Space>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </div>
           <div className="w-3/12">
