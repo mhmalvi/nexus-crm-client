@@ -27,7 +27,6 @@ const BigCalendar = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    
     dispatch(setLoader(true));
     setInterval(() => {
       (async () => {
@@ -39,24 +38,22 @@ const BigCalendar = () => {
             event.end = new Date(event.end);
           });
           setEventsData(featFollowUp?.data);
-          
-            dispatch(setLoader(false));
-          
+
+          dispatch(setLoader(false));
         } else {
           setTimeout(() => {
             dispatch(setLoader(false));
-          }, 3000);
+          }, 2000);
         }
       })();
-    }, 6000);
-    
+    }, 1500);
   }, [dispatch, selectedEventTime, userDetails, synEvents]);
-  useEffect(()=>{
+  useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 8000);
-  },[])
+    }, 2500);
+  }, []);
 
   const handleSelect = ({ start, end }) => {
     setSelectedEventTime({});

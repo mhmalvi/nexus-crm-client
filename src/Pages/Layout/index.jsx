@@ -6,7 +6,10 @@ import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute
 import Sidebar from "../../Components/Shared/Sidebar";
 import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
-import { handleFetchFollowUpNotification, handleFetchNotificationList } from "../../Components/services/notification";
+import {
+  handleFetchFollowUpNotification,
+  handleFetchNotificationList,
+} from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
 import { setNotifications } from "../../features/user/notificationSlice";
@@ -35,7 +38,7 @@ import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
-import NotifyModal from "../Notifications/NotifyModal.jsx"
+import NotifyModal from "../Notifications/NotifyModal.jsx";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -44,8 +47,6 @@ const Layout = () => {
   const userNotifications = useSelector(
     (state) => state?.notifications?.notifications
   );
-
-
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
@@ -104,7 +105,7 @@ const Layout = () => {
   useEffect(() => {
     setInterval(() => {
       fetchFollowUpNotification();
-    }, 5000);
+    }, 1000);
   }, []);
 
   function MinutesDate(date, minutes) {
@@ -131,37 +132,41 @@ const Layout = () => {
     // const notificationRes = await handleFetchFollowUp(
     //   userDetails?.userInfo?.user_id
     // );
-    const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
-     
-    // Custom sound system
-    // const soundSize = JSON.parse(localStorage.getItem('notifySound'));
+    const notificationRes = await handleFetchNotificationList(
+      userDetails?.userInfo?.user_id
+    );
 
-    // if(!soundSize){
-    //   setTimeout(()=>{
-    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
-    //   },7000)
-    // }else if(soundSize<notificationRes?.data?.length){
+    const soundSize = JSON.parse(localStorage.getItem("notifySound"));
+
+    // fake socket sound
+    // if (!soundSize) {
+    //   localStorage.setItem(
+    //     "notifySound",
+    //     JSON.stringify(notificationRes?.data?.length)
+    //   );
+    // } else if (soundSize < notificationRes?.data?.length) {
     //   handleMessageAudio();
-    //   setTimeout(()=>{
-    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
-    //   },7000)
-      
-    // }else{
-    //   setTimeout(()=>{
-    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
-    //   },1000)
+    //   setTimeout(() => {
+    //     localStorage.setItem(
+    //       "notifySound",
+    //       JSON.stringify(notificationRes?.data?.length)
+    //     );
+    //   }, 500);
+    // } else {
+    //   localStorage.setItem("notifySound", JSON.stringify(0));
     // }
-    // custom sound system end
- 
-    console.log("custom check: ",notificationRes);
+    // end
 
-    if (notificationRes?.message === "success" || notificationRes?.status === 200) {
+    console.log("custom check: ", notificationRes);
+
+    if (
+      notificationRes?.message === "success" ||
+      notificationRes?.status === 200
+    ) {
       let notifyData = [];
       let today = new Date();
 
       let newToday = DayDate(new Date(), 1);
-
-    
 
       // let currentDate =
       //   today.getFullYear() +
@@ -374,10 +379,14 @@ const Layout = () => {
           notificationLoading={notificationLoading}
           setNotificationLoading={setNotificationLoading}
           setIsNotifyOpen={setIsNotifyOpen}
-          setNotificationData = {setNotificationData}
+          setNotificationData={setNotificationData}
         />
       )}
-      <NotifyModal notificationData={notificationData} isNotifyOpen={isNotifyOpen} setIsNotifyOpen={setIsNotifyOpen}/>
+      <NotifyModal
+        notificationData={notificationData}
+        isNotifyOpen={isNotifyOpen}
+        setIsNotifyOpen={setIsNotifyOpen}
+      />
     </div>
   );
 };
