@@ -108,6 +108,7 @@ const Login = () => {
       } else {
         setTimeout(() => {
           navigate("/dashboard");
+          window.location.reload();
         }, 1500);
       }
     } else {
@@ -237,6 +238,7 @@ const Login = () => {
 
     setTimeout(() => {
       navigate("/dashboard");
+      window.location.reload();
     }, 1500);
   };
 
