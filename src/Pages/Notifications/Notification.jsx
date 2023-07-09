@@ -5,7 +5,7 @@ import {
   handleFetchFollowUpNotification,
   handleReadNotification,
   handleFetchNotificationList,
-  handleChangeNotificationStatus
+  handleChangeNotificationStatus,
 } from "../../Components/services/notification";
 import {
   addNotifications,
@@ -13,33 +13,29 @@ import {
 } from "../../features/user/notificationSlice";
 import { Spin } from "antd";
 
-
 const Notification = ({
   handleNotificationNavigation,
   toggleNotification,
   notificationLoading,
   setNotificationLoading,
   setNotificationData,
-  setIsNotifyOpen
+  setIsNotifyOpen,
 }) => {
   const [notifications, setNotificationss] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
- 
-  
+
   useEffect(() => {
     setInterval(() => {
       setNotificationss(notify);
-     
-    }, 5000);
+    }, 1200);
   }, [notify]);
 
   const userDetails = useSelector((state) => state?.user);
 
   const handleReadMessageReq = async (id) => {
-    
     // const messageReadRes = await handleReadNotification(id);
     const messageReadRes = await handleChangeNotificationStatus(id);
     // console.log("messageReadRes", messageReadRes);
@@ -50,9 +46,6 @@ const Notification = ({
     const notificationRes = await handleFetchNotificationList(
       userDetails?.userInfo?.user_id
     );
-
-    
-    
 
     if (messageReadRes?.status === 201) {
       dispatch(setNotifications([]));
@@ -77,7 +70,6 @@ const Notification = ({
         return notification;
       });
 
-      
       dispatch(setNotifications(updatedNotifications));
     }
   };
@@ -85,7 +77,7 @@ const Notification = ({
   useEffect(() => {
     setTimeout(() => {
       setNotificationLoading(false);
-    }, 5000);
+    }, 1300);
   }, [setNotificationLoading]);
 
   // const sendPropsNotification = (data) =>{
@@ -95,7 +87,6 @@ const Notification = ({
   const showNotifyModal = () => {
     setIsNotifyOpen(true);
   };
-
 
   return (
     <div>
@@ -129,7 +120,6 @@ const Notification = ({
               handleReadMessageReq(notification.id);
               setNotificationData(notification || {});
               setIsNotifyOpen(true);
-              
             }}
             key={i}
             className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
@@ -147,7 +137,6 @@ const Notification = ({
                   ) : null}
                 </span>
                 <span>{notification?.title}</span>
-                
               </div>
 
               {/* Date & Time */}
@@ -185,7 +174,6 @@ const Notification = ({
           </div>
         ))}
       </div>
-      
     </div>
   );
 };
