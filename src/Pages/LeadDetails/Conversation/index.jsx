@@ -641,7 +641,7 @@ const Conversation = ({ leadDetails, id }) => {
             >
               <img className="w-6" src={mailLogo} alt="" />
               <span className="text-black font-semibold text-base ml-3">
-                Open in Mail
+                Send Mail
               </span>
             </button>
             {/* ) : null} */}

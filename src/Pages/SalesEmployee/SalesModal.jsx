@@ -96,6 +96,19 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       dataIndex: "lead_id",
     },
     {
+      title: "Course",
+      dataIndex: "course",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className="">
+              {record?.course ? record?.course : <p className="text-[red] m-0 p-0">This Lead has no course</p>}
+            </div>
+          </>
+        );
+      },
+    },
+    {
       title: "Action",
       dataIndex: "",
       align: "center",
@@ -154,7 +167,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                 setIsByMe(false);
               }}
             >
-              Not Assigned
+              All Leads
             </Button>
           </div>
           <Table

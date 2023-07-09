@@ -7,6 +7,7 @@ import Icons from "./Icons";
 import { Storage } from "./utils/store";
 import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
+import { setLoader } from "../../features/user/userSlice";
 
 /* function getItem(label, key, icon, children) {
   return {
@@ -76,10 +77,7 @@ const Sidebar = ({
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
 
-  console.log(
-    "notifications",
-    notifications?.filter((notifi) => notifi?.status)
-  );
+ 
 
   useEffect(() => {
     (async () => {
@@ -123,13 +121,16 @@ const Sidebar = ({
   };
 
   const ToggleProfile = (e) => {
-    console.log(e);
+    
     if (e?.key === "profile") {
       navigate("/user-profile");
     } else if (e?.key === "company") {
       navigate("/settings");
     }
   };
+
+  
+  
 
   return (
     <div
@@ -366,7 +367,7 @@ const Sidebar = ({
               >
                 <Icons.MoneyCheck className="w-5" />
                 <span className="ml-4 leading-6 font-medium font-poppins">
-                  sales Employee
+                  Sales Employee
                 </span>
                 {active === "salesEmployee" && (
                   <div className="ml-auto active-option text-brand-color bg-brand-color">
@@ -396,7 +397,7 @@ const Sidebar = ({
                     active === "calender" ? "text-[#7037FF]" : "text-[#7C8DB5]"
                   } w-5`}
                 />
-                <span className="ml-4 leading-6 font-medium font-poppins">
+                <span className="ml-4 leading-6 font-medium font-poppins" >
                   Calender
                 </span>
                 {active === "calender" && (
