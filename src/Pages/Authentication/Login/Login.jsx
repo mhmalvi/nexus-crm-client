@@ -103,14 +103,12 @@ const Login = () => {
           ?.length
       ) {
         setAddBookMarkOpen(true);
-        window.location.reload();
       } else {
         setTimeout(() => {
           navigate("/dashboard");
           window.location.reload();
         }, 1500);
       }
-      window.location.reload();
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
@@ -238,6 +236,7 @@ const Login = () => {
 
     setTimeout(() => {
       navigate("/dashboard");
+      window.location.reload();
     }, 1500);
   };
 
