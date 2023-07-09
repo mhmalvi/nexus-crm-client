@@ -348,8 +348,10 @@ const Sidebar = ({
             </div>
           )}
 
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
+          {
+            // (userDetails?.userInfo?.role_id === 1 ||
+            // userDetails?.userInfo?.role_id === 2
+            // ) &&
             <div>
               <NavLink
                 to={"/salesEmployee"}
@@ -372,7 +374,7 @@ const Sidebar = ({
                 )}
               </NavLink>
             </div>
-          )}
+          }
 
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2 ||
