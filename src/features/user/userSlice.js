@@ -20,6 +20,7 @@ const initialState = {
   fbToken: Storage.getItem("fac_t"),
   error: null,
   success: false,
+  companyId: 0,
 };
 
 // if (initialState.userInfo) {
@@ -38,6 +39,9 @@ export const userSlice = createSlice({
       // Storage.setItem("auth_tok", actions?.payload?.token);
       // state.userInfo.client_id = 2;
     },
+    setCompanyId: (state, actions)=>{
+      state.companyId = actions.payload;
+    },
     updateUserDetails: (state) => {
       state.value -= 1;
     },
@@ -51,7 +55,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addUserDetails, updateUserDetails, updateFbToken, setLoader } =
+export const { addUserDetails, updateUserDetails, updateFbToken, setLoader,setCompanyId } =
   userSlice.actions;
 
 export default userSlice.reducer;

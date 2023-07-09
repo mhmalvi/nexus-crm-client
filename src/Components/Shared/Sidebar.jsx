@@ -1,6 +1,6 @@
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
@@ -42,6 +42,11 @@ const Sidebar = ({
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
   );
+  const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  const companyId = useSelector(
+    (state) => state?.user?.companyId,
+    shallowEqual
+  );
   // const userMessages = useSelector((state) => state.messages);
   // const userNotification = useSelector((state) => state.notifications);
 
@@ -76,8 +81,6 @@ const Sidebar = ({
   //     );
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
-
- 
 
   useEffect(() => {
     (async () => {
@@ -121,16 +124,12 @@ const Sidebar = ({
   };
 
   const ToggleProfile = (e) => {
-    
     if (e?.key === "profile") {
       navigate("/user-profile");
     } else if (e?.key === "company") {
       navigate("/settings");
     }
   };
-
-  
-  
 
   return (
     <div
@@ -352,30 +351,68 @@ const Sidebar = ({
             </div>
           )}
 
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
-            <div>
-              <NavLink
-                to={"/salesEmployee"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${
-                    active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
-                  }`,
-                }}
-                onClick={() => setActive("salesEmployee")}
-              >
-                <Icons.MoneyCheck className="w-5" />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Sales Employee
-                </span>
-                {active === "salesEmployee" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
-                    |
-                  </div>
-                )}
-              </NavLink>
-            </div>
+          {user?.client_id === 0 ? (
+            companyId ? (
+              (userDetails?.userInfo?.role_id === 1 ||
+                userDetails?.userInfo?.role_id === 2 ||
+                userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4) && (
+                <div>
+                  <NavLink
+                    to={"/salesEmployee"}
+                    className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                    style={{
+                      color: `${
+                        active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
+                      }`,
+                    }}
+                    onClick={() => setActive("salesEmployee")}
+                  >
+                    <Icons.MoneyCheck className="w-5" />
+                    <span className="ml-4 leading-6 font-medium font-poppins">
+                      Sales Employee
+                    </span>
+                    {active === "salesEmployee" && (
+                      <div className="ml-auto active-option text-brand-color bg-brand-color">
+                        |
+                      </div>
+                    )}
+                  </NavLink>
+                </div>
+              )
+            ) : (
+              <>
+                <div style={{ display: "none" }}></div>
+              </>
+            )
+          ) : (
+            (userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
+              <div>
+                <NavLink
+                  to={"/salesEmployee"}
+                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                  style={{
+                    color: `${
+                      active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
+                    }`,
+                  }}
+                  onClick={() => setActive("salesEmployee")}
+                >
+                  <Icons.MoneyCheck className="w-5" />
+                  <span className="ml-4 leading-6 font-medium font-poppins">
+                    Sales Employee
+                  </span>
+                  {active === "salesEmployee" && (
+                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                      |
+                    </div>
+                  )}
+                </NavLink>
+              </div>
+            )
           )}
 
           {(userDetails?.userInfo?.role_id === 1 ||
@@ -397,7 +434,7 @@ const Sidebar = ({
                     active === "calender" ? "text-[#7037FF]" : "text-[#7C8DB5]"
                   } w-5`}
                 />
-                <span className="ml-4 leading-6 font-medium font-poppins" >
+                <span className="ml-4 leading-6 font-medium font-poppins">
                   Calender
                 </span>
                 {active === "calender" && (

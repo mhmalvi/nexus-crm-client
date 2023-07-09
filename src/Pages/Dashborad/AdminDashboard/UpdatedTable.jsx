@@ -204,7 +204,7 @@ const UpdatedTable = ({
           <Table
             columns={tableHeaders}
             dataSource={list}
-            pagination={false}
+            pagination={true}
             // loading
             showSorterTooltip={true}
             sortDirections={["ascend", "descend"]}
