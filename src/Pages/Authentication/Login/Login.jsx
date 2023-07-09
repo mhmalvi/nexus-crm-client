@@ -9,6 +9,7 @@ import { Storage } from "../../../Components/Shared/utils/store";
 import { handleLogin } from "../../../Components/services/auth";
 import {
   addUserDetails,
+  setCompanyId,
   setLoader,
   updateFbToken,
 } from "../../../features/user/userSlice";
@@ -79,6 +80,7 @@ const Login = () => {
 
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
+      dispatch(setCompanyId(loginResponse?.data?.data?.company?.id))
 
       if (loginResponse?.data?.data?.flag === 1) {
         Storage.setItem("__ce__", data.email);

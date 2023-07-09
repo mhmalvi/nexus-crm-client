@@ -176,26 +176,28 @@ const EventDetails = ({
           </div>
           <div>
             {isEdit ? (
-              <Dropdown
-                overlay={menu}
-                trigger={["click"]}
-                className="cursor-pointer ml-4"
-              >
-                <Space>
-                  <div className="flex items-center">
-                    <Icons.Flag
-                      className={`w-4 h-4 mr-2 ${selectedPriority?.className}`}
-                    />
-                    <div className="whitespace-nowrap w-16">
-                      {selectedPriority?.lable}
+              <>
+                {/* <Dropdown
+                  overlay={menu}
+                  trigger={["click"]}
+                  className="cursor-pointer ml-4"
+                >
+                  <Space>
+                    <div className="flex items-center">
+                      <Icons.Flag
+                        className={`w-4 h-4 mr-2 ${selectedPriority?.className}`}
+                      />
+                      <div className="whitespace-nowrap w-16">
+                        {selectedPriority?.lable}
+                      </div>
                     </div>
-                  </div>
-                  <DownOutlined />
-                </Space>
-              </Dropdown>
+                    <DownOutlined />
+                  </Space>
+                </Dropdown> */}
+              </>
             ) : (
               <div className="flex items-center ml-4 px-2.5 py-0.5 border bg-slate-200 rounded-full shadow-sm">
-                <div>
+                {/* <div>
                   <Icons.Flag
                     className={`w-3.5 ${
                       priorityList.find(
@@ -210,7 +212,7 @@ const EventDetails = ({
                       (priority) => priority.key === eventDetails?.priority
                     ).lable
                   }
-                </div>
+                </div> */}
               </div>
             )}
           </div>

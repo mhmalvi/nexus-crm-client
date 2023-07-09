@@ -133,20 +133,25 @@ const Layout = () => {
     // );
     const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
      
-    
-    const soundSize = JSON.parse(localStorage.getItem('notifySound'));
+    // Custom sound system
+    // const soundSize = JSON.parse(localStorage.getItem('notifySound'));
 
-    if(!soundSize){
-      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
-    }else if(soundSize<notificationRes?.data?.length){
-      handleMessageAudio();
-      setTimeout(()=>{
-        localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
-      },500)
+    // if(!soundSize){
+    //   setTimeout(()=>{
+    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    //   },7000)
+    // }else if(soundSize<notificationRes?.data?.length){
+    //   handleMessageAudio();
+    //   setTimeout(()=>{
+    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    //   },7000)
       
-    }else{
-      localStorage.setItem('notifySound', JSON.stringify(0));
-    }
+    // }else{
+    //   setTimeout(()=>{
+    //     localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    //   },1000)
+    // }
+    // custom sound system end
  
     console.log("custom check: ",notificationRes);
 

@@ -17,10 +17,11 @@ const CampaignAnalytics = ({ activeCompany }) => {
   const [campaignQualityRatio, setCampaignQualityRatio] = useState([]);
   const [campaignwiseRevenue, setCampaignwiseRevenue] = useState([]);
   const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
+  const [leads,setLeads] = useState([]);
 
   const userDetails = useSelector((state) => state.user?.userInfo);
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
-  const leads = useSelector((state) => state.leads?.leads);
+  const getleads = useSelector((state) => state.leads?.leads);
   const loadingDetails = useSelector((state) => state.user)?.loading;
 
   const COLORS = [
@@ -31,6 +32,14 @@ const CampaignAnalytics = ({ activeCompany }) => {
     "#7037FF",
     "#ff1c24",
   ];
+
+  useEffect(()=>{
+    if(getleads){
+      if(getleads?.length){
+        setLeads(getleads);
+      }
+    }
+  },[getleads,getleads?.length])
 
   useEffect(() => {
     const curCampaign = [];

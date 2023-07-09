@@ -17,14 +17,22 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
   const loadingDetails = useSelector((state) => state.user)?.loading;
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
-  const leads = useSelector((state) => state.leads?.leads);
+  const getleads = useSelector((state) => state.leads?.leads);
   const campaignRatio = [];
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
   const [lastWeekIncome, setLastWeekIncome] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalLastWeekIncome, setTotalLastWeekIncome] = useState(0);
+  const [leads,setLeads] = useState([]);
 
+  useEffect(()=>{
+    if(getleads){
+      if(getleads?.length){
+        setLeads(getleads);
+      }
+    }
+  },[getleads,getleads?.length])
   useEffect(() => {
     dispatch(setLoader(true));
     (async () => {
