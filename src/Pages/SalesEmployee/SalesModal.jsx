@@ -18,6 +18,10 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [isByMe, setIsByMe] = useState(true);
   const userDetails = JSON.parse(localStorage.getItem("user_info"));
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  const companyId = useSelector(
+    (state) => state?.user?.companyId,
+    shallowEqual
+  );
   const handleOk = () => {
     setConfirmLoading(true);
     // setTimeout(() => {
@@ -42,7 +46,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   // leads data these are not assigned by anybody
   const notAssignedLeadsDataId = async () => {
     setIsLoading(true);
-    const res = await handleFetchUnassignedLeadList(user?.client_id);
+    const res = await handleFetchUnassignedLeadList(companyId || user?.client_id);
     setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
     setIsLoading(false);
   };

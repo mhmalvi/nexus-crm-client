@@ -79,10 +79,9 @@ const UpdatedTable = ({
       setSyncLeads(!syncLeads);
     } else if (leadFileUploadResp?.status === 403) {
       message.warn("Data already exists");
-    } else if(leadFileUploadResp?.status === 400) {
+    } else if (leadFileUploadResp?.status === 400) {
       message.warn("Please reformat excel sheet columnss");
-    }
-    else {
+    } else {
       message.warn("Someting went wrong. Please try again");
     }
   };
@@ -204,7 +203,7 @@ const UpdatedTable = ({
           <Table
             columns={tableHeaders}
             dataSource={list}
-            pagination={false}
+            pagination={true}
             // loading
             showSorterTooltip={true}
             sortDirections={["ascend", "descend"]}

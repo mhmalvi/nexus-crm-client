@@ -1,6 +1,6 @@
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
@@ -8,6 +8,7 @@ import { Storage } from "./utils/store";
 import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
 import { setLoader } from "../../features/user/userSlice";
+const qq_Logo = require("../../../src/assets/Icons/qq_logo_july.jpeg");
 
 /* function getItem(label, key, icon, children) {
   return {
@@ -41,6 +42,11 @@ const Sidebar = ({
   const userDetails = useSelector((state) => state.user);
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
+  );
+  const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  const companyId = useSelector(
+    (state) => state?.user?.companyId,
+    shallowEqual
   );
   // const userMessages = useSelector((state) => state.messages);
   // const userNotification = useSelector((state) => state.notifications);
@@ -76,8 +82,6 @@ const Sidebar = ({
   //     );
   //   })();
   // }, [dispatch, userDetails?.userInfo?.userId]);
-
- 
 
   useEffect(() => {
     (async () => {
@@ -118,19 +122,16 @@ const Sidebar = ({
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
     navigate("/login");
+    window.location.reload();
   };
 
   const ToggleProfile = (e) => {
-    
     if (e?.key === "profile") {
       navigate("/user-profile");
     } else if (e?.key === "company") {
       navigate("/settings");
     }
   };
-
-  
-  
 
   return (
     <div
@@ -352,30 +353,68 @@ const Sidebar = ({
             </div>
           )}
 
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
-            <div>
-              <NavLink
-                to={"/salesEmployee"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${
-                    active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
-                  }`,
-                }}
-                onClick={() => setActive("salesEmployee")}
-              >
-                <Icons.MoneyCheck className="w-5" />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Sales Employee
-                </span>
-                {active === "salesEmployee" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
-                    |
-                  </div>
-                )}
-              </NavLink>
-            </div>
+          {user?.client_id === 0 ? (
+            companyId ? (
+              (userDetails?.userInfo?.role_id === 1 ||
+                userDetails?.userInfo?.role_id === 2 ||
+                userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4) && (
+                <div>
+                  <NavLink
+                    to={"/salesEmployee"}
+                    className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                    style={{
+                      color: `${
+                        active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
+                      }`,
+                    }}
+                    onClick={() => setActive("salesEmployee")}
+                  >
+                    <Icons.MoneyCheck className="w-5" />
+                    <span className="ml-4 leading-6 font-medium font-poppins">
+                      Sales Employee
+                    </span>
+                    {active === "salesEmployee" && (
+                      <div className="ml-auto active-option text-brand-color bg-brand-color">
+                        |
+                      </div>
+                    )}
+                  </NavLink>
+                </div>
+              )
+            ) : (
+              <>
+                <div style={{ display: "none" }}></div>
+              </>
+            )
+          ) : (
+            (userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
+              <div>
+                <NavLink
+                  to={"/salesEmployee"}
+                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                  style={{
+                    color: `${
+                      active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
+                    }`,
+                  }}
+                  onClick={() => setActive("salesEmployee")}
+                >
+                  <Icons.MoneyCheck className="w-5" />
+                  <span className="ml-4 leading-6 font-medium font-poppins">
+                    Sales Employee
+                  </span>
+                  {active === "salesEmployee" && (
+                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                      |
+                    </div>
+                  )}
+                </NavLink>
+              </div>
+            )
           )}
 
           {(userDetails?.userInfo?.role_id === 1 ||
@@ -397,7 +436,7 @@ const Sidebar = ({
                     active === "calender" ? "text-[#7037FF]" : "text-[#7C8DB5]"
                   } w-5`}
                 />
-                <span className="ml-4 leading-6 font-medium font-poppins" >
+                <span className="ml-4 leading-6 font-medium font-poppins">
                   Calender
                 </span>
                 {active === "calender" && (
@@ -536,11 +575,20 @@ const Sidebar = ({
           />
 
           <div className="lg:mt-20 2xl:mt-36 pt-1.5">
-            <div className="mr-4">
-              <Icons.CompanyLogo
+            <div
+              className="mx-auto w-[250px]"
+              // style={{ border: "1px solid red" }}
+            >
+              {/* <Icons.CompanyLogo
                 style={{
                   width: "180px",
                 }}
+              /> */}
+              <img
+                className="w-full h-full ml-[-25px]"
+                // style={{ border: "1px solid blue" }}
+                src={qq_Logo}
+                alt="QuadQue Leads"
               />
             </div>
             {Items2.map((item, i) => (

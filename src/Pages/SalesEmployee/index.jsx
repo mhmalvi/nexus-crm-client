@@ -17,11 +17,15 @@ const Sales = () => {
   };
 
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  const companyId = useSelector(
+    (state) => state?.user?.companyId,
+    shallowEqual
+  );
 
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await handleFetchSales(user?.client_id);
+      const response = await handleFetchSales(companyId || user?.client_id);
       console.log("res: ", response);
       setSalesData(response ? (response?.data ? response.data : []) : []);
       setIsLoading(false);
@@ -77,17 +81,18 @@ const Sales = () => {
         console.log("record", record);
         return (
           <div key={i} className="flex gap-2 justify-center">
-            {userData?.role_id === 1 ||
-              (userData?.role_id === 3 && (
-                <Button
-                  key={i}
-                  icon={<PlusOutlined />}
-                  onClick={() => {
-                    showSalesModal();
-                    setSalesEmployeeId(record?.user_id);
-                  }}
-                ></Button>
-              ))}
+            {userData?.role_id === 1 || userData?.role_id === 3 ? (
+              <Button
+                key={i}
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  showSalesModal();
+                  setSalesEmployeeId(record?.user_id);
+                }}
+              ></Button>
+            ) : (
+              ""
+            )}
           </div>
         );
       },
@@ -110,8 +115,8 @@ const Sales = () => {
               textTransform: "uppercase",
             }}
             columns={salesColumn || []}
-            dataSource={salesData || []}
-            pagination={false}
+            dataSource={salesData ? (salesData?.length ? salesData : []) : []}
+            pagination={true}
             // loading
             showSorterTooltip={true}
             scroll={{
