@@ -1,7 +1,11 @@
 import { DeleteOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Popover, Space, TimePicker, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { handleAddFollowUp, handleDeleteFollowUp } from "../../Components/services/reminder";
+import {
+  handleAddFollowUp,
+  handleDeleteFollowUp,
+  handleFetchFollowUp,
+} from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
 import lazyImage from "../../assets/Images/lazy.png";
 
@@ -21,6 +25,7 @@ const DayDetails = ({
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
   const [rmTime, setRmtime] = useState("");
+  const [isSaveDisable, setIsSaveDisable] = useState(false);
   useEffect(() => {
     setCurrentDayEvents(
       eventsData?.filter(
@@ -31,9 +36,9 @@ const DayDetails = ({
             selectedEventTime?.end?.toLocaleDateString()
       )
     );
-  }, [selectedEventTime, eventDetails, eventsData]);
+  }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
-  console.log("currentDayEvents >>>>>>>>>>", currentDayEvents);
+  
 
   const onTimeChange = (time, timeString) => {
     setTime(timeString);
@@ -122,7 +127,7 @@ const DayDetails = ({
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setNotiFyDate(rmDate);
   };
-  console.log("rmTimeValue: ", notifyDate);
+ 
 
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
@@ -138,6 +143,7 @@ const DayDetails = ({
   };
 
   const handleAddFollowUpReq = async () => {
+    setIsSaveDisable(true);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
@@ -150,27 +156,28 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
       setSelectedEventTime();
       setTime("Select Time");
+      setRmtime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
       handleOpenDayDetailsCancel();
+      setIsSaveDisable(false);
+    } else {
+      setIsSaveDisable(false);
     }
   };
   const deleteReminder = async (fid) => {
     const res = await handleDeleteFollowUp(fid);
-    if(res?.status===201){
+    if (res?.status === 201) {
       message.success(res?.message || "Successfully deleted");
-      setCurrentDayEvents(
-        eventsData?.filter(
-          (event) =>
-            event?.start?.toLocaleDateString() ===
-              selectedEventTime?.start?.toLocaleDateString() ||
-            event?.end?.toLocaleDateString() ===
-              selectedEventTime?.end?.toLocaleDateString()
-        )
-      );
-    }else{
+      const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+      featFollowUp?.data?.forEach((event) => {
+        event.start = new Date(event.start);
+        event.end = new Date(event.end);
+      });
+      setEventsData(featFollowUp?.data);
+    } else {
       message.error(res?.message);
     }
-  }
+  };
 
   const menu = (
     <Menu defaultSelectedKeys={[1]}>
@@ -228,7 +235,7 @@ const DayDetails = ({
                 value={taskDetails?.title}
                 onChange={handleTextInputFieldChange}
               />
-              <Dropdown
+              {/* <Dropdown
                 overlay={menu}
                 trigger={["click"]}
                 className="cursor-pointer ml-4"
@@ -244,7 +251,7 @@ const DayDetails = ({
                   </div>
                   <DownOutlined />
                 </Space>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </div>
           <div className="w-3/12">
@@ -283,7 +290,7 @@ const DayDetails = ({
             <div className="w-4/12">
               <div className=" text-lg font-semibold">Set Reminder Time:</div>
               <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
-                <div>{rmTime}</div>
+                <div>{rmTime || "Select Time"}</div>
                 <TimePicker
                   format="HH:mm"
                   bordered={false}
@@ -304,12 +311,18 @@ const DayDetails = ({
           >
             Cancel
           </div>
-          <button
-            className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
-            onClick={handleAddFollowUpReq}
-          >
-            Save
-          </button>
+          {!isSaveDisable ? (
+            <button
+              className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+              onClick={handleAddFollowUpReq}
+            >
+              Save
+            </button>
+          ) : (
+            <button className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer">
+              Saving...
+            </button>
+          )}
         </div>
       </div>
 
@@ -347,7 +360,12 @@ const DayDetails = ({
                 </div>
                 <div>
                   <Popover content={"Remove"}>
-                    <DeleteOutlined className="cursor-pointer" onClick={()=>{deleteReminder(event?.id)}}/>
+                    <DeleteOutlined
+                      className="cursor-pointer"
+                      onClick={() => {
+                        deleteReminder(event?.id);
+                      }}
+                    />
                   </Popover>
                 </div>
               </div>

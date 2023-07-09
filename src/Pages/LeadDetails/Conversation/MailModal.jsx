@@ -2,6 +2,7 @@ import { Button, Form, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchEmailTemplatList } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
 import AddNewTemplate from "./AddNewTemplate";
@@ -18,6 +19,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [tempInitValue, setTempInitValue] = useState("");
   const [mailSubject, setMailSubject] = useState("");
   const editorRef = useRef(null);
+  const userDetails = useSelector((state) => state.user.userInfo);
   const handleTdata = (value) => {
     setTData(value);
   };
@@ -39,6 +41,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
     );
     formData.append("mail_subject", mailSubject);
     formData.append("student_email", leadDetails?.leadDetails?.student_email);
+    formData.append("sender", userDetails?.email);
 
     if (!tData || !mailSubject || !file) {
       if (!tData) {

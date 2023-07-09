@@ -18,7 +18,7 @@ export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
   try {
     const result = await axios.put(
       // `${follow_up_dev}/api/follow-up-update/${id}`,
-      `${crmNotification_dev}/api/follow-up-update/${id}`,
+      `${crmNotification_dev}/api/${id}/follow-up-update`,
       updatedFollowUpData
     );
     return result?.data;

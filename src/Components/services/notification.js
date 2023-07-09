@@ -1,41 +1,44 @@
 import axios from "axios";
 import { NOTIFICATION_SERVER_DEV, crmNotification_dev } from "./environment";
 
-export const handleFetchFollowUpNotification = async (userID) => {
-  console.log("userID", userID);
-  try {
-    const result = await axios.post(
-      // `${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/api/notifications-list`,
-      `${NOTIFICATION_SERVER_DEV}/api/notifications-list`,
-      {
-        user_id: userID,
-      }
-    );
-    return result?.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleFetchFollowUpNotification = async (userID) => {
+//   console.log("userID", userID);
+//   try {
+//     const result = await axios.post(
+//       // `${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/api/notifications-list`,
+//       `${NOTIFICATION_SERVER_DEV}/api/notifications-list`,
+//       {
+//         user_id: userID,
+//       }
+//     );
+//     return result?.data;
+//   } catch (error) {
+//     return error.response;
+//   }
+// };
 
-export const handleReadNotification = async (notificationID) => {
-  try {
-    const result = await axios.post(
-      // `${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/api/change-status`,
-      `${NOTIFICATION_SERVER_DEV}/api/change-status`,
-      {
-        id: notificationID,
-      }
-    );
-    return result?.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleReadNotification = async (notificationID) => {
+//   try {
+//     const result = await axios.post(
+//       // `${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/api/change-status`,
+//       `${NOTIFICATION_SERVER_DEV}/api/change-status`,
+//       {
+//         id: notificationID,
+//       }
+//     );
+//     return result?.data;
+//   } catch (error) {
+//     return error.response;
+//   }
+// };
 
 export const handleFetchNotificationList = async (uid) => {
   try {
-    const result = await axios.get(
-      `${crmNotification_dev}/api/${uid}/notifications-list`
+    const result = await axios.post(
+      `${crmNotification_dev}/api/${uid}/notifications-list`,
+      {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
     );
     return result?.data;
   } catch (error) {

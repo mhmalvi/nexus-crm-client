@@ -35,6 +35,7 @@ import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
+import NotifyModal from "../Notifications/NotifyModal.jsx"
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -44,13 +45,15 @@ const Layout = () => {
     (state) => state?.notifications?.notifications
   );
 
-  console.log("userNotifications 45", userNotifications);
+
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
   const [notificationLoading, setNotificationLoading] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
+  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState({});
 
   const ToogleSideBar = (index) => {
     setOpenSideBar(index);
@@ -129,16 +132,31 @@ const Layout = () => {
     //   userDetails?.userInfo?.user_id
     // );
     const notificationRes = await handleFetchNotificationList(userDetails?.userInfo?.user_id);
+     
+    
+    const soundSize = JSON.parse(localStorage.getItem('notifySound'));
 
-    console.log("notificationRes", notificationRes);
+    if(!soundSize){
+      localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+    }else if(soundSize<notificationRes?.data?.length){
+      handleMessageAudio();
+      setTimeout(()=>{
+        localStorage.setItem('notifySound', JSON.stringify(notificationRes?.data?.length));
+      },500)
+      
+    }else{
+      localStorage.setItem('notifySound', JSON.stringify(0));
+    }
+ 
+    console.log("custom check: ",notificationRes);
 
-    if (notificationRes?.message === "success") {
+    if (notificationRes?.message === "success" || notificationRes?.status === 200) {
       let notifyData = [];
       let today = new Date();
 
       let newToday = DayDate(new Date(), 1);
 
-      console.log("today t: ", newToday);
+    
 
       // let currentDate =
       //   today.getFullYear() +
@@ -350,8 +368,11 @@ const Layout = () => {
           setToggleNotification={setToggleNotification}
           notificationLoading={notificationLoading}
           setNotificationLoading={setNotificationLoading}
+          setIsNotifyOpen={setIsNotifyOpen}
+          setNotificationData = {setNotificationData}
         />
       )}
+      <NotifyModal notificationData={notificationData} isNotifyOpen={isNotifyOpen} setIsNotifyOpen={setIsNotifyOpen}/>
     </div>
   );
 };
