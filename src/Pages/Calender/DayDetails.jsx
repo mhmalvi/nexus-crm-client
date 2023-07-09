@@ -25,6 +25,7 @@ const DayDetails = ({
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
   const [rmTime, setRmtime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
   useEffect(() => {
     setCurrentDayEvents(
@@ -38,14 +39,12 @@ const DayDetails = ({
     );
   }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
-  
-
-  const onTimeChange = (time, timeString) => {
+  const onStartTimeChange = (time, timeString) => {
     setTime(timeString);
     const data = { ...taskDetails };
 
     const startToDateString = (selectedEventTime?.start).toLocaleDateString();
-    const endToDateString = (selectedEventTime?.end).toLocaleDateString();
+    // const endToDateString = (selectedEventTime?.end).toLocaleDateString();
 
     data.start =
       startToDateString?.split("/")[2] +
@@ -64,14 +63,16 @@ const DayDetails = ({
     // let newfrms = String(frms.join(" "));
     // data.start = newfrms;
     // end it
-    data.end =
-      endToDateString?.split("/")[2] +
-      "-" +
-      endToDateString?.split("/")[0] +
-      "-" +
-      endToDateString?.split("/")[1] +
-      " " +
-      timeString;
+    // by ej
+    // data.end =
+    //   endToDateString?.split("/")[2] +
+    //   "-" +
+    //   endToDateString?.split("/")[0] +
+    //   "-" +
+    //   endToDateString?.split("/")[1] +
+    //   " " +
+    //   timeString;
+    // end ej
     // minuse 1 houre from end fro australia
     // let frme = data?.end.split(" ");
     // let getfe = String(frme[0]).split("-");
@@ -102,6 +103,31 @@ const DayDetails = ({
 
     setTaskDetails(data);
   };
+  const onEndTimeChange = (time, timeString) => {
+    setEndTime(timeString);
+    const data = { ...taskDetails };
+    const endToDateString = (selectedEventTime?.end).toLocaleDateString();
+    data.end =
+      endToDateString?.split("/")[2] +
+      "-" +
+      endToDateString?.split("/")[0] +
+      "-" +
+      endToDateString?.split("/")[1] +
+      " " +
+      timeString;
+    // minus 1 from rmDate for australia
+    // let frm = rmDate.split(" ");
+    // let getf = String(frm[0]).split("-");
+    // getf[2] = String(parseInt(getf[2] - 1));
+    // let newgetf = String(getf.join("-"));
+    // frm[0] = newgetf;
+    // let newfrm = String(frm.join(" "));
+    // end it
+    // setNotiFyDate(newfrm);
+    // console.log("time : ", newfrm);
+    // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
+    setTaskDetails(data);
+  };
 
   const onRemiderTimeChange = (time, timeString) => {
     setRmtime(timeString);
@@ -127,7 +153,6 @@ const DayDetails = ({
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setNotiFyDate(rmDate);
   };
- 
 
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
@@ -222,7 +247,7 @@ const DayDetails = ({
 
       <div className="w-11/12 mx-auto">
         <div className="flex gap-6 items-center mb-4">
-          <div className="w-full">
+          <div className="w-7/12">
             <div className="text-lg font-semibold">Enter Task Title:</div>
             <div className="flex items-center">
               <input
@@ -255,15 +280,32 @@ const DayDetails = ({
             </div>
           </div>
           <div className="w-3/12">
-            <div className="text-lg font-semibold">Select Time:</div>
+            {/* Start Time */}
+            <div className="text-[15px] font-semibold">Select Start Time:</div>
             <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
               <div>
-                {time ? time : selectedEventTime?.start?.toLocaleTimeString()}
+                {time
+                  ? time
+                  : selectedEventTime?.start?.toLocaleTimeString() ||
+                    "Set Start Time"}
               </div>
               <TimePicker
                 format="HH:mm"
                 bordered={false}
-                onChange={onTimeChange}
+                onChange={onStartTimeChange}
+                // onOk={onTimeChange}
+              />
+            </div>
+          </div>
+          {/* End Time */}
+          <div className="w-3/12">
+            <div className="text-[15px] font-semibold">Select End Time:</div>
+            <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+              <div>{endTime || "Select Time"}</div>
+              <TimePicker
+                format="HH:mm"
+                bordered={false}
+                onChange={onEndTimeChange}
                 // onOk={onTimeChange}
               />
             </div>

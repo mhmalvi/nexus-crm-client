@@ -69,13 +69,17 @@ const EventDetails = ({
 
   const handleDateTimeChange = (_, dateTimeString) => {
     const eventData = { ...updateEventData };
+
     eventData.start = dateTimeString[0];
     eventData.end = dateTimeString[1];
 
     setUpdateEventData(eventData);
-    setStartDateTime(dateTimeString[0]);
-    setEndDateTime(dateTimeString[1]);
+    setStartDateTime(eventData?.start);
+    setEndDateTime(eventData?.end);
   };
+  console.log("zeor data", startDateTime);
+  console.log("same data:", updateEventData.start);
+  console.log("but data: ", eventDetails.start);
 
   const handleReminderDateTimeChange = (_, dateTimeString) => {
     console.log("notify update: ", dateTimeString);
@@ -84,7 +88,7 @@ const EventDetails = ({
     eventData.notification_time = dateTimeString;
 
     setUpdateEventData(eventData);
-    setNotifyTime(dateTimeString);
+    setNotifyTime(eventData?.notification_time);
   };
 
   const handleEventDetailsChange = (e) => {
@@ -93,9 +97,45 @@ const EventDetails = ({
     setUpdateEventData(updatedValue);
   };
 
+  // function convertDateString(dateString) {
+  //   const date = new Date(dateString);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  //   const day = date.getDate().toString().padStart(2, "0");
+  //   const hours = date.getHours().toString().padStart(2, "0");
+  //   const minutes = "20";
+  //   const seconds = "00";
+
+  //   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  // }
+  function convertDateString(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
   const handleUpdateFollowUpReq = async () => {
     const requestData = { ...updateEventData };
+
+    requestData.start = startDateTime
+      ? startDateTime
+      : convertDateString(`${eventDetails.start}`);
+    requestData.end = endDateTime
+      ? endDateTime
+      : convertDateString(`${eventDetails.end}`);
+    requestData.notification_time = notifyTime
+      ? notifyTime
+      : `${eventDetails.notification_time}`;
+
     requestData.status = 1;
+
+    console.log("ok: ", requestData);
 
     const updateFollowUpRes = await handleUpdateFollowUp(
       requestData,
@@ -111,6 +151,10 @@ const EventDetails = ({
       const restFllowUpEvents = eventsData?.filter(
         (envent) => envent.id !== eventDetails?.id
       );
+
+      setStartDateTime("");
+      setEndDateTime("");
+      setNotifyTime("");
 
       setOpenEventDetails(false);
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
@@ -284,6 +328,7 @@ const EventDetails = ({
                 onChange={handleReminderDateTimeChange}
                 format={dateFormat}
                 separator={null}
+                // value={}
               />
             </div>
           </div>

@@ -8,6 +8,7 @@ import { Storage } from "./utils/store";
 import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
 import { setLoader } from "../../features/user/userSlice";
+const qq_Logo = require("../../../src/assets/Icons/qq_logo_july.jpeg");
 
 /* function getItem(label, key, icon, children) {
   return {
@@ -531,11 +532,20 @@ const Sidebar = ({
           />
 
           <div className="lg:mt-20 2xl:mt-36 pt-1.5">
-            <div className="mr-4">
-              <Icons.CompanyLogo
+            <div
+              className="mx-auto w-[250px]"
+              // style={{ border: "1px solid red" }}
+            >
+              {/* <Icons.CompanyLogo
                 style={{
                   width: "180px",
                 }}
+              /> */}
+              <img
+                className="w-full h-full ml-[-25px]"
+                // style={{ border: "1px solid blue" }}
+                src={qq_Logo}
+                alt="QuadQue Leads"
               />
             </div>
             {Items2.map((item, i) => (
