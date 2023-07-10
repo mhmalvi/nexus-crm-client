@@ -96,3 +96,16 @@ export const handleSalesRemoveLead = async (data) => {
     return error.response;
   }
 };
+
+// Remove sales man
+
+export const handleSalesManRemove = async (sid) => {
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/lead/${sid}/unassign-lead`
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

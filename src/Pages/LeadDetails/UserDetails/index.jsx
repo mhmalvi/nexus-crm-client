@@ -24,6 +24,7 @@ import CheckList from "./CheckList";
 import EditDetails from "./EditDetails";
 import EmployeeHistory from "./EmployeeHistory";
 import SalesEmployees from "./SalesEmployees";
+import { handleSalesManRemove } from "../../../Components/services/utils";
 
 const UserDetails = ({
   leadDetails,
@@ -145,8 +146,14 @@ const UserDetails = ({
     }
   };
 
-  const confirmCancleSalesEmployee = async (e) => {
-    setCloseSealsman(false);
+  const confirmCancleSalesEmployee = async (sid) => {
+    const res = await handleSalesManRemove(sid);
+    if (res?.status === 201) {
+      message.success(res?.message || "Salesman has been successfully removed");
+      setCloseSealsman(false);
+    } else {
+      message.warn(res?.message || "Some thing wrong");
+    }
   };
 
   const cancel = (e) => {
@@ -317,7 +324,9 @@ const UserDetails = ({
               userDetails?.userInfo?.role_id === 4) ? (
               <Popconfirm
                 title="Are you sure to remove this Salesman?"
-                onConfirm={confirmCancleSalesEmployee}
+                onConfirm={() => {
+                  confirmCancleSalesEmployee(leadDetails?.leadDetails?.lead_id);
+                }}
                 onCancel={cancel}
                 okText="Yes"
                 cancelText="No"
