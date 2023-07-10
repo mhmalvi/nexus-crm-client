@@ -24,15 +24,15 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
   const [lastWeekIncome, setLastWeekIncome] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalLastWeekIncome, setTotalLastWeekIncome] = useState(0);
-  const [leads,setLeads] = useState([]);
+  const [leads, setLeads] = useState([]);
 
-  useEffect(()=>{
-    if(getleads){
-      if(getleads?.length){
+  useEffect(() => {
+    if (getleads) {
+      if (getleads?.length) {
         setLeads(getleads);
       }
     }
-  },[getleads,getleads?.length])
+  }, [getleads, getleads?.length]);
   useEffect(() => {
     dispatch(setLoader(true));
     (async () => {
@@ -243,39 +243,41 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
         </div>
       </div>
 
-      <div className="w-full mt-12">
-        <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
-          Monthly Revenue
-        </h1>
-        <div>
-          <rcElement.ResponsiveContainer width="100%" height={300}>
-            <rcElement.LineChart
-              width={500}
-              height={200}
-              data={monthlyRevenue}
-              margin={{
-                top: 0,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <rcElement.CartesianGrid strokeDasharray="3 3" />
-              <rcElement.XAxis dataKey="month" />
-              <rcElement.YAxis />
-              <rcElement.Tooltip />
-              <rcElement.Legend />
-              <rcElement.Line
-                connectNulls
-                type="monotone"
-                dataKey="Income"
-                stroke="#8884d8"
-                fill="#8884d8"
-              />
-            </rcElement.LineChart>
-          </rcElement.ResponsiveContainer>
+      {userDetails?.role_id !== 1 && (
+        <div className="w-full mt-12">
+          <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
+            Monthly Revenue
+          </h1>
+          <div>
+            <rcElement.ResponsiveContainer width="100%" height={300}>
+              <rcElement.LineChart
+                width={500}
+                height={200}
+                data={monthlyRevenue}
+                margin={{
+                  top: 0,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
+              >
+                <rcElement.CartesianGrid strokeDasharray="3 3" />
+                <rcElement.XAxis dataKey="month" />
+                <rcElement.YAxis />
+                <rcElement.Tooltip />
+                <rcElement.Legend />
+                <rcElement.Line
+                  connectNulls
+                  type="monotone"
+                  dataKey="Income"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+                />
+              </rcElement.LineChart>
+            </rcElement.ResponsiveContainer>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Lead Convertion Ratio */}
       <div className="mt-10">
