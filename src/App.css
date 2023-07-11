@@ -96,8 +96,8 @@ table.custom-table > tbody > tr:hover td {
   bottom: 0;
   background-image: linear-gradient(
     to right,
-    #ffffff,
-    rgba(255, 255, 255, 0.243) 200px
+    #aeffc6,
+    rgba(255, 255, 255, 0) 200px
   );
 }
 
@@ -110,7 +110,7 @@ table.custom-table > tbody > tr:hover td {
   bottom: 0;
   background-image: linear-gradient(
     to left,
-    #ffffff,
+    #aeffc6,
     rgba(0, 128, 128, 0) 200px
   );
 }

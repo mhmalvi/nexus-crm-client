@@ -101,7 +101,7 @@ const Table = ({
                 }
               >
                 <div
-                  className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
+                  className="text-white bg-black px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                   style={{
                     fontSize: "10px",
                   }}
@@ -120,7 +120,7 @@ const Table = ({
               <div className="mr-12">
                 <button
                   id="sync_leads"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#a57cff] text-white`}
                   onClick={handleSyncLeadsReq}
                 >
                   Sync Leads
@@ -336,7 +336,7 @@ const Table = ({
                   </tbody>
                 ) : (
                   <tbody>
-                    {list?.map((list) => (
+                    {list?.map((list, idx) => (
                       <tr
                         className="relative"
                         key={list.lead_id}
