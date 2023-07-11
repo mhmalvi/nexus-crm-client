@@ -50,7 +50,7 @@ const Filters = ({
       <div>
         {layout !== "Payment" && (
           <div
-            className="border py-3 px-7 mt-5"
+            className="py-3 px-7 mt-5 bg-[#c7e9ff]"
             style={{
               borderRadius: "20px",
             }}
@@ -113,6 +113,7 @@ const Filters = ({
       {/* Search Option */}
       {layout.toLowerCase()?.includes("payment") ? (
         <div>&nbsp;</div>
+      ) : (
         // <div
         //   className="border px-7 py-8 mt-5 ml-6"
         //   style={{
@@ -146,14 +147,13 @@ const Filters = ({
         //     </div>
         //   </div>
         // </div>
-      ) : (
         <div>
           {(userDetails?.role_id === 1 ||
             userDetails?.role_id === 2 ||
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) && (
             <div
-              className="border px-7 py-8 mt-5 ml-6"
+              className="px-7 py-8 mt-5 ml-6 bg-[#ffecd2]"
               style={{
                 borderRadius: "20px",
               }}
