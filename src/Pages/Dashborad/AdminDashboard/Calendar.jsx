@@ -259,7 +259,7 @@ const Calendar = ({
       }}
     >
       <div
-        className="border py-3 px-7 mt-4"
+        className=" py-3 px-7 mt-4 bg-[#aeffc6]"
         style={{
           borderRadius: "20px",
         }}
@@ -515,7 +515,7 @@ const Calendar = ({
         <div>
           {userDetails?.role_id === 3 ? (
             <div
-              className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
+              className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 mt-6 bg-[#e2f3ff]"
               style={{
                 borderRadius: "20px",
               }}
