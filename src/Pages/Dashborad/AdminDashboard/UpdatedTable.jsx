@@ -111,7 +111,7 @@ const UpdatedTable = ({
                 }
               >
                 <div
-                  className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
+                  className="bg-black text-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                   style={{
                     fontSize: "10px",
                   }}
@@ -132,7 +132,7 @@ const UpdatedTable = ({
                 >
                   <div
                     htmlFor="upload_lead_file"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#76bfff] text-white`}
                   >
                     Upload File
                   </div>
@@ -150,7 +150,7 @@ const UpdatedTable = ({
               <div className="mr-4">
                 <button
                   id="add_leads"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#ff9d88] text-white`}
                   onClick={() => setIsAddLeadFormOpen(true)}
                 >
                   Add Lead
@@ -173,7 +173,7 @@ const UpdatedTable = ({
                     <div className="mr-12">
                       <button
                         id="sync_leads"
-                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md`}
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#a57cff] text-white`}
                         onClick={() => handleSyncLeadsReq()}
                       >
                         Sync Leads
@@ -218,6 +218,9 @@ const UpdatedTable = ({
                 },
               };
             }}
+            rowClassName={(record, idx) =>
+              idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
+            }
           />
         )}
       </div>

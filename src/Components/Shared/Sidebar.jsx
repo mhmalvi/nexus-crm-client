@@ -355,8 +355,8 @@ const Sidebar = ({
 
           {user?.client_id === 0 ? (
             companyId ? (
-              (userDetails?.userInfo?.role_id === 1 ||
-                userDetails?.userInfo?.role_id === 2 ||
+              // userDetails?.userInfo?.role_id === 1 ||
+              (userDetails?.userInfo?.role_id === 2 ||
                 userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4) && (
                 <div>

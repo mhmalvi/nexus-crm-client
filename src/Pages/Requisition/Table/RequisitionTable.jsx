@@ -152,7 +152,7 @@ const RequisitionTable = ({
               filename={"Requisitions.csv"}
             >
               <h1
-                className="text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
+                className="text-white bg-black px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
                 style={{
                   fontSize: "10px",
                 }}
