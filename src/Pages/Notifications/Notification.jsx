@@ -11,7 +11,7 @@ import {
   addNotifications,
   setNotifications,
 } from "../../features/user/notificationSlice";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 
 const Notification = ({
   handleNotificationNavigation,
@@ -71,6 +71,10 @@ const Notification = ({
       });
 
       dispatch(setNotifications(updatedNotifications));
+    } else {
+      message.warn(
+        messageReadRes ? messageReadRes?.data?.message : "Something went wrong"
+      );
     }
   };
 

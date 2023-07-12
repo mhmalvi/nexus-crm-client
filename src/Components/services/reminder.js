@@ -1,12 +1,18 @@
 import axios from "axios";
 import { crmNotification_dev, follow_up_dev } from "./environment";
-
+const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleAddFollowUp = async (followUpData) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       // `${follow_up_dev}/api/follow-up`,
       `${crmNotification_dev}/api/follow-up`,
-      followUpData
+      followUpData,
+      config
     );
     return result?.data;
   } catch (error) {
@@ -15,11 +21,17 @@ export const handleAddFollowUp = async (followUpData) => {
 };
 
 export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.put(
       // `${follow_up_dev}/api/follow-up-update/${id}`,
       `${crmNotification_dev}/api/${id}/follow-up-update`,
-      updatedFollowUpData
+      updatedFollowUpData,
+      config
     );
     return result?.data;
   } catch (error) {
@@ -28,6 +40,11 @@ export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
 };
 
 export const handleFetchFollowUp = async (userID) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     // const result = await axios.post(`${follow_up_dev}/api/follow-up-by-user`, {
     //   user_id: userID,
@@ -36,7 +53,8 @@ export const handleFetchFollowUp = async (userID) => {
       `${crmNotification_dev}/api/follow-up-by-user`,
       {
         user_id: userID,
-      }
+      },
+      config
     );
     return result?.data;
   } catch (error) {
@@ -72,5 +90,3 @@ export const handleDeleteFollowUp = async (followupID) => {
     return error.response;
   }
 };
-
-

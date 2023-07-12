@@ -160,6 +160,11 @@ const EventDetails = ({
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
       setIsSaveDisable(false);
     } else {
+      message.warn(
+        updateFollowUpRes
+          ? updateFollowUpRes?.data?.message
+          : "Something went wrong with update"
+      );
       setIsSaveDisable(false);
     }
     // window.location.reload();
