@@ -25,9 +25,18 @@ const Sales = () => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await handleFetchSales(companyId || user?.client_id);
-      console.log("res: ", response);
-      setSalesData(response ? (response?.data ? response.data : []) : []);
+      let response;
+      if (companyId !== 0 || user?.client_id !== 0) {
+        response = await handleFetchSales(
+          companyId ? companyId : user?.client_id
+        );
+      }
+      if (response) {
+        if (response?.data) {
+          setSalesData(response?.data);
+        }
+      }
+
       setIsLoading(false);
     })();
   }, []);
