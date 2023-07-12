@@ -32,10 +32,19 @@ const Campaigns = () => {
         userDetails?.userInfo?.client_id
       );
 
-      if (response?.data) {
-        dispatch(addCampaigns(response?.data));
+      if (response?.status === 200) {
+        if (response?.data) {
+          dispatch(setLoader(false));
+          dispatch(addCampaigns(response?.data));
+          dispatch(setLoader(false));
+          setCampaignList(response?.data);
+        } else {
+          dispatch(setLoader(false));
+          setCampaignList([]);
+        }
+      } else {
         dispatch(setLoader(false));
-        setCampaignList(response?.data);
+        setCampaignList([]);
       }
     })();
   }, [dispatch, userDetails?.userInfo?.client_id]);

@@ -246,10 +246,16 @@ export const handleFetchLeadCheckListDocuments = async (details) => {
 };
 
 export const handleFetchCampaigns = async (clientId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/campaign/list`,
-      { client_id: clientId }
+      { client_id: clientId },
+      config
     );
     console.log(result.data);
     return result.data;
