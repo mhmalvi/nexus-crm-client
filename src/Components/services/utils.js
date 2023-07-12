@@ -1,6 +1,7 @@
 import axios from "axios";
 import { environment_dev } from "./environment";
 
+const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleUploadFile = async (fileDetails) => {
   try {
     const result = await axios.post(
@@ -37,9 +38,15 @@ export const handleFetchFile = async (fileId) => {
 };
 // Fetch Sales Employees
 export const handleFetchSales = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${id}`
+      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${id}`,
+      config
     );
     return result.data;
   } catch (error) {
@@ -49,9 +56,15 @@ export const handleFetchSales = async (id) => {
 // Fetch Leqds data by id of sales employee
 
 export const handleFetchLeadsBySalesId = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/assigned-lead-list/${id}`
+      `${process.env?.REACT_APP_LEAD_URL}/api/assigned-lead-list/${id}`,
+      config
     );
     return result.data;
   } catch (error) {
@@ -61,9 +74,15 @@ export const handleFetchLeadsBySalesId = async (id) => {
 // fetch unassigned lead list
 
 export const handleFetchUnassignedLeadList = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/unassigned-lead-list/${id}`
+      `${process.env?.REACT_APP_LEAD_URL}/api/unassigned-lead-list/${id}`,
+      config
     );
     return result.data;
   } catch (error) {
@@ -73,7 +92,6 @@ export const handleFetchUnassignedLeadList = async (id) => {
 
 // Sales Lead assign
 export const handleSalesAssignLead = async (data) => {
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -93,10 +111,16 @@ export const handleSalesAssignLead = async (data) => {
 // Sales remove assign
 
 export const handleSalesRemoveLead = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${environment_dev}/api/unassign-leads`,
-      data
+      data,
+      config
     );
     return result.data;
   } catch (error) {
