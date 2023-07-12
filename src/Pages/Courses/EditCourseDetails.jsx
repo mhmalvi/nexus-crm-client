@@ -6,8 +6,17 @@ import {
   getCourseDetailById,
   updateCourseDetailById,
 } from "../../Components/services/course";
+import { handleClientwiseCourseDetails } from "../../Components/services/leads";
+import { useSelector } from "react-redux";
 
-const EditCourseDetails = ({ open, setOpen, id }) => {
+const EditCourseDetails = ({
+  open,
+  setOpen,
+  id,
+  setCourses,
+  setCourseListLoading,
+}) => {
+  const userDetails = useSelector((state) => state.user?.userInfo);
   const [title, setTitle] = useState("");
   //   const [desc, setDesc] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -15,30 +24,48 @@ const EditCourseDetails = ({ open, setOpen, id }) => {
   const [Loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   console.log("modal record: ", id);
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     setUpdating(true);
+    let res;
     // setModalText("The modal will be closed after two seconds");
     if (title) {
       const data = {
         title,
       };
-      updateCourseDetailById(id, data);
+      res = await updateCourseDetailById(id, data);
       setConfirmLoading(true);
 
-      setTimeout(() => {
-        setOpen(false);
+      if (res.status === 201) {
+        setTimeout(() => {
+          setOpen(false);
+          setConfirmLoading(false);
+          setUpdating(false);
+          message.success(res ? res?.message : "Successfully updated!");
+        }, 500);
+        setCourseListLoading(true);
+        const courseResponse = await handleClientwiseCourseDetails(
+          userDetails?.client_id
+        );
+        if (courseResponse?.status === 200) {
+          setCourseListLoading(false);
+          setCourses(courseResponse?.data);
+        } else {
+          setCourseListLoading(false);
+        }
+      } else {
+        console.log("auth msg: ", res);
+        message.warn(res ? res?.data?.message : "Something went wrong");
         setConfirmLoading(false);
         setUpdating(false);
-        message.success("Successfully updated!");
-      }, 1500);
+      }
     } else {
       setTitleShow(true);
       setTimeout(() => {
         setTitleShow(false);
-      }, 2000);
+      }, 500);
     }
 
-    window.location.reload();
+    // window.location.reload();
   };
   const handleCancel = () => {
     setOpen(false);
