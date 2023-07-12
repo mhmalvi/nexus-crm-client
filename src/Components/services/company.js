@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleCreateCompany = async (companyDetails) => {
   try {
     const result = await axios.post(
@@ -49,9 +49,15 @@ export const handleFetchCompanyDetails = async (companyId) => {
 };
 
 export const handleFetchCompanyEmployees = async (companyId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/employee/list`
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/employee/list`,
+      config
     );
     return result.data;
   } catch (error) {
