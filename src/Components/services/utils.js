@@ -73,10 +73,17 @@ export const handleFetchUnassignedLeadList = async (id) => {
 
 // Sales Lead assign
 export const handleSalesAssignLead = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${environment_dev}/api/assign-leads`,
-      data
+      data,
+      config
     );
     return result.data;
   } catch (error) {
