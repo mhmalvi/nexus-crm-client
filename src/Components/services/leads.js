@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleAddLead = async (leadData) => {
   // console.log(clientId);
   try {
@@ -281,10 +281,16 @@ export const handleFetchCourses = async () => {
 };
 
 export const handleClientwiseCourseDetails = async (clientId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/course-details-by-client`,
-      { client_id: clientId }
+      { client_id: clientId },
+      config
     );
     return result.data;
   } catch (error) {
@@ -293,10 +299,16 @@ export const handleClientwiseCourseDetails = async (clientId) => {
 };
 
 export const handleCoursewiseSalesAssign = async (requestData) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/assign-sales-to-lead`,
-      requestData
+      requestData,
+      config
     );
     return result.data;
   } catch (error) {
@@ -305,10 +317,16 @@ export const handleCoursewiseSalesAssign = async (requestData) => {
 };
 
 export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/delete-sales-employee-by-user-id`,
-      requestData
+      requestData,
+      config
     );
     return result.data;
   } catch (error) {
@@ -317,12 +335,18 @@ export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
 };
 
 export const handleFetchCourseCheckList = async (courseId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist`,
       {
         course_id: courseId,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -348,6 +372,11 @@ export const handleCreateChecklist = async (
   courseId,
   title
 ) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/create`,
@@ -356,7 +385,8 @@ export const handleCreateChecklist = async (
         user_id: userId,
         course_id: courseId,
         title: title,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -365,12 +395,18 @@ export const handleCreateChecklist = async (
 };
 
 export const handleDeleteChecklist = async (checkListId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/delete`,
       {
         id: checkListId,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {

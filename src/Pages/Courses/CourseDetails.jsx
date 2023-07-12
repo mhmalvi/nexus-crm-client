@@ -102,15 +102,25 @@ const CourseDetails = ({ selectedCourse }) => {
         checklistTitle
       );
 
-      if (addChecklistResponse?.status) {
+      if (addChecklistResponse?.status === 201) {
         // const courseCheckList = await handleFetchCourseCheckList(
         //   selectedCourse?.id
         // );
         // if (courseCheckList?.data) {
         setChecklist([...checklist, addChecklistResponse?.data]);
+        message.success(
+          addChecklistResponse ? addChecklistResponse?.message : "Inserted"
+        );
         // }
 
         // message.success("Checklist Added Successfully");
+      } else {
+        console.log("auth check:", addChecklistResponse);
+        message.warn(
+          addChecklistResponse
+            ? addChecklistResponse?.data?.message
+            : "Something went wrong"
+        );
       }
     }
     setChecklistTitle("");
@@ -119,8 +129,12 @@ const CourseDetails = ({ selectedCourse }) => {
   const handleDeleteChecklistReq = async (checkListId) => {
     const deleteCourseCheckList = await handleDeleteChecklist(checkListId);
 
-    if (deleteCourseCheckList?.status) {
+    if (deleteCourseCheckList?.status === 201) {
       setChecklist(checklist?.filter((list) => list?.id !== checkListId));
+    } else {
+      message.warn(
+        deleteCourseCheckList ? deleteCourseCheckList?.data?.message : "Failed"
+      );
     }
   };
 
@@ -172,6 +186,8 @@ const CourseDetails = ({ selectedCourse }) => {
         )
       );
       setEmployeeList([...employeeList, userDetails]);
+    } else {
+      message.warn("Something went wrong");
     }
   };
 
