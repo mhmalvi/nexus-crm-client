@@ -95,6 +95,11 @@ export const handleLeadStatusUpdate = async (
   newStatus,
   salesUserId
 ) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
@@ -103,7 +108,8 @@ export const handleLeadStatusUpdate = async (
         lead_status: newStatus,
         sales_user_id: salesUserId,
         response: null,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {

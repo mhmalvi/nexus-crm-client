@@ -196,7 +196,7 @@ const LeadStatus = (props) => {
     console.log("statusUpdateResponse", statusUpdateResponse);
     console.log("leadDetails ......", leadDetails);
 
-    if (statusUpdateResponse?.status) {
+    if (statusUpdateResponse?.status === 201) {
       message.success("Status Updated Successfully");
       setSyncDetails(!syncDetails);
 
@@ -229,6 +229,8 @@ const LeadStatus = (props) => {
           message.warn("Something went wrong");
         }
       }
+    } else {
+      message.warn("Something went wrong");
     }
   };
 
