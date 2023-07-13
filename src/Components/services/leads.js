@@ -28,10 +28,16 @@ export const handleFetchLeads = async (details) => {
 };
 
 export const handleUploadLeadFile = async (fileDetails) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/excel-read`,
-      fileDetails
+      fileDetails,
+      config
     );
     console.log(result);
     return result.data;
