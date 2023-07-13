@@ -1,11 +1,16 @@
 import axios from "axios";
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleAddLead = async (leadData) => {
-  // console.log(clientId);
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/create-lead`,
-      leadData
+      leadData,
+      config
     );
     return result.data;
   } catch (error) {
