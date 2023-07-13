@@ -448,13 +448,19 @@ export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
 };
 
 export const handleSyncLeads = async (clientId, acToken) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/scrap`,
       {
         client_id: clientId,
         ac_k: acToken,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
