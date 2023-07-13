@@ -131,9 +131,16 @@ export const handleSalesRemoveLead = async (data) => {
 // Remove sales man
 
 export const handleSalesManRemove = async (sid) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
-      `${environment_dev}/api/lead/${sid}/unassign-lead`
+      `${environment_dev}/api/lead/${sid}/unassign-lead`,
+      {},
+      config
     );
     return result.data;
   } catch (error) {
