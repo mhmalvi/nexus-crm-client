@@ -5,7 +5,14 @@ import { useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 
-const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
+const CourseList = ({
+  courses,
+  setCourses,
+  setCourseDetailsOpen,
+  setSelectedCourse,
+  courseListLoading,
+  setCourseListLoading,
+}) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [courseId, setCourseId] = useState(0);
@@ -222,6 +229,7 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
       {/* Courses */}
       <div>
         <Table
+          loading={courseListLoading}
           style={{
             textTransform: "uppercase",
           }}
@@ -245,7 +253,14 @@ const CourseList = ({ courses, setCourseDetailsOpen, setSelectedCourse }) => {
           // }}
         />
       </div>
-      <EditCourseDetails open={open} setOpen={setOpen} id={courseId} />
+      <EditCourseDetails
+        open={open}
+        setOpen={setOpen}
+        id={courseId}
+        setCourses={setCourses}
+        courseListLoading={courseListLoading}
+        setCourseListLoading={setCourseListLoading}
+      />
     </div>
   );
 };

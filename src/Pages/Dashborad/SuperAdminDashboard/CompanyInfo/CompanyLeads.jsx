@@ -8,6 +8,7 @@ import { addLeads } from "../../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../../features/user/userSlice";
 import Filters from "../../AdminDashboard/Filters";
 import Table from "../../AdminDashboard/Table";
+import { message } from "antd";
 
 const CompanyLeads = ({ clientId }) => {
   const dispatch = useDispatch();

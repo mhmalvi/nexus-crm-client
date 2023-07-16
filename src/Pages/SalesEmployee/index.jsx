@@ -25,9 +25,18 @@ const Sales = () => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await handleFetchSales(companyId || user?.client_id);
-      console.log("res: ", response);
-      setSalesData(response ? (response?.data ? response.data : []) : []);
+      let response;
+      if (companyId !== 0 || user?.client_id !== 0) {
+        response = await handleFetchSales(
+          companyId ? companyId : user?.client_id
+        );
+      }
+      if (response) {
+        if (response?.data) {
+          setSalesData(response?.data);
+        }
+      }
+
       setIsLoading(false);
     })();
   }, []);
@@ -37,7 +46,6 @@ const Sales = () => {
       setUserData(userDetails);
     }
   }, []);
-  console.log("sales: ", salesData);
 
   let salesColumn = [
     {
@@ -78,7 +86,6 @@ const Sales = () => {
       align: "center",
       // ...getColumnSearchProps("course_title"),
       render: (_, record, i) => {
-        console.log("record", record);
         return (
           <div key={i} className="flex gap-2 justify-center">
             {userData?.role_id === 1 || userData?.role_id === 3 ? (
