@@ -147,3 +147,59 @@ export const handleSalesManRemove = async (sid) => {
     return error.response;
   }
 };
+// add new Attach file
+export const handleAddNewAttachment = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/checklist-save`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// get all Checklists
+export const handleGetAllCheckLists = async (cid) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/company_id=${cid}/checklist-fetch`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// delet chckekLists
+export const handleDeleteAttachment = async (cid, fid, attach_list) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/company_id=${cid}/checklist-delete`,
+      {
+        file_id: fid,
+        attach_list: attach_list,
+      },
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
