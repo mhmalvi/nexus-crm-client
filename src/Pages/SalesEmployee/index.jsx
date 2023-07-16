@@ -46,7 +46,6 @@ const Sales = () => {
       setUserData(userDetails);
     }
   }, []);
-  console.log("sales: ", salesData);
 
   let salesColumn = [
     {
@@ -87,7 +86,6 @@ const Sales = () => {
       align: "center",
       // ...getColumnSearchProps("course_title"),
       render: (_, record, i) => {
-        console.log("record", record);
         return (
           <div key={i} className="flex gap-2 justify-center">
             {userData?.role_id === 1 || userData?.role_id === 3 ? (

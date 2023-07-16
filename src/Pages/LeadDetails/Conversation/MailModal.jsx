@@ -7,6 +7,7 @@ import { fetchEmailTemplatList } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
+import AttachModal from "./AttachModal";
 
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -18,19 +19,27 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [staticTempListData, setStaticTempListData] = useState("");
   const [tempInitValue, setTempInitValue] = useState("");
   const [mailSubject, setMailSubject] = useState("");
+  const [attachOpen, setAttachOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState([]);
   const editorRef = useRef(null);
   const userDetails = useSelector((state) => state.user.userInfo);
   const handleTdata = (value) => {
     setTData(value);
   };
-  function handleFile(event) {
-    setFile(event.target.files[0]);
-    console.log("fdatas: ", event?.target?.files[0]);
-    setFileName(event?.target?.files[0]?.name);
-  }
+  // function handleFile(event) {
+  //   // setFile(event.target.files[0]);
+  //   // console.log("fdatas: ", event?.target?.files[0]);
+  //   // setFileName(event?.target?.files[0]?.name);
+
+  // }
+
+  const handleCheckListOpen = (e) => {
+    setAttachOpen(true);
+  };
+  // set mail with pdf
   const handleSendMail = () => {
     const formData = new FormData();
-    formData.append("checklist", file);
+    // formData.append("checklist", file);
     formData.append(
       "template",
       editorRef?.current
@@ -61,7 +70,6 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log("success", result);
           if (result?.status === 200) {
             message.success("Mail send successfully!");
             setOpenMailModal(false);
@@ -73,22 +81,21 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
           message.error("Something went wrong");
           setConfirmLoading(false);
         });
     }
   };
+  // set mail with pdf end
 
   const handleMailCancel = () => {
-    console.log("Clicked cancel button");
     setOpenMailModal(false);
     setConfirmLoading(false);
   };
   useEffect(() => {
     (async () => {
       let res = await fetchEmailTemplatList();
-      console.log("list temp: ", res);
+
       let tempList = [];
       res?.data?.map(
         (itm, idx) =>
@@ -109,12 +116,11 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   };
   useEffect(() => {
     templateList?.forEach((itm, idx) => {
-      console.log("tempDesc: ", itm);
       itm?.label | (itm?.value === tData) &&
         setTempInitValue(itm?.template_description);
     });
   }, [tData, templateList]);
-  console.log("template list", tData);
+
   return (
     <div>
       <Modal
@@ -176,19 +182,22 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 ></Input>
               </div>
 
-              <input
+              {/* <input
                 type="file"
                 name="file"
                 id="mail-upload"
                 onChange={handleFile}
                 style={{ display: "none" }}
-              />
+              /> */}
 
               <div className="flex gap-3 items-center mt-[5px] ">
                 <label
-                  htmlFor="mail-upload"
+                  // htmlFor="mail-upload"
                   className="py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white border border-slate-700 rounded"
                   style={{ border: "1px solid gray" }}
+                  onClick={(e) => {
+                    handleCheckListOpen(e);
+                  }}
                 >
                   Attach CheckList
                 </label>
@@ -244,6 +253,12 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         setStaticTempListData={setStaticTempListData}
         tempOpen={tempOpen}
         setTempOpen={setTempOpen}
+      />
+      <AttachModal
+        attachOpen={attachOpen}
+        setAttachOpen={setAttachOpen}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
       />
     </div>
   );

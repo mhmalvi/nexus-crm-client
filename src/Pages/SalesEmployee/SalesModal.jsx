@@ -34,7 +34,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setOpenSalesModel(false);
     setIsByMe(true);
   };
-  console.log("selsId: ", salesEmployeeId);
 
   // leads data by sales employee id
   const assignedByLeadsDataId = async () => {
@@ -89,7 +88,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     } else {
       message.error(res?.message);
     }
-    console.log("Remove Lead: ", res);
   };
 
   const leadColumn = [
