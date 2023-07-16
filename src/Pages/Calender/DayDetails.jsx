@@ -186,6 +186,9 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
       setIsSaveDisable(false);
     } else {
+      message.warn(
+        addFollowUpRes ? addFollowUpRes?.data?.message : "Something is wrong"
+      );
       setIsSaveDisable(false);
     }
   };

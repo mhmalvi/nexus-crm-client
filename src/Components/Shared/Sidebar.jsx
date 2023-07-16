@@ -243,45 +243,51 @@ const Sidebar = ({
             </div>
           </div> */}
 
-          <div>
-            <div
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
-              style={{
-                color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
-              }}
-              onClick={(e) => {
-                // setToggleMessage(false);
-                setToggleNotification(!toggleNotification);
-                setNotificationLoading(true);
-                e.stopPropagation();
-              }}
-            >
-              <Icons.Bell className="w-4" />
-              <span className="ml-4 leading-6 font-medium font-poppins">
-                Notifications
-              </span>
+          {userDetails?.userInfo?.role_id !== 6 && (
+            <div>
+              <div
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={(e) => {
+                  // setToggleMessage(false);
+                  setToggleNotification(!toggleNotification);
+                  setNotificationLoading(true);
+                  e.stopPropagation();
+                }}
+              >
+                <Icons.Bell className="w-4" />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Notifications
+                </span>
 
-              {notifications?.filter((notifi) => notifi?.status)?.length !==
-              0 ? (
-                <div className="relative right-0 flex justify-center items-center">
-                  <div
-                    className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                    style={{
-                      background: "#FF3B30",
-                    }}
-                  >
-                    {notifications?.filter((notifi) => notifi?.status)?.length}
+                {notifications?.filter((notifi) => notifi?.status)?.length !==
+                0 ? (
+                  <div className="relative right-0 flex justify-center items-center">
+                    <div
+                      className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
+                      style={{
+                        background: "#FF3B30",
+                      }}
+                    >
+                      {
+                        notifications?.filter((notifi) => notifi?.status)
+                          ?.length
+                      }
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
 
-              {toggleNotification && (
-                <div className="ml-auto active-option text-brand-color bg-brand-color">
-                  |
-                </div>
-              )}
+                {toggleNotification && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
+
           {userDetails?.userInfo?.role_id !== 6 && (
             <div>
               <NavLink

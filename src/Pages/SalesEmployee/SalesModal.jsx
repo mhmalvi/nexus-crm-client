@@ -34,7 +34,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setOpenSalesModel(false);
     setIsByMe(true);
   };
-  console.log("selsId: ", salesEmployeeId);
 
   // leads data by sales employee id
   const assignedByLeadsDataId = async () => {
@@ -46,7 +45,9 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   // leads data these are not assigned by anybody
   const notAssignedLeadsDataId = async () => {
     setIsLoading(true);
-    const res = await handleFetchUnassignedLeadList(companyId || user?.client_id);
+    const res = await handleFetchUnassignedLeadList(
+      companyId || user?.client_id
+    );
     setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
     setIsLoading(false);
   };
@@ -87,7 +88,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     } else {
       message.error(res?.message);
     }
-    console.log("Remove Lead: ", res);
   };
 
   const leadColumn = [
@@ -106,7 +106,11 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
         return (
           <>
             <div className="">
-              {record?.course ? record?.course : <p className="text-[red] m-0 p-0">This Lead has no course</p>}
+              {record?.course ? (
+                record?.course
+              ) : (
+                <p className="text-[red] m-0 p-0">This Lead has no course</p>
+              )}
             </div>
           </>
         );
@@ -176,7 +180,15 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
           </div>
           <Table
             columns={leadColumn || []}
-            dataSource={isByMe ? leadsData : notAssignedLeadsData || []}
+            dataSource={
+              isByMe
+                ? leadsData?.length
+                  ? leadsData
+                  : []
+                : notAssignedLeadsData?.length
+                ? notAssignedLeadsData
+                : [] || []
+            }
             loading={isLoading}
           />
         </div>

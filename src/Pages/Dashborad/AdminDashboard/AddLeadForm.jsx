@@ -199,6 +199,8 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
       });
 
       dispatch(setLoader(false));
+    } else {
+      message.warn("Something went wrong");
     }
   };
 

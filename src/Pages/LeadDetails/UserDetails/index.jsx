@@ -152,7 +152,7 @@ const UserDetails = ({
       message.success(res?.message || "Salesman has been successfully removed");
       setCloseSealsman(false);
     } else {
-      message.warn(res?.message || "Some thing wrong");
+      message.warn(res?.message || "Something went wrong");
     }
   };
 

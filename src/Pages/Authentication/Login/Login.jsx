@@ -80,7 +80,7 @@ const Login = () => {
 
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
-      dispatch(setCompanyId(loginResponse?.data?.data?.company?.id))
+      dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
 
       if (loginResponse?.data?.data?.flag === 1) {
         Storage.setItem("__ce__", data.email);
@@ -158,6 +158,7 @@ const Login = () => {
       message.success("Successfully Logged In");
       setTimeout(() => {
         navigate("/dashboard");
+        window.location.reload();
       }, 1500);
     } else {
       setTimeout(() => {
