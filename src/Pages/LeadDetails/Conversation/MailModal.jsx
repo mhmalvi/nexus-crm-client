@@ -11,7 +11,7 @@ import AttachModal from "./AttachModal";
 
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [file, setFile] = useState();
+
   const [fileName, setFileName] = useState("");
   const [tData, setTData] = useState("");
   const [templateList, setTemplateList] = useState([]);
@@ -34,12 +34,13 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   // }
 
   const handleCheckListOpen = (e) => {
+    setSelectedData([]);
     setAttachOpen(true);
   };
   // set mail with pdf
   const handleSendMail = () => {
     const formData = new FormData();
-    // formData.append("checklist", file);
+    formData.append("checklist", JSON.stringify(selectedData));
     formData.append(
       "template",
       editorRef?.current
@@ -52,14 +53,14 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
     formData.append("student_email", leadDetails?.leadDetails?.student_email);
     formData.append("sender", userDetails?.email);
 
-    if (!tData || !mailSubject || !file) {
+    if (!tData || !mailSubject || selectedData.length <= 0) {
       if (!tData) {
         message.warning("Please select template");
       }
       if (!mailSubject) {
         message.warning("Please enter mail subject");
       }
-      if (!file) {
+      if (selectedData.length <= 0) {
         message.warning("Please select file");
       }
     } else {
@@ -203,6 +204,19 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 </label>
                 <p className="text-[green] text-[16px] mt-2">{fileName}</p>
               </div>
+              {selectedData.length > 0 ? (
+                <ul className="w-[200px] h-[70px] overflow-auto">
+                  {selectedData?.map((item, idx) => {
+                    return (
+                      <li key={idx} className="text-[green] text-[16px] mt-2">
+                        {item?.file_name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                ""
+              )}
             </div>
             {tData && (
               <div className="my-[15px]" style={{ width: "100%" }}>
