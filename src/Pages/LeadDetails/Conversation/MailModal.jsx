@@ -134,7 +134,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         width="80%"
         onCancel={handleMailCancel}
       >
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between flex-wrap">
           <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
             Email
           </h1>
@@ -158,7 +158,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
             layout="vertical"
             onFinish={handleSendMail}
           >
-            <div className="flex items-center gap-5">
+            <div className="flex flex-wrap items-center gap-5">
               <div>
                 <h2>Select Mail Template:</h2>
                 <Form.Item label="">
