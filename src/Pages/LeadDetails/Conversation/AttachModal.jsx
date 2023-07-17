@@ -225,11 +225,11 @@ const AttachModal = ({
           }}
         >
           <div className="mt-6">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center flex-wrap">
               <div>
                 <h1 className="text-[25px] text-[#696868]">Attach CheckList</h1>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <input
                   type="file"
                   name="file"
@@ -238,7 +238,7 @@ const AttachModal = ({
                   onChange={handleCheckListFile}
                   style={{ display: "none" }}
                 />
-                <div className="flex gap-3 items-center mt-[5px] ">
+                <div className="flex gap-3 items-center mt-[5px]">
                   <label
                     htmlFor="checkList-upload"
                     className="py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white border border-slate-700 rounded"
@@ -278,6 +278,7 @@ const AttachModal = ({
 
             <div className="mt-6">
               <Table
+                scroll={true}
                 columns={column || []}
                 dataSource={allCheckLists?.length > 0 ? allCheckLists : []}
               />
