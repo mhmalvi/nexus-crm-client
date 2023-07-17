@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, Table, message } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FilePdfOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import {
   handleAddNewAttachment,
@@ -31,7 +31,12 @@ const AttachModal = ({
     })();
   }, [userDetail?.client_id]);
   const handleAttachOk = () => {
-    setAttachOpen(false);
+    allCheckLists?.forEach((item) => {
+      item.isChecked = false;
+    });
+    setTimeout(() => {
+      setAttachOpen(false);
+    }, 500);
   };
   const handleCheckListFile = (e) => {
     console.log("I entered file");
@@ -77,9 +82,14 @@ const AttachModal = ({
       if (resp?.status === 200 || resp?.status === 201) {
         setAllCheckLists(resp?.data);
       }
-      setAttachOpen(false);
+      if (!fid) {
+        setAttachOpen(false);
+      }
+      allCheckLists?.forEach((item) => {
+        item.isChecked = false;
+      });
     } else {
-      message.warning(res?.data?.message || "Something went wrong");
+      message.warning(res?.message || "Something went wrong");
     }
   };
 
@@ -88,9 +98,49 @@ const AttachModal = ({
       title: "Files",
       dataIndex: "file_name",
       key: "file_name",
+      icon: <FilePdfOutlined />,
+      render: (_, record, idx) => {
+        return (
+          <div key={idx} className="flex items-center gap-2">
+            <FilePdfOutlined className="!text-[red] text-[20px]" />
+            <p className="m-0 p-0">{record?.file_name}</p>
+          </div>
+        );
+      },
     },
     {
       title: "Action",
+      // All select features are
+      // () => {
+      // return (
+      //   <>
+      //     <div className="flex items-center justify-center gap-3">
+      //       <input
+      //         className=" cursor-pointer"
+      //         type="checkbox"
+      //         name=""
+      //         id=""
+      //         onChange={(e) => {
+      //           if (e?.target?.checked) {
+      //             allCheckLists &&
+      //               allCheckLists?.forEach((item) => {
+      //                 item.isChecked = true;
+      //               });
+      //             allCheckLists && setSelectedData(allCheckLists);
+      //           } else {
+      //             allCheckLists &&
+      //               allCheckLists?.forEach((item) => {
+      //                 item.isChecked = false;
+      //               });
+      //             allCheckLists && setSelectedData([]);
+      //           }
+      //         }}
+      //       />
+      //       <p className="m-0 p-0">Action</p>
+      //     </div>
+      //   </>
+      // );
+      // }
       width: 250,
       align: "center",
       render: (_, record, idx) => {
@@ -100,14 +150,17 @@ const AttachModal = ({
               <input
                 className="mt-2 w-4 cursor-pointer"
                 type="checkbox"
+                checked={record?.isChecked}
                 onChange={(e) => {
                   if (e?.target?.checked) {
+                    record.isChecked = true;
                     if (!selectedData) {
                       setSelectedData([{ ...record }]);
                     } else {
                       setSelectedData([...selectedData, { ...record }]);
                     }
                   } else {
+                    record.isChecked = false;
                     if (selectedData) {
                       let data = selectedData;
                       for (let i = 0; i < data?.length; i++) {
@@ -145,7 +198,13 @@ const AttachModal = ({
           onOk={handleAttachOk}
           okText="Close"
           footer={[
-            <Button type="" onClick={handleAttachOk}>
+            <Button
+              type=""
+              onClick={() => {
+                setAttachOpen(false);
+                setSelectedData([]);
+              }}
+            >
               Cancel
             </Button>,
             <Button
