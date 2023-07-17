@@ -1,17 +1,22 @@
-import { EyeOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Table } from "antd";
+import { EyeOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { handleFetchSales } from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
+import Highlighter from "react-highlight-words";
+import { useRef } from "react";
 
 const Sales = () => {
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const [salesData, setSalesData] = useState([]);
   const [userData, setUserData] = useState({});
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const tableSearchInput = useRef(null);
   const showSalesModal = () => {
     setOpenSalesModel(true);
   };
@@ -47,35 +52,117 @@ const Sales = () => {
     }
   }, []);
 
+  // Table search features
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={tableSearchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters();
+              confirm({ closeDropdown: false });
+              handleReset(clearFilters);
+            }}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Clear
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? "#1890ff" : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => tableSearchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: "#8250FF",
+            color: "white",
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text?.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
   let salesColumn = [
     {
       title: "Name",
       dataIndex: "full_name",
       key: "full_name",
-      render: (course_code, i) => (
-        <h4
-          key={i}
-          className="cursor-pointer uppercase"
-          style={{
-            textTransform: "uppercase",
-          }}
-        >
-          {course_code?.toUpperCase()}
-        </h4>
-      ),
-      // ...getColumnSearchProps("course_code"),
+
+      ...getColumnSearchProps("full_name"),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      // ...getColumnSearchProps("course_title"),
-      render: (course_title, i) => (
-        <h4 key={i} className="cursor-pointer uppercase">
-          {course_title}
-        </h4>
-      ),
-      // width: 150,
+      ...getColumnSearchProps("email"),
     },
   ];
   let addLeads = [

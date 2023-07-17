@@ -235,7 +235,7 @@ const CourseList = ({
           }}
           columns={courseLinstTableHeaders}
           dataSource={courses}
-          pagination={false}
+          pagination={true}
           // loading
           showSorterTooltip={true}
           scroll={{
