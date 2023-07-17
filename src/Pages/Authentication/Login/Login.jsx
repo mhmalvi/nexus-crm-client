@@ -14,6 +14,7 @@ import {
   updateFbToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
+const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
 
 const Login = () => {
   document.title = "Login";
@@ -311,7 +312,13 @@ const Login = () => {
         <div>
           <div className="pb-3 pt-8">
             <div className="flex flex-col items-center">
-              <Icons.CompanyLogo className="w-40" />
+              {/* <Icons.CompanyLogo className="w-40" /> */}
+              <img
+                src={companyLogo}
+                alt="companyLogo"
+                srcset=""
+                className="w-60"
+              />
             </div>
           </div>
           <div className="text-center my-6">
