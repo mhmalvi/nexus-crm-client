@@ -17,6 +17,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
 
 const Sales = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [salesData, setSalesData] = useState([]);
@@ -24,9 +25,12 @@ const Sales = () => {
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [searchName, setSearchName] = useState("");
-  const [searchEmail, setSearchEmail] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchName, setSearchName] = useState(
+    searchParams.get("salesEmployeeName") || ""
+  );
+  const [searchEmail, setSearchEmail] = useState(
+    searchParams.get("salesEmployeeEmail") || ""
+  );
   const navigate = useNavigate();
 
   const tableSearchInput = useRef(null);
@@ -67,13 +71,14 @@ const Sales = () => {
 
   // Search Features
   useEffect(() => {
-    // const queryParams = new URLSearchParams();
-    // queryParams.set("name", searchName);
-    // queryParams.set("email", searchEmail);
+    // const queryParams = new URLSearchParams(window.location.search);
+    // queryParams.set("salesEmployeeName", searchName);
+    // queryParams.set("salesEmployeeEmail", searchEmail);
     // const url = "/salesEmployee?" + queryParams.toString();
     // navigate(url);
-    searchParams.set("name", searchName);
-    searchParams.set("email", searchEmail);
+
+    searchParams.set("salesEmployeeName", searchName || "");
+    searchParams.set("salesEmployeeEmail", searchEmail || "");
     setSearchParams(searchParams);
   }, [searchEmail, searchName, searchParams, setSearchParams]);
 
@@ -230,46 +235,45 @@ const Sales = () => {
         <div className="flex items-center gap-4 mb-4">
           <div className="w-[24%]">
             <label htmlFor="#">Search By Name</label>
-
-            <Input
-              value={searchName}
-              onChange={(e) => {
-                setSearchName(e.target.value);
-              }}
-              placeholder="Enter Employee Name"
-              suffix={
-                searchName ? (
-                  <CloseOutlined
-                    className=" cursor-pointer"
-                    onClick={() => {
-                      setSearchName("");
-                    }}
-                  />
-                ) : (
-                  ""
-                )
-              }
-            />
+            <div className=" relative">
+              <Input
+                value={searchName}
+                onChange={(e) => {
+                  setSearchName(e.target.value);
+                }}
+                placeholder="Enter Employee Name"
+              />
+              {searchName ? (
+                <CloseOutlined
+                  className=" cursor-pointer absolute right-[2%] top-[25%]"
+                  onClick={() => {
+                    setSearchName("");
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
-          <div className="w-[24%]">
+          <div className="w-[24%] ">
             <label htmlFor="#">Search By Email</label>
-            <Input
-              value={searchEmail}
-              onChange={(e) => {
-                setSearchEmail(e.target.value);
-              }}
-              placeholder="Enter Employee Email"
-              suffix={
-                searchEmail && (
-                  <CloseOutlined
-                    className=" cursor-pointer"
-                    onClick={() => {
-                      setSearchEmail("");
-                    }}
-                  />
-                )
-              }
-            />
+            <div className="relative">
+              <Input
+                value={searchEmail}
+                onChange={(e) => {
+                  setSearchEmail(e.target.value);
+                }}
+                placeholder="Enter Employee Email"
+              />
+              {searchEmail && (
+                <CloseOutlined
+                  className=" cursor-pointer absolute right-[2%] top-[25%]"
+                  onClick={() => {
+                    setSearchEmail("");
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
         {/* Sales Employees */}
