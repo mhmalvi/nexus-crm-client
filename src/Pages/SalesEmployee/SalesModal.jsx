@@ -1,5 +1,5 @@
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Modal, Popover, Table, message } from "antd";
+import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Input, Modal, Popover, Table, message } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -9,13 +9,24 @@ import {
   handleSalesRemoveLead,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [leadsData, setLeadsData] = useState([]);
   const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
+  const [searchName, setSearchName] = useState(
+    searchParams.get("Search_Lead_Name") || ""
+  );
+  const [searchId, setSearchId] = useState(
+    searchParams.get("Search_Lead_Id") || ""
+  );
+  const [searchCourse, setSearchCourse] = useState(
+    searchParams.get("Search_Lead_Course") || ""
+  );
   const userDetails = JSON.parse(localStorage.getItem("user_info"));
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
@@ -57,6 +68,14 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   useEffect(() => {
     notAssignedLeadsDataId();
   }, [salesEmployeeId]);
+
+  // search features
+  useEffect(() => {
+    searchParams.set("Search_Lead_Name", searchName || "");
+    searchParams.set("Search_Lead_Id", searchId || "");
+    searchParams.set("Search_Lead_Course", searchCourse || "");
+    setSearchParams(searchParams);
+  }, [searchCourse, searchId, searchName, searchParams, setSearchParams]);
 
   //assigned leads by sales employee
   const LeadAssign = async (leadId) => {
@@ -178,6 +197,72 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
               All Leads
             </Button>
           </div>
+          {/* Search section */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-[24%]">
+              <label htmlFor="#">Search By Name</label>
+              <div className=" relative">
+                <Input
+                  value={searchName}
+                  onChange={(e) => {
+                    setSearchName(e.target.value);
+                  }}
+                  placeholder="Enter Employee Name"
+                />
+                {searchName ? (
+                  <CloseOutlined
+                    className=" cursor-pointer absolute right-[2%] top-[25%]"
+                    onClick={() => {
+                      setSearchName("");
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <div className="w-[24%] ">
+              <label htmlFor="#">Search By Id</label>
+              <div className="relative">
+                <Input
+                  value={searchId}
+                  onChange={(e) => {
+                    setSearchId(e.target.value);
+                  }}
+                  placeholder="Enter Employee Email"
+                />
+                {searchId && (
+                  <CloseOutlined
+                    className=" cursor-pointer absolute right-[2%] top-[25%]"
+                    onClick={() => {
+                      setSearchId("");
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="w-[24%] ">
+              <label htmlFor="#">Search By Course</label>
+              <div className="relative">
+                <Input
+                  value={searchCourse}
+                  onChange={(e) => {
+                    setSearchCourse(e.target.value);
+                  }}
+                  placeholder="Enter Employee Email"
+                />
+                {searchCourse && (
+                  <CloseOutlined
+                    className=" cursor-pointer absolute right-[2%] top-[25%]"
+                    onClick={() => {
+                      setSearchCourse("");
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          {/*  */}
           <Table
             columns={leadColumn || []}
             dataSource={

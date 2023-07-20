@@ -1,4 +1,10 @@
-import { EyeOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  CloseCircleTwoTone,
+  CloseOutlined,
+  EyeOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -7,8 +13,11 @@ import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
 import { useRef } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import "./style.css";
 
 const Sales = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [salesData, setSalesData] = useState([]);
@@ -16,6 +25,14 @@ const Sales = () => {
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [searchName, setSearchName] = useState(
+    searchParams.get("salesEmployeeName") || ""
+  );
+  const [searchEmail, setSearchEmail] = useState(
+    searchParams.get("salesEmployeeEmail") || ""
+  );
+  const navigate = useNavigate();
+
   const tableSearchInput = useRef(null);
   const showSalesModal = () => {
     setOpenSalesModel(true);
@@ -52,103 +69,116 @@ const Sales = () => {
     }
   }, []);
 
-  // Table search features
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
+  // Search Features
+  useEffect(() => {
+    // const queryParams = new URLSearchParams(window.location.search);
+    // queryParams.set("salesEmployeeName", searchName);
+    // queryParams.set("salesEmployeeEmail", searchEmail);
+    // const url = "/salesEmployee?" + queryParams.toString();
+    // navigate(url);
 
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText("");
-  };
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={tableSearchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-            confirm({ closeDropdown: false });
-          }}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-              confirm({ closeDropdown: false });
-              handleReset(clearFilters);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Clear
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1890ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => tableSearchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#8250FF",
-            color: "white",
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text?.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
+    searchParams.set("salesEmployeeName", searchName || "");
+    searchParams.set("salesEmployeeEmail", searchEmail || "");
+    setSearchParams(searchParams);
+  }, [searchEmail, searchName, searchParams, setSearchParams]);
+
+  // Table search features
+  // const handleSearch = (selectedKeys, confirm, dataIndex) => {
+  //   confirm();
+  //   setSearchText(selectedKeys[0]);
+  //   setSearchedColumn(dataIndex);
+  // };
+
+  // const handleReset = (clearFilters) => {
+  //   clearFilters();
+  //   setSearchText("");
+  // };
+  // const getColumnSearchProps = (dataIndex) => ({
+  //   filterDropdown: ({
+  //     setSelectedKeys,
+  //     selectedKeys,
+  //     confirm,
+  //     clearFilters,
+  //     close,
+  //   }) => (
+  //     <div
+  //       style={{
+  //         padding: 8,
+  //       }}
+  //       onKeyDown={(e) => e.stopPropagation()}
+  //     >
+  //       <Input
+  //         ref={tableSearchInput}
+  //         placeholder={`Search ${dataIndex}`}
+  //         value={selectedKeys[0]}
+  //         onChange={(e) => {
+  //           setSelectedKeys(e.target.value ? [e.target.value] : []);
+  //           confirm({ closeDropdown: false });
+  //         }}
+  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+  //         style={{
+  //           marginBottom: 8,
+  //           display: "block",
+  //         }}
+  //       />
+  //       <Space>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+  //           icon={<SearchOutlined />}
+  //           size="small"
+  //           style={{
+  //             width: 90,
+  //           }}
+  //         >
+  //           Search
+  //         </Button>
+  //         <Button
+  //           onClick={() => {
+  //             clearFilters();
+  //             confirm({ closeDropdown: false });
+  //             handleReset(clearFilters);
+  //           }}
+  //           size="small"
+  //           style={{
+  //             width: 90,
+  //           }}
+  //         >
+  //           Clear
+  //         </Button>
+  //       </Space>
+  //     </div>
+  //   ),
+  //   filterIcon: (filtered) => (
+  //     <SearchOutlined
+  //       style={{
+  //         color: filtered ? "#1890ff" : undefined,
+  //       }}
+  //     />
+  //   ),
+  //   onFilter: (value, record) =>
+  //     record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+  //   onFilterDropdownOpenChange: (visible) => {
+  //     if (visible) {
+  //       setTimeout(() => tableSearchInput.current?.select(), 100);
+  //     }
+  //   },
+  //   render: (text) =>
+  //     searchedColumn === dataIndex ? (
+  //       <Highlighter
+  //         highlightStyle={{
+  //           backgroundColor: "#8250FF",
+  //           color: "white",
+  //           padding: 0,
+  //         }}
+  //         searchWords={[searchText]}
+  //         autoEscape
+  //         textToHighlight={text ? text?.toString() : ""}
+  //       />
+  //     ) : (
+  //       text
+  //     ),
+  // });
 
   let salesColumn = [
     {
@@ -156,13 +186,13 @@ const Sales = () => {
       dataIndex: "full_name",
       key: "full_name",
 
-      ...getColumnSearchProps("full_name"),
+      // ...getColumnSearchProps("full_name"),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      ...getColumnSearchProps("email"),
+      // ...getColumnSearchProps("email"),
     },
   ];
   let addLeads = [
@@ -201,6 +231,50 @@ const Sales = () => {
       <div className="w-[90%] mx-auto">
         <div className="w-full flex items-center justify-between mt-18 mb-8">
           <div className="text-xl font-semibold">All Sales Employees</div>
+        </div>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-[24%]">
+            <label htmlFor="#">Search By Name</label>
+            <div className=" relative">
+              <Input
+                value={searchName}
+                onChange={(e) => {
+                  setSearchName(e.target.value);
+                }}
+                placeholder="Enter Employee Name"
+              />
+              {searchName ? (
+                <CloseOutlined
+                  className=" cursor-pointer absolute right-[2%] top-[25%]"
+                  onClick={() => {
+                    setSearchName("");
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+          <div className="w-[24%] ">
+            <label htmlFor="#">Search By Email</label>
+            <div className="relative">
+              <Input
+                value={searchEmail}
+                onChange={(e) => {
+                  setSearchEmail(e.target.value);
+                }}
+                placeholder="Enter Employee Email"
+              />
+              {searchEmail && (
+                <CloseOutlined
+                  className=" cursor-pointer absolute right-[2%] top-[25%]"
+                  onClick={() => {
+                    setSearchEmail("");
+                  }}
+                />
+              )}
+            </div>
+          </div>
         </div>
         {/* Sales Employees */}
         <div className="mb-6">
