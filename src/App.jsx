@@ -27,6 +27,7 @@ import Sales from "./Pages/SalesEmployee";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
+import Landing from "./Pages/LandingPage2/Landing";
 
 function App() {
   // useEffect(() => {
@@ -62,7 +63,8 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="welcome" element={<HomePage />} />
+        {/* <Route path="welcome" element={<HomePage />} /> */}
+        <Route path="welcome" element={<Landing />} />
         {/* <Route path="package-create" element={<Package />} /> */}
         {/* <Route
           path="subscription/edit-package/:id"
