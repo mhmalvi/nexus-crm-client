@@ -311,13 +311,16 @@ const Login = () => {
       <div className="container relative max-w-md border border-gray-200 rounded-md p-3 bg-white">
         <div>
           <div className="pb-3 pt-8">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center ">
               {/* <Icons.CompanyLogo className="w-40" /> */}
               <img
                 src={companyLogo}
                 alt="companyLogo"
                 srcset=""
-                className="w-60"
+                className="w-60 cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
               />
             </div>
           </div>
