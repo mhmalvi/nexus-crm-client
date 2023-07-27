@@ -219,7 +219,7 @@ const SectionOne = () => {
                     backgroundColor: "rgb(8, 160, 247)",
                   }}
                 >
-                  Let's get started
+                  Subscribe
                   <span
                     className="icon"
                     style={{
@@ -277,32 +277,6 @@ const SectionOne = () => {
                   marginTop: "20px",
                 }}
               >
-                <span
-                  style={{
-                    borderWidth: "0px",
-                    borderStyle: "solid",
-                    borderColor: "rgb(229, 231, 235)",
-                    boxSizing: "border-box",
-                    fontSize: "18px",
-                    fontWeight: 400,
-                    color: "rgb(102, 102, 102)",
-                  }}
-                >
-                  Already have an account?{" "}
-                  <a
-                    href="https://www.onethreadapp.com/signin"
-                    style={{
-                      borderWidth: "0px",
-                      borderStyle: "solid",
-                      borderColor: "rgb(229, 231, 235)",
-                      boxSizing: "border-box",
-                      textDecoration: "underline",
-                      color: "rgb(8, 160, 247)",
-                    }}
-                  >
-                    Sign In
-                  </a>
-                </span>
                 <div
                   className="bottom-buttons"
                   style={{

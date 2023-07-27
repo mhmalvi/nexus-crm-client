@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Button, Modal, Table, message } from "antd";
-import { DeleteOutlined, FilePdfOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  FilePdfOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import {
   handleAddNewAttachment,
   handleDeleteAttachment,
   handleGetAllCheckLists,
+  handleGetPDFShow,
 } from "../../../Components/services/utils";
 import { useEffect } from "react";
-
 const AttachModal = ({
   attachOpen,
   setAttachOpen,
@@ -21,7 +25,6 @@ const AttachModal = ({
   const [allCheckLists, setAllCheckLists] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
 
-  console.log("selected: ", selectedData);
   useEffect(() => {
     (async () => {
       const res = await handleGetAllCheckLists(userDetail?.client_id);
@@ -90,6 +93,14 @@ const AttachModal = ({
       });
     } else {
       message.warning(res?.message || "Something went wrong");
+    }
+  };
+
+  const handleShowPdf = async (id) => {
+    const res = await handleGetPDFShow(id);
+
+    if (res?.status === 200) {
+      window.open(res?.data, "_blank");
     }
   };
 
@@ -175,6 +186,13 @@ const AttachModal = ({
               />
             </div>
             <div>
+              <EyeOutlined
+                onClick={() => {
+                  handleShowPdf(record?.id);
+                }}
+              />
+            </div>
+            <div>
               <DeleteOutlined
                 className=" cursor-pointer text-[17px]"
                 onClick={() => {
@@ -224,6 +242,7 @@ const AttachModal = ({
             setAttachOpen(false);
           }}
         >
+          {/* {!pdfPage ? ( */}
           <div className="mt-6">
             <div className="flex justify-between items-center flex-wrap">
               <div>

@@ -203,3 +203,20 @@ export const handleDeleteAttachment = async (cid, fid, attach_list) => {
     return error.response;
   }
 };
+// get pdf for show
+export const handleGetPDFShow = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/checklist_id=${id}/view-pdf-content`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
