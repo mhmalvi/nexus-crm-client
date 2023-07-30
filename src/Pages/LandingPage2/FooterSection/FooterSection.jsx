@@ -287,7 +287,7 @@ const FooterSection = () => {
                     >
                       <a
                         className="body-text light"
-                        href="https://www.onethreadapp.com/terms"
+                        href="/"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",
@@ -306,7 +306,7 @@ const FooterSection = () => {
                       </a>
                       <a
                         className="body-text light"
-                        href="https://www.onethreadapp.com/gdpr"
+                        href="/"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",
@@ -325,7 +325,7 @@ const FooterSection = () => {
                       </a>
                       <a
                         className="body-text light"
-                        href="https://www.onethreadapp.com/privacy"
+                        href="/"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",
@@ -344,7 +344,7 @@ const FooterSection = () => {
                       </a>
                       <a
                         className="body-text light"
-                        href="https://www.onethreadapp.com/refund"
+                        href="/"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",
@@ -363,7 +363,7 @@ const FooterSection = () => {
                       </a>
                       <a
                         className="body-text light"
-                        href="https://www.onethreadapp.com/about-us"
+                        href="/"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",
@@ -432,7 +432,7 @@ const FooterSection = () => {
                       >
                         <a
                           aria-label="Onethread facebook page"
-                          href="https://www.facebook.com/Onethreadapp"
+                          href="https://www.facebook.com/quadquetech/"
                           rel="noopener noreferrer"
                           target="_blank"
                           style={{
@@ -497,7 +497,7 @@ const FooterSection = () => {
                         </a>
                         <a
                           aria-label="Onethread twitter account"
-                          href="https://twitter.com/Onethread_app"
+                          href="https://twitter.com/QuadqueT"
                           rel="noopener noreferrer"
                           target="_blank"
                           style={{
@@ -562,7 +562,7 @@ const FooterSection = () => {
                         </a>
                         <a
                           aria-label="Onethread linkedin account"
-                          href="https://www.linkedin.com/company/onethreadapp/"
+                          href="https://bd.linkedin.com/company/quadque-technologies-ltd"
                           rel="noopener noreferrer"
                           target="_blank"
                           style={{
