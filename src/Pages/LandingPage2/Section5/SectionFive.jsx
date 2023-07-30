@@ -49,7 +49,7 @@ const SectionFive = () => {
                 marginBottom: "100px",
               }}
             >
-              Book a free{" "}
+              Book a Free{" "}
               <span
                 style={{
                   borderWidth: "0px",
@@ -60,7 +60,7 @@ const SectionFive = () => {
                   fontWeight: 600,
                 }}
               >
-                Practical Demonstration{" "}
+                Demo Now!{" "}
               </span>
             </h2>
             <div
@@ -104,7 +104,7 @@ const SectionFive = () => {
                 >
                   <img
                     alt="Book Demo"
-                    src="https://www.onethreadapp.com/assets/book-img_1.c224971e.webp"
+                    src="https://crmcompany.quadque.digital/public/assets/img/landing/pcs.png"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -159,7 +159,7 @@ const SectionFive = () => {
                       marginBottom: "0px",
                     }}
                   >
-                    Get a free
+                    Unlock the Power
                     <span
                       style={{
                         borderWidth: "0px",
@@ -170,7 +170,7 @@ const SectionFive = () => {
                         color: "rgb(8, 160, 247)",
                       }}
                     >
-                      Demonstration
+                      Free Demonstration
                     </span>
                   </div>
                   <p
@@ -187,8 +187,8 @@ const SectionFive = () => {
                       margin: "30px 0px",
                     }}
                   >
-                    In order to experience the user friendly platform of
-                    Onethread, book a Practical Demo
+                    To experience the whole platform for free, book a Practical
+                    Demo
                   </p>
                   <a
                     className="button button-primary"

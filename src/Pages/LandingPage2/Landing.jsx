@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import Nav from "./Nav/Nav";
 import SectionOne from "./Section1/SectionOne";
 import SectionTwo from "./Section2/SectionTwo";
@@ -9,12 +9,29 @@ import SectionSix from "./Section6/SectionSix";
 import SectionSeven from "./Section7/SectionSeven";
 import FooterSection from "./FooterSection/FooterSection";
 import Nav from "./Nav/Nav";
+import ResNav from "./ResNav/ResNav";
 
 const Landing = () => {
+  const [resNav, setResNav] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth < 1000) {
+      setResNav(true);
+    }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 1000) {
+        setResNav(true);
+      } else if (window.innerWidth >= 1000) {
+        setResNav(false);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <div className="">
-        <Nav />
+        {resNav ? <ResNav /> : <Nav />}
+
         <SectionOne />
         <SectionTwo />
         <SectionThree />

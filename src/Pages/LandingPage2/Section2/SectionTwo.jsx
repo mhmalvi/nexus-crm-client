@@ -71,7 +71,7 @@ const SectionTwo = () => {
                 marginBottom: "100px",
               }}
             >
-              Get everything you need{" "}
+              Single Solution to Boost Your{" "}
               <span
                 style={{
                   borderWidth: "0px",
@@ -82,7 +82,7 @@ const SectionTwo = () => {
                   fontWeight: 600,
                 }}
               >
-                in a single package
+                Sales and Conversion
               </span>
             </h2>
             <div
