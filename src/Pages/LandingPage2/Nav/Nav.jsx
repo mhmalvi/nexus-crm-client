@@ -12,7 +12,7 @@ const Nav = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       // Define the scroll position where you want the menu to become fixed
-      const scrollThreshold = 45; // Adjust this value based on your needs
+      const scrollThreshold = 47; // Adjust this value based on your needs
       setIsMenuFixed(scrollY > scrollThreshold);
     };
 
@@ -40,7 +40,7 @@ const Nav = () => {
             marginRight: "auto",
             marginLeft: "auto",
             width: "100%",
-            maxWidth: "1400px",
+            maxWidth: "100%",
           }}
         >
           <nav
