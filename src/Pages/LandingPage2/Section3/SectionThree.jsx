@@ -50,7 +50,7 @@ const SectionThree = () => {
                 marginBottom: "0px",
               }}
             >
-              You will never miss another update{" "}
+              Instant Reports at{" "}
               <span
                 style={{
                   borderWidth: "0px",
@@ -61,7 +61,7 @@ const SectionThree = () => {
                   color: "rgb(46, 182, 125)",
                 }}
               >
-                with the Onethread Mobile App
+                Your Fingertips.
               </span>
             </h2>
             <div
@@ -119,8 +119,7 @@ const SectionThree = () => {
                       marginBottom: "10px",
                     }}
                   >
-                    Download our app to monitor projects and tasks wherever you
-                    go.
+                    Effortlessly Access Managerial Reports and Save Time.
                   </p>
                   <h3
                     style={{
@@ -129,14 +128,17 @@ const SectionThree = () => {
                       borderColor: "rgb(229, 231, 235)",
                       boxSizing: "border-box",
                       margin: "0px",
-                      fontSize: "40px",
+                      fontSize: "25px",
                       lineHeight: "54px",
                       fontWeight: 600,
                       color: "rgb(8, 160, 247)",
                       marginBottom: "40px",
                     }}
                   >
-                    On mobile, Onethread allows for real-time collaboration.
+                    Get Sales & Revenue Summary, Lead Conversion Rate, Campaigns
+                    Details, Campaigns Revenue, Lead Quality Ratio, Lead
+                    Summary, Individual SalesPerson Reports and many more
+                    without any effort
                   </h3>
                   <a
                     className="playstore-button"
@@ -231,7 +233,7 @@ const SectionThree = () => {
                     //     ? crm_show
                     //     : "https://www.onethreadapp.com/assets/mobile-app-img_1.3a10e8c9.webp"
                     // }
-                    src="https://www.onethreadapp.com/assets/mobile-app-img_1.3a10e8c9.webp"
+                    src="https://crmcompany.quadque.digital/public/assets/img/landing/phones.png"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",

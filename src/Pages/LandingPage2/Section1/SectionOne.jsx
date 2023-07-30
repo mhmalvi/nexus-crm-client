@@ -12,17 +12,17 @@ const SectionOne = () => {
           borderColor: "rgb(229, 231, 235)",
           boxSizing: "border-box",
           paddingTop: "300px",
-          paddingBottom: "300px",
+          // paddingBottom: "300px",
           marginTop: "-220px",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           backgroundSize: "cover",
           backgroundImage:
-            'url("https://www.onethreadapp.com/assets/hero-bg_1.1fc19dbc.webp")',
+            'url("https://crmcompany.quadque.digital/public/assets/img/landing/color.png")',
         }}
       >
         <div
-          className="mx-auto gy-5  !grid !grid-cols-12 gap-2"
+          className="mx-auto gy-5  !grid !grid-cols-12"
           style={{
             borderWidth: "0px",
             borderStyle: "solid",
@@ -40,7 +40,7 @@ const SectionOne = () => {
           }}
         >
           <div
-            className="!col-span-12 lg:!col-span-6"
+            className="!col-span-12 lg:!col-span-5"
             style={{
               borderWidth: "0px",
               borderStyle: "solid",
@@ -78,7 +78,7 @@ const SectionOne = () => {
                   color: "rgb(48, 48, 83)",
                 }}
               >
-                Easiest Tool to Manage{" "}
+                Easiest way of Skyrocketing{" "}
                 <span
                   style={{
                     borderWidth: "0px",
@@ -88,7 +88,7 @@ const SectionOne = () => {
                     color: "rgb(8, 160, 247)",
                   }}
                 >
-                  Task
+                  Conversions
                 </span>
               </h1>
               <p
@@ -105,7 +105,8 @@ const SectionOne = () => {
                   color: "rgb(48, 48, 83)",
                 }}
               >
-                Manage tasks, files & communicate in the simplest way.
+                Leads from Campaigns, Assign and Manage, Communicate & Update,
+                Payment and Beyond.
               </p>
               <div
                 style={{
@@ -130,18 +131,7 @@ const SectionOne = () => {
                     fontSize: "14px",
                   }}
                 >
-                  NO CREDIT CARD REQUIRED. |
-                  <span
-                    className="gdpr-text"
-                    style={{
-                      borderWidth: "0px",
-                      borderStyle: "solid",
-                      borderColor: "rgb(229, 231, 235)",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    Fully compliant with GDPR
-                  </span>
+                  Just Begin with A Simple Step |
                 </p>
               </div>
               <form
@@ -277,32 +267,6 @@ const SectionOne = () => {
                   marginTop: "20px",
                 }}
               >
-                <span
-                  style={{
-                    borderWidth: "0px",
-                    borderStyle: "solid",
-                    borderColor: "rgb(229, 231, 235)",
-                    boxSizing: "border-box",
-                    fontSize: "18px",
-                    fontWeight: 400,
-                    color: "rgb(102, 102, 102)",
-                  }}
-                >
-                  Already have an account?{" "}
-                  <a
-                    href="https://www.onethreadapp.com/signin"
-                    style={{
-                      borderWidth: "0px",
-                      borderStyle: "solid",
-                      borderColor: "rgb(229, 231, 235)",
-                      boxSizing: "border-box",
-                      textDecoration: "underline",
-                      color: "rgb(8, 160, 247)",
-                    }}
-                  >
-                    Sign In
-                  </a>
-                </span>
                 <div
                   className="bottom-buttons"
                   style={{
@@ -320,7 +284,7 @@ const SectionOne = () => {
                   <a
                     className="playstore-button"
                     aria-label="Appstore Link"
-                    href="https://apps.apple.com/in/app/onethread/id1645752656"
+                    href="https://apps.apple.com/"
                     target="_blank"
                     style={{
                       borderWidth: "0px",
@@ -352,7 +316,7 @@ const SectionOne = () => {
                   <a
                     className="playstore-button"
                     aria-label="Playstore Link"
-                    href="https://play.google.com/store/apps/details?id=app.onethread"
+                    href="https://play.google.com/"
                     target="_blank"
                     style={{
                       borderWidth: "0px",
@@ -385,7 +349,7 @@ const SectionOne = () => {
             </div>
           </div>
           <div
-            className="!col-span-12 lg:!col-span-6"
+            className="!col-span-12 lg:!col-span-7"
             style={{
               borderWidth: "0px",
               borderStyle: "solid",
@@ -401,7 +365,7 @@ const SectionOne = () => {
             }}
           >
             <div
-              className="hero-banner"
+              className="hero-banner w-full"
               style={{
                 borderWidth: "0px",
                 borderStyle: "solid",
@@ -424,6 +388,7 @@ const SectionOne = () => {
                   display: "block",
                   verticalAlign: "middle",
                   maxWidth: "100%",
+                  width: "100%",
                   height: "auto",
                 }}
               />

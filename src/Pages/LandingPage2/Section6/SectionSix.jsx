@@ -46,7 +46,7 @@ const SectionSix = () => {
                 marginBottom: "10px",
               }}
             >
-              We're offering you{" "}
+              The best deal is here to{" "}
               <span
                 style={{
                   borderWidth: "0px",
@@ -57,7 +57,7 @@ const SectionSix = () => {
                   fontWeight: 600,
                 }}
               >
-                The best deal!
+                save your business!
               </span>
             </h2>
             <p
@@ -75,7 +75,7 @@ const SectionSix = () => {
                 marginBottom: "100px",
               }}
             >
-              See how our pricing and features differ from our competitors
+              Discover Unmatched Value: Compare Our Pricing and Features
             </p>
             <div
               className="!grid !grid-cols-12 gap-2"
