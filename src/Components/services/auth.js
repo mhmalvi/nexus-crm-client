@@ -1,4 +1,5 @@
 import axios from "axios";
+import { btob_dev } from "./environment";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
@@ -14,7 +15,7 @@ export const handleRegistration = async (registrationDetails) => {
     console.log("result", result);
 
     // if (result?.status === 201) {
-    //   
+    //
 
     //   Storage.setItem("CRD", result?.data?.data);
     // }
@@ -30,6 +31,34 @@ export const handleLogin = async (loginDetails) => {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/login`,
       loginDetails
+    );
+
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const handleLoginSecond = async (loginDetails) => {
+  try {
+    const result = await axios.post(
+      `https://crmbtob.quadque.digital/agency_auth/agency-login`,
+      loginDetails
+    );
+
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const handleRegister = async (RegisterDetails) => {
+  try {
+    const result = await axios.post(
+      `https://crmbtob.quadque.digital/agency_auth/agency-register`,
+      RegisterDetails
     );
 
     console.log(result);

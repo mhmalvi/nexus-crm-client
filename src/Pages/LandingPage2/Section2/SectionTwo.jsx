@@ -67,7 +67,7 @@ const SectionTwo = () => {
                 fontSize: "50px",
                 lineHeight: "68px",
                 fontWeight: 400,
-                color: "rgb(48, 48, 83)",
+                color: "#a115ff",
                 marginBottom: "100px",
               }}
             >
@@ -78,7 +78,7 @@ const SectionTwo = () => {
                   borderStyle: "solid",
                   borderColor: "rgb(229, 231, 235)",
                   boxSizing: "border-box",
-                  color: "rgb(8, 160, 247)",
+                  color: "#e964ff",
                   fontWeight: 600,
                 }}
               >
@@ -204,7 +204,7 @@ const SectionTwo = () => {
                             verticalAlign: "middle",
                             maxWidth: "100%",
                             padding: "0px",
-                            width: "2.5rem",
+                            width: "3.5rem",
                             height: "2.5rem",
                             marginBottom: "0.5rem",
                             marginTop: "0.7rem",
@@ -339,7 +339,7 @@ const SectionTwo = () => {
                           fontSize: "24px",
                           fontWeight: 700,
                           lineHeight: "32px",
-                          color: "rgb(48, 48, 83)",
+                          color: "#a115ff",
                           marginBottom: "20px",
                           marginTop: "20px",
                           width: "100%",
@@ -370,6 +370,7 @@ const SectionTwo = () => {
                         }}
                       >
                         <li
+                          className=""
                           style={{
                             borderWidth: "0px",
                             borderStyle: "solid",
@@ -377,7 +378,7 @@ const SectionTwo = () => {
                             boxSizing: "border-box",
                             fontSize: "18px",
                             lineHeight: "24px",
-                            color: "rgb(48, 48, 83)",
+                            color: "#6909ff",
                           }}
                         >
                           {TabData?.desc}
@@ -394,8 +395,8 @@ const SectionTwo = () => {
                         }}
                       >
                         <a
-                          className="button button-primary"
-                          href="https://www.onethreadapp.com/#"
+                          className="button button-primary !bg-[#159afb]"
+                          href="/"
                           style={{
                             borderWidth: "0px",
                             borderStyle: "solid",
@@ -412,7 +413,6 @@ const SectionTwo = () => {
                             alignItems: "center",
                             color: "rgb(255, 255, 255)",
                             justifyContent: "center",
-                            backgroundColor: "rgb(8, 160, 247)",
                           }}
                         >
                           Next
