@@ -445,3 +445,11 @@ table.custom-table > tbody > tr:hover td {
 .tox-statusbar__branding {
   display: none;
 }
+
+.crm-scroll-none::-webkit-scrollbar {
+  display: none !important;
+  scrollbar-width: none !important;
+}
+.crm-scroll-none::-moz-scrollbar {
+  display: none !important;
+}

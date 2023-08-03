@@ -1,4 +1,4 @@
-import { Input, Modal, Tooltip, message } from "antd";
+import { Input, Modal, Select, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
-import { handleLogin } from "../../../Components/services/auth";
+import {
+  handleLogin,
+  handleLoginSecond,
+} from "../../../Components/services/auth";
 import {
   addUserDetails,
   setCompanyId,
@@ -14,8 +17,8 @@ import {
   updateFbToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
+import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
 const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
-
 const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();
@@ -26,7 +29,10 @@ const Login = () => {
   const [addBookMarkOpen, setAddBookMarkOpen] = useState(false);
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
-
+  const [role, setRole] = useState(0);
+  const handleChange = (value) => {
+    setRole(value);
+  };
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -63,19 +69,30 @@ const Login = () => {
 
     const loginFormData = new FormData();
     loginFormData.append("email", data.email);
+    loginFormData.append("abn_number", data.email);
     loginFormData.append("password", data.password);
+    loginFormData.append("role", role);
+    let loginResponse;
+    let loginResponseSecond;
 
-    const loginResponse = await handleLogin(loginFormData);
+    if (role === 0) {
+      loginResponse = await handleLogin(loginFormData);
+    } else {
+      loginResponseSecond = await handleLoginSecond(loginFormData);
+    }
 
     console.log("loginResponse", loginResponse);
 
-    if (loginResponse?.status === 200) {
+    if (loginResponse?.status === 200 && loginResponse?.data) {
       // if ()
 
       console.log("loginResponse?.data?.data", loginResponse?.data?.data);
 
       Storage.setItem("user_info", loginResponse?.data?.data);
-      Storage.setItem("auth_tok", loginResponse?.data?.token);
+      Storage.setItem(
+        "auth_tok",
+        loginResponse?.data?.token || loginResponse?.data?.data
+      );
       Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
       dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
 
@@ -112,11 +129,31 @@ const Login = () => {
           window.location.reload();
         }, 1500);
       }
+    } else if (
+      loginResponseSecond?.status === 200 &&
+      loginResponseSecond?.data
+    ) {
+      Storage.setItem("user_info", loginResponseSecond?.data?.data);
+      Storage.setItem(
+        "auth_tok",
+        loginResponseSecond?.data?.token || loginResponseSecond?.data?.data
+      );
+      // Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      // dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
+
+      dispatch(setLoader(false));
+      dispatch(addUserDetails(loginResponseSecond?.data?.data));
+      // dispatch(setCompanyId(loginResponseSecond?.data?.data?.company?.id));
+      message.success("Successfully Logged In");
+      setTimeout(() => {
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1500);
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
       }, 2000);
-      message.warning("Oopps Wrong! Check You Email or Password");
+      message.warning("Oopps Wrong! Check You Email or Password/ABN Number");
     }
   };
 
@@ -276,22 +313,21 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100 ">
+    <div className="flex justify-center items-center md:h-screen bg-gray-100 ">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       )}
 
-      <div className="flex justify-center gap-6 items-center flex-wrap w-full">
-        <div className="w-[59%]">
-          <img
-            className="w-full h-full"
-            src="https://crmcompany.quadque.digital/public/assets/img/login/review-evaluation-satisfaction-customer-service-feedback-sign-icon%20(1).jpg"
-            alt=""
-          />
+      <div className=" !grid !grid-cols-12 gap-2 mx-auto h-full py-[10px]">
+        <div className="w-[100%] h-full !col-span-12 md:!col-span-7 md:!relative md:!left-[40px]">
+          <img className="w-full h-full" src={sidecoverphoto} alt="" />
         </div>
-        <div className="container relative max-w-md border border-gray-200 rounded-md p-3 bg-white w-[39%] overflow-hidden">
+        <div
+          className="!col-span-12 md:!col-span-5 w-[100%]  !mx-auto container relative max-w-md border border-gray-200 rounded-md p-3 bg-white overflow-x-hidden overflow-y-auto crm-scroll-none"
+          style={{}}
+        >
           <Modal
             visible={addBookMarkOpen}
             footer={false}
@@ -348,11 +384,41 @@ const Login = () => {
             <div className="m-6">
               <form className="mb-4" onSubmit={handleLoginReq}>
                 <div className="mb-6 font-poppins">
+                  {/* <Radio.Group
+                    className="w-full "
+                    size="large"
+                    name="roll"
+                    id="roll"
+                    onChange={(e) => setRole(e.target.value)}
+                    value={role}
+                  >
+                    <Radio value={1}>As Agency</Radio>
+                    <Radio value={2}>As Manager</Radio>
+                  </Radio.Group> */}
+                  <label
+                    htmlFor=""
+                    className="block mb-2 text-sm text-gray-600"
+                  >
+                    Select Role
+                  </label>
+                  <Select
+                    defaultValue={0}
+                    // value={role}
+                    className="w-full"
+                    onChange={handleChange}
+                    options={[
+                      { value: 0, label: `Admin` },
+                      { value: 1, label: `Agency` },
+                      { value: 2, label: `Organization Manager` },
+                    ]}
+                  />
+                </div>
+                <div className="mb-6 font-poppins">
                   <label
                     htmlFor="email"
                     className="block mb-2 text-sm text-gray-600"
                   >
-                    Email
+                    {role === 1 ? "ABN Number" : "Email"}
                   </label>
                   <Input
                     // type="password"
@@ -421,7 +487,12 @@ const Login = () => {
                     Log in
                   </button>
                 </div>
-
+                <div
+                  className="text-center font-semibold cursor-pointer"
+                  onClick={() => navigate("/register")}
+                >
+                  I don't have account
+                </div>
                 <div className="text-center">
                   <a
                     className="font-semibold"
