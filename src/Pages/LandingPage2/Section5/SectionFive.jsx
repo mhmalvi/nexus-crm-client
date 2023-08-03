@@ -1,5 +1,6 @@
 import React from "react";
-
+import pcphoto from "../../../assets/newimages/pcs.png";
+import backgroundphoto from "../../../assets/BackgroundPhotos/Background-03.png";
 const SectionFive = () => {
   return (
     <>
@@ -15,8 +16,8 @@ const SectionFive = () => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "cover",
-            backgroundImage:
-              'url("https://www.onethreadapp.com/assets/book-bg_1.fbb5a557.webp")',
+            backgroundImage: `url(${backgroundphoto})`,
+            // 'url("https://www.onethreadapp.com/assets/book-bg_1.fbb5a557.webp")',
           }}
         >
           <div
@@ -45,7 +46,7 @@ const SectionFive = () => {
                 fontSize: "50px",
                 lineHeight: "68px",
                 fontWeight: 400,
-                color: "rgb(48, 48, 83)",
+                color: "#a115ff",
                 marginBottom: "100px",
               }}
             >
@@ -56,7 +57,7 @@ const SectionFive = () => {
                   borderStyle: "solid",
                   borderColor: "rgb(229, 231, 235)",
                   boxSizing: "border-box",
-                  color: "rgb(8, 160, 247)",
+                  color: "#e964ff",
                   fontWeight: 600,
                 }}
               >
@@ -104,7 +105,7 @@ const SectionFive = () => {
                 >
                   <img
                     alt="Book Demo"
-                    src="https://crmcompany.quadque.digital/public/assets/img/landing/pcs.png"
+                    src={pcphoto}
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -151,7 +152,7 @@ const SectionFive = () => {
                       boxSizing: "border-box",
                       fontSize: "24px",
                       fontWeight: 600,
-                      color: "rgb(48, 48, 83)",
+                      color: "#a115ff",
                       display: "flex",
                       alignItems: "baseline",
                       flexWrap: "wrap",
@@ -191,8 +192,8 @@ const SectionFive = () => {
                     Demo
                   </p>
                   <a
-                    className="button button-primary"
-                    href="https://www.onethreadapp.com/book-session"
+                    className="button button-primary bg-[#159afb]"
+                    href="/"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -209,7 +210,7 @@ const SectionFive = () => {
                       alignItems: "center",
                       color: "rgb(255, 255, 255)",
                       justifyContent: "center",
-                      backgroundColor: "rgb(8, 160, 247)",
+
                       width: "max-content",
                     }}
                   >

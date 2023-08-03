@@ -12,7 +12,7 @@ const Nav = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       // Define the scroll position where you want the menu to become fixed
-      const scrollThreshold = 45; // Adjust this value based on your needs
+      const scrollThreshold = 47; // Adjust this value based on your needs
       setIsMenuFixed(scrollY > scrollThreshold);
     };
 
@@ -40,7 +40,7 @@ const Nav = () => {
             marginRight: "auto",
             marginLeft: "auto",
             width: "100%",
-            maxWidth: "1400px",
+            maxWidth: "100%",
           }}
         >
           <nav
@@ -124,7 +124,7 @@ const Nav = () => {
                 }}
               >
                 <button
-                  className="button button-primary"
+                  className="button button-primary !bg-[#159afb]"
                   type="button"
                   style={{
                     borderWidth: "0px",
@@ -147,7 +147,6 @@ const Nav = () => {
                     alignItems: "center",
                     color: "rgb(255, 255, 255)",
                     justifyContent: "center",
-                    backgroundColor: "rgb(8, 160, 247)",
                   }}
                 >
                   <div
@@ -475,7 +474,7 @@ const Nav = () => {
                   >
                     <a
                       className="astro-R5CNXI4O"
-                      href="https://www.onethreadapp.com/blog"
+                      href="/"
                       target="_blank"
                       style={{
                         borderWidth: "0px",
@@ -885,7 +884,7 @@ const Nav = () => {
                                 marginLeft: "0px",
                               }}
                             >
-                              Watch quick videos to learn the basic of Onethread
+                              Watch quick videos to learn the basic of Queleads
                             </small>
                           </p>
                         </div>
@@ -908,7 +907,7 @@ const Nav = () => {
                   >
                     <a
                       className="astro-R5CNXI4O"
-                      href="https://www.onethreadapp.com/api-guide.html"
+                      href="/"
                       target="_blank"
                       style={{
                         borderWidth: "0px",
@@ -1029,7 +1028,7 @@ const Nav = () => {
                                 marginLeft: "0px",
                               }}
                             >
-                              Learn and build your app with Onethread
+                              Learn and build your app with Queleds
                             </small>
                           </p>
                         </div>
@@ -1091,7 +1090,7 @@ const Nav = () => {
                 }}
               >
                 <button
-                  className="button button-primary"
+                  className="button button-primary !bg-[#159afb]"
                   type="button"
                   style={{
                     borderWidth: "0px",
@@ -1112,13 +1111,55 @@ const Nav = () => {
                     alignItems: "center",
                     color: "rgb(255, 255, 255)",
                     justifyContent: "center",
-                    backgroundColor: "rgb(8, 160, 247)",
+
                     border: "0px",
                     cursor: "pointer",
                   }}
                 >
                   Free forever
                 </button>{" "}
+              </a>
+              <a
+                className="astro-W2BEH2IL"
+                onClick={() => navigate("/register")}
+                style={{
+                  borderWidth: "0px",
+                  borderStyle: "solid",
+                  borderColor: "rgb(229, 231, 235)",
+                  boxSizing: "border-box",
+                  textDecoration: "inherit",
+                  color: "inherit",
+                }}
+              >
+                <button
+                  className="button button-primary button-inverted"
+                  type="button"
+                  style={{
+                    borderWidth: "0px",
+                    borderStyle: "solid",
+                    borderColor: "rgb(229, 231, 235)",
+                    boxSizing: "border-box",
+                    margin: "0px",
+                    fontFamily: "inherit",
+                    lineHeight: "inherit",
+                    textTransform: "none",
+                    appearance: "button",
+                    backgroundImage: "none",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    padding: "10px 20px",
+                    borderRadius: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgb(8, 160, 247)",
+                    cursor: "pointer",
+                    border: "1px solid rgb(8, 160, 247)",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  Register
+                </button>
               </a>
               <a
                 className="astro-W2BEH2IL"

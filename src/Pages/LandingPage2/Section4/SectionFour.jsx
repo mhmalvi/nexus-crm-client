@@ -4,7 +4,7 @@ import { companyPhotos } from "./Section4Data";
 const SectionFour = () => {
   return (
     <>
-      <div>
+      <div className="bg-[#F7F7F7]">
         <div
           className="section-padding clients-wrapper"
           style={{
@@ -41,7 +41,7 @@ const SectionFour = () => {
                 fontSize: "50px",
                 lineHeight: "68px",
                 marginBottom: "100px",
-                color: "rgb(255, 168, 0)",
+                color: "#a115ff",
                 fontWeight: 600,
               }}
             >
@@ -83,7 +83,7 @@ const SectionFour = () => {
                       }}
                     >
                       <div
-                        className="mx-auto logo"
+                        className="mx-auto logo !my-12 !py-6 box-border"
                         style={{
                           borderWidth: "0px",
                           borderStyle: "solid",

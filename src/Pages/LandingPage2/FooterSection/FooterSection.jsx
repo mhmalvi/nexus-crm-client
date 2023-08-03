@@ -11,7 +11,7 @@ const FooterSection = () => {
             borderStyle: "solid",
             borderColor: "rgb(229, 231, 235)",
             boxSizing: "border-box",
-            backgroundColor: "rgb(48, 48, 83)",
+            backgroundColor: "#6909ff",
             padding: "80px 0px",
             marginTop: "auto",
             paddingBottom: "0px",
@@ -660,7 +660,7 @@ const FooterSection = () => {
                   }}
                 />
               </div> */}
-              <astro-island
+              <astro-isl
                 style={{
                   borderWidth: "0px",
                   borderStyle: "solid",
@@ -676,7 +676,7 @@ const FooterSection = () => {
                 }}
               >
                 <div
-                  className="w-full footer-copyright text-center"
+                  className="w-full footer-copyright text-center flex justify-between items-center flex-wrap"
                   style={{
                     borderWidth: "0px",
                     borderStyle: "solid",
@@ -706,6 +706,7 @@ const FooterSection = () => {
                     <a
                       className="body-text light"
                       href="https://queleadscrm.com/"
+                      target="_blank"
                       style={{
                         borderWidth: "0px",
                         borderStyle: "solid",
@@ -720,10 +721,44 @@ const FooterSection = () => {
                     >
                       Queleads
                     </a>
-                    . All rights reserved. Proudly made in Bangladesh.
+                    . All rights reserved. Proudly made in Australia.
+                  </p>
+                  <p
+                    className="body-text light mb5"
+                    style={{
+                      borderWidth: "0px",
+                      borderStyle: "solid",
+                      borderColor: "rgb(229, 231, 235)",
+                      boxSizing: "border-box",
+                      margin: "0px",
+                      fontSize: "20px",
+                      fontWeight: 400,
+                      lineHeight: "27px",
+                      color: "rgb(255, 255, 255)",
+                    }}
+                  >
+                    A product of{" "}
+                    <a
+                      className="body-text light"
+                      href="https://www.quadque.tech/"
+                      target="_blank"
+                      style={{
+                        borderWidth: "0px",
+                        borderStyle: "solid",
+                        borderColor: "rgb(229, 231, 235)",
+                        boxSizing: "border-box",
+                        textDecoration: "inherit",
+                        fontSize: "20px",
+                        lineHeight: "27px",
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Quadque Technologies Pty Limited
+                    </a>
                   </p>
                 </div>
-              </astro-island>
+              </astro-isl>
             </div>
           </div>
         </footer>

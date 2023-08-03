@@ -13,6 +13,7 @@ import { addMessages } from "../../features/user/messagesSlice";
 import AdminDashboard from "./AdminDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
 import UserDashboard from "./UserDashboard";
+import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -32,10 +33,12 @@ const Dashboard = () => {
       setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
     }
 
-    if (userDetails?.userInfo?.flag === 1) {
-      setToggleChanglePassword(true);
-    } else {
-      setToggleChanglePassword(false);
+    if (userDetails?.userInfo?.flag) {
+      if (userDetails?.userInfo?.flag === 1) {
+        setToggleChanglePassword(true);
+      } else {
+        setToggleChanglePassword(false);
+      }
     }
   }, [passwordDetails, userDetails?.userInfo?.flag]);
 
@@ -43,22 +46,24 @@ const Dashboard = () => {
     document.title = `Dashboard | Queleads CRM`;
 
     // API Request for fetching messages
-    (async () => {
-      const messages = await handlefetchMessages(
-        userDetails?.userInfo?.user_id
-      );
-      dispatch(
-        addMessages(
-          messages.length
-            ? messages?.filter(
-                (element, index) =>
-                  messages.findIndex((obj) => obj.room === element.room) ===
-                  index
-              )
-            : []
-        )
-      );
-    })();
+    if (userDetails?.userInfo?.user_id) {
+      (async () => {
+        const messages = await handlefetchMessages(
+          userDetails?.userInfo?.user_id
+        );
+        dispatch(
+          addMessages(
+            messages.length
+              ? messages?.filter(
+                  (element, index) =>
+                    messages.findIndex((obj) => obj.room === element.room) ===
+                    index
+                )
+              : []
+          )
+        );
+      })();
+    }
 
     // API Request for fetching notifiaction
     // (async () => {
@@ -175,26 +180,54 @@ const Dashboard = () => {
         <Avatar
           className="rounded-full cursor-pointer mr-1"
           size="38"
-          name={userDetails?.userInfo?.full_name}
+          name={
+            userDetails?.userInfo?.full_name ||
+            userDetails?.userInfo?.name ||
+            ""
+          }
         />
-        <span className="px-2">{userDetails?.userInfo?.full_name}</span>
+        <span className="px-2">
+          {userDetails?.userInfo?.full_name ||
+            userDetails?.userInfo?.name ||
+            ""}
+        </span>
 
         <div className="hidden group-hover:block min-w-40 h-16 bg-white shadow-md absolute right-0 top-[52px] rounded-md">
           <div className="flex flex-col p-2 text-xs">
-            <div>{userDetails?.userInfo?.full_name}</div>
+            <div>
+              {userDetails?.userInfo?.full_name ||
+                userDetails?.userInfo?.name ||
+                ""}
+            </div>
             <div>{userDetails?.userInfo?.email}</div>
-            <div>{userDetails?.userInfo?.contact_number}</div>
+            <div>
+              {userDetails?.userInfo?.contact_number ||
+                userDetails?.userInfo?.phone_number ||
+                ""}
+            </div>
           </div>
         </div>
       </div>
       {/*  )} */}
       <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
-        {(userDetails?.userInfo?.role_id === 1 ||
-          userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}
-        {(userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4 ||
-          userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
-        {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
+        {userDetails?.userInfo?.role_id && (
+          <div>
+            {(userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
+            {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
+          </div>
+        )}
+        {userDetails?.userInfo?.role && (
+          <div>
+            {userDetails?.userInfo?.role === 1 && <AgencyDashboard />}
+            {userDetails?.userInfo?.role === 2 && (
+              <div>This is for Manager</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
