@@ -28,6 +28,7 @@ import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Landing from "./Pages/LandingPage2/Landing";
+import Register from "./Pages/Authentication/Register/Register";
 
 function App() {
   // useEffect(() => {
@@ -61,6 +62,7 @@ function App() {
           <Route path="mail" element={<GmailModule />} />
         </Route>
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
         {/* <Route path="welcome" element={<HomePage />} /> */}

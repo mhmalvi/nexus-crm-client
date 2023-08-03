@@ -158,6 +158,7 @@ body {
         onClose={onClose}
         open={Draweropen}
         visible={Draweropen}
+        width={"100%"}
       >
         <div>
           <div className="flex justify-between items-center p-2">
@@ -191,7 +192,7 @@ body {
                   }}
                 >
                   <button
-                    className="button button-primary w-full"
+                    className="button button-primary w-full !bg-[#159afb]"
                     type="button"
                     style={{
                       borderWidth: "0px",
@@ -214,7 +215,6 @@ body {
                       alignItems: "center",
                       color: "rgb(255, 255, 255)",
                       justifyContent: "center",
-                      backgroundColor: "rgb(8, 160, 247)",
                     }}
                   >
                     <div
@@ -291,7 +291,7 @@ body {
               }}
             >
               <button
-                className="button button-primary w-full"
+                className="button button-primary w-full !bg-[#159afb]"
                 type="button"
                 style={{
                   borderWidth: "0px",
@@ -312,13 +312,55 @@ body {
                   alignItems: "center",
                   color: "rgb(255, 255, 255)",
                   justifyContent: "center",
-                  backgroundColor: "rgb(8, 160, 247)",
+
                   border: "0px",
                   cursor: "pointer",
                 }}
               >
                 Free forever
               </button>{" "}
+            </a>
+            <a
+              className="astro-W2BEH2IL w-full"
+              onClick={() => navigate("/register")}
+              style={{
+                borderWidth: "0px",
+                borderStyle: "solid",
+                borderColor: "rgb(229, 231, 235)",
+                boxSizing: "border-box",
+                textDecoration: "inherit",
+                color: "inherit",
+              }}
+            >
+              <button
+                className="button button-primary button-inverted w-full hover:!bg-[#08A0F7] hover:!text-white"
+                type="button"
+                style={{
+                  borderWidth: "0px",
+                  borderStyle: "solid",
+                  borderColor: "rgb(229, 231, 235)",
+                  boxSizing: "border-box",
+                  margin: "0px",
+                  fontFamily: "inherit",
+                  lineHeight: "inherit",
+                  textTransform: "none",
+                  appearance: "button",
+                  backgroundImage: "none",
+                  fontSize: "18px",
+                  fontWeight: 600,
+                  padding: "10px 20px",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "rgb(8, 160, 247)",
+                  cursor: "pointer",
+                  border: "1px solid rgb(8, 160, 247)",
+                  backgroundColor: "transparent",
+                }}
+              >
+                Register
+              </button>
             </a>
             <a
               className="astro-W2BEH2IL w-full"

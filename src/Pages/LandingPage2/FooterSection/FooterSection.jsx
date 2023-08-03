@@ -11,7 +11,7 @@ const FooterSection = () => {
             borderStyle: "solid",
             borderColor: "rgb(229, 231, 235)",
             boxSizing: "border-box",
-            backgroundColor: "rgb(48, 48, 83)",
+            backgroundColor: "#6909ff",
             padding: "80px 0px",
             marginTop: "auto",
             paddingBottom: "0px",
@@ -721,7 +721,7 @@ const FooterSection = () => {
                     >
                       Queleads
                     </a>
-                    . All rights reserved. Proudly made in Bangladesh.
+                    . All rights reserved. Proudly made in Australia.
                   </p>
                   <p
                     className="body-text light mb5"

@@ -42,7 +42,7 @@ const SectionSix = () => {
                 fontSize: "50px",
                 lineHeight: "68px",
                 fontWeight: 400,
-                color: "rgb(8, 160, 247)",
+                color: "#a115ff",
                 marginBottom: "10px",
               }}
             >
@@ -53,7 +53,7 @@ const SectionSix = () => {
                   borderStyle: "solid",
                   borderColor: "rgb(229, 231, 235)",
                   boxSizing: "border-box",
-                  color: "rgb(8, 160, 247)",
+                  color: "#a115ff",
                   fontWeight: 600,
                 }}
               >
@@ -69,7 +69,7 @@ const SectionSix = () => {
                 boxSizing: "border-box",
                 margin: "0px",
                 fontWeight: 400,
-                color: "rgb(48, 48, 83)",
+                color: "#e964ff",
                 fontSize: "35px",
                 lineHeight: "45px",
                 marginBottom: "100px",
@@ -78,7 +78,7 @@ const SectionSix = () => {
               Discover Unmatched Value: Compare Our Pricing and Features
             </p>
             <div
-              className="!grid !grid-cols-12 gap-2"
+              className="!grid !grid-cols-12 flex justify-center items-center"
               style={{
                 borderWidth: "0px",
                 borderStyle: "solid",
@@ -92,7 +92,7 @@ const SectionSix = () => {
               }}
             >
               <div
-                className="!col-span-12 lg:!col-span-8 md:ml-[6%]"
+                className="!col-span-12 lg:!col-span-8 lg:ml-[20px]"
                 style={{
                   borderWidth: "0px",
                   borderStyle: "solid",
@@ -107,9 +107,9 @@ const SectionSix = () => {
                   width: "100%",
                 }}
               >
-                <div className="!grid !grid-cols-12 gap-2">
+                <div className="!grid !grid-cols-12 gap-6">
                   <div
-                    className="!col-span-12 md:!col-span-5 w-[100%] flex justify-center flex-column item-center large pricing-card"
+                    className="!col-span-12 md:!col-span-6 w-[100%] flex justify-center flex-column item-center large pricing-card"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -169,7 +169,7 @@ const SectionSix = () => {
                     </span>
                   </div>
                   <div
-                    className="!col-span-12 md:!col-span-7"
+                    className="!col-span-12 md:!col-span-6"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -178,12 +178,29 @@ const SectionSix = () => {
                       maxWidth: "100%",
                       paddingRight: "calc(1.5rem*.5)",
                       paddingLeft: "calc(1.5rem*.5)",
-                      marginTop: "3rem",
+
                       flex: "0 0 auto",
                       flexShrink: 0,
                       width: "100%",
+                      //
+                      display: "flex",
+                      justifyContent: "center",
+                      borderRadius: "10px",
+                      padding: "30px",
+                      textAlign: "center",
+                      minHeight: "100%",
+                      background: "rgb(255, 255, 255)",
+                      border: "1px solid rgb(8, 160, 247)",
+                      boxShadow: "rgb(82, 182, 255) 0px 0px 7px",
+                      flexDirection: "column",
                     }}
                   >
+                    {/* <div className="w-full border border-red-500 !mt-[30px]"> */}
+                    <p className="text-[20px] mt-[-30px] font-bold  mx-auto text-center text-[#6909ff]">
+                      Pricing for others
+                    </p>
+                    {/* </div> */}
+
                     <div
                       className="!grid !grid-cols-12 gap-2"
                       style={{
@@ -217,7 +234,7 @@ const SectionSix = () => {
                             }}
                           >
                             <div
-                              className="pricing-card"
+                              className="pricing-card flex flex-col justify-center items-center !w-full "
                               style={{
                                 borderWidth: "0px",
                                 borderStyle: "solid",
@@ -232,44 +249,59 @@ const SectionSix = () => {
                               }}
                             >
                               <div
-                                className="icon"
-                                style={{
-                                  borderWidth: "0px",
-                                  borderStyle: "solid",
-                                  borderColor: "rgb(229, 231, 235)",
-                                  boxSizing: "border-box",
-                                  margin: "0px auto",
-                                  maxWidth: "45px",
-                                }}
+                                className="icon flex justify-center items-center w-[50px] h-[45px] mx-auto"
+                                style={
+                                  {
+                                    // borderWidth: "0px",
+                                    // borderStyle: "solid",
+                                    // borderColor: "rgb(229, 231, 235)",
+                                    // boxSizing: "border-box",
+                                    // margin: "0px auto",
+                                    // maxHeight: "50px",
+                                    // maxWidth: "50px",
+                                  }
+                                }
                               >
                                 <img
+                                  className="w-full h-full"
                                   src={item?.icon}
-                                  style={{
-                                    borderWidth: "0px",
-                                    borderStyle: "solid",
-                                    borderColor: "rgb(229, 231, 235)",
-                                    boxSizing: "border-box",
-                                    display: "block",
-                                    verticalAlign: "middle",
-                                    maxWidth: "100%",
-                                    height: "auto",
-                                  }}
+                                  style={
+                                    {
+                                      // borderWidth: "0px",
+                                      // borderStyle: "solid",
+                                      // borderColor: "rgb(229, 231, 235)",
+                                      // boxSizing: "border-box",
+                                      // display: "block",
+                                      // verticalAlign: "middle",
+                                      // maxWidth: "100%",
+                                      // maxHeight: "100%",
+                                      // // maxWidth: `${
+                                      // //   item?.width ? item?.width : "100%"
+                                      // // }`,
+                                      // height: "100%",
+                                      // width: `${
+                                      //   item?.width ? item?.width : "100%"
+                                      // }`,
+                                    }
+                                  }
                                 />
                               </div>
-                              <span
-                                className="price"
-                                style={{
-                                  borderWidth: "0px",
-                                  borderStyle: "solid",
-                                  borderColor: "rgb(229, 231, 235)",
-                                  boxSizing: "border-box",
-                                  display: "inline-block",
-                                  fontSize: "16px",
-                                  marginTop: "10px",
-                                }}
+                              <p className=" !text-center">{item?.name}</p>
+
+                              <p
+                                className="text-center text-[16px] mx-auto !w-full break-words"
+                                // style={{
+                                //   borderWidth: "0px",
+                                //   borderStyle: "solid",
+                                //   borderColor: "rgb(229, 231, 235)",
+                                //   boxSizing: "border-box",
+                                //   display: "inline-block",
+                                //   fontSize: "16px",
+                                //   marginTop: "10px",
+                                // }}
                               >
-                                {`${item?.price}/month`}
-                              </span>
+                                ${`${item?.price}/month`}
+                              </p>
                             </div>
                           </div>
                         );
@@ -280,7 +312,7 @@ const SectionSix = () => {
               </div>
 
               <div
-                className="!col-span-12 lg:!col-span-4"
+                className="!col-span-12 lg:!col-span-4 self-start"
                 style={{
                   borderWidth: "0px",
                   borderStyle: "solid",
@@ -315,7 +347,7 @@ const SectionSix = () => {
                       margin: "0px",
                       fontSize: "30px",
                       lineHeight: "40px",
-                      color: "rgb(48, 48, 83)",
+                      color: "#a115ff",
                       marginBottom: "20px",
                     }}
                   >
@@ -363,7 +395,7 @@ const SectionSix = () => {
                       />
                     </div>
                     <button
-                      className="button button-primary"
+                      className="button button-primary !bg-[#159afb]"
                       type="button"
                       style={{
                         borderWidth: "0px",
@@ -385,7 +417,7 @@ const SectionSix = () => {
                         alignItems: "center",
                         color: "rgb(255, 255, 255)",
                         justifyContent: "center",
-                        backgroundColor: "rgb(8, 160, 247)",
+
                         width: "max-content",
                         margin: "20px 0px",
                       }}
@@ -448,15 +480,15 @@ const SectionSix = () => {
                       margin: "0px",
                       fontSize: "30px",
                       lineHeight: "40px",
-                      color: "rgb(48, 48, 83)",
+                      color: "#e964ff",
                       marginBottom: "20px",
                     }}
                   >
                     Or, Choose a Plan
                   </h3>
                   <a
-                    className="button button-primary"
-                    href="https://www.onethreadapp.com/#"
+                    className="button button-primary !bg-[#159afb]"
+                    href="/"
                     style={{
                       borderWidth: "0px",
                       borderStyle: "solid",
@@ -473,7 +505,7 @@ const SectionSix = () => {
                       alignItems: "center",
                       color: "rgb(255, 255, 255)",
                       justifyContent: "center",
-                      backgroundColor: "rgb(8, 160, 247)",
+
                       width: "max-content",
                     }}
                   >

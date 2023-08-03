@@ -1,35 +1,43 @@
+const clogo1 = require("../../../assets/companylogos/clogo1.jpeg");
+const clogo2 = require("../../../assets/companylogos/clogo2.jpeg");
+const clogo3 = require("../../../assets/companylogos/clogo3.jpeg");
+const clogo4 = require("../../../assets/companylogos/clogo4.jpeg");
+const clogo5 = require("../../../assets/companylogos/clogo5.jpeg");
+const clogo6 = require("../../../assets/companylogos/clogo6.jpeg");
+const clogo7 = require("../../../assets/companylogos/clogo7.jpeg");
+const clogo8 = require("../../../assets/companylogos/clogo8.jpeg");
+const clogo9 = require("../../../assets/companylogos/clogo9.jpeg");
+const clogo10 = require("../../../assets/companylogos/clogo10.jpeg");
+
 export const companyPhotos = [
   {
-    image: "https://www.quadque.tech/static/media/NTA.7a3edd78f2fd5e1d86bb.png",
+    image: clogo1,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/Zaker_Dairy.d41c3780fc9bf3921ef7.png",
+    image: clogo2,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/ITEC.fd354a73318b5b4d9bc1.png",
+    image: clogo3,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/ALPHA.326390af1ec63dd64b92.png",
+    image: clogo4,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/Thermottle.e27686cbf5e2a0282cb0.png",
+    image: clogo5,
   },
   {
-    image: "https://www.quadque.tech/static/media/UCT.ec87a5ef69cbf557c95a.png",
+    image: clogo6,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/ESI_Logo.179c35a85042f6b99146.png",
+    image: clogo7,
   },
   {
-    image: "https://www.quadque.tech/static/media/aia.1cd119627bed0354aafb.png",
+    image: clogo8,
   },
   {
-    image:
-      "https://www.quadque.tech/static/media/Trade_Trade_US_Log.69b771e615381e5c412e.png",
+    image: clogo9,
+  },
+  {
+    image: clogo10,
   },
 ];
