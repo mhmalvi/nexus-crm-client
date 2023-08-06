@@ -245,7 +245,7 @@ const Sidebar = ({
 
           {userDetails?.userInfo?.role_id !== 6 &&
             userDetails?.userInfo?.role !== 1 &&
-            userDetails?.userInfo?.role !== 1 && (
+            userDetails?.userInfo?.role !== 2 && (
               <div>
                 <div
                   className="flex items-center text-base cursor-pointer my-5 py-0.5"
@@ -550,41 +550,69 @@ const Sidebar = ({
             </NavLink>
           </div> */}
 
-          {userDetails?.userInfo?.role !== 1 && (
-            <Menu
-              style={{
-                width: 226,
-                color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
-                fontSize: 16,
-              }}
-              onClick={ToggleProfile}
-              items={[
-                {
-                  label: (
-                    <span style={{ color: "#7C8DB5" }} className="pl-1">
-                      Settings
-                    </span>
-                  ),
-                  key: "menu",
-                  // <SettingOutlined
-                  icon: (
-                    <Icons.Settings className="inline text-gray-500 text-opacity-75" />
-                    //   style={{ color: "#7C8DB5", width: "16px" }}
-                    // />
-                  ),
-                  children: [
-                    { label: "Profile Settings", key: "profile" },
-                    userDetails?.userInfo?.role_id === 1 ||
-                    userDetails?.userInfo?.role_id === 2 ||
-                    userDetails?.userInfo?.role_id === 3 ||
-                    userDetails?.userInfo?.role_id === 4
-                      ? { label: "Company Settings", key: "company" }
-                      : null,
-                  ],
-                },
-              ]}
-            />
+          {userDetails?.userInfo?.role !== 1 &&
+            userDetails?.userInfo?.role !== 2 && (
+              <Menu
+                style={{
+                  width: 226,
+                  color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
+                  fontSize: 16,
+                }}
+                onClick={ToggleProfile}
+                items={[
+                  {
+                    label: (
+                      <span style={{ color: "#7C8DB5" }} className="pl-1">
+                        Settings
+                      </span>
+                    ),
+                    key: "menu",
+                    // <SettingOutlined
+                    icon: (
+                      <Icons.Settings className="inline text-gray-500 text-opacity-75" />
+                      //   style={{ color: "#7C8DB5", width: "16px" }}
+                      // />
+                    ),
+                    children: [
+                      { label: "Profile Settings", key: "profile" },
+                      userDetails?.userInfo?.role_id === 1 ||
+                      userDetails?.userInfo?.role_id === 2 ||
+                      userDetails?.userInfo?.role_id === 3 ||
+                      userDetails?.userInfo?.role_id === 4
+                        ? { label: "Company Settings", key: "company" }
+                        : null,
+                    ],
+                  },
+                ]}
+              />
+            )}
+          {/* Agency menu items start  */}
+          {(userDetails?.userInfo?.role === 1 ||
+            userDetails?.userInfo?.role === 2) && (
+            <div>
+              <NavLink
+                to={"/studentManagement"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${
+                    active === "studentManagement" ? "#7037FF" : "#7C8DB5"
+                  }`,
+                }}
+                onClick={() => setActive("studentManagement")}
+              >
+                <Icons.Pricing />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Student Management
+                </span>
+                {active === "studentManagement" && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </NavLink>
+            </div>
           )}
+          {/* Agency menu items end */}
 
           <div className="lg:mt-20 2xl:mt-36 pt-1.5">
             <div
