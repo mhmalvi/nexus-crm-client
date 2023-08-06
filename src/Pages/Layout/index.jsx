@@ -36,6 +36,7 @@ import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
+import ManageStudnet from "../StudentManagement/index";
 import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
 import NotifyModal from "../Notifications/NotifyModal.jsx";
@@ -456,6 +457,14 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "requisitions",
     component: <Requisitions />,
+    count: 0,
+  },
+  {
+    key: "studentManagement",
+    name: "studentManagement",
+    // icon: <Icons.Campaigns />,
+    label: "Student Management",
+    component: <ManageStudnet />,
     count: 0,
   },
   {
