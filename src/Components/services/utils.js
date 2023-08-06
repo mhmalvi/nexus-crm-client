@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment_dev } from "./environment";
+import { btob_dev, environment_dev } from "./environment";
 
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleUploadFile = async (fileDetails) => {
@@ -213,6 +213,109 @@ export const handleGetPDFShow = async (id) => {
   try {
     const result = await axios.get(
       `${environment_dev}/api/checklist_id=${id}/view-pdf-content`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// send student details
+export const handleSendStudentDetails = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/student-save`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Admission requests
+export const handleGetStudentAdmissionRequests = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(`${btob_dev}/student/student-lists`, config);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Student admission request details
+export const handleGetStudentAdmissionRequestsDetails = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/student_id=${id}/student-details`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Change status admission complete
+
+export const handleAdmissionStatusChange = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/change-status`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// get students details agency check
+
+export const handleGetStudentCompleteDetailsCheck = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/agency_id=${id}/show-student-agency`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Remove file
+export const handleRemoveFileAgencyCheck = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/file_id=${id}/delete-file-by-agency`,
       config
     );
     return result.data;
