@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  handleFetchB2BUser,
+  handleSuspandB2BUser,
   handleUpdateUserStatus,
   handleUserSuspendStatus,
 } from "../../../Components/services/auth";
@@ -16,12 +18,26 @@ const SalesAdmins = ({ clientId }) => {
 
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
+  const [activeAddStudentAdmin, setActiveAddStudentAdmin] = useState(false);
   const [companyAdminEmployee, setCompanyAdminEmployee] = useState();
   const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [syncEmployees, setSyncEmployees] = useState(false);
   const [inactiveAdminEmployees, setInactiveAdminEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
+  const [allStudnetAdmin, setAllStudentAdmin] = useState([]);
+  const [isSuspandStatusStudentAdmin, setIsSuspandStatusStudentAdmin] =
+    useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const status = isSuspandStatusStudentAdmin ? 1 : 0;
+      const res = await handleFetchB2BUser(7, status);
+      if (res?.status === 200) {
+        setAllStudentAdmin(res?.data);
+      }
+    })();
+  }, [clientId, isSuspandStatusStudentAdmin]);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -114,6 +130,19 @@ const SalesAdmins = ({ clientId }) => {
       setSyncEmployees(!syncEmployees);
     }
   };
+  const handleSuspendB2BEmployee = async (userId) => {
+    const status = isSuspandStatusStudentAdmin ? 0 : 1;
+    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+    // console.log(statusUpdateResponse);
+
+    if (statusUpdateResponse?.data?.status === true) {
+      const status = isSuspandStatusStudentAdmin ? 1 : 0;
+      const resep = await handleFetchB2BUser(7, status);
+      if (resep?.status === 200) {
+        setAllStudentAdmin(resep?.data);
+      }
+    }
+  };
 
   // console.log("companyAdminEmployee", companyAdminEmployee);
   // console.log("companyAdminEmployee", companyAdminEmployee);
@@ -122,8 +151,8 @@ const SalesAdmins = ({ clientId }) => {
   // console.log("inactiveSalesEmployees", inactiveSalesEmployees);
 
   return (
-    <div className="flex justify-between 2xl:justify-evenly mt-12 pt-0.5">
-      <div className="2xl:mr-32">
+    <div className="flex flex-wrap justify-between 2xl:justify-evenly mt-12 pt-0.5 w-full !grid !grid-cols-12 gap-2">
+      <div className="2xl:mr-32 !h-[300px] relative crm-scroll-none overflow-y-auto w-[100%] w-full !col-span-12  lg:!col-span-6">
         <div>
           <hr />
 
@@ -141,6 +170,7 @@ const SalesAdmins = ({ clientId }) => {
               setActiveAddSeals={setActiveAddSeals}
               syncEmployees={syncEmployees}
               setSyncEmployees={setSyncEmployees}
+              flag={0}
             />
           </Modal>
 
@@ -158,10 +188,24 @@ const SalesAdmins = ({ clientId }) => {
               setActiveAddSeals={setActiveAddSeals}
               syncEmployees={syncEmployees}
               setSyncEmployees={setSyncEmployees}
+              flag={0}
+            />
+          </Modal>
+          <Modal
+            title="Add Student Admin"
+            visible={activeAddStudentAdmin}
+            footer={null}
+            onCancel={() => setActiveAddStudentAdmin(false)}
+            width={600}
+          >
+            <EmployeeRegistrationForm
+              clientId={clientId}
+              flag={1}
+              setActiveAddStudentAdmin={setActiveAddStudentAdmin}
             />
           </Modal>
 
-          <div className="flex items-center">
+          <div className="flex items-center sticky top-0 w-full bg-slate-100">
             <h1 className="font-semibold text-xl leading-8 py-5 px-3 my-0">
               Admins
             </h1>
@@ -345,8 +389,8 @@ const SalesAdmins = ({ clientId }) => {
         ) : null}
       </div>
 
-      <div className="ml-2.5">
-        <div>
+      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+        <div className=" sticky top-0 w-full bg-slate-100">
           <hr />
           <div className="flex items-center">
             <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
@@ -480,6 +524,333 @@ const SalesAdmins = ({ clientId }) => {
                     <button
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
                       onClick={() => handleAddSuspendedEmployee(employee?.id)}
+                    >
+                      Reassign
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+      {/* Studnet Admin box */}
+      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+        <div className=" sticky top-0 w-full bg-slate-100">
+          <hr />
+          <div className="flex items-center">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
+              Student Admin
+            </h1>
+
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div className="flex items-center gap-2">
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() => setActiveAddStudentAdmin(true)}
+                >
+                  Add Admin
+                </button>
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() =>
+                    setIsSuspandStatusStudentAdmin(!isSuspandStatusStudentAdmin)
+                  }
+                >
+                  {isSuspandStatusStudentAdmin ? "Active" : "InActive"}
+                </button>
+              </div>
+            ) : null}
+          </div>
+          <hr />
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-6 px-4">
+          {allStudnetAdmin.length ? (
+            allStudnetAdmin.map((employee, i) => (
+              <div key={i} className="flex ">
+                {/* <div
+                  className={`${
+                    avatarColor[Math.floor(Math.random() * 10) + 1]
+                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
+                >
+                  {(employee?.full_name).slice(0, 2)}
+                </div> */}
+                <Avatar
+                  className="rounded-full cursor-pointer"
+                  size="38"
+                  // color={Avatar.getRandomColor("sitebase", [
+                  //   "red",
+                  //   "green",
+                  //   "#728FCE",
+                  //   "violet",
+                  //   "#2B547E",
+                  //   "black",
+                  //   "#87AFC7",
+                  //   "Lime",
+                  //   "#D5D6EA",
+                  //   "#77BFC7",
+                  //   "orange",
+                  //   "#FDD017",
+                  //   "#665D1E",
+                  // ])}
+                  name={employee?.student_admin_name}
+                />
+                <div className="ml-4">
+                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
+                    {employee?.student_admin_name}
+                  </h1>
+                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
+                    {employee?.email}
+                  </p>
+
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
+                    <div>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+
+                      <button
+                        className={`border px-1 py-0.5 text-xs rounded-md font-semibold  mt-3 ${
+                          isSuspandStatusStudentAdmin
+                            ? " border-green-500 text-green-500"
+                            : " border-red-500 text-red-500"
+                        }`}
+                        onClick={() =>
+                          handleSuspendB2BEmployee(employee?.id, 0)
+                        }
+                      >
+                        {!isSuspandStatusStudentAdmin ? "Suspend" : "ReAssign"}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))
+          ) : (
+            <h1 className="font-semibold text-base text-">
+              No Employee Added Yet
+            </h1>
+          )}
+        </div>
+
+        {inactiveSalesEmployees.length ? (
+          <div className="mt-10">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
+              Inactive Sales Admins
+            </h1>
+            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+              {inactiveSalesEmployees.map((employee, i) => (
+                <div key={i} className="flex ">
+                  <Avatar
+                    className="rounded-full cursor-pointer"
+                    size="38"
+                    // color={Avatar.getRandomColor("sitebase", [
+                    //   "red",
+                    //   "green",
+                    //   "#728FCE",
+                    //   "violet",
+                    //   "#2B547E",
+                    //   "black",
+                    //   "#87AFC7",
+                    //   "Lime",
+                    //   "#D5D6EA",
+                    //   "#77BFC7",
+                    //   "orange",
+                    //   "#FDD017",
+                    //   "#665D1E",
+                    // ])}
+                    name={employee?.full_name}
+                  />
+                  <div className="ml-4">
+                    <h1 className="text-red-500 font-semibold text-lg leading-5">
+                      {employee?.full_name}
+                    </h1>
+                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                      {employee?.email}
+                    </p>
+                    <button
+                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                      onClick={() => {
+                        handleSuspendB2BEmployee(employee?.id);
+                      }}
+                    >
+                      Reassign
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+      {/* Accountant box */}
+
+      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+        <div className=" sticky top-0 w-full bg-slate-100">
+          <hr />
+          <div className="flex items-center">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
+              Accountants
+            </h1>
+
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div className="flex items-center gap-2">
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() => setActiveAddStudentAdmin(true)}
+                >
+                  Add Accountant
+                </button>
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() =>
+                    setIsSuspandStatusStudentAdmin(!isSuspandStatusStudentAdmin)
+                  }
+                >
+                  {isSuspandStatusStudentAdmin ? "Active" : "InActive"}
+                </button>
+              </div>
+            ) : null}
+          </div>
+          <hr />
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-6 px-4">
+          {allStudnetAdmin.length ? (
+            allStudnetAdmin.map((employee, i) => (
+              <div key={i} className="flex ">
+                {/* <div
+                  className={`${
+                    avatarColor[Math.floor(Math.random() * 10) + 1]
+                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
+                >
+                  {(employee?.full_name).slice(0, 2)}
+                </div> */}
+                <Avatar
+                  className="rounded-full cursor-pointer"
+                  size="38"
+                  // color={Avatar.getRandomColor("sitebase", [
+                  //   "red",
+                  //   "green",
+                  //   "#728FCE",
+                  //   "violet",
+                  //   "#2B547E",
+                  //   "black",
+                  //   "#87AFC7",
+                  //   "Lime",
+                  //   "#D5D6EA",
+                  //   "#77BFC7",
+                  //   "orange",
+                  //   "#FDD017",
+                  //   "#665D1E",
+                  // ])}
+                  name={employee?.student_admin_name}
+                />
+                <div className="ml-4">
+                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
+                    {employee?.student_admin_name}
+                  </h1>
+                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
+                    {employee?.email}
+                  </p>
+
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
+                    <div>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+
+                      <button
+                        className={`border px-1 py-0.5 text-xs rounded-md font-semibold  mt-3 ${
+                          isSuspandStatusStudentAdmin
+                            ? " border-green-500 text-green-500"
+                            : " border-red-500 text-red-500"
+                        }`}
+                        onClick={() =>
+                          handleSuspendB2BEmployee(employee?.id, 0)
+                        }
+                      >
+                        {!isSuspandStatusStudentAdmin ? "Suspend" : "ReAssign"}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))
+          ) : (
+            <h1 className="font-semibold text-base text-">
+              No Employee Added Yet
+            </h1>
+          )}
+        </div>
+
+        {inactiveSalesEmployees.length ? (
+          <div className="mt-10">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
+              Inactive Sales Admins
+            </h1>
+            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+              {inactiveSalesEmployees.map((employee, i) => (
+                <div key={i} className="flex ">
+                  <Avatar
+                    className="rounded-full cursor-pointer"
+                    size="38"
+                    // color={Avatar.getRandomColor("sitebase", [
+                    //   "red",
+                    //   "green",
+                    //   "#728FCE",
+                    //   "violet",
+                    //   "#2B547E",
+                    //   "black",
+                    //   "#87AFC7",
+                    //   "Lime",
+                    //   "#D5D6EA",
+                    //   "#77BFC7",
+                    //   "orange",
+                    //   "#FDD017",
+                    //   "#665D1E",
+                    // ])}
+                    name={employee?.full_name}
+                  />
+                  <div className="ml-4">
+                    <h1 className="text-red-500 font-semibold text-lg leading-5">
+                      {employee?.full_name}
+                    </h1>
+                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                      {employee?.email}
+                    </p>
+                    <button
+                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                      onClick={() => {
+                        handleSuspendB2BEmployee(employee?.id);
+                      }}
                     >
                       Reassign
                     </button>

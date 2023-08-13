@@ -1,5 +1,5 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Button, Table, Tooltip } from "antd";
+import { Button, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { useState } from "react";
 import CreateStudentModal from "./CreateStudentModal";
@@ -45,6 +45,38 @@ const StudentdetailsAgency = () => {
       key: "course_name",
     },
     {
+      title: "Invoice",
+      dataIndex: "invoice",
+      key: "invoice",
+      render: (_, record, idx) => {
+        console.log("invoice has: ", record);
+        return (
+          <>
+            {record?.invoice ? (
+              <h1 className=" text-green-600">available</h1>
+            ) : (
+              <h1 className=" text-red-600">not available</h1>
+            )}
+          </>
+        );
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
+            {record?.status === 1 && <Tag color="green">Complete</Tag>}
+            {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+          </>
+        );
+      },
+    },
+    {
       title: "Action",
       dataIndex: "action",
       key: "action",
@@ -87,10 +119,14 @@ const StudentdetailsAgency = () => {
       <CreateStudentModal
         createOpen={createOpen}
         setCreateOpen={setCreateOpen}
+        setListData={setListData}
+        setStudentListLoading={setLoading}
       />
       <CheckDetailsModal
         checkModalOpen={checkModalOpen}
         setCheckModalOpen={setCheckModalOpen}
+        setListData={setListData}
+        setStudentListLoading={setLoading}
         rId={rId}
       />
     </div>
