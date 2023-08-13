@@ -1,7 +1,10 @@
 import { message } from "antd";
 import React from "react";
 import { useState } from "react";
-import { handleRegistration } from "../../../Components/services/auth";
+import {
+  handleRegister,
+  handleRegistration,
+} from "../../../Components/services/auth";
 import { handleAddCompanyEmployees } from "../../../Components/services/company";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../../features/user/userSlice";
@@ -15,14 +18,17 @@ const EmployeeRegistrationForm = ({
   setActiveAddSeals,
   syncEmployees,
   setSyncEmployees,
+  setActiveAddStudentAdmin,
+  flag,
 }) => {
+  console.log("flag: ", flag);
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [employeeDetails, setEmployeeDetails] = useState({
     full_name: "",
     email: "",
-    contact: "",
+    contact_number: "",
   });
 
   const handleChange = (e) => {
@@ -39,7 +45,7 @@ const EmployeeRegistrationForm = ({
     dispatch(setLoader(true));
     const registrationResponse = await handleRegistration({
       ...employeeDetails,
-      role_id: roleId,
+      role_id: (flag === 1 && 7) || roleId,
     });
 
     console.log("registrationResponse <><><>", registrationResponse);
@@ -79,7 +85,7 @@ const EmployeeRegistrationForm = ({
         setEmployeeDetails({
           full_name: "",
           email: "",
-          contact: "",
+          contact_number: "",
         });
 
         setSyncEmployees(!syncEmployees);
@@ -91,6 +97,26 @@ const EmployeeRegistrationForm = ({
       message.warn("Something went wrong. Try again later...");
     }
   };
+
+  // const handleAddStudentAdmin = async () => {
+  //   const data = {
+  //     ...employeeDetails,
+  //     name: employeeDetails.full_name,
+  //     role: 2,
+  //     company_id: clientId,
+  //   };
+  //   dispatch(setLoader(true));
+  //   const res = await handleRegister(data);
+  //   if (res?.status === 201) {
+  //     dispatch(setLoader(false));
+  //     setEmployeeDetails({});
+  //     message.success("Registered successfully");
+  //     setActiveAddStudentAdmin(false);
+  //   } else {
+  //     message.warn(res?.data?.message || "something went wrong");
+  //     dispatch(setLoader(false));
+  //   }
+  // };
 
   return (
     <div className="py-8 px-6">
@@ -149,14 +175,14 @@ const EmployeeRegistrationForm = ({
             <div className="flex justify-start gap-1 my-2">
               <div className="w-full">
                 <input
-                  name="contact"
+                  name="contact_number"
                   type="text"
-                  id="contact"
+                  id="contact_number"
                   maxLength={12}
                   minLength={9}
                   className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                   placeholder="Contact No."
-                  value={employeeDetails.contact}
+                  value={employeeDetails.contact_number}
                   onChange={handleChange}
                 />
               </div>
@@ -166,7 +192,9 @@ const EmployeeRegistrationForm = ({
         <div className="pt-10 pb-6">
           <button
             className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-white"
-            onClick={handleAddEmployee}
+            onClick={() => {
+              handleAddEmployee();
+            }}
           >
             Add
           </button>

@@ -407,7 +407,7 @@ const Login = () => {
                     className="w-full"
                     onChange={handleChange}
                     options={[
-                      { value: 0, label: `Admin` },
+                      { value: 0, label: `Admin/Others` },
                       { value: 1, label: `Agency` },
                       { value: 2, label: `Organization Manager` },
                     ]}
