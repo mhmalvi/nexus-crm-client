@@ -269,6 +269,22 @@ export const handleGetStudentAdmissionRequestsDetails = async (id) => {
     return error.response;
   }
 };
+export const handleGetStudentAdmissionDetailsAgency = async (aid, sid) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/agency_id=${aid}/student_id=${sid}/show-student-details-agency`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 // Change status admission complete
 
 export const handleAdmissionStatusChange = async (data) => {
@@ -307,7 +323,7 @@ export const handleGetStudentCompleteDetailsCheck = async (id) => {
   }
 };
 // Remove file
-export const handleRemoveFileAgencyCheck = async (id) => {
+export const handleRemoveFileAgencyCheck = async (id, rId) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -315,7 +331,61 @@ export const handleRemoveFileAgencyCheck = async (id) => {
   };
   try {
     const result = await axios.get(
-      `${btob_dev}/student/file_id=${id}/delete-file-by-agency`,
+      `${btob_dev}/student/student_id=${rId}/file_id=${id}/delete-file-by-agency`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Update file
+export const handleUpdateStudentFile = async (id, data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/student_id=${id}/update-file`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// Send mail to institute
+export const handleSendMailToInstitute = async (id, data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/student_id=${id}/send-mail`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// generate invoice pdf
+export const handleInvoiceGenerate = async (id, data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/student_id=${id}/generate-pdf`,
+      data,
       config
     );
     return result.data;

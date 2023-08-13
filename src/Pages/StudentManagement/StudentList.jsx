@@ -1,5 +1,5 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Table, Tooltip } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -37,6 +37,21 @@ const StudentList = () => {
       title: "Course Name",
       dataIndex: "course_name",
       key: "course_name",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
+            {record?.status === 1 && <Tag color="green">Complete</Tag>}
+            {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+          </>
+        );
+      },
     },
     {
       title: "Action",
@@ -77,6 +92,8 @@ const StudentList = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         rId={rId}
+        setAllAdmissionRequests={setAllAdmissionRequests}
+        setRequestListLoading={setRequestListLoading}
       />
     </>
   );
