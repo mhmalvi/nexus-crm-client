@@ -3,7 +3,7 @@ import { btob_dev } from "./environment";
 // import { io } from "socket.io-client";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
-
+const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleRegistration = async (registrationDetails) => {
   try {
     // const result = await coreAxios.get(`/messages/${userId}`);
@@ -43,7 +43,7 @@ export const handleLogin = async (loginDetails) => {
 export const handleLoginSecond = async (loginDetails) => {
   try {
     const result = await axios.post(
-      `https://crmbtob.quadque.digital/agency_auth/agency-login`,
+      `${btob_dev}/agency_auth/agency-login`,
       loginDetails
     );
 
@@ -55,10 +55,36 @@ export const handleLoginSecond = async (loginDetails) => {
   }
 };
 export const handleRegister = async (RegisterDetails) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
-      `https://crmbtob.quadque.digital/agency_auth/agency-register`,
-      RegisterDetails
+      `${btob_dev}/agency_auth/agency-register`,
+      RegisterDetails,
+      config
+    );
+
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const handleSuspandB2BUser = async (cid, uid, status) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/agency_auth/company_id=${cid}/user_id=${uid}/status=${status}/suspend-user`,
+      {},
+      config
     );
 
     console.log(result);
@@ -74,6 +100,23 @@ export const handleProfileDetails = async (user_id) => {
     const result = await axios.get(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/${user_id}/details`,
       user_id
+    );
+    return result.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const handleFetchB2BUser = async (rid, status) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_AUTH_URL}/api/role=${rid}/status=${status}/fetch-user`,
+      config
     );
     return result.data;
   } catch (error) {

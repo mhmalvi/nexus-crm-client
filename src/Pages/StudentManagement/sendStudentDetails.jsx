@@ -2,29 +2,44 @@ import { Button, Form, Input, Select, message } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleSendStudentDetails } from "../../Components/services/utils";
+import {
+  handleGetStudentCompleteDetailsCheck,
+  handleSendStudentDetails,
+} from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
+import CreateStudentModal from "./CreateStudentModal";
+import StudentdetailsAgency from "./StudentdetailsAgency";
 
-const SendStudentDetails = () => {
+const SendStudentDetails = ({
+  data,
+  setData,
+  fileName,
+  setFileName,
+  files,
+  setFiles,
+  setListData,
+  setStudentListLoading,
+  setCreateOpen,
+}) => {
   const navigate = useNavigate();
-  const [files, setFiles] = useState([]);
-  const [fileName, setFileName] = useState([]);
+  // const [files, setFiles] = useState([]);
+  // const [fileName, setFileName] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const userDetails = useSelector(
     (state) => state?.user?.userInfo,
     shallowEqual
   );
-  const [data, setData] = useState({
-    student_name: "",
-    course_name: "",
-  });
+  // const [data, setData] = useState({
+  //   student_name: "",
+  //   course_name: "",
+  // });
   const userData = (e) => {
     const userdata = { ...data };
     userdata[e.target.id] = e.target.value;
     setData(userdata);
   };
   const handleCheckListFile = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log("I entered file");
 
     const files = Object.values(e?.target?.files);
@@ -39,6 +54,7 @@ const SendStudentDetails = () => {
     files.forEach((file) => formData.append("student_file[]", file));
     formData.append("student_name", data.student_name);
     formData.append("course_name", data.course_name);
+    formData.append("institute_name", data.institute_name);
     formData.append("user_id", userDetails?.user_id);
 
     if (files.length <= 0) {
@@ -52,6 +68,18 @@ const SendStudentDetails = () => {
         setUploadLoading(false);
         setData({});
         message.success("Send successfully");
+
+        setStudentListLoading(true);
+        setCreateOpen(false);
+        const respons = await handleGetStudentCompleteDetailsCheck(
+          userDetails?.user_id
+        );
+        if (respons?.status === 200) {
+          setListData(respons?.data);
+          setStudentListLoading(false);
+        } else {
+          setStudentListLoading(false);
+        }
       } else {
         setUploadLoading(false);
         message.warn("Send failed/ Something went wrong");
@@ -90,6 +118,22 @@ const SendStudentDetails = () => {
               id="course_name"
               value={data.course_name}
               placeholder="Enter course name"
+              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+              onChange={userData}
+              required
+            />
+          </div>
+          <div className="mb-6 font-poppins">
+            <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
+              Institute Name
+            </label>
+            <Input
+              // type="password"
+              size="large"
+              name="institute_name"
+              id="institute_name"
+              value={data.institute_name}
+              placeholder="Enter institute name"
               className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
               onChange={userData}
               required

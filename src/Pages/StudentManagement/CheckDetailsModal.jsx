@@ -4,19 +4,35 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import {
+  handleGetStudentAdmissionDetailsAgency,
   handleGetStudentAdmissionRequestsDetails,
+  handleGetStudentCompleteDetailsCheck,
   handleRemoveFileAgencyCheck,
+  handleUpdateStudentFile,
 } from "../../Components/services/utils";
+import { shallowEqual, useSelector } from "react-redux";
 
-const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
+const CheckDetailsModal = ({
+  checkModalOpen,
+  setCheckModalOpen,
+  rId,
+  setStudentListLoading,
+  setListData,
+}) => {
+  const userDetails = useSelector((auth) => auth?.user?.userInfo, shallowEqual);
   const [AdmissionDetails, setAdmissionDetails] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     (async () => {
-      const res = await handleGetStudentAdmissionRequestsDetails(rId);
+      const res = await handleGetStudentAdmissionDetailsAgency(
+        userDetails?.user_id,
+        rId
+      );
       setLoading(true);
       if (res?.status === 200) {
         setLoading(false);
@@ -34,18 +50,53 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
     const files = Object.values(e?.target?.files);
     setFiles(files);
     setFileName(files);
-    console.log("fdatas: ", files);
   };
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
+    setIsUpdating(true);
     const formData = new FormData();
     files.forEach((file) => formData.append("student_file[]", file));
+    const res = await handleUpdateStudentFile(rId, formData);
+    if (res?.status === 201) {
+      setIsUpdating(false);
+      setLoading(true);
+      const respons = await handleGetStudentAdmissionDetailsAgency(
+        userDetails?.user_id,
+        rId
+      );
+      if (respons?.status === 200) {
+        setLoading(false);
+        setAdmissionDetails(respons?.data);
+        setFileList(respons?.data?.files);
+      } else {
+        setLoading(false);
+      }
+      setStudentListLoading(true);
+      const response = await handleGetStudentCompleteDetailsCheck(
+        userDetails?.user_id
+      );
+      if (response?.status === 200) {
+        setListData(response?.data);
+        setStudentListLoading(false);
+      } else {
+        setStudentListLoading(false);
+      }
+      setCheckModalOpen(false);
+      setFiles([]);
+      setFileName([]);
+    } else {
+      setIsUpdating(false);
+      message.warn(res?.data?.message || "Something went wrong");
+    }
   };
   const handleRemoveFile = async (fid) => {
-    const res = await handleRemoveFileAgencyCheck(fid);
+    const res = await handleRemoveFileAgencyCheck(fid, rId);
     if (res?.status === 201) {
       setLoading(true);
-      const respons = await handleGetStudentAdmissionRequestsDetails(rId);
+      const respons = await handleGetStudentAdmissionDetailsAgency(
+        userDetails?.user_id,
+        rId
+      );
 
       if (respons?.status === 200) {
         setLoading(false);
@@ -54,9 +105,42 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
       } else {
         setLoading(false);
       }
+      setStudentListLoading(true);
+      const response = await handleGetStudentCompleteDetailsCheck(
+        userDetails?.user_id
+      );
+      if (response?.status === 200) {
+        setListData(response?.data);
+        setStudentListLoading(false);
+      } else {
+        setStudentListLoading(false);
+      }
     } else {
       message.warn("Something went wrong");
     }
+  };
+  const SyncRefresh = async () => {
+    const res = await handleGetStudentAdmissionDetailsAgency(
+      userDetails?.user_id,
+      rId
+    );
+    setIsRefreshing(true);
+    setLoading(true);
+    if (res?.status === 200) {
+      setLoading(false);
+      setIsRefreshing(false);
+      setAdmissionDetails(res?.data);
+      setFileList(res?.data?.files);
+    } else {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
+  const handleCheckInvoice = () => {
+    console.log("Check Invoice: ", AdmissionDetails);
+    AdmissionDetails?.invoice
+      ? window.open(`${AdmissionDetails?.invoice?.file_path}`, "_blank")
+      : message.warning("No invoice");
   };
   const handleClose = () => {
     setCheckModalOpen(false);
@@ -108,7 +192,13 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
               <Tooltip title="Remove File" color={"red"} key={idx}>
                 <CloseOutlined
                   onClick={() => {
-                    handleRemoveFile(record?.id);
+                    if (record?.status === 1) {
+                      message.warn(
+                        "Cannot remove completed file contact with ITEC manager"
+                      );
+                    } else {
+                      handleRemoveFile(record?.id);
+                    }
                   }}
                 />
               </Tooltip>
@@ -131,12 +221,11 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
               Close
             </Button>,
             <Button
+              loading={isUpdating}
               className=" !bg-green-500 !text-white"
-              onClick={() => {
-                handleUpdate();
-              }}
+              onClick={handleUpdate}
             >
-              Update
+              {isUpdating ? "Updating" : "Update"}
             </Button>,
           ]}
         >
@@ -184,7 +273,7 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-4 my-4">
+              <div className="flex items-center gap-4 mb-2">
                 <span className="text-[20px] text-gray-600 m-0 p-0">
                   Student Name:{" "}
                 </span>
@@ -200,8 +289,37 @@ const CheckDetailsModal = ({ checkModalOpen, setCheckModalOpen, rId }) => {
                   {AdmissionDetails?.course_name}
                 </h1>
               </div>
+              <div className="flex items-center gap-4">
+                <span className="text-[20px] text-gray-600 ">Status: </span>
+                <h1 className="text-[18px] font-bold m-0 p-0">
+                  {AdmissionDetails?.status === 2 && (
+                    <Tag color="cyan">Pending</Tag>
+                  )}
+                  {AdmissionDetails?.status === 1 && (
+                    <Tag color="green">Complete</Tag>
+                  )}
+                  {AdmissionDetails?.status === 0 && (
+                    <Tag color="red">Incomplete</Tag>
+                  )}
+                </h1>
+              </div>
+              <div className="mt-3">
+                <Button
+                  onClick={handleCheckInvoice}
+                  className=" !rounded !bg-green-500 !text-white !border-none"
+                >
+                  Check Invoice
+                </Button>
+              </div>
             </div>
           </div>
+          <Button
+            loading={isRefreshing}
+            onClick={SyncRefresh}
+            className=" float-right rounded-lg mb-3"
+          >
+            Sync/Refresh
+          </Button>
           <Table
             loading={loading}
             columns={columns || []}
