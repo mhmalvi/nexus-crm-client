@@ -19,6 +19,9 @@ const SalesAdmins = ({ clientId }) => {
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
   const [activeAddStudentAdmin, setActiveAddStudentAdmin] = useState(false);
+  const [activeAddStudentAccountants, setActiveAddStudentAccountants] =
+    useState(false);
+  const [activeAddStudentAgency, setActiveAddStudentAgency] = useState(false);
   const [companyAdminEmployee, setCompanyAdminEmployee] = useState();
   const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [syncEmployees, setSyncEmployees] = useState(false);
@@ -26,7 +29,13 @@ const SalesAdmins = ({ clientId }) => {
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
   const [allStudnetAdmin, setAllStudentAdmin] = useState([]);
+  const [allStudnetAccountants, setAllStudentAccountants] = useState([]);
+  const [allStudnetAgencys, setAllStudentAgencys] = useState([]);
   const [isSuspandStatusStudentAdmin, setIsSuspandStatusStudentAdmin] =
+    useState(false);
+  const [isSuspandStatusAccountant, setIsSuspandStatusStudentAccountant] =
+    useState(false);
+  const [isSuspandStatusAgency, setIsSuspandStatusStudentAgency] =
     useState(false);
 
   useEffect(() => {
@@ -38,6 +47,25 @@ const SalesAdmins = ({ clientId }) => {
       }
     })();
   }, [clientId, isSuspandStatusStudentAdmin]);
+
+  useEffect(() => {
+    (async () => {
+      const status = isSuspandStatusAccountant ? 1 : 0;
+      const res = await handleFetchB2BUser(8, status);
+      if (res?.status === 200) {
+        setAllStudentAccountants(res?.data);
+      }
+    })();
+  }, [clientId, isSuspandStatusAccountant]);
+  useEffect(() => {
+    (async () => {
+      const status = isSuspandStatusAgency ? 1 : 0;
+      const res = await handleFetchB2BUser(9, status);
+      if (res?.status === 200) {
+        setAllStudentAgencys(res?.data);
+      }
+    })();
+  }, [clientId, isSuspandStatusAgency]);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -143,6 +171,32 @@ const SalesAdmins = ({ clientId }) => {
       }
     }
   };
+  const handleSuspendB2BEmployeeAccount = async (userId) => {
+    const status = isSuspandStatusAccountant ? 0 : 1;
+    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+    // console.log(statusUpdateResponse);
+
+    if (statusUpdateResponse?.data?.status === true) {
+      const status = isSuspandStatusAccountant ? 1 : 0;
+      const resep = await handleFetchB2BUser(8, status);
+      if (resep?.status === 200) {
+        setAllStudentAccountants(resep?.data);
+      }
+    }
+  };
+  const handleSuspendB2BEmployeeAgency = async (userId) => {
+    const status = isSuspandStatusAgency ? 0 : 1;
+    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+    // console.log(statusUpdateResponse);
+
+    if (statusUpdateResponse?.data?.status === true) {
+      const status = isSuspandStatusAgency ? 1 : 0;
+      const resep = await handleFetchB2BUser(9, status);
+      if (resep?.status === 200) {
+        setAllStudentAgencys(resep?.data);
+      }
+    }
+  };
 
   // console.log("companyAdminEmployee", companyAdminEmployee);
   // console.log("companyAdminEmployee", companyAdminEmployee);
@@ -202,6 +256,32 @@ const SalesAdmins = ({ clientId }) => {
               clientId={clientId}
               flag={1}
               setActiveAddStudentAdmin={setActiveAddStudentAdmin}
+            />
+          </Modal>
+          <Modal
+            title="Add Accountants"
+            visible={activeAddStudentAccountants}
+            footer={null}
+            onCancel={() => setActiveAddStudentAccountants(false)}
+            width={600}
+          >
+            <EmployeeRegistrationForm
+              clientId={clientId}
+              flag={2}
+              setActiveAddStudentAccountants={setActiveAddStudentAccountants}
+            />
+          </Modal>
+          <Modal
+            title="Add Agency"
+            visible={activeAddStudentAgency}
+            footer={null}
+            onCancel={() => setActiveAddStudentAgency(false)}
+            width={600}
+          >
+            <EmployeeRegistrationForm
+              clientId={clientId}
+              flag={3}
+              setActiveAddStudentAccountants={setActiveAddStudentAccountants}
             />
           </Modal>
 
@@ -715,17 +795,19 @@ const SalesAdmins = ({ clientId }) => {
               <div className="flex items-center gap-2">
                 <button
                   className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
-                  onClick={() => setActiveAddStudentAdmin(true)}
+                  onClick={() => setActiveAddStudentAccountants(true)}
                 >
                   Add Accountant
                 </button>
                 <button
                   className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
                   onClick={() =>
-                    setIsSuspandStatusStudentAdmin(!isSuspandStatusStudentAdmin)
+                    setIsSuspandStatusStudentAccountant(
+                      !isSuspandStatusAccountant
+                    )
                   }
                 >
-                  {isSuspandStatusStudentAdmin ? "Active" : "InActive"}
+                  {isSuspandStatusAccountant ? "Active" : "InActive"}
                 </button>
               </div>
             ) : null}
@@ -734,8 +816,8 @@ const SalesAdmins = ({ clientId }) => {
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-6 px-4">
-          {allStudnetAdmin.length ? (
-            allStudnetAdmin.map((employee, i) => (
+          {allStudnetAccountants.length ? (
+            allStudnetAccountants.map((employee, i) => (
               <div key={i} className="flex ">
                 {/* <div
                   className={`${
@@ -789,15 +871,15 @@ const SalesAdmins = ({ clientId }) => {
 
                       <button
                         className={`border px-1 py-0.5 text-xs rounded-md font-semibold  mt-3 ${
-                          isSuspandStatusStudentAdmin
+                          isSuspandStatusAccountant
                             ? " border-green-500 text-green-500"
                             : " border-red-500 text-red-500"
                         }`}
                         onClick={() =>
-                          handleSuspendB2BEmployee(employee?.id, 0)
+                          handleSuspendB2BEmployeeAccount(employee?.id, 0)
                         }
                       >
-                        {!isSuspandStatusStudentAdmin ? "Suspend" : "ReAssign"}
+                        {!isSuspandStatusAccountant ? "Suspend" : "ReAssign"}
                       </button>
                     </div>
                   ) : null}
@@ -850,6 +932,171 @@ const SalesAdmins = ({ clientId }) => {
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
                       onClick={() => {
                         handleSuspendB2BEmployee(employee?.id);
+                      }}
+                    >
+                      Reassign
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* Agency Box */}
+
+      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+        <div className=" sticky top-0 w-full bg-slate-100">
+          <hr />
+          <div className="flex items-center">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
+              Agency
+            </h1>
+
+            {(parseInt(userDetails?.userInfo?.client_id) ===
+              parseInt(clientId) &&
+              userDetails?.userInfo?.role_id === 1) ||
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4 ? (
+              <div className="flex items-center gap-2">
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() => setActiveAddStudentAgency(true)}
+                >
+                  Add Agency
+                </button>
+                <button
+                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color "
+                  onClick={() =>
+                    setIsSuspandStatusStudentAgency(!isSuspandStatusAgency)
+                  }
+                >
+                  {isSuspandStatusAgency ? "Active" : "InActive"}
+                </button>
+              </div>
+            ) : null}
+          </div>
+          <hr />
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-6 px-4">
+          {allStudnetAgencys.length ? (
+            allStudnetAgencys.map((employee, i) => (
+              <div key={i} className="flex ">
+                {/* <div
+                  className={`${
+                    avatarColor[Math.floor(Math.random() * 10) + 1]
+                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
+                >
+                  {(employee?.full_name).slice(0, 2)}
+                </div> */}
+                <Avatar
+                  className="rounded-full cursor-pointer"
+                  size="38"
+                  // color={Avatar.getRandomColor("sitebase", [
+                  //   "red",
+                  //   "green",
+                  //   "#728FCE",
+                  //   "violet",
+                  //   "#2B547E",
+                  //   "black",
+                  //   "#87AFC7",
+                  //   "Lime",
+                  //   "#D5D6EA",
+                  //   "#77BFC7",
+                  //   "orange",
+                  //   "#FDD017",
+                  //   "#665D1E",
+                  // ])}
+                  name={employee?.student_admin_name}
+                />
+                <div className="ml-4">
+                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
+                    {employee?.student_admin_name}
+                  </h1>
+                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
+                    {employee?.email}
+                  </p>
+
+                  {userDetails?.userInfo?.role_id === 1 ||
+                  userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ? (
+                    <div>
+                      {(userDetails?.userInfo?.role_id === 1 ||
+                        userDetails?.userInfo?.role_id === 2) && (
+                        <button
+                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
+                          onClick={() => handleRemoveUser(employee?.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+
+                      <button
+                        className={`border px-1 py-0.5 text-xs rounded-md font-semibold  mt-3 ${
+                          isSuspandStatusAgency
+                            ? " border-green-500 text-green-500"
+                            : " border-red-500 text-red-500"
+                        }`}
+                        onClick={() =>
+                          handleSuspendB2BEmployeeAgency(employee?.id, 0)
+                        }
+                      >
+                        {!isSuspandStatusAgency ? "Suspend" : "ReAssign"}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))
+          ) : (
+            <h1 className="font-semibold text-base text-">
+              No Employee Added Yet
+            </h1>
+          )}
+        </div>
+
+        {inactiveSalesEmployees.length ? (
+          <div className="mt-10">
+            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
+              Inactive Sales Admins
+            </h1>
+            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+              {inactiveSalesEmployees.map((employee, i) => (
+                <div key={i} className="flex ">
+                  <Avatar
+                    className="rounded-full cursor-pointer"
+                    size="38"
+                    // color={Avatar.getRandomColor("sitebase", [
+                    //   "red",
+                    //   "green",
+                    //   "#728FCE",
+                    //   "violet",
+                    //   "#2B547E",
+                    //   "black",
+                    //   "#87AFC7",
+                    //   "Lime",
+                    //   "#D5D6EA",
+                    //   "#77BFC7",
+                    //   "orange",
+                    //   "#FDD017",
+                    //   "#665D1E",
+                    // ])}
+                    name={employee?.full_name}
+                  />
+                  <div className="ml-4">
+                    <h1 className="text-red-500 font-semibold text-lg leading-5">
+                      {employee?.full_name}
+                    </h1>
+                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                      {employee?.email}
+                    </p>
+                    <button
+                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                      onClick={() => {
+                        handleSuspendB2BEmployeeAgency(employee?.id);
                       }}
                     >
                       Reassign

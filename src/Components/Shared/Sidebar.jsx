@@ -243,7 +243,11 @@ const Sidebar = ({
             </div>
           </div> */}
 
-          {userDetails?.userInfo?.role_id !== 6 &&
+          {userDetails?.userInfo?.role_id !== 10 &&
+            userDetails?.userInfo?.role_id !== 9 &&
+            userDetails?.userInfo?.role_id !== 8 &&
+            userDetails?.userInfo?.role_id !== 7 &&
+            userDetails?.userInfo?.role_id !== 6 &&
             userDetails?.userInfo?.role !== 1 &&
             userDetails?.userInfo?.role !== 2 && (
               <div>
@@ -290,7 +294,11 @@ const Sidebar = ({
               </div>
             )}
 
-          {userDetails?.userInfo?.role_id !== 6 &&
+          {userDetails?.userInfo?.role_id !== 10 &&
+            userDetails?.userInfo?.role_id !== 9 &&
+            userDetails?.userInfo?.role_id !== 8 &&
+            userDetails?.userInfo?.role_id !== 7 &&
+            userDetails?.userInfo?.role_id !== 6 &&
             userDetails?.userInfo?.role !== 1 &&
             userDetails?.userInfo?.role !== 2 && (
               <div>
@@ -549,9 +557,40 @@ const Sidebar = ({
               )}
             </NavLink>
           </div> */}
+          {/* Agency menu items start  */}
+          {(userDetails?.userInfo?.role_id === 10 ||
+            userDetails?.userInfo?.role_id === 9 ||
+            userDetails?.userInfo?.role_id === 8 ||
+            userDetails?.userInfo?.role_id === 7) && (
+            <div>
+              <NavLink
+                to={"/studentManagement"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${
+                    active === "studentManagement" ? "#7037FF" : "#7C8DB5"
+                  }`,
+                }}
+                onClick={() => setActive("studentManagement")}
+              >
+                <Icons.Pricing />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Student Management
+                </span>
+                {active === "studentManagement" && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </NavLink>
+            </div>
+          )}
+          {/* Agency menu items end */}
 
-          {userDetails?.userInfo?.role !== 1 &&
-            userDetails?.userInfo?.role !== 2 && (
+          {userDetails?.userInfo?.role_id !== 10 &&
+            userDetails?.userInfo?.role_id !== 9 &&
+            userDetails?.userInfo?.role_id !== 8 &&
+            userDetails?.userInfo?.role_id !== 7 && (
               <Menu
                 style={{
                   width: 226,
@@ -586,33 +625,6 @@ const Sidebar = ({
                 ]}
               />
             )}
-          {/* Agency menu items start  */}
-          {(userDetails?.userInfo?.role === 1 ||
-            userDetails?.userInfo?.role === 2) && (
-            <div>
-              <NavLink
-                to={"/studentManagement"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${
-                    active === "studentManagement" ? "#7037FF" : "#7C8DB5"
-                  }`,
-                }}
-                onClick={() => setActive("studentManagement")}
-              >
-                <Icons.Pricing />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Student Management
-                </span>
-                {active === "studentManagement" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
-                    |
-                  </div>
-                )}
-              </NavLink>
-            </div>
-          )}
-          {/* Agency menu items end */}
 
           <div className="lg:mt-20 2xl:mt-36 pt-1.5">
             <div
