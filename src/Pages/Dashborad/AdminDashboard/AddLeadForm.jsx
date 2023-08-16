@@ -147,60 +147,73 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         values: [leadData.work_location],
       },
     ]);
-
-    const addLeadResponse = await handleAddLead(details);
-
-    if (addLeadResponse?.status === 201) {
-      message.success("Lead added successfully");
-      setIsAddLeadFormOpen(false);
-
-      const responseData = { ...addLeadResponse.data };
-
-      responseData["course_code"] = `${
-        courses?.find(
-          (course) => course?.id === addLeadResponse?.data?.course_id
-        )?.course_title
-      }`;
-
-      responseData["course_title"] = `${
-        courses?.find(
-          (course) => course?.id === addLeadResponse?.data?.course_id
-        )?.course_title
-      }`;
-
-      dispatch(
-        addLeads([
-          {
-            ...addLeadResponse?.data,
-            course_title: courseList?.find(
-              (course) => course?.id === addLeadResponse?.data?.course_id
-            )?.course_title,
-            course_code: courseList?.find(
-              (course) => course?.id === addLeadResponse?.data?.course_id
-            )?.course_code,
-          },
-          ...leads,
-        ])
-      );
-      setLeadData({
-        full_name: "",
-        phone_number: "",
-        student_email: "",
-        client_id: userDetails?.client_id,
-        industry: "",
-        lead_from: "",
-        form_data: "",
-        industry_qualified_immediately: "",
-        industry_work_experience: "",
-        academic_qualifications: "",
-        course_id: null,
-        work_location: "",
-        work_experiences_location: "",
-      });
-
-      dispatch(setLoader(false));
+    if (leadData.full_name === "") {
+      message.warning("Student Name Required");
+    } else if (leadData.phone_number === "") {
+      message.warning("Student Phone Number Required");
+    } else if (leadData.student_email === "") {
+      message.warning("Student Mail Required");
+    } else if (leadData.industry === "") {
+      message.warning("Industry Required");
+    } else if (leadData.work_location === "") {
+      message.warning("Living Location Required");
+    } else if (leadData.course_id === "") {
+      message.warning("Course Name Required");
     } else {
-      message.warn("Something went wrong");
+      const addLeadResponse = await handleAddLead(details);
+
+      if (addLeadResponse?.status === 201) {
+        message.success("Lead added successfully");
+        setIsAddLeadFormOpen(false);
+
+        const responseData = { ...addLeadResponse.data };
+
+        responseData["course_code"] = `${
+          courses?.find(
+            (course) => course?.id === addLeadResponse?.data?.course_id
+          )?.course_title
+        }`;
+
+        responseData["course_title"] = `${
+          courses?.find(
+            (course) => course?.id === addLeadResponse?.data?.course_id
+          )?.course_title
+        }`;
+
+        dispatch(
+          addLeads([
+            {
+              ...addLeadResponse?.data,
+              course_title: courseList?.find(
+                (course) => course?.id === addLeadResponse?.data?.course_id
+              )?.course_title,
+              course_code: courseList?.find(
+                (course) => course?.id === addLeadResponse?.data?.course_id
+              )?.course_code,
+            },
+            ...leads,
+          ])
+        );
+        setLeadData({
+          full_name: "",
+          phone_number: "",
+          student_email: "",
+          client_id: userDetails?.client_id,
+          industry: "",
+          lead_from: "",
+          form_data: "",
+          industry_qualified_immediately: "",
+          industry_work_experience: "",
+          academic_qualifications: "",
+          course_id: null,
+          work_location: "",
+          work_experiences_location: "",
+        });
+
+        dispatch(setLoader(false));
+      } else {
+        message.warn("Something went wrong");
+      }
     }
   };
 

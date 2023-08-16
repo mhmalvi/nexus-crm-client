@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
+import AddCourseModal from "./AddCourseModal";
 
 const CourseList = ({
   courses,
@@ -19,6 +20,7 @@ const CourseList = ({
   // edit course details modal funtionality
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
+  const [addCourseOpen, setAddCourseOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
@@ -207,6 +209,13 @@ const CourseList = ({
     <div>
       <div className="w-full flex items-center justify-between mb-12">
         <div className="text-xl font-semibold">All Courses</div>
+        <Button
+          type="primary"
+          onClick={() => setAddCourseOpen(true)}
+          className=" !rounded"
+        >
+          Add Course
+        </Button>
         {/* <div className="flex items-center">
               <h1 className="px-2 bg-gray-100 py-1 mb-0 border">
                 Course Name:{" "}
@@ -259,6 +268,12 @@ const CourseList = ({
         id={courseId}
         setCourses={setCourses}
         courseListLoading={courseListLoading}
+        setCourseListLoading={setCourseListLoading}
+      />
+      <AddCourseModal
+        addCourseOpen={addCourseOpen}
+        setAddCourseOpen={setAddCourseOpen}
+        setCourses={setCourses}
         setCourseListLoading={setCourseListLoading}
       />
     </div>
