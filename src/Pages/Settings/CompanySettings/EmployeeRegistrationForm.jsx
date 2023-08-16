@@ -68,20 +68,21 @@ const EmployeeRegistrationForm = ({
       });
       console.log("employeeAddResponse", employeeAddResponse);
 
-      const sendRegistrationMail = await handleRegistrationResponseMail({
-        full_name: registrationResponse?.data?.user_name,
-        email: registrationResponse?.data?.user_email,
-        password: registrationResponse?.data?.password,
-      });
+      // const sendRegistrationMail = await handleRegistrationResponseMail({
+      //   full_name: registrationResponse?.data?.user_name,
+      //   email: registrationResponse?.data?.user_email,
+      //   password: registrationResponse?.data?.password,
+      // });
 
-      if (sendRegistrationMail === "success") {
-        dispatch(setLoader(false));
-        window.location.reload();
-      }
+      // if (sendRegistrationMail === "success") {
+      //   dispatch(setLoader(false));
+      //   window.location.reload();
+      // }
 
       if (employeeAddResponse?.status === true) {
         message.success("Employee Added Successfully");
-
+        dispatch(setLoader(false));
+        window.location.reload();
         if (roleId === 4) {
           setActiveAddSupervisor(false);
         }

@@ -50,6 +50,8 @@ const AdminDashboard = () => {
     (async () => {
       const response = await handleFetchLeads({
         client_id: userDetails?.userInfo?.client_id,
+        user_id: userDetails?.userInfo?.user_id,
+        role_id: userDetails?.userInfo?.role_id,
       });
 
       if (response?.data) {
