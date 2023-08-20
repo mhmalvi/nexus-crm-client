@@ -560,7 +560,6 @@ const Sidebar = ({
           {/* Agency menu items start  */}
           {(userDetails?.userInfo?.role_id === 10 ||
             userDetails?.userInfo?.role_id === 9 ||
-            userDetails?.userInfo?.role_id === 8 ||
             userDetails?.userInfo?.role_id === 7) && (
             <div>
               <NavLink
@@ -586,6 +585,32 @@ const Sidebar = ({
             </div>
           )}
           {/* Agency menu items end */}
+          {/* // Accountant menu items */}
+          {userDetails?.userInfo?.role_id === 8 && (
+            <div>
+              <NavLink
+                to={"/courseManagement"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${
+                    active === "courseManagement" ? "#7037FF" : "#7C8DB5"
+                  }`,
+                }}
+                onClick={() => setActive("courseManagement")}
+              >
+                <Icons.Pricing />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Course Management
+                </span>
+                {active === "courseManagement" && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </NavLink>
+            </div>
+          )}
+          {/* // Accountant menu end */}
 
           {userDetails?.userInfo?.role_id !== 10 &&
             userDetails?.userInfo?.role_id !== 9 &&

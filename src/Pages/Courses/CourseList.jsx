@@ -238,6 +238,7 @@ const CourseList = ({
       {/* Courses */}
       <div>
         <Table
+          className=" border rounded-2xl"
           loading={courseListLoading}
           style={{
             textTransform: "uppercase",

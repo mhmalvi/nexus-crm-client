@@ -40,6 +40,7 @@ import ManageStudnet from "../StudentManagement/index";
 import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
 import NotifyModal from "../Notifications/NotifyModal.jsx";
+import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -465,6 +466,14 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "Student Management",
     component: <ManageStudnet />,
+    count: 0,
+  },
+  {
+    key: "courseManagement",
+    name: "courseManagement",
+    // icon: <Icons.Campaigns />,
+    label: "Course Management",
+    component: <CourseMangemnet />,
     count: 0,
   },
   {
