@@ -86,15 +86,15 @@ function ManagerDashboard() {
                     //   "#FDD017",
                     //   "#665D1E",
                     // ])}
-                    name={ProfileDetails?.name}
+                    name={ProfileDetails?.full_name}
                   />
                 </div>
                 <div className="flex-col font-poppins my-auto">
-                  <div className="text-lg">{ProfileDetails?.name}</div>
+                  <div className="text-lg">{ProfileDetails?.full_name}</div>
                   <div className="text-xs">
                     Phone NUMBER:
                     <span className="font-semibold px-1">
-                      {ProfileDetails?.phone}
+                      {ProfileDetails?.contact_number}
                     </span>
                   </div>
                 </div>
@@ -115,9 +115,9 @@ function ManagerDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 my-10 mx-2 gap-8">
             <div>
               <div className="flex-col">
-                <div className="text-xs text-[#808080]">Manager Name</div>
+                <div className="text-xs text-[#808080]">Student Admin Name</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.name}
+                  {ProfileDetails?.full_name}
                 </div>
               </div>
             </div>
@@ -133,10 +133,18 @@ function ManagerDashboard() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Phone Number</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.phone}
+                  {ProfileDetails?.contact_number}
                 </div>
               </div>
             </div>
+            {/* <div>
+              <div className="flex-col">
+                <div className="text-xs text-[#808080]">Address</div>
+                <div className="font-semibold truncate">
+                  {ProfileDetails?.address}
+                </div>
+              </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -393,3 +393,21 @@ export const handleInvoiceGenerate = async (id, data) => {
     return error.response;
   }
 };
+//
+export const handleCourseCheckListInsert = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/add-course-by-accountant`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};

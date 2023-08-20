@@ -16,8 +16,8 @@ const MangeStudent = () => {
 
   return (
     <>
-      <div>{userDetails?.role === 1 && <StudentdetailsAgency />}</div>
-      <div>{userDetails?.role === 2 && <StudentList />}</div>
+      <div>{userDetails?.role_id === 9 && <StudentdetailsAgency />}</div>
+      <div>{userDetails?.role_id === 7 && <StudentList />}</div>
     </>
   );
 };

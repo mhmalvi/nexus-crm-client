@@ -31,6 +31,23 @@ export const handleFetchLeads = async (details) => {
     return error.response;
   }
 };
+export const handleAddCourse = async (details) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/add-course`,
+      details,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const handleUploadLeadFile = async (fileDetails) => {
   const config = {
