@@ -1,4 +1,4 @@
-import { AutoComplete, Dropdown, Menu, Radio, message } from "antd";
+import { AutoComplete, Button, Dropdown, Menu, Radio, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,6 +15,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
 
   const [courses, setCourses] = useState([]);
   const [courseList, setCourseList] = useState([]);
+  const [isCreating, setIsCreating] = useState(false);
   // const [campaigns, setCampaigns] = useState([]);
   // const [campaignList, setCampaignList] = useState([]);
 
@@ -114,8 +115,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   console.log("leadData", leadData);
 
   const handleAddLeadReq = async () => {
-    dispatch(setLoader(true));
-
     const details = { ...leadData };
     details.form_data = JSON.stringify([
       {
@@ -153,6 +152,13 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
       message.warning("Student Phone Number Required");
     } else if (leadData.student_email === "") {
       message.warning("Student Mail Required");
+    } else if (
+      !leadData.student_email.includes("@") &&
+      !leadData.student_email.includes(".")
+    ) {
+      message.warning(
+        "Email are not Valid it should be like this example@mail.com"
+      );
     } else if (leadData.industry === "") {
       message.warning("Industry Required");
     } else if (leadData.work_location === "") {
@@ -160,9 +166,13 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     } else if (leadData.course_id === "") {
       message.warning("Course Name Required");
     } else {
+      setIsCreating(true);
+      dispatch(setLoader(true));
       const addLeadResponse = await handleAddLead(details);
 
       if (addLeadResponse?.status === 201) {
+        setIsCreating(false);
+        dispatch(setLoader(false));
         message.success("Lead added successfully");
         setIsAddLeadFormOpen(false);
 
@@ -211,8 +221,14 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         });
 
         dispatch(setLoader(false));
+        window.location.reload();
       } else {
-        message.warn("Something went wrong");
+        message.warn(
+          addLeadResponse?.data?.errors?.student_email[0] ||
+            "Something went wrong"
+        );
+
+        setIsCreating(false);
       }
     }
   };
@@ -257,6 +273,25 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     const data = { ...leadData };
     data.academic_qualifications = e.target.value;
     setLeadData(data);
+  };
+  const onCancle = () => {
+    dispatch(setLoader(false));
+    setLeadData({
+      full_name: "",
+      phone_number: "",
+      student_email: "",
+      client_id: userDetails?.client_id,
+      industry: "",
+      lead_from: "",
+      form_data: "",
+      industry_qualified_immediately: "",
+      industry_work_experience: "",
+      academic_qualifications: "",
+      course_id: null,
+      work_location: "",
+      work_experiences_location: "",
+    });
+    setIsAddLeadFormOpen(false);
   };
 
   const workLocation = (
@@ -571,16 +606,17 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         <div className="flex items-center justify-end py-4">
           <div
             className="px-4 py-1.5 mr-4 bg-red-600 text-white text-sm font-normal font-poppins rounded-md cursor-pointer shadow"
-            onClick={() => setIsAddLeadFormOpen(false)}
+            onClick={onCancle}
           >
             Cancel
           </div>
-          <div
-            className="px-4 py-1.5 bg-black text-white text-sm font-normal font-poppins rounded-md cursor-pointer shadow"
+          <Button
+            loading={isCreating}
+            className="!border-none !text-white !bg-green-500 !rounded"
             onClick={handleAddLeadReq}
           >
-            Add
-          </div>
+            {isCreating ? "Adding" : "Add"}
+          </Button>
         </div>
       </div>
     </div>
