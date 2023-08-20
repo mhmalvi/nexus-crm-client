@@ -1,9 +1,10 @@
-import { message, Popconfirm, Upload } from "antd";
+import { Button, message, Popconfirm, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import companyIcon from "../../../assets/Images/company_icon.png";
 import {
+  handleCompanyDelete,
   handleCompanyStatusUpdate,
   handleFetchCompanyDetails,
   handleRefreshCompanyFBToken,
@@ -38,7 +39,7 @@ const CompanyDetails = () => {
   const [syncDetails, setSyncDetails] = useState(false);
   const [syncEmployees, setSyncEmployees] = useState(false);
   const [packageEndTime, setpackageEndTime] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     // const someDate = new Date();
     // const result = new Date().setDate(someDate.getDate() + 50);
@@ -214,8 +215,15 @@ const CompanyDetails = () => {
       }
     }
   };
-
-  console.log("companyDetails for Super Admin", companyDetails);
+  const DeleteCompany = async () => {
+    const res = await handleCompanyDelete(id);
+    if (res?.status === 201) {
+      message.success("Company deleted successfully");
+      navigate(-1);
+    } else {
+      message.warn("Something went wrong!");
+    }
+  };
 
   return (
     <div className="mx-6 py-12">
@@ -300,7 +308,7 @@ const CompanyDetails = () => {
                     ) : null}
                   </div>
 
-                  <div>
+                  <div className="flex items-center gap-1">
                     {companyDetails?.active === 0 ? (
                       <Popconfirm
                         title="Are you sure to add this Company?"
@@ -330,6 +338,19 @@ const CompanyDetails = () => {
                         </div>
                       </Popconfirm>
                     )}
+                    <Popconfirm
+                      title="Are you sure to delete this company?"
+                      onConfirm={DeleteCompany}
+                      okText="Delete"
+                      cancelText="Cancel"
+                    >
+                      <Button
+                        size="small"
+                        className="!rounded-lg !text-[12px] !font-bold"
+                      >
+                        Delete Company
+                      </Button>
+                    </Popconfirm>
                   </div>
                 </div>
 

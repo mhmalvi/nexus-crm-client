@@ -19,6 +19,7 @@ const EmployeeRegistrationForm = ({
   syncEmployees,
   setSyncEmployees,
   setActiveAddStudentAdmin,
+  setActiveAddStudentAccountants,
   flag,
 }) => {
   console.log("flag: ", flag);
@@ -29,6 +30,9 @@ const EmployeeRegistrationForm = ({
     full_name: "",
     email: "",
     contact_number: "",
+    abn_number: "",
+    website: "",
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -45,7 +49,8 @@ const EmployeeRegistrationForm = ({
     dispatch(setLoader(true));
     const registrationResponse = await handleRegistration({
       ...employeeDetails,
-      role_id: (flag === 1 && 7) || roleId,
+      role_id:
+        (flag === 1 && 7) || (flag === 2 && 8) || (flag === 3 && 9) || roleId,
     });
 
     console.log("registrationResponse <><><>", registrationResponse);
@@ -63,19 +68,21 @@ const EmployeeRegistrationForm = ({
       });
       console.log("employeeAddResponse", employeeAddResponse);
 
-      const sendRegistrationMail = await handleRegistrationResponseMail({
-        full_name: registrationResponse?.data?.user_name,
-        email: registrationResponse?.data?.user_email,
-        password: registrationResponse?.data?.password,
-      });
+      // const sendRegistrationMail = await handleRegistrationResponseMail({
+      //   full_name: registrationResponse?.data?.user_name,
+      //   email: registrationResponse?.data?.user_email,
+      //   password: registrationResponse?.data?.password,
+      // });
 
-      if (sendRegistrationMail === "success") {
-        dispatch(setLoader(false));
-      }
+      // if (sendRegistrationMail === "success") {
+      //   dispatch(setLoader(false));
+      //   window.location.reload();
+      // }
 
       if (employeeAddResponse?.status === true) {
         message.success("Employee Added Successfully");
-
+        dispatch(setLoader(false));
+        window.location.reload();
         if (roleId === 4) {
           setActiveAddSupervisor(false);
         }
@@ -86,6 +93,9 @@ const EmployeeRegistrationForm = ({
           full_name: "",
           email: "",
           contact_number: "",
+          abn_number: "",
+          website: "",
+          address: "",
         });
 
         setSyncEmployees(!syncEmployees);
@@ -166,29 +176,104 @@ const EmployeeRegistrationForm = ({
             </label>
           </div>
         </div>
-
-        <div className="w-full flex items-center">
-          <div className="w-full mb-2">
-            <label className="block text-sm font-medium text-gray-700 tracking-wide">
-              Contact
-            </label>
-            <div className="flex justify-start gap-1 my-2">
-              <div className="w-full">
-                <input
-                  name="contact_number"
-                  type="text"
-                  id="contact_number"
-                  maxLength={12}
-                  minLength={9}
-                  className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  placeholder="Contact No."
-                  value={employeeDetails.contact_number}
-                  onChange={handleChange}
-                />
+        {flag !== 3 && (
+          <div className="w-full flex items-center">
+            <div className="w-full mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                Contact
+              </label>
+              <div className="flex justify-start gap-1 my-2">
+                <div className="w-full">
+                  <input
+                    name="contact_number"
+                    type="text"
+                    id="contact_number"
+                    maxLength={12}
+                    minLength={9}
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Contact No."
+                    value={employeeDetails.contact_number}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+        {flag === 3 && (
+          <div className="w-full flex items-center">
+            <div className="w-full mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                ABN Number
+              </label>
+              <div className="flex justify-start gap-1 my-2">
+                <div className="w-full">
+                  <input
+                    name="abn_number"
+                    type="text"
+                    id="abn_number"
+                    maxLength={12}
+                    minLength={9}
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="ABN Number"
+                    value={employeeDetails.abn_number}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {flag === 3 && (
+          <div className="w-full flex items-center">
+            <div className="w-full mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                Website
+              </label>
+              <div className="flex justify-start gap-1 my-2">
+                <div className="w-full">
+                  <input
+                    name="website"
+                    type="text"
+                    id="website"
+                    maxLength={12}
+                    minLength={9}
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Web address"
+                    value={employeeDetails.website}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {flag === 3 && (
+          <div className="w-full flex items-center">
+            <div className="w-full mb-2">
+              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+                Address
+              </label>
+              <div className="flex justify-start gap-1 my-2">
+                <div className="w-full">
+                  <textarea
+                    rows={5}
+                    cols={5}
+                    name="address"
+                    type="text"
+                    id="address"
+                    maxLength={12}
+                    minLength={9}
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    placeholder="Address"
+                    value={employeeDetails.address}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="pt-10 pb-6">
           <button
             className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-white"

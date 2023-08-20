@@ -30,6 +30,7 @@ import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Landing from "./Pages/LandingPage2/Landing";
 import Register from "./Pages/Authentication/Register/Register";
 import MangeStudent from "./Pages/StudentManagement";
+import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 
 function App() {
   // useEffect(() => {
@@ -55,6 +56,7 @@ function App() {
           <Route path="courses" element={<Campaigns />} />
           <Route path="salesEmployee" element={<Sales />} />
           <Route path="studentManagement" element={<MangeStudent />} />
+          <Route path="courseManagement" element={<CourseMangemnet />} />
           <Route path="calender" element={<Calender />} />
           <Route path="requisitions" element={<RequisitionTable />} />
           {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}

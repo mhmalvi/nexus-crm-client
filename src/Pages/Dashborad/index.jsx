@@ -219,12 +219,8 @@ const Dashboard = () => {
               userDetails?.userInfo?.role_id === 4 ||
               userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
             {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
-          </div>
-        )}
-        {userDetails?.userInfo?.role && (
-          <div>
-            {userDetails?.userInfo?.role === 1 && <AgencyDashboard />}
-            {userDetails?.userInfo?.role === 2 && <ManagerDashboard />}
+            {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
+            {userDetails?.userInfo?.role_id === 7 && <ManagerDashboard />}
           </div>
         )}
       </div>

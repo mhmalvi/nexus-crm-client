@@ -184,6 +184,22 @@ export const handleCompanyStatusUpdate = async (companyId, status) => {
     return error.response;
   }
 };
+export const handleCompanyDelete = async (companyId) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${process.env?.REACT_APP_COMPANY_URL}/api/company_id=${companyId}/company-destroy`,
+      config
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const handleFetchStudentsPaymentHistory = async (userId) => {
   try {

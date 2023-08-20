@@ -46,7 +46,6 @@ const CompanySettings = () => {
         userDetails?.userInfo?.client_id
       );
 
-      console.log("Cooool", companyDetailsResponse?.data?.[0].logo_id);
       if (companyDetailsResponse?.status) {
         if (companyDetailsResponse?.data?.[0]?.logo_id) {
           const fetchFile = await handleFetchFile(

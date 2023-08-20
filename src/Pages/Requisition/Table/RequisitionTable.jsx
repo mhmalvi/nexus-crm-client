@@ -67,6 +67,7 @@ const RequisitionTable = ({
   };
 
   const HandleApprove = async (id) => {
+    message.error("i am entered");
     const approveRequisitionResponse = await handleUpdateRequisitions(id, 1);
 
     if (approveRequisitionResponse?.key === "success") {

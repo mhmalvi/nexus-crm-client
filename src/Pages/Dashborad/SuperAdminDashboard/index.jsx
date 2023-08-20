@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CloseOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import companyIcon from "../../../assets/Images/company_icon.png";
 import { handleFetchCompanies } from "../../../Components/services/company";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader, setCompanyId } from "../../../features/user/userSlice";
+import { Popconfirm, message } from "antd";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -23,20 +25,23 @@ const SuperAdminDashboard = () => {
       console.log("companiesResponse", companiesResponse);
 
       if (companiesResponse?.status === true) {
-        if(companiesResponse){
-          if(companiesResponse?.data){
+        if (companiesResponse) {
+          if (companiesResponse?.data) {
             // if(companiesResponse?.length){
-              setCompanies(
-                companiesResponse?.data?.filter((company) => !company?.super_admin)
-              );
-              setStoreCompanies(
-                companiesResponse?.data?.filter((company) => !company?.super_admin)
-              );
-              dispatch(setLoader(false));
+            setCompanies(
+              companiesResponse?.data?.filter(
+                (company) => !company?.super_admin
+              )
+            );
+            setStoreCompanies(
+              companiesResponse?.data?.filter(
+                (company) => !company?.super_admin
+              )
+            );
+            dispatch(setLoader(false));
             // }
           }
         }
-       
       }
     })();
   }, [dispatch]);
@@ -109,8 +114,8 @@ const SuperAdminDashboard = () => {
                 key={i}
                 to={`company/${company?.id}`}
                 className="border h-48 border-gray-600 border-opacity-70 px-4 py-3 rounded-2xl cursor-pointer"
-                onClick={()=>{
-                  dispatch(setCompanyId(company?.id))
+                onClick={() => {
+                  dispatch(setCompanyId(company?.id));
                 }}
               >
                 <div className="my-4 relative">
