@@ -15,6 +15,7 @@ import SuperAdminDashboard from "./SuperAdminDashboard";
 import UserDashboard from "./UserDashboard";
 import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
+import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -221,6 +222,7 @@ const Dashboard = () => {
             {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
             {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
             {userDetails?.userInfo?.role_id === 7 && <ManagerDashboard />}
+            {userDetails?.userInfo?.role_id === 8 && <AccountantDashboard />}
           </div>
         )}
       </div>
