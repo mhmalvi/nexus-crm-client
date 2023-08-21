@@ -411,3 +411,19 @@ export const handleCourseCheckListInsert = async (data) => {
     return error.response;
   }
 };
+export const handleCourseCheckLists = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/get-course-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
