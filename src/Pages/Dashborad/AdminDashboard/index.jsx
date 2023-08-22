@@ -109,14 +109,45 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const headers = [
+      // {
+      //   title: "Lead ID",
+      //   dataIndex: "lead_id",
+      //   key: "lead_id",
+      //   fixed: true,
+      //   render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
+      //   width: 150,
+      //   ...getColumnSearchProps("lead_id"),
+      // },
       {
-        title: "Lead ID",
-        dataIndex: "lead_id",
-        key: "lead_id",
-        fixed: true,
-        render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
-        width: 150,
-        ...getColumnSearchProps("lead_id"),
+        title: "Assigned To",
+        dataIndex: "sales_user_id",
+        key: "sales_user_id",
+        render: (sales_user_id) => (
+          <div className="flex items-center">
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) &&
+            sales_user_id !== 0 ? (
+              <div className="ml-3">
+                {/* <Avatar
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="30"
+                  color="#1f262a"
+                  name={
+                    companyEmployeeList?.find(
+                      (employee) => employee?.id === sales_user_id
+                    )?.full_name
+                  }
+                /> */}
+              </div>
+            ) : null}
+            {
+              companyEmployeeList?.find(
+                (employee) => employee?.id === sales_user_id
+              )?.full_name
+            }
+          </div>
+        ),
       },
       {
         title: "Date",
@@ -211,33 +242,6 @@ const AdminDashboard = () => {
                   <div className="ml-1">{lead_status.title}</div>
                 </div>
               ))}
-          </div>
-        ),
-        width: 120,
-      },
-      {
-        title: "Assigned To",
-        dataIndex: "sales_user_id",
-        key: "sales_user_id",
-        render: (sales_user_id) => (
-          <div className="flex items-center">
-            {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) &&
-            sales_user_id !== 0 ? (
-              <div className="ml-3">
-                <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
-                  name={
-                    companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
-                    )?.full_name
-                  }
-                />
-              </div>
-            ) : null}
           </div>
         ),
         width: 120,

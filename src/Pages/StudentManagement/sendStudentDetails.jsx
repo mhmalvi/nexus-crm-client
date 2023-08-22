@@ -9,22 +9,44 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 import CreateStudentModal from "./CreateStudentModal";
 import StudentdetailsAgency from "./StudentdetailsAgency";
+import { useEffect } from "react";
+import { handleClientwiseCourseDetails } from "../../Components/services/leads";
 
 const SendStudentDetails = ({
   data,
   setData,
-  fileName,
-  setFileName,
   files,
   setFiles,
+  photoFile,
+  setPhotoFIle,
+  resumeFile,
+  setResumeFIle,
+  letterFile,
+  setLetterFIle,
+  visaFile,
+  setVisaFIle,
+  academicFile,
+  setAcademicFIle,
+  photoVidoeFile,
+  setPhotoVideoFIle,
+  usiFile,
+  setUsiFIle,
+  payFile,
+  setpayFIle,
   setListData,
   setStudentListLoading,
   setCreateOpen,
+  course,
+  setCourse,
+  courseList,
+  setCourseList,
 }) => {
   const navigate = useNavigate();
   // const [files, setFiles] = useState([]);
   // const [fileName, setFileName] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [courseListLoading, setCourseListLoading] = useState(false);
+
   const userDetails = useSelector(
     (state) => state?.user?.userInfo,
     shallowEqual
@@ -33,6 +55,22 @@ const SendStudentDetails = ({
   //   student_name: "",
   //   course_name: "",
   // });
+  useEffect(() => {
+    (async () => {
+      setCourseListLoading(true);
+      const res = await handleClientwiseCourseDetails();
+      if (res?.status === 200) {
+        setCourseListLoading(false);
+        const data = [];
+        res?.data?.map((item, idx) =>
+          data.push({ value: item?.id, label: item?.course_title })
+        );
+        setCourseList(data);
+      } else {
+        setCourseListLoading(false);
+      }
+    })();
+  }, [setCourseList]);
   const userData = (e) => {
     const userdata = { ...data };
     userdata[e.target.id] = e.target.value;
@@ -44,27 +82,69 @@ const SendStudentDetails = ({
 
     const files = Object.values(e?.target?.files);
     setFiles(files);
-    setFileName(files);
     console.log("fdatas: ", files);
+  };
+  function handlePhotoUpload(e) {
+    setPhotoFIle(e.target.files[0]);
+  }
+  function handleResumeUpload(e) {
+    setResumeFIle(e.target.files[0]);
+  }
+  function handleLetterUpload(e) {
+    setLetterFIle(e.target.files[0]);
+  }
+  function handleVisaUpload(e) {
+    setVisaFIle(e.target.files[0]);
+  }
+  function handleAcademicUpload(e) {
+    setAcademicFIle(e.target.files[0]);
+  }
+  function handlePhotoVideoUpload(e) {
+    setPhotoVideoFIle(e.target.files[0]);
+  }
+  function handleUsiUpload(e) {
+    setUsiFIle(e.target.files[0]);
+  }
+  function handlePayUpload(e) {
+    setpayFIle(e.target.files[0]);
+  }
+
+  const handleChange = (value) => {
+    setCourse(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    files.forEach((file) => formData.append("student_file[]", file));
+
     formData.append("student_name", data.student_name);
     formData.append("course_name", data.course_name);
     formData.append("institute_name", data.institute_name);
     formData.append("user_id", userDetails?.user_id);
 
-    if (files.length <= 0) {
+    if (
+      !photoFile &&
+      !resumeFile &&
+      !letterFile &&
+      !visaFile &&
+      !academicFile &&
+      !photoVidoeFile &&
+      !usiFile &&
+      !payFile
+    ) {
       message.error("Please select files");
     } else {
       setUploadLoading(true);
       const res = await handleSendStudentDetails(formData);
       if (res?.status === 201 && res) {
-        setFiles([]);
-        setFileName([]);
+        setPhotoFIle({});
+        setResumeFIle({});
+        setLetterFIle({});
+        setVisaFIle({});
+        setAcademicFIle({});
+        setPhotoVideoFIle({});
+        setUsiFIle({});
+        setpayFIle({});
         setUploadLoading(false);
         setData({});
         message.success("Send successfully");
@@ -86,6 +166,7 @@ const SendStudentDetails = ({
       }
     }
   };
+  console.log("course lists: ", courseList);
   return (
     <>
       <div className="p-10 w-[90%] mx-auto mt-12">
@@ -107,25 +188,10 @@ const SendStudentDetails = ({
               required
             />
           </div>
+
           <div className="mb-6 font-poppins">
             <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
-              Course Name
-            </label>
-            <Input
-              // type="password"
-              size="large"
-              name="course_name"
-              id="course_name"
-              value={data.course_name}
-              placeholder="Enter course name"
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
-          </div>
-          <div className="mb-6 font-poppins">
-            <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
-              Institute Name
+              RTO Name
             </label>
             <Input
               // type="password"
@@ -139,8 +205,28 @@ const SendStudentDetails = ({
               required
             />
           </div>
+          <div className="mb-6 font-poppins">
+            <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
+              Select Course
+            </label>
+            <Select
+              loading={courseListLoading}
+              // value={role}
+              className="w-full"
+              onChange={handleChange}
+              showSearch
+              placeholder="Select Course"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={courseList || []}
+            />
+          </div>
           <div className="flex items-center gap-4 flex-wrap mb-6">
-            <input
+            {/* <input
               type="file"
               name="file"
               multiple
@@ -169,6 +255,304 @@ const SendStudentDetails = ({
               ) : (
                 ""
               )}
+            </div> */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <input
+                type="file"
+                name="file"
+                id="photo-upload"
+                onChange={handlePhotoUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="photo-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload 100 Points Photo ID</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="resume-upload"
+                onChange={handleResumeUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="resume-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload Resume</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="letter-upload"
+                onChange={handleLetterUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="letter-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload Reference Letter/Details</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="visa-upload"
+                onChange={handleVisaUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="visa-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload Visa Copy</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="academic-upload"
+                onChange={handleAcademicUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="academic-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload Academic Qualification</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="photo-video-upload"
+                onChange={handlePhotoVideoUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="photo-video-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">
+                    Upload Photo Video While Performing Works
+                  </p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="usi-upload"
+                onChange={handleUsiUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="usi-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload USI Number</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="pay-upload"
+                onChange={handlePayUpload}
+                hidden
+              />
+              <div className="flex gap-3 items-center">
+                <label
+                  htmlFor="pay-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Upload Pay Slip</p>
+                </label>
+                <p className="text-[green] text-[16px] mt-2">{""}</p>
+              </div>
+            </div>
+            <div>
+              <input
+                type="file"
+                name="file"
+                multiple
+                id="student-file-upload"
+                onChange={handleCheckListFile}
+                style={{ display: "none" }}
+              />
+              <div className="">
+                <label
+                  htmlFor="student-file-upload"
+                  className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">Attach Other files</p>
+                </label>
+                {files.length > 0 ? (
+                  <ul className="w-[69%] h-[70px] overflow-auto">
+                    {files?.map((item, idx) => {
+                      return (
+                        <li key={idx} className="text-[green] text-[16px] mt-2">
+                          {item?.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
           <div className="mb-6">
