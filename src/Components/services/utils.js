@@ -427,3 +427,20 @@ export const handleCourseCheckLists = async () => {
     return error.response;
   }
 };
+// REMOVE SALES ADMIN
+export const handleRemoveSalesAdmin = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/get-course-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
