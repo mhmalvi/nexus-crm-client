@@ -1,13 +1,17 @@
-import { Button, Form, Input, message, Modal, Select } from "antd";
+import { Button, Form, Input, message, Modal, Popconfirm, Select } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmailTemplatList } from "../../../Components/services/leads";
-import { handleLeadMailUpload } from "../../../Components/services/utils";
+import {
+  handleLeadMailUpload,
+  handleRemoveTemplet,
+} from "../../../Components/services/utils";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
 import AttachModal from "./AttachModal";
+import { CloseOutlined } from "@ant-design/icons";
 
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -94,7 +98,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
     setConfirmLoading(false);
   };
   useEffect(() => {
-    (async () => {
+    async function onSelectTemp() {
       let res = await fetchEmailTemplatList();
 
       let tempList = [];
@@ -103,15 +107,42 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
           tempList.push({
             id: itm?.id,
             value: itm?.template_name,
-            label: itm.template_name,
+            label: (
+              <>
+                <div className="flex justify-between items-center">
+                  <h1>{itm.template_name}</h1>{" "}
+                  <Popconfirm
+                    title="Are you sure to remove this template"
+                    okText="Yes"
+                    onConfirm={async () => {
+                      const resRmTemp = await handleRemoveTemplet(itm?.id);
+                      if (resRmTemp?.status === 201) {
+                        message.success("Template successfully removed");
+                        setTData("");
+                        setTemplateList([{ value: "", label: "" }]);
+                        onSelectTemp();
+                      } else {
+                        message.warn(
+                          resRmTemp?.message ||
+                            "This Template already deleted Select another one/Something went wrong"
+                        );
+                      }
+                    }}
+                  >
+                    <CloseOutlined className="text-red-500" />
+                  </Popconfirm>
+                </div>
+              </>
+            ),
             ...itm,
           })
         // tempList([...tempList, itm])
       );
       staticTempListData && tempList.push(staticTempListData);
       setTemplateList(tempList);
-    })();
-  }, [staticTempListData]);
+    }
+    onSelectTemp();
+  }, [tData, staticTempListData, templateList]);
   const showAddNewTemplateModal = () => {
     setTempOpen(true);
   };
@@ -163,6 +194,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 <h2>Select Mail Template:</h2>
                 <Form.Item label="">
                   <Select
+                    defaultValue={!tData && ""}
                     placeholder="Select Email template"
                     style={{
                       width: 240,

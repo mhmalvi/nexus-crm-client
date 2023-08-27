@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { CloseOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
@@ -11,11 +11,17 @@ import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
 // import Table from "./Table";
-import { Button, Input, Modal, Space, message } from "antd";
+import { Button, Input, Modal, Select, Space, message } from "antd";
 import Avatar from "react-avatar";
 import Highlighter from "react-highlight-words";
 import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
+import {
+  handleAssignLeadToSales,
+  handleFetchSales,
+  handleSalesRemoveLead,
+} from "../../../Components/services/utils";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -45,6 +51,10 @@ const AdminDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [tableHeaders, setTableHeaders] = useState([]);
+  const [salesOptions, setSalesOptions] = useState([]);
+  const [selectedSales, setSelectedSales] = useState("");
+  const [assignLoading, setAssignLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -108,6 +118,184 @@ const AdminDashboard = () => {
   }, [filterDate, leadList]);
 
   useEffect(() => {
+    (async () => {
+      const res = await handleFetchSales(userDetails?.userInfo?.client_id);
+      console.log("my res: ", res);
+      if (res?.status === 200) {
+        const data = [{ value: "", label: "Select Sales" }];
+        res?.data?.forEach((item, idx) => {
+          data.push({ value: item?.id, label: item?.full_name });
+        });
+        setSalesOptions(data);
+      }
+    })();
+  }, [userDetails?.userInfo?.client_id]);
+
+  console.log("selected sales: ", selectedSales);
+  async function onAssignLead(lid, sid) {
+    console.log("selected salessssss: ", sid);
+    setAssignLoading(true);
+    if (sid) {
+      const data = {
+        lead_id: lid,
+        sales_user_id: sid,
+        assign_by: userDetails?.user_id,
+        active_status: 1,
+      };
+      const res = await handleAssignLeadToSales(data);
+      if (res?.status === 201) {
+        setAssignLoading(false);
+        message.success("Lead successfully assigned to sales");
+        // localStorage.setItem("sales_id", "");
+        // sid = "";
+        const response = await handleFetchLeads({
+          client_id: userDetails?.userInfo?.client_id,
+          user_id: userDetails?.userInfo?.user_id,
+          role_id: userDetails?.userInfo?.role_id,
+        });
+
+        if (response?.status === 200) {
+          setLeadData(response.data);
+        }
+      } else {
+        setAssignLoading(false);
+        message.warn("Failed/Something went wrong");
+      }
+    } else {
+      setAssignLoading(false);
+      message.warn("Please select a sales to assign");
+    }
+  }
+  const onRemoveSales = async (lid, sid) => {
+    const data = {
+      lead_id: lid,
+      sales_user_id: sid,
+    };
+    const res = await handleSalesRemoveLead(data);
+    if (res?.status === 201) {
+      message.success("Removed Sales Successfully");
+      const response = await handleFetchLeads({
+        client_id: userDetails?.userInfo?.client_id,
+        user_id: userDetails?.userInfo?.user_id,
+        role_id: userDetails?.userInfo?.role_id,
+      });
+
+      if (response?.status === 200) {
+        setLeadData(response.data);
+      }
+    } else {
+      message.warn("faild/Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    const assignButton = {
+      title: "Assign Lead",
+      dataIndex: "assign_lead",
+      key: "assign_lead",
+      width: 100,
+      render: (id, record, idx) => {
+        return (
+          <Button
+            loading={assignLoading}
+            type="primary"
+            size="small"
+            onClick={() => {
+              const sid = localStorage.getItem("sales_id");
+              onAssignLead(record?.lead_id, sid);
+            }}
+            className="!rounded !bg-green-500"
+          >
+            Assign
+          </Button>
+        );
+      },
+      // ...getColumnSearchProps("lead_id"),
+    };
+    const assignTO = {
+      // title: () => {
+      //   return (
+      //     <div className="flex items-center justify-center gap-2">
+      //       <h1>Assign to</h1>
+      //       {/* <div className="mr-4">
+      //         <Select
+      //           defaultValue={""}
+      //           onChange={(v) => {
+      //             localStorage.setItem("sales_id", v);
+      //           }}
+      //           options={salesOptions || []}
+      //           placeholder="Select Sales"
+      //         />
+      //       </div> */}
+      //     </div>
+      //   );
+      // },
+      title: "Assigned to",
+      dataIndex: "sales_user_id",
+      key: "sales_user_id",
+      width: 150,
+      render: (_, record, idx) => {
+        return (
+          <div className="flex gap-4 items-center ">
+            <div className="flex items-center">
+              {(userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ||
+                userDetails?.userInfo?.role_id === 5) &&
+              record?.sales_user_id !== 0 ? (
+                <div className="ml-3">
+                  {/* <Avatar
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="30"
+                  color="#1f262a"
+                  name={
+                    companyEmployeeList?.find(
+                      (employee) => employee?.id === sales_user_id
+                    )?.full_name
+                  }
+                /> */}
+                </div>
+              ) : null}
+              {
+                companyEmployeeList?.find(
+                  (employee) => employee?.id === record?.sales_user_id
+                )?.full_name
+              }
+            </div>
+            <div className="flex items-center">
+              {(userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ||
+                userDetails?.userInfo?.role_id === 5) &&
+              record?.sales_user_id !== 0 ? (
+                <div className="ml-3">
+                  {/* <Avatar
+                  className="rounded-full shadow-sm cursor-pointer"
+                  size="30"
+                  color="#1f262a"
+                  name={
+                    companyEmployeeList?.find(
+                      (employee) => employee?.id === sales_user_id
+                    )?.full_name
+                  }
+                /> */}
+                </div>
+              ) : null}
+              {companyEmployeeList?.find(
+                (employee) => employee?.id === record?.sales_user_id
+              ) && (
+                <CloseOutlined
+                  className="cursor-pointer"
+                  title="Remove Sales"
+                  onClick={() => {
+                    const sid = localStorage.getItem("sales_id");
+                    onRemoveSales(record?.lead_id, sid);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        );
+      },
+    };
     const headers = [
       // {
       //   title: "Lead ID",
@@ -119,36 +307,33 @@ const AdminDashboard = () => {
       //   ...getColumnSearchProps("lead_id"),
       // },
       {
-        title: "Assigned To",
-        dataIndex: "sales_user_id",
-        key: "sales_user_id",
-        render: (sales_user_id) => (
-          <div className="flex items-center">
-            {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) &&
-            sales_user_id !== 0 ? (
-              <div className="ml-3">
-                {/* <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
-                  name={
-                    companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
-                    )?.full_name
-                  }
-                /> */}
-              </div>
-            ) : null}
-            {
-              companyEmployeeList?.find(
-                (employee) => employee?.id === sales_user_id
-              )?.full_name
-            }
-          </div>
-        ),
+        title: "View",
+        dataIndex: "view",
+        key: "view",
+        align: "center",
+        render: (_, record, idx) => {
+          return (
+            <>
+              <EyeOutlined
+                onClick={() => {
+                  navigate(`/lead/${record?.lead_id}`);
+                }}
+              />
+            </>
+          );
+        },
+        width: 100,
       },
+
+      ...(userDetails?.userInfo?.role_id === 1 ||
+      userDetails?.userInfo?.role_id === 3
+        ? [assignButton]
+        : []),
+      ...(userDetails?.userInfo?.role_id === 1 ||
+      userDetails?.userInfo?.role_id === 3
+        ? [assignTO]
+        : []),
+
       {
         title: "Date",
         dataIndex: "lead_apply_date",
@@ -250,7 +435,7 @@ const AdminDashboard = () => {
 
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyEmployeeList, userDetails?.userInfo]);
+  }, [companyEmployeeList, userDetails?.userInfo, assignLoading]);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
@@ -531,6 +716,10 @@ const AdminDashboard = () => {
         setIsAddLeadFormOpen={setIsAddLeadFormOpen}
         setSyncLeads={setSyncLeads}
         syncLeads={syncLeads}
+        salesOptions={salesOptions}
+        setSalesOptions={setSalesOptions}
+        selectedSales={selectedSales}
+        setSelectedSales={setSelectedSales}
       />
 
       {/* <Table
