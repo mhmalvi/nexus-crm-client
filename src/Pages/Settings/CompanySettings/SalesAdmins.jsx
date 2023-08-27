@@ -78,7 +78,7 @@ const SalesAdmins = ({ clientId }) => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
       if (employeeResponse?.status === true) {
-        // console.log(employeeResponse?.data);
+        console.log("employee res:", employeeResponse?.data);
 
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
@@ -463,7 +463,7 @@ const SalesAdmins = ({ clientId }) => {
                         <Popconfirm
                           title="Are you sure to remove this Admin"
                           okText="Yes"
-                          onConfirm={() => handleRemoveUser(employee?.id)}
+                          onConfirm={() => handleRemoveUser(employee?.user_id)}
                         >
                           <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
                             Remove
@@ -472,7 +472,7 @@ const SalesAdmins = ({ clientId }) => {
                       )}
                       <button
                         className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                        onClick={() => handleSuspendEmployee(employee?.id)}
+                        onClick={() => handleSuspendEmployee(employee?.user_id)}
                       >
                         Suspend
                       </button>
@@ -530,7 +530,9 @@ const SalesAdmins = ({ clientId }) => {
                     </p>
                     <button
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => handleAddSuspendedEmployee(employee?.id)}
+                      onClick={() =>
+                        handleAddSuspendedEmployee(employee?.user_id)
+                      }
                     >
                       Reassign
                     </button>
@@ -619,7 +621,7 @@ const SalesAdmins = ({ clientId }) => {
                         userDetails?.userInfo?.role_id === 5) && (
                         <Popconfirm
                           title="Are you sure to remove this Sales Admin"
-                          onConfirm={() => handleRemoveUser(employee?.id)}
+                          onConfirm={() => handleRemoveUser(employee?.user_id)}
                           okText="Yes"
                         >
                           <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
