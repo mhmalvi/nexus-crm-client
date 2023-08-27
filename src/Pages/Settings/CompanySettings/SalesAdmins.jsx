@@ -1,4 +1,4 @@
-import { Badge, message, Modal } from "antd";
+import { Badge, message, Modal, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -460,12 +460,15 @@ const SalesAdmins = ({ clientId }) => {
                         userDetails?.userInfo?.role_id === 2 ||
                         userDetails?.userInfo?.role_id === 3) && (
                         // userDetails?.userInfo?.role_id === 3
-                        <button
-                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                          onClick={() => handleRemoveUser(employee?.id)}
+                        <Popconfirm
+                          title="Are you sure to remove this Admin"
+                          okText="Yes"
+                          onConfirm={() => handleRemoveUser(employee?.id)}
                         >
-                          Remove
-                        </button>
+                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
+                            Remove
+                          </button>
+                        </Popconfirm>
                       )}
                       <button
                         className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
@@ -614,12 +617,15 @@ const SalesAdmins = ({ clientId }) => {
                         userDetails?.userInfo?.role_id === 3 ||
                         userDetails?.userInfo?.role_id === 4 ||
                         userDetails?.userInfo?.role_id === 5) && (
-                        <button
-                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                          onClick={() => handleRemoveUser(employee?.id)}
+                        <Popconfirm
+                          title="Are you sure to remove this Sales Admin"
+                          onConfirm={() => handleRemoveUser(employee?.id)}
+                          okText="Yes"
                         >
-                          Remove
-                        </button>
+                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
+                            Remove
+                          </button>
+                        </Popconfirm>
                       )}
 
                       <button

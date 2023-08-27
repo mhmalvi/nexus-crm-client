@@ -27,6 +27,7 @@ import { handleLeadDetails } from "../../../Components/services/leads";
 import { handleLeadMailUpload } from "../../../Components/services/utils";
 import Comments from "./Comments";
 import MailModal from "./MailModal";
+import StatusShow from "./StatusShow";
 
 // const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
@@ -724,8 +725,11 @@ const Conversation = ({ leadDetails, id }) => {
           {/* mailing part end */}
 
           {/* Coments and Comments history*/}
-          <div className="lead-comments mt-12">
+          <div className="lead-comments mt-12 h-[300px] overflow-y-auto crm-scroll-none">
             <Comments Comments={leadDtls?.leadComments} />
+          </div>
+          <div className="lead-comments mt-12  h-[400px] overflow-y-auto crm-scroll-none ">
+            <StatusShow leadDetails={leadDetails} />
           </div>
         </div>
 
