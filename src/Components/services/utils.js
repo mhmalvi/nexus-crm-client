@@ -37,7 +37,7 @@ export const handleFetchFile = async (fileId) => {
   }
 };
 // Fetch Sales Employees
-export const handleFetchSales = async (id) => {
+export const handleFetchSales = async (cid) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -45,7 +45,7 @@ export const handleFetchSales = async (id) => {
   };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${id}`,
+      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${cid}`,
       config
     );
     return result.data;
@@ -420,6 +420,57 @@ export const handleCourseCheckLists = async () => {
   try {
     const result = await axios.get(
       `${environment_dev}/api/get-course-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// REMOVE SALES ADMIN
+export const handleRemoveTemplet = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/template_id=${id}/delete-mail-templates`,
+      {},
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleShowStatusLogs = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/lead/lead_id=${data?.lid}/lead-status-logs`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleAssignLeadToSales = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/assign-leads`,
+      data,
       config
     );
     return result.data;

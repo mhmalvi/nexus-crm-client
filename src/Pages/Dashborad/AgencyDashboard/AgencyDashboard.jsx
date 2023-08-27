@@ -117,7 +117,7 @@ function AgencyDashboard() {
               <div className="flex-col">
                 <div className="text-xs text-[#808080]">Agency Name</div>
                 <div className="font-semibold truncate">
-                  {ProfileDetails?.name}
+                  {ProfileDetails?.full_name}
                 </div>
               </div>
             </div>

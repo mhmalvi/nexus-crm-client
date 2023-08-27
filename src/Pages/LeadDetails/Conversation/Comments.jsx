@@ -23,7 +23,7 @@ const Comments = ({ Comments }) => {
     <div>
       <div>
         <div className="">
-          <div className="font-poppins text-base font-semibold mb-2">
+          <div className="font-poppins text-base font-semibold mb-2 sticky top-0 bg-gray-300 p-2">
             Comments History
           </div>
 
