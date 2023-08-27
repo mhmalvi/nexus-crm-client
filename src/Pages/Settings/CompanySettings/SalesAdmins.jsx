@@ -1,4 +1,4 @@
-import { Badge, message, Modal } from "antd";
+import { Badge, message, Modal, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import {
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
+import { handleRemoveSalesAdmin } from "../../../Components/services/utils";
 
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
@@ -37,6 +38,9 @@ const SalesAdmins = ({ clientId }) => {
     useState(false);
   const [isSuspandStatusAgency, setIsSuspandStatusStudentAgency] =
     useState(false);
+  // const [isFeatingSalesAdminLoading, setIsFeatingSalesAdminLoading] =
+  //   useState(false);
+  // const [isRemovingSalesLoading, setIsRemovingSalesLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -74,7 +78,7 @@ const SalesAdmins = ({ clientId }) => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
       if (employeeResponse?.status === true) {
-        // console.log(employeeResponse?.data);
+        console.log("employee res:", employeeResponse?.data);
 
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
@@ -197,6 +201,71 @@ const SalesAdmins = ({ clientId }) => {
       }
     }
   };
+
+  // const onRemoveSalesAdmin = async () => {
+  //   setIsRemovingSalesLoading(true);
+  //   const res = await handleRemoveSalesAdmin();
+  //   if (res?.status === 201) {
+  //     setIsRemovingSalesLoading(false);
+  //     message.success("Sales Admin successfully removed");
+  //     setIsFeatingSalesAdminLoading(true);
+  //     // fetching sales admin
+  //     const employeeResponse = await handleFetchCompanyEmployees(clientId);
+
+  //     if (employeeResponse?.status === true) {
+  //       // console.log(employeeResponse?.data);
+  //       setIsFeatingSalesAdminLoading(false);
+  //       if (employeeResponse?.data?.length) {
+  //         const admins = (employeeResponse?.data).filter(
+  //           (employee) => employee?.role_id === 4 && employee?.suspend === 0
+  //         );
+
+  //         const sales = (employeeResponse?.data).filter(
+  //           (employee) =>
+  //             (employee?.role_id === 2 || employee?.role_id === 5) &&
+  //             employee?.suspend === 0
+  //         );
+
+  //         setCompanyAdvisorEmployees(admins);
+  //         setCompanySalesEmployees(sales);
+
+  //         // console.log("LLLLL", employeeResponse?.data);
+
+  //         setCompanyAdminEmployee(
+  //           (employeeResponse?.data).find(
+  //             (employee) =>
+  //               (employee?.role_id === 1 || employee?.role_id === 3) &&
+  //               employee?.suspend === 0
+  //           )
+  //         );
+
+  //         setInactiveAdminEmployees(
+  //           (employeeResponse?.data).filter(
+  //             (employee) =>
+  //               (employee?.role_id === 3 || employee?.role_id === 4) &&
+  //               employee?.suspend === 1
+  //           )
+  //         );
+
+  //         setInactiveSalesEmployees(
+  //           (employeeResponse?.data).filter(
+  //             (employee) => employee?.role_id === 5 && employee?.suspend === 1
+  //           )
+  //         );
+  //       }
+  //       dispatch(setLoader(false));
+  //     } else {
+  //       setIsFeatingSalesAdminLoading(false);
+  //     }
+  //     // end the fetching part
+  //   } else {
+  //     setIsRemovingSalesLoading(false);
+  //     message.warn(
+  //       res?.data?.message ||
+  //         "Failed to remove Sales Admin/Something went wrong"
+  //     );
+  //   }
+  // };
 
   // console.log("companyAdminEmployee", companyAdminEmployee);
   // console.log("companyAdminEmployee", companyAdminEmployee);
@@ -388,18 +457,22 @@ const SalesAdmins = ({ clientId }) => {
                   userDetails?.userInfo?.role_id === 4 ? (
                     <div>
                       {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2) && (
+                        userDetails?.userInfo?.role_id === 2 ||
+                        userDetails?.userInfo?.role_id === 3) && (
                         // userDetails?.userInfo?.role_id === 3
-                        <button
-                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                          onClick={() => handleRemoveUser(employee?.id)}
+                        <Popconfirm
+                          title="Are you sure to remove this Admin"
+                          okText="Yes"
+                          onConfirm={() => handleRemoveUser(employee?.user_id)}
                         >
-                          Remove
-                        </button>
+                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
+                            Remove
+                          </button>
+                        </Popconfirm>
                       )}
                       <button
                         className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                        onClick={() => handleSuspendEmployee(employee?.id)}
+                        onClick={() => handleSuspendEmployee(employee?.user_id)}
                       >
                         Suspend
                       </button>
@@ -457,7 +530,9 @@ const SalesAdmins = ({ clientId }) => {
                     </p>
                     <button
                       className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => handleAddSuspendedEmployee(employee?.id)}
+                      onClick={() =>
+                        handleAddSuspendedEmployee(employee?.user_id)
+                      }
                     >
                       Reassign
                     </button>
@@ -469,6 +544,7 @@ const SalesAdmins = ({ clientId }) => {
         ) : null}
       </div>
 
+      {/* Sales admins box */}
       <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
         <div className=" sticky top-0 w-full bg-slate-100">
           <hr />
@@ -539,13 +615,19 @@ const SalesAdmins = ({ clientId }) => {
                   userDetails?.userInfo?.role_id === 4 ? (
                     <div>
                       {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2) && (
-                        <button
-                          className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2"
-                          onClick={() => handleRemoveUser(employee?.id)}
+                        userDetails?.userInfo?.role_id === 2 ||
+                        userDetails?.userInfo?.role_id === 3 ||
+                        userDetails?.userInfo?.role_id === 4 ||
+                        userDetails?.userInfo?.role_id === 5) && (
+                        <Popconfirm
+                          title="Are you sure to remove this Sales Admin"
+                          onConfirm={() => handleRemoveUser(employee?.user_id)}
+                          okText="Yes"
                         >
-                          Remove
-                        </button>
+                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
+                            Remove
+                          </button>
+                        </Popconfirm>
                       )}
 
                       <button
@@ -726,56 +808,6 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-
-        {inactiveSalesEmployees.length ? (
-          <div className="mt-10">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
-              Inactive Sales Admins
-            </h1>
-            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
-              {inactiveSalesEmployees.map((employee, i) => (
-                <div key={i} className="flex ">
-                  <Avatar
-                    className="rounded-full cursor-pointer"
-                    size="38"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
-                    name={employee?.full_name}
-                  />
-                  <div className="ml-4">
-                    <h1 className="text-red-500 font-semibold text-lg leading-5">
-                      {employee?.full_name}
-                    </h1>
-                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
-                      {employee?.email}
-                    </p>
-                    <button
-                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => {
-                        handleSuspendB2BEmployee(employee?.id);
-                      }}
-                    >
-                      Reassign
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
       </div>
       {/* Accountant box */}
 
@@ -892,56 +924,6 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-
-        {inactiveSalesEmployees.length ? (
-          <div className="mt-10">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
-              Inactive Sales Admins
-            </h1>
-            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
-              {inactiveSalesEmployees.map((employee, i) => (
-                <div key={i} className="flex ">
-                  <Avatar
-                    className="rounded-full cursor-pointer"
-                    size="38"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
-                    name={employee?.full_name}
-                  />
-                  <div className="ml-4">
-                    <h1 className="text-red-500 font-semibold text-lg leading-5">
-                      {employee?.full_name}
-                    </h1>
-                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
-                      {employee?.email}
-                    </p>
-                    <button
-                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => {
-                        handleSuspendB2BEmployee(employee?.id);
-                      }}
-                    >
-                      Reassign
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
       </div>
 
       {/* Agency Box */}
@@ -1057,56 +1039,6 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-
-        {inactiveSalesEmployees.length ? (
-          <div className="mt-10">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
-              Inactive Sales Admins
-            </h1>
-            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
-              {inactiveSalesEmployees.map((employee, i) => (
-                <div key={i} className="flex ">
-                  <Avatar
-                    className="rounded-full cursor-pointer"
-                    size="38"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
-                    name={employee?.full_name}
-                  />
-                  <div className="ml-4">
-                    <h1 className="text-red-500 font-semibold text-lg leading-5">
-                      {employee?.full_name}
-                    </h1>
-                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
-                      {employee?.email}
-                    </p>
-                    <button
-                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => {
-                        handleSuspendB2BEmployeeAgency(employee?.id);
-                      }}
-                    >
-                      Reassign
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
       </div>
     </div>
   );

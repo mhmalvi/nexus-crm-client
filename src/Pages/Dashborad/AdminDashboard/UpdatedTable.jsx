@@ -1,4 +1,4 @@
-import { Table, Tooltip, Upload, message } from "antd";
+import { Select, Table, Tooltip, Upload, message } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 import { handleUploadLeadFile } from "../../../Components/services/leads";
+import { handleFetchSales } from "../../../Components/services/utils";
 
 const UpdatedTable = ({
   table_title,
@@ -20,6 +21,10 @@ const UpdatedTable = ({
   setIsAddLeadFormOpen,
   searchInput,
   handleSyncLeadsReq,
+  salesOptions,
+  setSalesOptions,
+  selectedSales,
+  setSelectedSales,
 }) => {
   const navigate = useNavigate();
 
@@ -86,6 +91,12 @@ const UpdatedTable = ({
     }
   };
 
+  // new work down
+
+  const handleSelectData = (v) => {
+    setSelectedSales(v);
+  };
+
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
       <div>
@@ -123,6 +134,19 @@ const UpdatedTable = ({
           </div>
 
           <div className="flex items-center">
+            {(userDetails?.role_id === 1 || userDetails?.role_id === 3) && (
+              <div className="mr-4">
+                <Select
+                  defaultValue={""}
+                  onChange={(v) => {
+                    localStorage.setItem("sales_id", v);
+                  }}
+                  options={salesOptions || []}
+                  placeholder="Select Sales"
+                />
+              </div>
+            )}
+
             {table_title === "Lead List" ? (
               <div className="mr-4">
                 <Upload
@@ -210,13 +234,6 @@ const UpdatedTable = ({
             scroll={{
               x: 1700,
               y: 600,
-            }}
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: () => {
-                  navigate(`/lead/${record?.lead_id}`);
-                },
-              };
             }}
             rowClassName={(record, idx) =>
               idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"

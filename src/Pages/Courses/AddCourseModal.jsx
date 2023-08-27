@@ -33,6 +33,9 @@ const AddCourseModal = ({
       if (res?.status === 201) {
         setIsAddingCourse(false);
         message.success("Course added successfully");
+        setCourseCode("");
+        setCourseName("");
+        setCourseDsc("");
         setCourseListLoading(true);
         setAddCourseOpen(false);
         const courseResponse = await handleClientwiseCourseDetails(
