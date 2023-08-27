@@ -118,9 +118,18 @@ const SendStudentDetails = ({
     const formData = new FormData();
 
     formData.append("student_name", data.student_name);
-    formData.append("course_name", data.course_name);
     formData.append("institute_name", data.institute_name);
+    formData.append("course_name", course);
     formData.append("user_id", userDetails?.user_id);
+    formData.append("photo_id", photoFile);
+    formData.append("resume", resumeFile);
+    formData.append("reference_letter", letterFile);
+    formData.append("visa_copy", visaFile);
+    formData.append("academic_qualification", academicFile);
+    formData.append("photo_video", photoVidoeFile);
+    formData.append("usi_number", usiFile);
+    formData.append("pay_slip", payFile);
+    files?.map((item, idx) => formData.append("student_file[]", item));
 
     if (
       !photoFile &&
@@ -264,7 +273,7 @@ const SendStudentDetails = ({
                 onChange={handlePhotoUpload}
                 hidden
               />
-              <div className="flex gap-3 items-center">
+              <div className="">
                 <label
                   htmlFor="photo-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -286,7 +295,7 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload 100 Points Photo ID</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px]">{photoFile?.name}</p>
               </div>
               <input
                 type="file"
@@ -295,7 +304,7 @@ const SendStudentDetails = ({
                 onChange={handleResumeUpload}
                 hidden
               />
-              <div className="flex gap-3 items-center">
+              <div className="">
                 <label
                   htmlFor="resume-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -317,16 +326,18 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload Resume</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {resumeFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="letter-upload"
-                onChange={handleLetterUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="letter-upload"
+                  onChange={handleLetterUpload}
+                  hidden
+                />
                 <label
                   htmlFor="letter-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -348,16 +359,18 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload Reference Letter/Details</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {letterFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="visa-upload"
-                onChange={handleVisaUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="visa-upload"
+                  onChange={handleVisaUpload}
+                  hidden
+                />
                 <label
                   htmlFor="visa-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -379,16 +392,18 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload Visa Copy</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {visaFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="academic-upload"
-                onChange={handleAcademicUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="academic-upload"
+                  onChange={handleAcademicUpload}
+                  hidden
+                />
                 <label
                   htmlFor="academic-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -410,16 +425,18 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload Academic Qualification</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {academicFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="photo-video-upload"
-                onChange={handlePhotoVideoUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="photo-video-upload"
+                  onChange={handlePhotoVideoUpload}
+                  hidden
+                />
                 <label
                   htmlFor="photo-video-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -443,16 +460,18 @@ const SendStudentDetails = ({
                     Upload Photo Video While Performing Works
                   </p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {photoVidoeFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="usi-upload"
-                onChange={handleUsiUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="usi-upload"
+                  onChange={handleUsiUpload}
+                  hidden
+                />
                 <label
                   htmlFor="usi-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -474,16 +493,18 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload USI Number</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {usiFile?.name}
+                </p>
               </div>
-              <input
-                type="file"
-                name="file"
-                id="pay-upload"
-                onChange={handlePayUpload}
-                hidden
-              />
-              <div className="flex gap-3 items-center">
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="pay-upload"
+                  onChange={handlePayUpload}
+                  hidden
+                />
                 <label
                   htmlFor="pay-upload"
                   className="flex justify-center items-center gap-2 py-[5px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer mb-4 text-white border-none"
@@ -505,7 +526,9 @@ const SendStudentDetails = ({
                   </svg>
                   <p className="m-0 p-0">Upload Pay Slip</p>
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{""}</p>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {payFile?.name}
+                </p>
               </div>
             </div>
             <div>
