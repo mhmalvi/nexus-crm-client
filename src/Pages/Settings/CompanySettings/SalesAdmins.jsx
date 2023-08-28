@@ -11,7 +11,10 @@ import {
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
-import { handleRemoveSalesAdmin } from "../../../Components/services/utils";
+import {
+  handleGetSalesAdmin,
+  handleRemoveSalesAdmin,
+} from "../../../Components/services/utils";
 
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
@@ -70,6 +73,20 @@ const SalesAdmins = ({ clientId }) => {
       }
     })();
   }, [clientId, isSuspandStatusAgency]);
+  useEffect(() => {
+    (async () => {
+      const res = await handleGetSalesAdmin();
+      if (res?.status === 200) {
+        setCompanySalesEmployees(res?.data);
+      }
+    })();
+  }, []);
+  const getSalesAdminsSync = async () => {
+    const res = await handleGetSalesAdmin();
+    if (res?.status === 200) {
+      setCompanySalesEmployees(res?.data);
+    }
+  };
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -92,7 +109,7 @@ const SalesAdmins = ({ clientId }) => {
           );
 
           setCompanyAdvisorEmployees(admins);
-          setCompanySalesEmployees(sales);
+          // setCompanySalesEmployees(sales);
 
           // console.log("LLLLL", employeeResponse?.data);
 
@@ -138,6 +155,7 @@ const SalesAdmins = ({ clientId }) => {
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
+      getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
       message.success("Employee Removed Successfully");
     }
@@ -148,6 +166,7 @@ const SalesAdmins = ({ clientId }) => {
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
+      getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
       message.success("Employee reassigned Successfully");
     }
@@ -159,6 +178,7 @@ const SalesAdmins = ({ clientId }) => {
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("Employee suspended Successfully");
+      getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
     }
   };

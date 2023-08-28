@@ -323,15 +323,18 @@ export const handleGetStudentCompleteDetailsCheck = async (id) => {
   }
 };
 // Remove file
-export const handleRemoveFileAgencyCheck = async (id, rId) => {
+export const handleRemoveFileAgencyCheck = async (id, rId, flag) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
     },
   };
   try {
-    const result = await axios.get(
+    const result = await axios.post(
       `${btob_dev}/student/student_id=${rId}/file_id=${id}/delete-file-by-agency`,
+      {
+        flag: flag,
+      },
       config
     );
     return result.data;
@@ -471,6 +474,22 @@ export const handleAssignLeadToSales = async (data) => {
     const result = await axios.post(
       `${environment_dev}/api/assign-leads`,
       data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleGetSalesAdmin = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `https://crmcompany.quadque.digital/api/sales-employee`,
       config
     );
     return result.data;
