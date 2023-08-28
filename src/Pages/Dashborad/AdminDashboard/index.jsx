@@ -120,20 +120,18 @@ const AdminDashboard = () => {
   useEffect(() => {
     (async () => {
       const res = await handleFetchSales(userDetails?.userInfo?.client_id);
-      console.log("my res: ", res);
+
       if (res?.status === 200) {
         const data = [{ value: "", label: "Select Sales" }];
         res?.data?.forEach((item, idx) => {
-          data.push({ value: item?.id, label: item?.full_name });
+          data.push({ value: item?.user_id, label: item?.full_name });
         });
         setSalesOptions(data);
       }
     })();
   }, [userDetails?.userInfo?.client_id]);
 
-  console.log("selected sales: ", selectedSales);
   async function onAssignLead(lid, sid) {
-    console.log("selected salessssss: ", sid);
     setAssignLoading(true);
     if (sid) {
       const data = {

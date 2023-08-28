@@ -34,6 +34,7 @@ const RequestDetailsModal = ({
 }) => {
   const [AdmissionDetails, setAdmissionDetails] = useState({});
   const [fileList, setFileList] = useState([]);
+  const [mendetroyfileList, setMendetoryFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [res, setRes] = useState({});
@@ -55,17 +56,34 @@ const RequestDetailsModal = ({
 
         setAdmissionDetails(res?.data);
         setFileList(res?.data?.files);
+        setMendetoryFileList(res?.data?.mandatory_files);
       } else {
         setLoading(false);
       }
     })();
   }, [rId]);
   console.log("addmission details: ", AdmissionDetails);
-  const handleChangeStatus = async (fid, s) => {
+  const SyncRefresh = async () => {
+    const res = await handleGetStudentAdmissionRequestsDetails(rId);
+    setIsRefreshing(true);
+    setLoading(true);
+    if (res?.status === 200) {
+      setLoading(false);
+      setIsRefreshing(false);
+      setAdmissionDetails(res?.data);
+      setFileList(res?.data?.files);
+      setMendetoryFileList(res?.data?.mandatory_files);
+    } else {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
+  const handleChangeStatus = async (fid, s, f) => {
     const data = {
       student_id: rId,
       file_id: fid,
       status: s,
+      flag: f,
     };
     const res = await handleAdmissionStatusChange(data);
     if (res?.status === 201) {
@@ -75,7 +93,7 @@ const RequestDetailsModal = ({
       if (respons?.status === 200) {
         setLoading(false);
         setAdmissionDetails(respons?.data);
-        setFileList(respons?.data?.files);
+        SyncRefresh();
       } else {
         setLoading(false);
       }
@@ -88,21 +106,6 @@ const RequestDetailsModal = ({
       } else {
         setRequestListLoading(false);
       }
-    }
-  };
-
-  const SyncRefresh = async () => {
-    const res = await handleGetStudentAdmissionRequestsDetails(rId);
-    setIsRefreshing(true);
-    setLoading(true);
-    if (res?.status === 200) {
-      setLoading(false);
-      setIsRefreshing(false);
-      setAdmissionDetails(res?.data);
-      setFileList(res?.data?.files);
-    } else {
-      setLoading(false);
-      setIsRefreshing(false);
     }
   };
 
@@ -211,14 +214,14 @@ const RequestDetailsModal = ({
               <Tooltip title="Complete File" color={"cyan"} key={idx}>
                 <CheckOutlined
                   onClick={() => {
-                    handleChangeStatus(record?.id, 1);
+                    handleChangeStatus(record?.id, 1, 1);
                   }}
                 />
               </Tooltip>
               <Tooltip title="Incomplete File" color={"red"} key={idx}>
                 <CloseOutlined
                   onClick={() => {
-                    handleChangeStatus(record?.id, 0);
+                    handleChangeStatus(record?.id, 0, 1);
                   }}
                 />
               </Tooltip>
@@ -228,6 +231,88 @@ const RequestDetailsModal = ({
       },
     },
   ];
+  const mcolumns = [
+    {
+      title: "File Type",
+      dataIndex: "file_type",
+      key: "file_type",
+    },
+    {
+      title: "File Name",
+      dataIndex: "file_name",
+      key: "file_name",
+    },
+    {
+      title: "File Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div>
+              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
+              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+            </div>
+          </>
+        );
+      },
+    },
+
+    {
+      title: () => {
+        return (
+          <>
+            <div className="flex justify-center items-center gap-4 !m-0 !p-0">
+              <div className="!mb-[10px]">
+                <Tooltip title="Sync/Refresh" color="green">
+                  <ReloadOutlined onClick={SyncRefresh} />
+                </Tooltip>
+              </div>
+
+              <h1>Action</h1>
+            </div>
+          </>
+        );
+      },
+      dataIndex: "action",
+      key: "action",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className="flex justify-center items-center gap-4">
+              <Tooltip title="View File" color={"Green"} key={idx}>
+                <EyeOutlined
+                  onClick={() => {
+                    window.open(
+                      `https://crmbtob.quadque.digital/public/${record?.file_path}`,
+                      "_blank"
+                    );
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Complete File" color={"cyan"} key={idx}>
+                <CheckOutlined
+                  onClick={() => {
+                    handleChangeStatus(record?.id, 1, 0);
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Incomplete File" color={"red"} key={idx}>
+                <CloseOutlined
+                  onClick={() => {
+                    handleChangeStatus(record?.id, 0, 0);
+                  }}
+                />
+              </Tooltip>
+            </div>
+          </>
+        );
+      },
+    },
+  ];
+
   return (
     <>
       <div>
@@ -407,13 +492,31 @@ const RequestDetailsModal = ({
               </Button>
             </Popconfirm>
           </div>
-          <Table
-            className="mt-3"
-            loading={loading}
-            columns={columns || []}
-            dataSource={fileList || []}
-            pagination
-          />
+
+          <div>
+            <div>
+              <h1 className="mb-[-15px] p-0 text-lg font-bold">
+                Mandatory Files
+              </h1>
+              <Table
+                className="mt-3"
+                loading={loading}
+                columns={mcolumns || []}
+                dataSource={mendetroyfileList || []}
+                pagination
+              />
+            </div>
+            <div>
+              <h1 className="m-0 p-0 text-lg font-bold">Other Files</h1>
+              <Table
+                className="mt-3"
+                loading={loading}
+                columns={columns || []}
+                dataSource={fileList || []}
+                pagination
+              />
+            </div>
+          </div>
         </Modal>
       </div>
     </>
