@@ -22,6 +22,7 @@ const CheckDetailsModal = ({
   const userDetails = useSelector((auth) => auth?.user?.userInfo, shallowEqual);
   const [AdmissionDetails, setAdmissionDetails] = useState({});
   const [fileList, setFileList] = useState([]);
+  const [mendetroyfileList, setMendetoryFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState([]);
@@ -38,11 +39,30 @@ const CheckDetailsModal = ({
         setLoading(false);
         setAdmissionDetails(res?.data);
         setFileList(res?.data?.files);
+        setMendetoryFileList(res?.data?.mandatory_files);
       } else {
         setLoading(false);
       }
     })();
   }, [rId]);
+  const SyncRefresh = async () => {
+    const res = await handleGetStudentAdmissionDetailsAgency(
+      userDetails?.user_id,
+      rId
+    );
+    setIsRefreshing(true);
+    setLoading(true);
+    if (res?.status === 200) {
+      setLoading(false);
+      setIsRefreshing(false);
+      setAdmissionDetails(res?.data);
+      setFileList(res?.data?.files);
+      setMendetoryFileList(res?.data?.mandatory_files);
+    } else {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
   const handleCheckListFile = (e) => {
     e.preventDefault();
     console.log("I entered file");
@@ -67,7 +87,7 @@ const CheckDetailsModal = ({
       if (respons?.status === 200) {
         setLoading(false);
         setAdmissionDetails(respons?.data);
-        setFileList(respons?.data?.files);
+        SyncRefresh();
       } else {
         setLoading(false);
       }
@@ -89,8 +109,8 @@ const CheckDetailsModal = ({
       message.warn(res?.data?.message || "Something went wrong");
     }
   };
-  const handleRemoveFile = async (fid) => {
-    const res = await handleRemoveFileAgencyCheck(fid, rId);
+  const handleRemoveFile = async (fid, flag) => {
+    const res = await handleRemoveFileAgencyCheck(fid, rId, flag);
     if (res?.status === 201) {
       setLoading(true);
       const respons = await handleGetStudentAdmissionDetailsAgency(
@@ -101,7 +121,7 @@ const CheckDetailsModal = ({
       if (respons?.status === 200) {
         setLoading(false);
         setAdmissionDetails(respons?.data);
-        setFileList(respons?.data?.files);
+        SyncRefresh();
       } else {
         setLoading(false);
       }
@@ -119,23 +139,7 @@ const CheckDetailsModal = ({
       message.warn("Something went wrong");
     }
   };
-  const SyncRefresh = async () => {
-    const res = await handleGetStudentAdmissionDetailsAgency(
-      userDetails?.user_id,
-      rId
-    );
-    setIsRefreshing(true);
-    setLoading(true);
-    if (res?.status === 200) {
-      setLoading(false);
-      setIsRefreshing(false);
-      setAdmissionDetails(res?.data);
-      setFileList(res?.data?.files);
-    } else {
-      setLoading(false);
-      setIsRefreshing(false);
-    }
-  };
+
   const handleCheckInvoice = () => {
     console.log("Check Invoice: ", AdmissionDetails);
     AdmissionDetails?.invoice
@@ -197,7 +201,73 @@ const CheckDetailsModal = ({
                         "Cannot remove completed file contact with ITEC manager"
                       );
                     } else {
-                      handleRemoveFile(record?.id);
+                      handleRemoveFile(record?.id, 1);
+                    }
+                  }}
+                />
+              </Tooltip>
+            </div>
+          </>
+        );
+      },
+    },
+  ];
+  const mcolumns = [
+    {
+      title: "File Type",
+      dataIndex: "file_type",
+      key: "file_type",
+    },
+    {
+      title: "File Name",
+      dataIndex: "file_name",
+      key: "file_name",
+    },
+    {
+      title: "File Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div>
+              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
+              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+            </div>
+          </>
+        );
+      },
+    },
+
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className="flex justify-center items-center gap-4">
+              <Tooltip title="View File" color={"Green"} key={idx}>
+                <EyeOutlined
+                  onClick={() => {
+                    window.open(
+                      `https://crmbtob.quadque.digital/public/${record?.file_path}`,
+                      "_blank"
+                    );
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Remove File" color={"red"} key={idx}>
+                <CloseOutlined
+                  onClick={() => {
+                    if (record?.status === 1) {
+                      message.warn(
+                        "Cannot remove completed file contact with ITEC manager"
+                      );
+                    } else {
+                      handleRemoveFile(record?.id, 0);
                     }
                   }}
                 />
@@ -320,12 +390,28 @@ const CheckDetailsModal = ({
           >
             Sync/Refresh
           </Button>
-          <Table
-            loading={loading}
-            columns={columns || []}
-            dataSource={fileList || []}
-            pagination
-          />
+          <div>
+            <div>
+              <h1 className="mb-[-15px] p-0 text-lg font-bold">
+                Mandatory Files
+              </h1>
+              <Table
+                loading={loading}
+                columns={mcolumns || []}
+                dataSource={mendetroyfileList || []}
+                pagination
+              />
+            </div>
+            <div>
+              <h1 className="m-0 p-0 text-lg font-bold">Other Files</h1>
+              <Table
+                loading={loading}
+                columns={columns || []}
+                dataSource={fileList || []}
+                pagination
+              />
+            </div>
+          </div>
         </Modal>
       </div>
     </>

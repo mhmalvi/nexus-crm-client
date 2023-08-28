@@ -1,4 +1,5 @@
 import { Button, Form, Input, Select, message } from "antd";
+import { Document, Page } from "react-pdf";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import CreateStudentModal from "./CreateStudentModal";
 import StudentdetailsAgency from "./StudentdetailsAgency";
 import { useEffect } from "react";
 import { handleClientwiseCourseDetails } from "../../Components/services/leads";
+import { environment_dev } from "../../Components/services/environment";
 
 const SendStudentDetails = ({
   data,
@@ -63,7 +65,11 @@ const SendStudentDetails = ({
         setCourseListLoading(false);
         const data = [];
         res?.data?.map((item, idx) =>
-          data.push({ value: item?.id, label: item?.course_title })
+          data.push({
+            value: item?.id,
+            label: item?.course_title,
+            path: item?.checklist_path,
+          })
         );
         setCourseList(data);
       } else {
@@ -109,8 +115,8 @@ const SendStudentDetails = ({
     setpayFIle(e.target.files[0]);
   }
 
-  const handleChange = (value) => {
-    setCourse(value);
+  const handleChange = (value, option) => {
+    setCourse(option);
   };
 
   const handleSubmit = async (e) => {
@@ -119,7 +125,7 @@ const SendStudentDetails = ({
 
     formData.append("student_name", data.student_name);
     formData.append("institute_name", data.institute_name);
-    formData.append("course_name", course);
+    formData.append("course", JSON.stringify(course));
     formData.append("user_id", userDetails?.user_id);
     formData.append("photo_id", photoFile);
     formData.append("resume", resumeFile);
@@ -169,6 +175,7 @@ const SendStudentDetails = ({
         } else {
           setStudentListLoading(false);
         }
+        window.location.reload();
       } else {
         setUploadLoading(false);
         message.warn("Send failed/ Something went wrong");
@@ -233,6 +240,29 @@ const SendStudentDetails = ({
               }
               options={courseList || []}
             />
+
+            {course && (
+              <div>
+                {course?.path ? (
+                  <h1
+                    title={course?.label || "PDF"}
+                    className="text-green-500 font-bold cursor-pointer"
+                    onClick={() => {
+                      window.open(
+                        `${environment_dev}/public/${course?.path}`,
+                        "_blank"
+                      );
+                    }}
+                  >
+                    Checklist available for this course please check it
+                  </h1>
+                ) : (
+                  <h1 className="text-red-500 font-bold">
+                    No Checklist available
+                  </h1>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-4 flex-wrap mb-6">
             {/* <input
@@ -578,6 +608,7 @@ const SendStudentDetails = ({
               </div>
             </div>
           </div>
+
           <div className="mb-6">
             <button
               disabled={uploadLoading ? true : false}
