@@ -126,7 +126,7 @@ const SendStudentDetails = ({
     formData.append("student_name", data.student_name);
     formData.append("institute_name", data.institute_name);
     formData.append("course", JSON.stringify(course));
-    formData.append("user_id", userDetails?.user_id);
+    formData.append("agency", JSON.stringify(userDetails));
     formData.append("photo_id", photoFile);
     formData.append("resume", resumeFile);
     formData.append("reference_letter", letterFile);
@@ -527,7 +527,7 @@ const SendStudentDetails = ({
                   {usiFile?.name}
                 </p>
               </div>
-              <div className="">
+              {/* <div className="">
                 <input
                   type="file"
                   name="file"
@@ -559,7 +559,7 @@ const SendStudentDetails = ({
                 <p className="text-[green] text-[16px] m-0 p-0">
                   {payFile?.name}
                 </p>
-              </div>
+              </div> */}
             </div>
             <div>
               <input

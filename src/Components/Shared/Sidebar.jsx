@@ -610,6 +610,28 @@ const Sidebar = ({
               </NavLink>
             </div>
           )}
+          {userDetails?.userInfo?.role_id === 8 && (
+            <div>
+              <NavLink
+                to={"/paymentSlip"}
+                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                style={{
+                  color: `${active === "paymentSlip" ? "#7037FF" : "#7C8DB5"}`,
+                }}
+                onClick={() => setActive("paymentSlip")}
+              >
+                <Icons.Pricing />
+                <span className="ml-4 leading-6 font-medium font-poppins">
+                  Payment Slip
+                </span>
+                {active === "paymentSlip" && (
+                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    |
+                  </div>
+                )}
+              </NavLink>
+            </div>
+          )}
           {/* // Accountant menu end */}
 
           {userDetails?.userInfo?.role_id !== 10 &&
