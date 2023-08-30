@@ -9,6 +9,7 @@ import {
   handleGetStudentCompleteDetailsCheck,
   handleRemoveFileAgencyCheck,
   handleUpdateStudentFile,
+  handleUpoladPaySlip,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 
@@ -26,8 +27,10 @@ const CheckDetailsModal = ({
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState([]);
+  const [payFile, setpayFIle] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [paySlipUploadLoading, setPaySlipUploadLoading] = useState(false);
   useEffect(() => {
     (async () => {
       const res = await handleGetStudentAdmissionDetailsAgency(
@@ -141,7 +144,6 @@ const CheckDetailsModal = ({
   };
 
   const handleCheckInvoice = () => {
-    console.log("Check Invoice: ", AdmissionDetails);
     AdmissionDetails?.invoice
       ? window.open(`${AdmissionDetails?.invoice?.file_path}`, "_blank")
       : message.warning("No invoice");
@@ -150,7 +152,36 @@ const CheckDetailsModal = ({
     setCheckModalOpen(false);
     setFiles([]);
     setFileName([]);
+    setpayFIle({});
   };
+
+  async function handlePayUpload(e) {
+    if (!AdmissionDetails?.invoice) {
+      message.warning("Please check invoice first");
+    } else {
+      setpayFIle(e.target.files[0]);
+      if (payFile) {
+        setPaySlipUploadLoading(true);
+        const formData = new FormData();
+        formData.append("student_id", rId);
+        formData.append("pay_slip", e.target.files[0]);
+        const res = await handleUpoladPaySlip(formData);
+        if (res?.status === 201) {
+          setPaySlipUploadLoading(false);
+          message.success("PaySlip successfully sent");
+          setpayFIle({});
+          e.target.files[0] = {};
+        } else {
+          setPaySlipUploadLoading(false);
+          message.warn("PaySlip failed to send something went wrong");
+          message.error("Select again");
+          setpayFIle({});
+          e.target.files[0] = {};
+        }
+      }
+    }
+  }
+
   const columns = [
     {
       title: "File Name",
@@ -373,13 +404,52 @@ const CheckDetailsModal = ({
                   )}
                 </h1>
               </div>
-              <div className="mt-3">
+              <div className="mt-3 flex gap-1 items-center">
                 <Button
                   onClick={handleCheckInvoice}
                   className=" !rounded !bg-green-500 !text-white !border-none"
                 >
                   Check Invoice
                 </Button>
+
+                <div className="">
+                  <input
+                    type="file"
+                    name="file"
+                    id="pay-upload"
+                    onChange={handlePayUpload}
+                    hidden
+                    disabled={paySlipUploadLoading}
+                  />
+                  <label
+                    htmlFor="pay-upload"
+                    className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-green-400 to-green-700 cursor-pointer  text-white border-none"
+                    style={{ border: "1px solid gray" }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                      />
+                    </svg>
+                    <p className="m-0 p-0">
+                      {paySlipUploadLoading
+                        ? "Uploading Pay Slip"
+                        : "Upload Pay Slip"}
+                    </p>
+                  </label>
+                  <p className="text-[green] text-[16px] m-0 p-0">
+                    {payFile?.name}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

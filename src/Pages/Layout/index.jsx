@@ -41,6 +41,7 @@ import { handleFetchFollowUp } from "../../Components/services/reminder";
 import moment from "moment";
 import NotifyModal from "../Notifications/NotifyModal.jsx";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
+import PaySlip from "../PaySlip/PaySlip";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -474,6 +475,14 @@ const Items = [
     // icon: <Icons.Campaigns />,
     label: "Course Management",
     component: <CourseMangemnet />,
+    count: 0,
+  },
+  {
+    key: "paymentSlip",
+    name: "paymentSlip",
+    // icon: <Icons.Campaigns />,
+    label: "Pay Slip",
+    component: <PaySlip />,
     count: 0,
   },
   {
