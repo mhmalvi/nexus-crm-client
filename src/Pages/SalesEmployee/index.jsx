@@ -8,7 +8,10 @@ import {
 import { Button, Input, Space, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { handleFetchSales } from "../../Components/services/utils";
+import {
+  handleFetchSales,
+  handleGetSalesAdmin,
+} from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
@@ -49,9 +52,7 @@ const Sales = () => {
       setIsLoading(true);
       let response;
       if (companyId !== 0 || user?.client_id !== 0) {
-        response = await handleFetchSales(
-          companyId ? companyId : user?.client_id
-        );
+        response = await handleGetSalesAdmin();
       }
       if (response) {
         if (response?.data) {
