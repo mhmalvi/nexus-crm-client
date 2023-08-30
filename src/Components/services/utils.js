@@ -497,3 +497,36 @@ export const handleGetSalesAdmin = async () => {
     return error.response;
   }
 };
+export const handleUpoladPaySlip = async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/pay-slip`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleGetPaySlip = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/accountant/get-payment-slip-lists`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
