@@ -19,6 +19,7 @@ import AddLeadForm from "./AddLeadForm";
 import {
   handleAssignLeadToSales,
   handleFetchSales,
+  handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
@@ -119,7 +120,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await handleFetchSales(userDetails?.userInfo?.client_id);
+      const res = await handleGetSalesAdmin();
 
       if (res?.status === 200) {
         const data = [{ value: "", label: "Select Sales" }];
