@@ -1,17 +1,31 @@
-import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Modal, Table, Tag, Tooltip, message } from "antd";
-import React from "react";
+import { CloseOutlined, EyeOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  Avatar,
+  Button,
+  Input,
+  Modal,
+  Popconfirm,
+  Table,
+  Tag,
+  Tooltip,
+  message,
+} from "antd";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import {
+  handleGetComments,
   handleGetStudentAdmissionDetailsAgency,
   handleGetStudentAdmissionRequestsDetails,
   handleGetStudentCompleteDetailsCheck,
   handleRemoveFileAgencyCheck,
+  handleSendComment,
+  handleSendCommentAgency,
   handleUpdateStudentFile,
   handleUpoladPaySlip,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
+import { btob_dev } from "../../Components/services/environment";
 
 const CheckDetailsModal = ({
   checkModalOpen,
@@ -31,6 +45,11 @@ const CheckDetailsModal = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [paySlipUploadLoading, setPaySlipUploadLoading] = useState(false);
+  const [comment, setComment] = useState("");
+  const [commentsData, setCommentsData] = useState([]);
+
+  const messageBoxRef = useRef(null);
+
   useEffect(() => {
     (async () => {
       const res = await handleGetStudentAdmissionDetailsAgency(
@@ -181,7 +200,38 @@ const CheckDetailsModal = ({
       }
     }
   }
+  useEffect(() => {
+    scrollToBottom();
+  }, [commentsData]);
+  const onGetCommnets = async (fid) => {
+    const res = await handleGetComments(fid);
+    if (res?.status === 200) {
+      setCommentsData(res?.data);
+    }
+  };
 
+  const onSendComment = async (fid) => {
+    const data = {
+      user_id: userDetails?.user_id,
+      comments: comment,
+      file_id: fid,
+      user_name: userDetails?.full_name,
+    };
+    const res = await handleSendCommentAgency(data);
+    if (res?.status === 201) {
+      setComment("");
+      onGetCommnets(fid);
+
+      message.success("Comment sent successfully");
+    } else {
+      message.warn(res?.data?.message || "Failed/Someting went wrong");
+    }
+  };
+  const scrollToBottom = () => {
+    if (messageBoxRef.current) {
+      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+    }
+  };
   const columns = [
     {
       title: "File Name",
@@ -198,7 +248,112 @@ const CheckDetailsModal = ({
             <div>
               {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
               {record?.status === 1 && <Tag color="green">Complete</Tag>}
-              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+              {record?.status === 0 && (
+                <div className="">
+                  <div>
+                    <Tag color="red">Incomplete</Tag>
+                  </div>
+
+                  <Popconfirm
+                    className="mt-2 box-commnet"
+                    icon=""
+                    okButtonProps={{
+                      className: "!hidden",
+                    }}
+                    cancelButtonProps={{
+                      className: "!hidden",
+                    }}
+                    title={
+                      <div className="w-[300px] ">
+                        <div
+                          className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
+                          ref={messageBoxRef}
+                        >
+                          {/* <h1 className=" sticky top-0">Chat with Agency</h1> */}
+                          <div className="">
+                            {commentsData?.map((comment, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className={`my-4 w-[70%] border rounded-3xl  px-3 py-[4px] text-white ${
+                                    userDetails?.user_id === comment?.user_id &&
+                                    "ml-auto"
+                                  } ${
+                                    userDetails?.user_id === comment?.user_id
+                                      ? "bg-[#395698]"
+                                      : "bg-[#3e35c4]"
+                                  }`}
+                                >
+                                  <div
+                                    className={`flex gap-[5px] ${
+                                      userDetails?.user_id ===
+                                        comment?.user_id && "flex-row-reverse"
+                                    } `}
+                                  >
+                                    {userDetails?.user_id !==
+                                      comment?.user_id && (
+                                      <div className="">
+                                        <Avatar
+                                          icon={`${comment?.user_name[0]}`}
+                                          className="w-full h-full !bg-[blueviolet]"
+                                        />
+                                      </div>
+                                    )}
+
+                                    <div
+                                      className={`${
+                                        userDetails?.user_id ===
+                                          comment?.user_id && "ml-auto"
+                                      }`}
+                                    >
+                                      <p
+                                        className={`m-0 p-0 break-words ${
+                                          userDetails?.user_id ===
+                                            comment?.user_id && "text-right"
+                                        }`}
+                                      >
+                                        {comment?.comments}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center gap-3">
+                          <Input
+                            className=" !rounded-xl"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="What's on your mind ?"
+                          />
+                          {comment && (
+                            <SendOutlined
+                              className="text-[25px] !text-green-600 cursor-pointer"
+                              onClick={() => {
+                                onSendComment(record?.id);
+                              }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Button
+                      size="small"
+                      className=" !bg-pink-500 !rounded !text-white !border-none"
+                      onClick={() => {
+                        // setInterval(() => {
+                        onGetCommnets(record?.id);
+                        // }, 1000);
+                      }}
+                    >
+                      Place a comment
+                    </Button>
+                  </Popconfirm>
+                </div>
+              )}
             </div>
           </>
         );
@@ -224,19 +379,21 @@ const CheckDetailsModal = ({
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Remove File" color={"red"} key={idx}>
-                <CloseOutlined
-                  onClick={() => {
-                    if (record?.status === 1) {
-                      message.warn(
-                        "Cannot remove completed file contact with ITEC manager"
-                      );
-                    } else {
-                      handleRemoveFile(record?.id, 1);
-                    }
-                  }}
-                />
-              </Tooltip>
+              {AdmissionDetails?.pay_slip_status !== 1 && (
+                <Tooltip title="Remove File" color={"red"} key={idx}>
+                  <CloseOutlined
+                    onClick={() => {
+                      if (record?.status === 1) {
+                        message.warn(
+                          "Cannot remove completed file contact with ITEC manager"
+                        );
+                      } else {
+                        handleRemoveFile(record?.id, 1);
+                      }
+                    }}
+                  />
+                </Tooltip>
+              )}
             </div>
           </>
         );
@@ -264,7 +421,113 @@ const CheckDetailsModal = ({
             <div>
               {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
               {record?.status === 1 && <Tag color="green">Complete</Tag>}
-              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+              {record?.status === 0 && (
+                <div className="">
+                  <div>
+                    <Tag color="red">Incomplete</Tag>
+                  </div>
+
+                  <Popconfirm
+                    className="mt-2 box-commnet"
+                    icon=""
+                    okButtonProps={{
+                      className: "!hidden",
+                    }}
+                    cancelButtonProps={{
+                      className: "!hidden",
+                    }}
+                    onConfirm={onSendComment}
+                    title={
+                      <div className="w-[300px] ">
+                        <div
+                          className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
+                          ref={messageBoxRef}
+                        >
+                          {/* <h1>Chat with agency</h1> */}
+                          <div className="">
+                            {commentsData?.map((comment, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className={`my-4 w-[70%] border rounded-3xl  px-3 py-[4px] text-white ${
+                                    userDetails?.user_id === comment?.user_id &&
+                                    "ml-auto"
+                                  } ${
+                                    userDetails?.user_id === comment?.user_id
+                                      ? "bg-[#395698]"
+                                      : "bg-[#3e35c4]"
+                                  }`}
+                                >
+                                  <div
+                                    className={`flex gap-[5px] ${
+                                      userDetails?.user_id ===
+                                        comment?.user_id && "flex-row-reverse"
+                                    } `}
+                                  >
+                                    {userDetails?.user_id !==
+                                      comment?.user_id && (
+                                      <div className="">
+                                        <Avatar
+                                          icon={`${comment?.user_name[0]}`}
+                                          className="w-full h-full !bg-[blueviolet]"
+                                        />
+                                      </div>
+                                    )}
+
+                                    <div
+                                      className={`${
+                                        userDetails?.user_id ===
+                                          comment?.user_id && "ml-auto"
+                                      }`}
+                                    >
+                                      <p
+                                        className={`m-0 p-0 break-words ${
+                                          userDetails?.user_id ===
+                                            comment?.user_id && "text-right"
+                                        }`}
+                                      >
+                                        {comment?.comments}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center gap-3">
+                          <Input
+                            className=" !rounded-xl"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="What's on your mind ?"
+                          />
+                          {comment && (
+                            <SendOutlined
+                              className="text-[25px] !text-green-600 cursor-pointer"
+                              onClick={() => {
+                                onSendComment(record?.id);
+                              }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Button
+                      size="small"
+                      className=" !bg-pink-500 !rounded !text-white !border-none"
+                      onClick={() => {
+                        // setInterval(() => {
+                        onGetCommnets(record?.id);
+                        // }, 1000);
+                      }}
+                    >
+                      Place a comment
+                    </Button>
+                  </Popconfirm>
+                </div>
+              )}
             </div>
           </>
         );
@@ -290,19 +553,21 @@ const CheckDetailsModal = ({
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Remove File" color={"red"} key={idx}>
-                <CloseOutlined
-                  onClick={() => {
-                    if (record?.status === 1) {
-                      message.warn(
-                        "Cannot remove completed file contact with ITEC manager"
-                      );
-                    } else {
-                      handleRemoveFile(record?.id, 0);
-                    }
-                  }}
-                />
-              </Tooltip>
+              {AdmissionDetails?.pay_slip_status !== 1 && (
+                <Tooltip title="Remove File" color={"red"} key={idx}>
+                  <CloseOutlined
+                    onClick={() => {
+                      if (record?.status === 1) {
+                        message.warn(
+                          "Cannot remove completed file contact with ITEC manager"
+                        );
+                      } else {
+                        handleRemoveFile(record?.id, 0);
+                      }
+                    }}
+                  />
+                </Tooltip>
+              )}
             </div>
           </>
         );
@@ -378,9 +643,25 @@ const CheckDetailsModal = ({
                 <span className="text-[20px] text-gray-600 m-0 p-0">
                   Student Name:{" "}
                 </span>
-                <h1 className="text-[18px] font-bold m-0">
-                  {AdmissionDetails?.student_name}
-                </h1>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-[18px] font-bold m-0">
+                    {AdmissionDetails?.student_name}
+                  </h1>
+                  {AdmissionDetails?.certificate && (
+                    <Tag
+                      title="Donwload Certificate"
+                      color="red"
+                      className=" cursor-pointer"
+                      onClick={() => {
+                        window.open(
+                          `${btob_dev}/public/${AdmissionDetails?.certificate}`
+                        );
+                      }}
+                    >
+                      Certificate Available
+                    </Tag>
+                  )}
+                </div>
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">
