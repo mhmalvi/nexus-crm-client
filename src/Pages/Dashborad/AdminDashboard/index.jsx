@@ -11,7 +11,7 @@ import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
 // import Table from "./Table";
-import { Button, Input, Modal, Select, Space, message } from "antd";
+import { Button, Input, Modal, Select, Space, Tooltip, message } from "antd";
 import Avatar from "react-avatar";
 import Highlighter from "react-highlight-words";
 import UpdatedTable from "./UpdatedTable";
@@ -313,11 +313,15 @@ const AdminDashboard = () => {
         render: (_, record, idx) => {
           return (
             <>
+            <Tooltip title="View Lead Details">
+
               <EyeOutlined
+              className="!p-1 text-[25px]"
                 onClick={() => {
                   navigate(`/lead/${record?.lead_id}`);
                 }}
               />
+            </Tooltip>
             </>
           );
         },

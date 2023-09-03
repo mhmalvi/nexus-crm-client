@@ -39,6 +39,23 @@ const StudentList = () => {
       key: "course_name",
     },
     {
+      title: "Payment Status",
+      dataIndex: "payment-status",
+      key: "payment-status",
+      align: "center",
+      render: (_, record, idx) => {
+        return (
+          <>
+            {(record?.pay_slip_status === 0 || !record?.pay_slip_status) && (
+              <Tag color="cyan">Pending</Tag>
+            )}
+            {record?.pay_slip_status === 1 && <Tag color="green">Approved</Tag>}
+            {record?.pay_slip_status === 2 && <Tag color="red">Rejected</Tag>}
+          </>
+        );
+      },
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",

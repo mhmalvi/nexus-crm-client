@@ -1,13 +1,22 @@
-import { EyeOutlined } from "@ant-design/icons";
-import { Table, message } from "antd";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  EyeOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { Table, Tag, Tooltip, message } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { handleGetPaySlip } from "../../Components/services/utils";
+import {
+  handleChangeStatusPaySlip,
+  handleGetPaySlip,
+} from "../../Components/services/utils";
 import { btob_dev } from "../../Components/services/environment";
 
 const PaySlip = () => {
   const [data, setData] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
+  const [changeStatusLoading, setChangeStatusLoading] = useState(false);
   useEffect(() => {
     (async () => {
       setGetLoading(true);
@@ -20,6 +29,32 @@ const PaySlip = () => {
       }
     })();
   }, []);
+  const onSyncGetPaySlips = async () => {
+    setGetLoading(true);
+    const res = await handleGetPaySlip();
+    if (res?.status === 200) {
+      setGetLoading(false);
+      setData(res?.data);
+    } else {
+      setGetLoading(false);
+    }
+  };
+  const onPlaySlipStatusChange = async (sid, status) => {
+    setChangeStatusLoading(true);
+    const data = {
+      student_id: sid,
+      status: status,
+    };
+    const res = await handleChangeStatusPaySlip(data);
+    if (res?.status === 201) {
+      setChangeStatusLoading(false);
+      message.success(res?.data?.message || "Status changed successfully");
+      onSyncGetPaySlips();
+    } else {
+      setChangeStatusLoading(false);
+      message.warn(res?.data?.message || "Failed/ Something went wrong");
+    }
+  };
   const column = [
     {
       title: "Student Name",
@@ -42,23 +77,73 @@ const PaySlip = () => {
       key: "course_name",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div>
+              {record?.pay_slip_status === 0 && <Tag color="blue">Pending</Tag>}
+              {record?.pay_slip_status === 1 && (
+                <Tag color="green">Approved</Tag>
+              )}
+              {record?.pay_slip_status === 2 && <Tag color="red">Rejected</Tag>}
+            </div>
+          </>
+        );
+      },
+    },
+    {
       title: "Action",
       dataIndex: "",
       key: "",
       align: "center",
       render: (_, record, idx) => {
+        console.log("record student id");
         return (
           <>
             <div>
-              <EyeOutlined
-                onClick={() => {
-                  if (record?.pay_slip) {
-                    window.open(`${btob_dev}/public/${record?.pay_slip}`);
-                  } else {
-                    message.warning("Pay slip not available");
-                  }
-                }}
-              />
+              {changeStatusLoading ? (
+                <LoadingOutlined />
+              ) : (
+                <div className="flex gap-6 items-center justify-center">
+                  <Tooltip title="Check Slip">
+                    <EyeOutlined
+                      className="!p-1 text-[25px]"
+                      onClick={() => {
+                        if (record?.pay_slip) {
+                          window.open(`${btob_dev}/public/${record?.pay_slip}`);
+                        } else {
+                          message.warning("Pay slip not available");
+                        }
+                      }}
+                    />
+                  </Tooltip>
+                  {record?.pay_slip_status !== 1 && (
+                    <>
+                      <Tooltip title="Approve" color="green">
+                        <CheckOutlined
+                          className="!p-1 cursor-pointer text-[25px]"
+                          onClick={() => {
+                            // 1 == approve
+                            onPlaySlipStatusChange(record?.id, 1);
+                          }}
+                        />
+                      </Tooltip>
+                      <Tooltip title="Reject" color="red">
+                        <CloseOutlined
+                          className="!p-1 cursor-pointer text-[25px]"
+                          onClick={() => {
+                            // 2 == reject
+                            onPlaySlipStatusChange(record?.id, 2);
+                          }}
+                        />
+                      </Tooltip>
+                      </>
+                  )}
+                </div>
+              )}
             </div>
           </>
         );

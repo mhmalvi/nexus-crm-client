@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Input,
   Modal,
@@ -8,23 +9,28 @@ import {
   Tooltip,
   message,
 } from "antd";
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
   handleAdmissionStatusChange,
+  handleGetComments,
   handleGetStudentAdmissionRequests,
   handleGetStudentAdmissionRequestsDetails,
   handleInvoiceGenerate,
+  handleSendComment,
   handleSendMailToInstitute,
+  handleUploadCertificate,
 } from "../../Components/services/utils";
 import {
   CheckOutlined,
   CloseOutlined,
   EyeOutlined,
   ReloadOutlined,
+  SendOutlined,
 } from "@ant-design/icons";
-
+import paidPhoto from "../../assets/PNGS/paid.svg";
+import { shallowEqual, useSelector } from "react-redux";
 const RequestDetailsModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -44,6 +50,14 @@ const RequestDetailsModal = ({
   const [isSendingmail, setIssendingMail] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [status, setStatus] = useState(0);
+  const [comment, setComment] = useState("");
+  const [commentsData, setCommentsData] = useState([]);
+  const [certificate, setCetificate] = useState({});
+  const [uploadCertificateLoading, setUploadCertificateLoading] =
+    useState(false);
+
+  const userDetails = useSelector((auth) => auth?.user?.userInfo, shallowEqual);
+  const messageBoxRef = useRef(null);
   useEffect(() => {
     (async () => {
       const res = await handleGetStudentAdmissionRequestsDetails(rId);
@@ -150,11 +164,74 @@ const RequestDetailsModal = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setCetificate({});
   };
   const handleCanclePopupMailbox = () => {
     setSubject("");
     setEmail("");
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [commentsData]);
+  const onGetCommnets = async (fid) => {
+    const res = await handleGetComments(fid);
+    if (res?.status === 200) {
+      setCommentsData(res?.data);
+    }
+  };
+
+  const onSendComment = async (fid) => {
+    const data = {
+      user_id: userDetails?.user_id,
+      comments: comment,
+      file_id: fid,
+      user_name: userDetails?.full_name,
+    };
+    const res = await handleSendComment(data);
+    if (res?.status === 201) {
+      setComment("");
+      onGetCommnets(fid);
+
+      message.success("Comment sent successfully");
+      // scrollToBottom();
+    } else {
+      message.warn(res?.data?.message || "Failed/Someting went wrong");
+    }
+  };
+  const scrollToBottom = () => {
+    if (messageBoxRef.current) {
+      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+    }
+  };
+
+  async function handleCertificateUpload(e) {
+    setCetificate(e.target.files[0]);
+    if (e.target.files[0]) {
+      setUploadCertificateLoading(true);
+      const formData = new FormData();
+      formData.append("student_id", AdmissionDetails?.id);
+      formData.append("certificate", e.target.files[0]);
+      const res = await handleUploadCertificate(formData);
+      if (res?.status === 201) {
+        setUploadCertificateLoading(false);
+        message.success("Certificate uploaded successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
+
+        setCetificate({});
+        e.target.files[0] = null;
+      } else {
+        setUploadCertificateLoading(false);
+
+        message.warn(res?.data?.message || "Failed");
+        e.target.files[0] = null;
+        setCetificate({});
+      }
+    }
+  }
+
   const columns = [
     {
       title: "File Name",
@@ -171,7 +248,112 @@ const RequestDetailsModal = ({
             <div>
               {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
               {record?.status === 1 && <Tag color="green">Complete</Tag>}
-              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+              {record?.status === 0 && (
+                <div className="">
+                  <div>
+                    <Tag color="red">Incomplete</Tag>
+                  </div>
+
+                  <Popconfirm
+                    className="mt-2 box-commnet"
+                    icon=""
+                    okButtonProps={{
+                      className: "!hidden",
+                    }}
+                    cancelButtonProps={{
+                      className: "!hidden",
+                    }}
+                    title={
+                      <div className="w-[300px] ">
+                        <div
+                          className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
+                          ref={messageBoxRef}
+                        >
+                          {/* <h1>Chat with studnet admin</h1> */}
+                          <div className="">
+                            {commentsData?.map((comment, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className={`my-4 w-[70%] border rounded-3xl  px-3 py-[4px] text-white ${
+                                    userDetails?.user_id === comment?.user_id &&
+                                    "ml-auto"
+                                  } ${
+                                    userDetails?.user_id === comment?.user_id
+                                      ? "bg-[#395698]"
+                                      : "bg-[#3e35c4]"
+                                  }`}
+                                >
+                                  <div
+                                    className={`flex gap-[5px] ${
+                                      userDetails?.user_id ===
+                                        comment?.user_id && "flex-row-reverse"
+                                    } `}
+                                  >
+                                    {userDetails?.user_id !==
+                                      comment?.user_id && (
+                                      <div className="">
+                                        <Avatar
+                                          icon={`${comment?.user_name[0]}`}
+                                          className="w-full h-full !bg-[blueviolet]"
+                                        />
+                                      </div>
+                                    )}
+
+                                    <div
+                                      className={`${
+                                        userDetails?.user_id ===
+                                          comment?.user_id && "ml-auto"
+                                      }`}
+                                    >
+                                      <p
+                                        className={`m-0 p-0 break-words ${
+                                          userDetails?.user_id ===
+                                            comment?.user_id && "text-right"
+                                        }`}
+                                      >
+                                        {comment?.comments}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center gap-3">
+                          <Input
+                            className=" !rounded-xl"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="What's on your mind ?"
+                          />
+                          {comment && (
+                            <SendOutlined
+                              className="text-[25px] !text-green-600 cursor-pointer"
+                              onClick={() => {
+                                onSendComment(record?.id);
+                              }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Button
+                      size="small"
+                      className=" !bg-pink-500 !rounded !text-white !border-none"
+                      onClick={() => {
+                        // setInterval(() => {
+                        onGetCommnets(record?.id);
+                        // }, 1000);
+                      }}
+                    >
+                      Place a comment``
+                    </Button>
+                  </Popconfirm>
+                </div>
+              )}
             </div>
           </>
         );
@@ -203,6 +385,7 @@ const RequestDetailsModal = ({
             <div className="flex justify-center items-center gap-4">
               <Tooltip title="View File" color={"Green"} key={idx}>
                 <EyeOutlined
+                  className="text-[25px]"
                   onClick={() => {
                     window.open(
                       `https://crmbtob.quadque.digital/public/${record?.file_path}`,
@@ -211,20 +394,24 @@ const RequestDetailsModal = ({
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Complete File" color={"cyan"} key={idx}>
-                <CheckOutlined
-                  onClick={() => {
-                    handleChangeStatus(record?.id, 1, 1);
-                  }}
-                />
-              </Tooltip>
-              <Tooltip title="Incomplete File" color={"red"} key={idx}>
-                <CloseOutlined
-                  onClick={() => {
-                    handleChangeStatus(record?.id, 0, 1);
-                  }}
-                />
-              </Tooltip>
+              {AdmissionDetails?.pay_slip_status !== 1 && (
+                <>
+                  <Tooltip title="Complete File" color={"cyan"} key={idx}>
+                    <CheckOutlined
+                      onClick={() => {
+                        handleChangeStatus(record?.id, 1, 1);
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Incomplete File" color={"red"} key={idx}>
+                    <CloseOutlined
+                      onClick={() => {
+                        handleChangeStatus(record?.id, 0, 1);
+                      }}
+                    />
+                  </Tooltip>
+                </>
+              )}
             </div>
           </>
         );
@@ -252,7 +439,116 @@ const RequestDetailsModal = ({
             <div>
               {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
               {record?.status === 1 && <Tag color="green">Complete</Tag>}
-              {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+
+              {record?.status === 0 && (
+                <div className="">
+                  <div>
+                    <Tag color="red">Incomplete</Tag>
+                  </div>
+
+                  <Popconfirm
+                    className="mt-2 box-commnet"
+                    icon=""
+                    okButtonProps={{
+                      className: "!hidden",
+                    }}
+                    cancelButtonProps={{
+                      className: "!hidden",
+                    }}
+                    title={
+                      <div className="w-[300px] ">
+                        <div
+                          className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
+                          ref={messageBoxRef}
+                        >
+                          {/* <div className=" sticky top-0 p-1 bg-green-500 z-10">
+                          <h1 >Chat with studnet admin</h1>
+                          </div> */}
+
+                          <div className="">
+                            {commentsData?.map((comment, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className={`my-4 w-[70%] border rounded-3xl  px-3 py-[4px] text-white ${
+                                    userDetails?.user_id === comment?.user_id &&
+                                    "ml-auto"
+                                  } ${
+                                    userDetails?.user_id === comment?.user_id
+                                      ? "bg-[#395698]"
+                                      : "bg-[#3e35c4]"
+                                  }`}
+                                >
+                                  <div
+                                    className={`flex gap-[5px] ${
+                                      userDetails?.user_id ===
+                                        comment?.user_id && "flex-row-reverse"
+                                    } `}
+                                  >
+                                    {userDetails?.user_id !==
+                                      comment?.user_id && (
+                                      <div className="">
+                                        <Avatar
+                                          icon={`${comment?.user_name[0]}`}
+                                          className="w-full h-full !bg-[blueviolet]"
+                                        />
+                                      </div>
+                                    )}
+
+                                    <div
+                                      className={`${
+                                        userDetails?.user_id ===
+                                          comment?.user_id && "ml-auto"
+                                      }`}
+                                    >
+                                      <p
+                                        className={`m-0 p-0 break-words ${
+                                          userDetails?.user_id ===
+                                            comment?.user_id && "text-right"
+                                        }`}
+                                      >
+                                        {comment?.comments}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center gap-3">
+                          <Input
+                            className=" !rounded-xl"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="What's on your mind ?"
+                          />
+                          {comment && (
+                            <SendOutlined
+                              className="text-[25px] !text-green-600 cursor-pointer"
+                              onClick={() => {
+                                onSendComment(record?.id);
+                              }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Button
+                      size="small"
+                      className=" !bg-pink-500 !rounded !text-white !border-none"
+                      onClick={() => {
+                        // setInterval(() => {
+                        onGetCommnets(record?.id);
+                        // }, 1000);
+                      }}
+                    >
+                      Place a comment
+                    </Button>
+                  </Popconfirm>
+                </div>
+              )}
             </div>
           </>
         );
@@ -284,6 +580,7 @@ const RequestDetailsModal = ({
             <div className="flex justify-center items-center gap-4">
               <Tooltip title="View File" color={"Green"} key={idx}>
                 <EyeOutlined
+                  className="text-[25px]"
                   onClick={() => {
                     window.open(
                       `https://crmbtob.quadque.digital/public/${record?.file_path}`,
@@ -292,20 +589,24 @@ const RequestDetailsModal = ({
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Complete File" color={"cyan"} key={idx}>
-                <CheckOutlined
-                  onClick={() => {
-                    handleChangeStatus(record?.id, 1, 0);
-                  }}
-                />
-              </Tooltip>
-              <Tooltip title="Incomplete File" color={"red"} key={idx}>
-                <CloseOutlined
-                  onClick={() => {
-                    handleChangeStatus(record?.id, 0, 0);
-                  }}
-                />
-              </Tooltip>
+              {AdmissionDetails?.pay_slip_status !== 1 && (
+                <>
+                  <Tooltip title="Complete File" color={"cyan"} key={idx}>
+                    <CheckOutlined
+                      onClick={() => {
+                        handleChangeStatus(record?.id, 1, 0);
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Incomplete File" color={"red"} key={idx}>
+                    <CloseOutlined
+                      onClick={() => {
+                        handleChangeStatus(record?.id, 0, 0);
+                      }}
+                    />
+                  </Tooltip>
+                </>
+              )}
             </div>
           </>
         );
@@ -333,42 +634,57 @@ const RequestDetailsModal = ({
             </Button>,
           ]}
         >
-          <div className="my-6">
-            <div className="flex items-center gap-4 my-4">
-              <span className="text-[20px] text-gray-600 m-0 p-0">
-                Agency Name:{" "}
-              </span>
-              <h1 className="text-[18px] font-bold m-0">{res?.agency}</h1>
+          <div className="mb-6 flex justify-between items-center gap-2">
+            <div className="md:w-[60%] ">
+              <div className="flex items-center gap-4 my-4">
+                <span className="text-[20px] text-gray-600 m-0 p-0">
+                  Agency Name:{" "}
+                </span>
+                <h1 className="text-[18px] font-bold m-0">{res?.agency}</h1>
+              </div>
+              <div className="flex items-center gap-4 my-4">
+                <span className="text-[20px] text-gray-600 m-0 p-0">
+                  Student Name:{" "}
+                </span>
+                <h1 className="text-[18px] font-bold m-0">
+                  {AdmissionDetails?.student_name}
+                </h1>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-[20px] text-gray-600 ">
+                  Course Name:{" "}
+                </span>
+                <h1 className="text-[18px] font-bold m-0 p-0">
+                  {AdmissionDetails?.course_name}
+                </h1>
+              </div>
+              <div className="mt-4 flex items-center gap-4">
+                <span className="text-[20px] text-gray-600 ">Status: </span>
+                <h1 className="text-[18px] font-bold m-0 p-0">
+                  {AdmissionDetails?.status === 2 && (
+                    <Tag color="cyan">Pending</Tag>
+                  )}
+                  {AdmissionDetails?.status === 1 && (
+                    <Tag color="green">Complete</Tag>
+                  )}
+                  {AdmissionDetails?.status === 0 && (
+                    <Tag color="red">Incomplete</Tag>
+                  )}
+                </h1>
+              </div>
             </div>
-            <div className="flex items-center gap-4 my-4">
-              <span className="text-[20px] text-gray-600 m-0 p-0">
-                Student Name:{" "}
-              </span>
-              <h1 className="text-[18px] font-bold m-0">
-                {AdmissionDetails?.student_name}
-              </h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-[20px] text-gray-600 ">Course Name: </span>
-              <h1 className="text-[18px] font-bold m-0 p-0">
-                {AdmissionDetails?.course_name}
-              </h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-[20px] text-gray-600 ">Status: </span>
-              <h1 className="text-[18px] font-bold m-0 p-0">
-                {AdmissionDetails?.status === 2 && (
-                  <Tag color="cyan">Pending</Tag>
-                )}
-                {AdmissionDetails?.status === 1 && (
-                  <Tag color="green">Complete</Tag>
-                )}
-                {AdmissionDetails?.status === 0 && (
-                  <Tag color="red">Incomplete</Tag>
-                )}
-              </h1>
-            </div>
+            {AdmissionDetails?.pay_slip_status === 1 && (
+              <div className="md:w-[39%]">
+                <img
+                  className=" mx-auto  w-1/2"
+                  src={paidPhoto}
+                  alt=""
+                  srcset=""
+                />
+              </div>
+            )}
           </div>
+
           <div className="flex items-center gap-2">
             <Popconfirm
               icon=""
@@ -491,9 +807,48 @@ const RequestDetailsModal = ({
                 Generate Invoice
               </Button>
             </Popconfirm>
+            {AdmissionDetails?.pay_slip_status === 1 && (
+              <div className="">
+                <input
+                  type="file"
+                  name="file"
+                  id="certificate-upload"
+                  onChange={handleCertificateUpload}
+                  hidden
+                />
+                <label
+                  htmlFor="certificate-upload"
+                  className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer text-white border-none"
+                  style={{ border: "1px solid gray" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                    />
+                  </svg>
+                  <p className="m-0 p-0">
+                    {uploadCertificateLoading
+                      ? "Uploading Certificate"
+                      : "Upload Certificate"}
+                  </p>
+                </label>
+                <p className="text-[green] text-[16px] m-0 p-0">
+                  {certificate?.name}
+                </p>
+              </div>
+            )}
           </div>
 
-          <div>
+          <div className="mt-6">
             <div>
               <h1 className="mb-[-15px] p-0 text-lg font-bold">
                 Mandatory Files

@@ -20,6 +20,7 @@ const CreateStudentModal = ({
   const [usiFile, setUsiFIle] = useState({});
   const [payFile, setpayFIle] = useState({});
   const [courseList, setCourseList] = useState([]);
+  const [allSelectedStudentFiles, setAllSelectedStudentFiles] = useState([]);
   const [data, setData] = useState({
     student_name: "",
     institute_name: "",
@@ -37,6 +38,7 @@ const CreateStudentModal = ({
     setData({});
     setCourseList([]);
     setCourse(0);
+    setAllSelectedStudentFiles([])
   };
   return (
     <>
@@ -79,6 +81,8 @@ const CreateStudentModal = ({
             courseList={courseList}
             setCourseList={setCourseList}
             course={course}
+            allSelectedStudentFiles={allSelectedStudentFiles}
+            setAllSelectedStudentFiles={setAllSelectedStudentFiles}
           />
         </Modal>
       </div>
