@@ -615,5 +615,70 @@ export const handleUploadCertificate = async (data) => {
     return error.response;
   }
 };
+export const handleGetDashboardDataAccountant = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/accountant/get-accountant-dashboard-analytics`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleGetDashboardDataGraph = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/accountant/accountant-current-year-dashboard-data`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleGetStudentAdminDashboardData = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/admin-analytics`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleGetStudentAdminDashboardDataGraph = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/admin-graph`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 
