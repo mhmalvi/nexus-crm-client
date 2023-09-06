@@ -23,11 +23,15 @@ import {
 } from "recharts";
 import { curveCardinal } from "d3-shape";
 import { PieChart, Pie, Sector, Cell } from "recharts";
+import { handleGetStudentAdminDashboardData, handleGetStudentAdminDashboardDataGraph } from "../../../Components/services/utils";
 
 function ManagerDashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState();
+  const [dashboardData, setDashboardData] = useState({});
+  const [dashboardDataGraph, setDashboardDataGraph] = useState([])
+  const [dashboardLoading, setDashboardLoading] = useState(false);
   const loadingDetails = useSelector((state) => state?.user?.loading);
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -65,6 +69,40 @@ function ManagerDashboard() {
   const EditSettings = () => {
     navigate("/edit-profile");
   };
+
+  useEffect(() => {
+    (async () => {
+      setDashboardLoading(true);
+      const res = await handleGetStudentAdminDashboardData();
+      if (res?.status === 200) {
+        const data = [];
+        setDashboardLoading(false);
+        setDashboardData(res?.data);
+      } else {
+        setDashboardLoading(false);
+      }
+    })();
+  }, []);
+  useEffect(()=>{
+    (async()=>{
+      setDashboardLoading(true);
+      const res = await handleGetStudentAdminDashboardDataGraph();
+      if (res?.status === 200) {
+        const data = [];
+        setDashboardLoading(false);
+        res?.data?.forEach((item,idx)=>{
+          data.push({
+            name: item?.monthname,
+            certified: item?.count
+          })
+        })
+        setDashboardDataGraph(data);
+      } else {
+        setDashboardLoading(false);
+      }
+    })()
+  },[])
+
   const data = [
     {
       name: "Page A",
@@ -111,10 +149,22 @@ function ManagerDashboard() {
   ];
 
   const pidata = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
+    {
+      name: "Approved",
+      value: dashboardData?.approved ? dashboardData?.approved : 0,
+    },
+    {
+      name: "Pending",
+      value: dashboardData?.pending ? dashboardData?.pending : 0,
+    },
+    {
+      name: "Rejected",
+      value: dashboardData?.rejected ? dashboardData?.rejected : 0,
+    },
+    {
+      name: "Certified",
+      value: dashboardData?.certified ? dashboardData?.certified : 0,
+    },
   ];
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   const RADIAN = Math.PI / 180;
@@ -257,9 +307,11 @@ function ManagerDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.approved ? dashboardData?.approved : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Total Student
+                Approved
               </p>
             </div>
           </div>
@@ -281,9 +333,11 @@ function ManagerDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.pending ? dashboardData?.pending : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Completed
+                Pending
               </p>
             </div>
           </div>
@@ -305,9 +359,11 @@ function ManagerDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.rejected ? dashboardData?.rejected : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Incompleted
+                Rejected
               </p>
             </div>
           </div>
@@ -329,7 +385,9 @@ function ManagerDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.certified ? dashboardData?.certified : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
                 Certified
               </p>
@@ -342,7 +400,7 @@ function ManagerDashboard() {
             <AreaChart
               width={640}
               height={400}
-              data={data}
+              data={dashboardDataGraph}
               margin={{
                 top: 10,
                 right: 30,
@@ -356,14 +414,14 @@ function ManagerDashboard() {
               <Tooltip />
               <Area
                 type="monotone"
-                dataKey="uv"
+                dataKey="certified"
                 stroke="#8884d8"
                 fill="#8884d8"
                 fillOpacity={0.3}
               />
               <Area
                 type={cardinal}
-                dataKey="uv"
+                dataKey="certified"
                 stroke="#82ca9d"
                 fill="#82ca9d"
                 fillOpacity={0.3}
