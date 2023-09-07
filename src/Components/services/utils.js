@@ -680,5 +680,21 @@ export const handleGetStudentAdminDashboardDataGraph = async () => {
     return error.response;
   }
 };
+export const handleGetAgencyDashboardData = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${btob_dev}/student/agency_id=${id}/agency-analytics`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 
