@@ -24,11 +24,14 @@ import {
 } from "recharts";
 import { curveCardinal } from "d3-shape";
 import { PieChart, Pie, Sector, Cell } from "recharts";
+import { handleGetAgencyDashboardData } from "../../../Components/services/utils";
 
 function AgencyDashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState();
+  const [dashboardData, setDashboardData] = useState({});
+  const [loading, setLoading] = useState(false);
   const loadingDetails = useSelector((state) => state?.user?.loading);
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -66,6 +69,19 @@ function AgencyDashboard() {
   const EditSettings = () => {
     navigate("/edit-profile");
   };
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const res = await handleGetAgencyDashboardData(ProfileDetails?.user_id);
+      if (res?.status === 200) {
+        setLoading(false);
+        setDashboardData(res?.data);
+      } else {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   const data = [
     {
@@ -315,7 +331,7 @@ function AgencyDashboard() {
       )} */}
       <div className="w-full mx-auto">
         <div className="flex gap-2 flex-wrap w-full">
-          <div className=" w-[24%] h-[100px] bg-[#FFA859] rounded flex items-center justify-center gap-5  text-white">
+          <div className=" w-[32%] h-[100px] bg-[#FFA859] rounded flex items-center justify-center gap-5  text-white">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -333,13 +349,17 @@ function AgencyDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.payment_pending
+                  ? dashboardData?.payment_pending
+                  : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Total Student
+                Payment Pending
               </p>
             </div>
           </div>
-          <div className="w-[24%] h-[100px] bg-[#6EE46A] rounded  flex items-center justify-center gap-5  text-white">
+          <div className="w-[32%] h-[100px] bg-[#6EE46A] rounded  flex items-center justify-center gap-5  text-white">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -357,13 +377,17 @@ function AgencyDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.payment_approved
+                  ? dashboardData?.payment_approved
+                  : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Completed
+                Payment Approved
               </p>
             </div>
           </div>
-          <div className="w-[24%] h-[100px] bg-[#AA87CB] rounded  flex items-center justify-center gap-5  text-white">
+          <div className="w-[32%] h-[100px] bg-[#AA87CB] rounded  flex items-center justify-center gap-5  text-white">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -381,13 +405,69 @@ function AgencyDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.payment_disapproved
+                  ? dashboardData?.payment_disapproved
+                  : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
-                Incompleted
+                Payment Disapproved
               </p>
             </div>
           </div>
-          <div className="w-[24%] h-[100px] bg-[#709FBB] rounded  flex items-center justify-center gap-5  text-white">
+          <div className="w-[32%] h-[100px] bg-[#709FBB] rounded  flex items-center justify-center gap-5  text-white">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-16 h-16"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+                />
+              </svg>
+            </div>
+            <div>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.pending ? dashboardData?.pending : 0}
+              </h1>
+              <p className="p-0 m-0 font-bold font-serif text-[17px]">
+                File Incomplete
+              </p>
+            </div>
+          </div>
+          <div className="w-[32%] h-[100px] bg-[#70ccc0] rounded  flex items-center justify-center gap-5  text-white">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-16 h-16"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+                />
+              </svg>
+            </div>
+            <div>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.rejected ? dashboardData?.rejected : 0}
+              </h1>
+              <p className="p-0 m-0 font-bold font-serif text-[17px]">
+                File Rejected
+              </p>
+            </div>
+          </div>
+          <div className="w-[32%] h-[100px] bg-[#50583f] rounded  flex items-center justify-center gap-5  text-white">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -405,7 +485,9 @@ function AgencyDashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="p-0 m-0 text-[25px] text-white">100</h1>
+              <h1 className="p-0 m-0 text-[25px] text-white">
+                {dashboardData?.certified ? dashboardData?.certified : 0}
+              </h1>
               <p className="p-0 m-0 font-bold font-serif text-[17px]">
                 Certified
               </p>
@@ -413,9 +495,9 @@ function AgencyDashboard() {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-[64%] mt-10">
+          {/* <div className="w-[64%] mt-10">
             {/* <ResponsiveContainer width="100%" height="100%"> */}
-            <AreaChart
+          {/* <AreaChart
               width={640}
               height={400}
               data={data}
@@ -446,8 +528,8 @@ function AgencyDashboard() {
               />
             </AreaChart>
             {/* </ResponsiveContainer> */}
-          </div>
-          <div className="w-[35%] border mt-5 rounded-lg bg-slate-300">
+          {/* </div> */}
+          {/* <div className="w-[100%] border mt-5 rounded-lg bg-slate-300">
             <PieChart width={350} height={360}>
               <Pie
                 isAnimationActive={true}
@@ -467,9 +549,9 @@ function AgencyDashboard() {
                   />
                 ))}
               </Pie>
-              <Tooltip/>
+              <Tooltip />
             </PieChart>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
