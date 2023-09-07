@@ -1,13 +1,19 @@
-import { Button, Form, Input, Table, message } from "antd";
+import { Button, Form, Input, Popconfirm, Table, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import plus from "../../assets/Images/plus.png";
 import { useForm } from "antd/lib/form/Form";
 import {
   handleCourseCheckListInsert,
   handleCourseCheckLists,
+  handleDeleteCourse,
+  handleUpdateCourse,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
-import { FilePdfOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  FilePdfOutlined,
+} from "@ant-design/icons";
 import { environment_dev } from "../../Components/services/environment";
 
 const CourseMangemnet = () => {
@@ -19,8 +25,10 @@ const CourseMangemnet = () => {
   const [inputFields, setInputFields] = useState([{ value: "" }]);
   const [file, setFile] = useState({});
   const [fileName, setFileName] = useState("");
+  const [courseId, setCourseId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [data, setData] = useState([]);
   const [isCourseListLoading, setIsCourseListLoading] = useState(false);
   function handleFile(event) {
@@ -41,8 +49,13 @@ const CourseMangemnet = () => {
     // formData.append("file_names", inputFields);
 
     setIsLoading(true);
-    const res = await handleCourseCheckListInsert(formData);
-    if (res?.status === 201) {
+    let res;
+    if (isUpdate) {
+      res = await handleUpdateCourse(courseId, formData);
+    } else {
+      res = await handleCourseCheckListInsert(formData);
+    }
+    if (res?.status === 200 || res?.status === 201) {
       form.resetFields();
       setInputFields([{ value: "" }]);
       setFile({});
@@ -58,6 +71,7 @@ const CourseMangemnet = () => {
       }
       setIsLoading(false);
       setIsCreate(false);
+      setIsUpdate(false);
     } else {
       message?.warning(res?.data?.message || "Failed/ Something went wrong");
       setIsLoading(false);
@@ -85,6 +99,7 @@ const CourseMangemnet = () => {
     setFile({});
     setFileName("");
     setIsCreate(false);
+    setIsUpdate(false);
   };
   useEffect(() => {
     (async () => {
@@ -98,6 +113,25 @@ const CourseMangemnet = () => {
       }
     })();
   }, []);
+  const syncCourse = async () => {
+    setIsCourseListLoading(true);
+    const res = await handleCourseCheckLists();
+    if (res?.status === 200) {
+      setIsCourseListLoading(false);
+      setData(res?.data);
+    } else {
+      setIsCourseListLoading(false);
+    }
+  };
+  const onDeleteCourse = async (id) => {
+    const res = await handleDeleteCourse(id);
+    if (res?.status === 200) {
+      syncCourse();
+    } else {
+      message.warn(res?.data?.message || "Failed/Something went wrong");
+    }
+  };
+
   const column = [
     {
       title: "Course Code",
@@ -133,6 +167,38 @@ const CourseMangemnet = () => {
         );
       },
     },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_, record, idx) => {
+        return (
+          <div className="flex items-center gap-6">
+            <Tooltip title="Edit Course" color="blue">
+              <div className="!course-pointer ">
+                <EditOutlined
+                  className="text-[25px]"
+                  onClick={() => {
+                    setCourseId(record?.id);
+                    setIsUpdate(true);
+                  }}
+                />
+              </div>
+            </Tooltip>
+            <Tooltip title="Delete Course" color="red">
+              <Popconfirm
+                title="Are you sure to delete this course"
+                onConfirm={() => {
+                  onDeleteCourse(record?.id);
+                }}
+              >
+                <DeleteOutlined className="course-pointer text-[25px]" />
+              </Popconfirm>
+            </Tooltip>
+          </div>
+        );
+      },
+    },
   ];
   return (
     <>
@@ -142,7 +208,7 @@ const CourseMangemnet = () => {
             <h1 className="text-[25px] font-mono font-semibold">
               Course And CheckList Insert
             </h1>
-            {isCreate ? (
+            {isCreate || isUpdate ? (
               <div className="flex gap-2 items-center">
                 <Button
                   onClick={onCancle}
@@ -156,7 +222,13 @@ const CourseMangemnet = () => {
                   type="primary"
                   className="!bg-purple-500 !border !border-none !text-white !rounded"
                 >
-                  Create
+                  {isUpdate
+                    ? isLoading
+                      ? "Updating..."
+                      : "Update"
+                    : isLoading
+                    ? "Creating..."
+                    : "Create"}
                 </Button>
               </div>
             ) : (
@@ -168,7 +240,7 @@ const CourseMangemnet = () => {
               </Button>
             )}
           </div>
-          {isCreate && (
+          {(isCreate || isUpdate) && (
             <div>
               <Form.Item label="Course Code" name="course_code" required>
                 <Input required />
@@ -252,7 +324,7 @@ const CourseMangemnet = () => {
               })}
             </div>
           )}
-          {!isCreate && (
+          {!isCreate && !isUpdate && (
             <div>
               <Table
                 loading={isCourseListLoading}

@@ -696,5 +696,39 @@ export const handleGetAgencyDashboardData = async (id) => {
     return error.response;
   }
 };
+export const handleDeleteCourse = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/course_id=${id}/course-destroy-from-accountant`,
+      {},
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleUpdateCourse = async (id,data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${environment_dev}/api/course_id=${id}/course-update-from-accountant`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 
