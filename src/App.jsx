@@ -32,6 +32,7 @@ import Register from "./Pages/Authentication/Register/Register";
 import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
+import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 
 function App() {
   // useEffect(() => {
@@ -65,6 +66,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          <Route path="email-setting" element={<EmailSetting />} />
           <Route path="mail" element={<GmailModule />} />
         </Route>
         <Route path="login" element={<Login />} />

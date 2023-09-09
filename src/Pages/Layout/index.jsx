@@ -42,6 +42,7 @@ import moment from "moment";
 import NotifyModal from "../Notifications/NotifyModal.jsx";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
+import EmailSetting from "../EmailSetting/EmailSetting";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -351,6 +352,7 @@ const Layout = () => {
           />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="mail" element={<GmailModule />} />
@@ -499,6 +501,14 @@ const Items = [
     // icon: <Icons.Settings />,
     label: "Settings",
     component: <Settings />,
+    count: 0,
+  },
+  {
+    key: "email-setting",
+    name: "email-setting",
+    // icon: <Icons.Settings />,
+    label: "Email Setting",
+    component: <EmailSetting />,
     count: 0,
   },
 ];
