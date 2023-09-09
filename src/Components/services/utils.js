@@ -730,5 +730,21 @@ export const handleUpdateCourse = async (id,data) => {
     return error.response;
   }
 };
+export const handleGetCourseEdit = async (id) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/course_id=${id}/get-course-details-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 

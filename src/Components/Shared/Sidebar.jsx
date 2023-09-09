@@ -128,7 +128,10 @@ const Sidebar = ({
   const ToggleProfile = (e) => {
     if (e?.key === "profile") {
       navigate("/user-profile");
-    } else if (e?.key === "company") {
+    }else if(e?.key === "email-setting"){
+      navigate("/email-setting")
+    }
+     else if (e?.key === "company") {
       navigate("/settings");
     }
   };
@@ -637,7 +640,7 @@ const Sidebar = ({
           {userDetails?.userInfo?.role_id !== 10 &&
             userDetails?.userInfo?.role_id !== 9 &&
             userDetails?.userInfo?.role_id !== 8 &&
-            userDetails?.userInfo?.role_id !== 7 && (
+             (
               <Menu
                 style={{
                   width: 226,
@@ -661,11 +664,16 @@ const Sidebar = ({
                     ),
                     children: [
                       { label: "Profile Settings", key: "profile" },
+                      
                       userDetails?.userInfo?.role_id === 1 ||
                       userDetails?.userInfo?.role_id === 2 ||
                       userDetails?.userInfo?.role_id === 3 ||
                       userDetails?.userInfo?.role_id === 4
                         ? { label: "Company Settings", key: "company" }
+                        : null,
+                      userDetails?.userInfo?.role_id === 7 
+                      
+                        ? { label: "Email Settings", key: "email-setting" }
                         : null,
                     ],
                   },

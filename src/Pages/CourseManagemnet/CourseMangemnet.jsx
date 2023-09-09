@@ -7,6 +7,7 @@ import {
   handleCourseCheckLists,
   handleDeleteCourse,
   handleUpdateCourse,
+  handleGetCourseEdit,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import {
@@ -23,14 +24,19 @@ const CourseMangemnet = () => {
   );
   const [form] = useForm();
   const [inputFields, setInputFields] = useState([{ value: "" }]);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(false);
   const [fileName, setFileName] = useState("");
   const [courseId, setCourseId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [editCourseDetails, setEditCourseDetails] = useState();
   const [data, setData] = useState([]);
   const [isCourseListLoading, setIsCourseListLoading] = useState(false);
+  const [courseCode, setCourseCode] = useState("");
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDesc, setCourseDesc] = useState("");
+  const [checklistItem,setCheckListItem] = useState("");
   function handleFile(event) {
     setFile(event.target.files[0]);
     console.log("fdatas: ", event?.target?.files[0]);
@@ -41,11 +47,14 @@ const CourseMangemnet = () => {
     const values = form.getFieldsValue(true);
     const formData = new FormData();
     formData.append("user_id", userDetails?.user_id);
-    formData.append("course_code", values?.course_code);
-    formData.append("course_title", values?.course_title);
-    formData.append("course_description", values?.course_description);
-    formData.append("checklist", file);
-    formData.append("file_names", JSON.stringify(inputFields));
+    formData.append("course_code", courseCode);
+    formData.append("course_title", courseTitle);
+    formData.append("course_description", courseDesc);
+    // formData.append("checklist", file);
+    if(file){
+      formData.append("checklist", file );
+    }
+    // formData.append("file_names", JSON.stringify(inputFields));
     // formData.append("file_names", inputFields);
 
     setIsLoading(true);
@@ -58,9 +67,9 @@ const CourseMangemnet = () => {
     if (res?.status === 200 || res?.status === 201) {
       form.resetFields();
       setInputFields([{ value: "" }]);
-      setFile({});
+      setFile(false);
       setFileName("");
-      message.success("Course Saved");
+      message.success("Saved");
       setIsCourseListLoading(true);
       const resFetch = await handleCourseCheckLists();
       if (resFetch?.status === 200) {
@@ -69,9 +78,13 @@ const CourseMangemnet = () => {
       } else {
         setIsCourseListLoading(false);
       }
+      setEditCourseDetails({});
       setIsLoading(false);
       setIsCreate(false);
       setIsUpdate(false);
+      setCourseCode("");
+      setCourseTitle("");
+      setCourseDesc("");
     } else {
       message?.warning(res?.data?.message || "Failed/ Something went wrong");
       setIsLoading(false);
@@ -96,10 +109,14 @@ const CourseMangemnet = () => {
   const onCancle = () => {
     form.resetFields();
     setInputFields([{ value: "" }]);
-    setFile({});
+    setFile(false);
     setFileName("");
     setIsCreate(false);
     setIsUpdate(false);
+    setEditCourseDetails({});
+    setCourseCode("");
+    setCourseTitle("");
+    setCourseDesc("");
   };
   useEffect(() => {
     (async () => {
@@ -131,7 +148,19 @@ const CourseMangemnet = () => {
       message.warn(res?.data?.message || "Failed/Something went wrong");
     }
   };
+  const getEditCourseDetails = async (id) => {
+    const res = await handleGetCourseEdit(id);
+    if (res?.status === 200) {
+      // message.warn("if you see empty or defferent data please cancle and click again  edit button")
+      setCourseCode(res?.data?.course_code);
+      setCourseTitle(res?.data?.course_title);
+      setCourseDesc(res?.data?.course_description);
+      setCheckListItem(res?.data?.checklist_path)
+      setEditCourseDetails(res?.data);
+    }
+  };
 
+  console.log("edit course detail: ", editCourseDetails);
   const column = [
     {
       title: "Course Code",
@@ -179,6 +208,7 @@ const CourseMangemnet = () => {
                 <EditOutlined
                   className="text-[25px]"
                   onClick={() => {
+                    getEditCourseDetails(record?.id);
                     setCourseId(record?.id);
                     setIsUpdate(true);
                   }}
@@ -200,10 +230,20 @@ const CourseMangemnet = () => {
       },
     },
   ];
+  console.log("course_code show:", courseCode);
   return (
     <>
       <div className=" md:px-40 mt-20">
-        <Form layout="vertical" form={form} onFinish={onInsertCourseChecklist}>
+        <Form
+          layout="vertical"
+          form={form}
+          onFinish={onInsertCourseChecklist}
+          // initialValues={editCourseDetails && {
+          //   course_code: editCourseDetails?.course_code ?editCourseDetails?.course_code:"",
+          //   course_title: editCourseDetails?.course_title ? editCourseDetails?.course_title : "",
+          //   course_description: editCourseDetails?.course_description ? editCourseDetails?.course_description : "",
+          // }}
+        >
           <div className="flex items-center justify-between">
             <h1 className="text-[25px] font-mono font-semibold">
               Course And CheckList Insert
@@ -242,19 +282,48 @@ const CourseMangemnet = () => {
           </div>
           {(isCreate || isUpdate) && (
             <div>
-              <Form.Item label="Course Code" name="course_code" required>
-                <Input required />
-              </Form.Item>
-              <Form.Item label="Course Title" name="course_title" required>
-                <Input required />
-              </Form.Item>
-              <Form.Item
+              {/* <Form.Item label="Course Code" name="course_code" required> */}
+              <div className="mb-3">
+                <label htmlFor="" className="mb-1">
+                  Course code
+                </label>
+                <Input
+                  required
+                  value={courseCode}
+                  onChange={(e) => setCourseCode(e.target.value)}
+                  placeholder="write course code"
+                />
+              </div>
+              {/* </Form.Item> */}
+              {/* <Form.Item label="Course Title" name="course_title" required> */}
+              <div className="mb-3">
+                <label htmlFor="" className="mb-1">
+                  Course Title
+                </label>
+                <Input
+                  required
+                  value={courseTitle}
+                  onChange={(e) => setCourseTitle(e.target.value)}
+                  placeholder="write course title"
+                />
+              </div>
+              {/* </Form.Item> */}
+
+              {/* <Form.Item
                 label="Course Description"
                 name="course_description"
                 required
-              >
-                <Input.TextArea required />
-              </Form.Item>
+              > */}
+              <div className="mb-3">
+                <label htmlFor="" className="mb-1">Course Description</label>
+                <Input.TextArea
+                  required
+                  value={courseDesc}
+                  onChange={(e) => setCourseDesc(e.target.value)}
+                  placeholder="write course description"
+                />
+              </div>
+              {/* </Form.Item> */}
 
               <input
                 type="file"
@@ -288,7 +357,7 @@ const CourseMangemnet = () => {
                 <p className="text-[green] text-[16px] mt-2">{fileName}</p>
               </div>
 
-              {inputFields.map((inputField, index) => {
+              {/* {inputFields.map((inputField, index) => {
                 return (
                   <Form.Item
                     className=" gap-2 w-full  "
@@ -321,7 +390,7 @@ const CourseMangemnet = () => {
                     </div>
                   </Form.Item>
                 );
-              })}
+              })} */}
             </div>
           )}
           {!isCreate && !isUpdate && (
