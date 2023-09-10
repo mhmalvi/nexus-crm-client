@@ -393,7 +393,7 @@ function AccountantDashboard() {
                 <h1 className="p-0 m-0 text-[25px] text-white">
                   {dashboardData?.total_student
                     ? dashboardData?.total_student
-                    : 100}
+                    : 0}
                 </h1>
                 <p className="p-0 m-0 font-bold font-serif text-[17px]">
                   Total Student
@@ -448,7 +448,7 @@ function AccountantDashboard() {
                 <h1 className="p-0 m-0 text-[25px] text-white">
                   {dashboardData?.slip_approved
                     ? dashboardData?.slip_approved
-                    : 100}
+                    : 0}
                 </h1>
                 <p className="p-0 m-0 font-bold font-serif text-[17px]">
                   Completed
