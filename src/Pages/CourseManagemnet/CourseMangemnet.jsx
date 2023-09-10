@@ -246,7 +246,7 @@ const CourseMangemnet = () => {
         >
           <div className="flex items-center justify-between">
             <h1 className="text-[25px] font-mono font-semibold">
-              Course And CheckList Insert
+              Course And CheckList Update
             </h1>
             {isCreate || isUpdate ? (
               <div className="flex gap-2 items-center">
