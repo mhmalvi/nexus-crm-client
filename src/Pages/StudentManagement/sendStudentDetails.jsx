@@ -43,7 +43,7 @@ const SendStudentDetails = ({
   courseList,
   setCourseList,
   allSelectedStudentFiles,
-  setAllSelectedStudentFiles
+  setAllSelectedStudentFiles,
 }) => {
   const navigate = useNavigate();
   // const [files, setFiles] = useState([]);
@@ -53,7 +53,6 @@ const SendStudentDetails = ({
   const [selectedStudentFileOption, setSelectedStuendtFileOption] = useState(
     {}
   );
-
 
   const userDetails = useSelector(
     (state) => state?.user?.userInfo,
@@ -150,16 +149,16 @@ const SendStudentDetails = ({
     files?.map((item, idx) => formData.append("student_file[]", item));
 
     if (
-      !photoFile &&
-      !resumeFile &&
-      !letterFile &&
-      !visaFile &&
-      !academicFile &&
-      !photoVidoeFile &&
-      !usiFile &&
-      !payFile
+      Object.keys(photoFile).length===0 &&
+      Object.keys(resumeFile).length===0&&
+      Object.keys(letterFile).length===0 &&
+      Object.keys(visaFile).length===0 &&
+      Object.keys(academicFile).length===0&&
+      Object.keys(photoVidoeFile).length===0 &&
+      Object.keys(usiFile).length===0 
+      
     ) {
-      message.error("Please select files");
+      message.warn("Please select all files");
     } else {
       setUploadLoading(true);
       const res = await handleSendStudentDetails(formData);
@@ -317,7 +316,7 @@ const SendStudentDetails = ({
               ""
             )}
           </div>
-          <div className="flex items-center gap-4 flex-wrap mb-6">
+          <div className="flex items-center gap-4 flex-wrap mb-10">
             {/* <input
               type="file"
               name="file"
@@ -365,10 +364,24 @@ const SendStudentDetails = ({
                 optionFilterProp="children"
                 options={selectFileOptions || []}
               />
+              <div className="">
+                <label
+                  htmlFor="name"
+                  className="block  text-sm text-gray-600 font-bold font-serif"
+                >
+                  Selectd student files
+                </label>
+                {allSelectedStudentFiles?.map((item, idx) => {
+                  return (
+                    <p key={idx} className="text-green-500 m-0 p-0">
+                      {item}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
-            
 
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap self-start translate-y-7">
               {selectedStudentFileOption.value === "1" && (
                 <div className="">
                   <input
@@ -668,7 +681,7 @@ const SendStudentDetails = ({
                 </p>
               </div> */}
             </div>
-            <div>
+            <div className=" self-start translate-y-7">
               <input
                 type="file"
                 name="file"
@@ -715,21 +728,6 @@ const SendStudentDetails = ({
               </div>
             </div>
           </div>
-          <div className="mb-6 translate-y-[-45px]">
-              <label
-                htmlFor="name"
-                className="block  text-sm text-gray-600 font-bold font-serif"
-              >
-                Selectd student files
-              </label>
-              {
-                allSelectedStudentFiles?.map((item,idx)=>{
-                  return(
-                    <p key={idx} className="text-green-500 m-0 p-0">{item}</p>
-                  )
-                })
-              }
-            </div>
 
           <div className="mb-6">
             <button
