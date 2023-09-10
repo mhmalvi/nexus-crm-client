@@ -1,4 +1,9 @@
-import { CloseOutlined, EyeOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  CloudUploadOutlined,
+  EyeOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -18,6 +23,7 @@ import {
   handleGetStudentAdmissionDetailsAgency,
   handleGetStudentAdmissionRequestsDetails,
   handleGetStudentCompleteDetailsCheck,
+  handleIncompleteUpdateStudentFile,
   handleRemoveFileAgencyCheck,
   handleSendComment,
   handleSendCommentAgency,
@@ -47,6 +53,9 @@ const CheckDetailsModal = ({
   const [paySlipUploadLoading, setPaySlipUploadLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsData, setCommentsData] = useState([]);
+  const [inCompleteFile, setInCompleteFile] = useState({});
+  const [fid, setFid] = useState(0);
+  const [flg,setFlg] = useState(1);
 
   const messageBoxRef = useRef(null);
 
@@ -232,6 +241,33 @@ const CheckDetailsModal = ({
       messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
     }
   };
+  const sendAndUploadIncompleteFile = async (e) => {
+    e.preventDefault();
+    console.log("my fid: ", fid);
+    console.log("selec file is: ", e.target.files[0]);
+    setInCompleteFile(e.target.files[0]);
+    if (e.target.files[0]) {
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      const res = await handleIncompleteUpdateStudentFile(fid, flg, formData);
+      if (res?.status === 201) {
+        message.success("File successfully uploaded");
+        SyncRefresh();
+        e.target.value = null;
+        e.target.files[0] = null;
+      } else {
+        message.warn(
+          res?.data?.message || "Error uploading/Something went wrong"
+        );
+        e.target.value = null;
+        e.target.files[0] = null;
+      }
+    } else {
+      message.warn("Please select file");
+      e.target.value = null;
+      e.target.files[0] = null;
+    }
+  };
   const columns = [
     {
       title: "File Name",
@@ -369,7 +405,7 @@ const CheckDetailsModal = ({
         return (
           <>
             <div className="flex justify-center items-center gap-4">
-              <Tooltip title="View File" color={"Green"} key={idx}>
+              <Tooltip title="View File" color={"Green"} key={idx + 1}>
                 <EyeOutlined
                   onClick={() => {
                     window.open(
@@ -377,6 +413,7 @@ const CheckDetailsModal = ({
                       "_blank"
                     );
                   }}
+                  className="text-[25px]"
                 />
               </Tooltip>
               {AdmissionDetails?.pay_slip_status !== 1 && (
@@ -391,7 +428,29 @@ const CheckDetailsModal = ({
                         handleRemoveFile(record?.id, 1);
                       }
                     }}
+                    className="text-[25px]"
                   />
+                </Tooltip>
+              )}
+              {record?.status !== 1 && (
+                <Tooltip title="Upload file">
+                  <input
+                    type="file"
+                    id="upload-incomplete"
+                    onChange={(e) => {
+                      sendAndUploadIncompleteFile(e);
+                    }}
+                    className="hidden"
+                  />
+                  <label htmlFor="upload-incomplete">
+                    <CloudUploadOutlined
+                      className="cursor-pointer text-[25px]"
+                      onClick={() => {
+                        setFid(record?.id);
+                        setFlg(1);
+                      }}
+                    />
+                  </label>
                 </Tooltip>
               )}
             </div>
@@ -540,6 +599,7 @@ const CheckDetailsModal = ({
       key: "action",
       align: "center",
       render: (_, record, idx) => {
+        console.log("main record: ", record);
         return (
           <>
             <div className="flex justify-center items-center gap-4">
@@ -551,9 +611,10 @@ const CheckDetailsModal = ({
                       "_blank"
                     );
                   }}
+                  className="text-[25px]"
                 />
               </Tooltip>
-              {AdmissionDetails?.pay_slip_status !== 1 && (
+              {/* {AdmissionDetails?.pay_slip_status !== 1 && (
                 <Tooltip title="Remove File" color={"red"} key={idx}>
                   <CloseOutlined
                     onClick={() => {
@@ -565,7 +626,29 @@ const CheckDetailsModal = ({
                         handleRemoveFile(record?.id, 0);
                       }
                     }}
+                    className="text-[25px]"
                   />
+                </Tooltip>
+              )} */}
+              {record?.status !== 1 && (
+                <Tooltip title="Upload file">
+                  <input
+                    type="file"
+                    id="upload-incomplete"
+                    onChange={(e) => {
+                      sendAndUploadIncompleteFile(e, 0);
+                    }}
+                    className="hidden"
+                  />
+                  <label htmlFor="upload-incomplete">
+                    <CloudUploadOutlined
+                      className="cursor-pointer text-[25px]"
+                      onClick={() => {
+                        setFid(record?.id);
+                        setFlg(0);
+                      }}
+                    />
+                  </label>
                 </Tooltip>
               )}
             </div>

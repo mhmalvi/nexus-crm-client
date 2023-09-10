@@ -149,28 +149,28 @@ const SendStudentDetails = ({
     files?.map((item, idx) => formData.append("student_file[]", item));
 
     if (
-      Object.keys(photoFile).length===0 &&
-      Object.keys(resumeFile).length===0&&
-      Object.keys(letterFile).length===0 &&
-      Object.keys(visaFile).length===0 &&
-      Object.keys(academicFile).length===0&&
-      Object.keys(photoVidoeFile).length===0 &&
-      Object.keys(usiFile).length===0 
+      !photoFile ||
+      !resumeFile ||
+      !letterFile ||
+      !visaFile ||
+      !academicFile ||
+      !photoVidoeFile ||
+      !usiFile
       
     ) {
       message.warn("Please select all files");
     } else {
       setUploadLoading(true);
       const res = await handleSendStudentDetails(formData);
-      if (res?.status === 201 && res) {
-        setPhotoFIle({});
-        setResumeFIle({});
-        setLetterFIle({});
-        setVisaFIle({});
-        setAcademicFIle({});
-        setPhotoVideoFIle({});
-        setUsiFIle({});
-        setpayFIle({});
+      if (res?.status === 201 ) {
+        setPhotoFIle(false);
+        setResumeFIle(false);
+        setLetterFIle(false);
+        setVisaFIle(false);
+        setAcademicFIle(false);
+        setPhotoVideoFIle(false);
+        setUsiFIle(false);
+        setpayFIle(false);
         setUploadLoading(false);
         setData({});
         message.success("Send successfully");
@@ -190,7 +190,7 @@ const SendStudentDetails = ({
         window.location.reload();
       } else {
         setUploadLoading(false);
-        message.warn("Send failed/ Something went wrong");
+        message.warn(res?.data?.message || "Send failed/ Something went wrong");
       }
     }
   };
@@ -255,7 +255,7 @@ const SendStudentDetails = ({
             />
           </div>
 
-          <div className="mb-6 font-poppins">
+          {/* <div className="mb-6 font-poppins">
             <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
               RTO Name
             </label>
@@ -270,7 +270,7 @@ const SendStudentDetails = ({
               onChange={userData}
               required
             />
-          </div>
+          </div> */}
           <div className="mb-6 font-poppins">
             <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
               Select Course
@@ -364,12 +364,12 @@ const SendStudentDetails = ({
                 optionFilterProp="children"
                 options={selectFileOptions || []}
               />
-              <div className="">
+              <div className="mt-1">
                 <label
                   htmlFor="name"
                   className="block  text-sm text-gray-600 font-bold font-serif"
                 >
-                  Selectd student files
+                  Selected student files
                 </label>
                 {allSelectedStudentFiles?.map((item, idx) => {
                   return (

@@ -730,6 +730,7 @@ export const handleUpdateCourse = async (id,data) => {
     return error.response;
   }
 };
+
 export const handleGetCourseEdit = async (id) => {
   const config = {
     headers: {
@@ -739,6 +740,41 @@ export const handleGetCourseEdit = async (id) => {
   try {
     const result = await axios.get(
       `${environment_dev}/api/course_id=${id}/get-course-details-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleIncompleteUpdateStudentFile = async (fid,flag, data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${btob_dev}/student/file_id=${fid}/flag_id=${flag}/update-file`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleSearchStudent= async (data) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://crmbtob.quadque.digital/student/student-search`,
+      data,
       config
     );
     return result.data;

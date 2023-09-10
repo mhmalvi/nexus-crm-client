@@ -395,7 +395,7 @@ const Login = () => {
                     <Radio value={1}>As Agency</Radio>
                     <Radio value={2}>As Manager</Radio>
                   </Radio.Group> */}
-                  <label
+                  {/* <label
                     htmlFor=""
                     className="block mb-2 text-sm text-gray-600"
                   >
@@ -411,7 +411,7 @@ const Login = () => {
                       { value: 1, label: `Agency` },
                       { value: 2, label: `Organization Manager` },
                     ]}
-                  />
+                  /> */}
                 </div>
                 <div className="mb-6 font-poppins">
                   <label

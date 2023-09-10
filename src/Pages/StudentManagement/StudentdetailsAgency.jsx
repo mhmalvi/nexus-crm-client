@@ -1,12 +1,14 @@
-import { EyeOutlined } from "@ant-design/icons";
-import { Button, Table, Tag, Tooltip } from "antd";
+import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { useState } from "react";
 import CreateStudentModal from "./CreateStudentModal";
 import CheckDetailsModal from "./CheckDetailsModal";
 import { useEffect } from "react";
-import { handleGetStudentCompleteDetailsCheck } from "../../Components/services/utils";
+import { handleGetStudentCompleteDetailsCheck, handleSearchStudent } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
+import Search from "antd/lib/transfer/search";
+import axios from "axios";
 
 const StudentdetailsAgency = () => {
   const userDetails = useSelector(
@@ -18,6 +20,9 @@ const StudentdetailsAgency = () => {
   const [rId, setRid] = useState();
   const [loading, setLoading] = useState(false);
   const [listData, setListData] = useState([]);
+  const [search, setSearch] = useState("");
+ 
+
 
   useEffect(() => {
     (async () => {
@@ -115,18 +120,60 @@ const StudentdetailsAgency = () => {
       },
     },
   ];
+
+  const onSearch = async ()=>{
+    
+    if(search){
+      setLoading(true);
+      const res = await handleSearchStudent({name: search});
+      if(res?.status === 200){
+        setListData(res?.data)
+        setLoading(false);
+      }else{
+        setLoading(false);
+      }
+    }else{
+      setLoading(true);
+      const res = await handleGetStudentCompleteDetailsCheck(
+        userDetails?.user_id
+      );
+      if (res?.status === 200) {
+        setListData(res?.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    }
+    
+  }
   return (
     <div className="p-10 w-[95%] mx-auto mt-12">
       <div className="flex justify-between items-center">
         <h1 className="text-[30px] font-bold">Student list</h1>
-        <Button
-          className=" rounded"
-          onClick={() => {
-            setCreateOpen(true);
-          }}
-        >
-          Create Student
-        </Button>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            {/* <label htmlFor="">Search Student</label> */}
+            <Input
+              value={search}
+              placeholder="Search for students"
+              style={{
+                width: 200,
+              }}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <SearchOutlined className=" cursor-pointer" onClick={onSearch} />
+          </div>
+          <div>
+            <Button
+              className=" rounded"
+              onClick={() => {
+                setCreateOpen(true);
+              }}
+            >
+              Create Student
+            </Button>
+          </div>
+        </div>
       </div>
       <Table
         loading={loading}
