@@ -638,8 +638,8 @@ const Sidebar = ({
           {/* // Accountant menu end */}
 
           {userDetails?.userInfo?.role_id !== 10 &&
-            userDetails?.userInfo?.role_id !== 9 &&
-            userDetails?.userInfo?.role_id !== 8 &&
+            
+            
              (
               <Menu
                 style={{
@@ -671,10 +671,10 @@ const Sidebar = ({
                       userDetails?.userInfo?.role_id === 4
                         ? { label: "Company Settings", key: "company" }
                         : null,
-                      userDetails?.userInfo?.role_id === 7 
+                      // userDetails?.userInfo?.role_id === 7 
                       
-                        ? { label: "Email Settings", key: "email-setting" }
-                        : null,
+                      //   ? { label: "Email Settings", key: "email-setting" }
+                      //   : null,
                     ],
                   },
                 ]}
