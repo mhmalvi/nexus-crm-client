@@ -245,7 +245,7 @@ const CourseDetails = ({ selectedCourse }) => {
 
         <div className="min-h-full w-0.5 bg-gray-100">&nbsp;</div>
 
-        <div>
+        {/* <div>
           <div className="text-base font-semibold mb-4">
             Assign Sales Employee
           </div>
@@ -309,7 +309,7 @@ const CourseDetails = ({ selectedCourse }) => {
               Assign
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

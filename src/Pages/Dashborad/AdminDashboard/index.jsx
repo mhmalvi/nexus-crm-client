@@ -439,6 +439,7 @@ const AdminDashboard = () => {
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyEmployeeList, userDetails?.userInfo, assignLoading]);
+  console.log("the leads: ", leadList)
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);

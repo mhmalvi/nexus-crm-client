@@ -8,7 +8,12 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 import { handleUploadLeadFile } from "../../../Components/services/leads";
-import { handleFetchSales } from "../../../Components/services/utils";
+import {
+  handleCompanyList,
+  handleCompanyWiseLeadList,
+  handleFetchSales,
+} from "../../../Components/services/utils";
+import { addLeads } from "../../../features/Leads/leadsSlice";
 
 const UpdatedTable = ({
   table_title,
@@ -34,6 +39,9 @@ const UpdatedTable = ({
 
   const [list, setList] = useState([]);
   const [leadFile, setLeadFile] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
+  const [companyWiseListData, setCompanyWiseListData] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -93,9 +101,41 @@ const UpdatedTable = ({
 
   // new work down
 
-  const handleSelectData = (v) => {
-    setSelectedSales(v);
+  const onSelectCompanyData = (v, option) => {
+    setSelectedCompany(option);
   };
+
+  useEffect(() => {
+    (async () => {
+      const res = await handleCompanyList(userDetails?.role_id);
+      if (res?.status === 200) {
+        const data = [{ value: "", label: "Select Company" }];
+        res?.data?.forEach((item, idx) =>
+          data.push({ value: item?.id, label: item.name })
+        );
+        setCompanyList(data);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      dispatch(setLoader(true));
+      const res = await handleCompanyWiseLeadList(
+        userDetails?.user_id,
+        selectedCompany?.value
+      );
+      if (res?.status === 200) {
+        dispatch(setLoader(false));
+        dispatch(addLeads(res?.data));
+        setCompanyWiseListData(res?.data);
+      } else {
+        dispatch(setLoader(false));
+      }
+    })();
+  }, [selectedCompany]);
+
+  const companyColomun = [];
 
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
@@ -135,14 +175,29 @@ const UpdatedTable = ({
 
           <div className="flex items-center">
             {(userDetails?.role_id === 1 || userDetails?.role_id === 3) && (
+              <>
+                {!window.location.pathname.includes("campaigns") && (
+                  <div className="mr-4">
+                    <Select
+                      defaultValue={""}
+                      onChange={(v) => {
+                        localStorage.setItem("sales_id", v);
+                      }}
+                      options={salesOptions || []}
+                      placeholder="Select Sales"
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            {userDetails?.role_id === 5 && (
               <div className="mr-4">
                 <Select
+                  className=" min-w-[150px]"
                   defaultValue={""}
-                  onChange={(v) => {
-                    localStorage.setItem("sales_id", v);
-                  }}
-                  options={salesOptions || []}
-                  placeholder="Select Sales"
+                  onChange={onSelectCompanyData}
+                  options={companyList || []}
+                  placeholder="Select Company"
                 />
               </div>
             )}
@@ -171,20 +226,24 @@ const UpdatedTable = ({
             ) : null}
 
             {setIsAddLeadFormOpen ? (
-              <div className="mr-4">
-                <button
-                  id="add_leads"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#ff9d88] text-white`}
-                  onClick={() => setIsAddLeadFormOpen(true)}
-                >
-                  Add Lead
-                </button>
-                <Tooltip align={"top"} title="Add lead manually">
-                  <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
-                    ?
-                  </span>
-                </Tooltip>
-              </div>
+              <>
+                {userDetails?.role_id !== 5 && (
+                  <div className="mr-4">
+                    <button
+                      id="add_leads"
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#ff9d88] text-white`}
+                      onClick={() => setIsAddLeadFormOpen(true)}
+                    >
+                      Add Lead
+                    </button>
+                    <Tooltip align={"top"} title="Add lead manually">
+                      <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                        ?
+                      </span>
+                    </Tooltip>
+                  </div>
+                )}
+              </>
             ) : null}
 
             {handleSyncLeadsReq ? (
@@ -224,21 +283,23 @@ const UpdatedTable = ({
             <Loading />
           </div>
         ) : (
-          <Table
-            columns={tableHeaders}
-            dataSource={list}
-            pagination={true}
-            // loading
-            showSorterTooltip={true}
-            sortDirections={["ascend", "descend"]}
-            scroll={{
-              x: 1700,
-              y: 600,
-            }}
-            rowClassName={(record, idx) =>
-              idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
-            }
-          />
+          <div>
+            <Table
+              columns={tableHeaders}
+              dataSource={list || companyWiseListData}
+              pagination={true}
+              // loading
+              showSorterTooltip={true}
+              sortDirections={["ascend", "descend"]}
+              scroll={{
+                x: 1700,
+                y: 600,
+              }}
+              rowClassName={(record, idx) =>
+                idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
+              }
+            />
+          </div>
         )}
       </div>
     </div>
