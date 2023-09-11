@@ -69,7 +69,7 @@ export const handleAddLeadPaymentHistory = async (data) => {
   try {
     const result = await axios.post(
       // `${process.env?.REACT_APP_PAYMENT_URL}/api/store-payment-history`,
-      `https://crmpayment.quadque.tech/api/store-payment-history`,
+      `https://crmpayment.quadque.digital/api/store-payment-history`,
       data
     );
     return result.data;
