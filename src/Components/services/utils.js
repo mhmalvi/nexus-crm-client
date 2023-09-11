@@ -783,4 +783,39 @@ export const handleSearchStudent= async (data) => {
   }
 };
 
+export const handleCompanyList= async (rid) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `https://crmcompany.quadque.digital/api/role_id=${rid}/company-list-in-sales`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleCompanyWiseLeadList= async (sid,cid) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://crmleads.quadque.digital/api/sales_id=${sid}/company_id=${cid}/get-lead-list-in-sales`,
+      {},
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 

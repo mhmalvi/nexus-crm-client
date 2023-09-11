@@ -1,4 +1,12 @@
-import { AutoComplete, Button, Dropdown, Menu, Radio, message } from "antd";
+import {
+  AutoComplete,
+  Button,
+  Dropdown,
+  Menu,
+  Radio,
+  Select,
+  message,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -39,20 +47,22 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   // const [checklistTitle, setChecklistTitle] = useState("");
 
   useEffect(() => {
-    const courseOption = [];
     // const campaigns = [];
 
     (async () => {
       const courseResponse = await handleFetchCourses();
-      console.log("courseResponse", courseResponse);
 
-      if (courseResponse?.status) {
+      if (courseResponse?.status === 200) {
+        const courseOption = [{ value: "", label: "Select Course" }];
+
         courseResponse?.data?.forEach((course) => {
           courseOption.push({
             id: course?.id,
             value: course?.course_title,
+            label: course?.course_title,
           });
         });
+        setCourses(courseOption);
         setCourseList(courseResponse?.data);
       }
     })();
@@ -75,7 +85,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     //   }
     // })();
 
-    setCourses(courseOption);
     // setCampaigns(campaigns);
   }, [dispatch, userDetails]);
 
@@ -582,25 +591,33 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         <div className="w-1/2 mb-4">
           <h1 className="mb-1">Course Name:</h1>
 
-          <AutoComplete
-            style={{
-              width: 400,
-              textTransform: "uppercase",
-            }}
-            id="course_id"
-            // value={
-            //   courses?.find((course) => course?.id === leadData.course_id)
-            //     ?.course_title
-            // }
-            onChange={handleCourseSearch}
-            options={courses}
-            placeholder="Search with course name"
-            filterOption={(inputValue, option) =>
-              option?.value
-                ?.toLowerCase()
-                ?.indexOf(inputValue?.toLowerCase()) !== -1
-            }
-          />
+          {courses ? (
+            <div>
+              <Select
+                showSearch
+                optionFilterProp="children"
+                style={{
+                  width: 400,
+                  textTransform: "uppercase",
+                }}
+                id="course_id"
+                // value={
+                //   courses?.find((course) => course?.id === leadData.course_id)
+                //     ?.course_title
+                // }
+                onChange={handleCourseSearch}
+                options={courses}
+                placeholder="Search with course name"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              />
+            </div>
+          ) : (
+            "No Courses"
+          )}
         </div>
 
         <div className="flex items-center justify-end py-4">
