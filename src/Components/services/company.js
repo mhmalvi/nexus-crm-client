@@ -1,4 +1,5 @@
 import axios from "axios";
+import { payment_dev } from "./environment";
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleCreateCompany = async (companyDetails) => {
   try {
@@ -204,7 +205,7 @@ export const handleCompanyDelete = async (companyId) => {
 export const handleFetchStudentsPaymentHistory = async (userId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      `${payment_dev}/api/payment/list`,
       {
         user_id: userId,
       }
@@ -218,7 +219,7 @@ export const handleFetchStudentsPaymentHistory = async (userId) => {
 export const handleFetchClientsPaymentHistory = async (companyId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment/list`,
+      `${payment_dev}/api/payment/list`,
       {
         company_id: companyId,
       }
@@ -232,7 +233,7 @@ export const handleFetchClientsPaymentHistory = async (companyId) => {
 export const handleFetchStudentsInvoiceHistory = async (userId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      `${payment_dev}/api/invoice/list`,
       {
         user_id: userId,
       }
@@ -246,7 +247,7 @@ export const handleFetchStudentsInvoiceHistory = async (userId) => {
 export const handleFetchClientsInvoiceHistory = async (companyId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      `${payment_dev}/api/invoice/list`,
       {
         company_id: companyId,
       }
@@ -261,7 +262,7 @@ export const handleFetchInvoiceDetails = async (invoiceId) => {
   console.log("invoiceId", invoiceId);
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/invoice/list`,
+      `${payment_dev}/api/invoice/list`,
       {
         id: invoiceId,
       }
