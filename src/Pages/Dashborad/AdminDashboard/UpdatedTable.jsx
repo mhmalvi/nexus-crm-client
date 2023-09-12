@@ -176,7 +176,10 @@ const UpdatedTable = ({
           <div className="flex items-center">
             {(userDetails?.role_id === 1 || userDetails?.role_id === 3) && (
               <>
-                {!window.location.pathname.includes("campaigns") && (
+                {window.location.pathname.includes("campaigns") ||
+                window.location.pathname.includes("payments") ? (
+                  ""
+                ) : (
                   <div className="mr-4">
                     <Select
                       defaultValue={""}

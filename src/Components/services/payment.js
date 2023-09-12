@@ -1,9 +1,10 @@
 import axios from "axios";
+import { payment_dev } from "./environment";
 
 export const handleAddEwayPaymentDetails = async (paymentData) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/eway/payment/response`,
+      `${payment_dev}/api/eway/payment/response`,
       paymentData
     );
     return result.data;
@@ -15,7 +16,7 @@ export const handleAddEwayPaymentDetails = async (paymentData) => {
 export const handlePaymentDetails = async (leadId) => {
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment-details/${leadId}`
+      `${payment_dev}/api/payment-details/${leadId}`
     );
     return result.data;
   } catch (error) {
@@ -26,7 +27,7 @@ export const handlePaymentDetails = async (leadId) => {
 export const fetchMonthPaymentDataOfCompany = async (companyId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/monthly-payment`,
+      `${payment_dev}/api/monthly-payment`,
       {
         company_id: companyId,
       }
@@ -40,7 +41,7 @@ export const fetchMonthPaymentDataOfCompany = async (companyId) => {
 export const fetchCampaignwisePaymentDataOfCompany = async (companyId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/campaign-wise-payment`,
+      `${payment_dev}/api/campaign-wise-payment`,
       {
         company_id: companyId,
       }
@@ -54,7 +55,7 @@ export const fetchCampaignwisePaymentDataOfCompany = async (companyId) => {
 export const fetchAverageIncomeOfLastWeek = async (companyId) => {
   try {
     const result = await axios.post(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/last-week-payment`,
+      `${payment_dev}/api/last-week-payment`,
       {
         company_id: companyId,
       }
@@ -81,7 +82,7 @@ export const handleAddLeadPaymentHistory = async (data) => {
 export const handleDeletePaymentHistory = async (id) => {
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_PAYMENT_URL}/api/payment-history-delete/${id}`
+      `${payment_dev}/api/payment-history-delete/${id}`
     );
     return result.data;
   } catch (error) {
