@@ -108,9 +108,10 @@ export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
 };
 
 export const handleLeadStatusUpdate = async (
-  leadId,
-  newStatus,
-  salesUserId
+  // leadId,
+  // newStatus,
+  // salesUserId,
+  data
 ) => {
   const config = {
     headers: {
@@ -120,12 +121,14 @@ export const handleLeadStatusUpdate = async (
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
-      {
-        lead_id: leadId,
-        lead_status: newStatus,
-        sales_user_id: salesUserId,
-        response: null,
-      },
+      // {
+      //   lead_id: leadId,
+      //   lead_status: newStatus,
+      //   sales_user_id: salesUserId,
+      //   response: null,
+      //   ...data,
+      // },
+      data,
       config
     );
     return result.data;
@@ -135,18 +138,13 @@ export const handleLeadStatusUpdate = async (
 };
 
 export const handleCallResponseUpdate = async (
-  leadId,
-  leadStatus,
-  response
+  
+  data
 ) => {
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/response`,
-      {
-        lead_id: leadId,
-        lead_status: leadStatus,
-        response: response,
-      }
+      data
     );
     return result.data;
   } catch (error) {
