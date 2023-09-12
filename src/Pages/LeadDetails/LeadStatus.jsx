@@ -186,11 +186,28 @@ const LeadStatus = (props) => {
     setLeadStatusColor(
       statusColor.find((i) => i.lable === statusData[key])?.class
     );
+    const data = {
+      lead_id: leadDetails?.leadDetails?.lead_id,
+      lead_status: parseInt(key) + 1,
+      sales_user_id: userDetails?.userInfo?.user_id,
+      response: null,
+      to: leadDetails?.leadDetails?.student_email,
+      course: leadDetails?.leadDetails?.course_title,
+      client_id: userDetails?.userInfo?.client_id,
+      // // logo: companyDetails?.logo,
+      // logo: (companyDetails?.logo).replace(
+      //   `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
+      //   ""
+      // ),
+      name: leadDetails?.leadDetails?.full_name,
+      student_id: leadDetails?.leadDetails?.student_id,
+    };
 
     const statusUpdateResponse = await handleLeadStatusUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      parseInt(key) + 1,
-      userDetails?.userInfo?.user_id
+      // leadDetails?.leadDetails?.lead_id,
+      // parseInt(key) + 1,
+      // userDetails?.userInfo?.user_id,
+      data
     );
 
     console.log("statusUpdateResponse", statusUpdateResponse);
@@ -242,11 +259,21 @@ const LeadStatus = (props) => {
   const onCallResponseChange = async (e) => {
     dispatch(setLoader(true));
     setCallResponse(e.target.value);
-    const response = await handleCallResponseUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      3,
-      e.target.value
-    );
+    const data = {
+      lead_id: leadDetails?.leadDetails?.lead_id,
+      lead_status: 3,
+      response: e.target.value,
+      to: leadDetails?.leadDetails?.student_email,
+      name: leadDetails?.leadDetails?.full_name,
+      course: leadDetails?.leadDetails?.course_title,
+      client_id: userDetails?.userInfo?.client_id,
+      // logo: (companyDetails?.logo).replace(
+      //   `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
+      //   ""
+      // ),
+      student_id: leadDetails?.leadDetails?.student_id,
+    };
+    const response = await handleCallResponseUpdate(data);
     if (response.status === 200) {
       dispatch(setLoader(false));
       setSyncDetails(!syncDetails);
