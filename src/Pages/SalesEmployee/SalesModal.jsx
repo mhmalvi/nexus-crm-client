@@ -198,7 +198,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
             </Button>
           </div>
           {/* Search section */}
-          <div className="flex items-center gap-4 mb-4">
+          {/* <div className="flex items-center gap-4 mb-4">
             <div className="w-[24%]">
               <label htmlFor="#">Search By Name</label>
               <div className=" relative">
@@ -261,7 +261,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
           {/*  */}
           <Table
             columns={leadColumn || []}

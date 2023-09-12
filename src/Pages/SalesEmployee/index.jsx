@@ -233,7 +233,7 @@ const Sales = () => {
         <div className="w-full flex items-center justify-between mt-18 mb-8">
           <div className="text-xl font-semibold">All Sales Employees</div>
         </div>
-        <div className="flex items-center gap-4 mb-4">
+        {/* <div className="flex items-center gap-4 mb-4">
           <div className="w-[24%]">
             <label htmlFor="#">Search By Name</label>
             <div className=" relative">
@@ -276,7 +276,7 @@ const Sales = () => {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
         {/* Sales Employees */}
         <div className="mb-6">
           <Table
