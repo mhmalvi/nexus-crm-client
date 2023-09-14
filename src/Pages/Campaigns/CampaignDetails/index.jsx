@@ -287,6 +287,7 @@ const CampaignDetails = () => {
   }, [companyEmployeeList, userDetails?.userInfo]);
 
   const handleFilterLeadList = (filterId) => {
+    
     console.log("filterId....", filterId);
 
     setActiveFilter(filterId);

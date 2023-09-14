@@ -123,11 +123,16 @@ const LeadDetails = () => {
     //     ?.lead_status
     // );
     const statusUpdateResponse = await handleLeadStatusUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      0,
+      {
+        lead_id: leadDetails?.leadDetails?.lead_id,
+        lead_status: 0,
+        sales_user_id: userDetails?.user_id,
+        client_id: userDetails?.client_id,
+        response: null,
+      }
+
       // leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
       //   ?.lead_status,
-      userDetails?.user_id
     );
 
     if (statusUpdateResponse?.status) {
