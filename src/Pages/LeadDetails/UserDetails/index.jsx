@@ -135,9 +135,15 @@ const UserDetails = ({
 
   const confirm = async (e) => {
     const statusUpdateResponse = await handleLeadStatusUpdate(
-      leadDetails?.leadDetails?.lead_id,
-      0,
-      userDetails?.userInfo?.user_id
+      {
+        lead_id: leadDetails?.leadDetails?.lead_id,
+        lead_status: 0,
+        sales_user_id: userDetails?.userInfo?.user_id,
+        client_id: userDetails?.userInfo?.client_id,
+        response: null
+      }
+     
+      
     );
 
     if (statusUpdateResponse?.status) {

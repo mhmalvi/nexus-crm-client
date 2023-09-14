@@ -146,10 +146,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         name: "Where is your work experience?",
         values: [leadData.work_experiences_location],
       },
-      {
-        name: "Where is your work experience?",
-        values: [leadData.work_experiences_location],
-      },
+
       {
         name: "Where do you live in?",
         values: [leadData.work_location],
