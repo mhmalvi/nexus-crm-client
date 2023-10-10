@@ -47,10 +47,10 @@ const StudentList = () => {
         return (
           <>
             {(record?.pay_slip_status === 0 || !record?.pay_slip_status) && (
-              <Tag color="cyan">Pending</Tag>
+              <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>
             )}
-            {record?.pay_slip_status === 1 && <Tag color="green">Approved</Tag>}
-            {record?.pay_slip_status === 2 && <Tag color="red">Rejected</Tag>}
+            {record?.pay_slip_status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Approved</Tag>}
+            {record?.pay_slip_status === 2 && <Tag color="red" className="!text-[17px] animate-pulse">Rejected</Tag>}
           </>
         );
       },
@@ -63,9 +63,9 @@ const StudentList = () => {
       render: (_, record, idx) => {
         return (
           <>
-            {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-            {record?.status === 1 && <Tag color="green">Complete</Tag>}
-            {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+            {record?.status === 2 && <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>}
+            {record?.status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>}
+            {record?.status === 0 && <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>}
           </>
         );
       },
@@ -87,6 +87,7 @@ const StudentList = () => {
                 onClick={() => {
                   showRequestAdmissionModal(record?.id);
                 }}
+                className="!text-[25px]"
               />
             </Tooltip>
           </>

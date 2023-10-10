@@ -31,6 +31,7 @@ import {
 } from "@ant-design/icons";
 import paidPhoto from "../../assets/PNGS/paid.svg";
 import { shallowEqual, useSelector } from "react-redux";
+import "./checkDetailsModal.css"
 const RequestDetailsModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -234,24 +235,28 @@ const RequestDetailsModal = ({
 
   const columns = [
     {
-      title: "File Name",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Name</h1>
+      },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: "File Status",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Status</h1>
+      },
       dataIndex: "status",
       key: "status",
       render: (_, record, idx) => {
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 2 && <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>}
+              {record?.status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>}
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
                   </div>
 
                   <Popconfirm
@@ -364,7 +369,7 @@ const RequestDetailsModal = ({
       title: () => {
         return (
           <>
-            <div className="flex justify-center items-center gap-4 !m-0 !p-0">
+            <div className="flex justify-center items-center gap-4 !m-0 !p-0 text-[20px] font-bold">
               <div className="!mb-[10px]">
                 <Tooltip title="Sync/Refresh" color="green">
                   <ReloadOutlined onClick={SyncRefresh} />
@@ -420,30 +425,41 @@ const RequestDetailsModal = ({
   ];
   const mcolumns = [
     {
-      title: "File Type",
+      title: ()=>{
+        return <h1 className=" text-[20px] font-bold">File Type</h1>
+      },
       dataIndex: "file_type",
       key: "file_type",
+      render:(_,record,idx)=>{
+        return(
+          <h1 key={idx} className="text-[17px] font-bold">{record?.file_type}</h1>
+        )
+      }
     },
     {
-      title: "File Name",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Name</h1>
+      },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: "File Status",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Status</h1>
+      },
       dataIndex: "status",
       key: "status",
       render: (_, record, idx) => {
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 2 && <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>}
+              {record?.status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>}
 
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
                   </div>
 
                   <Popconfirm
@@ -559,7 +575,7 @@ const RequestDetailsModal = ({
       title: () => {
         return (
           <>
-            <div className="flex justify-center items-center gap-4 !m-0 !p-0">
+            <div className="flex justify-center items-center gap-4 !m-0 !p-0 text-[20px] font-bold">
               <div className="!mb-[10px]">
                 <Tooltip title="Sync/Refresh" color="green">
                   <ReloadOutlined onClick={SyncRefresh} />
@@ -642,6 +658,7 @@ const RequestDetailsModal = ({
                 </span>
                 <h1 className="text-[18px] font-bold m-0">{res?.agency}</h1>
               </div>
+              <hr className=" translate-y-[-1px]"/>
               <div className="flex items-center gap-4 my-4">
                 <span className="text-[20px] text-gray-600 m-0 p-0">
                   Student Name:{" "}
@@ -650,6 +667,7 @@ const RequestDetailsModal = ({
                   {AdmissionDetails?.student_name}
                 </h1>
               </div>
+              <hr className=" translate-y-[-9px]"/>
               <div className="flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">
                   Course Name:{" "}
@@ -658,20 +676,22 @@ const RequestDetailsModal = ({
                   {AdmissionDetails?.course_name}
                 </h1>
               </div>
+              <hr className=" translate-y-[6px]"/>
               <div className="mt-4 flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">Status: </span>
                 <h1 className="text-[18px] font-bold m-0 p-0">
                   {AdmissionDetails?.status === 2 && (
-                    <Tag color="cyan">Pending</Tag>
+                    <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>
                   )}
                   {AdmissionDetails?.status === 1 && (
-                    <Tag color="green">Complete</Tag>
+                    <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>
                   )}
                   {AdmissionDetails?.status === 0 && (
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
                   )}
                 </h1>
               </div>
+              <hr className=" translate-y-[6px]"/>
             </div>
             {AdmissionDetails?.pay_slip_status === 1 && (
               <div className="md:w-[39%]">
@@ -748,12 +768,13 @@ const RequestDetailsModal = ({
                 </>
               }
             >
-              <Button
+              {/* <Button
                 disabled={AdmissionDetails?.status !== 1}
                 className=" !rounded !bg-green-500 !text-white !border-none"
               >
                 Send Mail
-              </Button>
+              </Button> */}
+              <button disabled={AdmissionDetails?.status !== 1} className="sendMailButton" role="button">Send Mail</button>
             </Popconfirm>
             <Popconfirm
               icon=""
@@ -800,12 +821,13 @@ const RequestDetailsModal = ({
                 </>
               }
             >
-              <Button
+              {/* <Button
                 disabled={AdmissionDetails?.status !== 1}
                 className=" !rounded !bg-green-500 !text-white !border-none"
               >
                 Generate Invoice
-              </Button>
+              </Button> */}
+              <button disabled={AdmissionDetails?.status !== 1} className="generateInvoiceButton" role="button">Generate Invoice</button>
             </Popconfirm>
             {AdmissionDetails?.pay_slip_status === 1 && (
               <div className="">
@@ -818,7 +840,7 @@ const RequestDetailsModal = ({
                 />
                 <label
                   htmlFor="certificate-upload"
-                  className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer text-white border-none"
+                  className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer text-white border-none uploadCertificateButton"
                   style={{ border: "1px solid gray" }}
                 >
                   <svg
