@@ -84,11 +84,11 @@ const PaySlip = () => {
         return (
           <>
             <div>
-              {record?.pay_slip_status === 0 && <Tag color="blue">Pending</Tag>}
+              {record?.pay_slip_status === 0 && <Tag color="blue" className="!text-[17px] animate-pulse">Pending</Tag>}
               {record?.pay_slip_status === 1 && (
-                <Tag color="green">Approved</Tag>
+                <Tag color="green" className="!text-[17px] animate-pulse">Approved</Tag>
               )}
-              {record?.pay_slip_status === 2 && <Tag color="red">Rejected</Tag>}
+              {record?.pay_slip_status === 2 && <Tag color="red" className="!text-[17px] animate-pulse">Rejected</Tag>}
             </div>
           </>
         );

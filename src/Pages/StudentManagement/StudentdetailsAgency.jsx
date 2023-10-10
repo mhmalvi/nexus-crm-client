@@ -5,10 +5,14 @@ import { useState } from "react";
 import CreateStudentModal from "./CreateStudentModal";
 import CheckDetailsModal from "./CheckDetailsModal";
 import { useEffect } from "react";
-import { handleGetStudentCompleteDetailsCheck, handleSearchStudent } from "../../Components/services/utils";
+import {
+  handleGetStudentCompleteDetailsCheck,
+  handleSearchStudent,
+} from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import Search from "antd/lib/transfer/search";
 import axios from "axios";
+import "./checkDetailsModal.css";
 
 const StudentdetailsAgency = () => {
   const userDetails = useSelector(
@@ -21,8 +25,6 @@ const StudentdetailsAgency = () => {
   const [loading, setLoading] = useState(false);
   const [listData, setListData] = useState([]);
   const [search, setSearch] = useState("");
- 
-
 
   useEffect(() => {
     (async () => {
@@ -58,9 +60,13 @@ const StudentdetailsAgency = () => {
         return (
           <>
             {record?.invoice ? (
-              <h1 className=" text-green-600">available</h1>
+              <h1 className=" text-green-600 text-[17px] animate-pulse">
+                available
+              </h1>
             ) : (
-              <h1 className=" text-red-600">not available</h1>
+              <h1 className=" text-red-600 text-[17px] animate-pulse">
+                not available
+              </h1>
             )}
           </>
         );
@@ -75,10 +81,20 @@ const StudentdetailsAgency = () => {
         return (
           <>
             {(record?.pay_slip_status === 0 || !record?.pay_slip_status) && (
-              <Tag color="cyan">Pending</Tag>
+              <Tag color="cyan" className="!text-[17px] animate-pulse">
+                Pending
+              </Tag>
             )}
-            {record?.pay_slip_status === 1 && <Tag color="green">Approved</Tag>}
-            {record?.pay_slip_status === 2 && <Tag color="red">Rejected</Tag>}
+            {record?.pay_slip_status === 1 && (
+              <Tag color="green" className="!text-[17px] animate-pulse">
+                Approved
+              </Tag>
+            )}
+            {record?.pay_slip_status === 2 && (
+              <Tag color="red" className="!text-[17px] animate-pulse">
+                Rejected
+              </Tag>
+            )}
           </>
         );
       },
@@ -91,9 +107,21 @@ const StudentdetailsAgency = () => {
       render: (_, record, idx) => {
         return (
           <>
-            {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-            {record?.status === 1 && <Tag color="green">Complete</Tag>}
-            {record?.status === 0 && <Tag color="red">Incomplete</Tag>}
+            {record?.status === 2 && (
+              <Tag color="cyan" className="!text-[17px] animate-pulse">
+                Pending
+              </Tag>
+            )}
+            {record?.status === 1 && (
+              <Tag color="green" className="!text-[17px] animate-pulse">
+                Complete
+              </Tag>
+            )}
+            {record?.status === 0 && (
+              <Tag color="red" className="!text-[17px] animate-pulse">
+                Incomplete
+              </Tag>
+            )}
           </>
         );
       },
@@ -121,18 +149,17 @@ const StudentdetailsAgency = () => {
     },
   ];
 
-  const onSearch = async ()=>{
-    
-    if(search){
+  const onSearch = async () => {
+    if (search) {
       setLoading(true);
-      const res = await handleSearchStudent({name: search});
-      if(res?.status === 200){
-        setListData(res?.data)
+      const res = await handleSearchStudent({ name: search });
+      if (res?.status === 200) {
+        setListData(res?.data);
         setLoading(false);
-      }else{
+      } else {
         setLoading(false);
       }
-    }else{
+    } else {
       setLoading(true);
       const res = await handleGetStudentCompleteDetailsCheck(
         userDetails?.user_id
@@ -144,16 +171,15 @@ const StudentdetailsAgency = () => {
         setLoading(false);
       }
     }
-    
-  }
+  };
   return (
     <div className="p-10 w-[95%] mx-auto mt-12">
       <div className="flex justify-between items-center">
         <h1 className="text-[30px] font-bold">Student list</h1>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
+          {/* <div className="flex items-center gap-1"> */}
             {/* <label htmlFor="">Search Student</label> */}
-            <Input
+            {/* <Input
               value={search}
               placeholder="Search for students"
               style={{
@@ -161,17 +187,38 @@ const StudentdetailsAgency = () => {
               }}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <SearchOutlined className=" cursor-pointer" onClick={onSearch} />
+            <SearchOutlined className=" cursor-pointer" onClick={onSearch} /> */}
+          {/* </div> */}
+          <div className="searchBox">
+            <input
+              className="searchInput"
+              type="text"
+              name=""
+              placeholder="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className="searchButton" href="#">
+              <i className="material-icons" onClick={onSearch}>search</i>
+            </button>
           </div>
           <div>
             <Button
-              className=" rounded"
+              className=" !py-5 !flex !items-center !border-none !text-white !font-bold !rounded !bg-gradient-to-r !from-[#8614f8] !to-[#760be0] hover:opacity-[0.7]"
               onClick={() => {
                 setCreateOpen(true);
               }}
             >
               Create Student
             </Button>
+            {/* <button
+              className="createStudentButton"
+              role="button"
+              onClick={() => {
+                setCreateOpen(true);
+              }}
+            >
+              Create Student
+            </button> */}
           </div>
         </div>
       </div>

@@ -693,7 +693,8 @@ const SendStudentDetails = ({
               <div className="flex items-center ">
                 <label
                   htmlFor="student-file-upload"
-                  className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer text-white border-none"
+                  // className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-purple-400 to-purple-700 cursor-pointer text-white border-none"
+                  className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-purple-700 cursor-pointer text-white border-none"
                   style={{ border: "1px solid gray" }}
                 >
                   <svg
@@ -729,12 +730,12 @@ const SendStudentDetails = ({
             </div>
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 flex justify-center">
             <button
               disabled={uploadLoading ? true : false}
               type="submit"
               loading={uploadLoading}
-              className="!w-full !py-3 !text-white font-medium !bg-brand-color !bg-opacity-80 hover:bg-primary-800 !rounded-md focus:outline-none font-poppins"
+              className="w-1/4 !py-3 !text-white font-medium !bg-brand-color !bg-opacity-80 hover:bg-primary-800 !rounded-md focus:outline-none font-poppins"
             >
               {uploadLoading ? "Submitting..." : "Submit"}
             </button>

@@ -32,6 +32,7 @@ import {
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import { btob_dev } from "../../Components/services/environment";
+import "./checkDetailsModal.css";
 
 const CheckDetailsModal = ({
   checkModalOpen,
@@ -55,7 +56,7 @@ const CheckDetailsModal = ({
   const [commentsData, setCommentsData] = useState([]);
   const [inCompleteFile, setInCompleteFile] = useState({});
   const [fid, setFid] = useState(0);
-  const [flg,setFlg] = useState(1);
+  const [flg, setFlg] = useState(1);
 
   const messageBoxRef = useRef(null);
 
@@ -270,24 +271,38 @@ const CheckDetailsModal = ({
   };
   const columns = [
     {
-      title: "File Name",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Name</h1>
+      },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: "File Status",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Status</h1>
+      },
       dataIndex: "status",
       key: "status",
       render: (_, record, idx) => {
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 2 && (
+                <Tag color="cyan" className=" animate-pulse !text-[17px]">
+                  Pending
+                </Tag>
+              )}
+              {record?.status === 1 && (
+                <Tag color="green" className=" animate-pulse !text-[17px]">
+                  Complete
+                </Tag>
+              )}
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className=" animate-pulse !text-[17px]">
+                      Incomplete
+                    </Tag>
                   </div>
 
                   <Popconfirm
@@ -397,7 +412,9 @@ const CheckDetailsModal = ({
     },
 
     {
-      title: "Action",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">Action</h1>
+      },
       dataIndex: "action",
       key: "action",
       align: "center",
@@ -461,29 +478,52 @@ const CheckDetailsModal = ({
   ];
   const mcolumns = [
     {
-      title: "File Type",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Type</h1>
+      },
       dataIndex: "file_type",
       key: "file_type",
+      render: (_, record, idx) => {
+        return (
+          <h1 key={idx} className=" font-bold text-lg">
+            {record?.file_type}
+          </h1>
+        );
+      },
     },
     {
-      title: "File Name",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Name</h1>
+      },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: "File Status",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">File Status</h1>
+      },
       dataIndex: "status",
       key: "status",
       render: (_, record, idx) => {
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green">Complete</Tag>}
+              {record?.status === 2 && (
+                <Tag color="cyan" className=" animate-pulse !text-[17px]">
+                  Pending
+                </Tag>
+              )}
+              {record?.status === 1 && (
+                <Tag color="green" className=" animate-pulse !text-[17px]">
+                  Complete
+                </Tag>
+              )}
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className=" animate-pulse !text-[17px]">
+                      Incomplete
+                    </Tag>
                   </div>
 
                   <Popconfirm
@@ -594,7 +634,9 @@ const CheckDetailsModal = ({
     },
 
     {
-      title: "Action",
+      title: ()=>{
+        return <h1 className="text-[20px] font-bold">Action</h1>
+      },
       dataIndex: "action",
       key: "action",
       align: "center",
@@ -694,13 +736,30 @@ const CheckDetailsModal = ({
                   }}
                   style={{ display: "none" }}
                 />
-                <div className="flex gap-3 items-center mt-[5px] w-full flex-wrap   ">
+                <div className="flex gap-3 items-center mt-[5px] w-full flex-wrap ">
                   <label
                     htmlFor="student-file-upload"
-                    className="py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white text-center border border-slate-700 rounded w-[29%] ml-auto"
+                    className=" cursor-pointer bg-slate-700 text-white text-center !border-none rounded w-[29%] !ml-auto attchButton flex justify-between items-center !gap-3 !px-14"
                     style={{ border: "1px solid gray" }}
                   >
-                    Attach Student File
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 text-white"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"
+                        />
+                      </svg>
+                    </div>
+
+                    <h1 className="text-white">Attach Student File</h1>
                   </label>
                   {fileName.length > 0 ? (
                     <ul className="w-[69%] h-[70px] overflow-auto">
@@ -734,7 +793,7 @@ const CheckDetailsModal = ({
                     <Tag
                       title="Donwload Certificate"
                       color="red"
-                      className=" cursor-pointer"
+                      className=" translate-y-[-8px] !self-start w-[200px] !h-[30px] !flex !justify-center !items-center !text-[18px] cursor-pointer motion-safe:animate-pulse absolute top-6 left-[50%] translate-x-[-50%]"
                       onClick={() => {
                         window.open(
                           `${btob_dev}/public/${AdmissionDetails?.certificate}`
@@ -746,6 +805,7 @@ const CheckDetailsModal = ({
                   )}
                 </div>
               </div>
+              <hr className=" translate-y-[-4px]" />
               <div className="flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">
                   Course Name:{" "}
@@ -754,27 +814,43 @@ const CheckDetailsModal = ({
                   {AdmissionDetails?.course_name}
                 </h1>
               </div>
-              <div className="flex items-center gap-4">
+              <hr className=" translate-y-[3px]" />
+              <div className="flex items-center gap-4 mt-2">
                 <span className="text-[20px] text-gray-600 ">Status: </span>
                 <h1 className="text-[18px] font-bold m-0 p-0">
                   {AdmissionDetails?.status === 2 && (
-                    <Tag color="cyan">Pending</Tag>
+                    <Tag color="cyan" className=" animate-pulse !text-[17px]">
+                      Pending
+                    </Tag>
                   )}
                   {AdmissionDetails?.status === 1 && (
-                    <Tag color="green">Complete</Tag>
+                    <Tag color="green" className=" animate-pulse !text-[17px]">
+                      Complete
+                    </Tag>
                   )}
                   {AdmissionDetails?.status === 0 && (
-                    <Tag color="red">Incomplete</Tag>
+                    <Tag color="red" className=" animate-pulse !text-[17px]">
+                      Incomplete
+                    </Tag>
                   )}
                 </h1>
               </div>
+              <hr className=" translate-y-[4px]" />
               <div className="mt-3 flex gap-1 items-center">
-                <Button
+                {/* <Button
                   onClick={handleCheckInvoice}
-                  className=" !rounded !bg-green-500 !text-white !border-none"
+                  className=" !rounded !bg-green-500 !text-white !border-none "
+              
                 >
                   Check Invoice
-                </Button>
+                </Button> */}
+                <button
+                  className="checkInvoiceButton"
+                  role="button"
+                  onClick={handleCheckInvoice}
+                >
+                  Check Invoice
+                </button>
 
                 <div className="">
                   <input
@@ -787,7 +863,8 @@ const CheckDetailsModal = ({
                   />
                   <label
                     htmlFor="pay-upload"
-                    className="flex justify-center items-center gap-2 py-[3px] px-[15px] rounded bg-gradient-to-l from-green-400 to-green-700 cursor-pointer  text-white border-none"
+                    className="flex justify-center items-center gap-2  rounded bg-gradient-to-l from-green-400 to-green-700 cursor-pointer  text-white !border-none uploadPaySlipButton"
+                    // className="translate-x-[-50%]uploadPaySlipButton"
                     style={{ border: "1px solid gray" }}
                   >
                     <svg
