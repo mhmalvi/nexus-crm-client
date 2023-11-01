@@ -313,15 +313,14 @@ const AdminDashboard = () => {
         render: (_, record, idx) => {
           return (
             <>
-            <Tooltip title="View Lead Details">
-
-              <EyeOutlined
-              className="!p-1 text-[25px]"
-                onClick={() => {
-                  navigate(`/lead/${record?.lead_id}`);
-                }}
-              />
-            </Tooltip>
+              <Tooltip title="View Lead Details">
+                <EyeOutlined
+                  className="!p-1 text-[25px]"
+                  onClick={() => {
+                    navigate(`/lead/${record?.lead_id}`);
+                  }}
+                />
+              </Tooltip>
             </>
           );
         },
@@ -353,6 +352,14 @@ const AdminDashboard = () => {
               ?.slice(0, 24)}
           </h4>
         ),
+        width: 150,
+      },
+      {
+        title: "No. of calls",
+        dataIndex: "call_counts",
+        key: "call_counts",
+        ...getColumnSearchProps("call_counts"),
+        render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
         width: 150,
       },
       {
