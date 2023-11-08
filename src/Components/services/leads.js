@@ -469,6 +469,7 @@ export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
 };
 
 export const handleSyncLeads = async (clientId, acToken) => {
+  console.log('actoken',acToken);
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
