@@ -23,6 +23,8 @@ import {
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
+import ViewLeadCallDetails from "./ViewLeadCallDetails";
+// import assignLeadId from "../../../features/Leads/dashboardIdSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -55,6 +57,9 @@ const AdminDashboard = () => {
   const [salesOptions, setSalesOptions] = useState([]);
   const [selectedSales, setSelectedSales] = useState("");
   const [assignLoading, setAssignLoading] = useState(false);
+  const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
+    useState(false);
+  let [clickedLeadId, setClickedLeadId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -132,6 +137,10 @@ const AdminDashboard = () => {
     })();
   }, [userDetails?.userInfo?.client_id]);
 
+  // const setLeadId = (lead_id) => {
+  //   localStorage.setItem("dashboard_lead_id", lead_id);
+  //   lead_id=""
+  // };
   async function onAssignLead(lid, sid) {
     setAssignLoading(true);
     if (sid) {
@@ -203,7 +212,7 @@ const AdminDashboard = () => {
               const sid = localStorage.getItem("sales_id");
               onAssignLead(record?.lead_id, sid);
             }}
-            className="!rounded !bg-green-500"
+            className="rounded-lg !bg-green-500 border-none "
           >
             Assign
           </Button>
@@ -359,7 +368,23 @@ const AdminDashboard = () => {
         dataIndex: "call_counts",
         key: "call_counts",
         ...getColumnSearchProps("call_counts"),
-        render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
+        render: (_, record, idx, call_counts) => (
+          <h4 className="cursor-pointer uppercase">
+            <button
+              onClick={() => {
+                console.log("call_counts", record.call_counts);
+                setClickedLeadId(record?.lead_id);
+                setOpenCallCountDetailsModal(true);
+              }}
+              className=" btn btn-block w-[100px] h-[28px] bg-indigo-700 text-white rounded-full hover:bg-purple-900 flex flex-row m-auto "
+            >
+              <div className="flex flex-row m-auto justify-between">
+                <p className="m-auto p-1">{record.call_counts!=null?record.call_counts:0}</p>
+                <p className="m-auto p-1">Call Details</p>
+              </div>
+            </button>
+          </h4>
+        ),
         width: 150,
       },
       {
@@ -446,7 +471,7 @@ const AdminDashboard = () => {
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyEmployeeList, userDetails?.userInfo, assignLoading]);
-  console.log("the leads: ", leadList)
+  console.log("the leads: ", leadList);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
@@ -518,7 +543,7 @@ const AdminDashboard = () => {
 
   const handleSyncLeadsReq = async () => {
     dispatch(setLoader(true));
-
+    console.log("fbtoken", userDetails?.fbToken);
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
       userDetails?.fbToken
@@ -677,6 +702,17 @@ const AdminDashboard = () => {
         footer={false}
       >
         <AddLeadForm setIsAddLeadFormOpen={setIsAddLeadFormOpen} />
+      </Modal>
+      <Modal
+        className=""
+        visible={openCallCountDetailsModal}
+        onCancel={() => setOpenCallCountDetailsModal(false)}
+        footer={false}
+      >
+        <ViewLeadCallDetails
+          lead_id={clickedLeadId}
+          setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
+        />
       </Modal>
 
       <Calendar

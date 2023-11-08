@@ -61,9 +61,14 @@ const UpdatedTable = ({
   useEffect(() => {
     if (table_title !== "Payment History") {
       if (!searchInput?.length) {
+        // setList(
+        //   userDetails?.role_id === 5 && activeFilter !== 8
+        //     ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
+        //     : data
+        // );
         setList(
           userDetails?.role_id === 5 && activeFilter !== 8
-            ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
+            ? Object.values(data)?.filter((lead) => parseInt(lead.lead_details_status) === 1)
             : data
         );
       } else {

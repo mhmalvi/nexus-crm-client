@@ -5,8 +5,11 @@ export const handleAddFollowUp = async (followUpData) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
+      Accept: "application/json",
     },
   };
+  // console.log(followUpData);
+
   try {
     const result = await axios.post(
       // `${follow_up_dev}/api/follow-up`,
@@ -16,7 +19,8 @@ export const handleAddFollowUp = async (followUpData) => {
     );
     return result?.data;
   } catch (error) {
-    return error.response;
+    // console.log(error);
+    return error;
   }
 };
 

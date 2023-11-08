@@ -508,15 +508,16 @@ const Login = () => {
 
           <div
             className={`${
-              !bookMarkOpen ? "w-0 h-0" : "w-full h-full py-12 px-6"
+              !bookMarkOpen ? "w-0 h-0" : "w-full h-[670px] py-12 px-6"
             } absolute top-0 right-0 bottom-0 bg-white transition-all delay-200 duration-500 border`}
           >
             <div
+              style={{ overflow: "scroll" }}
               className={`${
                 !bookMarkOpen
-                  ? "delay-100 duration-100 opacity-0"
+                  ? "delay-100 duration-100 opacity-0 h-[670px]"
                   : "delay-1000 duration-200 opacity-100"
-              } transition-all mt-2 ml-2 flex flex-col justify-start items-start`}
+              } transition-all mt-2 ml-2 flex flex-col justify-start items-start h-[670px]`}
             >
               <div className="text-xl font-semibold mb-4">
                 Bookmarked Accounts

@@ -27,6 +27,12 @@ const DayDetails = ({
   const [rmTime, setRmtime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
+
+  // error handling
+  const [titleError, setTitleError] = useState("");
+  const [endError, setEndError] = useState("");
+  const [startError, setStartError] = useState("");
+  const [notifyError, setNotifyError] = useState("");
   useEffect(() => {
     setCurrentDayEvents(
       eventsData?.filter(
@@ -169,12 +175,13 @@ const DayDetails = ({
 
   const handleAddFollowUpReq = async () => {
     setIsSaveDisable(true);
+    // console.log(taskDetails);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
       notification_time: notifyDate,
     });
-
+    console.log(addFollowUpRes);
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
       setTaskDetails(initialData);
@@ -186,9 +193,25 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
       setIsSaveDisable(false);
     } else {
-      message.warn(
-        addFollowUpRes ? addFollowUpRes?.data?.message : "Something is wrong"
-      );
+      // console.log(addFollowUpRes.response.data.errors.start[0]);
+      if (addFollowUpRes.response.data.errors.end[0]) {
+        setEndError(addFollowUpRes.response.data.errors.end[0]);
+      }
+      if (addFollowUpRes.response.data.errors.title[0]) {
+        setTitleError(addFollowUpRes.response.data.errors.title[0]);
+      }
+      if (addFollowUpRes.response.data.errors.notification_time[0]) {
+        setNotifyError(
+          addFollowUpRes.response.data.errors.notification_time[0]
+        );
+      }
+      if (addFollowUpRes.response.data.errors.start[0] !== "") {
+        setStartError(addFollowUpRes.response.data.errors.start[0]);
+        console.log(addFollowUpRes.response.data.errors.start[0]);
+      }
+      // message.warn(
+      //   addFollowUpRes ? addFollowUpRes?.data?.message : "Something is wrong"
+      // );
       setIsSaveDisable(false);
     }
   };
@@ -263,6 +286,7 @@ const DayDetails = ({
                 value={taskDetails?.title}
                 onChange={handleTextInputFieldChange}
               />
+
               {/* <Dropdown
                 overlay={menu}
                 trigger={["click"]}
@@ -282,6 +306,13 @@ const DayDetails = ({
               </Dropdown> */}
             </div>
           </div>
+          <div className="text-red-500">
+            {titleError && taskDetails?.title === "" ? (
+              <p>{titleError}</p>
+            ) : (
+              <p></p>
+            )}
+          </div>
           <div className="w-3/12">
             {/* Start Time */}
             <div className="text-[15px] font-semibold">Select Start Time:</div>
@@ -300,6 +331,13 @@ const DayDetails = ({
               />
             </div>
           </div>
+          <div className="text-red-500">
+            {startError && taskDetails?.start === "" ? (
+              <p>{startError}</p>
+            ) : (
+              <p></p>
+            )}
+          </div>
           {/* End Time */}
           <div className="w-3/12">
             <div className="text-[15px] font-semibold">Select End Time:</div>
@@ -311,7 +349,14 @@ const DayDetails = ({
                 onChange={onEndTimeChange}
                 // onOk={onTimeChange}
               />
+
+              {/* <div className="text-red-500">
+                {startError ? <p>{startError}</p> : <p></p>}
+              </div> */}
             </div>
+          </div>
+          <div className="text-red-500">
+            {endError && taskDetails?.end === "" ? <p>{endError}</p> : <p></p>}
           </div>
         </div>
 
@@ -344,6 +389,13 @@ const DayDetails = ({
 
                   // onOk={onTimeChange}
                 />
+                <div className="text-red-500">
+                  {notifyError && notifyDate === "" ? (
+                    <p>{notifyError}</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
                 {/* <Input type="date"></Input> */}
               </div>
             </div>
