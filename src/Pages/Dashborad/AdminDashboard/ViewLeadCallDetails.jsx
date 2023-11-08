@@ -41,10 +41,24 @@ const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
             callHistory.map((history, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{history.call_start_time}</td>
-                <td>{history.call_end_time}</td>
                 <td>
-                  {history.call_remarks ? history.call_remarks : "No remarks"}
+                  {new Date(
+                    new Date(history.call_start_time).getTime() +
+                      6 * 60 * 60 * 1000
+                  )
+                    ?.toString()
+                    ?.slice(0, 24)}
+                </td>
+                <td>
+                  {new Date(
+                    new Date(history.call_end_time).getTime() +
+                      6 * 60 * 60 * 1000
+                  )
+                    ?.toString()
+                    ?.slice(0, 24)}
+                </td>
+                <td>
+                  {history.call_remark ? history.call_remark : "No remarks"}
                 </td>
               </tr>
             ))
