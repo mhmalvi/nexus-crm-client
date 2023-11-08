@@ -367,7 +367,7 @@ const AdminDashboard = () => {
         title: "No. of calls",
         dataIndex: "call_counts",
         key: "call_counts",
-        ...getColumnSearchProps("call_counts"),
+        // ...getColumnSearchProps("call_counts"),
         render: (_, record, idx, call_counts) => (
           <h4 className="cursor-pointer uppercase">
             <button
