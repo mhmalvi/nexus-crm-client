@@ -288,11 +288,11 @@ const Sidebar = ({
                     </div>
                   ) : null}
 
-                  {toggleNotification && (
+                  {/* {toggleNotification && (
                     <div className="ml-auto active-option text-brand-color bg-brand-color">
                       |
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             )}

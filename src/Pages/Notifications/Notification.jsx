@@ -30,7 +30,7 @@ const Notification = ({
   useEffect(() => {
     setInterval(() => {
       setNotificationss(notify);
-    }, 1200);
+    }, 3000);
   }, [notify]);
 
   const userDetails = useSelector((state) => state?.user);
@@ -81,7 +81,7 @@ const Notification = ({
   useEffect(() => {
     setTimeout(() => {
       setNotificationLoading(false);
-    }, 1300);
+    }, 3000);
   }, [setNotificationLoading]);
 
   // const sendPropsNotification = (data) =>{
@@ -108,9 +108,9 @@ const Notification = ({
           </div>
         ) : (
           !notifications?.length && (
-            <div className="text-lg font-poppins text-center my-6">
-              No Notification Yet
-            </div>
+              <div className="text-lg font-poppins text-center my-6">
+                No Notification Yet
+              </div>
           )
         )}
         {notifications?.map((notification, i) => (

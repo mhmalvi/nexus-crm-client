@@ -10,6 +10,7 @@ import {
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import ViewLeadCallDetails from "../../Pages/Dashborad/AdminDashboard/ViewLeadCallDetails";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,6 +28,9 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchCourse, setSearchCourse] = useState(
     searchParams.get("Search_Lead_Course") || ""
   );
+  const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
+    useState(false);
+  const [clickedLeadId, setClickedLeadId] = useState();
   const userDetails = JSON.parse(localStorage.getItem("user_info"));
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
@@ -136,30 +140,55 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       },
     },
     {
+      title: "Call Counts",
+      dataIndex: "call_counts",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className="items-center flex">
+              {record?.count ? (
+                <button
+                  onClick={() => {
+                    setClickedLeadId(record.lead_id);
+                    setOpenCallCountDetailsModal(true);
+                  }}
+                  className="bg-zinc-700 text-center rounded-lg border-none text-white m-auto w-[50%]"
+                >
+                  {record?.count.call_count
+                    ? record?.count.call_count
+                    : 0}
+                </button>
+              ) : (
+                <p className="text-[red] m-0 p-0">This Lead has no calls</p>
+              )}
+            </div>
+          </>
+        );
+      },
+    },
+    {
       title: "Action",
       dataIndex: "",
       align: "center",
       render: (_, record, idx) => {
         return (
-          <>
-            <div className=" cursor-pointer">
-              <Popover content={isByMe ? "Remove" : "Assign"}>
-                {isByMe ? (
-                  <MinusOutlined
-                    onClick={() => {
-                      LeadRemove(record.lead_id);
-                    }}
-                  />
-                ) : (
-                  <PlusOutlined
-                    onClick={() => {
-                      LeadAssign(record?.lead_id);
-                    }}
-                  />
-                )}
-              </Popover>
-            </div>
-          </>
+          <div className=" cursor-pointer">
+            <Popover content={isByMe ? "Remove" : "Assign"}>
+              {isByMe ? (
+                <MinusOutlined
+                  onClick={() => {
+                    LeadRemove(record.lead_id);
+                  }}
+                />
+              ) : (
+                <PlusOutlined
+                  onClick={() => {
+                    LeadAssign(record?.lead_id);
+                  }}
+                />
+              )}
+            </Popover>
+          </div>
         );
       },
     },
@@ -167,6 +196,17 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
 
   return (
     <div>
+      <Modal
+        className=""
+        visible={openCallCountDetailsModal}
+        onCancel={() => setOpenCallCountDetailsModal(false)}
+        footer={false}
+      >
+        <ViewLeadCallDetails
+          lead_id={clickedLeadId}
+          setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
+        />
+      </Modal>
       <Modal
         width={1000}
         title={isByMe ? "Assigned Leads" : "Un-Assigned Leads"}
