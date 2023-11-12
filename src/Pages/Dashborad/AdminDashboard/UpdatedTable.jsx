@@ -68,7 +68,9 @@ const UpdatedTable = ({
         // );
         setList(
           userDetails?.role_id === 5 && activeFilter !== 8
-            ? Object.values(data)?.filter((lead) => parseInt(lead.lead_details_status) === 1)
+            ? Object.values(data)?.filter(
+                (lead) => parseInt(lead.lead_details_status) === 1
+              )
             : data
         );
       } else {
@@ -115,13 +117,14 @@ const UpdatedTable = ({
       const res = await handleCompanyList(userDetails?.role_id);
       if (res?.status === 200) {
         const data = [{ value: "", label: "Select Company" }];
+        console.log("salescoeeeee", res.data);
         res?.data?.forEach((item, idx) =>
           data.push({ value: item?.id, label: item.name })
         );
         setCompanyList(data);
       }
     })();
-  }, []);
+  });
 
   useEffect(() => {
     (async () => {
@@ -204,7 +207,7 @@ const UpdatedTable = ({
                   className=" min-w-[150px]"
                   defaultValue={""}
                   onChange={onSelectCompanyData}
-                  options={companyList || []}
+                  options={companyList}
                   placeholder="Select Company"
                 />
               </div>
