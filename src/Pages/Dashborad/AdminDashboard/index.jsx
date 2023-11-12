@@ -78,7 +78,6 @@ const AdminDashboard = () => {
         userDetails?.userInfo?.client_id
       );
 
-      console.log("fetchEmployees......", fetchEmployees);
 
       if (fetchEmployees?.status === true) {
         setCompanyEmployeeList(fetchEmployees?.data);
@@ -367,12 +366,10 @@ const AdminDashboard = () => {
         title: "No. of calls",
         dataIndex: "call_counts",
         key: "call_counts",
-        // ...getColumnSearchProps("call_counts"),
-        render: (_, record, idx, call_counts) => (
+        render: (_, record, idx) => (
           <h4 className="cursor-pointer uppercase">
             <button
               onClick={() => {
-                console.log("call_counts", record.call_counts);
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
@@ -543,14 +540,10 @@ const AdminDashboard = () => {
 
   const handleSyncLeadsReq = async () => {
     dispatch(setLoader(true));
-    console.log("fbtoken", userDetails?.fbToken);
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
-      userDetails?.fbToken
+      userDetails?.userInfo?.ac_k
     );
-
-    console.log("leadSyncResponse", syncResponse);
-
     if (syncResponse?.status) {
       setSyncLeads(!syncLeads);
       dispatch(setLoader(false));

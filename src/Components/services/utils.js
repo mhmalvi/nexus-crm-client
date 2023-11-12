@@ -671,10 +671,7 @@ export const handleGetStudentAdminDashboardDataGraph = async () => {
     },
   };
   try {
-    const result = await axios.get(
-      `${btob_dev}/student/admin-graph`,
-      config
-    );
+    const result = await axios.get(`${btob_dev}/student/admin-graph`, config);
     return result.data;
   } catch (error) {
     return error.response;
@@ -713,7 +710,7 @@ export const handleDeleteCourse = async (id) => {
     return error.response;
   }
 };
-export const handleUpdateCourse = async (id,data) => {
+export const handleUpdateCourse = async (id, data) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -748,7 +745,7 @@ export const handleGetCourseEdit = async (id) => {
   }
 };
 
-export const handleIncompleteUpdateStudentFile = async (fid,flag, data) => {
+export const handleIncompleteUpdateStudentFile = async (fid, flag, data) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -765,7 +762,7 @@ export const handleIncompleteUpdateStudentFile = async (fid,flag, data) => {
     return error.response;
   }
 };
-export const handleSearchStudent= async (data) => {
+export const handleSearchStudent = async (data) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -783,7 +780,7 @@ export const handleSearchStudent= async (data) => {
   }
 };
 
-export const handleCompanyList= async (rid) => {
+export const handleCompanyList = async (rid) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -800,7 +797,7 @@ export const handleCompanyList= async (rid) => {
   }
 };
 
-export const handleCompanyWiseLeadList= async (sid,cid) => {
+export const handleCompanyWiseLeadList = async (sid, cid) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
@@ -817,5 +814,3 @@ export const handleCompanyWiseLeadList= async (sid,cid) => {
     return error.response;
   }
 };
-
-
