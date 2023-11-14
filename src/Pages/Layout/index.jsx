@@ -161,7 +161,6 @@ const Layout = () => {
     // }
     // end
 
-    console.log("custom check: ", notificationRes);
 
     if (
       notificationRes?.message === "success" ||

@@ -4,7 +4,6 @@ import { handleFetchLeads } from "../../../Components/services/leads";
 import axios from "axios";
 
 const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
-  console.log("leeeeeeeeeeeeeeeeeeeead", lead_id);
   const userDetails = useSelector((state) => state.user);
   const [syncLeads, setSyncLeads] = useState(false);
   const [callHistory, setCallHistory] = useState([""]);
@@ -14,7 +13,6 @@ const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
         lead_id: lead_id,
       })
       .then((response) => {
-        console.log("lead_details", response);
         setCallHistory(response.data.leadCallHistory);
         //   dashboard_lead_id=""
       });

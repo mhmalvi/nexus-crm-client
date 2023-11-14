@@ -42,7 +42,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="*" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />

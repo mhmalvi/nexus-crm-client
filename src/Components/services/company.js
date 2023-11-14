@@ -42,7 +42,6 @@ export const handleFetchCompanyDetails = async (companyId) => {
     const result = await axios.get(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/details`
     );
-    console.log("companyId", result.data);
     return result.data;
   } catch (error) {
     return error.response;
@@ -79,7 +78,6 @@ export const handleAddCompanyEmployees = async (employeeDetails) => {
 };
 
 export const handleRefreshCompanyFBToken = async (companyId) => {
-  console.log(companyId);
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/token/update`

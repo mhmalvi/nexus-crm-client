@@ -51,7 +51,6 @@ const LeadDetails = () => {
 
     (async () => {
       const response = await handleLeadDetails(id);
-      console.log("response", response);
       if (response) {
         setleadDetails(response);
         const status = {
