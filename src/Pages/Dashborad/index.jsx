@@ -44,48 +44,7 @@ const Dashboard = () => {
     }
   }, [passwordDetails, userDetails?.userInfo?.flag]);
 
-  useEffect(() => {
-    document.title = `Dashboard | Queleads CRM`;
-
-    // API Request for fetching messages
-    if (userDetails?.userInfo?.user_id) {
-      (async () => {
-        const messages = await handlefetchMessages(
-          userDetails?.userInfo?.user_id
-        );
-        dispatch(
-          addMessages(
-            messages.length
-              ? messages?.filter(
-                  (element, index) =>
-                    messages.findIndex((obj) => obj.room === element.room) ===
-                    index
-                )
-              : []
-          )
-        );
-      })();
-    }
-
-    // API Request for fetching notifiaction
-    // (async () => {
-    //   const response = await handlefetchNotifications(
-    //     userDetails?.userInfo?.user_id
-    //   );
-
-    //   if (response) {
-    //     response?.forEach((notification) => {
-    //       if (
-    //         userNotifications?.filter(
-    //           (notific) => notific.id !== notification.id
-    //         ).length === 0
-    //       ) {
-    //         dispatch(addNotifications(notification));
-    //       }
-    //     });
-    //   }
-    // })();
-  }, [dispatch, userDetails?.userInfo?.user_id, userNotifications]);
+  // ompany-list in-sales
 
   const handleOk = () => {
     setConfirmLoading(true);

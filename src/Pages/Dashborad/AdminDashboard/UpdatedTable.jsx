@@ -83,7 +83,6 @@ const UpdatedTable = ({
     } else {
       setList(data);
     }
-    console.log(data);
   }, [data, searchInput, activeFilter, userDetails, table_title]);
 
   const handleLeadFileUploadReq = async (e) => {
@@ -117,7 +116,6 @@ const UpdatedTable = ({
       const res = await handleCompanyList(userDetails?.role_id);
       if (res?.status === 200) {
         const data = [{ value: "", label: "Select Company" }];
-        console.log("salescoeeeee", res.data);
         res?.data?.forEach((item, idx) =>
           data.push({ value: item?.id, label: item.name })
         );
@@ -194,7 +192,7 @@ const UpdatedTable = ({
                       onChange={(v) => {
                         localStorage.setItem("sales_id", v);
                       }}
-                      options={salesOptions || []}
+                      options={salesOptions}
                       placeholder="Select Sales"
                     />
                   </div>

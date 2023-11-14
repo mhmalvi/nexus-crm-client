@@ -53,12 +53,6 @@ const CampaignDetails = () => {
       });
       if (response?.data) {
         dispatch(addLeads(response?.data));
-        console.log(
-          "filtered",
-          (response?.data).filter(
-            (lead) => parseInt(lead.campaign_id) === parseInt(id)
-          )
-        );
         setLeadData(
           (response?.data).filter(
             (lead) => parseInt(lead.campaign_id) === parseInt(id)
@@ -74,7 +68,6 @@ const CampaignDetails = () => {
       const response = await handleFetchCampaigns(
         userDetails?.userInfo?.client_id
       );
-      console.log(response.data);
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
         // setCampaignList(response?.data);
@@ -98,7 +91,6 @@ const CampaignDetails = () => {
     }
   }, [id, leadList, selectedDay, selectedMonth, selectedYear]);
 
-  console.log("leadData >>>>>>>", leadData);
 
   useEffect(() => {
     setCampaignDetails(

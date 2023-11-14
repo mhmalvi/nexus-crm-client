@@ -78,7 +78,6 @@ const AdminDashboard = () => {
         userDetails?.userInfo?.client_id
       );
 
-
       if (fetchEmployees?.status === true) {
         setCompanyEmployeeList(fetchEmployees?.data);
       }
@@ -365,9 +364,8 @@ const AdminDashboard = () => {
       {
         title: "No. of calls",
         dataIndex: "call_counts",
-        key: "call_counts",
         render: (_, record, idx) => (
-          <h4 className="cursor-pointer uppercase">
+          <h4 key={idx} className="cursor-pointer uppercase">
             <button
               onClick={() => {
                 setClickedLeadId(record?.lead_id);
@@ -376,7 +374,9 @@ const AdminDashboard = () => {
               className=" btn btn-block w-[100px] h-[28px] bg-indigo-700 text-white rounded-full hover:bg-purple-900 flex flex-row m-auto "
             >
               <div className="flex flex-row m-auto justify-between">
-                <p className="m-auto p-1">{record.call_counts!=null?record.call_counts:0}</p>
+                <p className="m-auto p-1">
+                  {record.call_counts != null ? record.call_counts : 0}
+                </p>
                 <p className="m-auto p-1">Call Details</p>
               </div>
             </button>
@@ -468,7 +468,6 @@ const AdminDashboard = () => {
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyEmployeeList, userDetails?.userInfo, assignLoading]);
-  console.log("the leads: ", leadList);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
@@ -477,25 +476,6 @@ const AdminDashboard = () => {
         leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
       );
     } else if (filterId === 8) {
-      console.log(leadList);
-
-      console.log(
-        "My Leads",
-        leadList
-          .filter(
-            (lead) =>
-              parseInt(lead.sales_user_id) ===
-                parseInt(userDetails?.userInfo?.user_id) ||
-              (lead?.assignedHistory?.includes(
-                userDetails?.userInfo?.user_id
-              ) &&
-                lead.sales_user_id === 0)
-          )
-          ?.sort(
-            (date1, date2) =>
-              new Date(date2.updated_at) - new Date(date1.updated_at)
-          )
-      );
 
       setLeadData(
         leadList

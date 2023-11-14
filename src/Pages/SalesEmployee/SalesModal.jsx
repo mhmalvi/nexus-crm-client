@@ -141,7 +141,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     },
     {
       title: "Call Counts",
-      dataIndex: "call_counts",
+      dataIndex: "call_count",
       render: (_, record, idx) => {
         return (
           <>
@@ -154,10 +154,29 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                   }}
                   className="bg-zinc-700 text-center rounded-lg border-none text-white m-auto w-[50%]"
                 >
-                  {record?.count.call_count
-                    ? record?.count.call_count
-                    : 0}
+                  {record?.count.call_count ? record?.count.call_count : 0}
                 </button>
+              ) : (
+                <p className="text-[red] m-0 p-0">This Lead has no calls</p>
+              )}
+            </div>
+          </>
+        );
+      },
+    },
+    {
+      title: "Last Call",
+      dataIndex: "last_call",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <div className="items-center flex">
+              {record?.last_call ? (
+                new Date(
+                  new Date(record?.last_call).getTime() + 6 * 60 * 60 * 1000
+                )
+                  ?.toString()
+                  ?.slice(0, 24)
               ) : (
                 <p className="text-[red] m-0 p-0">This Lead has no calls</p>
               )}
@@ -198,7 +217,9 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     <div>
       <Modal
         className=""
+        open={openCallCountDetailsModal}
         visible={openCallCountDetailsModal}
+        confirmLoading={confirmLoading}
         onCancel={() => setOpenCallCountDetailsModal(false)}
         footer={false}
       >

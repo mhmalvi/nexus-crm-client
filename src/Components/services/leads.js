@@ -83,7 +83,6 @@ export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
 };
 
 export const handleLeadDetails = async (leadId) => {
-  console.log(leadId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/details`,
@@ -234,7 +233,6 @@ export const handleFetchChecklist = async (courseId) => {
 };
 
 export const handleChecklistDocumentUpload = async (documentDetails) => {
-  console.log(documentDetails);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/add/document`,
@@ -248,8 +246,6 @@ export const handleChecklistDocumentUpload = async (documentDetails) => {
 };
 
 export const handleChecklistDocumentDelete = async (checklistId, studentId) => {
-  console.log(checklistId);
-  console.log(studentId);
   try {
     const result = await axios.delete(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/${checklistId}/delete/documents`,
@@ -505,7 +501,6 @@ export const handleLeadCertificatetDetailsUpdate = async (
 };
 
 export const handleReviewRemarksSubmitReq = async (remarks, leadId) => {
-  console.log(remarks, leadId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/review/${leadId}`,
@@ -520,7 +515,6 @@ export const handleReviewRemarksSubmitReq = async (remarks, leadId) => {
 };
 
 export const handleCommentsSubmitReq = async (remarks, leadId) => {
-  console.log(remarks, leadId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
@@ -549,7 +543,6 @@ export const handleDeleteComment = async (commentId) => {
 };
 
 export const fetchSalesEmployeesSale = async (companyId) => {
-  console.log("companyId", companyId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/sales-wise-lead-amount`,
