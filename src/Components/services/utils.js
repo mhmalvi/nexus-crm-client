@@ -66,6 +66,7 @@ export const handleFetchLeadsBySalesId = async (id) => {
       `${process.env?.REACT_APP_LEAD_URL}/api/assigned-lead-list/${id}`,
       config
     );
+    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;

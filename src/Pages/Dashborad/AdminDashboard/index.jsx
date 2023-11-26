@@ -80,6 +80,7 @@ const AdminDashboard = () => {
 
       if (fetchEmployees?.status === true) {
         setCompanyEmployeeList(fetchEmployees?.data);
+        console.log(fetchEmployees?.data);
       }
 
       setLeadData(response.data);
@@ -263,8 +264,9 @@ const AdminDashboard = () => {
               ) : null}
               {
                 companyEmployeeList?.find(
-                  (employee) => employee?.id === record?.sales_user_id
+                  (employee) => employee?.user_id === record?.sales_user_id
                 )?.full_name
+                // record?.sales_user_id
               }
             </div>
             <div className="flex items-center">
@@ -286,7 +288,7 @@ const AdminDashboard = () => {
                 </div>
               ) : null}
               {companyEmployeeList?.find(
-                (employee) => employee?.id === record?.sales_user_id
+                (employee) => employee?.user_id === record?.sales_user_id
               ) && (
                 <CloseOutlined
                   className="cursor-pointer"
@@ -476,7 +478,6 @@ const AdminDashboard = () => {
         leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
       );
     } else if (filterId === 8) {
-
       setLeadData(
         leadList
           .filter(

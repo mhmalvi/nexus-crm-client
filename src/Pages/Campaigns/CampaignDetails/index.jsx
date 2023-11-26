@@ -262,7 +262,7 @@ const CampaignDetails = () => {
                   color="#1f262a"
                   name={
                     companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
+                      (employee) => employee?.user_id === sales_user_id
                     )?.full_name
                   }
                 />
