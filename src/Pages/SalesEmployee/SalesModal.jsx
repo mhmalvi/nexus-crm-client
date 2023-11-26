@@ -333,7 +333,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                   : []
                 : notAssignedLeadsData?.length
                 ? notAssignedLeadsData
-                : [] || []
+                : []
             }
             loading={isLoading}
           />
