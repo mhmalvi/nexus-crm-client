@@ -30,7 +30,7 @@ const Notification = ({
   useEffect(() => {
     setInterval(() => {
       setNotificationss(notify);
-    }, 3000);
+    }, 2000);
   }, [notify]);
 
   const userDetails = useSelector((state) => state?.user);
@@ -81,7 +81,7 @@ const Notification = ({
   useEffect(() => {
     setTimeout(() => {
       setNotificationLoading(false);
-    }, 3000);
+    }, 2000);
   }, [setNotificationLoading]);
 
   // const sendPropsNotification = (data) =>{
