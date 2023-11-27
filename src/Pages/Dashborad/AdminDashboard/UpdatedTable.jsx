@@ -285,7 +285,20 @@ const UpdatedTable = ({
           </div>
         </div>
       </div>
-
+      {table_title == "Lead List" ? (
+        <div className="m-auto justify-center mr-20 mt-4 flex gap-5 ">
+          <div className="flex gap-2">
+            <p>WA</p>
+            <div className="bg-[#fef08a] w-[20px] h-[20px]"></div>
+          </div>
+          <div className="flex gap-2">
+            <p>Others</p>
+            <div className="bg-[#d9f99d] w-[20px] h-[20px]"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="pt-6">
         {loadingDetails ? (
           <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
@@ -295,7 +308,7 @@ const UpdatedTable = ({
           <div>
             <Table
               columns={tableHeaders}
-              dataSource={list || companyWiseListData}
+              dataSource={list}
               pagination={true}
               // loading
               showSorterTooltip={true}
@@ -304,9 +317,24 @@ const UpdatedTable = ({
                 x: 1700,
                 y: 600,
               }}
-              rowClassName={(record, idx) =>
-                idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
-              }
+              rowClassName={(record, idx) => {
+                // idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
+                // record.work_location == "NSW" &&
+                // record.campaign_id != 0 &&
+                if (table_title == "Lead List") {
+                  if (
+                    (record.work_location === "wa" ||
+                      record.work_location === "WA") &&
+                    record.campaign_id >= 0
+                  ) {
+                    let color = "bg-[#fef08a]";
+                    return color;
+                  } else {
+                    let color = "bg-[#d9f99d]";
+                    return color;
+                  }
+                }
+              }}
             />
           </div>
         )}

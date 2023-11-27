@@ -324,7 +324,7 @@ const AdminDashboard = () => {
             <>
               <Tooltip title="View Lead Details">
                 <EyeOutlined
-                  className="!p-1 text-[25px]"
+                  className="!p-1 text-[25px] bg-gray "
                   onClick={() => {
                     navigate(`/lead/${record?.lead_id}`);
                   }}
@@ -390,8 +390,11 @@ const AdminDashboard = () => {
         title: "Course Code",
         dataIndex: "course_code",
         key: "course_code",
+        ...getColumnSearchProps("title"),
         ...getColumnSearchProps("course_code"),
-        render: (code) => <h4 className="cursor-pointer uppercase">{code}</h4>,
+        render: (_, record, idx) => (
+          <h4 className="cursor-pointer uppercase">{record?.course_code}</h4>
+        ),
         width: 150,
       },
       {
@@ -409,7 +412,9 @@ const AdminDashboard = () => {
         dataIndex: "full_name",
         key: "full_name",
         ...getColumnSearchProps("full_name"),
-        render: (full_name) => <h4 className="cursor-pointer">{full_name}</h4>,
+        render: (_, record, idx) => (
+          <h4 className="cursor-pointer">{record.full_name}</h4>
+        ),
         width: 150,
       },
       {
