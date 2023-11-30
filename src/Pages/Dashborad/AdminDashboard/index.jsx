@@ -428,6 +428,16 @@ const AdminDashboard = () => {
         width: 150,
       },
       {
+        title: "From",
+        dataIndex: "lead_from",
+        key: "work_location",
+        ...getColumnSearchProps("work_location"),
+        render: (_, record, idx) => (
+          <h4 className="cursor-pointer uppercase">{record.lead_from}</h4>
+        ),
+        width: 100,
+      },
+      {
         title: "Location",
         dataIndex: "work_location",
         key: "work_location",
@@ -437,6 +447,7 @@ const AdminDashboard = () => {
         ),
         width: 100,
       },
+
       {
         title: "Campaign ID",
         dataIndex: "campaign_id",
