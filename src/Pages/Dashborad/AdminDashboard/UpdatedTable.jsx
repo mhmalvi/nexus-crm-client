@@ -122,7 +122,8 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  });
+    
+  },[companyList]);
 
   useEffect(() => {
     (async () => {
