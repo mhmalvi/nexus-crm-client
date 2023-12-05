@@ -8,15 +8,14 @@ const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
   const [syncLeads, setSyncLeads] = useState(false);
   const [callHistory, setCallHistory] = useState([""]);
   useEffect(() => {
-    axios
-      .post(`${process.env?.REACT_APP_LEAD_URL}/api/lead/details`, {
+    axios.post(`${process.env?.REACT_APP_LEAD_URL}/api/lead/details`, {
         lead_id: lead_id,
       })
       .then((response) => {
-        setCallHistory(response.data.leadCallHistory);
+          setCallHistory(response.data.leadCallHistory);
         //   dashboard_lead_id=""
       });
-  });
+  },[lead_id]);
   return (
     <div>
       <div className="items-center flex mb-2">
