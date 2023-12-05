@@ -142,7 +142,8 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
       setTemplateList(tempList);
     }
     onSelectTemp();
-  }, [tData, staticTempListData, templateList]);
+  }, []);
+
   const showAddNewTemplateModal = () => {
     setTempOpen(true);
   };

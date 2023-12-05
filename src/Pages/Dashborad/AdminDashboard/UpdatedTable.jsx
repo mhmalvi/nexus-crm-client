@@ -50,9 +50,6 @@ const UpdatedTable = ({
         setTimeout(() => {
           dispatch(setLoader(false));
         }, 1000);
-        console.log(JSON.parse(data[31].form_data)[2].values[0])
-        
-        
       }
 
     })();
@@ -301,10 +298,7 @@ const UpdatedTable = ({
           </div><div className="flex gap-2">
             <p>Others</p>
             <div className="bg-[#d9f99d] w-[20px] h-[20px]"></div>
-          </div> <div className="flex gap-2">
-            <p>Others</p>
-            <div className="bg-[#d9f99d] w-[20px] h-[20px]"></div>
-          </div>
+          </div> 
         </div>
       ) : (
         ""
