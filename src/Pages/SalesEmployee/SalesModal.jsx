@@ -67,8 +67,14 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setIsLoading(false);
   };
   useEffect(() => {
-    assignedByLeadsDataId();
+    if(salesEmployeeId){
+      assignedByLeadsDataId();
+    }
+    // return(
+    //   setLeadsData("")
+    // )
   }, [salesEmployeeId]);
+  
   useEffect(() => {
     notAssignedLeadsDataId();
   }, [salesEmployeeId]);
