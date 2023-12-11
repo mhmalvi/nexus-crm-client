@@ -233,12 +233,6 @@ const Table = ({
                         </td>
 
                         <td
-                          // className={`font-semibold ${
-                          //   list.payment_status === "succeeded" &&
-                          //   "text-green-500"
-                          // } ${
-                          //   list.payment_status === "FAILED" && "text-red-500"
-                          // }`}
                           className={`font-semibold ${
                             list.payment_status === "succeeded"
                               ? "text-green-500"
@@ -290,9 +284,6 @@ const Table = ({
                           {list.created_at ? (
                             new Date(list.created_at)?.toLocaleString()
                           ) : (
-                            // new Date(list.created_at).toString().slice(4, 21) +
-                            // " " +
-                            // new Date(list.created_at).toString().slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
@@ -353,13 +344,6 @@ const Table = ({
                           {list.lead_apply_date ? (
                             new Date(list.lead_apply_date)?.toLocaleString()
                           ) : (
-                            // new Date(list.lead_apply_date)
-                            //   .toString()
-                            //   .slice(4, 21) +
-                            // " " +
-                            // new Date(list.lead_apply_date)
-                            //   .toString()
-                            //   .slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
