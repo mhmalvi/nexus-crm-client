@@ -51,7 +51,6 @@ const UpdatedTable = ({
           dispatch(setLoader(false));
         }, 1000);
       }
-
     })();
   }, [data, data?.length, dispatch]);
 
@@ -119,8 +118,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-    
-  },[companyList]);
+  }, [companyList]);
 
   useEffect(() => {
     (async () => {
@@ -139,7 +137,6 @@ const UpdatedTable = ({
     })();
   }, [selectedCompany]);
 
-  
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
       <div>
@@ -295,10 +292,11 @@ const UpdatedTable = ({
           <div className="flex gap-2">
             <p>Phillipine</p>
             <div className="bg-[#d7f7ff] w-[20px] h-[20px]"></div>
-          </div><div className="flex gap-2">
+          </div>
+          <div className="flex gap-2">
             <p>Others</p>
             <div className="bg-[#d9f99d] w-[20px] h-[20px]"></div>
-          </div> 
+          </div>
         </div>
       ) : (
         ""
@@ -328,31 +326,32 @@ const UpdatedTable = ({
                 if (table_title == "Lead List") {
                   if (
                     (record.work_location === "wa" ||
-                      record.work_location === "WA") && 
-                    record.campaign_id >= 0 && JSON.parse(record.form_data)[2].values[0] !== "vietnam"
-                    && JSON.parse(record.form_data)[2].values[0] !== "philippines"
+                      record.work_location === "WA") &&
+                    record.campaign_id >= 0 &&
+                    JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
+                    JSON.parse(record.form_data)[2].values[0] !== "philippines"
                   ) {
                     let color = "bg-[#fef08a]";
                     return color;
-                  }
-                  else if (JSON.parse(record.form_data)[2].values[0] === "vietnam"  &&
-                  record.campaign_id >= 0){
+                  } else if (
+                    JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
+                    record.campaign_id >= 0
+                  ) {
                     let color = "bg-[#f2d7ff]";
                     return color;
-                  }
-                  else if (JSON.parse(record.form_data)[2].values[0] === "philippines"  &&
-                  record.campaign_id >= 0){
+                  } else if (
+                    JSON.parse(record.form_data)[2].values[0] ===
+                      "philippines" &&
+                    record.campaign_id >= 0
+                  ) {
                     let color = "bg-[#d7f7ff]";
                     return color;
-                  }
-                  else {
+                  } else {
                     let color = "bg-[#d9f99d]";
                     return color;
                   }
-                  
                 }
-              }
-            }
+              }}
             />
           </div>
         )}
