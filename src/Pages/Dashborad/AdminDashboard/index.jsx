@@ -10,25 +10,20 @@ import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
 import Calendar from "./Calendar";
 import Filters from "./Filters";
-// import Table from "./Table";
-import { Button, Input, Modal, Select, Space, Tooltip, message } from "antd";
-import Avatar from "react-avatar";
+import { Button, Input, Modal, Space, Tooltip, message } from "antd";
 import Highlighter from "react-highlight-words";
 import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
 import {
   handleAssignLeadToSales,
-  handleFetchSales,
   handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
 import ViewLeadCallDetails from "./ViewLeadCallDetails";
-// import assignLeadId from "../../../features/Leads/dashboardIdSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
@@ -62,6 +57,7 @@ const AdminDashboard = () => {
   let [clickedLeadId, setClickedLeadId] = useState("");
   const navigate = useNavigate();
 
+
   useEffect(() => {
     (async () => {
       const response = await handleFetchLeads({
@@ -86,8 +82,6 @@ const AdminDashboard = () => {
       setLeadData(response.data);
     })();
   }, [dispatch, syncLeads, userDetails?.userInfo?.client_id]);
-
-  // dispatch, userDetails, syncLeads;
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
@@ -140,8 +134,11 @@ const AdminDashboard = () => {
   //   localStorage.setItem("dashboard_lead_id", lead_id);
   //   lead_id=""
   // };
+  
   async function onAssignLead(lid, sid) {
     setAssignLoading(true);
+  
+  
     if (sid) {
       const data = {
         lead_id: lid,
@@ -153,14 +150,14 @@ const AdminDashboard = () => {
       if (res?.status === 201) {
         setAssignLoading(false);
         message.success("Lead successfully assigned to sales");
-        // localStorage.setItem("sales_id", "");
-        // sid = "";
+  
+        // Fetch leads without updating the state
         const response = await handleFetchLeads({
           client_id: userDetails?.userInfo?.client_id,
           user_id: userDetails?.userInfo?.user_id,
           role_id: userDetails?.userInfo?.role_id,
         });
-
+  
         if (response?.status === 200) {
           setLeadData(response.data);
         }
@@ -173,6 +170,7 @@ const AdminDashboard = () => {
       message.warn("Please select a sales to assign");
     }
   }
+  
   const onRemoveSales = async (lid, sid) => {
     const data = {
       lead_id: lid,
@@ -217,26 +215,9 @@ const AdminDashboard = () => {
           </Button>
         );
       },
-      // ...getColumnSearchProps("lead_id"),
     };
     const assignTO = {
-      // title: () => {
-      //   return (
-      //     <div className="flex items-center justify-center gap-2">
-      //       <h1>Assign to</h1>
-      //       {/* <div className="mr-4">
-      //         <Select
-      //           defaultValue={""}
-      //           onChange={(v) => {
-      //             localStorage.setItem("sales_id", v);
-      //           }}
-      //           options={salesOptions || []}
-      //           placeholder="Select Sales"
-      //         />
-      //       </div> */}
-      //     </div>
-      //   );
-      // },
+    
       title: "Assigned to",
       dataIndex: "sales_user_id",
       key: "sales_user_id",
@@ -250,23 +231,12 @@ const AdminDashboard = () => {
                 userDetails?.userInfo?.role_id === 5) &&
               record?.sales_user_id !== 0 ? (
                 <div className="ml-3">
-                  {/* <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
-                  name={
-                    companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
-                    )?.full_name
-                  }
-                /> */}
                 </div>
               ) : null}
               {
                 companyEmployeeList?.find(
                   (employee) => employee?.user_id === record?.sales_user_id
                 )?.full_name
-                // record?.sales_user_id
               }
             </div>
             <div className="flex items-center">
@@ -275,16 +245,6 @@ const AdminDashboard = () => {
                 userDetails?.userInfo?.role_id === 5) &&
               record?.sales_user_id !== 0 ? (
                 <div className="ml-3">
-                  {/* <Avatar
-                  className="rounded-full shadow-sm cursor-pointer"
-                  size="30"
-                  color="#1f262a"
-                  name={
-                    companyEmployeeList?.find(
-                      (employee) => employee?.id === sales_user_id
-                    )?.full_name
-                  }
-                /> */}
                 </div>
               ) : null}
               {companyEmployeeList?.find(
@@ -305,15 +265,6 @@ const AdminDashboard = () => {
       },
     };
     const headers = [
-      // {
-      //   title: "Lead ID",
-      //   dataIndex: "lead_id",
-      //   key: "lead_id",
-      //   fixed: true,
-      //   render: (lead_id) => <h4 className="cursor-pointer">{lead_id}</h4>,
-      //   width: 150,
-      //   ...getColumnSearchProps("lead_id"),
-      // },
       {
         title: "View",
         dataIndex: "view",
@@ -335,7 +286,6 @@ const AdminDashboard = () => {
         },
         width: 100,
       },
-
       ...(userDetails?.userInfo?.role_id === 1 ||
       userDetails?.userInfo?.role_id === 3
         ? [assignButton]
@@ -344,18 +294,12 @@ const AdminDashboard = () => {
       userDetails?.userInfo?.role_id === 3
         ? [assignTO]
         : []),
-
       {
         title: "Date",
         dataIndex: "lead_apply_date",
         key: "lead_apply_date",
-        // ...getColumnSearchProps("lead_apply_date"),
         render: (lead_apply_date) => (
           <h4 className="cursor-pointer">
-            {/* {new Date(lead_apply_date)
-              ?.toString()
-              .slice(4, 33)
-              ?.replace("GMT", "")} */}
             {new Date(new Date(lead_apply_date).getTime() + 6 * 60 * 60 * 1000)
               ?.toString()
               ?.slice(0, 24)}
@@ -447,7 +391,6 @@ const AdminDashboard = () => {
         ),
         width: 100,
       },
-
       {
         title: "Campaign ID",
         dataIndex: "campaign_id",
@@ -758,23 +701,6 @@ const AdminDashboard = () => {
         selectedSales={selectedSales}
         setSelectedSales={setSelectedSales}
       />
-
-      {/* <Table
-        title="Lead List"
-        tableHeaders={tableHeaders}
-        data={leadData}
-        companyEmployeeList={companyEmployeeList}
-        filterOptions={
-          userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4
-            ? adminFilterOptions
-            : salesEmployeesFilterOptions
-        }
-        ratings={ratings}
-        activeFilter={activeFilter}
-        searchInput={searchInput}
-        handleSyncLeadsReq={handleSyncLeadsReq}
-      /> */}
     </div>
   );
 };

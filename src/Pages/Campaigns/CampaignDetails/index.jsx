@@ -581,16 +581,6 @@ const CampaignDetails = () => {
         syncLeads={null}
       />
 
-      {/* <Table
-        title="Lead List"
-        tableHeaders={tableHeaders}
-        data={leadData}
-        filterOptions={filterOptions}
-        companyEmployeeList={companyEmployeeList}
-        ratings={ratings}
-        activeFilter={activeFilter}
-        searchInput={searchInput}
-      /> */}
     </div>
   );
 };

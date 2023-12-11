@@ -12,6 +12,7 @@ import {
   handleCompanyList,
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
+import {Pagination} from "antd";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 
 const UpdatedTable = ({
@@ -28,7 +29,8 @@ const UpdatedTable = ({
   salesOptions,
 }) => {
   const navigate = useNavigate();
-
+  const [current, setCurrent] = React.useState(1);
+  const pageSizeRef = React.useRef(10);
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const dispatch = useDispatch();
@@ -38,6 +40,7 @@ const UpdatedTable = ({
   const [companyList, setCompanyList] = useState([]);
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
+  const [currentPage, setCurrentPage] = useState()
 
   useEffect(() => {
     (async () => {
@@ -46,6 +49,7 @@ const UpdatedTable = ({
         setTimeout(() => {
           dispatch(setLoader(false));
         }, 3000);
+        
       } else {
         setTimeout(() => {
           dispatch(setLoader(false));
@@ -57,11 +61,6 @@ const UpdatedTable = ({
   useEffect(() => {
     if (table_title !== "Payment History") {
       if (!searchInput?.length) {
-        // setList(
-        //   userDetails?.role_id === 5 && activeFilter !== 8
-        //     ? data?.filter((lead) => parseInt(lead.lead_details_status) === 1)
-        //     : data
-        // );
         setList(
           userDetails?.role_id === 5 && activeFilter !== 8
             ? Object.values(data)?.filter(
@@ -100,8 +99,7 @@ const UpdatedTable = ({
       message.warn("Someting went wrong. Please try again");
     }
   };
-
-  // new work down
+  
 
   const onSelectCompanyData = (v, option) => {
     setSelectedCompany(option);
@@ -311,8 +309,13 @@ const UpdatedTable = ({
             <Table
               columns={tableHeaders}
               dataSource={list}
-              pagination={true}
-              // loading
+               pagination={{
+                defaultPageSize: 10, onChange: pageNum => {
+                    setCurrentPage(pageNum)
+                },
+                current: currentPage
+            }
+            }
               showSorterTooltip={true}
               sortDirections={["ascend", "descend"]}
               scroll={{
@@ -320,10 +323,7 @@ const UpdatedTable = ({
                 y: 600,
               }}
               rowClassName={(record, idx) => {
-                // idx % 2 === 0 ? "bg-[#f5f7ff]" : "bg-[#eff1ff]"
-                // record.work_location == "NSW" &&
-                // record.campaign_id != 0 &&
-                if (table_title == "Lead List") {
+                if (table_title === "Lead List") {
                   if (
                     (record.work_location === "wa" ||
                       record.work_location === "WA") &&
@@ -353,6 +353,7 @@ const UpdatedTable = ({
                 }
               }}
             />
+            
           </div>
         )}
       </div>
