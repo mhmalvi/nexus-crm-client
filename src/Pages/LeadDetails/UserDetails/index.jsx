@@ -50,6 +50,7 @@ const UserDetails = ({
   const [comment, setComment] = useState("");
   const [allComents, setAllComents] = useState([]);
   const [ratingRemarks, setRatingRemarks] = useState("");
+  const [experience, setExperience] = useState("");
 
   useEffect(() => {
     console.log(leadDetails);
@@ -61,6 +62,17 @@ const UserDetails = ({
         );
         setSalesEmployeeName(salesman?.sales_user_name);
         setCloseSealsman(true);
+      }
+      const relevantFormData = leadDetails?.leadDetails?.form_data.find(
+        (data) =>
+          data?.name ===
+          "how_many_years_of_relevant_work_experience_do_you_have?"
+      );
+
+      if (relevantFormData) {
+        const unprocessedData = relevantFormData.values[0];
+        const sanitizedString = unprocessedData.replace(/[_\+]/g, " ");
+        setExperience(sanitizedString);
       }
 
       const previousSalesmans = [];
@@ -134,17 +146,13 @@ const UserDetails = ({
   // const handleCommentHistory = () => {};
 
   const confirm = async (e) => {
-    const statusUpdateResponse = await handleLeadStatusUpdate(
-      {
-        lead_id: leadDetails?.leadDetails?.lead_id,
-        lead_status: 0,
-        sales_user_id: userDetails?.userInfo?.user_id,
-        client_id: userDetails?.userInfo?.client_id,
-        response: null
-      }
-     
-      
-    );
+    const statusUpdateResponse = await handleLeadStatusUpdate({
+      lead_id: leadDetails?.leadDetails?.lead_id,
+      lead_status: 0,
+      sales_user_id: userDetails?.userInfo?.user_id,
+      client_id: userDetails?.userInfo?.client_id,
+      response: null,
+    });
 
     if (statusUpdateResponse?.status) {
       message.success("Lead Has Been Suspended Successfully");
@@ -444,6 +452,12 @@ const UserDetails = ({
               <span>Location:&nbsp;&nbsp;</span>
               <span className="uppercase">
                 {leadDetails?.leadDetails?.work_location}
+              </span>
+            </div>
+            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
+              <span>Experience:&nbsp;&nbsp;</span>
+              <span className="uppercase">
+                <div>{experience}</div>
               </span>
             </div>
           </div>
