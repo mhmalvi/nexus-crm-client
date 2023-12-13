@@ -28,9 +28,6 @@ const UpdatedTable = ({
   handleSyncLeadsReq,
   salesOptions,
 }) => {
-  const navigate = useNavigate();
-  const [current, setCurrent] = React.useState(1);
-  const pageSizeRef = React.useRef(10);
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const dispatch = useDispatch();

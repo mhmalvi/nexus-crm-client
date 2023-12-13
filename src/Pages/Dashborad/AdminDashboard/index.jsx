@@ -57,7 +57,6 @@ const AdminDashboard = () => {
   let [clickedLeadId, setClickedLeadId] = useState("");
   const navigate = useNavigate();
 
-
   useEffect(() => {
     (async () => {
       const response = await handleFetchLeads({
@@ -81,11 +80,10 @@ const AdminDashboard = () => {
 
       setLeadData(response.data);
     })();
-  }, [dispatch, syncLeads, userDetails?.userInfo?.client_id]);
+  }, [dispatch, syncLeads, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id, userDetails?.userInfo?.user_id]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
-    // console.log(seletedDate);
 
     if (selectedDay && selectedMonth && selectedYear) {
       setLeadData(
@@ -93,12 +91,6 @@ const AdminDashboard = () => {
           (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
         )
       );
-      // console.log(
-      //   "SELECTED DATE",
-      //   leadList.filter(
-      //     (lead) => lead.lead_apply_date.slice(0, 10) === seletedDate
-      //   )
-      // );
     } else {
       setLeadData(leadList);
     }
@@ -134,11 +126,10 @@ const AdminDashboard = () => {
   //   localStorage.setItem("dashboard_lead_id", lead_id);
   //   lead_id=""
   // };
-  
+
   async function onAssignLead(lid, sid) {
     setAssignLoading(true);
-  
-  
+
     if (sid) {
       const data = {
         lead_id: lid,
@@ -150,14 +141,14 @@ const AdminDashboard = () => {
       if (res?.status === 201) {
         setAssignLoading(false);
         message.success("Lead successfully assigned to sales");
-  
+
         // Fetch leads without updating the state
         const response = await handleFetchLeads({
           client_id: userDetails?.userInfo?.client_id,
           user_id: userDetails?.userInfo?.user_id,
           role_id: userDetails?.userInfo?.role_id,
         });
-  
+
         if (response?.status === 200) {
           setLeadData(response.data);
         }
@@ -170,7 +161,7 @@ const AdminDashboard = () => {
       message.warn("Please select a sales to assign");
     }
   }
-  
+
   const onRemoveSales = async (lid, sid) => {
     const data = {
       lead_id: lid,
@@ -201,23 +192,24 @@ const AdminDashboard = () => {
       width: 100,
       render: (id, record, idx) => {
         return (
-          <Button
-            loading={assignLoading}
-            type="primary"
-            size="small"
-            onClick={() => {
-              const sid = localStorage.getItem("sales_id");
-              onAssignLead(record?.lead_id, sid);
-            }}
-            className="rounded-lg !bg-green-500 border-none "
-          >
-            Assign
-          </Button>
+          <>
+            <Button
+              loading={assignLoading}
+              type="primary"
+              size="small"
+              onClick={() => {
+                const sid = localStorage.getItem("sales_id");
+                onAssignLead(record?.lead_id, sid);
+              }}
+              className="rounded-lg !bg-green-500 border-none "
+            >
+              Assign
+            </Button>
+          </>
         );
       },
     };
     const assignTO = {
-    
       title: "Assigned to",
       dataIndex: "sales_user_id",
       key: "sales_user_id",
@@ -230,8 +222,7 @@ const AdminDashboard = () => {
                 userDetails?.userInfo?.role_id === 4 ||
                 userDetails?.userInfo?.role_id === 5) &&
               record?.sales_user_id !== 0 ? (
-                <div className="ml-3">
-                </div>
+                <div className="ml-3"></div>
               ) : null}
               {
                 companyEmployeeList?.find(
@@ -244,8 +235,7 @@ const AdminDashboard = () => {
                 userDetails?.userInfo?.role_id === 4 ||
                 userDetails?.userInfo?.role_id === 5) &&
               record?.sales_user_id !== 0 ? (
-                <div className="ml-3">
-                </div>
+                <div className="ml-3"></div>
               ) : null}
               {companyEmployeeList?.find(
                 (employee) => employee?.user_id === record?.sales_user_id
@@ -426,9 +416,20 @@ const AdminDashboard = () => {
       },
     ];
 
+
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyEmployeeList, userDetails?.userInfo, assignLoading]);
+
+    const handlePageReload = () => {
+      localStorage.removeItem("sales_id");
+    };
+
+    window.addEventListener('beforeunload', handlePageReload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handlePageReload);
+    };
+  }, [companyEmployeeList, userDetails?.userInfo, assignLoading, onAssignLead, onRemoveSales, navigate]);
 
   const handleFilterLeadList = (filterId) => {
     setActiveFilter(filterId);
