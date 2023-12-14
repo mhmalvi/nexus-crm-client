@@ -1,5 +1,4 @@
 import {
-  AutoComplete,
   Button,
   Dropdown,
   Menu,
@@ -24,8 +23,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   const [courses, setCourses] = useState([]);
   const [courseList, setCourseList] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
-  // const [campaigns, setCampaigns] = useState([]);
-  // const [campaignList, setCampaignList] = useState([]);
 
   console.log("userDetails", userDetails);
 
@@ -44,10 +41,8 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     work_location: "",
     work_experiences_location: "",
   });
-  // const [checklistTitle, setChecklistTitle] = useState("");
 
   useEffect(() => {
-    // const campaigns = [];
 
     (async () => {
       const courseResponse = await handleFetchCourses();
@@ -66,26 +61,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         setCourseList(courseResponse?.data);
       }
     })();
-
-    // (async () => {
-    //   const campaignResponse = await handleFetchCampaigns(
-    //     userDetails?.client_id
-    //   );
-
-    //   console.log("campaignResponse", campaignResponse);
-
-    //   if (campaignResponse?.status) {
-    //     campaignResponse?.data?.forEach((campaign) => {
-    //       campaigns.push({
-    //         id: campaign?.id,
-    //         value: campaign?.campaign_name,
-    //       });
-    //     });
-    //     setCampaignList(campaignResponse?.data);
-    //   }
-    // })();
-
-    // setCampaigns(campaigns);
   }, [dispatch, userDetails]);
 
   const handleCourseSearch = async (value) => {
@@ -98,25 +73,8 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     setLeadData(data);
   };
 
-  // const handleCampaignSearch = async (value) => {
-  //   const campaignId = campaignList?.find((cmapaign) =>
-  //     cmapaign?.campaign_name?.toLowerCase().includes(value?.toLowerCase())
-  //   );
-
-  //   const data = { ...leadData };
-  //   data.campaign_id = campaignId?.campaign_id;
-  //   setLeadData(data);
-  // };
-
-  // const handleLocationSearch = async (value) => {
-  //   const data = { ...leadData };
-  //   data.work_location = value;
-  //   setLeadData(data);
-  // };
-
   const handleInputData = (e) => {
     const data = { ...leadData };
-    // console.log("data", data);
     data[e.target.id] = e.target.value;
     setLeadData(data);
   };
@@ -388,16 +346,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
                 {leadData?.industry ? leadData?.industry : "Select Industry"}
               </div>
             </Dropdown>
-
-            {/* <input
-              id="industry"
-              name="industry"
-              className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-              type="text"
-              placeholder="Trade/Hospitality/Health"
-              value={leadData.industry}
-              onChange={handleInputData}
-            /> */}
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -425,15 +373,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               </div>
             </Dropdown>
 
-            {/* <input
-              id="work_experiences_location"
-              name="work_experiences_location"
-              className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-              type="text"
-              placeholder="Australia, Overseas, Other"
-              value={leadData.work_experiences_location}
-              onChange={handleInputData}
-            /> */}
           </div>
         </div>
 
@@ -447,15 +386,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               <Radio value={"Yes"}>Yes</Radio>
               <Radio value={"No"}>No</Radio>
             </Radio.Group>
-            {/* <input
-              id="academic_qualifications"
-              name="academic_qualifications"
-              className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-              type="text"
-              placeholder="Yes/No"
-              value={leadData.academic_qualifications}
-              onChange={handleInputData}
-            /> */}
           </div>
 
           <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
@@ -470,15 +400,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
                 <Radio value={"No"}>No</Radio>
               </Radio.Group>
             </div>
-            {/* <input
-              id="industry_work_experience"
-              name="industry_work_experience"
-              className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-              type="text"
-              placeholder="Yes/No (Reference letters, pay slips, pictures, videos and more)"
-              value={leadData.industry_work_experience}
-              onChange={handleInputData}
-            /> */}
           </div>
         </div>
 
@@ -493,15 +414,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
             <Radio value={"Yes"}>Yes</Radio>
             <Radio value={"No"}>No</Radio>
           </Radio.Group>
-          {/* <input
-            id="industry_qualified_immediately"
-            name="industry_qualified_immediately"
-            className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-            type="text"
-            placeholder="Yes/No (Reference letters, pay slips, pictures, videos and more)"
-            value={leadData.industry_qualified_immediately}
-            onChange={handleInputData}
-          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -514,56 +426,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
                 : "Select Location"}
             </div>
           </Dropdown>
-          {/* <AutoComplete
-            style={{
-              width: 400,
-              borderTop: 0,
-              borderLeft: 0,
-              borderRight: 0,
-            }}
-            id="work_location"
-            value={leadData.work_location}
-            onChange={handleLocationSearch}
-            options={[
-              {
-                id: 1,
-                value: "NSW",
-              },
-              {
-                id: 2,
-                value: "WA",
-              },
-              {
-                id: 3,
-                value: "VIC",
-              },
-              {
-                id: 4,
-                value: "QLD",
-              },
-              {
-                id: 5,
-                value: "SA",
-              },
-              {
-                id: 6,
-                value: "ACT",
-              },
-              {
-                id: 7,
-                value: "NT",
-              },
-              {
-                id: 8,
-                value: "TAS",
-              },
-            ]}
-            placeholder="Search with location initial"
-            filterOption={(inputValue, option) =>
-              option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1
-            }
-          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -574,15 +436,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
               {leadData?.lead_from ? leadData?.lead_from : "Select Source"}
             </div>
           </Dropdown>
-          {/* <input
-            id="lead_from"
-            name="lead_from"
-            className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-            type="text"
-            placeholder="Onsite, Instagram, Tiktok,"
-            value={leadData.lead_from}
-            onChange={handleInputData}
-          /> */}
         </div>
 
         <div className="w-1/2 mb-4">
@@ -598,10 +451,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
                   textTransform: "uppercase",
                 }}
                 id="course_id"
-                // value={
-                //   courses?.find((course) => course?.id === leadData.course_id)
-                //     ?.course_title
-                // }
                 onChange={handleCourseSearch}
                 options={courses}
                 placeholder="Search with course name"

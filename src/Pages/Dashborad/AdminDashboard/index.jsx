@@ -1,5 +1,5 @@
 import { CloseOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
@@ -57,8 +57,8 @@ const AdminDashboard = () => {
   let [clickedLeadId, setClickedLeadId] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    (async () => {
+  const memoizedFetchLeads = useMemo(
+    () => async () => {
       const response = await handleFetchLeads({
         client_id: userDetails?.userInfo?.client_id,
         user_id: userDetails?.userInfo?.user_id,
@@ -79,8 +79,18 @@ const AdminDashboard = () => {
       }
 
       setLeadData(response.data);
-    })();
-  }, [dispatch, syncLeads, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id, userDetails?.userInfo?.user_id]);
+    },
+    [
+      dispatch,
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.role_id,
+      userDetails?.userInfo?.user_id,
+    ]
+  );
+
+  useEffect(() => {
+    memoizedFetchLeads();
+  }, [memoizedFetchLeads]);
 
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
@@ -122,12 +132,8 @@ const AdminDashboard = () => {
     })();
   }, [userDetails?.userInfo?.client_id]);
 
-  // const setLeadId = (lead_id) => {
-  //   localStorage.setItem("dashboard_lead_id", lead_id);
-  //   lead_id=""
-  // };
 
-  async function onAssignLead(lid, sid) {
+  const onAssignLead = useCallback(async (lid, sid) => {
     setAssignLoading(true);
 
     if (sid) {
@@ -137,12 +143,47 @@ const AdminDashboard = () => {
         assign_by: userDetails?.user_id,
         active_status: 1,
       };
-      const res = await handleAssignLeadToSales(data);
-      if (res?.status === 201) {
-        setAssignLoading(false);
-        message.success("Lead successfully assigned to sales");
+      try {
+        const res = await handleAssignLeadToSales(data);
+        if (res?.status === 201) {
+          setAssignLoading(false);
+          message.success("Lead successfully assigned to sales");
 
-        // Fetch leads without updating the state
+          // Fetch leads without updating the state
+          const response = await handleFetchLeads({
+            client_id: userDetails?.userInfo?.client_id,
+            user_id: userDetails?.userInfo?.user_id,
+            role_id: userDetails?.userInfo?.role_id,
+          });
+
+          if (response?.status === 200) {
+            setLeadData(response.data);
+          }
+        } else {
+          setAssignLoading(false);
+          message.warn("Failed/Something went wrong");
+        }
+      } catch (error) {
+        console.error("Error assigning lead:", error);
+        setAssignLoading(false);
+        message.error("An error occurred while assigning lead");
+      }
+    } else {
+      setAssignLoading(false);
+      message.warn("Please select a sales to assign");
+    }
+  }, [userDetails?.user_id, userDetails?.userInfo?.client_id, userDetails?.userInfo?.user_id, userDetails?.userInfo?.role_id]);
+
+
+  const onRemoveSales = useCallback(async (lid, sid) => {
+    const data = {
+      lead_id: lid,
+      sales_user_id: sid,
+    };
+    try {
+      const res = await handleSalesRemoveLead(data);
+      if (res?.status === 201) {
+        message.success("Removed Sales Successfully");
         const response = await handleFetchLeads({
           client_id: userDetails?.userInfo?.client_id,
           user_id: userDetails?.userInfo?.user_id,
@@ -153,36 +194,14 @@ const AdminDashboard = () => {
           setLeadData(response.data);
         }
       } else {
-        setAssignLoading(false);
         message.warn("Failed/Something went wrong");
       }
-    } else {
-      setAssignLoading(false);
-      message.warn("Please select a sales to assign");
+    } catch (error) {
+      console.error("Error removing sales:", error);
+      message.error("An error occurred while removing sales");
     }
-  }
+  }, [userDetails?.userInfo, setLeadData]);
 
-  const onRemoveSales = async (lid, sid) => {
-    const data = {
-      lead_id: lid,
-      sales_user_id: sid,
-    };
-    const res = await handleSalesRemoveLead(data);
-    if (res?.status === 201) {
-      message.success("Removed Sales Successfully");
-      const response = await handleFetchLeads({
-        client_id: userDetails?.userInfo?.client_id,
-        user_id: userDetails?.userInfo?.user_id,
-        role_id: userDetails?.userInfo?.role_id,
-      });
-
-      if (response?.status === 200) {
-        setLeadData(response.data);
-      }
-    } else {
-      message.warn("faild/Something went wrong");
-    }
-  };
 
   useEffect(() => {
     const assignButton = {
@@ -416,22 +435,18 @@ const AdminDashboard = () => {
       },
     ];
 
-
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    companyEmployeeList,
+    userDetails?.userInfo,
+    assignLoading,
+    onAssignLead,
+    onRemoveSales,
+    navigate,
+  ]);
 
-    const handlePageReload = () => {
-      localStorage.removeItem("sales_id");
-    };
-
-    window.addEventListener('beforeunload', handlePageReload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handlePageReload);
-    };
-  }, [companyEmployeeList, userDetails?.userInfo, assignLoading, onAssignLead, onRemoveSales, navigate]);
-
-  const handleFilterLeadList = (filterId) => {
+  const handleFilterLeadList = useMemo(() => (filterId) => {
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
       setLeadData(
@@ -470,8 +485,20 @@ const AdminDashboard = () => {
         )
       );
     }
-  };
+  }, [setActiveFilter, setLeadData, leadList, userDetails?.userInfo]);
 
+
+  useEffect(() => {
+    const handlePageReload = () => {
+      localStorage.removeItem("sales_id");
+    };
+    window.addEventListener("beforeunload", handlePageReload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handlePageReload);
+    };
+  });
+  
   const handleStaredLeadsFilter = (starFilterId) => {
     setActiveFilter(starFilterId);
     setLeadData(
@@ -479,7 +506,7 @@ const AdminDashboard = () => {
     );
   };
 
-  const handleSyncLeadsReq = async () => {
+  const handleSyncLeadsReq = useCallback(async () => {
     dispatch(setLoader(true));
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
@@ -489,7 +516,8 @@ const AdminDashboard = () => {
       setSyncLeads(!syncLeads);
       dispatch(setLoader(false));
     }
-  };
+  }, [dispatch, setSyncLeads, userDetails?.userInfo?.client_id, userDetails?.userInfo?.ac_k, syncLeads]);
+
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -505,7 +533,7 @@ const AdminDashboard = () => {
     setSearchText("");
   };
 
-  const handleFilterAssignedEmployee = (userName) => {
+  const handleFilterAssignedEmployee = useCallback((userName) => {
     if (userName !== "All") {
       const employee = companyEmployeeList?.find(
         (employee) => employee?.full_name === userName
@@ -517,7 +545,7 @@ const AdminDashboard = () => {
     } else {
       setLeadData(leadList);
     }
-  };
+  }, [companyEmployeeList, leadList, setLeadData]);
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
