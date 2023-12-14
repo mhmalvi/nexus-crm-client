@@ -91,7 +91,7 @@ const UpdatedTable = ({
     } else {
       message.warn("Something went wrong. Please try again");
     }
-  }, [handleUploadLeadFile, userDetails?.client_id, setSyncLeads, syncLeads]);
+  }, [userDetails?.client_id, setSyncLeads, syncLeads]);
 
   
 
@@ -110,7 +110,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  }, [companyList]);
+  }, [userDetails?.role_id]);
 
   useEffect(() => {
     (async () => {
@@ -127,7 +127,7 @@ const UpdatedTable = ({
         dispatch(setLoader(false));
       }
     })();
-  }, [selectedCompany]);
+  },[dispatch, selectedCompany?.value, userDetails?.user_id]);
 
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
@@ -271,7 +271,7 @@ const UpdatedTable = ({
           </div>
         </div>
       </div>
-      {table_title == "Lead List" ? (
+      {table_title === "Lead List" ? (
         <div className="m-auto justify-center mr-20 mt-4 flex gap-5 ">
           <div className="flex gap-2">
             <p>WA</p>
