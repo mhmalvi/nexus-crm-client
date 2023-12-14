@@ -9,7 +9,6 @@ const Filters = ({
   filterOptions,
   ratings,
   layout,
-  setSearchInput,
   companyEmployeeList,
   handleFilterLeadList,
   handleStaredLeadsFilter,

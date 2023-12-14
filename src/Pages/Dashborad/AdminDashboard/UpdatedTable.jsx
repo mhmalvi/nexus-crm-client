@@ -1,10 +1,7 @@
 import { Select, Table, Tooltip, Upload, message } from "antd";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React,{ useEffect,useState, useCallback } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 import { handleUploadLeadFile } from "../../../Components/services/leads";
@@ -12,7 +9,6 @@ import {
   handleCompanyList,
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
-import {Pagination} from "antd";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 
 const UpdatedTable = ({
@@ -77,7 +73,7 @@ const UpdatedTable = ({
     }
   }, [data, searchInput, activeFilter, userDetails, table_title]);
 
-  const handleLeadFileUploadReq = async (e) => {
+  const handleLeadFileUploadReq = useCallback(async (e) => {
     const fileData = new FormData();
 
     fileData.append("file", e?.file?.originFileObj);
@@ -91,11 +87,12 @@ const UpdatedTable = ({
     } else if (leadFileUploadResp?.status === 403) {
       message.warn("Data already exists");
     } else if (leadFileUploadResp?.status === 400) {
-      message.warn("Please reformat excel sheet columnss");
+      message.warn("Please reformat excel sheet columns");
     } else {
-      message.warn("Someting went wrong. Please try again");
+      message.warn("Something went wrong. Please try again");
     }
-  };
+  }, [handleUploadLeadFile, userDetails?.client_id, setSyncLeads, syncLeads]);
+
   
 
   const onSelectCompanyData = (v, option) => {
@@ -285,7 +282,7 @@ const UpdatedTable = ({
             <div className="bg-[#f2d7ff] w-[20px] h-[20px]"></div>
           </div>
           <div className="flex gap-2">
-            <p>Phillipine</p>
+            <p>Philippines</p>
             <div className="bg-[#d7f7ff] w-[20px] h-[20px]"></div>
           </div>
           <div className="flex gap-2">
@@ -320,6 +317,7 @@ const UpdatedTable = ({
                 y: 600,
               }}
               rowClassName={(record, idx) => {
+                console.log(record.campaign_id)
                 if (table_title === "Lead List") {
                   if (
                     (record.work_location === "wa" ||
@@ -348,6 +346,103 @@ const UpdatedTable = ({
                     return color;
                   }
                 }
+                // if (table_title === "Lead List") {
+                //   // Philipines-1
+                //   if(record.campaign_id === +'120203649998840200'){
+                //         let color = "bg-[#d7f7ff]";
+                //         return color;
+                //   }
+                //   // Philipines-2
+                //   else if(record.campaign_id === +'120203634722410190'){
+                //         let color = "bg-[#d7f7ff]";
+                //         return color;
+                //   }
+                //   // Vietnam
+                //   else if(record.campaign_id === +'120203650508850190'){
+                //     let color = "bg-[#f2d7ff]";
+                //     return color;
+                //   } 
+                //   // WA-1
+                //   else if(record.campaign_id === +'120203063277230190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-2
+                //   else if(record.campaign_id === +'120203632110450190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-3
+                //   else if(record.campaign_id === +'120203635487850190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-4
+                //   else if(record.campaign_id === +'120204159219510190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-4
+                //   else if(record.campaign_id === +'120203634722410190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-5
+                //   else if(record.campaign_id === +'120203635184280200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-6
+                //   else if(record.campaign_id === +'120202830768260200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-7
+                //   else if(record.campaign_id === +'120203107332280200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-8
+                //   else if(record.campaign_id === +'120203044035210190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-9
+                //   else if(record.campaign_id === +'120202831124020200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-10
+                //   else if(record.campaign_id === +'120203208346430190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-11
+                //   else if(record.campaign_id === +'120202967409090190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-12
+                //   else if(record.campaign_id === +'23858487569630196'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-13
+                //   else if(record.campaign_id === +'23860071184420196'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-14
+                //   else if(record.campaign_id === +'23858278860450756'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // others
+                //   else {
+                //     let color = "bg-[#d9f99d]";
+                //     return color;
+                //   }                   
+                // }
               }}
             />
             
