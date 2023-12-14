@@ -318,7 +318,7 @@ const AdminDashboard = () => {
       },
       {
         title: "No. of calls",
-        dataIndex: "call_counts",
+        dataIndex: "call_count",
         render: (_, record, idx) => (
           <h4 key={idx} className="cursor-pointer uppercase">
             <button
@@ -330,7 +330,7 @@ const AdminDashboard = () => {
             >
               <div className="flex flex-row m-auto justify-between">
                 <p className="m-auto p-1">
-                  {record.call_counts != null ? record.call_counts : 0}
+                  {record.call_count != null ? record.call_count : 0}
                 </p>
                 <p className="m-auto p-1">Call Details</p>
               </div>
