@@ -84,8 +84,6 @@ const Campaigns = () => {
         );
         setCampaignList(closedCampaigns);
       }
-
-      // setCampaignList(campaign);
     }
   }, [activeFilter, campaigns, searchCampaign]);
 
@@ -96,25 +94,6 @@ const Campaigns = () => {
 
   return (
     <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
-      {/* <div className="flex items-center mb-6 mt-10">
-        <div
-          onClick={() => {
-            setActiveSection(1);
-            setToggleCourses(true);
-          }}
-        >
-          <h1
-            className={`text-sm leading-4 font-poppins px-3 py-2 cursor-pointer mr-2.5 ${
-              activeSection === 1
-                ? "text-brand-color font-semibold"
-                : "text-black font-normal"
-            } rounded-full`}
-          >
-            Show Courses
-          </h1>
-        </div>
-      </div> */}
-
       <Modal
         visible={toggleCourses}
         footer={null}
@@ -127,7 +106,6 @@ const Campaigns = () => {
       <Filter
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
-        // searchCampaign={searchCampaign}
         setSearchCampaign={setSearchCampaign}
       />
 

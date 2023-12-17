@@ -56,15 +56,8 @@ const CheckList = ({ leadDetails }) => {
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
-    // for (const value of fileFormData.values()) {
-    //   console.log(value);
-    // }
 
     const uploadFile = await handleUploadFile(fileFormData);
-
-    // if (uploadFile?.status === 200) {
-    //   setSyncDocumentList(!syncDocumentList);
-    // }
 
     const saveDocumentDetails = await handleChecklistDocumentUpload({
       checklist_id: checklistId,
@@ -73,7 +66,6 @@ const CheckList = ({ leadDetails }) => {
       student_id: userDetails?.userInfo?.user_id,
     });
 
-    // console.log("handleChecklistDocumentUpload", saveDocumentDetails);
 
     if (saveDocumentDetails?.status) {
       message.success("Document Added Successfully");
@@ -129,7 +121,6 @@ const CheckList = ({ leadDetails }) => {
                 </div>
               ) : (
                 <div className='flex font-poppins mt-0.5'>
-                  {/* <h1>{document.document_id}</h1> */}
                   <div>
                     <a
                       href='null'

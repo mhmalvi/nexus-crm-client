@@ -1,14 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const companyId = Storage.getItem("")
-
-// const fetchUserById = createAsyncThunk(
-//   `${process.env?.REACT_APP_COMPANY_URL}/api/company/${companyId}/details`,
-//   async (companyId, thunkAPI) => {
-//     const response = await userAPI.fetchById(userId);
-//     return response.data;
-//   }
-// );
 
 const initialState = { companyDetails: {} };
 

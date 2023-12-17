@@ -33,7 +33,6 @@ function UpdateDialog({ user_id, onDialog }) {
     await Axios.post(`http://192.168.0.126/api/update/package`, Data)
       .then((res) => {
         setmsg(res.data.message);
-        //console.log(res.data.key);
         onDialog(false);
       })
       .catch((err) => console.log(err));
@@ -42,19 +41,11 @@ function UpdateDialog({ user_id, onDialog }) {
   return (
     <div
       className="fixed inset-0 z-50"
-      /*       onClick={() => onDialog(false)} */
     >
       <div
         className="flex flex-col justify-center min-h-screen overflow-hidden mt-10"
         onClick={(e) => e.stopPropagation()}
       >
-        {/*         {Object.keys(DataErr).length === 0 && Show && !error && (
-          <div className="w-[30%] p-6 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
-            Package updated successfully!
-          </div>
-        )} */}
-        {/*         <div className="flex justify-center my-10">
-        </div> */}
         {msg && (
           <div className="w-[30%] p-4 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
             {msg}

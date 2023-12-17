@@ -1,4 +1,4 @@
-import { Modal, message } from "antd";
+import { Modal } from "antd";
 import React, { useState } from "react";
 import Axios from "axios";
 

@@ -2,10 +2,9 @@ import { Button, Form, Input, message, Modal, Popconfirm, Select } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchEmailTemplatList } from "../../../Components/services/leads";
 import {
-  handleLeadMailUpload,
   handleRemoveTemplet,
 } from "../../../Components/services/utils";
 import AddNewTemplate from "./AddNewTemplate";
@@ -16,7 +15,7 @@ import { CloseOutlined } from "@ant-design/icons";
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const [fileName, setFileName] = useState("");
+  // const [fileName, setFileName] = useState("");
   const [tData, setTData] = useState("");
   const [templateList, setTemplateList] = useState([]);
   const [tempOpen, setTempOpen] = useState(false);
@@ -30,12 +29,6 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const handleTdata = (value) => {
     setTData(value);
   };
-  // function handleFile(event) {
-  //   // setFile(event.target.files[0]);
-  //   // console.log("fdatas: ", event?.target?.files[0]);
-  //   // setFileName(event?.target?.files[0]?.name);
-
-  // }
 
   const handleCheckListOpen = (e) => {
     setSelectedData([]);
@@ -136,7 +129,6 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
             ),
             ...itm,
           })
-        // tempList([...tempList, itm])
       );
       staticTempListData && tempList.push(staticTempListData);
       setTemplateList(tempList);
@@ -216,17 +208,8 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 ></Input>
               </div>
 
-              {/* <input
-                type="file"
-                name="file"
-                id="mail-upload"
-                onChange={handleFile}
-                style={{ display: "none" }}
-              /> */}
-
               <div className="flex gap-3 items-center mt-[5px] ">
                 <label
-                  // htmlFor="mail-upload"
                   className="py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white border border-slate-700 rounded"
                   style={{ border: "1px solid gray" }}
                   onClick={(e) => {
@@ -235,7 +218,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 >
                   Attach CheckList
                 </label>
-                <p className="text-[green] text-[16px] mt-2">{fileName}</p>
+                {/* <p className="text-[green] text-[16px] mt-2">{fileName}</p> */}
               </div>
               {selectedData.length > 0 ? (
                 <ul className="w-[200px] h-[70px] overflow-auto">

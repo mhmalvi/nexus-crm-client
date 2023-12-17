@@ -7,8 +7,6 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
   const [editNotice, setEditNotice] = useState(false);
-  // const [updatedNoticeTitle, setUpdatedNoticeTitle] = useState("");
-  // const [updatedNoticeDescription, setUpdatedNoticeDescription] = useState("");
 
   const handleUpdateNoticeReq = async (id) => {
     const noticeTitle = document.getElementById(
@@ -42,7 +40,6 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
                 ? "bg-gray-100 border border-gray-300 outline-none px-1 py-0.5 rounded-lg"
                 : "bg-white cursor-default"
             }`}
-            // onChange={(e) => setUpdatedNoticeTitle(e.target.value)}
           >
             {notice?.notice_title}
           </span>
@@ -57,7 +54,6 @@ const Notice = ({ notice, handleDeleteNoticeReq }) => {
                 ? "bg-gray-100 border border-gray-300 outline-none px-1 py-0.5 rounded-lg"
                 : "bg-white cursor-default"
             }`}
-            // onChange={(e) => setUpdatedNoticeDescription(e.target.value)}
           >
             {notice?.notice_description}
           </div>

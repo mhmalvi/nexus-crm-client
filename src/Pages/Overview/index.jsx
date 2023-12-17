@@ -141,10 +141,8 @@ const Overview = () => {
         <div className="font-light">
           <Select
             id="companies"
-            // defaultValue={companies?.[0]?.name}
             defaultValue={defaultCompany}
             placeholder={defaultCompany}
-            // className="absolute top-16 right-0"
             style={{
               width: 250,
             }}

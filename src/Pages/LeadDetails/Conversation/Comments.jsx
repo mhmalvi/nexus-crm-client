@@ -29,7 +29,6 @@ const Comments = ({ Comments }) => {
 
           <div className="flex items-end mb-4">
             <div className="w-full">
-              {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
               {allComents?.length
                 ? allComents?.map((history) => (
                     <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">

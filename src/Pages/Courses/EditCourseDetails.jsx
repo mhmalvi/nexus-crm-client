@@ -18,7 +18,6 @@ const EditCourseDetails = ({
 }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
   const [title, setTitle] = useState("");
-  //   const [desc, setDesc] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [titleShow, setTitleShow] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -27,7 +26,6 @@ const EditCourseDetails = ({
   const handleUpdate = async () => {
     setUpdating(true);
     let res;
-    // setModalText("The modal will be closed after two seconds");
     if (title) {
       const data = {
         title,
@@ -65,7 +63,6 @@ const EditCourseDetails = ({
       }, 500);
     }
 
-    // window.location.reload();
   };
   const handleCancel = () => {
     setOpen(false);
@@ -76,19 +73,13 @@ const EditCourseDetails = ({
       console.log("rId: ", id);
       setLoading(true);
       const result = await getCourseDetailById(id);
-      // setTimeout(() => {
       if (result) {
         setTitle(result?.data?.course_title);
         setLoading(false);
       } else {
         setLoading(true);
       }
-
-      // }, 1000);
     })();
-
-    // const result = getCourseDetailById(id);
-    // setSingleData(result);
   }, [id]);
   return (
     <>
@@ -118,14 +109,6 @@ const EditCourseDetails = ({
                   <p className="text-[red]">Title field can not be empty!</p>
                 )}
               </Form.Item>
-              {/* <Form.Item label="Course Description" required>
-              <Input.TextArea
-                required
-                showCount
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              />
-            </Form.Item> */}
             </Form>
           </div>
         )}

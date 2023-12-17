@@ -4,7 +4,6 @@ import logo from "../../assets/Images/logo.png";
 import { IoMenuOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { GrAppsRounded } from "react-icons/gr";
-import guy from "../../assets/Images/guy.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   expandMailSidebar,

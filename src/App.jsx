@@ -12,7 +12,6 @@ import Dashboard from "./Pages/Dashborad";
 import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import GmailModule from "./Pages/Gmail";
-import HomePage from "./Pages/LandingPage";
 import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
 import Overview from "./Pages/Overview";
@@ -35,9 +34,6 @@ import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 
 function App() {
-  // useEffect(() => {
-  //   if (process.env.REACT_APP_PRODUCTION) console.log = () => {};
-  // }, []);
 
   return (
     <div>
@@ -62,7 +58,6 @@ function App() {
           <Route path="paymentSlip" element={<PaySlip />} />
           <Route path="calender" element={<Calender />} />
           <Route path="requisitions" element={<RequisitionTable />} />
-          {/* <Route path={"settings/company/:id"} element={<CompanyDetails />} /> */}
           <Route path="settings" element={<Settings />} />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
@@ -73,13 +68,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        {/* <Route path="welcome" element={<HomePage />} /> */}
         <Route path="welcome" element={<Landing />} />
-        {/* <Route path="package-create" element={<Package />} /> */}
-        {/* <Route
-          path="subscription/edit-package/:id"
-          element={<PackageUpdate />}
-        /> */}
       </Routes>
     </div>
   );

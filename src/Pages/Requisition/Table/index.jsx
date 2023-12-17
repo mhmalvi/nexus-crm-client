@@ -23,8 +23,6 @@ const Requisitions = () => {
         data={requisitionsData}
         syncRequisitionsData={syncRequisitionsData}
         setSyncRequisitionsData={setSyncRequisitionsData}
-        // activeFilter={activeFilter}
-        // searchInput={searchInput}
       />
     </div>
   );

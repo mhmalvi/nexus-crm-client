@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
 import {
-  handleFetchFollowUpNotification,
-  handleReadNotification,
   handleFetchNotificationList,
   handleChangeNotificationStatus,
 } from "../../Components/services/notification";
@@ -22,7 +20,6 @@ const Notification = ({
   setIsNotifyOpen,
 }) => {
   const [notifications, setNotificationss] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
@@ -36,13 +33,7 @@ const Notification = ({
   const userDetails = useSelector((state) => state?.user);
 
   const handleReadMessageReq = async (id) => {
-    // const messageReadRes = await handleReadNotification(id);
     const messageReadRes = await handleChangeNotificationStatus(id);
-    // console.log("messageReadRes", messageReadRes);
-
-    // const notificationRes = await handleFetchFollowUpNotification(
-    //   userDetails?.userInfo?.user_id
-    // );
     const notificationRes = await handleFetchNotificationList(
       userDetails?.userInfo?.user_id
     );
@@ -84,14 +75,6 @@ const Notification = ({
     }, 2000);
   }, [setNotificationLoading]);
 
-  // const sendPropsNotification = (data) =>{
-  //   setNotificationData(data);
-  //   setIsNotifyOpen(true);
-  // }
-  const showNotifyModal = () => {
-    setIsNotifyOpen(true);
-  };
-
   return (
     <div>
       <div
@@ -128,7 +111,6 @@ const Notification = ({
             key={i}
             className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
           >
-            {/* <div className="bg-brand-color/20 px-2 py-0.5 rounded"> */}
             <div className="flex justify-between items-start ">
               <div className="text-lg leading-7 font-poppins font-semibold flex items-center">
                 <span>
@@ -170,10 +152,7 @@ const Notification = ({
                   }`}
                 />
               </div>
-              {/* <div>
-                <div/> */}
             </div>
-            {/* </div> */}
             <hr onClick={(e) => e.stopPropagation()} />
           </div>
         ))}

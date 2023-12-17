@@ -35,9 +35,6 @@ const CompanySettings = () => {
   const [packageEndTime, setpackageEndTime] = useState("");
 
   useEffect(() => {
-    // const packageEnd = new Date(companyDetails?.package_date);
-    // packageEnd.setDate(packageEnd.getDate() + 10);
-    // setpackageEndTime(packageEnd.toString()?.slice(4, 15));
 
     dispatch(setLoader(true));
 
@@ -82,12 +79,10 @@ const CompanySettings = () => {
       }
     })();
   }, [
-    // companyDetails?.package_date,
     dispatch,
     userDetails?.userInfo?.client_id,
   ]);
 
-  // console.log(companyDetails);
 
   const handleLoadCompanyDetails = (e) => {
     const data = { ...companyDetails };
@@ -180,18 +175,12 @@ const CompanySettings = () => {
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
-    // for (const value of fileFormData.values()) {
-    //   console.log(value);
-    // }
     const uploadFile = await handleUploadFile(fileFormData);
-    // setFileId(uploadFile?.message?.data[0]?.id);
     setFileId(uploadFile?.data?.id);
   };
 
   return (
     <div className="mx-6 py-12">
-      {/* <CompanyDetails companyDetails={companyDetails} />
-      <SalesAdmins admin={true} /> */}
 
       <div
         className="lg:w-[100%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto mb-28"
@@ -225,11 +214,9 @@ const CompanySettings = () => {
                     accept="image/png, image/jpeg, image/jpg"
                     fileList={fileList}
                   >
-                    {/* <label htmlFor="avatar"> */}
                     <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
                       <Icons.AddImage className="w-4 text-white" />
                     </div>
-                    {/* </label> */}
                   </Upload>
                 ) : null}
               </div>
@@ -395,7 +382,6 @@ const CompanySettings = () => {
                           {companyDetails?.website}
                         </a>
 
-                        // <span>{companyDetails?.website}</span>
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">

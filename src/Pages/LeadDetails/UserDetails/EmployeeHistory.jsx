@@ -36,7 +36,6 @@ const EmployeeHistory = ({ employeeList }) => {
                   <td className="cursor-none">
                     {employeeHistory.sales_user_name}
                   </td>
-                  {/* <td>{employeeHistory.created_at}</td> */}
                   <td>
                     {new Date(employeeHistory.created_at).toDateString()}{" "}
                     {new Date(employeeHistory.created_at).toLocaleTimeString()}

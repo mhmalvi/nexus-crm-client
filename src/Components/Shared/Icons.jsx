@@ -1,5 +1,4 @@
 import { ReactComponent as CompanyLogo } from "../../assets/Icons/QQ_logo.svg";
-// import { ReactComponent as CompanyLogo } from "../../assets/Icons/qq_logo_july.jpeg";
 import { ReactComponent as Dashboard } from "../../assets/Icons/dashboard.svg";
 import { ReactComponent as Chart } from "../../assets/Icons/chart.svg";
 import { ReactComponent as Message } from "../../assets/Icons/message.svg";

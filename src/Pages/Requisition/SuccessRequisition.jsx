@@ -10,9 +10,6 @@ const Dialog = () => {
         </div>
 
         <div className="text-center">
-          {/* <h3 className="md:text-2.5xl text-base text-gray-900 font-semibold text-center uppercase">
-            Thank You For Relly on Us
-          </h3> */}
           <h3 className="md:text-2.5xl text-base text-gray-900 font-semibold text-center uppercase">
             Thank You
           </h3>

@@ -106,9 +106,6 @@
     transition: 0s;
     transform: translate(0, 5%);
   }
-  /* end attach button */
-  
-  /* Create Student Button */
   .createStudentButton {
     background-color: initial;
     background-image: linear-gradient(#8614f8 0, #760be0 100%);
@@ -122,7 +119,6 @@
     font-size: 16px;
     font-weight: 500;
     padding: 10px 20px;
-    /* height: 30px; */
     line-height: 60px;
     margin-left: -4px;
     outline: 0;
@@ -132,7 +128,6 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: bottom;
-    /* width: 150px; */
   }
   
   .createStudentButton:hover {
@@ -147,16 +142,8 @@
       width: 150px;
     }
   }
-  /* End create student button */
-
-  /* Stuendt Search box css */
   .searchBox {
-    /* position: absolute; */
-    /* top: 50%;
-    left: 50%; */
-    /* transform:  translate(-50%,50%); */
     background: #2f3640;
-    /* height: 40px; */
     border-radius: 40px;
     padding: 0px 10px;
     display: flex;
@@ -169,11 +156,6 @@
     padding: 0 5px;
 } 
 
-/* .searchBox:hover > .searchButton {
-  background: white;
-  color : #2f3640;
-  justify-content: end;
-} */
 
 .searchButton {
     color: white;
@@ -203,15 +185,6 @@
     width: 0px;
 
 }
-
-/* @media screen and (max-width: 620px) {
-.searchBox:hover > .searchInput {
-    width: 150px;
-    padding: 0 6px;
-}
-} */
-  /* end student search box css */
-  /* send mail button */
   .sendMailButton {
     color: #fff;
     padding: 10px 20px;
@@ -230,9 +203,6 @@
   
     cursor: pointer;
   }
-/* send mail button end */
-
-/* Genrate invoice button */
 .generateInvoiceButton {
   display: flex;
   align-items: center;
@@ -260,9 +230,6 @@
 .generateInvoiceButton:active {
   box-shadow: 0 0.3em 1em -0.5em #14a73e98;
 }
-/* Generate invoice button end */
-
-/* Upload certificate button */
 .uploadCertificateButton { 
   display:d flex;
   align-items: center;
@@ -272,7 +239,6 @@
   padding: 10px 20px;
   color: white;
   background: #ad5389;
-  /* background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%); */
   background: linear-gradient(0deg, #4da3ff 0%, rgb(102 214 247) 100%);
   border: none !important;
   box-shadow: 0 0.7em 1.5em -0.5em #1471a79e;
@@ -291,5 +257,4 @@
 .uploadCertificateButton:active {
   box-shadow: 0 0.3em 1em -0.5em #14a73e98;
 }
-/* upload certificate button end */
   

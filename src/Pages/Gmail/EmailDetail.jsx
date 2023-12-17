@@ -16,7 +16,7 @@ const EmailDetail = ({ selectedEmailId }) => {
       console.log("single", details);
     })();
 
-  }, [selectedEmailId]);
+  }, [details, selectedEmailId]);
   
   useEffect(() => {
     const date = details?.payload?.headers?.find(
@@ -26,7 +26,7 @@ const EmailDetail = ({ selectedEmailId }) => {
     const weekday = convertableDate.getDay();
     setWeekweekdayNum(weekday);
     console.log("weekday", weekdayNum);
-  }, [details]);
+  }, [details, weekdayNum]);
   
 
   useEffect(() => {
@@ -72,7 +72,6 @@ const EmailDetail = ({ selectedEmailId }) => {
         </div>
       </div>
 
-      {/* <div className="pt-5">{details?.snippet}</div> */}
       <div dangerouslySetInnerHTML={{ __html: messagePart }}></div>
     </div>
   );

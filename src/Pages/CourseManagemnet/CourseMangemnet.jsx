@@ -44,18 +44,14 @@ const CourseMangemnet = () => {
   }
 
   const onInsertCourseChecklist = async () => {
-    const values = form.getFieldsValue(true);
     const formData = new FormData();
     formData.append("user_id", userDetails?.user_id);
     formData.append("course_code", courseCode);
     formData.append("course_title", courseTitle);
     formData.append("course_description", courseDesc);
-    // formData.append("checklist", file);
     if(file){
       formData.append("checklist", file );
     }
-    // formData.append("file_names", JSON.stringify(inputFields));
-    // formData.append("file_names", inputFields);
 
     setIsLoading(true);
     let res;
@@ -91,21 +87,6 @@ const CourseMangemnet = () => {
     }
   };
 
-  const handleAddInput = () => {
-    const newInputFields = [...inputFields, { value: "" }];
-    setInputFields(newInputFields);
-  };
-
-  const handleRemoveInput = (index) => {
-    const newInputFields = [...inputFields];
-    newInputFields.splice(index, 1);
-    setInputFields(newInputFields);
-  };
-  const handleInputChange = (index, event) => {
-    const newInputFields = [...inputFields];
-    newInputFields[index].value = event.target.value;
-    setInputFields(newInputFields);
-  };
   const onCancle = () => {
     form.resetFields();
     setInputFields([{ value: "" }]);
@@ -151,7 +132,6 @@ const CourseMangemnet = () => {
   const getEditCourseDetails = async (id) => {
     const res = await handleGetCourseEdit(id);
     if (res?.status === 200) {
-      // message.warn("if you see empty or defferent data please cancle and click again  edit button")
       setCourseCode(res?.data?.course_code);
       setCourseTitle(res?.data?.course_title);
       setCourseDesc(res?.data?.course_description);
@@ -238,11 +218,6 @@ const CourseMangemnet = () => {
           layout="vertical"
           form={form}
           onFinish={onInsertCourseChecklist}
-          // initialValues={editCourseDetails && {
-          //   course_code: editCourseDetails?.course_code ?editCourseDetails?.course_code:"",
-          //   course_title: editCourseDetails?.course_title ? editCourseDetails?.course_title : "",
-          //   course_description: editCourseDetails?.course_description ? editCourseDetails?.course_description : "",
-          // }}
         >
           <div className="flex items-center justify-between">
             <h1 className="text-[25px] font-mono font-semibold">
@@ -282,7 +257,6 @@ const CourseMangemnet = () => {
           </div>
           {(isCreate || isUpdate) && (
             <div>
-              {/* <Form.Item label="Course Code" name="course_code" required> */}
               <div className="mb-3">
                 <label htmlFor="" className="mb-1">
                   Course code
@@ -294,8 +268,6 @@ const CourseMangemnet = () => {
                   placeholder="write course code"
                 />
               </div>
-              {/* </Form.Item> */}
-              {/* <Form.Item label="Course Title" name="course_title" required> */}
               <div className="mb-3">
                 <label htmlFor="" className="mb-1">
                   Course Title
@@ -307,13 +279,6 @@ const CourseMangemnet = () => {
                   placeholder="write course title"
                 />
               </div>
-              {/* </Form.Item> */}
-
-              {/* <Form.Item
-                label="Course Description"
-                name="course_description"
-                required
-              > */}
               <div className="mb-3">
                 <label htmlFor="" className="mb-1">Course Description</label>
                 <Input.TextArea
@@ -323,7 +288,6 @@ const CourseMangemnet = () => {
                   placeholder="write course description"
                 />
               </div>
-              {/* </Form.Item> */}
 
               <input
                 type="file"
@@ -357,40 +321,6 @@ const CourseMangemnet = () => {
                 <p className="text-[green] text-[16px] mt-2">{fileName}</p>
               </div>
 
-              {/* {inputFields.map((inputField, index) => {
-                return (
-                  <Form.Item
-                    className=" gap-2 w-full  "
-                    label={`Required CheckList Items Name ${index + 1}`}
-                    key={index}
-                  >
-                    <div className="flex gap-2 items-center justify-end !w-full ">
-                      <Input
-                        className="m-0 !w-full"
-                        type="text"
-                        value={inputField.value}
-                        onChange={(event) => handleInputChange(index, event)}
-                      />
-                      {inputFields.length > 1 && (
-                        <Button
-                          className=" !rounded !bg-red-600 !border-none !text-white !float-right "
-                          onClick={() => handleRemoveInput(index)}
-                        >
-                          -
-                        </Button>
-                      )}
-                      {index === inputFields.length - 1 && (
-                        <div
-                          className=" w-[50px]  cursor-pointer rounded-[50%]"
-                          onClick={handleAddInput}
-                        >
-                          <img src={plus} alt="" className="w-full h-full" />
-                        </div>
-                      )}
-                    </div>
-                  </Form.Item>
-                );
-              })} */}
             </div>
           )}
           {!isCreate && !isUpdate && (

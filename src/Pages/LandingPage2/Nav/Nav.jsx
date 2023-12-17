@@ -26,7 +26,6 @@ const Nav = () => {
     <>
       <div>
         <div
-          //   className="astro-W2BEH2IL container "
           className={`crm-menu astro-W2BEH2IL container shadow-[0px_0px_25px_-10px_rgba(0,0,0,0.8)] ${
             isMenuFixed ? "crm-fixed" : ""
           }`}

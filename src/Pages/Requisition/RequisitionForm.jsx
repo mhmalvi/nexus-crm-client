@@ -125,29 +125,6 @@ const RequisitionForm = ({
               <p className="text-red-500 text-xs">{DataErr.business_email}</p>
             </div>
 
-            {/* <div className="mb-6">
-              <span className="block text-sm font-medium text-gray-700 tracking-wide mb-2">
-                Logo
-              </span>
-              <div className="w-full flex justify-start items-end">
-                <label
-                  htmlFor="logo"
-                  className="cursor-pointer mr-6 w-44 max-h-10 shadow text-white font-medium text-center bg-brand-color focus:outline-none hover:ring-indigo-700 hover:border-indigo-700 py-2"
-                >
-                  <span>Upload</span>
-                  <input
-                    id="logo"
-                    accept="image/png, image/jpeg, image/jpg"
-                    name="logo"
-                    type="file"
-                    placeholder="Company contact no."
-                    onChange={(e) => handleImage(e)}
-                    style={{ display: "none" }}
-                  />
-                </label>
-              </div>
-              <p className="text-red-500 text-xs">{DataErr.logo}</p>
-            </div> */}
           </div>
 
           <div className="mb-6">
@@ -268,40 +245,8 @@ const RequisitionForm = ({
                 -1
               }
             />
-            {/* <select
-                  id="country_name"
-                  name="country_name"
-                  value={data.country_name}
-                  onChange={handleChange}
-                  className="mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500"
-                >
-                  <option className="text-slate-400">Select country</option>
-                  <option>USA</option>
-                  <option>Canada</option>
-                  <option>Australia</option>
-                  <option>UK</option>
-                  <option>Bangladesh</option>
-                  <option>China</option>
-                  <option>India</option>
-                </select> */}
             <p className="text-red-500 text-xs">{DataErr.country_name}</p>
           </div>
-          {/* <div className="mb-6">
-                <label>
-                  <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                    FaceBook Account
-                  </span>
-                  <input
-                    name="facebook"
-                    type="text"
-                    id="facebook"
-                    className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                    placeholder="www.facebook.com"
-                    value={data.facebook}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div> */}
           <div className="mt-6 px-3 flex justify-between items-center">
             <div className="flex items-center">
               <input

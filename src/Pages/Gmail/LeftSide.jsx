@@ -44,9 +44,6 @@ const LeftSide = () => {
   ];
   return (
     <div
-      /* className={`${
-        isMailSidebarOpen ? "hidden" : "w-[13rem]"
-      }`} */
     >
       {/* <Compose/> */}
       <div

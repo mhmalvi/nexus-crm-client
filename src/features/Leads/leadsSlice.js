@@ -7,7 +7,6 @@ export const leadsSlice = createSlice({
   initialState,
   reducers: {
     addLeads: (state, actions) => {
-      // console.log("current(state)", current(state));
       state.leads = actions.payload;
     },
   },

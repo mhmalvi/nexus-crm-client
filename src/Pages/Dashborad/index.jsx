@@ -2,14 +2,12 @@ import { UserOutlined } from "@ant-design/icons";
 import { Button, Input, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  handlefetchMessages,
   handlePasswordReset,
 } from "../../Components/services/auth";
 import { Storage } from "../../Components/Shared/utils/store";
-import { addMessages } from "../../features/user/messagesSlice";
 import AdminDashboard from "./AdminDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
 import UserDashboard from "./UserDashboard";
@@ -18,13 +16,9 @@ import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state?.user);
-  const userNotifications = useSelector(
-    (state) => state?.notifications
-  ).notifications;
 
   const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -44,15 +38,12 @@ const Dashboard = () => {
     }
   }, [passwordDetails, userDetails?.userInfo?.flag]);
 
-  // ompany-list in-sales
 
   const handleOk = () => {
     setConfirmLoading(true);
     setTimeout(async () => {
       const newPassword = document.getElementById("new_password").value;
       const rewNewPassword = document.getElementById("re_new_password").value;
-      // console.log("newPassword", newPassword);
-      // console.log("reNewPassword", rewNewPassword);
 
       if (newPassword === rewNewPassword) {
         const passwordChangeResponse = await handlePasswordReset(
@@ -78,10 +69,6 @@ const Dashboard = () => {
     setPasswordDetails(e?.target?.vaue);
   };
 
-  // const handleCancel = () => {
-  //   console.log("Clicked cancel button");
-  //   setToggleChanglePassword(false);
-  // };
 
   return (
     <div>
@@ -90,14 +77,12 @@ const Dashboard = () => {
         title="Change Password"
         centered
         visible={toggleChanglePassword}
-        // onOk={handleOk}
         confirmLoading={confirmLoading}
         footer={[
           <Button key="submit" type="primary" onClick={handleOk}>
             Save
           </Button>,
         ]}
-        // okText="Save"
       >
         <div className="font-poppins">
           <div>
@@ -136,7 +121,6 @@ const Dashboard = () => {
           </div>
         </div>
       </Modal>
-      {/* {userDetails?.userInfo?.role_id === 6 && ( */}
       <div className="absolute group right-0 mt-4 mr-4 p-1 rounded-full shadow-md">
         <Avatar
           className="rounded-full cursor-pointer mr-1"
@@ -169,7 +153,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {/*  )} */}
       <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
         {userDetails?.userInfo?.role_id && (
           <div>

@@ -91,10 +91,6 @@ const BigCalendar = () => {
       {loading ? (
         <>
           <div className="w-full h-[100vh] flex justify-center items-center">
-            {/* <Spin
-              size="larger"
-              
-            /> */}
             <Loader />
           </div>
         </>

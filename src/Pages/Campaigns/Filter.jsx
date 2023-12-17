@@ -4,7 +4,6 @@ import Icons from "../../Components/Shared/Icons";
 const Filter = ({
   activeFilter,
   setActiveFilter,
-  //   searchCampaign,
   setSearchCampaign,
 }) => {
   const filterOptions = [

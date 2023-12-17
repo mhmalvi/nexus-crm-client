@@ -19,10 +19,8 @@ const LeadDetails = () => {
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const userDetails = useSelector((state) => state?.user)?.userInfo;
 
-  // console.log("userDetails", userDetails);
 
   const [leadDetails, setleadDetails] = useState();
-  // const [statusDetails, setStatusDetails] = useState([]);
   const [syncDetails, setSyncDetails] = useState(false);
   const [leadStatusDetails, setLeadStatusDetails] = useState({
     Suspended: false,
@@ -83,7 +81,6 @@ const LeadDetails = () => {
           statusTimeDate[
             `${Object.keys(statusTimeDate)[parseInt(leadStatus?.lead_status)]}`
           ] = `${leadStatus?.updated_at}`;
-          // ] = `${leadStatus?.updated_at?.replace("T", " ")?.slice(0, 15)}`;
         });
 
         setLeadStatusDetails(status);
@@ -116,11 +113,6 @@ const LeadDetails = () => {
   }, [id, syncTotalPaid]);
 
   const confirm = async (e) => {
-    // console.log(
-    //   "STATUSSS",
-    //   leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
-    //     ?.lead_status
-    // );
     const statusUpdateResponse = await handleLeadStatusUpdate(
       {
         lead_id: leadDetails?.leadDetails?.lead_id,
@@ -130,8 +122,6 @@ const LeadDetails = () => {
         response: null,
       }
 
-      // leadDetails?.leadAllStatus[leadDetails?.leadAllStatus?.length - 2]
-      //   ?.lead_status,
     );
 
     if (statusUpdateResponse?.status) {

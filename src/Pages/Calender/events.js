@@ -1,20 +1,4 @@
 const events = [
-  // {
-  //   id: 0,
-  //   title: "Graphics 101",
-  //   allDay: true,
-  //   start: "Tue Apr 09 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 09 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 1,
-  //   title: "Long Event",
-  //   start: "Tue Apr 16 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 16 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 2,
-  // },
-
   {
     id: 20,
     title: "DTS STARTS",
@@ -51,91 +35,6 @@ const events = [
     priority: 1,
   },
 
-  // {
-  //   id: 3,
-  //   title: "DTS ENDS",
-  //   start: "Tue Apr 14 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 14 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-
-  // {
-  //   id: 4,
-  //   title: "Some Event",
-  //   start: "Tue Apr 04 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 04 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 3,
-  // },
-  // {
-  //   id: 5,
-  //   title: "Conference",
-  //   start: "Tue Apr 04 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 04 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   desc: "Big conference for important people",
-  //   priority: 4,
-  // },
-  // {
-  //   id: 6,
-  //   title: "Meeting",
-  //   start: "Tue Apr 07 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 07 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   desc: "Pre-meeting meeting, to prepare for the meeting",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 7,
-  //   title: "Lunch",
-  //   start: "Tue Apr 08 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 08 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   desc: "Power lunch",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 8,
-  //   title: "Meeting",
-  //   start: "Tue Apr 01 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 01 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 9,
-  //   title: "Happy Hour",
-  //   start: "Tue Apr 04 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 04 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   desc: "Most important meal of the day",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 10,
-  //   title: "Dinner",
-  //   start: "Tue Apr 04 2023 17:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 04 2023 18:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-
-  // {
-  //   id: 14,
-  //   title: "Today is Eid",
-  //   // start: new Date(new Date().setHours(new Date().getHours() - 3)),
-  //   start: "Tue Apr 04 2023 15:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   // end: new Date(new Date().setHours(new Date().getHours() + 3)),
-  //   end: "Tue Apr 04 2023 15:36:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 15,
-  //   title: "Point in Time Event",
-  //   start: "Tue Apr 05 2023 15:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 05 2023 15:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
-  // {
-  //   id: 16,
-  //   title: "Video Record",
-  //   start: "Tue Apr 05 2023 15:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   end: "Tue Apr 05 2023 15:08:37 GMT+0600 (Bangladesh Standard Time)",
-  //   priority: 1,
-  // },
 ];
 
 export default events;

@@ -1,5 +1,11 @@
 import { CloseOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
@@ -132,24 +138,65 @@ const AdminDashboard = () => {
     })();
   }, [userDetails?.userInfo?.client_id]);
 
+  const onAssignLead = useCallback(
+    async (lid, sid) => {
+      setAssignLoading(true);
 
-  const onAssignLead = useCallback(async (lid, sid) => {
-    setAssignLoading(true);
+      if (sid) {
+        const data = {
+          lead_id: lid,
+          sales_user_id: sid,
+          assign_by: userDetails?.user_id,
+          active_status: 1,
+        };
+        try {
+          const res = await handleAssignLeadToSales(data);
+          if (res?.status === 201) {
+            setAssignLoading(false);
+            message.success("Lead successfully assigned to sales");
 
-    if (sid) {
+            // Fetch leads without updating the state
+            const response = await handleFetchLeads({
+              client_id: userDetails?.userInfo?.client_id,
+              user_id: userDetails?.userInfo?.user_id,
+              role_id: userDetails?.userInfo?.role_id,
+            });
+
+            if (response?.status === 200) {
+              setLeadData(response.data);
+            }
+          } else {
+            setAssignLoading(false);
+            message.warn("Failed/Something went wrong");
+          }
+        } catch (error) {
+          console.error("Error assigning lead:", error);
+          setAssignLoading(false);
+          message.error("An error occurred while assigning lead");
+        }
+      } else {
+        setAssignLoading(false);
+        message.warn("Please select a sales to assign");
+      }
+    },
+    [
+      userDetails?.user_id,
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.user_id,
+      userDetails?.userInfo?.role_id,
+    ]
+  );
+
+  const onRemoveSales = useCallback(
+    async (lid, sid) => {
       const data = {
         lead_id: lid,
         sales_user_id: sid,
-        assign_by: userDetails?.user_id,
-        active_status: 1,
       };
       try {
-        const res = await handleAssignLeadToSales(data);
+        const res = await handleSalesRemoveLead(data);
         if (res?.status === 201) {
-          setAssignLoading(false);
-          message.success("Lead successfully assigned to sales");
-
-          // Fetch leads without updating the state
+          message.success("Removed Sales Successfully");
           const response = await handleFetchLeads({
             client_id: userDetails?.userInfo?.client_id,
             user_id: userDetails?.userInfo?.user_id,
@@ -160,48 +207,15 @@ const AdminDashboard = () => {
             setLeadData(response.data);
           }
         } else {
-          setAssignLoading(false);
           message.warn("Failed/Something went wrong");
         }
       } catch (error) {
-        console.error("Error assigning lead:", error);
-        setAssignLoading(false);
-        message.error("An error occurred while assigning lead");
+        console.error("Error removing sales:", error);
+        message.error("An error occurred while removing sales");
       }
-    } else {
-      setAssignLoading(false);
-      message.warn("Please select a sales to assign");
-    }
-  }, [userDetails?.user_id, userDetails?.userInfo?.client_id, userDetails?.userInfo?.user_id, userDetails?.userInfo?.role_id]);
-
-
-  const onRemoveSales = useCallback(async (lid, sid) => {
-    const data = {
-      lead_id: lid,
-      sales_user_id: sid,
-    };
-    try {
-      const res = await handleSalesRemoveLead(data);
-      if (res?.status === 201) {
-        message.success("Removed Sales Successfully");
-        const response = await handleFetchLeads({
-          client_id: userDetails?.userInfo?.client_id,
-          user_id: userDetails?.userInfo?.user_id,
-          role_id: userDetails?.userInfo?.role_id,
-        });
-
-        if (response?.status === 200) {
-          setLeadData(response.data);
-        }
-      } else {
-        message.warn("Failed/Something went wrong");
-      }
-    } catch (error) {
-      console.error("Error removing sales:", error);
-      message.error("An error occurred while removing sales");
-    }
-  }, [userDetails?.userInfo, setLeadData]);
-
+    },
+    [userDetails?.userInfo, setLeadData]
+  );
 
   useEffect(() => {
     const assignButton = {
@@ -446,47 +460,49 @@ const AdminDashboard = () => {
     navigate,
   ]);
 
-  const handleFilterLeadList = useMemo(() => (filterId) => {
-    setActiveFilter(filterId);
-    if (filterId === 0 || filterId === 7) {
-      setLeadData(
-        leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
-      );
-    } else if (filterId === 8) {
-      setLeadData(
-        leadList
-          .filter(
-            (lead) =>
-              parseInt(lead.sales_user_id) ===
-                parseInt(userDetails?.userInfo?.user_id) ||
-              (lead?.assignedHistory?.includes(
-                userDetails?.userInfo?.user_id
-              ) &&
-                lead.sales_user_id === 0)
+  const handleFilterLeadList = useMemo(
+    () => (filterId) => {
+      setActiveFilter(filterId);
+      if (filterId === 0 || filterId === 7) {
+        setLeadData(
+          leadList?.filter((lead) => parseInt(lead?.lead_details_status) !== 0)
+        );
+      } else if (filterId === 8) {
+        setLeadData(
+          leadList
+            .filter(
+              (lead) =>
+                parseInt(lead.sales_user_id) ===
+                  parseInt(userDetails?.userInfo?.user_id) ||
+                (lead?.assignedHistory?.includes(
+                  userDetails?.userInfo?.user_id
+                ) &&
+                  lead.sales_user_id === 0)
+            )
+            ?.sort(
+              (date1, date2) =>
+                new Date(date2.updated_at) - new Date(date1.updated_at)
+            )
+        );
+      } else if (filterId === 9) {
+        setLeadData(
+          leadList
+            .filter((lead) => parseInt(lead.lead_details_status) === 0)
+            ?.sort(
+              (date1, date2) =>
+                new Date(date2.updated_at) - new Date(date1.updated_at)
+            )
+        );
+      } else {
+        setLeadData(
+          leadList.filter(
+            (lead) => parseInt(lead.lead_details_status) === filterId
           )
-          ?.sort(
-            (date1, date2) =>
-              new Date(date2.updated_at) - new Date(date1.updated_at)
-          )
-      );
-    } else if (filterId === 9) {
-      setLeadData(
-        leadList
-          .filter((lead) => parseInt(lead.lead_details_status) === 0)
-          ?.sort(
-            (date1, date2) =>
-              new Date(date2.updated_at) - new Date(date1.updated_at)
-          )
-      );
-    } else {
-      setLeadData(
-        leadList.filter(
-          (lead) => parseInt(lead.lead_details_status) === filterId
-        )
-      );
-    }
-  }, [setActiveFilter, setLeadData, leadList, userDetails?.userInfo]);
-
+        );
+      }
+    },
+    [setActiveFilter, setLeadData, leadList, userDetails?.userInfo]
+  );
 
   useEffect(() => {
     const handlePageReload = () => {
@@ -498,7 +514,7 @@ const AdminDashboard = () => {
       window.removeEventListener("beforeunload", handlePageReload);
     };
   });
-  
+
   const handleStaredLeadsFilter = (starFilterId) => {
     setActiveFilter(starFilterId);
     setLeadData(
@@ -516,8 +532,13 @@ const AdminDashboard = () => {
       setSyncLeads(!syncLeads);
       dispatch(setLoader(false));
     }
-  }, [dispatch, setSyncLeads, userDetails?.userInfo?.client_id, userDetails?.userInfo?.ac_k, syncLeads]);
-
+  }, [
+    dispatch,
+    setSyncLeads,
+    userDetails?.userInfo?.client_id,
+    userDetails?.userInfo?.ac_k,
+    syncLeads,
+  ]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -533,19 +554,22 @@ const AdminDashboard = () => {
     setSearchText("");
   };
 
-  const handleFilterAssignedEmployee = useCallback((userName) => {
-    if (userName !== "All") {
-      const employee = companyEmployeeList?.find(
-        (employee) => employee?.full_name === userName
-      );
+  const handleFilterAssignedEmployee = useCallback(
+    (userName) => {
+      if (userName !== "All") {
+        const employee = companyEmployeeList?.find(
+          (employee) => employee?.full_name === userName
+        );
 
-      setLeadData(
-        leadList?.filter((lead) => lead?.sales_user_id === employee?.user_id)
-      );
-    } else {
-      setLeadData(leadList);
-    }
-  }, [companyEmployeeList, leadList, setLeadData]);
+        setLeadData(
+          leadList?.filter((lead) => lead?.sales_user_id === employee?.user_id)
+        );
+      } else {
+        setLeadData(leadList);
+      }
+    },
+    [companyEmployeeList, leadList, setLeadData]
+  );
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -600,28 +624,6 @@ const AdminDashboard = () => {
           >
             Clear
           </Button>
-          {/* <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button> */}
         </Space>
       </div>
     ),
@@ -776,18 +778,10 @@ const salesEmployeesFilterOptions = [
     id: 1,
     title: "New Lead",
   },
-  // {
-  //   id: 0,
-  //   title: "All",
-  // },
   {
     id: 8,
     title: "My Leads",
   },
-  // {
-  //   id: 7,
-  //   title: "Today's Task",
-  // },
 ];
 
 const ratings = [
@@ -812,18 +806,6 @@ const ratings = [
     title: "5 Stars",
   },
 ];
-
-// const tableHeaders = [
-//   "ID",
-//   "Date",
-//   "Course Code",
-//   "Course Name",
-//   "Customer Name",
-//   "Phone Number",
-//   "Location",
-//   "Campaign ID",
-//   "Lead Status",
-// ];
 
 const statusColor = [
   {

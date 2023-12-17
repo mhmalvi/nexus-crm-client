@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { handleFetchLeads } from "../../../Components/services/leads";
 import axios from "axios";
 
 const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
-  const userDetails = useSelector((state) => state.user);
-  const [syncLeads, setSyncLeads] = useState(false);
   const [callHistory, setCallHistory] = useState([""]);
   useEffect(() => {
     axios.post(`${process.env?.REACT_APP_LEAD_URL}/api/lead/details`, {
@@ -13,7 +9,6 @@ const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
       })
       .then((response) => {
           setCallHistory(response.data.leadCallHistory);
-        //   dashboard_lead_id=""
       });
   },[lead_id]);
   return (

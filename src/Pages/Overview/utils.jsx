@@ -7,7 +7,6 @@ export const LeadConvertionCustomizedLabel = (props) => {
 
   return (
     <g>
-      {/* <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" /> */}
       <text
         x={x + width / 2}
         y={y - radius}
@@ -33,7 +32,6 @@ export const LeadStatusCustomizedLabel = (props) => {
     fill,
     payload,
     percent,
-    value,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);

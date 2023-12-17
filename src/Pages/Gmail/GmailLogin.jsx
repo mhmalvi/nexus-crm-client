@@ -10,12 +10,13 @@ const GmailLogin = () => {
   const Login = () => {
     signInWithPopup(auth, provider)
       .then(({ user }) => {
-        dispatch(signin({
-          displayName: user.displayName,
-          photoUrl: user.photoURL,
-          email: user.email
-      }))
-        // console.log("auth", user);
+        dispatch(
+          signin({
+            displayName: user.displayName,
+            photoUrl: user.photoURL,
+            email: user.email,
+          })
+        );
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -28,7 +29,6 @@ const GmailLogin = () => {
         <img src={GoogleMail} alt="" className="w-[40%] m-auto" />
         <div
           onClick={Login}
-          
           className="w-[15rem] bg-[#4285F4] px-4 py-2 text-white text-lg text-center rounded-md border m-auto cursor-pointer"
         >
           LOGIN WITH GMAIL

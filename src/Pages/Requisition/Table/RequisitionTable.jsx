@@ -233,15 +233,7 @@ const RequisitionTable = ({
                     <td onClick={() => handleRequisitionDetails(list?.id)}>
                       {new Date(list.created_at).toString().slice(4, 21)}{" "}
                       {new Date(list.created_at).toString().slice(25, 31)}
-                      {/* {list.created_at
-                        .replace("T", " ")
-                        .toString()
-                        .slice(0, 19)} */}
-                      {/* {list.trading_name} */}
                     </td>
-                    {/* <td onClick={() => handleRequisitionDetails(list?.id)}>
-                    {list.created_at.toString().slice(0, 31)}
-                  </td> */}
 
                     <td onClick={() => handleRequisitionDetails(list?.id)}>
                       {list.status === 2 ? (

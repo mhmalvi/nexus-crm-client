@@ -50,51 +50,8 @@ export default function Footer() {
               </li>
             </ul>
             {/* Column 3 HIDDEN IN MOBILE VIEW*/}
-            {/* <ul className="hidden md:block">
-              <li className="flex p-2">
-                <a className="text-white font-bold px-4">CRM tutorial</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Project managment</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Time tracker</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Time schedule</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Lead generate</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Remote Collaboration</a>
-              </li>
-            </ul> */}
           </div>
 
-          {/* Column 3 FOR MOBILE VIEW */}
-          {/* <div className="w-full flex justify-center md:hidden">
-            <ul>
-              <li className="flex p-2">
-                <a className="text-white font-bold px-4">CRM tutorial</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Project managment</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Time tracker</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Time schedule</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Lead generate</a>
-              </li>
-              <li className="flex p-2">
-                <a className="text-xs text-white px-4">Remote Collaboration</a>
-              </li>
-            </ul>
-          </div> */}
         </div>
         <div className="w-full md:w-2/5 font-poppins">
           <div className="text-4xl text-white pb-1">SMART CRM</div>

@@ -40,11 +40,6 @@ const EmployeeRegistrationForm = ({
     setEmployeeDetails({ ...employeeDetails, [e.target.name]: e.target.value });
   };
 
-  // console.log("employeeDetails", {
-  //   ...employeeDetails,
-  //   role_id: roleId,
-  // });
-
   const handleAddEmployee = async () => {
     dispatch(setLoader(true));
     const registrationResponse = await handleRegistration({
@@ -55,29 +50,12 @@ const EmployeeRegistrationForm = ({
 
     console.log("registrationResponse <><><>", registrationResponse);
 
-    // console.log("registrationResponse", registrationResponse);
-    // console.log("DATA?????", {
-    //   company_id: clientId,
-    //   user_id: registrationResponse?.data?.user_id,
-    // });
-
     if (registrationResponse?.status === true) {
       const employeeAddResponse = await handleAddCompanyEmployees({
         company_id: clientId,
         user_id: registrationResponse?.data?.user_id,
       });
       console.log("employeeAddResponse", employeeAddResponse);
-
-      // const sendRegistrationMail = await handleRegistrationResponseMail({
-      //   full_name: registrationResponse?.data?.user_name,
-      //   email: registrationResponse?.data?.user_email,
-      //   password: registrationResponse?.data?.password,
-      // });
-
-      // if (sendRegistrationMail === "success") {
-      //   dispatch(setLoader(false));
-      //   window.location.reload();
-      // }
 
       if (employeeAddResponse?.status === true) {
         message.success("Employee Added Successfully");
@@ -107,26 +85,6 @@ const EmployeeRegistrationForm = ({
       message.warn("Something went wrong. Try again later...");
     }
   };
-
-  // const handleAddStudentAdmin = async () => {
-  //   const data = {
-  //     ...employeeDetails,
-  //     name: employeeDetails.full_name,
-  //     role: 2,
-  //     company_id: clientId,
-  //   };
-  //   dispatch(setLoader(true));
-  //   const res = await handleRegister(data);
-  //   if (res?.status === 201) {
-  //     dispatch(setLoader(false));
-  //     setEmployeeDetails({});
-  //     message.success("Registered successfully");
-  //     setActiveAddStudentAdmin(false);
-  //   } else {
-  //     message.warn(res?.data?.message || "something went wrong");
-  //     dispatch(setLoader(false));
-  //   }
-  // };
 
   return (
     <div className="py-8 px-6">

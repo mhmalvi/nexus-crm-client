@@ -37,7 +37,7 @@ const CourseList = ({
     clearFilters();
     setSearchText("");
   };
-  //get daat from localStorage for hide te edit button
+  //get data from localStorage to hide the edit button
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("user_info"));
     if (userDetails) {
@@ -160,7 +160,6 @@ const CourseList = ({
           {course_title}
         </h4>
       ),
-      // width: 150,
     },
 
     {
@@ -168,7 +167,6 @@ const CourseList = ({
       dataIndex: "course_title",
       key: "course_title",
       align: "center",
-      // ...getColumnSearchProps("course_title"),
       render: (_, record, i) => {
         console.log("record", record);
         return (
@@ -195,15 +193,8 @@ const CourseList = ({
           </div>
         );
       },
-      // width: 150,
     },
   ];
-
-  // useEffect(() => {
-  //   document
-  //     .getElementsByClassName("ant-table-cell")
-  //     ?.classList?.add("uppercase");
-  // }, []);
 
   return (
     <div>
@@ -216,24 +207,6 @@ const CourseList = ({
         >
           Add Course
         </Button>
-        {/* <div className="flex items-center">
-              <h1 className="px-2 bg-gray-100 py-1 mb-0 border">
-                Course Name:{" "}
-              </h1>
-              <AutoComplete
-                style={{
-                  width: 300,
-                }}
-                onSelect={handleCourseSearch}
-                options={options}
-                placeholder="Type your course title"
-                filterOption={(inputValue, option) =>
-                  option.value
-                    .toUpperCase()
-                    .indexOf(inputValue.toUpperCase()) !== -1
-                }
-              />
-            </div> */}
       </div>
       {/* Courses */}
       <div>
@@ -246,21 +219,12 @@ const CourseList = ({
           columns={courseLinstTableHeaders}
           dataSource={courses}
           pagination={true}
-          // loading
           showSorterTooltip={true}
           scroll={{
             x: 600,
             y: 600,
           }}
           // Do not need to use on row view course detais by onClick in onRow it is used in Clicked by view button on colum list
-          // onRow={(record) => {
-          //   return {
-          //     onClick: () => {
-          //       setCourseDetailsOpen(true);
-          //       setSelectedCourse(record);
-          //     },
-          //   };
-          // }}
         />
       </div>
       <EditCourseDetails

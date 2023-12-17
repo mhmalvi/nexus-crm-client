@@ -109,11 +109,6 @@ function ContactSection() {
           </div>
         </div>
       </div>
-      {/*       <div className="w-1/5 m-auto bg-black rounded-xl text-center py-4 my-6">
-        <a className="text-md text-white font-semibold" href="">
-          More Blog
-        </a>
-      </div> */}
     </div>
   );
 }

@@ -3,8 +3,6 @@ import Icons from "../../Components/Shared/Icons";
 import Vector from "../../assets/Images/Vector.svg";
 import group259 from "../../assets/Images/group259.svg";
 import img46 from "../../assets/Images/img46.png";
-import group277 from "../../assets/Images/group277.svg";
-import group278 from "../../assets/Images/group278.svg";
 
 function AboutUsSection() {
   return (
@@ -53,26 +51,6 @@ function AboutUsSection() {
             </div>
           </div>
           <div className="bg-home-color rounded-lg p-4 pt-16">
-            {/* <div className="grid grid-cols-4 font-poppins text-white">
-              <div className="flex">
-                <div></div>
-                <div></div>
-              </div>
-              <div>
-                <img src={Vector} className="relative -top-14" alt="" />
-              </div>
-              <div></div>
-              <div className="grid grid-cols-2 justify-end">
-                <div></div>
-                <div>
-                  <img
-                    src={group259}
-                    className="relative -top-10 left-10"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div> */}
             <div className="flex flex-col md:flex-row justify-evenly font-poppins text-white px-6 md:px-16 pb-6 md:pb-16">
               <div className="flex-col justify-start pb-6 md:pb-0">
                 <div className="px-4">

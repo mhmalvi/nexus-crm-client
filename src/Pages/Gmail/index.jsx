@@ -1,33 +1,18 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Compose from "./Compose";
 import Emails from "./Emails";
 import { selectSendMessageIsOpen } from "./features/mailSlice";
-import { selectMailUser, signin } from "./features/mailUserSlice";
-/* import Footer from "./Footer"; */
+import { selectMailUser } from "./features/mailUserSlice";
 import GmailLogin from "./GmailLogin";
 import GmailNavbar from "./GmailNavbar";
 import Inbox from "./Inbox";
 import LeftSide from "./LeftSide";
-import { auth } from "./Firebase/firebase";
 
 const GmailModule = () => {
-  const dispatch = useDispatch();
   const isMessageOpen = useSelector(selectSendMessageIsOpen);
   console.log(useSelector(selectSendMessageIsOpen));
   const user = useSelector(selectMailUser);
-/* 
-  useEffect(() => {
-  auth.onAuthStateChanged((authUser)=>{
-  if (authUser) {
-    dispatch(signin({
-      
-    }))
-  }
-  console.log(authUser);
-})
-  }, [dispatch]) */
-  
   return (
     <>
     {user ? (

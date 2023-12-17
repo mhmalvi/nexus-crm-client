@@ -10,7 +10,6 @@ export const handleConfirmRegistration = async (full_name, email, password) => {
   try {
     const sendConfimationMail = await axios.post(
       `${process.env?.REACT_APP_EMAIL_URL}/api/send-registration-mail`,
-      // email: registrationDetails?.email,
       {
         full_name: full_name,
         email: "megatanjib@gmail.com",

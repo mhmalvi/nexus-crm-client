@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import io from "socket.io-client";
-// import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
-// import { addNotifications } from "../../features/user/notificationSlice";
-import { handleFetchFollowUpNotification } from "../../Components/services/notification";
+import React from "react";
 import Notification from "./Notification";
 import { useNavigate } from "react-router-dom";
-import { addNotifications } from "../../features/user/notificationSlice";
 import { useState } from "react";
-import NotifyModal from "./NotifyModal";
-
-// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 
 const Notifications = ({
   toggleNotification,
@@ -18,62 +9,15 @@ const Notifications = ({
   setNotificationLoading,
   setToggleNotification,
   setNotificationData,
-  setIsNotifyOpen
+  setIsNotifyOpen,
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state?.user);
 
-  const userNotifications = useSelector(
-    (state) => state?.notifications
-  ).notifications;
   const [syncNotification, setSyncNotification] = useState(true);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const notificationRes = await handleFetchFollowUpNotification(
-  //       userDetails?.userInfo?.user_id
-  //     );
-
-  //     console.log("notificationRes", notificationRes);
-
-  //     if (notificationRes.status === 200) {
-  //       notificationRes?.data?.forEach((notification) => {
-  //         if (
-  //           userNotifications?.filter((n) => n.id === notification.id)
-  //             ?.length === 0
-  //         ) {
-  //           dispatch(addNotifications(notification));
-  //         }
-  //       });
-  //     }
-  //   })();
-  // }, [syncNotification]);
-
   const handleNotificationNavigation = async (notification) => {
-   
-
-    // await socket.emit("read_notification", notification.id);
-    // socket.on("updated_notification", (data) => {
-    //   if (data) {
-    //     console.log(data);
-    //     dispatch(addNotifications(data));
-    //   }
-    // });
-    // setSyncNotification(!syncNotification);
-
     if (notification.type === "notice") navigate("/dashboard");
   };
-
-  // useEffect(() => {
-  //   socket.on("receive_notification", (data) => {
-  //     if (data) {
-  //       console.log(data);
-  //       handleMessageAudio();
-  //       dispatch(addNotifications(data));
-  //     }
-  //   });
-  // }, [dispatch]);
 
   return (
     <div
@@ -98,11 +42,10 @@ const Notifications = ({
         syncNotification={syncNotification}
         setSyncNotification={setSyncNotification}
         handleNotificationNavigation={handleNotificationNavigation}
-        setNotificationData = {setNotificationData}
+        setNotificationData={setNotificationData}
         setIsNotifyOpen={setIsNotifyOpen}
         setToggleNotification={setToggleNotification}
       />
-      
     </div>
   );
 };

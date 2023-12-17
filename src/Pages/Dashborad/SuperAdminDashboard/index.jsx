@@ -27,7 +27,6 @@ const SuperAdminDashboard = () => {
       if (companiesResponse?.status === true) {
         if (companiesResponse) {
           if (companiesResponse?.data) {
-            // if(companiesResponse?.length){
             setCompanies(
               companiesResponse?.data?.filter(
                 (company) => !company?.super_admin
@@ -39,7 +38,6 @@ const SuperAdminDashboard = () => {
               )
             );
             dispatch(setLoader(false));
-            // }
           }
         }
       }
@@ -155,28 +153,6 @@ const SuperAdminDashboard = () => {
             No Companies Yet
           </div>
         )}
-
-        {/* Add company modal */}
-
-        {/* <div>
-        <Modal
-          title="Create Company Profile"
-          centered
-          visible={toggleAddCompany}
-          onSubmit={() => setToggleAddCompany(false)}
-          onCancel={() => setToggleAddCompany(false)}
-          footer={[
-            <Button key="back" onClick={handleCancel}>
-              Cancel
-            </Button>,
-            <Button key="submit" type="primary" onClick={handleSubmit}>
-              Submit
-            </Button>,
-          ]}
-        >
-          <p>Company informations</p>
-        </Modal>
-      </div> */}
       </div>
     </div>
   );

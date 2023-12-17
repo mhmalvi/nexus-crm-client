@@ -250,55 +250,17 @@ const SectionSix = () => {
                             >
                               <div
                                 className="icon flex justify-center items-center w-[50px] h-[45px] mx-auto"
-                                style={
-                                  {
-                                    // borderWidth: "0px",
-                                    // borderStyle: "solid",
-                                    // borderColor: "rgb(229, 231, 235)",
-                                    // boxSizing: "border-box",
-                                    // margin: "0px auto",
-                                    // maxHeight: "50px",
-                                    // maxWidth: "50px",
-                                  }
-                                }
                               >
                                 <img
                                   className="w-full h-full"
                                   src={item?.icon}
-                                  style={
-                                    {
-                                      // borderWidth: "0px",
-                                      // borderStyle: "solid",
-                                      // borderColor: "rgb(229, 231, 235)",
-                                      // boxSizing: "border-box",
-                                      // display: "block",
-                                      // verticalAlign: "middle",
-                                      // maxWidth: "100%",
-                                      // maxHeight: "100%",
-                                      // // maxWidth: `${
-                                      // //   item?.width ? item?.width : "100%"
-                                      // // }`,
-                                      // height: "100%",
-                                      // width: `${
-                                      //   item?.width ? item?.width : "100%"
-                                      // }`,
-                                    }
-                                  }
+                                  alt="item"
                                 />
                               </div>
                               <p className=" !text-center">{item?.name}</p>
 
                               <p
                                 className="text-center text-[16px] mx-auto !w-full break-words"
-                                // style={{
-                                //   borderWidth: "0px",
-                                //   borderStyle: "solid",
-                                //   borderColor: "rgb(229, 231, 235)",
-                                //   boxSizing: "border-box",
-                                //   display: "inline-block",
-                                //   fontSize: "16px",
-                                //   marginTop: "10px",
-                                // }}
                               >
                                 ${`${item?.price}/month`}
                               </p>

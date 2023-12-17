@@ -80,7 +80,6 @@ const Register = () => {
           <div>
             <div className="pb-3 pt-8">
               <div className="flex flex-col items-center ">
-                {/* <Icons.CompanyLogo className="w-40" /> */}
                 <img
                   src={companyLogo}
                   alt="companyLogo"
@@ -104,17 +103,6 @@ const Register = () => {
             <div className="m-6">
               <form className="mb-4" onSubmit={handleLoginReq}>
                 <div className="mb-6 font-poppins">
-                  {/* <Radio.Group
-                    className="w-full "
-                    size="large"
-                    name="roll"
-                    id="roll"
-                    onChange={(e) => setRole(e.target.value)}
-                    value={role}
-                  >
-                    <Radio value={1}>As Agency</Radio>
-                    <Radio value={2}>As Manager</Radio>
-                  </Radio.Group> */}
                   <label
                     htmlFor=""
                     className="block mb-2 text-sm text-gray-600"
@@ -123,7 +111,6 @@ const Register = () => {
                   </label>
                   <Select
                     defaultValue={1}
-                    // value={role}
                     className="w-full"
                     onChange={handleChange}
                     options={[
@@ -140,7 +127,6 @@ const Register = () => {
                     Name/Agency Name
                   </label>
                   <Input
-                    // type="password"
                     size="large"
                     name="name"
                     id="name"
@@ -181,7 +167,6 @@ const Register = () => {
                       Phone Number
                     </label>
                     <Input
-                      // type="password"
                       size="large"
                       name="phone_number"
                       id="phone_number"
@@ -219,7 +204,6 @@ const Register = () => {
                     Email
                   </label>
                   <Input
-                    // type="password"
                     size="large"
                     name="email"
                     id="email"
@@ -276,7 +260,6 @@ const Register = () => {
                       Address
                     </label>
                     <Input.TextArea
-                      //   type="number"
                       rows={5}
                       cols={5}
                       size="large"

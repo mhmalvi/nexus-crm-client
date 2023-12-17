@@ -15,7 +15,6 @@ import {
   handleCallResponseMail,
   handleLeadStatusChangeEmail,
 } from "../../Components/services/mail";
-// import { handleRegistration } from "../../Components/services/auth";
 import {
   handleAddAmount,
   handleAddCall,
@@ -23,7 +22,6 @@ import {
   handleLeadCertificatetDetailsUpdate,
   handleLeadStatusUpdate,
 } from "../../Components/services/leads";
-// import { handleConfirmRegistration } from "../../Components/services/mail";
 import {
   handleFetchFile,
   handleUploadFile,
@@ -60,9 +58,6 @@ const LeadStatus = (props) => {
 
   const userDetails = useSelector((state) => state?.user);
   const companyDetails = useSelector((state) => state?.company.companyDetails);
-  // const [activeStatus, setActiveStatus] = useState(
-  //   Object.values(leadStatus).reduce((a, item) => a + item, 0) - 1
-  // );
   const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
@@ -142,20 +137,12 @@ const LeadStatus = (props) => {
     setActiveStatusTitle(
       leadDetails?.leadDetails?.lead_details_status === 0
         ? "Suspended"
-        : // : statusData[Object.values(leadStatus).reduce((a, item) => a + item, 0)]
-          statusData[leadDetails?.leadDetails?.lead_details_status]
+        : statusData[leadDetails?.leadDetails?.lead_details_status]
     );
     setLeadStatusColor(
       leadDetails?.leadDetails?.lead_details_status === 0
         ? "color-black"
         : statusColor[leadDetails?.leadDetails?.lead_details_status]?.class
-      //  statusColor?.find(
-      //     (i) =>
-      //       i.lable ===
-      //       statusData[
-      //         Object.values(leadStatus).reduce((a, item) => a + item, 0)
-      //       ]
-      //   ).class
     );
     if (leadDetails?.leadDetails?.document_certificate_id) {
       (async () => {
@@ -181,7 +168,6 @@ const LeadStatus = (props) => {
   }, [leadStatus, leadDetails, statusData]);
 
   const onStatusChange = async ({ key }) => {
-    // leadStatus[`${statusData[key]}`] = true;
     setActiveStatusTitle(statusData[key]);
     setLeadStatusColor(
       statusColor.find((i) => i.lable === statusData[key])?.class
@@ -194,21 +180,11 @@ const LeadStatus = (props) => {
       to: leadDetails?.leadDetails?.student_email,
       course: leadDetails?.leadDetails?.course_title,
       client_id: userDetails?.userInfo?.client_id,
-      // // logo: companyDetails?.logo,
-      // logo: (companyDetails?.logo).replace(
-      //   `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
-      //   ""
-      // ),
       name: leadDetails?.leadDetails?.full_name,
       student_id: leadDetails?.leadDetails?.student_id,
     };
 
-    const statusUpdateResponse = await handleLeadStatusUpdate(
-      // leadDetails?.leadDetails?.lead_id,
-      // parseInt(key) + 1,
-      // userDetails?.userInfo?.user_id,
-      data
-    );
+    const statusUpdateResponse = await handleLeadStatusUpdate(data);
 
     console.log("statusUpdateResponse", statusUpdateResponse);
     console.log("leadDetails ......", leadDetails);
@@ -230,7 +206,6 @@ const LeadStatus = (props) => {
           lead_id: leadDetails?.leadDetails?.lead_id,
           course: leadDetails?.leadDetails?.course_title,
           client: companyDetails?.name,
-          // logo: companyDetails?.logo,
           logo: (companyDetails?.logo).replace(
             `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
             ""
@@ -267,10 +242,6 @@ const LeadStatus = (props) => {
       name: leadDetails?.leadDetails?.full_name,
       course: leadDetails?.leadDetails?.course_title,
       client_id: userDetails?.userInfo?.client_id,
-      // logo: (companyDetails?.logo).replace(
-      //   `${process.env.REACT_APP_FILE_SERVER_URL}/public/`,
-      //   ""
-      // ),
       student_id: leadDetails?.leadDetails?.student_id,
     };
     const response = await handleCallResponseUpdate(data);
@@ -381,7 +352,6 @@ const LeadStatus = (props) => {
       const response = await handleAddAmount(
         leadDetails?.leadDetails?.lead_id,
         amount
-        // parseFloat(amount) + parseFloat(amount * 0.035)
       );
 
       if (response?.status) {
@@ -393,70 +363,6 @@ const LeadStatus = (props) => {
       }
     }
   };
-
-  // const handleRegistrationReq = async () => {
-  //   // For Registering Students
-  //   const registrationFormData = new FormData();
-
-  //   registrationFormData.append(
-  //     "email",
-  //     leadDetails?.leadDetails?.student_email
-  //   );
-  //   registrationFormData.append("role_id", 6);
-  //   registrationFormData.append(
-  //     "contact_number",
-  //     leadDetails?.leadDetails?.phone_number
-  //   );
-  //   registrationFormData.append(
-  //     "full_name",
-  //     leadDetails?.leadDetails?.full_name
-  //   );
-  //   registrationFormData.append(
-  //     "qualification",
-  //     leadDetails?.leadDetails?.form_data[6]?.values[0].replace("_", " ")
-  //   );
-  //   registrationFormData.append(
-  //     "work_experiences",
-  //     leadDetails?.leadDetails?.form_data[8]?.values[0].replace("_", " ")
-  //   );
-  //   registrationFormData.append(
-  //     "location",
-  //     leadDetails?.leadDetails?.work_location
-  //   );
-
-  //   const registrationResponse = await handleRegistration(registrationFormData);
-
-  //   if (registrationResponse?.status === true) {
-  //     // const lead
-  //     // leadDetails?.leadDetails?.student_id=
-
-  //     const leadUpdateResponse = await handleLeadStudentDetailsUpdate(
-  //       leadDetails?.leadDetails.lead_id,
-  //       registrationResponse?.data?.user_id
-  //     );
-
-  //     if (leadUpdateResponse?.status) {
-  //       message.success("User Registered Successfully");
-
-  //       const confirmRegistrationResponse = await handleConfirmRegistration(
-  //         registrationResponse?.data?.user_name,
-  //         registrationResponse?.data?.email,
-  //         registrationResponse?.data?.password
-  //       );
-
-  //       if (confirmRegistrationResponse === "success") {
-  //         message.success("An email sent with credentials");
-  //       }
-
-  //       setSyncDetails(!syncDetails);
-  //     }
-  //   } else {
-  //     message.warning("Email Already Exist");
-  //   }
-
-  //   for (const value of registrationFormData.values()) {
-  //   }
-  // };
 
   const handleCancel = () => {
     setIsCallDetailsOpen(false);
@@ -731,11 +637,7 @@ const LeadStatus = (props) => {
                   {leadDetails?.leadAmountHistory?.map((history, i) => (
                     <tr key={i}>
                       <td className="w-16">{i + 1}</td>
-                      <td>
-                        {new Date(history.created_at)?.toLocaleString()}
-                        {/* {new Date(history.created_at).toString().slice(4, 21)}{" "}
-                        {new Date(history.created_at).toString().slice(25, 31)} */}
-                      </td>
+                      <td>{new Date(history.created_at)?.toLocaleString()}</td>
                       <td className="w-32">
                         <span>${history.amount}</span>
                       </td>
@@ -832,8 +734,6 @@ const LeadStatus = (props) => {
           />
         </Modal>
 
-        {/* {(activeStatusTitle !== "New Lead" ||
-          activeStatusTitle !== "Skilled") && ( */}
         {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
           <div className="flex items-center">
             {userDetails?.userInfo?.role_id === 3 ||
@@ -887,39 +787,6 @@ const LeadStatus = (props) => {
             </div>
           </div>
         )}
-
-        {/* {(activeStatusTitle === "Called" || activeStatusTitle === "Skilled") &&
-        (userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4 ||
-          userDetails?.userInfo?.role_id === 5) ? (
-          <>
-            {leadDetails?.leadDetails?.student_id === 0 ? (
-              <div className="font-poppins">
-                <Tooltip
-                  placement="top"
-                  title={"Register the user to this system"}
-                >
-                  <button
-                    className="text-xs bg-black text-white px-3 py-2.5 rounded-lg ml-2"
-                    onClick={handleRegistrationReq}
-                  >
-                    Register
-                  </button>
-                </Tooltip>
-              </div>
-            ) : (
-              <div>
-                <button
-                  title="Register the user to this system"
-                  disabled
-                  className="text-xs bg-gray-200 cursor-not-allowed italic text-gray-500 px-3 py-2.5 rounded-lg ml-2"
-                >
-                  Registered
-                </button>
-              </div>
-            )}
-          </>
-        ) : null} */}
 
         {(activeStatusTitle !== "New Lead" ||
           activeStatusTitle !== "Skilled") &&
@@ -1110,11 +977,7 @@ const LeadStatus = (props) => {
                 ? new Date(statusDateTime["Called"]?.toString())
                     ?.toGMTString()
                     ?.replace("GMT", "")
-                : // new Date(statusDateTime["Called"]).toString().slice(4, 21) +
-                  //   " " +
-                  //   new Date(statusDateTime["Called"]).toString().slice(25, 31)
-                  // new Date(statusDateTime["Called"]).toString().slice(0, 31)
-                  "Not Yet"}
+                : "Not Yet"}
             </div>
           </Tooltip>
         </div>
@@ -1206,10 +1069,6 @@ const LeadStatus = (props) => {
                   </button>
                 </div>
               ) : null}
-
-              {/* <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
-                Online Payment
-              </h6> */}
             </div>
           </div>
           <Tooltip placement="top" title={"Activity Time"}>
@@ -1218,10 +1077,7 @@ const LeadStatus = (props) => {
                 ? new Date(statusDateTime["Paid"]?.toString())
                     ?.toGMTString()
                     ?.replace("GMT", "")
-                : // new Date(statusDateTime["Paid"]).toString().slice(4, 21) +
-                  //   " " +
-                  //   new Date(statusDateTime["Paid"]).toString().slice(25, 31)
-                  "Not Yet"}
+                : "Not Yet"}
             </div>
           </Tooltip>
         </div>
@@ -1265,7 +1121,6 @@ const LeadStatus = (props) => {
                 )}
               </h6>
               <div className="flex mt-1">
-                {/* <Icons.PDF /> */}
                 <h6 className="mb-0 italic text-xs whitespace-nowrap font-medium font-poppins leading-5">
                   <span className="text-red-500">*</span> Please Check The
                   Checklist Section
@@ -1279,11 +1134,7 @@ const LeadStatus = (props) => {
                 ? new Date(statusDateTime["Verified"]?.toString())
                     ?.toGMTString()
                     ?.replace("GMT", "")
-                : // new Date(statusDateTime["Verified"]).toString().slice(4, 21) +
-                  //   " " +
-                  //   new Date(statusDateTime["Verified"]).toString().slice(25, 31)
-                  // new Date(statusDateTime["Verified"]).toString().slice(0, 31)
-                  "Not Yet"}
+                : "Not Yet"}
             </div>
           </Tooltip>
         </div>

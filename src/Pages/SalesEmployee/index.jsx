@@ -61,11 +61,6 @@ const Sales = () => {
 
   // Search Features
   useEffect(() => {
-    // const queryParams = new URLSearchParams(window.location.search);
-    // queryParams.set("salesEmployeeName", searchName);
-    // queryParams.set("salesEmployeeEmail", searchEmail);
-    // const url = "/salesEmployee?" + queryParams.toString();
-    // navigate(url);
 
     searchParams.set("salesEmployeeName", searchName || "");
     searchParams.set("salesEmployeeEmail", searchEmail || "");
@@ -79,13 +74,11 @@ const Sales = () => {
       dataIndex: "full_name",
       key: "full_name",
 
-      // ...getColumnSearchProps("full_name"),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      // ...getColumnSearchProps("email"),
     },
   ];
   let addLeads = [
@@ -94,7 +87,6 @@ const Sales = () => {
       dataIndex: "course_title",
       key: "course_title",
       align: "center",
-      // ...getColumnSearchProps("course_title"),
       render: (_, record, i) => {
         return (
           <div key={i} className="flex gap-2 justify-center">

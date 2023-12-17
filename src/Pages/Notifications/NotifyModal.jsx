@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import React from "react";
+import {  Modal } from "antd";
 import moment from "moment";
 const NotifyModal = ({ isNotifyOpen, setIsNotifyOpen, notificationData }) => {
 

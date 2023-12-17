@@ -342,21 +342,12 @@ const CampaignAnalytics = ({ activeCompany }) => {
         },
       ]);
     }
-  }, [activeCampaign, activeCampaignSummary, leads]);
+  }, [activeCampaign, activeCampaignSummary, leads, userDetails?.userInfo?.role_id]);
 
   useEffect(() => {
     // Campaigns Details
     const campaignsDetailsArray = [];
     campaigns?.forEach((campaign) => {
-      // let dur = moment.duration({ from: new Date(), to: campaign?.start_time });
-
-      // console.log(
-      //   "campaign",
-      //   campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-      // );
-      // console.log("new Date().getFullYear", new Date().getFullYear());
-      // console.log("campaign", campaign?.start_time);
-      // console.log("campaign", dur);
       if (
         campaign?.start_time?.toString()?.includes(new Date().getFullYear()) 
       ) {

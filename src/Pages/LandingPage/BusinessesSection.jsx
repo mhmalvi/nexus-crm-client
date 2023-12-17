@@ -1,6 +1,4 @@
-import { Carousel } from "antd";
 import React, { useRef } from "react";
-import businessLogos from "../../assets/Images/partner-logos.png";
 import "antd/dist/antd.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -14,17 +12,6 @@ import client6 from "../../assets/Images/01-25.png";
 import client7 from "../../assets/Images/01-26.png";
 import client8 from "../../assets/Images/01-31.png";
 
-/* const contentStyle = {
-  margin: 0,
-  width: "200px",
-  height: "60px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-  margin: "auto"
-};
- */
 const BusinessSection = () => {
   const CaseSlider = useRef(null);
 
@@ -64,9 +51,6 @@ const BusinessSection = () => {
       },
     ],
   };
-  /*   const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  }; */
   return (
     <div className="pb-10 md:pb-30">
       <div className="text-center m-auto pb-10">

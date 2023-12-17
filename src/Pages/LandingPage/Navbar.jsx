@@ -5,7 +5,6 @@ const Navbar = () => {
     <div className="w-full top-0 left-0">
       <div className="md:flex items-center justify-between bg-home-color px-4 py-6">
         <div className="font-poppins text-gray-800 font-bold text-2xl coursor-pointer flex items-center">
-          {/* <span className="text-2xl text-brand-color mr-1 pt-2">SmartCRM</span> */}
         </div>
         <ul className="md:flex md:items-center m-0">
           <li className="md:ml-8 text-md">

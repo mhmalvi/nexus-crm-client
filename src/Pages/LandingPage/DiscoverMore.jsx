@@ -1,6 +1,5 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
-//mport Vector from "../../assets/Images/Vector.svg";
 
 function DiscoverMoreSection() {
   return (

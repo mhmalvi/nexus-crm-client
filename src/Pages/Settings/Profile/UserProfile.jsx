@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
-// import picture from "./../../assets/Images/paypal.png";
 import { useNavigate } from "react-router-dom";
 import graphgif from "../../../assets/Images/graph.gif";
 import xaxis from "../../../assets/Images/x-axis.png";
 import yaxis from "../../../assets/Images/y-axis.png";
 import { handleProfileDetails } from "../../../Components/services/auth";
-// import Loading from "../../Components/Shared/Loader";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
@@ -57,7 +55,6 @@ function UserProfile() {
   return (
     <div className="m-20">
       {loadingDetails && (
-        // <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
         <div className="w-full h-full text-7xl absolute z-50 flex justify-center mx-auto items-center bg-white bg-opacity-70">
           <Loading />
         </div>
@@ -71,21 +68,6 @@ function UserProfile() {
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="80"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
                     name={userDetails?.full_name}
                   />
                 </div>

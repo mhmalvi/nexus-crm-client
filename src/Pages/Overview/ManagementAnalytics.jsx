@@ -76,9 +76,6 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCompany, userDetails]);
 
-  // console.log("lastWeekIncome", lastWeekIncome);
-  // console.log("totalLastWeekIncome", totalLastWeekIncome);
-  // console.log("totalRevenue", totalRevenue);
 
   campaigns?.forEach((campaign) => {
     campaignRatio.push({

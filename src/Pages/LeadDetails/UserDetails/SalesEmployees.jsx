@@ -31,14 +31,8 @@ const SalesEmployees = ({
         userDetails?.userInfo?.client_id
       );
 
-      // console.log("employeeResponse", employeeResponse);
 
       if (employeeResponse?.status === true) {
-        // console.log("employeeResponse?.data", employeeResponse?.data);
-        // console.log(
-        //   "leadDetails?.leadSalesEmployeeHistory",
-        //   leadDetails?.leadSalesEmployeeHistory
-        // );
 
         if (employeeResponse?.data?.length) {
           const sales = (employeeResponse?.data).filter(
@@ -46,7 +40,6 @@ const SalesEmployees = ({
           );
 
           var unAssignedEmployee = sales.filter(function (o1) {
-            // filter out (!) items in result2
             return !leadDetails?.leadSalesEmployeeHistory?.some(function (o2) {
               return o1.id === o2.sales_user_id; // assumes unique id
             });

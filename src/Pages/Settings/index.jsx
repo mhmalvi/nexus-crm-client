@@ -9,12 +9,6 @@ const Settings = () => {
 
   return (
     <div className="pt-1 pb-10">
-      {/* Company Profile Settings */}
-      {/* {(userDetails?.userInfo?.role_id === 1 ||
-        userDetails?.userInfo?.role_id === 2) && <AdminSettings />} */}
-      {/* {userDetails?.userInfo?.role_id === 1 && <AdminSettings />} */}
-
-      {/* Company Profile Settings */}
       {(userDetails?.userInfo?.role_id === 1 ||
         userDetails?.userInfo?.role_id === 2 ||
         userDetails?.userInfo?.role_id === 3 ||

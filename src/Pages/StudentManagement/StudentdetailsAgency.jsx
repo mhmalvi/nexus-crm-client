@@ -1,5 +1,5 @@
-import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Table, Tag, Tooltip } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
+import { Button, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { useState } from "react";
 import CreateStudentModal from "./CreateStudentModal";
@@ -10,8 +10,6 @@ import {
   handleSearchStudent,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
-import Search from "antd/lib/transfer/search";
-import axios from "axios";
 import "./checkDetailsModal.css";
 
 const StudentdetailsAgency = () => {
@@ -177,18 +175,6 @@ const StudentdetailsAgency = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-[30px] font-bold">Student list</h1>
         <div className="flex items-center gap-2">
-          {/* <div className="flex items-center gap-1"> */}
-            {/* <label htmlFor="">Search Student</label> */}
-            {/* <Input
-              value={search}
-              placeholder="Search for students"
-              style={{
-                width: 200,
-              }}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <SearchOutlined className=" cursor-pointer" onClick={onSearch} /> */}
-          {/* </div> */}
           <div className="searchBox">
             <input
               className="searchInput"
@@ -210,15 +196,6 @@ const StudentdetailsAgency = () => {
             >
               Create Student
             </Button>
-            {/* <button
-              className="createStudentButton"
-              role="button"
-              onClick={() => {
-                setCreateOpen(true);
-              }}
-            >
-              Create Student
-            </button> */}
           </div>
         </div>
       </div>

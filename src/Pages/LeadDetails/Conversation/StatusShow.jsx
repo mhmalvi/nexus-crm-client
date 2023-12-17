@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { handleShowStatusLogs } from "../../../Components/services/utils";
 import { Button } from "antd";
 
@@ -83,12 +83,7 @@ const StatusShow = ({ leadDetails }) => {
                           </p>
                         </div>
                       </div>
-                      <div
-                        className="mr-2"
-                        // onClick={() => handleDeleteCommentReq(history?.id)}
-                      >
-                        {/* <Icons.Cross className="w-3 text-red-600 hover:text-red-500 cursor-pointer" /> */}
-                      </div>
+                      <div className="mr-2"></div>
                     </div>
                   ))
                 : "No Status Log"}

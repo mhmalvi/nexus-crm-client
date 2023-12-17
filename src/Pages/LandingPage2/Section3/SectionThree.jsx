@@ -12,12 +12,10 @@ const SectionThree = () => {
             borderStyle: "solid",
             borderColor: "rgb(229, 231, 235)",
             boxSizing: "border-box",
-            // padding: "80px 0px",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
             backgroundSize: "cover",
             backgroundImage: `url(${backgroundphoto})`,
-            // 'url("https://www.onethreadapp.com/assets/mobile-app-bg_1.fe801c33.webp")',
             paddingTop: "0px",
           }}
         >
@@ -170,11 +168,6 @@ const SectionThree = () => {
                 >
                   <img
                     alt="CRM_SHOW"
-                    // src={
-                    //   crm_show
-                    //     ? crm_show
-                    //     : "https://www.onethreadapp.com/assets/mobile-app-img_1.3a10e8c9.webp"
-                    // }
                     src={crm_show}
                     style={{
                       borderWidth: "0px",

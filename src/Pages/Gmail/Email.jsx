@@ -14,14 +14,13 @@ const Email = ({
     const convert = new Date(timestamp)
     const weekday = convert.getDay();
     setDayNum(weekday);
-  }, [])
+  }, [timestamp])
   
   
   return (
     <>
       <div
         key={emailId}
-        /* onClick={showModal} */
         className="flex justify-between items-center border-b py-1.5 px-6 hover:bg-zinc-50 hover:shadow duration-300 cursor-pointer"
       >
         <p className="w-[12rem] font-semibold whitespace-nowrap truncate">
