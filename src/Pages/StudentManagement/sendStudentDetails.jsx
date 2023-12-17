@@ -29,7 +29,6 @@ const SendStudentDetails = ({
   setPhotoVideoFIle,
   usiFile,
   setUsiFIle,
-  payFile,
   setpayFIle,
   setListData,
   setStudentListLoading,

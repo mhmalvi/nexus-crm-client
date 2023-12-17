@@ -401,7 +401,7 @@ const Login = () => {
                 </div>
                 <div className="mb-4 font-poppins">
                   {/* Forgot password */}
-                  <div className="flex justify-between mb-2">
+                  {/* <div className="flex justify-between mb-2">
                     <label htmlFor="password" className="text-sm text-gray-600">
                       Password
                     </label>
@@ -417,7 +417,7 @@ const Login = () => {
                       oncancel={(cancel) => setTooglePasswordForget(cancel)}
                       emaildata={data.email}
                     />
-                  </div>
+                  </div> */}
                   <Input.Password
                     size="large"
                     name="password"
