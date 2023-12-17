@@ -246,7 +246,7 @@ const CheckDetailsModal = ({
     e.preventDefault();
     console.log("my fid: ", fid);
     console.log("selec file is: ", e.target.files[0]);
-    setInCompleteFile(e.target.files[0]);
+    // setInCompleteFile(e.target.files[0]);
     if (e.target.files[0]) {
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
@@ -320,7 +320,6 @@ const CheckDetailsModal = ({
                           className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
                           ref={messageBoxRef}
                         >
-                          {/* <h1 className=" sticky top-0">Chat with Agency</h1> */}
                           <div className="">
                             {commentsData?.map((comment, i) => {
                               return (
@@ -395,9 +394,7 @@ const CheckDetailsModal = ({
                       size="small"
                       className=" !bg-pink-500 !rounded !text-white !border-none"
                       onClick={() => {
-                        // setInterval(() => {
                         onGetCommnets(record?.id);
-                        // }, 1000);
                       }}
                     >
                       Place a comment
@@ -542,7 +539,6 @@ const CheckDetailsModal = ({
                           className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
                           ref={messageBoxRef}
                         >
-                          {/* <h1>Chat with agency</h1> */}
                           <div className="">
                             {commentsData?.map((comment, i) => {
                               return (
@@ -617,9 +613,7 @@ const CheckDetailsModal = ({
                       size="small"
                       className=" !bg-pink-500 !rounded !text-white !border-none"
                       onClick={() => {
-                        // setInterval(() => {
                         onGetCommnets(record?.id);
-                        // }, 1000);
                       }}
                     >
                       Place a comment
@@ -656,22 +650,6 @@ const CheckDetailsModal = ({
                   className="text-[25px]"
                 />
               </Tooltip>
-              {/* {AdmissionDetails?.pay_slip_status !== 1 && (
-                <Tooltip title="Remove File" color={"red"} key={idx}>
-                  <CloseOutlined
-                    onClick={() => {
-                      if (record?.status === 1) {
-                        message.warn(
-                          "Cannot remove completed file contact with ITEC manager"
-                        );
-                      } else {
-                        handleRemoveFile(record?.id, 0);
-                      }
-                    }}
-                    className="text-[25px]"
-                  />
-                </Tooltip>
-              )} */}
               {record?.status !== 1 && (
                 <Tooltip title="Upload file">
                   <input
@@ -837,16 +815,8 @@ const CheckDetailsModal = ({
               </div>
               <hr className=" translate-y-[4px]" />
               <div className="mt-3 flex gap-1 items-center">
-                {/* <Button
-                  onClick={handleCheckInvoice}
-                  className=" !rounded !bg-green-500 !text-white !border-none "
-              
-                >
-                  Check Invoice
-                </Button> */}
                 <button
                   className="checkInvoiceButton"
-                  role="button"
                   onClick={handleCheckInvoice}
                 >
                   Check Invoice
@@ -864,7 +834,6 @@ const CheckDetailsModal = ({
                   <label
                     htmlFor="pay-upload"
                     className="flex justify-center items-center gap-2  rounded bg-gradient-to-l from-green-400 to-green-700 cursor-pointer  text-white !border-none uploadPaySlipButton"
-                    // className="translate-x-[-50%]uploadPaySlipButton"
                     style={{ border: "1px solid gray" }}
                   >
                     <svg

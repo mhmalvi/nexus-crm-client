@@ -1,7 +1,6 @@
 import React from "react";
 import AnimatedText from "react-animated-text-content";
 import CountUp from "react-countup";
-import graph_diagram from "../../assets/Images/impression_graph.json";
 import "./MoreImpression.css";
 
 
@@ -30,11 +29,6 @@ function MoreImpressionMobileSection() {
               matter. Generate better leads and increase the conversion rate
               with our CRM.
             </div>
-            {/* <div className="w-2/5 bg-black rounded-xl text-center py-4 my-6 mx-auto md:mx-0">
-              <a className="text-white" href="/">
-                Get Free Trial
-              </a>
-            </div> */}
           </div>
 
           <div className="w-full flex-col justify-start">
@@ -44,17 +38,6 @@ function MoreImpressionMobileSection() {
                 <div className="relative flex justify-center">
                   <div className="progressBarMobile"></div>
                   <div className="absolute top-6 text-center font-semibold">
-                    {/* {
-                      <CountUp
-                        delay={7.5}
-                        start={90}
-                        end={0}
-                        duration={2}
-                        onEnd={({ pauseResume, reset, start, update }) =>
-                          start()
-                        }
-                      />
-                    } */}
                     90%
                     <div className="text-[8px] leading-0 text-center pb-2">
                       Customer <br /> Satisfaction
@@ -169,54 +152,3 @@ function MoreImpressionMobileSection() {
 
 export default MoreImpressionMobileSection;
 
-const data = [
-  { name: "Group A", value: 98 },
-  { name: "Group A", value: 2 },
-];
-const data1 = [
-  { name: "Group A", value: 75 },
-  { name: "Group A", value: 25 },
-];
-
-const data2 = [
-  {
-    name: "Page Z",
-    pv: 1400,
-  },
-  {
-    name: "Page A",
-    pv: 7400,
-  },
-  {
-    name: "Page B",
-    pv: 5098,
-  },
-  {
-    name: "Page C",
-    pv: 9800,
-  },
-];
-
-const data3 = [
-  {
-    name: "Page A",
-    pv: 7200,
-  },
-  {
-    name: "Page B",
-    pv: 9998,
-  },
-  {
-    name: "Page C",
-    pv: 4000,
-  },
-];
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: graph_diagram,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};

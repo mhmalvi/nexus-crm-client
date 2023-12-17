@@ -5,8 +5,6 @@ import { handleAddLeadPaymentHistory } from "../../Components/services/payment";
 const AddPaymentHistory = ({
   leadDetails,
   setIsAddPaymentHistoryOpen,
-  // syncDetails,
-  // setSyncDetails,
   syncTotalPaid,
   setSyncTotalPaid,
 }) => {

@@ -55,7 +55,6 @@ const EventDetails = ({
             .slice(0, 16)
         : eventDetails.end?.toISOString().replace("T", " ").slice(0, 16);
 
-    // console.log("eventDetailsData", eventDetailsData);
 
     setUpdateEventData(eventDetailsData);
   }, [eventDetails]);
@@ -97,17 +96,6 @@ const EventDetails = ({
     setUpdateEventData(updatedValue);
   };
 
-  // function convertDateString(dateString) {
-  //   const date = new Date(dateString);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  //   const day = date.getDate().toString().padStart(2, "0");
-  //   const hours = date.getHours().toString().padStart(2, "0");
-  //   const minutes = "20";
-  //   const seconds = "00";
-
-  //   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  // }
   function convertDateString(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -115,7 +103,6 @@ const EventDetails = ({
     const day = date.getDate().toString().padStart(2, "0");
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
-    const seconds = date.getSeconds().toString().padStart(2, "0");
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
@@ -167,26 +154,10 @@ const EventDetails = ({
       );
       setIsSaveDisable(false);
     }
-    // window.location.reload();
   };
 
   console.log("eventDetails", eventDetails);
 
-  const menu = (
-    <Menu defaultSelectedKeys={[1]}>
-      {priorityList?.map((priority) => (
-        <Menu.Item
-          key={priority?.key}
-          onClick={() => handlePriorityChange(priority)}
-        >
-          <div className="flex items-center">
-            <Icons.Flag className={`w-4 h-4 mr-2 ${priority?.className}`} />
-            <div>{priority?.lable}</div>
-          </div>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
 
   const handleDeleteFollowUpReq = async (id) => {
     console.log("id", id);
@@ -222,48 +193,6 @@ const EventDetails = ({
               )}
               <div>-Details</div>
             </div>
-          </div>
-          <div>
-            {isEdit ? (
-              <>
-                {/* <Dropdown
-                  overlay={menu}
-                  trigger={["click"]}
-                  className="cursor-pointer ml-4"
-                >
-                  <Space>
-                    <div className="flex items-center">
-                      <Icons.Flag
-                        className={`w-4 h-4 mr-2 ${selectedPriority?.className}`}
-                      />
-                      <div className="whitespace-nowrap w-16">
-                        {selectedPriority?.lable}
-                      </div>
-                    </div>
-                    <DownOutlined />
-                  </Space>
-                </Dropdown> */}
-              </>
-            ) : (
-              <div className="flex items-center ml-4 px-2.5 py-0.5 border bg-slate-200 rounded-full shadow-sm">
-                {/* <div>
-                  <Icons.Flag
-                    className={`w-3.5 ${
-                      priorityList.find(
-                        (priority) => priority.key === eventDetails.priority
-                      )?.className
-                    }`}
-                  />
-                </div>
-                <div className="text-sm font-semibold ml-1.5">
-                  {
-                    priorityList?.find(
-                      (priority) => priority.key === eventDetails?.priority
-                    ).lable
-                  }
-                </div> */}
-              </div>
-            )}
           </div>
           <div>
             <Tooltip title="If you have completed the Task">
@@ -335,7 +264,6 @@ const EventDetails = ({
                 onChange={handleReminderDateTimeChange}
                 format={dateFormat}
                 separator={null}
-                // value={}
               />
             </div>
           </div>

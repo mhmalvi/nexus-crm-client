@@ -80,33 +80,6 @@ function QualitySection() {
                 alt=""
               />
             </div>
-            {/* <div className="grid grid-cols-6 font-poppins text-white p-4">
-              <div className="flex justify-between gap-10">
-                <div className=""></div>
-                <div className="m-auto">
-                  <img src={group277} className="animate-pulse" alt="" />
-                </div>
-              </div>
-              <div className="flex justify-between gap-10">
-                <div className=""></div>
-                <div className="m-auto">
-                  <img src={Vector} className="relative top-14" alt="" />
-                </div>
-              </div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div className="grid grid-cols-2 justify-start">
-                <div></div>
-                <div>
-                  <img
-                    src={group278}
-                    className="w-full animate-bounce"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

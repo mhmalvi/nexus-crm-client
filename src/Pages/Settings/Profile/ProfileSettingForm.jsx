@@ -8,7 +8,6 @@ import {
 import Icons from "../../../Components/Shared/Icons";
 
 function ProfileSettingForm() {
-  // const dispatch = useDispatch();
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
   const initialState = {
@@ -26,7 +25,6 @@ function ProfileSettingForm() {
 
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [profileData, setProfileData] = useState(initialState);
-  // const [syncprofileData, setSyncProfileData] = useState(initialState);
 
   useEffect(() => {
     (async () => {
@@ -40,10 +38,8 @@ function ProfileSettingForm() {
         const user = userDetailResponse?.data;
 
         setProfileData(user);
-        //dispatch(setLoader(false));
       } else {
         setTimeout(() => {
-          //dispatch(setLoader(false));
         }, 3000);
       }
     })();
@@ -57,14 +53,6 @@ function ProfileSettingForm() {
     setProfileData(data);
   };
 
-  // useEffect(() => {
-  //   console.log(ProfileDetails);
-  // }, [ProfileDetails])
-
-  /*   console.log({
-    user_id: ProfileDetails?.user_id,
-    ...profileData
-  }); */
 
   const UpdateUserDetailsReq = async () => {
     const updateResponse = await handleUpdateProfileDetails({
@@ -167,15 +155,6 @@ function ProfileSettingForm() {
                     />
                   </div>
                 ) : (
-                  // <input
-                  //   id="date_of_birth"
-                  //   name="date_of_birth"
-                  //   className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-                  //   type="text"
-                  //   disabled={!toggleEditDetails ? "disabled" : ""}
-                  //   onChange={userData}
-                  //   defaultValue={profileData?.date_of_birth}
-                  // />
                   <span className="text-sm text-black">
                     {profileData?.date_of_birth
                       ? profileData?.date_of_birth
@@ -319,15 +298,6 @@ function ProfileSettingForm() {
                     </div>
                   </Dropdown>
                 ) : (
-                  // <input
-                  //   id="work_experiences"
-                  //   name="work_experiences"
-                  //   className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-                  //   type="text"
-                  //   disabled={!toggleEditDetails ? "disabled" : ""}
-                  //   onChange={userData}
-                  //   defaultValue={profileData?.work_experiences}
-                  // />
                   <span className="text-sm text-black">
                     {profileData?.work_experiences
                       ? profileData?.work_experiences

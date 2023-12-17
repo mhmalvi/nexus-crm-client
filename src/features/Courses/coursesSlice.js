@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const fetchCoursesById = createAsyncThunk(
-//   "users/fetchByIdStatus",
-//   async (userId, thunkAPI) => {
-//     const response = await userAPI.fetchById(userId);
-//     return response.data;
-//   }
-// );
 
 const initialState = { campaigns: [] };
 

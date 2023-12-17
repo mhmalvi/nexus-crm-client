@@ -16,19 +16,16 @@ import {
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
-import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader } from "../../../features/user/userSlice";
 import CompanyInfo from "./CompanyInfo";
 
 const CompanyDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
-  // const [syncDetails, setSyncDetails] = useState(false);
   const [toggleShowPassword, setToggleShowPassword] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
@@ -41,19 +38,6 @@ const CompanyDetails = () => {
   const [packageEndTime, setpackageEndTime] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    // const someDate = new Date();
-    // const result = new Date().setDate(someDate.getDate() + 50);
-    // const finaldate = new Date(result);
-    // const futureDate = finaldate.toString().slice(0, 15);
-
-    // if (
-    //   userDetails?.userInfo?.client_id !== id &&
-    //   (userDetails?.userInfo?.role_id !== 1 ||
-    //     userDetails?.userInfo?.role_id !== 2)
-    // ) {
-    //   navigate("/dashboard");
-    // }
-
     const packageEnd = new Date(companyDetails?.package_date);
     packageEnd.setDate(packageEnd.getDate() + 10);
     setpackageEndTime(packageEnd.toString()?.slice(4, 15));
@@ -87,8 +71,6 @@ const CompanyDetails = () => {
     })();
   }, [companyDetails?.package_date, dispatch, id, syncDetails, syncEmployees]);
 
-  // console.log(companyDetails);
-
   const handleLoadCompanyDetails = (e) => {
     const data = { ...companyDetails };
     data[e.target.id] = e.target.value;
@@ -117,8 +99,6 @@ const CompanyDetails = () => {
       subscription_id: companyDetails?.subscription_id,
       business_type: 1,
     });
-
-    // console.log(createCompany);
 
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
@@ -158,12 +138,6 @@ const CompanyDetails = () => {
 
   const confirm = async () => {
     const refreshResponse = await handleRefreshCompanyFBToken(id);
-    // const someDate = new Date();
-    // const result = new Date().setDate(someDate.getDate() + 50);
-    // const finaldate = new Date(result);
-    // const futureDate = finaldate.toString().slice(0, 15);
-
-    // Storage.setItem("refresh_tok", futureDate);
     if (refreshResponse?.status === true) {
       setCompanyDetails(refreshResponse?.data);
       message.success("Facebook Token Updated Successfully");
@@ -183,12 +157,7 @@ const CompanyDetails = () => {
     fileFormData.append("client_id", userDetails?.userInfo?.client_id);
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
-    // for (const value of fileFormData.values()) {
-    //   console.log(value);
-    // }
     const uploadFile = await handleUploadFile(fileFormData);
-    // console.log("uploadFile", uploadFile);
-    // console.log(uploadFile?.message?.data[0]?.id);
 
     setFileId(uploadFile?.message?.data[0]?.id);
   };
@@ -230,7 +199,6 @@ const CompanyDetails = () => {
       <div
         className="lg:w-[95%] xl:w-[85%] font-poppins border py-10 px-8 mx-auto mt-16 mb-10"
         style={{
-          // width: "90%",
           borderRadius: "20px",
         }}
       >
@@ -473,8 +441,6 @@ const CompanyDetails = () => {
                         >
                           {companyDetails?.website}
                         </a>
-
-                        // <span>{companyDetails?.website}</span>
                       )}
                     </div>
                     <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
@@ -532,7 +498,6 @@ const CompanyDetails = () => {
                         >
                           <button
                             className="px-3 py-1 ml-4 text-xs rounded-md border border-brand-color text-brand-color hover:bg-brand-color hover:text-white hover:transition-colors hover:delay-150"
-                            // onClick={handleUpdateFaceboookToken}
                           >
                             Refresh
                           </button>
@@ -663,13 +628,6 @@ const CompanyDetails = () => {
 
       {/* Company Information Details Section */}
       <CompanyInfo clientId={id} />
-
-      {/* Sales Employee Details */}
-      {/* <SalesAdmins
-        clientId={id}
-        syncEmployees={syncEmployees}
-        setSyncEmployees={setSyncEmployees}
-      /> */}
     </div>
   );
 };

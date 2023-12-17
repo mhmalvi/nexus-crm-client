@@ -6,21 +6,4 @@ export const customlinks = [
   { name: "Contact", link: "/welcome" },
   { name: "Login", link: "/login" },
   { name: "Free Trial", link: "/welcome" },
-  /* {
-    name: "More",
-    submenu: [
-      {
-        name: "Blogs",
-        sublink: "/blog",
-      },
-      {
-        name: "Gallery",
-        sublink: "/gallery",
-      },
-      {
-        name: "Stories",
-        sublink: "/stories",
-      },
-    ],
-  }, */
 ];

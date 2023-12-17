@@ -3,14 +3,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { createFileName, useScreenshot } from "use-react-screenshot";
 import { handleFetchInvoiceDetails } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
 import companyIcon from "../../assets/Images/company_icon.png";
 import Loading from "../../Components/Shared/Loader";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import dayjs from "dayjs";
 
 const Invoice = () => {
   const { id } = useParams();
@@ -19,7 +17,6 @@ const Invoice = () => {
   const loadingDetails = useSelector((state) => state.user.loading);
 
   const [invoiceDetails, setInvoiceDetails] = useState([]);
-  const [image, takeScreenShot] = useScreenshot();
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -197,10 +194,6 @@ const Invoice = () => {
                 <span className="font-bold">Paid To :</span>
                 <span> {invoiceDetails?.company_name}</span>
               </div>
-              {/* <div className="text-sm mb-1.5">
-                <span className="font-bold">Email :</span>
-                <span> {invoiceDetails?.company_email}</span>
-              </div> */}
               <div className="text-sm mb-1.5">
                 <span className="font-bold">Contact :</span>
                 <span> {invoiceDetails?.company_contact}</span>
@@ -253,33 +246,6 @@ const Invoice = () => {
                     </td>
                   </tr>
 
-                  {/* <tr className="whitespace-nowrap">
-                    <td className="px-6 py-4 text-sm text-gray-500">2</td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">
-                        Amazon Brand - Symactive Men's Regular Fit T-Shirt
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500">2</div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">$60</td>
-                    <td className="px-6 py-4">$12</td>
-                  </tr>
-                  <tr className="border-b-2 whitespace-nowrap">
-                    <td className="px-6 py-4 text-sm text-gray-500">3</td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">
-                        Amazon Brand - Symactive Men's Regular Fit T-Shirt
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500">1</div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">$10</td>
-                    <td className="px-6 py-4">$13</td>
-                  </tr> */}
-
                   <tr className="">
                     <td colSpan="3"></td>
                     <td className="text-sm font-bold">Sub Total</td>
@@ -330,12 +296,6 @@ const Invoice = () => {
                 </li>
               </ul>
             </div>
-            {/* <div className="p-4">
-              <h3>Company Name</h3>
-              <div className="text-xl italic text-brand-color font-extralight font">
-                {invoiceDetails?.company_name}
-              </div>
-            </div> */}
           </div>
           <div className="w-full h-0.5 bg-brand-color"></div>
 
@@ -354,22 +314,6 @@ const Invoice = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-6/12 mt-4 text-left bg-white shadow-lg">
-                <div className="flex justify-between px-8 py-6">
-                    <div className="flex items-center">
-                        sale invoice
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <button className="px-2 py-1 bg-gray-200 hover:bg-gray-400">Save</button>
-                        <button className="px-2 py-1 bg-gray-200 hover:bg-gray-400">Print</button>
-                    </div>
-                </div>
-                <div className="w-full h-0.5 bg-gray-800"></div>
-
-            </div>
-        </div> */}
     </div>
   );
 };

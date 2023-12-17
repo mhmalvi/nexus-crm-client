@@ -102,16 +102,7 @@ const SalesAdmins = ({ clientId }) => {
             (employee) => employee?.role_id === 4 && employee?.suspend === 0
           );
 
-          const sales = (employeeResponse?.data).filter(
-            (employee) =>
-              (employee?.role_id === 2 || employee?.role_id === 5) &&
-              employee?.suspend === 0
-          );
-
           setCompanyAdvisorEmployees(admins);
-          // setCompanySalesEmployees(sales);
-
-          // console.log("LLLLL", employeeResponse?.data);
 
           setCompanyAdminEmployee(
             (employeeResponse?.data).find(
@@ -140,15 +131,6 @@ const SalesAdmins = ({ clientId }) => {
     })();
   }, [clientId, dispatch, syncEmployees]);
 
-  // const handleActiveUser = async (userId) => {
-  //   const statusUpdateResponse = await handleUpdateUserStatus(userId, 1);
-  //   console.log(statusUpdateResponse);
-
-  //   if (statusUpdateResponse?.data?.status === true) {
-  //     message.success("User Added Successfully");
-  //     setSyncEmployees(!syncEmployees);
-  //   }
-  // };
 
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
@@ -211,7 +193,6 @@ const SalesAdmins = ({ clientId }) => {
   const handleSuspendB2BEmployeeAgency = async (userId) => {
     const status = isSuspandStatusAgency ? 0 : 1;
     const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-    // console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       const status = isSuspandStatusAgency ? 1 : 0;
@@ -222,76 +203,6 @@ const SalesAdmins = ({ clientId }) => {
     }
   };
 
-  // const onRemoveSalesAdmin = async () => {
-  //   setIsRemovingSalesLoading(true);
-  //   const res = await handleRemoveSalesAdmin();
-  //   if (res?.status === 201) {
-  //     setIsRemovingSalesLoading(false);
-  //     message.success("Sales Admin successfully removed");
-  //     setIsFeatingSalesAdminLoading(true);
-  //     // fetching sales admin
-  //     const employeeResponse = await handleFetchCompanyEmployees(clientId);
-
-  //     if (employeeResponse?.status === true) {
-  //       // console.log(employeeResponse?.data);
-  //       setIsFeatingSalesAdminLoading(false);
-  //       if (employeeResponse?.data?.length) {
-  //         const admins = (employeeResponse?.data).filter(
-  //           (employee) => employee?.role_id === 4 && employee?.suspend === 0
-  //         );
-
-  //         const sales = (employeeResponse?.data).filter(
-  //           (employee) =>
-  //             (employee?.role_id === 2 || employee?.role_id === 5) &&
-  //             employee?.suspend === 0
-  //         );
-
-  //         setCompanyAdvisorEmployees(admins);
-  //         setCompanySalesEmployees(sales);
-
-  //         // console.log("LLLLL", employeeResponse?.data);
-
-  //         setCompanyAdminEmployee(
-  //           (employeeResponse?.data).find(
-  //             (employee) =>
-  //               (employee?.role_id === 1 || employee?.role_id === 3) &&
-  //               employee?.suspend === 0
-  //           )
-  //         );
-
-  //         setInactiveAdminEmployees(
-  //           (employeeResponse?.data).filter(
-  //             (employee) =>
-  //               (employee?.role_id === 3 || employee?.role_id === 4) &&
-  //               employee?.suspend === 1
-  //           )
-  //         );
-
-  //         setInactiveSalesEmployees(
-  //           (employeeResponse?.data).filter(
-  //             (employee) => employee?.role_id === 5 && employee?.suspend === 1
-  //           )
-  //         );
-  //       }
-  //       dispatch(setLoader(false));
-  //     } else {
-  //       setIsFeatingSalesAdminLoading(false);
-  //     }
-  //     // end the fetching part
-  //   } else {
-  //     setIsRemovingSalesLoading(false);
-  //     message.warn(
-  //       res?.data?.message ||
-  //         "Failed to remove Sales Admin/Something went wrong"
-  //     );
-  //   }
-  // };
-
-  // console.log("companyAdminEmployee", companyAdminEmployee);
-  // console.log("companyAdminEmployee", companyAdminEmployee);
-  // console.log("companySalesEmployees", companySalesEmployees);
-  // console.log("companyAdvisorEmployees", companyAdvisorEmployees);
-  // console.log("inactiveSalesEmployees", inactiveSalesEmployees);
 
   return (
     <div className="flex flex-wrap justify-between 2xl:justify-evenly mt-12 pt-0.5 w-full !grid !grid-cols-12 gap-2">
@@ -514,31 +425,9 @@ const SalesAdmins = ({ clientId }) => {
             <div className="mt-3 grid grid-cols-2 gap-6 px-4">
               {inactiveAdminEmployees.map((employee, i) => (
                 <div key={i} className="flex ">
-                  {/* <div
-                    className={`${
-                      avatarColor[Math.floor(Math.random() * 10) + 1]
-                    } w-7.5 h-7.5 p-3 border-2 text-red-500 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                  >
-                    {(employee?.full_name).slice(0, 2)}
-                  </div> */}
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
                     name={employee?.full_name}
                   />
                   <div className="ml-4">
@@ -594,31 +483,9 @@ const SalesAdmins = ({ clientId }) => {
           {companySalesEmployees.length ? (
             companySalesEmployees.map((employee, i) => (
               <div key={i} className="flex ">
-                {/* <div
-                  className={`${
-                    avatarColor[Math.floor(Math.random() * 10) + 1]
-                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                >
-                  {(employee?.full_name).slice(0, 2)}
-                </div> */}
                 <Avatar
                   className="rounded-full cursor-pointer"
                   size="38"
-                  // color={Avatar.getRandomColor("sitebase", [
-                  //   "red",
-                  //   "green",
-                  //   "#728FCE",
-                  //   "violet",
-                  //   "#2B547E",
-                  //   "black",
-                  //   "#87AFC7",
-                  //   "Lime",
-                  //   "#D5D6EA",
-                  //   "#77BFC7",
-                  //   "orange",
-                  //   "#FDD017",
-                  //   "#665D1E",
-                  // ])}
                   name={employee?.full_name}
                 />
                 <div className="ml-4">
@@ -679,21 +546,6 @@ const SalesAdmins = ({ clientId }) => {
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
                     name={employee?.full_name}
                   />
                   <div className="ml-4">
@@ -755,31 +607,9 @@ const SalesAdmins = ({ clientId }) => {
           {allStudnetAdmin.length ? (
             allStudnetAdmin.map((employee, i) => (
               <div key={i} className="flex ">
-                {/* <div
-                  className={`${
-                    avatarColor[Math.floor(Math.random() * 10) + 1]
-                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                >
-                  {(employee?.full_name).slice(0, 2)}
-                </div> */}
                 <Avatar
                   className="rounded-full cursor-pointer"
                   size="38"
-                  // color={Avatar.getRandomColor("sitebase", [
-                  //   "red",
-                  //   "green",
-                  //   "#728FCE",
-                  //   "violet",
-                  //   "#2B547E",
-                  //   "black",
-                  //   "#87AFC7",
-                  //   "Lime",
-                  //   "#D5D6EA",
-                  //   "#77BFC7",
-                  //   "orange",
-                  //   "#FDD017",
-                  //   "#665D1E",
-                  // ])}
                   name={employee?.student_admin_name}
                 />
                 <div className="ml-4">
@@ -871,31 +701,9 @@ const SalesAdmins = ({ clientId }) => {
           {allStudnetAccountants.length ? (
             allStudnetAccountants.map((employee, i) => (
               <div key={i} className="flex ">
-                {/* <div
-                  className={`${
-                    avatarColor[Math.floor(Math.random() * 10) + 1]
-                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                >
-                  {(employee?.full_name).slice(0, 2)}
-                </div> */}
                 <Avatar
                   className="rounded-full cursor-pointer"
                   size="38"
-                  // color={Avatar.getRandomColor("sitebase", [
-                  //   "red",
-                  //   "green",
-                  //   "#728FCE",
-                  //   "violet",
-                  //   "#2B547E",
-                  //   "black",
-                  //   "#87AFC7",
-                  //   "Lime",
-                  //   "#D5D6EA",
-                  //   "#77BFC7",
-                  //   "orange",
-                  //   "#FDD017",
-                  //   "#665D1E",
-                  // ])}
                   name={employee?.student_admin_name}
                 />
                 <div className="ml-4">
@@ -986,31 +794,9 @@ const SalesAdmins = ({ clientId }) => {
           {allStudnetAgencys.length ? (
             allStudnetAgencys.map((employee, i) => (
               <div key={i} className="flex ">
-                {/* <div
-                  className={`${
-                    avatarColor[Math.floor(Math.random() * 10) + 1]
-                  } w-7.5 h-7.5 p-3 border-2 uppercase border-black border-opacity-40 rounded-full flex justify-center items-center font-semibold text-sm leading-7`}
-                >
-                  {(employee?.full_name).slice(0, 2)}
-                </div> */}
                 <Avatar
                   className="rounded-full cursor-pointer"
                   size="38"
-                  // color={Avatar.getRandomColor("sitebase", [
-                  //   "red",
-                  //   "green",
-                  //   "#728FCE",
-                  //   "violet",
-                  //   "#2B547E",
-                  //   "black",
-                  //   "#87AFC7",
-                  //   "Lime",
-                  //   "#D5D6EA",
-                  //   "#77BFC7",
-                  //   "orange",
-                  //   "#FDD017",
-                  //   "#665D1E",
-                  // ])}
                   name={employee?.student_admin_name}
                 />
                 <div className="ml-4">

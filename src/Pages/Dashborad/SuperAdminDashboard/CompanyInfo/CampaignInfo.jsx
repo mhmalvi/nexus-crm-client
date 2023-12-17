@@ -26,7 +26,6 @@ const CampaignInfo = () => {
   const leadList = useSelector((state) => state.leads)?.leads;
   const campaignList = useSelector((state) => state.campaigns)?.campaigns;
 
-  // const [campaignList, setCampaignDetails] = useState();
   const [campaignDetails, setCampaignDetails] = useState();
   const [campaignCourses, setCampaignCourses] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
@@ -65,7 +64,6 @@ const CampaignInfo = () => {
       console.log(response.data);
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
-        // setCampaignList(response?.data);
       }
     })();
   }, [clientId, dispatch, campaignId]);

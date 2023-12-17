@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { io } from "socket.io-client";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
-import { handleMessageAudio } from "../../Components/Shared/utils/sounds";
 import { Storage } from "../../Components/Shared/utils/store";
-import {
-  handleFetchFollowUpNotification,
-  handleFetchNotificationList,
-} from "../../Components/services/notification";
+import { handleFetchNotificationList } from "../../Components/services/notification";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
 import { setNotifications } from "../../features/user/notificationSlice";
@@ -37,8 +32,6 @@ import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import ManageStudnet from "../StudentManagement/index";
-import { handleFetchFollowUp } from "../../Components/services/reminder";
-import moment from "moment";
 import NotifyModal from "../Notifications/NotifyModal.jsx";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
@@ -48,9 +41,6 @@ const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
-  const userNotifications = useSelector(
-    (state) => state?.notifications?.notifications
-  );
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
@@ -64,182 +54,27 @@ const Layout = () => {
     setOpenSideBar(index);
   };
 
-  // useEffect(() => {
-  //   // const socket = io(`https://crm-notification.onrender.com`);
-  //   const socket = io(`http://170.64.176.218:7000`);
 
-  //   setInterval(() => {
-  //     socket.emit("message", {
-  //       user_id: userDetails?.userInfo?.user_id,
-  //     });
 
-  //     socket.on("message", function (msg) {
-  //       // let msgs = [{ id: 0, name: "mahadi" }];
-  //       if (msg.length) {
-  //         handleMessageAudio();
-  //         fetchFollowUpNotification();
-  //       }
-  //       // msg.forEach((notification) => {
-  //       //   console.log("notification", notification);
-  //       //   console.log("userNotifications", userNotifications);
-  //       //   console.log(
-  //       //     "FOUNDDD",
-  //       //     [...userNotifications].filter(
-  //       //       (n) => parseInt(n?.id) === parseInt(notification?.id)
-  //       //     )
-  //       //   );
 
-  //       //   const allNotifiations = [...userNotifications];
+  const fetchFollowUpNotification = async () => {
+    const notificationRes = await handleFetchNotificationList(
+      userDetails?.userInfo?.user_id
+    );
 
-  //       //   if (
-  //       //     allNotifiations.filter(
-  //       //       (n) => parseInt(n?.id) === parseInt(notification?.id)
-  //       //     )?.length === 0
-  //       //   ) {
-  //       //     dispatch(addNotifications(notification));
-  //       //     handleMessageAudio();
-  //       //   }
-  //       // });
-
-  //       console.log("msg", msg);
-  //     });
-  //   }, 100000);
-  // }, [userDetails?.userInfo?.user_id]);
+    if (
+      notificationRes?.message === "success" ||
+      notificationRes?.status === 200
+    ) {
+      dispatch(setNotifications(notificationRes?.data));
+    }
+  };
 
   useEffect(() => {
     setInterval(() => {
       fetchFollowUpNotification();
     }, 1000);
   }, []);
-
-  function MinutesDate(date, minutes) {
-    date.setMinutes(date.getMinutes() - minutes);
-
-    return date;
-  }
-  function HouresDate(date, hours) {
-    date.setHours(date.getHours() - hours);
-
-    return date;
-  }
-  function DayDate(date, day) {
-    let dy = date.getDate() - day;
-    date.setDate(dy);
-
-    return date;
-  }
-
-  const fetchFollowUpNotification = async () => {
-    // const notificationRes = await handleFetchFollowUpNotification(
-    //   userDetails?.userInfo?.user_id
-    // );
-    // const notificationRes = await handleFetchFollowUp(
-    //   userDetails?.userInfo?.user_id
-    // );
-    const notificationRes = await handleFetchNotificationList(
-      userDetails?.userInfo?.user_id
-    );
-
-    const soundSize = JSON.parse(localStorage.getItem("notifySound"));
-
-    // fake socket sound
-    // if (!soundSize) {
-    //   localStorage.setItem(
-    //     "notifySound",
-    //     JSON.stringify(notificationRes?.data?.length)
-    //   );
-    // } else if (soundSize < notificationRes?.data?.length) {
-    //   handleMessageAudio();
-    //   setTimeout(() => {
-    //     localStorage.setItem(
-    //       "notifySound",
-    //       JSON.stringify(notificationRes?.data?.length)
-    //     );
-    //   }, 500);
-    // } else {
-    //   localStorage.setItem("notifySound", JSON.stringify(0));
-    // }
-    // end
-
-
-    if (
-      notificationRes?.message === "success" ||
-      notificationRes?.status === 200
-    ) {
-      let notifyData = [];
-      let today = new Date();
-
-      let newToday = DayDate(new Date(), 1);
-
-      // let currentDate =
-      //   today.getFullYear() +
-      //   "-" +
-      //   (today.getMonth() + 1) +
-      //   "-" +
-      //   today.getDate();
-      // notificationRes?.data?.forEach((item, idx) => {
-      //   console.log("item.start date: ", item?.start);
-      //   // let iDate = item?.start;
-      //   let date = new Date(item?.start);
-      //   let checkPush = HouresDate(new Date(item?.start), 10);
-      //   let customNotifyTime = HouresDate(
-      //     new Date(item?.notification_time),
-      //     10
-      //   );
-      //   let gotnotifyDate = MinutesDate(new Date(checkPush), 10);
-
-      //   // date = new Date(date.setHours(date.getHours() - 6)).toISOString();
-      //   console.log("changed date: ", checkPush);
-      //   console.log("custom time: ", customNotifyTime);
-      //   console.log("minus date: ", gotnotifyDate);
-      //   var date_from_db =
-      //     date.getFullYear() +
-      //     "-" +
-      //     (date.getMonth() + 1) +
-      //     "-" +
-      //     date.getDate();
-      //   if (currentDate === date_from_db) {
-      //     console.log("we entered");
-      //     // let mstr = new Date(
-      //     //   date.setMinutes(date.getMinutes() - 10)
-      //     // ).toISOString();
-      //     // console.log("mstr: ", mstr);
-      //     // if (newToday < checkPush && newToday >= gotnotifyDate) {
-      //     //   console.log("logic ok");
-      //     //   notifyData.push(item);
-      //     // }
-      //     if (newToday > customNotifyTime) {
-      //       if (customNotifyTime < checkPush) {
-      //         console.log("logic ok");
-      //         notifyData.push(item);
-      //       } else {
-      //         // notifyData = [];
-      //         notifyData.push(item);
-      //       }
-      //     } else {
-      //       notifyData.push(item);
-      //       console.log("something went wrong");
-      //     }
-      //   }
-      // });
-
-      // console.log("notify data: ", notifyData);
-
-      dispatch(setNotifications(notificationRes?.data));
-
-      // notificationRes?.data?.forEach((notification) => {
-      //   console.log(
-      //     "UNIQUE",
-      //     userNotifications?.filter((n) => n.id === notification.id)
-      //   );
-
-      //   if (
-      //     !userNotifications?.filter((n) => n.id === notification.id)?.length
-      //   ) {
-      //   }
-      // });
-    }
-  };
 
   useEffect(() => {
     if (window.location.pathname === "/") {
@@ -253,42 +88,6 @@ const Layout = () => {
     }
   }, [navigate]);
 
-  // const openNotification = (placement, details) => {
-  //   notification.warn({
-  //     message: "Reminder",
-  //     duration: 0,
-  //     description: (
-  //       <div>
-  //         <h4 className="text-sm font-normal">
-  //           {details?.details} on Lead id {details?.lead_id}
-  //         </h4>
-  //         <a
-  //           className="text-brand-color font-medium"
-  //           href={`/lead/${details?.lead_id}`}
-  //           target="__blank"
-  //         >
-  //           Click Here
-  //         </a>
-  //       </div>
-  //     ),
-  //     placement,
-  //   });
-  // };
-
-  // const handleClose = () => {
-  //   setReminderVisible(false);
-  // };
-
-  // useEffect(() => {
-  //   setAllReminder(JSON.parse(localStorage.getItem("reminder")));
-  // }, []);
-
-  // setInterval(() => {
-  //   const filteredTasks = allReminder.filter(
-  //     (task) => task.time === dayjs().$d.toString().slice(4, 21)
-  //   );
-  //   setCurrentTasks(filteredTasks);
-  // }, 5000);
 
   return (
     <div
@@ -301,7 +100,7 @@ const Layout = () => {
       <div className="fixed top-0 left-0 overflow-x-hidden">
         <Sidebar
           Items={Items}
-          Items2={Items2}
+          // Items2={Items2}
           active={active}
           openSideBar={openSideBar}
           setActive={setActive}
@@ -351,7 +150,7 @@ const Layout = () => {
           />
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
-          
+
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="mail" element={<GmailModule />} />
@@ -512,29 +311,3 @@ const Items = [
   },
 ];
 
-const Items2 = [
-  // {
-  //   key: "profile",
-  //   name: "profile",
-  //   icon: <Icons.PeopleRounded />,
-  //   label: "Profile",
-  //   component: <Dashboard />,
-  //   count: 0,
-  // },
-  // {
-  //   key: "team-contact",
-  //   name: "team-contact",
-  //   icon: <Icons.MessageRounded />,
-  //   label: "Team Contact",
-  //   component: <PaymentStatus />,
-  //   count: 0,
-  // },
-  // {
-  //   key: "help-centre",
-  //   name: "help-centre",
-  //   icon: <Icons.Info />,
-  //   label: "Help Centre",
-  //   component: <Dashboard />,
-  //   count: 0,
-  // },
-];

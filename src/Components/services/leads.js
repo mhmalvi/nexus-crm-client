@@ -19,12 +19,10 @@ export const handleAddLead = async (leadData) => {
 };
 
 export const handleFetchLeads = async (details) => {
-  // console.log(clientId);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
       details
-      // { client_id: clientId }
     );
     return result.data;
   } catch (error) {
@@ -69,12 +67,10 @@ export const handleUploadLeadFile = async (fileDetails) => {
 };
 
 export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
-  // console.log(clientId);
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead-update/${leadId}`,
       updatedDetails
-      // { client_id: clientId }
     );
     return result.data;
   } catch (error) {
@@ -107,9 +103,6 @@ export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
 };
 
 export const handleLeadStatusUpdate = async (
-  // leadId,
-  // newStatus,
-  // salesUserId,
   data
 ) => {
   const config = {
@@ -120,13 +113,6 @@ export const handleLeadStatusUpdate = async (
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/status`,
-      // {
-      //   lead_id: leadId,
-      //   lead_status: newStatus,
-      //   sales_user_id: salesUserId,
-      //   response: null,
-      //   ...data,
-      // },
       data,
       config
     );
@@ -175,9 +161,7 @@ export const handleLeadCommentUpdate = async (
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
       {
-        /* lead_id: leadId, */
         comments: remarks,
-        /* sales_user_id: salesUserId, */
       }
     );
     return result.data;

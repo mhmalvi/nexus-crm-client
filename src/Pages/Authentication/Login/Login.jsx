@@ -84,7 +84,6 @@ const Login = () => {
     console.log("loginResponse", loginResponse);
 
     if (loginResponse?.status === 200 && loginResponse?.data) {
-      // if ()
 
       console.log("loginResponse?.data?.data", loginResponse?.data?.data);
 
@@ -138,12 +137,9 @@ const Login = () => {
         "auth_tok",
         loginResponseSecond?.data?.token || loginResponseSecond?.data?.data
       );
-      // Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
-      // dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
 
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponseSecond?.data?.data));
-      // dispatch(setCompanyId(loginResponseSecond?.data?.data?.company?.id));
       message.success("Successfully Logged In");
       setTimeout(() => {
         navigate("/dashboard");
@@ -284,7 +280,6 @@ const Login = () => {
   const ForgotPasswordModal = () => {
     console.log(data);
     const regex = /^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i;
-    // /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (data.email !== "") {
       if (regex.test(data.email) === true) {
         setTooglePasswordForget(true);
@@ -361,7 +356,6 @@ const Login = () => {
           <div>
             <div className="pb-3 pt-8">
               <div className="flex flex-col items-center ">
-                {/* <Icons.CompanyLogo className="w-40" /> */}
                 <img
                   src={companyLogo}
                   alt="companyLogo"
@@ -385,34 +379,6 @@ const Login = () => {
             <div className="m-6">
               <form className="mb-4" onSubmit={handleLoginReq}>
                 <div className="mb-6 font-poppins">
-                  {/* <Radio.Group
-                    className="w-full "
-                    size="large"
-                    name="roll"
-                    id="roll"
-                    onChange={(e) => setRole(e.target.value)}
-                    value={role}
-                  >
-                    <Radio value={1}>As Agency</Radio>
-                    <Radio value={2}>As Manager</Radio>
-                  </Radio.Group> */}
-                  {/* <label
-                    htmlFor=""
-                    className="block mb-2 text-sm text-gray-600"
-                  >
-                    Select Role
-                  </label>
-                  <Select
-                    defaultValue={0}
-                    // value={role}
-                    className="w-full"
-                    onChange={handleChange}
-                    options={[
-                      { value: 0, label: `Admin/Others` },
-                      { value: 1, label: `Agency` },
-                      { value: 2, label: `Organization Manager` },
-                    ]}
-                  /> */}
                 </div>
                 <div className="mb-6 font-poppins">
                   <label

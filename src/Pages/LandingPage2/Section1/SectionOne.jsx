@@ -13,14 +13,11 @@ const SectionOne = () => {
           borderColor: "rgb(229, 231, 235)",
           boxSizing: "border-box",
           paddingTop: "300px",
-          // paddingBottom: "300px",
           marginTop: "-220px",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           backgroundSize: "cover",
           backgroundImage: `url(${backgroundphoto})`,
-          backgroundSize: "cover",
-          // 'url("../../../assets/BackgroundPhotos/Background-01.png")',
         }}
       >
         <div

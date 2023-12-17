@@ -50,7 +50,6 @@ const DayDetails = ({
     const data = { ...taskDetails };
 
     const startToDateString = (selectedEventTime?.start).toLocaleDateString();
-    // const endToDateString = (selectedEventTime?.end).toLocaleDateString();
 
     data.start =
       startToDateString?.split("/")[2] +
@@ -60,52 +59,6 @@ const DayDetails = ({
       startToDateString?.split("/")[1] +
       " " +
       timeString;
-    // minuse 1 houre from start australia
-    // let frms = data?.start.split(" ");
-    // let getfs = String(frms[0]).split("-");
-    // getfs[2] = String(parseInt(getfs[2] - 1));
-    // let newgetfs = String(getfs.join("-"));
-    // frms[0] = newgetfs;
-    // let newfrms = String(frms.join(" "));
-    // data.start = newfrms;
-    // end it
-    // by ej
-    // data.end =
-    //   endToDateString?.split("/")[2] +
-    //   "-" +
-    //   endToDateString?.split("/")[0] +
-    //   "-" +
-    //   endToDateString?.split("/")[1] +
-    //   " " +
-    //   timeString;
-    // end ej
-    // minuse 1 houre from end fro australia
-    // let frme = data?.end.split(" ");
-    // let getfe = String(frme[0]).split("-");
-    // getfe[2] = String(parseInt(getfe[2] - 1));
-    // let newgetfe = String(getfe.join("-"));
-    // frme[0] = newgetfe;
-    // let newfrme = String(frme.join(" "));
-    // data.end = newfrme;
-    // end it
-    // } else {
-    //   data.start =
-    //     startToDateString?.split("/")[2] +
-    //     "-" +
-    //     startToDateString?.split("/")[0] +
-    //     "-" +
-    //     startToDateString?.split("/")[1] +
-    //     " " +
-    //     timeString;
-    //   data.end =
-    //     endToDateString?.split("/")[2] +
-    //     "-" +
-    //     endToDateString?.split("/")[0] +
-    //     "-" +
-    //     endToDateString?.split("/")[1] +
-    //     " " +
-    //     timeString;
-    // }
 
     setTaskDetails(data);
   };
@@ -121,16 +74,6 @@ const DayDetails = ({
       endToDateString?.split("/")[1] +
       " " +
       timeString;
-    // minus 1 from rmDate for australia
-    // let frm = rmDate.split(" ");
-    // let getf = String(frm[0]).split("-");
-    // getf[2] = String(parseInt(getf[2] - 1));
-    // let newgetf = String(getf.join("-"));
-    // frm[0] = newgetf;
-    // let newfrm = String(frm.join(" "));
-    // end it
-    // setNotiFyDate(newfrm);
-    // console.log("time : ", newfrm);
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setTaskDetails(data);
   };
@@ -146,16 +89,6 @@ const DayDetails = ({
       DateString?.split("/")[1] +
       " " +
       timeString;
-    // minus 1 from rmDate for australia
-    // let frm = rmDate.split(" ");
-    // let getf = String(frm[0]).split("-");
-    // getf[2] = String(parseInt(getf[2] - 1));
-    // let newgetf = String(getf.join("-"));
-    // frm[0] = newgetf;
-    // let newfrm = String(frm.join(" "));
-    // end it
-    // setNotiFyDate(newfrm);
-    // console.log("time : ", newfrm);
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setNotiFyDate(rmDate);
   };
@@ -175,7 +108,6 @@ const DayDetails = ({
 
   const handleAddFollowUpReq = async () => {
     setIsSaveDisable(true);
-    // console.log(taskDetails);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
@@ -209,9 +141,6 @@ const DayDetails = ({
         setStartError(addFollowUpRes.response.data.errors.start[0]);
         console.log(addFollowUpRes.response.data.errors.start[0]);
       }
-      // message.warn(
-      //   addFollowUpRes ? addFollowUpRes?.data?.message : "Something is wrong"
-      // );
       setIsSaveDisable(false);
     }
   };
@@ -229,22 +158,6 @@ const DayDetails = ({
       message.error(res?.message);
     }
   };
-
-  const menu = (
-    <Menu defaultSelectedKeys={[1]}>
-      {priorityList?.map((priority) => (
-        <Menu.Item
-          key={priority?.key}
-          onClick={() => handlePriorityChange(priority)}
-        >
-          <div className="flex items-center">
-            <Icons.Flag className={`w-4 h-4 mr-2 ${priority?.className}`} />
-            <div>{priority?.lable}</div>
-          </div>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
 
   return (
     <div className="py-10">
@@ -265,10 +178,6 @@ const DayDetails = ({
           </span>
         )}
         <br />
-        {/* {new Date(selectedEventTime?.start)
-          .toGMTString()
-          ?.replace("00 GMT", "")}{" "}
-        - {new Date(selectedEventTime?.end).toGMTString()} */}
       </div>
 
       <div className="w-11/12 mx-auto">
@@ -286,24 +195,6 @@ const DayDetails = ({
                 value={taskDetails?.title}
                 onChange={handleTextInputFieldChange}
               />
-
-              {/* <Dropdown
-                overlay={menu}
-                trigger={["click"]}
-                className="cursor-pointer ml-4"
-              >
-                <Space>
-                  <div className="flex items-center">
-                    <Icons.Flag
-                      className={`w-4 h-4 mr-2 ${selectedPriority?.className}`}
-                    />
-                    <div className="whitespace-nowrap w-16">
-                      {selectedPriority?.lable}
-                    </div>
-                  </div>
-                  <DownOutlined />
-                </Space>
-              </Dropdown> */}
             </div>
           </div>
           <div className="text-red-500">
@@ -327,7 +218,6 @@ const DayDetails = ({
                 format="HH:mm"
                 bordered={false}
                 onChange={onStartTimeChange}
-                // onOk={onTimeChange}
               />
             </div>
           </div>
@@ -347,12 +237,7 @@ const DayDetails = ({
                 format="HH:mm"
                 bordered={false}
                 onChange={onEndTimeChange}
-                // onOk={onTimeChange}
               />
-
-              {/* <div className="text-red-500">
-                {startError ? <p>{startError}</p> : <p></p>}
-              </div> */}
             </div>
           </div>
           <div className="text-red-500">
@@ -385,9 +270,6 @@ const DayDetails = ({
                   format="HH:mm"
                   bordered={false}
                   onChange={onRemiderTimeChange}
-                  // defaultValue={dayjs("00:00:00", "HH:mm:ss")}
-
-                  // onOk={onTimeChange}
                 />
                 <div className="text-red-500">
                   {notifyError && notifyDate === "" ? (
@@ -396,7 +278,6 @@ const DayDetails = ({
                     <p></p>
                   )}
                 </div>
-                {/* <Input type="date"></Input> */}
               </div>
             </div>
           </div>

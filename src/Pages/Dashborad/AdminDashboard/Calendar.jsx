@@ -20,7 +20,6 @@ const Calendar = ({
   setSelectedMonth,
   setSelectedYear,
   selectedYear,
-  // layout,
 }) => {
   const [activeSection, setActiveSection] = useState("day");
   const [currentDate, setCurrentDate] = useState();
@@ -28,10 +27,6 @@ const Calendar = ({
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
   const [syncNotifications, setSyncNotifications] = useState(false);
-  // const [selectedDay, setSelectedDay] = useState("");
-  // const [selectedMonth, setSelectedMonth] = useState("");
-  // const [selectedYear, setSelectedYear] = useState("");
-  // const [notifications, setNotifications] = useState([]);
   const [noticeTitle, setNoticeTitle] = useState("");
   const [noticeDescription, setNoticeDescription] = useState("");
   const [notices, setNotices] = useState([]);
@@ -41,15 +36,6 @@ const Calendar = ({
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
   useEffect(() => {
-    //   if (userDetails.role !== "admin") {
-    //     const textAreaInput = document.getElementById("notice_input");
-    //     textAreaInput.setAttribute("disabled", "");
-    //     textAreaInput.placeholder = "No Notice Yet";
-    //   } else {
-    //     const textAreaInput = document.getElementById("notice_input");
-    //     textAreaInput.placeholder = "Write notice here";
-    //   }
-
     (async () => {
       const response = await handleFetchNotices(userDetails?.client_id);
       if (response?.data) {
@@ -82,47 +68,6 @@ const Calendar = ({
     slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
   }, []);
-
-  // useEffect(() => {
-  //   socket.on("receive_notification", (data) => {
-  //     if (data) {
-  //       handleMessageAudio();
-  //       dispatch(() => addNotifications(data));
-  //       // setNotifications(data);
-  //     }
-  //   });
-  // }, [dispatch, syncNotifications]);
-
-  // const dates = [
-  //   dayjs().date() - 7 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 6
-  //     : dayjs().date() - 7,
-  //   dayjs().date() - 6 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 5
-  //     : dayjs().date() - 6,
-  //   dayjs().date() - 5 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 4
-  //     : dayjs().date() - 5,
-  //   dayjs().date() - 4 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 3
-  //     : dayjs().date() - 4,
-  //   dayjs().date() - 3 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 2
-  //     : dayjs().date() - 3,
-  //   dayjs().date() - 2 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates - 1
-  //     : dayjs().date() - 2,
-  //   dayjs().date() - 1 < 0
-  //     ? datesInMonth[dayjs().month() + 1].dates
-  //     : dayjs().date() - 1,
-  //   dayjs().date(),
-  //   dayjs().date() + 1,
-  //   dayjs().date() + 2,
-  //   dayjs().date() + 3,
-  //   dayjs().date() + 4,
-  //   dayjs().date() + 5,
-  //   dayjs().date() + 6,
-  // ];
 
   const settings = {
     centerMode: true,
@@ -205,18 +150,6 @@ const Calendar = ({
   const handleSendNotice = async (e) => {
     e.preventDefault();
     if (noticeDescription !== "") {
-      // const notificationData = {
-      //   user_id: 1,
-      //   client_id: 2,
-      //   lead_id: "",
-      //   email: "",
-      //   contact: "",
-      //   details: noticeDescription,
-      //   trigg_time: new Date().toISOString().slice(0, 19).replace("T", " "),
-      //   notification_type: "notice",
-      //   status: 0,
-      // };
-      // handleAddNotification(notificationData);
 
       const handleAddNotile = await handleAddNotice(
         userDetails?.client_id,
@@ -228,7 +161,6 @@ const Calendar = ({
         setSyncNotices(!syncNotices);
         message.success("Notice updated Successfully");
       }
-      // await socket.emit("send_notification", notificationData);
       setSyncNotifications(!syncNotifications);
       setNoticeTitle("");
       setNoticeDescription("");
@@ -406,36 +338,6 @@ const Calendar = ({
           }}
         >
           <div className="ml-14 mb-5">
-            {/* <div className=" flex justify-between items-center">
-              {dates.map((i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div
-                    onClick={() => handleDates(i)}
-                    className={`w-8 h-8 flex justify-center items-center rounded-full cursor-pointer ${
-                      currentDate === i ? "bg-black" : "bg-gray-100"
-                    }`}
-                  >
-                    <h1
-                      className={`text-base text-center leading-6 font-poppins font-normal mb-0 ${
-                        currentDate === i && "text-white rounded-full"
-                      }`}
-                    >
-                      {i + 1}
-                    </h1>
-                  </div>
-                  <div className="mt-3">
-                    <h1
-                      className="leading-4 font-normal font-poppins"
-                      style={{
-                        fontSize: "10px",
-                      }}
-                    >
-                      {weekDays[`${dayjs()?.day(i + 1)?.$W}`].slice(0, 3)}
-                    </h1>
-                  </div>
-                </div>
-              ))}
-            </div> */}
 
             {/* Creating the dates aray to map */}
             <Slider {...dateSettings} ref={slideDateRef}>
@@ -447,12 +349,6 @@ const Calendar = ({
                   onClick={() => handleDates(i)}
                   className="cursor-pointer flex  justify-center items-center"
                 >
-                  {/* <div
-                    onClick={() => handleDates(i)}
-                    className={`w-8 h-8 mx-auto flex justify-center items-center rounded-full ${
-                      currentDate === i ? "border border-black" : "bg-gray-100"
-                    }`}
-                  > */}
                   <h1
                     className={`w-8 h-8 mb-0 mx-auto flex justify-center items-center rounded-full ${
                       currentDate === i ? "bg-black text-white" : "bg-gray-100"
@@ -460,7 +356,6 @@ const Calendar = ({
                   >
                     {i + 1}
                   </h1>
-                  {/* </div> */}
                   <div className="mt-3">
                     <h1
                       className="leading-4 text-center font-normal font-poppins"
@@ -545,9 +440,6 @@ const Calendar = ({
                     value={noticeTitle}
                     onChange={(e) => setNoticeTitle(e.target.value)}
                   />
-                  {/* <span className="text-xs font-normal font-poppins mb-0.5 ml-1.5">
-                    Notice Details
-                  </span> */}
                   <textarea
                     className="w-full outline-none border px-2 py-1 rounded-md bg-transparent"
                     name=""

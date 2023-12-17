@@ -7,20 +7,16 @@ import { handleFetchCompanyEmployees } from "../../Components/services/company";
 import { fetchSalesEmployeesSale } from "../../Components/services/leads";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
-import * as chartData from "./data";
 import * as chartUtils from "./utils";
 
 const SalesAnalytics = ({ activeCompany }) => {
   const dispatch = useDispatch();
-  const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user);
   const loadingDetails = useSelector((state) => state.user)?.loading;
 
-  // const [companyAdvisorEmployees, setCompanyAdvisorEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [employeesSales, setEmployeesSales] = useState([]);
 
-  // console.log("User", userDetails?.userInfo?.id);
 
   useEffect(() => {
     (async () => {
@@ -44,12 +40,8 @@ const SalesAnalytics = ({ activeCompany }) => {
       );
 
       if (employeeResponse?.status === true) {
-        // console.log(employeeResponse?.data);
 
         if (employeeResponse?.data?.length) {
-          // const admins = (employeeResponse?.data).filter(
-          //   (employee) => employee?.role_id === 4 && employee?.suspend === 0
-          // );
 
           const sales = (employeeResponse?.data).filter(
             (employee) =>
@@ -87,30 +79,6 @@ const SalesAnalytics = ({ activeCompany }) => {
 
           console.log("Sales From Overview", employees);
           setEmployeesSales(employees);
-
-          // console.log("LLLLL", employeeResponse?.data);
-
-          // setCompanyAdminEmployee(
-          //   (employeeResponse?.data).find(
-          //     (employee) =>
-          //       (employee?.role_id === 1 || employee?.role_id === 3) &&
-          //       employee?.suspend === 0
-          //   )
-          // );
-
-          // setInactiveAdminEmployees(
-          //   (employeeResponse?.data).filter(
-          //     (employee) =>
-          //       (employee?.role_id === 3 || employee?.role_id === 4) &&
-          //       employee?.suspend === 1
-          //   )
-          // );
-
-          // setInactiveSalesEmployees(
-          //   (employeeResponse?.data).filter(
-          //     (employee) => employee?.role_id === 5 && employee?.suspend === 1
-          //   )
-          // );
         }
         dispatch(setLoader(false));
       }

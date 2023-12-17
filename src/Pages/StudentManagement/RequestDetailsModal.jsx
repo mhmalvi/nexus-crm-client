@@ -50,7 +50,6 @@ const RequestDetailsModal = ({
   const [coursePrice, setCoursePrice] = useState(0.0);
   const [isSendingmail, setIssendingMail] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-  const [status, setStatus] = useState(0);
   const [comment, setComment] = useState("");
   const [commentsData, setCommentsData] = useState([]);
   const [certificate, setCetificate] = useState({});
@@ -477,9 +476,6 @@ const RequestDetailsModal = ({
                           className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
                           ref={messageBoxRef}
                         >
-                          {/* <div className=" sticky top-0 p-1 bg-green-500 z-10">
-                          <h1 >Chat with studnet admin</h1>
-                          </div> */}
 
                           <div className="">
                             {commentsData?.map((comment, i) => {
@@ -555,9 +551,7 @@ const RequestDetailsModal = ({
                       size="small"
                       className=" !bg-pink-500 !rounded !text-white !border-none"
                       onClick={() => {
-                        // setInterval(() => {
                         onGetCommnets(record?.id);
-                        // }, 1000);
                       }}
                     >
                       Place a comment
@@ -734,7 +728,6 @@ const RequestDetailsModal = ({
                         Subject
                       </label>
                       <Input
-                        // type="password"
                         size="large"
                         name="subject"
                         id="subject"
@@ -768,13 +761,7 @@ const RequestDetailsModal = ({
                 </>
               }
             >
-              {/* <Button
-                disabled={AdmissionDetails?.status !== 1}
-                className=" !rounded !bg-green-500 !text-white !border-none"
-              >
-                Send Mail
-              </Button> */}
-              <button disabled={AdmissionDetails?.status !== 1} className="sendMailButton" role="button">Send Mail</button>
+              <button disabled={AdmissionDetails?.status !== 1} className="sendMailButton">Send Mail</button>
             </Popconfirm>
             <Popconfirm
               icon=""

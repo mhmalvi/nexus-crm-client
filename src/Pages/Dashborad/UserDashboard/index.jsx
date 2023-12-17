@@ -12,10 +12,8 @@ const UserDashboard = () => {
   const dispatch = useDispatch();
 
   const [leadData, setLeadData] = useState([]);
-  // const [syncLeads, setSyncLeads] = useState(false);
 
   const userDetails = useSelector((state) => state.user);
-  // const leadList = useSelector((state) => state.leads)?.leads;
 
   useEffect(() => {
     (async () => {

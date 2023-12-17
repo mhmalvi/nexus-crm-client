@@ -233,7 +233,6 @@ const Payment = () => {
         title: "Date",
         dataIndex: "created_at",
         key: "created_at",
-        // ...getColumnSearchProps("lead_apply_date"),
         render: (created_at) => (
           <h4 className="cursor-pointer">
             {new Date(new Date(created_at).getTime() + 6 * 60 * 60 * 1000)
@@ -291,34 +290,6 @@ const Payment = () => {
         ),
         width: 150,
       },
-
-      // {
-      //   title: "Assigned To",
-      //   dataIndex: "sales_user_id",
-      //   key: "sales_user_id",
-      //   render: (sales_user_id) => (
-      //     <div className="flex items-center">
-      //       {(userDetails?.userInfo?.role_id === 3 ||
-      //         userDetails?.userInfo?.role_id === 4 ||
-      //         userDetails?.userInfo?.role_id === 5) &&
-      //       sales_user_id !== 0 ? (
-      //         <div className="ml-3">
-      //           <Avatar
-      //             className="rounded-full shadow-sm cursor-pointer"
-      //             size="30"
-      //             color="#1f262a"
-      //             name={
-      //               companyEmployeeList?.find(
-      //                 (employee) => employee?.id === sales_user_id
-      //               )?.full_name
-      //             }
-      //           />
-      //         </div>
-      //       ) : null}
-      //     </div>
-      //   ),
-      //   width: 120,
-      // },
     ];
 
     setTableHeaders([...headers]);
@@ -383,29 +354,6 @@ const Payment = () => {
       />
       <Filters layout="Payment" setSearchInput={setSearchInput} />
 
-      {/* <div className="mt-10">
-        <button
-          className={`${
-            toggleTabs === "payment"
-              ? "px-3 py-2 text-xs leading-4 font-medium font-poppins border border-black bg-black text-white rounded-full cursor-pointer"
-              : "px-3 py-2 text-xs leading-4 font-medium font-poppins border border-black text-black rounded-full cursor-pointer"
-          }`}
-          onClick={() => setToggleTabs("payment")}
-        >
-          Payment History
-        </button>
-        <button
-          className={`ml-3 ${
-            toggleTabs === "invoice"
-              ? "px-3 py-2 text-xs leading-4 font-medium font-poppins border border-black bg-black text-white rounded-full cursor-pointer"
-              : "px-3 py-2 text-xs leading-4 font-medium font-poppins border border-black text-black rounded-full cursor-pointer"
-          }`}
-          onClick={() => setToggleTabs("invoice")}
-        >
-          Invoice History
-        </button>
-      </div> */}
-
       {toggleTabs === "payment" ? (
         <UpdatedTable
           table_title="Payment History"
@@ -422,13 +370,6 @@ const Payment = () => {
           syncLeads={null}
         />
       ) : (
-        // <Table
-        //   title="Payment History"
-        //   tableHeaders={paymentHistoryTableHeaders}
-        //   data={paymentData}
-        //   searchInput={searchInput}
-        //   setSearchInput={setSearchInput}
-        // />
         <Table
           title="Invoice History"
           tableHeaders={invoiceHistoryTableHeaders}
@@ -443,16 +384,6 @@ const Payment = () => {
 
 export default Payment;
 
-// const paymentHistoryTableHeaders = [
-//   "Lead ID",
-//   "Date",
-//   // "Coustomer Name",
-//   // "Course Code",
-//   "Transaction ID",
-//   "Payment Via",
-//   "Amount",
-//   "Status",
-// ];
 
 const invoiceHistoryTableHeaders = [
   "Invoice ID",
@@ -460,46 +391,7 @@ const invoiceHistoryTableHeaders = [
   "Payer Name",
   "Date",
   "Course Code",
-  // "Course Code",
-  // "Transaction ID",
   "Amount",
   "Payment Via",
 ];
 
-// const statusColor = [
-//   {
-//     id: 0,
-//     title: "Suspended",
-//     color: "bg-black",
-//   },
-//   {
-//     id: 1,
-//     title: "New Lead",
-//     color: "bg-green-500",
-//   },
-//   {
-//     id: 2,
-//     title: "Skilled",
-//     color: "bg-orange-500",
-//   },
-//   {
-//     id: 3,
-//     title: "Called",
-//     color: "bg-blue-500",
-//   },
-//   {
-//     id: 4,
-//     title: "Paid",
-//     color: "bg-teal-500",
-//   },
-//   {
-//     id: 5,
-//     title: "Verified",
-//     color: "bg-violet-500",
-//   },
-//   {
-//     id: 6,
-//     title: "Completed",
-//     color: "bg-red-500",
-//   },
-// ];

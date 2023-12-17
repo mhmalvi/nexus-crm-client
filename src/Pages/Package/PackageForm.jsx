@@ -110,14 +110,6 @@ const PackageForm = ({
                 <span className="block text-sm font-medium text-gray-700 tracking-wide mb-1">
                   Package Type
                 </span>
-                {/* <input
-                  name="package_type"
-                  type="number"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  placeholder="Ex. 1,2,3"
-                  value={Data.package_type}
-                  onChange={handleChange}
-                /> */}
                 <Select
                   className="requisition_package"
                   defaultValue={packageType[1]}
@@ -136,14 +128,6 @@ const PackageForm = ({
             <div className="mb-2">
               <label className="block text-sm font-medium text-gray-700 tracking-wide mb-1">
                 Package Type Limit
-                {/* <input
-                  name="package_type_limit"
-                  type="number"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  placeholder="Ex. 1,2,3"
-                  value={Data.package_type_limit}
-                  onChange={handleChange}
-                /> */}
                 <Select
                   className="requisition_package"
                   style={{
@@ -172,14 +156,6 @@ const PackageForm = ({
                   }}
                   options={[]}
                 />
-                {/* <input
-                  name="business_type"
-                  type="number"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  placeholder="Business type"
-                  value={Data.business_type}
-                  onChange={handleChange}
-                /> */}
               </label>
             </div>
 

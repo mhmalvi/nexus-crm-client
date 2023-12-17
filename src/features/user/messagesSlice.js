@@ -7,7 +7,6 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessages: (state, actions) => {
-      // console.log("current(state)", current(state));
       state.messages = actions.payload;
     },
   },

@@ -166,14 +166,6 @@ const EditDetails = ({
           <div
             className="px-4 py-1.5 mr-4 bg-red-600 text-white text-sm font-normal font-poppins rounded-md cursor-pointer shadow"
             onClick={() => {
-              // setContactDetails({
-              //   contact: "",
-              //   email: "",
-              //   campaign_id: "",
-              //   course_id: "",
-              //   course_name: "",
-              //   work_location: "",
-              // });
               setToggleEditDetials(false);
             }}
           >

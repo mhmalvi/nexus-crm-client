@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
-// import picture from "./../../assets/Images/paypal.png";
 import { useNavigate } from "react-router-dom";
-import graphgif from "../../../assets/Images/graph.gif";
-import xaxis from "../../../assets/Images/x-axis.png";
-import yaxis from "../../../assets/Images/y-axis.png";
 import { handleProfileDetails } from "../../../Components/services/auth";
-// import Loading from "../../Components/Shared/Loader";
-import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
-import { PureComponent } from "react";
 import {
   AreaChart,
   Area,
@@ -19,10 +11,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 import { curveCardinal } from "d3-shape";
-import { PieChart, Pie, Sector, Cell } from "recharts";
+import { PieChart, Pie,  Cell } from "recharts";
 import { handleGetStudentAdminDashboardData, handleGetStudentAdminDashboardDataGraph } from "../../../Components/services/utils";
 
 function ManagerDashboard() {
@@ -199,94 +190,10 @@ function ManagerDashboard() {
   return (
     <div className="m-0">
       {loadingDetails && (
-        // <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
         <div className="w-full h-full text-7xl absolute z-50 flex justify-center mx-auto items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       )}
-      {/* <div className="border rounded-md shadow-md">
-        <div className="my-10 mx-5 lg:mx-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div>
-              <div className="flex flex-wrap m-auto">
-                <div className="rounded-full mx-2">
-                  <Avatar
-                    className="rounded-full cursor-pointer"
-                    size="80"
-                    // color={Avatar.getRandomColor("sitebase", [
-                    //   "red",
-                    //   "green",
-                    //   "#728FCE",
-                    //   "violet",
-                    //   "#2B547E",
-                    //   "black",
-                    //   "#87AFC7",
-                    //   "Lime",
-                    //   "#D5D6EA",
-                    //   "#77BFC7",
-                    //   "orange",
-                    //   "#FDD017",
-                    //   "#665D1E",
-                    // ])}
-                    name={ProfileDetails?.full_name}
-                  />
-                </div>
-                <div className="flex-col font-poppins my-auto">
-                  <div className="text-lg">{ProfileDetails?.full_name}</div>
-                  <div className="text-xs">
-                    Phone NUMBER:
-                    <span className="font-semibold px-1">
-                      {ProfileDetails?.contact_number}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              {/* <div className="flex justify-end">
-                <button
-                  className="bg-black text-white font-poppins text-sm rounded-md px-6 py-2 flex items-center"
-                  onClick={EditSettings}
-                >
-                  <Icons.Edit className="text-white" />
-                  <span className="ml-2">Edit</span>
-                </button>
-              </div> */}
-      {/* </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 my-10 mx-2 gap-8">
-            <div>
-              <div className="flex-col">
-                <div className="text-xs text-[#808080]">Student Admin Name</div>
-                <div className="font-semibold truncate">
-                  {ProfileDetails?.full_name}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="flex-col">
-                <div className="text-xs text-[#808080]">Email Address</div>
-                <div className="font-semibold truncate">
-                  {ProfileDetails?.email}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="flex-col">
-                <div className="text-xs text-[#808080]">Phone Number</div>
-                <div className="font-semibold truncate">
-                  {ProfileDetails?.contact_number}
-                </div>
-              </div>
-            </div> */}
-      {/* <div>
-              <div className="flex-col">
-                <div className="text-xs text-[#808080]">Address</div>
-                <div className="font-semibold truncate">
-                  {ProfileDetails?.address}
-                </div>
-              </div>
-            </div> */}
       <div className="w-full mx-auto">
         <div className="flex gap-2 flex-wrap w-full">
           <div className=" w-[24%] h-[100px] bg-[#FFA859] rounded flex items-center justify-center gap-5  text-white">
@@ -396,7 +303,6 @@ function ManagerDashboard() {
         </div>
         <div className="flex items-center">
           <div className="w-[64%] mt-10">
-            {/* <ResponsiveContainer width="100%" height="100%"> */}
             <AreaChart
               width={640}
               height={400}
@@ -427,7 +333,6 @@ function ManagerDashboard() {
                 fillOpacity={0.3}
               />
             </AreaChart>
-            {/* </ResponsiveContainer> */}
           </div>
           <div className="w-[35%] border mt-5 rounded-lg bg-slate-300">
             <PieChart width={350} height={360}>

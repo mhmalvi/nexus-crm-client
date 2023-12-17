@@ -345,7 +345,7 @@ const UpdatedTable = ({
                     let color = "bg-[#d9f99d]";
                     return color;
                   }
-                }
+                }  
                 // if (table_title === "Lead List") {
                 //   // Philipines-1
                 //   if(record.campaign_id === +'120203649998840200'){

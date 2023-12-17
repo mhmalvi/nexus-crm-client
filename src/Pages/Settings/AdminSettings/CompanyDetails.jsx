@@ -25,7 +25,6 @@ const CompanyDetails = () => {
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
-  // const [syncDetails, setSyncDetails] = useState(false);
   const [toggleShowPassword, setToggleShowPassword] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
@@ -35,10 +34,6 @@ const CompanyDetails = () => {
   const [avatarPreviewer, setAvatarPreviewer] = useState();
 
   useEffect(() => {
-    // const someDate = new Date();
-    // const result = new Date().setDate(someDate.getDate() + 50);
-    // const finaldate = new Date(result);
-    // const futureDate = finaldate.toString().slice(0, 15);
 
     dispatch(setLoader(true));
 
@@ -100,7 +95,6 @@ const CompanyDetails = () => {
       business_type: 1,
     });
 
-    // console.log(createCompany);
 
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
@@ -167,12 +161,7 @@ const CompanyDetails = () => {
     fileFormData.append("client_id", userDetails?.userInfo?.client_id);
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
-    // for (const value of fileFormData.values()) {
-    //   console.log(value);
-    // }
     const uploadFile = await handleUploadFile(fileFormData);
-    // console.log("uploadFile", uploadFile);
-    // console.log(uploadFile?.message?.data[0]?.id);
 
     setFileId(uploadFile?.message?.data[0]?.id);
   };
@@ -181,7 +170,6 @@ const CompanyDetails = () => {
     <div
       className="lg:w-[95%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto my-20"
       style={{
-        // width: "90%",
         borderRadius: "20px",
       }}
     >
@@ -210,11 +198,9 @@ const CompanyDetails = () => {
                   accept="image/png, image/jpeg, image/jpg"
                   fileList={fileList}
                 >
-                  {/* <label htmlFor="avatar"> */}
                   <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
                     <Icons.AddImage className="w-4 text-white" />
                   </div>
-                  {/* </label> */}
                 </Upload>
               ) : null}
             </div>
@@ -428,7 +414,6 @@ const CompanyDetails = () => {
                       >
                         <button
                           className="px-3 py-1 ml-4 text-xs rounded-md border border-brand-color text-brand-color hover:bg-brand-color hover:text-white hover:transition-colors hover:delay-150"
-                          // onClick={handleUpdateFaceboookToken}
                         >
                           Refresh
                         </button>

@@ -6,12 +6,8 @@ import Loading from "../../Components/Shared/Loader";
 import * as chartUtils from "./utils";
 
 const CompanyRevenue = ({ activeCompany }) => {
-  // const { Option } = Select;
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
-  // const handleChange = (value) => {
-  //   console.log(`selected ${value}`);
-  // };
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
@@ -41,19 +37,6 @@ const CompanyRevenue = ({ activeCompany }) => {
             <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
               Company Monthly Revenue Details
             </h1>
-            {/* <div className="absolute top-6 right-7 float-right font-light">
-              <Select
-                defaultValue="ITEC"
-                style={{
-                  width: 120,
-                }}
-                onChange={handleChange}
-              >
-                <Option value="#cmp1">ITEC</Option>
-                <Option value="#cmp2">Tiger IT</Option>
-                <Option value="#cmp3">BS23</Option>
-              </Select>
-            </div> */}
           </div>
         </div>
         <div>

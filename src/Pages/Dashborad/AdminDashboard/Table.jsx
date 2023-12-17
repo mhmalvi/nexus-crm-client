@@ -21,7 +21,6 @@ const Table = ({
 }) => {
   console.log(companyEmployeeList);
 
-  // const leads = useSelector((state) => state?.leads)?.leads;
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
@@ -29,8 +28,6 @@ const Table = ({
   const dispatch = useDispatch();
 
   const [list, setList] = useState([]);
-
-  // console.log("data", data);
 
   useEffect(() => {
     (async () => {
@@ -63,8 +60,6 @@ const Table = ({
     }
     console.log(data);
   }, [data, searchInput, activeFilter, userDetails?.role_id]);
-
-  // console.log("list...........", list);
 
   const handleNavigate = (id) => {
     navigate(`/lead/${id}`);
@@ -147,20 +142,6 @@ const Table = ({
                       {header}
                     </th>
                   ) : (
-                    // : header === "Course Code" ? (
-                    //   <th className="w-36" key={i}>
-                    //     {header}
-                    //   </th>
-                    // )
-                    // : header === "Payment Via" ? (
-                    //   <th className="w-[100px]" key={i}>
-                    //     {header}
-                    //   </th>
-                    // ) : header === "Amount" ? (
-                    //   <th className="w-[100px]" key={i}>
-                    //     {header}
-                    //   </th>
-                    // )
                     <th key={i}>{header}</th>
                   )
                 )}
@@ -202,9 +183,6 @@ const Table = ({
                           {list.created_at ? (
                             new Date(list.created_at)?.toLocaleString()
                           ) : (
-                            // new Date(list.created_at).toString().slice(4, 21) +
-                            // " " +
-                            // new Date(list.created_at).toString().slice(25, 31)
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
@@ -481,20 +459,3 @@ const statusColor = [
     color: "bg-red-500",
   },
 ];
-
-// const colorArray = [
-//   "red",
-//   "green",
-//   "#728FCE",
-//   "violet",
-//   "#2B547E",
-//   "black",
-//   "#87AFC7",
-//   "Lime",
-//   "#D5D6EA",
-//   "#77BFC7",
-//   "orange",
-//   "#FDD017",
-//   "#665D1E",
-// ];
-// const random = () => Math.floor(Math.random() * (30 - 0)) + 0;

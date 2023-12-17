@@ -9,7 +9,6 @@ function WhyUsSectionSection() {
     <div className="w-full pb-20 md:pb-30 md:px-20">
       <div className="items-center">
         <div className="items-center m-auto">
-          {/* w-2/3  */}
           <div className="flex flex-col md:flex-row items-center font-poppins text-black p-4">
             <div className="w-full md:w-1/2 flex-col justify-start relative px-5">
               <div className="w-[100px] absolute top-4 md:-top-4 -left-1 md:-left-0">

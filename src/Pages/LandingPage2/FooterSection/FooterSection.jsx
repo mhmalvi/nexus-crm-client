@@ -629,37 +629,6 @@ const FooterSection = () => {
                   </div>
                 </div>
               </astro-island>
-              {/* <div
-                className="mt-4"
-                style={{
-                  borderWidth: "0px",
-                  borderStyle: "solid",
-                  borderColor: "rgb(229, 231, 235)",
-                  boxSizing: "border-box",
-                  flexShrink: 0,
-                  width: "100%",
-                  maxWidth: "100%",
-                  paddingRight: "calc(1.5rem*.5)",
-                  paddingLeft: "calc(1.5rem*.5)",
-                  marginTop: "1.5rem",
-                }}
-              >
-                <img
-                  className="w-100"
-                  alt="SSLCommerz"
-                  src="https://www.onethreadapp.com/assets/sllcommerz.25152ee3.png"
-                  style={{
-                    borderWidth: "0px",
-                    borderStyle: "solid",
-                    borderColor: "rgb(229, 231, 235)",
-                    boxSizing: "border-box",
-                    display: "block",
-                    verticalAlign: "middle",
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                />
-              </div> */}
               <astro-isl
                 style={{
                   borderWidth: "0px",

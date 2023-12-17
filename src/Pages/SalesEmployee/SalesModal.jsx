@@ -39,10 +39,8 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   );
   const handleOk = () => {
     setConfirmLoading(true);
-    // setTimeout(() => {
     setOpenSalesModel(false);
     setConfirmLoading(false);
-    // }, 1000);
     setIsByMe(true);
   };
   const handleCancel = () => {
@@ -70,9 +68,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     if(salesEmployeeId){
       assignedByLeadsDataId();
     }
-    // return(
-    //   setLeadsData("")
-    // )
   }, [salesEmployeeId]);
   
   useEffect(() => {
@@ -249,7 +244,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
               type={`${isByMe ? "primary" : "default"}`}
               onClick={() => {
                 setIsByMe(true);
-                // setIsNotByMe(false);
               }}
             >
               Assigned
@@ -257,7 +251,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
             <Button
               type={`${!isByMe ? "primary" : "default"}`}
               onClick={() => {
-                // setIsNotByMe(true);
                 setIsByMe(false);
               }}
             >
@@ -265,71 +258,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
             </Button>
           </div>
           {/* Search section */}
-          {/* <div className="flex items-center gap-4 mb-4">
-            <div className="w-[24%]">
-              <label htmlFor="#">Search By Name</label>
-              <div className=" relative">
-                <Input
-                  value={searchName}
-                  onChange={(e) => {
-                    setSearchName(e.target.value);
-                  }}
-                  placeholder="Enter Employee Name"
-                />
-                {searchName ? (
-                  <CloseOutlined
-                    className=" cursor-pointer absolute right-[2%] top-[25%]"
-                    onClick={() => {
-                      setSearchName("");
-                    }}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-            <div className="w-[24%] ">
-              <label htmlFor="#">Search By Id</label>
-              <div className="relative">
-                <Input
-                  value={searchId}
-                  onChange={(e) => {
-                    setSearchId(e.target.value);
-                  }}
-                  placeholder="Enter Employee Email"
-                />
-                {searchId && (
-                  <CloseOutlined
-                    className=" cursor-pointer absolute right-[2%] top-[25%]"
-                    onClick={() => {
-                      setSearchId("");
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="w-[24%] ">
-              <label htmlFor="#">Search By Course</label>
-              <div className="relative">
-                <Input
-                  value={searchCourse}
-                  onChange={(e) => {
-                    setSearchCourse(e.target.value);
-                  }}
-                  placeholder="Enter Employee Email"
-                />
-                {searchCourse && (
-                  <CloseOutlined
-                    className=" cursor-pointer absolute right-[2%] top-[25%]"
-                    onClick={() => {
-                      setSearchCourse("");
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          </div> */}
-          {/*  */}
           <Table
             columns={leadColumn || []}
             dataSource={

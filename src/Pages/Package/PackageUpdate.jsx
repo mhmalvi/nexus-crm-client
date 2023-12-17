@@ -23,20 +23,8 @@ const PackageUpdate = ({
     }
   };
 
-  // console.log(getPackageTypeLimit(updatePackageDate.package_type_limit));
 
   const [Data, setData] = useState({});
-  //   {
-  //   id: updatePackageDate?.id,
-  //   package_name: updatePackageDate.package_name,
-  //   package_type: updatePackageDate.package_type,
-  //   package_type_limit: getPackageTypeLimit(
-  //     updatePackageDate.package_type_limit
-  //   ),
-  //   business_type: updatePackageDate.business_type,
-  //   package_details: updatePackageDate.package_details,
-  //   price: updatePackageDate.price,
-  // }
 
   const [packageLimit, setPackageLimit] = useState(
     packageTypeData[packageType[updatePackageDate.package_type - 1]]
@@ -124,57 +112,16 @@ const PackageUpdate = ({
   useEffect(() => {
     document.getElementById("package_name").value =
       updatePackageDate.package_name;
-    // document.getElementById("package_type_limit").value =
-    //   updatePackageDate.package_type_limit;
-    // document.getElementById("business_type").value =
-    //   updatePackageDate.package_type;
     document.getElementById("package_details").value =
       updatePackageDate.package_details;
     document.getElementById("price").value = updatePackageDate.price;
   }, [updatePackageDate]);
-
-  // const handleUpdate = async (e) => {
-  //   const data = {
-  //     id: updatePackageDate?.id,
-  //     package_name: document.getElementById("package_name").value,
-  //     package_type_limit: document.getElementById("package_type_limit").value,
-  //     business_type: document.getElementById("business_type").value,
-  //     package_details: document.getElementById("package_details").value,
-  //     price: document.getElementById("price").value,
-  //   };
-
-  //   e.preventDefault();
-  //   await Axios.post(
-  //     `${process.env.REACT_APP_COMPANY_URL}/api/update/package`,
-  //     data
-  //   )
-  //     .then((res) => {
-  //       console.log("res.data", res.data);
-  //       message.success(res.data.message);
-  //       setSyncPackages(!syncPackages);
-  //       setTogglePackageUpdate(false);
-  //       document.getElementById("package_name").value = "";
-  //       document.getElementById("package_type_limit").value = "";
-  //       document.getElementById("business_type").value = "";
-  //       document.getElementById("package_details").value = "";
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const handleChange=(e)=>{
-
-  // }
 
   console.log("Data", Data);
 
   return (
     <>
       <div className="relative ">
-        {/*         {Object.keys(DataErr).length === 0 && Show && !error && (
-          <div className="w-[30%] p-6 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
-            Package updated successfully!
-          </div>
-        )} */}
         <div className="w-11/12 px-6 py-10 m-auto border-slate-200 rounded-lg">
           <h1 className="text-2xl font-semibold text-left text-[#7E4BFF] uppercase tracking-wide">
             Update package
@@ -200,13 +147,6 @@ const PackageUpdate = ({
               <label className="block text-sm font-medium text-gray-700 tracking-wide">
                 Package Type
               </label>
-              {/* <input
-                id="package_type_limit"
-                name="package_type_limit"
-                type="number"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                defaultValue={updatePackageDate.package_type_limit}
-              /> */}
               <Select
                 className="requisition_package"
                 defaultValue={
@@ -227,13 +167,6 @@ const PackageUpdate = ({
               <label className="block text-sm font-medium text-gray-700 tracking-wide">
                 Package Type Limit
               </label>
-              {/* <input
-                id="package_type_limit"
-                name="package_type_limit"
-                type="number"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                defaultValue={updatePackageDate.package_type_limit}
-              /> */}
               <Select
                 className="requisition_package"
                 style={{
@@ -253,13 +186,6 @@ const PackageUpdate = ({
                 <span className="block text-sm font-medium text-gray-700 tracking-wide">
                   Business Type
                 </span>
-                {/* <input
-                  id="business_type"
-                  name="business_type"
-                  type="number"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                  defaultValue={updatePackageDate.business_type}
-                /> */}
 
                 <Select
                   className="requisition_package"
@@ -321,7 +247,6 @@ const PackageUpdate = ({
 export default PackageUpdate;
 
 const packageType = ["User Limit", "Monthly", "Storage Limit"];
-// const packageType = ["Monthly"];
 
 const packageTypeData = {
   "User Limit": ["10", "20", "50", "100"],

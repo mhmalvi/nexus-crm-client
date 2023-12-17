@@ -62,7 +62,6 @@ function Header() {
             </div>
             <div className="w-full md:w-1/2 m-auto mb-8 lg:my-8 lg:py-10 relative flex flex-col justify-center items-center">
               <div className="w-10/12 bg-white rounded-xl flex justify-between items-center px-1 xl:px-2 m-auto">
-                {/* <AiOutlineSearch size={25}/> */}
                 <input
                   className="w-full md:w-[70%] bg-transparent focus:outline-none text-sm lg:text-lg py-2 xl:py-4 px-4"
                   type="text"
@@ -87,13 +86,11 @@ function Header() {
               <div className="bg-white p-2 lg:p-4 rounded-lg z-60 bg-opacity-10 backdrop:filter backdrop-blur-sm">
                 <div className="bg-white p-2 lg:p-4 rounded-lg z-70 bg-opacity-20 backdrop:filter backdrop-blur-sm">
                   <div className="bg-white lg:p-4 rounded-lg z-80 bg-opacity-30 backdrop:filter backdrop-blur-sm">
-                    {/* <div className="-z-10 border-2 rounded-md"> */}
                       <img
                         src={Dashboard}
                         className="w-full rounded-tl rounded-tr"
                         alt=""
                       />
-                    {/* </div> */}
                   </div>
                 </div>
               </div>

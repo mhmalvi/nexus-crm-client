@@ -8,7 +8,6 @@ import { addLeads } from "../../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../../features/user/userSlice";
 import Filters from "../../AdminDashboard/Filters";
 import Table from "../../AdminDashboard/Table";
-import { message } from "antd";
 
 const CompanyLeads = ({ clientId }) => {
   const dispatch = useDispatch();
@@ -176,18 +175,10 @@ const salesEmployeesFilterOptions = [
     id: 1,
     title: "New Lead",
   },
-  // {
-  //   id: 0,
-  //   title: "All",
-  // },
   {
     id: 8,
     title: "My Leads",
   },
-  // {
-  //   id: 7,
-  //   title: "Today's Task",
-  // },
 ];
 
 const ratings = [

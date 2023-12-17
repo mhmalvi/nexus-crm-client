@@ -17,7 +17,6 @@ const SectionFive = () => {
             backgroundPosition: "center center",
             backgroundSize: "cover",
             backgroundImage: `url(${backgroundphoto})`,
-            // 'url("https://www.onethreadapp.com/assets/book-bg_1.fbb5a557.webp")',
           }}
         >
           <div

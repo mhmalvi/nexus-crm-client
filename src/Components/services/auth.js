@@ -1,24 +1,14 @@
 import axios from "axios";
 import { btob_dev } from "./environment";
-// import { io } from "socket.io-client";
-
-// const socket = io.connect(process.env.REACT_APP_CHAT_SERVER_URL);
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 export const handleRegistration = async (registrationDetails) => {
   try {
-    // const result = await coreAxios.get(`/messages/${userId}`);
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/register`,
       registrationDetails
     );
 
     console.log("result", result);
-
-    // if (result?.status === 201) {
-    //
-
-    //   Storage.setItem("CRD", result?.data?.data);
-    // }
 
     return result?.data;
   } catch (error) {
@@ -157,7 +147,6 @@ export const handlePasswordReset = async (userId, newPassword) => {
 };
 
 export const handleUserSuspendStatus = async (userId, status) => {
-  // console.log();
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/user-suspend`,
@@ -199,9 +188,7 @@ export const handleFetchUserProfileDetails = async (userId) => {
 };
 
 export const handlefetchMessages = async (userId) => {
-  //   console.log(userId);
   try {
-    // const result = await coreAxios.get(`/messages/${userId}`);
     const result = await axios.get(
       `${process.env?.REACT_APP_CHAT_SERVER_URL}/messages/${userId}`
     );
@@ -221,19 +208,3 @@ export const handlefetchNotifications = async (userId) => {
     return error.response;
   }
 };
-
-// export const handleAddNotification = async (notificationData) => {
-//   try {
-//     await socket.emit("send_notification", notificationData);
-//   } catch (error) {
-//     return error.response;
-//   }
-// };
-
-// export const handleSetReminder = async (reminderData) => {
-//   try {
-//     await socket.emit("add_reminder", reminderData);
-//   } catch (error) {
-//     return error.response;
-//   }
-// };

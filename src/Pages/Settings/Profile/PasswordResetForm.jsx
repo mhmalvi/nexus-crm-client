@@ -29,7 +29,6 @@ function PasswordResetForm() {
       console.log("passwordChangeResponse", passwordChangeResponse);
 
       if (passwordChangeResponse?.status === 205) {
-        // Storage.setItem("crm_password", newPassword);
         message.success("Password changed successfully");
 
         Storage.removeItem("auth_tok");
@@ -43,25 +42,12 @@ function PasswordResetForm() {
     }
   };
 
-  // const CancelEditSettings = () => {
-  //   navigate("/user-profile");
-  // };
   return (
     <div className="w-11/12 border rounded-lg bg-white m-auto shadow-md py-6">
       <div className="w-3/5 font-poppins mt-6 m-auto">
         <div className="font-semibold text-2xl py-2">Change Password</div>
         <div className="font-poppins">
           <div>
-            {/* <div className="mb-6">
-              <span className="text-sm mb-0.5 font-light">Old Password</span>
-              <Input.Password
-                required
-                value={passwordDetails}
-                onChange={handleChange}
-                placeholder="Old Password"
-                prefix={<UserOutlined />}
-              />
-            </div> */}
             <div className="mb-3">
               <span className="text-sm mb-1 font-light">New Password</span>
               <Input.Password
@@ -88,14 +74,6 @@ function PasswordResetForm() {
         </div>
 
         <div className="flex justify-center my-10 gap-1">
-          {/* <div>
-            <button
-              className="h-10 px-5 w-full text-black bg-white border-2 border-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-gray-800 hover:text-gray-800 tracking-wide"
-              onClick={CancelEditSettings}
-            >
-              Cancel
-            </button>
-          </div> */}
           <div>
             <button
               key="submit"

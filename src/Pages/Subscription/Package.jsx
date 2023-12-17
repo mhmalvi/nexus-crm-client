@@ -6,7 +6,6 @@ import { handleFetchPackages } from "../../Components/services/company";
 import Icons from "../../Components/Shared/Icons";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
-// import { addPackages } from "../../features/utils/packagesSlice";
 import PackageForm from "../Package/PackageForm";
 import PackageUpdate from "../Package/PackageUpdate";
 
@@ -23,10 +22,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
   const [togglePackageUpdate, setTogglePackageUpdate] = useState(false);
   const [togglePackageCreate, setTogglePackageCreate] = useState(false);
   const [syncPackages, setSyncPackages] = useState(false);
-  // const [Updatedialog, setUpdateDialog] = useState({
-  //   id: "",
-  //   isLoading: false,
-  // });
 
   const updateSelected1 = (plan) => {
     if (!selected1?.includes(plan) && selected1?.length < 2) {
@@ -258,9 +253,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                     </span>
                     <br />
                   </h1>
-                  {/* <span className="text-brand-color text-sm ml-5">
-                  {packageType[plan?.package_type]}
-                </span> */}
                   <div className="flex-1 text-slate-500 text-xs py-4">
                     {plan.package_details}
                   </div>
@@ -291,11 +283,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
             <div className="whitespace-nowrap">Inactive Package</div>
             <div className="flex bg-slate-200 h-1 w-full mx-4 my-4"></div>
           </div>
-          {/* {loadingDetails && (
-            <div className="w-full h-96 text-7xl absolute z-50 flex justify-center mx-auto items-center bg-white bg-opacity-70">
-              <Loading />
-            </div>
-          )} */}
           <div className="mx-auto grid grid-cols-4 max-w-7xl gap-4 px-20 my-4">
             {inActivePackages?.length ? (
               inActivePackages?.map((plan, i) => (
@@ -310,33 +297,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                           inactive
                         </span>
                       </div>
-
-                      {/* <div className="flex gap-1">
-                        <div
-                          className="flex items-center py-1.5 px-2 shadow-sm rounded-md border border-slate-100 justify-center hover:border-slate-200 h-10"
-                          onClick={() => handleUpdate(plan.id)}
-                        >
-                          <button title="Edit">
-                            <Icons.Edit />
-                          </button>
-                        </div>
-                        <Popconfirm
-                          title="Are you sure to delete this task?"
-                          onConfirm={confirm}
-                          onCancel={cancel}
-                          okText="Yes"
-                          cancelText="No"
-                        >
-                          <div
-                            className="flex items-center py-1.5 px-2 shadow-sm border border-slate-100 justify-center  hover:border-slate-200 h-10"
-                            onClick={() => handleDelete(plan.id)}
-                          >
-                            <button title="Delete">
-                              <Icons.Bin />
-                            </button>
-                          </div>
-                        </Popconfirm>
-                      </div> */}
                     </div>
                     <h3 className="font-bold pt-10 pb-4 text-[20px]">
                       {plan.package_name}

@@ -2,7 +2,6 @@ import axios from "axios";
 
 const coreAxios = axios.create({
   baseURL: process.env.REACT_APP_SERVICE_URL,
-  //   baseURL: "http://localhost:5000",
 });
 
 export default coreAxios;

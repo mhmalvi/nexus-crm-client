@@ -11,10 +11,6 @@ const PricingSectionMobile = () => {
   const [tooglePkg, setTooglePkg] = useState();
   const CaseSlider = useRef(null);
 
-  const TooglePackage = (index) => {
-    setTooglePkg(index);
-    console.log(tooglePkg);
-  };
 
   const settings = {
     dots: true,
@@ -37,14 +33,6 @@ const PricingSectionMobile = () => {
           Please take a look at the range of plans that we are offering
         </div>
       </div>
-      {/* <div className="w-full pb-10 m-auto">
-        <div className="flex items-center bg-[#E0E4FC] font-semibold rounded-3xl p-2 mx-4">
-          <p className="w-full text-center p-2 m-auto">Monthly</p>
-          <p className="w-full bg-black text-white text-center rounded-2xl py-4 m-auto">
-            Yearly
-          </p>
-        </div>
-      </div> */}
       <div className="service-capbility">
         <Slider ref={CaseSlider} arrows={false} {...settings} className="mb-10">
           <div className="p-8">
@@ -196,15 +184,6 @@ const PricingSectionMobile = () => {
           </div>
         </Slider>
       </div>
-
-      {/* <div className="w-1/2 m-auto bg-black rounded-xl text-center py-4 my-6">
-        <a
-          className="text-md text-white font-semibold whitespace-nowrap"
-          href="/"
-        >
-          Explore More
-        </a>
-      </div> */}
     </div>
   );
 };

@@ -25,14 +25,6 @@
   transition-duration: 1s;
 }
 
-/* .background:hover {
-  background: radial-gradient(
-    220px circle at var(--mouse-x) var(--mouse-y),
-    rgba(255, 255, 255, 0) 0%,
-    (#d8fdde) 70%
-  );
-  transition-duration: 1s;
-} */
 
 .card:hover {
   background: radial-gradient(
