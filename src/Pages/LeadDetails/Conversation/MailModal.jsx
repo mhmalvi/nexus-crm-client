@@ -62,7 +62,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
       }
     } else {
       setConfirmLoading(true);
-      fetch("https://crmleads.quadque.digital/api/lead/mail", {
+      fetch("https://crmleads.queleadscrm.com/api/lead/mail", {
         method: "POST",
         body: formData,
       })
