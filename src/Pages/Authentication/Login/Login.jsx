@@ -317,7 +317,7 @@ const Login = () => {
       )}
 
       <div className=" !grid !grid-cols-12 gap-2 mx-auto h-full py-[10px]">
-        <div className="w-[100%] h-full !col-span-12 md:!col-span-7 md:!relative md:!left-[40px]">
+        <div className="w-[100%] lg:block hidden h-full !col-span-12 md:!col-span-7 md:!relative md:!left-[40px]">
           <img className="w-full h-full" src={sidecoverphoto} alt="" />
         </div>
         <div

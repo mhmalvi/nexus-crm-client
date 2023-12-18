@@ -74,7 +74,7 @@ const Layout = () => {
     setInterval(() => {
       fetchFollowUpNotification();
     }, 1000);
-  }, []);
+  });
 
   useEffect(() => {
     if (window.location.pathname === "/") {
@@ -126,14 +126,14 @@ const Layout = () => {
               src={Ham}
               title="Show sidebar"
               alt=""
-              className="w-8 m-auto cursor-pointer"
+              className="w-8 my-[10px] mx-[20px] cursor-pointer fixed"
             />
           ) : (
             <img
               src={Cross}
               title="Hide sidebar"
               alt=""
-              className="w-10 m-auto cursor-pointer"
+              className="w-10 m-auto cursor-pointer bg-[#c5c5c5] fixed"
             />
           )}
         </div>

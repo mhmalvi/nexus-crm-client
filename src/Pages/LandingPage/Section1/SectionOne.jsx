@@ -6,7 +6,7 @@ const SectionOne = () => {
   return (
     <div>
       <div
-        className="bg-cover hero-wrapper"
+        className=" "
         style={{
           borderWidth: "0px",
           borderStyle: "solid",
