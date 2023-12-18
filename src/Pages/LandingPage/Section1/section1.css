@@ -2,3 +2,57 @@
   width: 100%;
   border: 1px solid red;
 }
+.bubble1, .bubble3{
+  animation: transformShift 2s linear infinite;
+  transform-origin: center;
+}
+
+.bubble2{
+  animation: transformShift2 2s linear infinite;
+  transform-origin: center;
+}
+
+
+/* .crmtextxvg {
+  stroke-dasharray: 150%;
+  stroke-dashoffset: 0;
+  animation: dashAnimation 4s linear infinite;
+}
+
+@keyframes dashAnimation {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dashoffset: 100%;
+  }
+  100% {
+    stroke-dashoffset: 0%;
+  }
+} */
+
+@keyframes transformShift {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes transformShift2 {
+  0% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+
+

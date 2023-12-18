@@ -2,6 +2,7 @@ import React from "react";
 import "./section1.css";
 import crm_show from "../../../assets/Gif/crm_show.gif";
 import backgroundphoto from "../../../assets/BackgroundPhotos/Background-01.png";
+import HeroSVG from "./HeroSVG";
 const SectionOne = () => {
   return (
     <div>
@@ -282,56 +283,13 @@ const SectionOne = () => {
                 boxSizing: "border-box",
               }}
             >
-              <img
-                className=" opacity-[0.8]"
-                alt="Banner"
-                src={
-                  crm_show
-                    ? crm_show
-                    : "https://www.onethreadapp.com/assets/hero-banner_1.16d208f6.webp"
-                }
-                style={{
-                  borderWidth: "0px",
-                  borderStyle: "solid",
-                  borderColor: "rgb(229, 231, 235)",
-                  boxSizing: "border-box",
-                  display: "block",
-                  verticalAlign: "middle",
-                  maxWidth: "100%",
-                  width: "100%",
-                  height: "auto",
-                }}
-              />
+             
+             <HeroSVG/>
             </div>
           </div>
         </div>
       </div>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-html {
-  border-width: 0px;
-  border-style: solid;
-  border-color: rgb(229, 231, 235);
-  box-sizing: border-box;
-  line-height: 1.5;
-  text-size-adjust: 100%;
-  tab-size: 4;
-  font-family: Poppins, sans-serif;
-}
-
-body {
-  border-width: 0px;
-  border-style: solid;
-  border-color: rgb(229, 231, 235);
-  box-sizing: border-box;
-  margin: 0px;
-  line-height: inherit;
-  width: 100%;
-}
-`,
-        }}
-      />
+     
     </div>
   );
 };
