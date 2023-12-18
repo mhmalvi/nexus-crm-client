@@ -17,7 +17,7 @@ export const handleLeadMailUpload = async (data) => {
   console.log("data: ", data);
   try {
     const result = await axios.post(
-      `https://crmleads.quadque.digital/api/lead/mail`,
+      `https://crmleads.queleadscrm.com/api/lead/mail`,
       data
     );
     return result.data;
@@ -490,7 +490,7 @@ export const handleGetSalesAdmin = async () => {
   };
   try {
     const result = await axios.get(
-      `https://crmcompany.quadque.digital/api/sales-employee`,
+      `https://crmcompany.queleadscrm.com/api/sales-employee`,
       config
     );
     return result.data;
@@ -771,7 +771,7 @@ export const handleSearchStudent = async (data) => {
   };
   try {
     const result = await axios.post(
-      `https://crmbtob.quadque.digital/student/student-search`,
+      `https://crmbtob.queleadscrm.com/student/student-search`,
       data,
       config
     );
@@ -789,7 +789,7 @@ export const handleCompanyList = async (rid) => {
   };
   try {
     const result = await axios.get(
-      `https://crmcompany.quadque.digital/api/role_id=${rid}/company-list-in-sales`,
+      `https://crmcompany.queleadscrm.com/api/role_id=${rid}/company-list-in-sales`,
       config
     );
     return result.data;
@@ -806,7 +806,7 @@ export const handleCompanyWiseLeadList = async (sid, cid) => {
   };
   try {
     const result = await axios.post(
-      `https://crmleads.quadque.digital/api/sales_id=${sid}/company_id=${cid}/get-lead-list-in-sales`,
+      `https://crmleads.queleadscrm.com/api/sales_id=${sid}/company_id=${cid}/get-lead-list-in-sales`,
       {},
       config
     );
