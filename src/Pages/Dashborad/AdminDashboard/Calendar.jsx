@@ -150,7 +150,6 @@ const Calendar = ({
   const handleSendNotice = async (e) => {
     e.preventDefault();
     if (noticeDescription !== "") {
-
       const handleAddNotile = await handleAddNotice(
         userDetails?.client_id,
         noticeTitle,
@@ -184,31 +183,26 @@ const Calendar = ({
 
   return (
     <div
-      className="flex justify-between"
+      className="lg:flex justify-between "
       onClick={() => {
         setMonthPicker(false);
         setYearPicker(false);
       }}
     >
       <div
-        className=" py-3 px-7 mt-4 bg-[#aeffc6]"
+        className=" lg:py-3 md:mx-3 lg:px-7 lg:mt-4 bg-[#aeffc6] grid"
         style={{
           borderRadius: "20px",
         }}
       >
-        <div>
-          <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins">
+        <div className="text-center lg:pt-0 pt-5">
+          <h1 className="text-xl font-semibold mb-7 leading-8 font-poppins lg:w-full">
             {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
             {datesInMonth[dayjs().month()].month} {dayjs().year()}
           </h1>
         </div>
 
-        <div
-          className="relative flex justify-center items-center"
-          style={{
-            width: "42vw",
-          }}
-        >
+        <div className="relative flex justify-center items-center md:w-full">
           <div className="flex items-center rounded-full bg-gray-100 mb-5">
             <Dropdown overlay={dayMenu} trigger={["click"]}>
               <div
@@ -303,12 +297,7 @@ const Calendar = ({
           </div>
         </div>
 
-        <div
-          className="relative calender-carousel"
-          style={{
-            width: "42vw",
-          }}
-        >
+        <div className="relative calender-carousel lg:w-[42vw] w-[98vw]">
           <Slider {...settings} ref={slideMonthRef}>
             {datesInMonth.map((date) => (
               <div
@@ -331,14 +320,8 @@ const Calendar = ({
           <div className="calendar-fader-right"></div>
         </div>
 
-        <div
-          className="relative"
-          style={{
-            width: "42vw",
-          }}
-        >
+        <div className="relative lg:w-[42vw] w-[98vw]">
           <div className="ml-14 mb-5">
-
             {/* Creating the dates aray to map */}
             <Slider {...dateSettings} ref={slideDateRef}>
               {Array.from(

@@ -43,14 +43,11 @@ const Filters = ({
   };
 
   return (
-    <div className="flex justify-between ">
-      <div>
+    <div className="lg:flex justify-between md:grid">
         {layout !== "Payment" && (
           <div
-            className="py-3 px-7 mt-5 bg-[#c7e9ff]"
-            style={{
-              borderRadius: "20px",
-            }}
+            className="py-3 px-7 mt-4 bg-[#c7e9ff] rounded-[20px]"
+        
           >
             <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
               Filters
@@ -105,7 +102,7 @@ const Filters = ({
             ) : null}
           </div>
         )}
-      </div>
+    
 
       {/* Search Option */}
       {layout.toLowerCase()?.includes("payment") ? (
@@ -117,7 +114,7 @@ const Filters = ({
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) && (
             <div
-              className="px-7 py-8 mt-5 ml-6 bg-[#ffecd2]"
+              className="px-7 py-8 mt-5 lg:ml-6 bg-[#ffecd2]"
               style={{
                 borderRadius: "20px",
               }}

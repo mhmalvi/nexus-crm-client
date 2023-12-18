@@ -824,7 +824,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 11px 10px;
+  /* padding: 11px 10px; */
 }
 @media (max-width: 991px) {
   .header-wrapper .navbar-wrapper {
@@ -1316,9 +1316,9 @@ img {
 }
 .hero-wrapper {
   background-image: url(../../images/lossless/hero-bg_1.webp);
-  padding-top: 300px;
+  /* padding-top: 300px; */
   padding-bottom: 300px;
-  margin-top: -220px;
+  /* margin-top: -220px; */
 }
 @media (max-width: 575px) {
   .hero-wrapper {
@@ -1329,13 +1329,13 @@ img {
 .hero-wrapper .hero-heading {
   font-size: 36px;
   font-weight: 700;
-  line-height: 68px;
+  /* line-height: 68px; */
   color: #303053;
 }
 @media (max-width: 575px) {
   .hero-wrapper .hero-heading {
     font-size: 35px;
-    line-height: 45px;
+    /* line-height: 45px; */
     font-weight: 700;
   }
 }
@@ -1347,20 +1347,20 @@ img {
   font-weight: 500;
   line-height: 32px;
   color: #303053;
-  margin: 40px 0;
+  /* margin: 40px 0; */
 }
 @media (max-width: 575px) {
   .hero-wrapper .body-text {
     font-size: 16px;
     line-height: 24px;
-    margin: 20px 0;
+    /* margin: 20px 0; */
   }
 }
 .hero-wrapper .hero-form {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
+  /* gap: 10px; */
 }
 .hero-wrapper .hero-form div {
   width: 100%;
@@ -1381,9 +1381,9 @@ img {
     margin-bottom: 10px;
   }
 }
-.hero-wrapper .content-bottom {
+/* .hero-wrapper .content-bottom {
   margin-top: 20px;
-}
+} */
 .hero-wrapper .content-bottom span {
   font-size: 18px;
   font-weight: 400;
