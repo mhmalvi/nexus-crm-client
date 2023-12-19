@@ -1,5 +1,5 @@
 .crm-menu {
-  top: 50px !important;
+  /* top: 50px !important; */
   position: relative !important;
   /* border: 1px solid red !important; */
   width: 97% !important;
@@ -14,7 +14,7 @@
   left: 1.5% !important;
   top: 0 !important;
   z-index: 100000 !important;
-  margin: auto !important;
+  /* margin: auto !important; */
 
   /* Add other styling properties for the fixed position */
 }

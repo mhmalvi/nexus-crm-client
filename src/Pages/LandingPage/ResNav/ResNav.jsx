@@ -99,7 +99,7 @@ const ResNav = () => {
                     display: "block",
                     verticalAlign: "middle",
                     maxWidth: "100%",
-                    height: "auto",
+                    height: "8vh",
                   }}
                 />
               </a>

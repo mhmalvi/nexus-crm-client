@@ -13,7 +13,7 @@
 }
 
 
-/* .crmtextxvg {
+.crmtextxvg {
   stroke-dasharray: 150%;
   stroke-dashoffset: 0;
   animation: dashAnimation 4s linear infinite;
@@ -29,7 +29,7 @@
   100% {
     stroke-dashoffset: 0%;
   }
-} */
+}
 
 @keyframes transformShift {
   0% {
