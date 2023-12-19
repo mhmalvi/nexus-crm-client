@@ -35,7 +35,7 @@ const AdminDashboard = () => {
   const leadList = useSelector((state) => state.leads)?.leads;
 
   const [activeFilter, setActiveFilter] = useState(
-    userDetails?.userInfo?.role_id === 5 ? 1 : 0
+    userDetails?.userInfo?.role_id === 5 ? 8 : 0
   );
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
