@@ -50,7 +50,7 @@ const Sidebar = ({
             ...companyDetailsResp?.data?.[0],
             company_logo:
               process.env.REACT_APP_FILE_SERVER_URL +
-              "/public/" +
+              "/" +
               companyLogo?.data?.document_name,
           })
         );
@@ -62,7 +62,7 @@ const Sidebar = ({
           : " ",
         company_logo:
           process.env.REACT_APP_FILE_SERVER_URL +
-          "/public/" +
+          "/" +
           companyLogo?.data?.document_name,
       });
     })();
