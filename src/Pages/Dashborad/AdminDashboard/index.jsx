@@ -58,6 +58,7 @@ const AdminDashboard = () => {
   const [salesOptions, setSalesOptions] = useState([]);
   const [selectedSales, setSelectedSales] = useState("");
   const [assignLoading, setAssignLoading] = useState(false);
+  const [noSalesID, setNoSalesID] = useState();
   const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
     useState(false);
   let [clickedLeadId, setClickedLeadId] = useState("");
@@ -277,8 +278,7 @@ const AdminDashboard = () => {
                   className="cursor-pointer"
                   title="Remove Sales"
                   onClick={() => {
-                    const sid = localStorage.getItem("sales_id");
-                    onRemoveSales(record?.lead_id, sid);
+                    onRemoveSales(record?.lead_id, record?.sales_user_id);
                   }}
                 />
               )}
