@@ -1,5 +1,5 @@
 import { Select, Table, Tooltip, Upload, message } from "antd";
-import React,{ useEffect,useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../Components/Shared/Loader";
@@ -33,7 +33,7 @@ const UpdatedTable = ({
   const [companyList, setCompanyList] = useState([]);
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
-  const [currentPage, setCurrentPage] = useState()
+  const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
     (async () => {
@@ -42,7 +42,6 @@ const UpdatedTable = ({
         setTimeout(() => {
           dispatch(setLoader(false));
         }, 3000);
-        
       } else {
         setTimeout(() => {
           dispatch(setLoader(false));
@@ -73,27 +72,28 @@ const UpdatedTable = ({
     }
   }, [data, searchInput, activeFilter, userDetails, table_title]);
 
-  const handleLeadFileUploadReq = useCallback(async (e) => {
-    const fileData = new FormData();
+  const handleLeadFileUploadReq = useCallback(
+    async (e) => {
+      const fileData = new FormData();
 
-    fileData.append("file", e?.file?.originFileObj);
-    fileData.append("client_id", userDetails?.client_id);
+      fileData.append("file", e?.file?.originFileObj);
+      fileData.append("client_id", userDetails?.client_id);
 
-    const leadFileUploadResp = await handleUploadLeadFile(fileData);
+      const leadFileUploadResp = await handleUploadLeadFile(fileData);
 
-    if (leadFileUploadResp?.status === 200) {
-      message.success("Lead uploaded successfully");
-      setSyncLeads(!syncLeads);
-    } else if (leadFileUploadResp?.status === 403) {
-      message.warn("Data already exists");
-    } else if (leadFileUploadResp?.status === 400) {
-      message.warn("Please reformat excel sheet columns");
-    } else {
-      message.warn("Something went wrong. Please try again");
-    }
-  }, [userDetails?.client_id, setSyncLeads, syncLeads]);
-
-  
+      if (leadFileUploadResp?.status === 200) {
+        message.success("Lead uploaded successfully");
+        setSyncLeads(!syncLeads);
+      } else if (leadFileUploadResp?.status === 403) {
+        message.warn("Data already exists");
+      } else if (leadFileUploadResp?.status === 400) {
+        message.warn("Please reformat excel sheet columns");
+      } else {
+        message.warn("Something went wrong. Please try again");
+      }
+    },
+    [userDetails?.client_id, setSyncLeads, syncLeads]
+  );
 
   const onSelectCompanyData = (v, option) => {
     setSelectedCompany(option);
@@ -110,7 +110,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  }, [userDetails?.role_id]);
+  }, [userDetails?.role_id, data]);
 
   useEffect(() => {
     (async () => {
@@ -127,7 +127,7 @@ const UpdatedTable = ({
         dispatch(setLoader(false));
       }
     })();
-  },[dispatch, selectedCompany?.value, userDetails?.user_id]);
+  }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
 
   return (
     <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
@@ -300,152 +300,152 @@ const UpdatedTable = ({
           </div>
         ) : (
           <div>
-            <Table
-              columns={tableHeaders}
-              dataSource={list}
-               pagination={{
-                defaultPageSize: 10, onChange: pageNum => {
-                    setCurrentPage(pageNum)
-                },
-                current: currentPage
-            }
-            }
-              showSorterTooltip={true}
-              sortDirections={["ascend", "descend"]}
-              scroll={{
-                x: 1700,
-                y: 600,
-              }}
-              rowClassName={(record, idx) => {
-                console.log(record.campaign_id)
-                if (table_title === "Lead List") {
-                  if (
-                    (record.work_location === "wa" ||
-                      record.work_location === "WA") &&
-                    record.campaign_id >= 0 &&
-                    JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
-                    JSON.parse(record.form_data)[2].values[0] !== "philippines"
-                  ) {
-                    let color = "bg-[#fef08a]";
-                    return color;
-                  } else if (
-                    JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
-                    record.campaign_id >= 0
-                  ) {
-                    let color = "bg-[#f2d7ff]";
-                    return color;
-                  } else if (
-                    JSON.parse(record.form_data)[2].values[0] ===
-                      "philippines" &&
-                    record.campaign_id >= 0
-                  ) {
-                    let color = "bg-[#d7f7ff]";
-                    return color;
-                  } else {
-                    let color = "bg-[#d9f99d]";
-                    return color;
+              <Table
+                columns={tableHeaders}
+                dataSource={Array.isArray(list) ? list : []}
+                pagination={{
+                  defaultPageSize: 10,
+                  onChange: (pageNum) => {
+                    setCurrentPage(pageNum);
+                  },
+                  current: currentPage,
+                }}
+                showSorterTooltip={true}
+                sortDirections={["ascend", "descend"]}
+                scroll={{
+                  x: 1700,
+                  y: 600,
+                }}
+                rowClassName={(record, idx) => {
+                  console.log(record.campaign_id);
+                  if (table_title === "Lead List") {
+                    if (
+                      (record.work_location === "wa" ||
+                        record.work_location === "WA") &&
+                      record.campaign_id >= 0 &&
+                      JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
+                      JSON.parse(record.form_data)[2].values[0] !==
+                        "philippines"
+                    ) {
+                      let color = "bg-[#fef08a]";
+                      return color;
+                    } else if (
+                      JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
+                      record.campaign_id >= 0
+                    ) {
+                      let color = "bg-[#f2d7ff]";
+                      return color;
+                    } else if (
+                      JSON.parse(record.form_data)[2].values[0] ===
+                        "philippines" &&
+                      record.campaign_id >= 0
+                    ) {
+                      let color = "bg-[#d7f7ff]";
+                      return color;
+                    } else {
+                      let color = "bg-[#d9f99d]";
+                      return color;
+                    }
                   }
-                }  
-                // if (table_title === "Lead List") {
-                //   // Philipines-1
-                //   if(record.campaign_id === +'120203649998840200'){
-                //         let color = "bg-[#d7f7ff]";
-                //         return color;
-                //   }
-                //   // Philipines-2
-                //   else if(record.campaign_id === +'120203634722410190'){
-                //         let color = "bg-[#d7f7ff]";
-                //         return color;
-                //   }
-                //   // Vietnam
-                //   else if(record.campaign_id === +'120203650508850190'){
-                //     let color = "bg-[#f2d7ff]";
-                //     return color;
-                //   } 
-                //   // WA-1
-                //   else if(record.campaign_id === +'120203063277230190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-2
-                //   else if(record.campaign_id === +'120203632110450190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-3
-                //   else if(record.campaign_id === +'120203635487850190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-4
-                //   else if(record.campaign_id === +'120204159219510190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-4
-                //   else if(record.campaign_id === +'120203634722410190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-5
-                //   else if(record.campaign_id === +'120203635184280200'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-6
-                //   else if(record.campaign_id === +'120202830768260200'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-7
-                //   else if(record.campaign_id === +'120203107332280200'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-8
-                //   else if(record.campaign_id === +'120203044035210190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-9
-                //   else if(record.campaign_id === +'120202831124020200'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-10
-                //   else if(record.campaign_id === +'120203208346430190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-11
-                //   else if(record.campaign_id === +'120202967409090190'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-12
-                //   else if(record.campaign_id === +'23858487569630196'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-13
-                //   else if(record.campaign_id === +'23860071184420196'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // WA-14
-                //   else if(record.campaign_id === +'23858278860450756'){
-                //     let color = "bg-[#fef08a]";
-                //     return color;
-                //   }
-                //   // others
-                //   else {
-                //     let color = "bg-[#d9f99d]";
-                //     return color;
-                //   }                   
-                // }
-              }}
-            />
-            
+                  // if (table_title === "Lead List") {
+                  //   // Philipines-1
+                  //   if(record.campaign_id === +'120203649998840200'){
+                  //         let color = "bg-[#d7f7ff]";
+                  //         return color;
+                  //   }
+                  //   // Philipines-2
+                  //   else if(record.campaign_id === +'120203634722410190'){
+                  //         let color = "bg-[#d7f7ff]";
+                  //         return color;
+                  //   }
+                  //   // Vietnam
+                  //   else if(record.campaign_id === +'120203650508850190'){
+                  //     let color = "bg-[#f2d7ff]";
+                  //     return color;
+                  //   }
+                  //   // WA-1
+                  //   else if(record.campaign_id === +'120203063277230190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-2
+                  //   else if(record.campaign_id === +'120203632110450190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-3
+                  //   else if(record.campaign_id === +'120203635487850190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-4
+                  //   else if(record.campaign_id === +'120204159219510190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-4
+                  //   else if(record.campaign_id === +'120203634722410190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-5
+                  //   else if(record.campaign_id === +'120203635184280200'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-6
+                  //   else if(record.campaign_id === +'120202830768260200'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-7
+                  //   else if(record.campaign_id === +'120203107332280200'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-8
+                  //   else if(record.campaign_id === +'120203044035210190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-9
+                  //   else if(record.campaign_id === +'120202831124020200'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-10
+                  //   else if(record.campaign_id === +'120203208346430190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-11
+                  //   else if(record.campaign_id === +'120202967409090190'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-12
+                  //   else if(record.campaign_id === +'23858487569630196'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-13
+                  //   else if(record.campaign_id === +'23860071184420196'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // WA-14
+                  //   else if(record.campaign_id === +'23858278860450756'){
+                  //     let color = "bg-[#fef08a]";
+                  //     return color;
+                  //   }
+                  //   // others
+                  //   else {
+                  //     let color = "bg-[#d9f99d]";
+                  //     return color;
+                  //   }
+                  // }
+                }}
+              />
           </div>
         )}
       </div>
