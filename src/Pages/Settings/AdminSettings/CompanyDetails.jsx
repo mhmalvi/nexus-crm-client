@@ -52,7 +52,7 @@ const CompanyDetails = () => {
             setAvatarPreviewer(
               (
                 process.env.REACT_APP_FILE_SERVER_URL +
-                "/public/" +
+                "/" +
                 fetchFile?.data?.[0]?.document_name
               ).toString()
             );

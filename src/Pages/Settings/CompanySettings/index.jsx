@@ -54,7 +54,7 @@ const CompanySettings = () => {
             setAvatarPreviewer(
               (
                 process.env.REACT_APP_FILE_SERVER_URL +
-                "/public/" +
+                "/" +
                 fetchFile?.data?.document_name
               ).toString()
             );
