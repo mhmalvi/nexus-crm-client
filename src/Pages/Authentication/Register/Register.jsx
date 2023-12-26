@@ -1,25 +1,14 @@
-import { Button, Input, Radio, Select, Tooltip, message } from "antd";
-import React, { useEffect, useState } from "react";
-import Avatar from "react-avatar";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Input, Select, message } from "antd";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
-import { Storage } from "../../../Components/Shared/utils/store";
-import { handleLogin, handleRegister } from "../../../Components/services/auth";
-import {
-  addUserDetails,
-  setCompanyId,
-  setLoader,
-  updateFbToken,
-} from "../../../features/user/userSlice";
+import { handleRegister } from "../../../Components/services/auth";
 
-import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
 const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
 const Register = () => {
   document.title = "Register";
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [isCreating, setIscreating] = useState(false);
   const [role, setRole] = useState(1);
