@@ -365,7 +365,7 @@ const Login = () => {
                 />
               </div>
             </div>
-            <div className="text-center my-6">
+            <div className="text-center">
               <h1 className="text-2xl font-semibold text-gray-700 font-poppins">
                 Login
               </h1>
