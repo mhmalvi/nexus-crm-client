@@ -168,16 +168,12 @@ const Login = () => {
         }, 2000);
         message.warning("Oopps Wrong! Check You Email or Password/ABN Number");
       }
+      setTimeout(() => {
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1500);
     },
-    [
-      dispatch,
-      data.email,
-      data.password,
-      role,
-      bookMarkedAccounts,
-      makeid,
-      navigate,
-    ]
+    [dispatch, data.email, data.password, role, bookMarkedAccounts, makeid, navigate]
   );
 
   const handleOneClickLogin = useCallback(
@@ -232,23 +228,26 @@ const Login = () => {
     [dispatch, data.email, data.password, makeid, navigate]
   );
 
-  const handleRememberMe = useCallback((e) => {
-    if (e.target.checked) {
-      Storage.setItem("__ce__", data.email);
-      Storage.setItem(
-        "__cp__",
-        data.password +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3)
-      );
-    }
-  }, [data.email, data.password, makeid]);
+  const handleRememberMe = useCallback(
+    (e) => {
+      if (e.target.checked) {
+        Storage.setItem("__ce__", data.email);
+        Storage.setItem(
+          "__cp__",
+          data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3)
+        );
+      }
+    },
+    [data.email, data.password, makeid]
+  );
 
   const handleAddToBookMark = () => {
     setBookMarkedAccounts([
