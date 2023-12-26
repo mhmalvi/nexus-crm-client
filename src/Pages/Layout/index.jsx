@@ -54,9 +54,6 @@ const Layout = () => {
     setOpenSideBar(index);
   };
 
-
-
-
   const fetchFollowUpNotification = async () => {
     const notificationRes = await handleFetchNotificationList(
       userDetails?.userInfo?.user_id
@@ -88,7 +85,6 @@ const Layout = () => {
     }
   }, [navigate]);
 
-
   return (
     <div
       className="flex justify-start items-start font-poppins overflow-x-hidden"
@@ -100,7 +96,6 @@ const Layout = () => {
       <div className="fixed top-0 left-0 overflow-x-hidden">
         <Sidebar
           Items={Items}
-          // Items2={Items2}
           active={active}
           openSideBar={openSideBar}
           setActive={setActive}
@@ -310,4 +305,3 @@ const Items = [
     count: 0,
   },
 ];
-

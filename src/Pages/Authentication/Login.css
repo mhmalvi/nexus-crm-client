@@ -1,0 +1,25 @@
+
+.loginBackground {
+  background: linear-gradient(314deg, #8d5fff, #4d8cfc);
+  background-size: 400% 400%;
+
+  -webkit-animation: loginBG 12s ease infinite;
+  -moz-animation: loginBG 12s ease infinite;
+  animation: loginBG 12s ease infinite;
+}
+
+@-webkit-keyframes loginBG {
+  0%{background-position:7% 0%}
+  50%{background-position:94% 100%}
+  100%{background-position:7% 0%}
+}
+@-moz-keyframes loginBG {
+  0%{background-position:7% 0%}
+  50%{background-position:94% 100%}
+  100%{background-position:7% 0%}
+}
+@keyframes loginBG {
+  0%{background-position:7% 0%}
+  50%{background-position:94% 100%}
+  100%{background-position:7% 0%}
+}
