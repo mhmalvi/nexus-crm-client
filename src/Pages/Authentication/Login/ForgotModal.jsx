@@ -6,12 +6,16 @@ const ForgotPassword = (props) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [emailCheckResponse, setEmailCheckResponse] = useState();
   const [modalText, setModalText] = useState(
-    "A Verification mail will be sent to the designated email. Do you wish to proceed?"
+    "A Verification mail will be sent to the designated email."
   );
+  const [emailData, setEmailData] = useState("");
 
+  console.log(emailData)
   const handleOk = () => {
     Axios.post(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/user/forgot-password/?email=${props.emaildata}`
+      `https://crmuser.quadque.digital/api/user/forgot-password/?email=${emailData}`
+      // `${process.env?.REACT_APP_AUTH_URL}/api/user/forgot-password`,
+      // props.emaildata
     )
       .then((res) => {
         console.log(res.data.message);
@@ -23,8 +27,7 @@ const ForgotPassword = (props) => {
       });
 
     if (emailCheckResponse.status === true) {
-      setModalText(
-        "Verfication mail has been sent to the designated email. Please verify through your email account.");
+      setModalText("Verfication mail has been sent to the designated email.");
     } else {
       setModalText(emailCheckResponse.message);
     }
@@ -40,10 +43,20 @@ const ForgotPassword = (props) => {
       title="Did you forget your password?"
       visible={props.visibility}
       onOk={handleOk}
+      okText={"Send Email"}
       confirmLoading={confirmLoading}
       onCancel={() => props.oncancel(false)}
     >
       <p>{modalText}</p>
+      <input
+        className="w-full"
+        type="text"
+        placeholder="Enter a valid email"
+        onChange={(e) => {
+          e.preventDefault();
+          setEmailData(e.target.value)
+        }}
+      />
     </Modal>
   );
 };

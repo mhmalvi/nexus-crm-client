@@ -1,4 +1,4 @@
-import { Input, Modal, Select, Tooltip, message } from "antd";
+import { Input, Modal, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,8 @@ import {
   updateFbToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
-import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
+import "../Login.css"
+// import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
 const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
 const Login = () => {
   document.title = "Login";
@@ -84,7 +85,6 @@ const Login = () => {
     console.log("loginResponse", loginResponse);
 
     if (loginResponse?.status === 200 && loginResponse?.data) {
-
       console.log("loginResponse?.data?.data", loginResponse?.data?.data);
 
       Storage.setItem("user_info", loginResponse?.data?.data);
@@ -279,7 +279,8 @@ const Login = () => {
 
   const ForgotPasswordModal = () => {
     console.log(data);
-    const regex = /^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i;
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
     if (data.email !== "") {
       if (regex.test(data.email) === true) {
         setTooglePasswordForget(true);
@@ -309,19 +310,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center md:h-screen bg-gray-100 ">
+    <div className="flex justify-center items-center min-h-[100vh] loginBackground">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       )}
 
-      <div className=" !grid !grid-cols-12 gap-2 mx-auto h-full py-[10px]">
-        <div className="w-[100%] h-full !col-span-12 md:!col-span-7 md:!relative md:!left-[40px]">
-          <img className="w-full h-full" src={sidecoverphoto} alt="" />
-        </div>
+      <div className=" flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className="!col-span-12 md:!col-span-5 w-[100%]  !mx-auto container relative max-w-md border border-gray-200 rounded-md p-3 bg-white overflow-x-hidden overflow-y-auto crm-scroll-none"
+          className="z-10 !col-span-12 w-full !mx-auto relative max-w-md border border-gray-200 rounded-md p-3 bg-white overflow-x-hidden overflow-y-auto crm-scroll-none"
           style={{}}
         >
           <Modal
@@ -378,8 +376,7 @@ const Login = () => {
 
             <div className="m-6">
               <form className="mb-4" onSubmit={handleLoginReq}>
-                <div className="mb-6 font-poppins">
-                </div>
+                <div className="mb-6 font-poppins"></div>
                 <div className="mb-6 font-poppins">
                   <label
                     htmlFor="email"
@@ -401,7 +398,7 @@ const Login = () => {
                 </div>
                 <div className="mb-4 font-poppins">
                   {/* Forgot password */}
-                  {/* <div className="flex justify-between mb-2">
+                  <div className="flex justify-between mb-2">
                     <label htmlFor="password" className="text-sm text-gray-600">
                       Password
                     </label>
@@ -415,9 +412,8 @@ const Login = () => {
                     <ForgotPassword
                       visibility={tooglePasswordForget}
                       oncancel={(cancel) => setTooglePasswordForget(cancel)}
-                      emaildata={data.email}
                     />
-                  </div> */}
+                  </div>
                   <Input.Password
                     size="large"
                     name="password"
