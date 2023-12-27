@@ -35,6 +35,11 @@ import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 import RevalidateUser from "./Pages/Authentication/Login/RevalidateUser";
 
 function App() {
+
+  const ExternalRedirect = () => {
+    window.location.assign("https://queleadscrm.com");
+    return null; // This is needed to avoid rendering anything in the React component
+  };
   return (
     <div>
       <Routes>
@@ -69,7 +74,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="welcome" element={<Landing />} />
+        <Route path="welcome" element={<ExternalRedirect />} />
       </Routes>
     </div>
   );
