@@ -13,7 +13,7 @@ const ForgotPassword = (props) => {
   console.log(emailData)
   const handleOk = () => {
     Axios.post(
-      `https://crmuser.quadque.digital/api/user/forgot-password/?email=${emailData}`
+      `https://crmuser.queleadscrm.com/api/user/forgot-password/?email=${emailData}`
       // `${process.env?.REACT_APP_AUTH_URL}/api/user/forgot-password`,
       // props.emaildata
     )

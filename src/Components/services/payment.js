@@ -69,7 +69,7 @@ export const fetchAverageIncomeOfLastWeek = async (companyId) => {
 export const handleAddLeadPaymentHistory = async (data) => {
   try {
     const result = await axios.post(
-      `https://crmpayment.quadque.digital/api/store-payment-history`,
+      `https://crmpayment.queleadscrm.com/api/store-payment-history`,
       data
     );
     return result.data;
