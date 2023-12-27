@@ -392,7 +392,7 @@ const RequestDetailsModal = ({
                   className="text-[25px]"
                   onClick={() => {
                     window.open(
-                      `https://crmbtob.quadque.digital/public/${record?.file_path}`,
+                      `https://crmbtob.queleadscrm.com/public/${record?.file_path}`,
                       "_blank"
                     );
                   }}
@@ -593,7 +593,7 @@ const RequestDetailsModal = ({
                   className="text-[25px]"
                   onClick={() => {
                     window.open(
-                      `https://crmbtob.quadque.digital/public/${record?.file_path}`,
+                      `https://crmbtob.queleadscrm.com/public/${record?.file_path}`,
                       "_blank"
                     );
                   }}
