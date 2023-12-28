@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import React, { useState } from "react";
 import Axios from "axios";
 
@@ -10,27 +10,41 @@ const ForgotPassword = (props) => {
   );
   const [emailData, setEmailData] = useState("");
 
-  console.log(emailData)
-  const handleOk = () => {
-    Axios.post(
-      `https://crmuser.queleadscrm.com/api/user/forgot-password/?email=${emailData}`
-      // `${process.env?.REACT_APP_AUTH_URL}/api/user/forgot-password`,
-      // props.emaildata
-    )
-      .then((res) => {
-        console.log(res.data.message);
-        setEmailCheckResponse(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        setEmailCheckResponse(err.response.data);
-      });
+  console.log(emailData);
+  const config = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
 
-    if (emailCheckResponse.status === true) {
-      setModalText("Verfication mail has been sent to the designated email.");
+  const handleOk = () => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (emailData !== "") {
+      if (regex.test(emailData) === true) {
+        Axios.post(
+          `https://crmuser.queleadscrm.com/api/user/forgot-password`,
+          {
+            email: emailData,
+          },
+          config
+        )
+          .then((res) => {
+            console.log(res.data.message);
+            setEmailCheckResponse(res.data);
+            message.success("Verfication mail has been sent to the designated email.");
+          })
+          .catch((err) => {
+            console.log(err.response.data.message);
+            setEmailCheckResponse(err.response.data);
+            message.warning("Please enter a valid email.");
+          });
+      } else {
+        message.warning("Please enter a valid email address.");
+      }
     } else {
-      setModalText(emailCheckResponse.message);
+      message.warning("Enter your email first.");
     }
+
     setConfirmLoading(true);
     setTimeout(() => {
       props.oncancel(false);
@@ -50,13 +64,14 @@ const ForgotPassword = (props) => {
       <p>{modalText}</p>
       <input
         className="w-full"
-        type="text"
+        type="email"
         placeholder="Enter a valid email"
         onChange={(e) => {
           e.preventDefault();
-          setEmailData(e.target.value)
+          setEmailData(e.target.value);
         }}
       />
+      {/* ?email=${emailData} */}
     </Modal>
   );
 };
