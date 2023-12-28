@@ -19,7 +19,7 @@ import {
 import ForgotPassword from "./ForgotModal";
 import "../Login.css";
 // import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
-const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
+const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();
@@ -166,14 +166,22 @@ const Login = () => {
         setTimeout(() => {
           dispatch(setLoader(false));
         }, 2000);
-        message.warning("Oopps Wrong! Check You Email or Password/ABN Number");
+        message.warning("Oops Wrong! Check You Email or Password/ABN Number");
       }
       setTimeout(() => {
         navigate("/dashboard");
         window.location.reload();
       }, 1500);
     },
-    [dispatch, data.email, data.password, role, bookMarkedAccounts, makeid, navigate]
+    [
+      dispatch,
+      data.email,
+      data.password,
+      role,
+      bookMarkedAccounts,
+      makeid,
+      navigate,
+    ]
   );
 
   const handleOneClickLogin = useCallback(
@@ -296,7 +304,6 @@ const Login = () => {
   };
 
   const ForgotPasswordModal = () => {
-    console.log(data);
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (data.email !== "") {
@@ -335,9 +342,9 @@ const Login = () => {
         </div>
       )}
 
-      <div className=" flex items-center justify-center mx-auto h-full p-[10px]">
+      <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className="z-10 !col-span-12 w-full !mx-auto relative max-w-md border border-gray-200 rounded-md p-3 bg-white overflow-x-hidden overflow-y-auto crm-scroll-none"
+          className="shadow-xl backdrop-blur-3xl bg-[#ffffffaa] z-10 !col-span-12 w-full !mx-auto relative max-w-md border-[2px] border-gray-200 rounded-md p-3 overflow-x-hidden overflow-y-auto crm-scroll-none"
           style={{}}
         >
           <Modal
