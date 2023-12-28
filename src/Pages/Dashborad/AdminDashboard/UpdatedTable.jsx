@@ -300,152 +300,157 @@ const UpdatedTable = ({
           </div>
         ) : (
           <div>
-              <Table
-                columns={tableHeaders}
-                dataSource={Array.isArray(list) ? list : []}
-                pagination={{
-                  defaultPageSize: 10,
-                  onChange: (pageNum) => {
-                    setCurrentPage(pageNum);
-                  },
-                  current: currentPage,
-                }}
-                showSorterTooltip={true}
-                sortDirections={["ascend", "descend"]}
-                scroll={{
-                  x: 1700,
-                  y: 600,
-                }}
-                rowClassName={(record, idx) => {
-                  console.log(record.campaign_id);
-                  if (table_title === "Lead List") {
-                    if (
-                      (record.work_location === "wa" ||
-                        record.work_location === "WA") &&
-                      record.campaign_id >= 0 &&
-                      JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
-                      JSON.parse(record.form_data)[2].values[0] !==
-                        "philippines"
-                    ) {
-                      let color = "bg-[#fef08a]";
-                      return color;
-                    } else if (
-                      JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
-                      record.campaign_id >= 0
-                    ) {
-                      let color = "bg-[#f2d7ff]";
-                      return color;
-                    } else if (
-                      JSON.parse(record.form_data)[2].values[0] ===
-                        "philippines" &&
-                      record.campaign_id >= 0
-                    ) {
-                      let color = "bg-[#d7f7ff]";
-                      return color;
-                    } else {
-                      let color = "bg-[#d9f99d]";
-                      return color;
-                    }
+            <Table
+              columns={tableHeaders}
+              dataSource={Array.isArray(list) ? list : [""]}
+              pagination={{
+                defaultPageSize: 10,
+                onChange: (pageNum) => {
+                  setCurrentPage(pageNum);
+                  console.log(
+                    " This is the size " + pageNum / Math.max(1, list.length)
+                  );
+                },
+                total: list.length,
+                current: currentPage,
+              }}
+              showSorterTooltip={true}
+              sortDirections={["ascend", "descend"]}
+              scroll={{
+                x: 1700,
+                y: 600,
+              }}
+              rowClassName={(record) => {
+                if (table_title === "Lead List") {
+                  if (
+                    (record.work_location === "wa" ||
+                      record.work_location === "WA") &&
+                    record.campaign_id >= 0 &&
+                    record.form_data &&
+                    JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
+                    JSON.parse(record.form_data)[2].values[0] !== "philippines"
+                  ) {
+                    let color = "bg-[#fef08a]";
+                    return color;
+                  } else if (
+                    record.form_data &&
+                    JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
+                    record.campaign_id >= 0
+                  ) {
+                    let color = "bg-[#f2d7ff]";
+                    return color;
+                  } else if (
+                    record.form_data &&
+                    JSON.parse(record.form_data)[2].values[0] ===
+                      "philippines" &&
+                    record.campaign_id >= 0
+                  ) {
+                    let color = "bg-[#d7f7ff]";
+                    return color;
+                  } else {
+                    let color = "bg-[#d9f99d]";
+                    return color;
                   }
-                  // if (table_title === "Lead List") {
-                  //   // Philipines-1
-                  //   if(record.campaign_id === +'120203649998840200'){
-                  //         let color = "bg-[#d7f7ff]";
-                  //         return color;
-                  //   }
-                  //   // Philipines-2
-                  //   else if(record.campaign_id === +'120203634722410190'){
-                  //         let color = "bg-[#d7f7ff]";
-                  //         return color;
-                  //   }
-                  //   // Vietnam
-                  //   else if(record.campaign_id === +'120203650508850190'){
-                  //     let color = "bg-[#f2d7ff]";
-                  //     return color;
-                  //   }
-                  //   // WA-1
-                  //   else if(record.campaign_id === +'120203063277230190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-2
-                  //   else if(record.campaign_id === +'120203632110450190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-3
-                  //   else if(record.campaign_id === +'120203635487850190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-4
-                  //   else if(record.campaign_id === +'120204159219510190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-4
-                  //   else if(record.campaign_id === +'120203634722410190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-5
-                  //   else if(record.campaign_id === +'120203635184280200'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-6
-                  //   else if(record.campaign_id === +'120202830768260200'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-7
-                  //   else if(record.campaign_id === +'120203107332280200'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-8
-                  //   else if(record.campaign_id === +'120203044035210190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-9
-                  //   else if(record.campaign_id === +'120202831124020200'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-10
-                  //   else if(record.campaign_id === +'120203208346430190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-11
-                  //   else if(record.campaign_id === +'120202967409090190'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-12
-                  //   else if(record.campaign_id === +'23858487569630196'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-13
-                  //   else if(record.campaign_id === +'23860071184420196'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // WA-14
-                  //   else if(record.campaign_id === +'23858278860450756'){
-                  //     let color = "bg-[#fef08a]";
-                  //     return color;
-                  //   }
-                  //   // others
-                  //   else {
-                  //     let color = "bg-[#d9f99d]";
-                  //     return color;
-                  //   }
-                  // }
-                }}
-              />
+                }
+                // if (table_title === "Lead List") {
+                //   // Philipines-1
+                //   if(record.campaign_id === +'120203649998840200'){
+                //         let color = "bg-[#d7f7ff]";
+                //         return color;
+                //   }
+                //   // Philipines-2
+                //   else if(record.campaign_id === +'120203634722410190'){
+                //         let color = "bg-[#d7f7ff]";
+                //         return color;
+                //   }
+                //   // Vietnam
+                //   else if(record.campaign_id === +'120203650508850190'){
+                //     let color = "bg-[#f2d7ff]";
+                //     return color;
+                //   }
+                //   // WA-1
+                //   else if(record.campaign_id === +'120203063277230190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-2
+                //   else if(record.campaign_id === +'120203632110450190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-3
+                //   else if(record.campaign_id === +'120203635487850190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-4
+                //   else if(record.campaign_id === +'120204159219510190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-4
+                //   else if(record.campaign_id === +'120203634722410190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-5
+                //   else if(record.campaign_id === +'120203635184280200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-6
+                //   else if(record.campaign_id === +'120202830768260200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-7
+                //   else if(record.campaign_id === +'120203107332280200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-8
+                //   else if(record.campaign_id === +'120203044035210190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-9
+                //   else if(record.campaign_id === +'120202831124020200'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-10
+                //   else if(record.campaign_id === +'120203208346430190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-11
+                //   else if(record.campaign_id === +'120202967409090190'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-12
+                //   else if(record.campaign_id === +'23858487569630196'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-13
+                //   else if(record.campaign_id === +'23860071184420196'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // WA-14
+                //   else if(record.campaign_id === +'23858278860450756'){
+                //     let color = "bg-[#fef08a]";
+                //     return color;
+                //   }
+                //   // others
+                //   else {
+                //     let color = "bg-[#d9f99d]";
+                //     return color;
+                //   }
+                // }
+              }}
+            />
           </div>
         )}
       </div>
