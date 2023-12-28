@@ -529,17 +529,6 @@ const UserDetails = ({
                 <span className="ml-2">Download</span>
               </button>
             </div>
-            {/* <a
-              className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
-              href="http://smartcrm.quadque.tech/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <button className="flex items-center justify-center">
-                <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
-                <span className="ml-2">Download</span>
-              </button>
-            </a> */}
           </div>
         </div>
 
