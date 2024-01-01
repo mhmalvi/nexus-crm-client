@@ -379,8 +379,7 @@ const Login = () => {
               />
             </div>
             <form className="mb-4" onSubmit={handleLoginReq}>
-              <div className="mb-6 font-poppins"></div>
-              <div className="mb-6 font-poppins">
+              <div className="mb-6 font-poppins ">
                 <label
                   htmlFor="email"
                   className="block mb-2 text-sm text-white"
@@ -388,15 +387,19 @@ const Login = () => {
                   {role === 1 ? "ABN Number" : "Email"}
                 </label>
                 <Input
-                  // type="password"
                   size="large"
                   name="email"
                   id="email"
                   value={data.email}
                   placeholder="Enter your username"
-                  className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                  className="rounded-3xl w-full px-6 py-2 placeholder-gray-600 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color "
                   onChange={userData}
                   required
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "#ffffff",
+                    borderRadius: "10px",
+                  }}
                 />
               </div>
               <div className="mb-4 font-poppins w-full">
@@ -417,9 +420,14 @@ const Login = () => {
                   id="password"
                   placeholder="Enter your password"
                   value={data.password}
-                  className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                  className="w-full px-6 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color text-white"
                   onChange={userData}
                   required
+                  style={{
+                    backgroundColor: "transparent",
+                    borderRadius: "10px",
+                    color:"#ffffff"
+                  }}
                 />
               </div>
               <div className="mb-6 font-poppins flex items-center justify-between">
@@ -456,7 +464,11 @@ const Login = () => {
               </div>
             </form>
             <div className="text-center ">
-              <a className="font-semibold text-white" href="/requisition" target="_blank">
+              <a
+                className="font-semibold text-white"
+                href="/requisition"
+                target="_blank"
+              >
                 Click Here To Explore Packages and Send Requisition
               </a>
             </div>
