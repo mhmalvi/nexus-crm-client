@@ -19,7 +19,7 @@ import {
 import ForgotPassword from "./ForgotModal";
 import "../Login.css";
 // import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
-const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
+const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
 const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();
@@ -304,17 +304,7 @@ const Login = () => {
   };
 
   const ForgotPasswordModal = () => {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-    if (data.email !== "") {
-      if (regex.test(data.email) === true) {
-        setTooglePasswordForget(true);
-      } else {
-        message.warning("Please enter a valid email address.");
-      }
-    } else {
-      message.warning("Enter your email first.");
-    }
+    setTooglePasswordForget(true);
   };
 
   const handleRemoverBookmarkedAccount = (acoountDetials) => {
@@ -344,7 +334,7 @@ const Login = () => {
 
       <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className="shadow-xl backdrop-blur-3xl bg-[#ffffffaa] z-10 !col-span-12 w-full !mx-auto relative max-w-md border-[2px] border-gray-200 rounded-md p-3 overflow-x-hidden overflow-y-auto crm-scroll-none"
+          className="shadow-xl backdrop-blur-2xl bg-[#ffffff11] z-10 !col-span-12 w-full !mx-auto relative max-w-md border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
           style={{}}
         >
           <Modal
@@ -376,121 +366,99 @@ const Login = () => {
               </div>
             </div>
           </Modal>
-          <div>
-            <div className="pb-3 pt-8">
-              <div className="flex flex-col items-center ">
-                <img
-                  src={companyLogo}
-                  alt="companyLogo"
-                  srcset=""
-                  className="w-60 cursor-pointer"
-                  onClick={() => {
-                    navigate("/");
-                  }}
+          <div className="m-6 min-h-[60vh] flex flex-col justify-between">
+            <div className="flex flex-col items-center ">
+              <img
+                src={companyLogo}
+                alt="companyLogo"
+                srcset=""
+                className="w-60 cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
+            </div>
+            <form className="mb-4" onSubmit={handleLoginReq}>
+              <div className="mb-6 font-poppins"></div>
+              <div className="mb-6 font-poppins">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm text-white"
+                >
+                  {role === 1 ? "ABN Number" : "Email"}
+                </label>
+                <Input
+                  // type="password"
+                  size="large"
+                  name="email"
+                  id="email"
+                  value={data.email}
+                  placeholder="Enter your username"
+                  className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                  onChange={userData}
+                  required
                 />
               </div>
-            </div>
-            <div className="text-center">
-              <h1 className="text-2xl font-semibold text-gray-700 font-poppins">
-                Login
-              </h1>
-              <p className="text-gray-500 pt-2 pb-4 font-poppins">
-                Login to access your account
-              </p>
-            </div>
-
-            <div className="m-6">
-              <form className="mb-4" onSubmit={handleLoginReq}>
-                <div className="mb-6 font-poppins"></div>
-                <div className="mb-6 font-poppins">
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm text-gray-600"
-                  >
-                    {role === 1 ? "ABN Number" : "Email"}
+              <div className="mb-4 font-poppins w-full">
+                {/* Forgot password */}
+                <div className="flex justify-between mb-2">
+                  <label htmlFor="password" className="text-sm text-white">
+                    Password
                   </label>
-                  <Input
-                    // type="password"
-                    size="large"
-                    name="email"
-                    id="email"
-                    value={data.email}
-                    placeholder="Enter your username"
-                    className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                    onChange={userData}
-                    required
+
+                  <ForgotPassword
+                    visibility={tooglePasswordForget}
+                    oncancel={(cancel) => setTooglePasswordForget(cancel)}
                   />
                 </div>
-                <div className="mb-4 font-poppins">
-                  {/* Forgot password */}
-                  <div className="flex justify-between mb-2">
-                    <label htmlFor="password" className="text-sm text-gray-600">
-                      Password
-                    </label>
-                    <label
-                      className="text-xs text-gray-400 focus:outline-none hover:text-indigo-500"
-                      onClick={ForgotPasswordModal}
-                    >
-                      Forgot password?
-                    </label>
-
-                    <ForgotPassword
-                      visibility={tooglePasswordForget}
-                      oncancel={(cancel) => setTooglePasswordForget(cancel)}
-                    />
-                  </div>
-                  <Input.Password
-                    size="large"
-                    name="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    value={data.password}
-                    className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                    onChange={userData}
-                    required
+                <Input.Password
+                  size="large"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={data.password}
+                  className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
+                  onChange={userData}
+                  required
+                />
+              </div>
+              <div className="mb-6 font-poppins flex items-center justify-between">
+                <div className="w-full">
+                  <input
+                    className="cursor-pointer mr-2"
+                    type="checkbox"
+                    name="remember me"
+                    id="remember_me"
+                    defaultValue="off"
+                    onChange={handleRememberMe}
                   />
-                </div>
-
-                <div className="mb-6 font-poppins flex items-center justify-between">
-                  <div className="">
-                    <input
-                      className="cursor-pointer mr-2"
-                      type="checkbox"
-                      name="remember me"
-                      id="remember_me"
-                      defaultValue="off"
-                      onChange={handleRememberMe}
-                    />
-                    <label className="cursor-pointer" htmlFor="remember_me">
-                      Remember Me
-                    </label>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <button
-                    type="submit"
-                    className="w-full p-3 text-white font-medium bg-brand-color bg-opacity-80 hover:bg-primary-800 rounded-md focus:outline-none font-poppins"
+                  <label
+                    className="cursor-pointer text-white"
+                    htmlFor="remember_me"
                   >
-                    Log in
-                  </button>
+                    Remember Me
+                  </label>
                 </div>
-                <div
-                  className="text-center font-semibold cursor-pointer"
-                  onClick={() => navigate("/register")}
+                <label
+                  className="text-xs text-white focus:outline-none hover:text-indigo-500 w-full text-end cursor-pointer"
+                  onClick={ForgotPasswordModal}
                 >
-                  I don't have account
-                </div>
-                <div className="text-center">
-                  <a
-                    className="font-semibold"
-                    href="/requisition"
-                    target="_blank"
-                  >
-                    Click Here To Explore Packages and Send Requisition
-                  </a>
-                </div>
-              </form>
+                  Forgot password?
+                </label>
+              </div>
+              <div className="mb-6">
+                <button
+                  type="submit"
+                  className="ease-in duration-200 w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                >
+                  Log in
+                </button>
+              </div>
+            </form>
+            <div className="text-center ">
+              <a className="font-semibold text-white" href="/requisition" target="_blank">
+                Click Here To Explore Packages and Send Requisition
+              </a>
             </div>
           </div>
 
@@ -547,13 +515,18 @@ const Login = () => {
               )}
             </div>
           </div>
-
           {/* Saved Accounts */}
+          {/* <div
+                  className="text-center font-semibold cursor-pointer"
+                  onClick={() => navigate("/register")}
+                >
+                  I don't have account
+                </div> */}
           <div className="absolute right-6 top-6">
             {!bookMarkOpen ? (
               <Tooltip title="Book marked accounts" placement="right">
                 <Icons.Bookmark
-                  className="w-6 cursor-pointer hover:text-brand-color"
+                  className="w-6 cursor-pointer text-white hover:text-brand-color"
                   onClick={() => setBookMarkOpen(true)}
                 />
               </Tooltip>
