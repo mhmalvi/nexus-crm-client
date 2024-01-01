@@ -5,7 +5,8 @@ const ProtectedRoute = () => {
   return Storage.getItem("auth_tok") ? (
     <Outlet />
   ) : (
-    window.location.assign("https://queleadscrm.com")
+    // window.location.assign("https://queleadscrm.com")
+    ""
   );
 };
 
