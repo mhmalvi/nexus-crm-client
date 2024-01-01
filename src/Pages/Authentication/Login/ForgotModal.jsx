@@ -71,7 +71,6 @@ const ForgotPassword = (props) => {
           setEmailData(e.target.value);
         }}
       />
-      {/* ?email=${emailData} */}
     </Modal>
   );
 };
