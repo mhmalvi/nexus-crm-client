@@ -36,7 +36,7 @@ import RevalidateUser from "./Pages/Authentication/Login/RevalidateUser";
 function App() {
 
   const ExternalRedirect = () => {
-    window.location.assign("https://queleadscrm.com");
+    // window.location.assign("https://queleadscrm.com");
     return null;
   };
   return (

@@ -79,110 +79,85 @@ const Login = () => {
     };
   }, []);
 
-  const handleLoginReq = useCallback(
-    async (e) => {
-      e.preventDefault();
-      dispatch(setLoader(true));
+  const handleLoginReq = async (e) => {
+    e.preventDefault();
+    dispatch(setLoader(true));
 
-      const loginFormData = new FormData();
-      loginFormData.append("email", data.email);
-      loginFormData.append("abn_number", data.email);
-      loginFormData.append("password", data.password);
-      loginFormData.append("role", role);
-      let loginResponse;
-      let loginResponseSecond;
+    const loginFormData = new FormData();
+    loginFormData.append("email", data.email);
+    loginFormData.append("abn_number", data.email);
+    loginFormData.append("password", data.password);
+    loginFormData.append("role", role);
+    let loginResponse;
+    let loginResponseSecond;
 
-      if (role === 0) {
-        loginResponse = await handleLogin(loginFormData);
-      } else {
-        loginResponseSecond = await handleLoginSecond(loginFormData);
+    if (role === 0) {
+      loginResponse = await handleLogin(loginFormData);
+    } else {
+      loginResponseSecond = await handleLoginSecond(loginFormData);
+    }
+
+    console.log("loginResponse", loginResponse);
+
+    if (loginResponse?.status === 200 && loginResponse?.data) {
+      console.log("loginResponse?.data?.data", loginResponse?.data?.data);
+
+      Storage.setItem("user_info", loginResponse?.data?.data);
+      Storage.setItem(
+        "auth_tok",
+        loginResponse?.data?.token || loginResponse?.data?.data
+      );
+      Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
+
+      dispatch(setLoader(false));
+      dispatch(addUserDetails(loginResponse?.data?.data));
+      dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
+
+      if (loginResponse?.data?.data?.flag === 1) {
+        Storage.setItem("__ce__", data.email);
+        Storage.setItem(
+          "__cp__",
+          data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3)
+        );
       }
 
-      console.log("loginResponse", loginResponse);
+      message.success("Successfully Logged In");
 
-      if (loginResponse?.status === 200 && loginResponse?.data) {
-        console.log("loginResponse?.data?.data", loginResponse?.data?.data);
-
-        Storage.setItem("user_info", loginResponse?.data?.data);
-        Storage.setItem(
-          "auth_tok",
-          loginResponse?.data?.token || loginResponse?.data?.data
-        );
-        Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
-        dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
-
-        dispatch(setLoader(false));
-        dispatch(addUserDetails(loginResponse?.data?.data));
-        dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
-
-        if (loginResponse?.data?.data?.flag === 1) {
-          Storage.setItem("__ce__", data.email);
-          Storage.setItem(
-            "__cp__",
-            data.password +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3)
-          );
-        }
-
-        message.success("Successfully Logged In");
-
-        if (
-          !bookMarkedAccounts?.filter(
-            (account) => account?._ue_ === data?.email
-          )?.length
-        ) {
-          setAddBookMarkOpen(true);
-        } else {
-          setTimeout(() => {
-            navigate("/dashboard");
-            window.location.reload();
-          }, 1500);
-        }
-      } else if (
-        loginResponseSecond?.status === 200 &&
-        loginResponseSecond?.data
+      if (
+        !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
+          ?.length
       ) {
-        Storage.setItem("user_info", loginResponseSecond?.data?.data);
-        Storage.setItem(
-          "auth_tok",
-          loginResponseSecond?.data?.token || loginResponseSecond?.data?.data
-        );
-
-        dispatch(setLoader(false));
-        dispatch(addUserDetails(loginResponseSecond?.data?.data));
-        message.success("Successfully Logged In");
-        setTimeout(() => {
-          navigate("/dashboard");
-          window.location.reload();
-        }, 1500);
-      } else {
-        setTimeout(() => {
-          dispatch(setLoader(false));
-        }, 2000);
-        message.warning("Oops Wrong! Check You Email or Password/ABN Number");
+        setAddBookMarkOpen(true);
       }
+    } else if (
+      loginResponseSecond?.status === 200 &&
+      loginResponseSecond?.data
+    ) {
+      Storage.setItem("user_info", loginResponseSecond?.data?.data);
+      Storage.setItem(
+        "auth_tok",
+        loginResponseSecond?.data?.token || loginResponseSecond?.data?.data
+      );
+
+      dispatch(setLoader(false));
+      dispatch(addUserDetails(loginResponseSecond?.data?.data));
+      message.success("Successfully Logged In");
+    } else {
       setTimeout(() => {
-        navigate("/dashboard");
-        window.location.reload();
-      }, 1500);
-    },
-    [
-      dispatch,
-      data.email,
-      data.password,
-      role,
-      bookMarkedAccounts,
-      makeid,
-      navigate,
-    ]
-  );
+        dispatch(setLoader(false));
+      }, 2000);
+      message.warning("Oops Wrong! Check You Email or Password/ABN Number");
+    }
+  };
 
   const handleOneClickLogin = useCallback(
     async (credentials) => {
@@ -426,7 +401,7 @@ const Login = () => {
                   style={{
                     backgroundColor: "transparent",
                     borderRadius: "10px",
-                    color:"#ffffff"
+                    color: "#ffffff",
                   }}
                 />
               </div>
