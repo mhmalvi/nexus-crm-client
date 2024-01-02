@@ -31,7 +31,6 @@ import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
-import RevalidateUser from "./Pages/Authentication/Login/RevalidateUser";
 
 function App() {
 
@@ -68,7 +67,6 @@ function App() {
           <Route path="email-setting" element={<EmailSetting />} />
           <Route path="mail" element={<GmailModule />} />
         </Route>
-        <Route path="validate-user" element={<RevalidateUser />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />

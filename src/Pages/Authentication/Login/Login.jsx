@@ -129,7 +129,6 @@ const Login = () => {
             makeid(3)
         );
       }
-
       message.success("Successfully Logged In");
 
       if (
@@ -137,6 +136,11 @@ const Login = () => {
           ?.length
       ) {
         setAddBookMarkOpen(true);
+      } else {
+        setTimeout(() => {
+          navigate("/dashboard");
+          window.location.reload();
+        }, 500);
       }
     } else if (
       loginResponseSecond?.status === 200 &&
@@ -200,7 +204,7 @@ const Login = () => {
         setTimeout(() => {
           navigate("/dashboard");
           window.location.reload();
-        }, 1500);
+        }, 500);
       } else {
         setTimeout(() => {
           dispatch(setLoader(false));
@@ -334,6 +338,7 @@ const Login = () => {
                   onClick={() => {
                     setAddBookMarkOpen(false);
                     navigate("/dashboard");
+                    window.location.reload();
                   }}
                 >
                   No
@@ -432,7 +437,7 @@ const Login = () => {
               <div className="mb-6">
                 <button
                   type="submit"
-                  className="ease-in duration-200 w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                  className="ease-in duration-200 lg:h-full w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
                 >
                   Log in
                 </button>

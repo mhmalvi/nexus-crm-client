@@ -17,8 +17,8 @@ const ForgotPassword = (props) => {
     },
   };
 
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const handleOk = () => {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (emailData !== "") {
       if (regex.test(emailData) === true) {
         Axios.post(
@@ -31,7 +31,9 @@ const ForgotPassword = (props) => {
           .then((res) => {
             console.log(res.data.message);
             setEmailCheckResponse(res.data);
-            message.success("Verfication mail has been sent to the designated email.");
+            message.success(
+              "Verfication mail has been sent to the designated email."
+            );
           })
           .catch((err) => {
             console.log(err.response.data.message);
@@ -49,7 +51,7 @@ const ForgotPassword = (props) => {
     setTimeout(() => {
       props.oncancel(false);
       setConfirmLoading(false);
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -58,6 +60,7 @@ const ForgotPassword = (props) => {
       visible={props.visibility}
       onOk={handleOk}
       okText={"Send Email"}
+      okButtonProps={{ disabled: emailData ? false : true }}
       confirmLoading={confirmLoading}
       onCancel={() => props.oncancel(false)}
     >
