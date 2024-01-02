@@ -1,5 +1,11 @@
 import { Input, Modal, Tooltip, message } from "antd";
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +24,8 @@ import {
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 import "../Login.css";
-// import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
+import GLOBE from "vanta/dist/vanta.globe.min";
+import * as THREE from "three";
 const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
 const Login = () => {
   document.title = "Login";
@@ -31,9 +38,31 @@ const Login = () => {
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
-  const handleChange = (value) => {
-    setRole(value);
-  };
+  const [vantaEffect, setVantaEffect] = useState(null);
+
+  const myRef = useRef(null);
+  useEffect(() => {
+    if (!vantaEffect) {
+      setVantaEffect(
+        GLOBE({
+          THREE,
+          el: myRef.current,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          color: 0x2596FB,
+          color2: 0x8A7CFD,
+          backgroundColor: 0x180432,
+          scale: 1.0,
+          scaleMobile: 1.0,
+        })
+      );
+    }
+
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -279,7 +308,7 @@ const Login = () => {
     setTimeout(() => {
       navigate("/dashboard");
       window.location.reload();
-    }, 1500);
+    }, 500);
   };
 
   const ForgotPasswordModal = () => {
@@ -304,7 +333,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] loginBackground">
+    <div className="flex justify-center items-center min-h-[100vh] loginBackground" ref={myRef}>
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
