@@ -1,6 +1,6 @@
 
 .loginBackground {
-  background-color: #180432;
+  background: linear-gradient(to bottom, #180432, #460a94, #180432);
   background-repeat: no-repeat;
   background-position: center;
   background-size:100%;
