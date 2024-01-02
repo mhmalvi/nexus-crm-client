@@ -39,7 +39,29 @@ const Login = () => {
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
   const [vantaEffect, setVantaEffect] = useState(null);
-
+  const gradientShader = {
+    uniforms: {
+      color1: { value: new THREE.Color(0x2596FB) },
+      color2: { value: new THREE.Color(0x8A7CFD) },
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+      varying vec2 vUv;
+  
+      void main() {
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+  };
   const myRef = useRef(null);
   useEffect(() => {
     if (!vantaEffect) {
@@ -52,7 +74,7 @@ const Login = () => {
           gyroControls: false,
           color: 0x2596FB,
           color2: 0x8A7CFD,
-          backgroundColor: 0x180432,
+          backgroundAlpha:0,
           scale: 1.0,
           scaleMobile: 1.0,
         })
