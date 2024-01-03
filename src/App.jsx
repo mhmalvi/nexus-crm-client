@@ -35,13 +35,13 @@ import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 function App() {
 
   const ExternalRedirect = () => {
-    // window.location.assign("https://queleadscrm.com");
+    window.location.assign("https://app.queleadscrm.com/login");
     return null;
   };
   return (
     <div>
       <Routes>
-        <Route path="*" element={<Layout />}>
+        <Route path="*" element={<ExternalRedirect />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
