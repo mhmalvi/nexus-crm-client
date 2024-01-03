@@ -1,5 +1,5 @@
 import "antd/dist/antd.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./App.css";
@@ -33,15 +33,10 @@ import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 
 function App() {
-
-  const ExternalRedirect = () => {
-    window.location.assign("https://app.queleadscrm.com/login");
-    return null;
-  };
   return (
     <div>
       <Routes>
-        <Route path="*" element={<ExternalRedirect />}>
+        <Route path="*" element={<Layout/>}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
@@ -71,7 +66,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="welcome" element={<ExternalRedirect />} />
+        <Route path="welcome" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
   );
