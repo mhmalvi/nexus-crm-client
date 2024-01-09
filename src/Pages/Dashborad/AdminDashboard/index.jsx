@@ -680,55 +680,57 @@ const AdminDashboard = () => {
             setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
           />
         </Modal>
-        <div className="grid grid-cols-5 gap-5">
-          <div className="col-span-3">
-            <Filters
-              layout="Dashboard"
-              handleFilterLeadList={handleFilterLeadList}
-              activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
-              activeStars={activeStars}
-              filterOptions={
-                userDetails?.userInfo?.role_id === 3 ||
-                userDetails?.userInfo?.role_id === 4
-                  ? adminFilterOptions
-                  : salesEmployeesFilterOptions
-              }
-              ratings={ratings}
-              handleStaredLeadsFilter={handleStaredLeadsFilter}
-              setActiveStars={setActiveStars}
-              setSearchInput={setSearchInput}
-              companyEmployeeList={companyEmployeeList}
-              handleFilterAssignedEmployee={handleFilterAssignedEmployee}
-            />
+        <div className="flex flex-col justify-between ">
+          <div className="grid grid-cols-5 gap-5">
+            <div className="col-span-3">
+              <Filters
+                layout="Dashboard"
+                handleFilterLeadList={handleFilterLeadList}
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+                activeStars={activeStars}
+                filterOptions={
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4
+                    ? adminFilterOptions
+                    : salesEmployeesFilterOptions
+                }
+                ratings={ratings}
+                handleStaredLeadsFilter={handleStaredLeadsFilter}
+                setActiveStars={setActiveStars}
+                setSearchInput={setSearchInput}
+                companyEmployeeList={companyEmployeeList}
+                handleFilterAssignedEmployee={handleFilterAssignedEmployee}
+              />
+            </div>
+            <div className="col-span-2">
+              <CountryList table_title="Lead List" />
+            </div>
           </div>
-          <div className="col-span-2">
-            <CountryList table_title="Lead List" />
-          </div>
+          <UpdatedTable
+            table_title="Lead List"
+            tableHeaders={tableHeaders}
+            data={leadData}
+            companyEmployeeList={companyEmployeeList}
+            filterOptions={
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4
+                ? adminFilterOptions
+                : salesEmployeesFilterOptions
+            }
+            ratings={ratings}
+            activeFilter={activeFilter}
+            searchInput={searchInput}
+            handleSyncLeadsReq={handleSyncLeadsReq}
+            setIsAddLeadFormOpen={setIsAddLeadFormOpen}
+            setSyncLeads={setSyncLeads}
+            syncLeads={syncLeads}
+            salesOptions={salesOptions}
+            setSalesOptions={setSalesOptions}
+            selectedSales={selectedSales}
+            setSelectedSales={setSelectedSales}
+          />
         </div>
-        <UpdatedTable
-          table_title="Lead List"
-          tableHeaders={tableHeaders}
-          data={leadData}
-          companyEmployeeList={companyEmployeeList}
-          filterOptions={
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4
-              ? adminFilterOptions
-              : salesEmployeesFilterOptions
-          }
-          ratings={ratings}
-          activeFilter={activeFilter}
-          searchInput={searchInput}
-          handleSyncLeadsReq={handleSyncLeadsReq}
-          setIsAddLeadFormOpen={setIsAddLeadFormOpen}
-          setSyncLeads={setSyncLeads}
-          syncLeads={syncLeads}
-          salesOptions={salesOptions}
-          setSalesOptions={setSalesOptions}
-          selectedSales={selectedSales}
-          setSelectedSales={setSelectedSales}
-        />
         {/* <Calendar
             filterDate={filterDate}
             setFilterDate={setFilterDate}

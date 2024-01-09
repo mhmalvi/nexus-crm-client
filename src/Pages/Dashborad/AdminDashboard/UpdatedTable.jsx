@@ -290,7 +290,7 @@ const UpdatedTable = ({
               sortDirections={["ascend", "descend"]}
               scroll={{
                 x: 1700,
-                // y: 400,
+                y: 360,
               }}
               rowClassName={(record) => {
                 if (table_title === "Lead List") {
