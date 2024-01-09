@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import dayLocaleData from "dayjs/plugin/localeData";
-import { Calendar, Col, Radio, Row, Select, Typography } from "antd";
+import { Calendar,  Radio, Select } from "antd";
+import { useMediaQuery } from "react-responsive";
 dayjs.extend(dayLocaleData);
 const CalendarSmall = ({
   // filterDate,
@@ -55,6 +56,7 @@ const CalendarSmall = ({
     setSelectedYear("");
   };
 
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
     <>
       <Calendar
@@ -97,7 +99,7 @@ const CalendarSmall = ({
           }
           return (
             <div>
-              <h1 level={4} className="text-xl text-white">
+              <h1 level={4} className={`text-${isBigScreen ? "xl":"base"}  text-white`}>
                 {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
                 {datesInMonth[dayjs().month()].month} {dayjs().year()}
               </h1>

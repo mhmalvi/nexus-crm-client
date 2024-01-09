@@ -31,6 +31,7 @@ import CountryList from "./CountryList";
 import UserLabel from "./UserLabel";
 import NoticeForm from "./NoticeForm";
 import CalendarSmall from "./CalendarSmall";
+import { useMediaQuery } from "react-responsive";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -658,6 +659,7 @@ const AdminDashboard = () => {
         text
       ),
   });
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   return (
     <div className="w-full max-h-full grid grid-cols-12 gap-5 max-h-[90vh] ">
@@ -742,7 +744,7 @@ const AdminDashboard = () => {
             setSelectedYear={setSelectedYear}
           /> */}
       </div>
-      <div className="col-span-3 grid grid-cols-1 gap-5 max-h-[90vh]">
+      <div className={`col-span-3 grid grid-cols-1 gap-${isBigScreen ? "5": "2"} max-h-[90vh]`}>
         <div className="w-full flex items-center justify-between  p-3 rounded-xl min-h-[5vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] z-50">
           <h1 className="m-0 p-0 text-white">Notification</h1>
           <UserLabel />
