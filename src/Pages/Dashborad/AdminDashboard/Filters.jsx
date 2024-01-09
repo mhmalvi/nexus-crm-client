@@ -17,7 +17,7 @@ const Filters = ({
           <h1 className="text-2xl text-white font-normal font-poppins  pt-1">
             Filters
           </h1>
-          <div className="grid grid-cols-7 gap-2 w-full">
+          <div className="grid grid-cols-6 gap-1 w-full">
             {/* Status Filters */}
             {filterOptions.map((option) => (
               <div
@@ -25,7 +25,7 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`text-xs text-center font-normal border-[1px] border-white font-poppins p-2 cursor-pointer ${
+                  className={`w-full text-xs text-center font-normal border-[1px] border-white font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
                       ? "text-white bg-[#460a94] "
                       : "text-white bg-transparent"
@@ -46,7 +46,7 @@ const Filters = ({
                     onClick={() => handleStaredLeadsFilter(rate?.id)}
                   >
                     <h1
-                      className={`text-xs text-center border-[1px] border-white font-normal font-poppins p-2 cursor-pointer ${
+                      className={`text-xs text-center border-[1px] border-white font-normal font-poppins p-1 cursor-pointer ${
                         activeFilter === rate?.id
                           ? "text-white bg-[#460a94]"
                           : "text-white bg-transparent"
