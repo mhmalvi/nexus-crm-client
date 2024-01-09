@@ -1,8 +1,9 @@
 .dashboard-background {
-  /* background: linear-gradient(to bottom, #180432, #460a94, #180432); */
-  background: url("./assets/BackgroundPhotos/BACKGROUND.png");
-  background-repeat: no-repeat;
-  background-size: auto;
+  background: radial-gradient(#180432, #460a94, #180432);
+  background-position: center;
+  /* background: url("./assets/BackgroundPhotos/BACKGROUND.png"); */
+  /* background-repeat: no-repeat;
+  background-size: auto; */
 }
 
 .font-poppins {
@@ -184,8 +185,6 @@ table {
 .calendarBody {
   backdrop-filter: blur(40px);
   background-color: #ffffff11;
-  /* background-color: #fffffc; */
-  border: 0.5px solid #ffffff44;
   border-radius: 10px;
   height: 100%;
   padding-left: 10px;
@@ -232,16 +231,22 @@ table {
 
 .settingsSidebar {
   width: 100%;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
 .settingsSidebar .ant-menu-submenu {
   width: 100%;
   position: relative;
 }
-.settingsSidebar .ant-menu-submenu .ant-menu-title-content .pl-1 {
-  width: 75%;
+.settingsSidebar .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
+  /* background-color: #17cdd9 !important; */
+  color:transparent !important;
+  border: 0px;
 }
+
+/* .settingsSidebar .ant-menu-submenu-title { */
+  /* padding-left: 0 !important; */
+/* } */
 
 td {
   padding: 16px;
@@ -550,11 +555,6 @@ table.custom-table > tbody > tr:hover td {
   border-radius: 0.5rem !important;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-.ant-menu-submenu-title {
-  padding-left: 0 !important;
-  margin: -3px 0 0 0 !important;
 }
 
 @keyframes animloader {

@@ -21,7 +21,7 @@ const Notifications = ({
 
   return (
     <div
-      className="fixed top-28 -ml-2 -mt-2 pb-6 bg-white border rounded-md"
+      className="fixed top-28 -ml-2 -mt-2 pb-6 rounded-md"
       style={{
         width: "341px",
         left: "290px",

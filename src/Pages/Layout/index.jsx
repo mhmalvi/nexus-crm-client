@@ -16,7 +16,6 @@ import CampaignInfo from "../Dashborad/SuperAdminDashboard/CompanyInfo/CampaignI
 import GmailModule from "../Gmail";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
-import Notifications from "../Notifications";
 import Overview from "../Overview";
 import RenewPackage from "../Package/RenewPackage";
 import Pay from "../Pay";
@@ -30,7 +29,6 @@ import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import ManageStudnet from "../StudentManagement/index";
-import NotifyModal from "../Notifications/NotifyModal.jsx";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
@@ -42,15 +40,8 @@ const Layout = () => {
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  const [toggleNotification, setToggleNotification] = useState(false);
-  const [notificationLoading, setNotificationLoading] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
-  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
-  const [notificationData, setNotificationData] = useState({});
 
-  const ToogleSideBar = (index) => {
-    setOpenSideBar(index);
-  };
 
   const fetchFollowUpNotification = async () => {
     const notificationRes = await handleFetchNotificationList(
@@ -88,7 +79,6 @@ const Layout = () => {
       className="flex justify-start items-start font-poppins overflow-x-hidden"
       onClick={() => {
         setToggleMessage(false);
-        setToggleNotification(false);
       }}
     >
       <div className="fixed top-0 left-0 overflow-x-hidden">
@@ -100,10 +90,6 @@ const Layout = () => {
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
-          toggleNotification={toggleNotification}
-          setToggleNotification={setToggleNotification}
-          notificationLoading={notificationLoading}
-          setNotificationLoading={setNotificationLoading}
         />
       </div>
       <div
@@ -111,26 +97,6 @@ const Layout = () => {
           openSideBar ? "w-[calc(100vw-80px)]" : "w-[calc(100vw-277px)]"
         }`}
       >
-        {/* <div
-          onClick={() => ToogleSideBar(!openSideBar)}
-          className="w-16 h-14 absolute top-3 z-[999999]"
-        >
-          {openSideBar ? (
-            <img
-              src={Ham}
-              title="Show sidebar"
-              alt=""
-              className="w-8 m-auto cursor-pointer"
-            />
-          ) : (
-            <img
-              src={Cross}
-              title="Hide sidebar"
-              alt=""
-              className="w-10 m-auto cursor-pointer"
-            />
-          )}
-        </div> */}
         <Routes>
           <Route path="renew-package" element={<RenewPackage />} />
           <Route path={"success/:id"} element={<Success />} />
@@ -169,21 +135,8 @@ const Layout = () => {
         />
       )}
       {/* ----------- For notification pop up ------------- */}
-      {toggleNotification && (
-        <Notifications
-          toggleNotification={toggleNotification}
-          setToggleNotification={setToggleNotification}
-          notificationLoading={notificationLoading}
-          setNotificationLoading={setNotificationLoading}
-          setIsNotifyOpen={setIsNotifyOpen}
-          setNotificationData={setNotificationData}
-        />
-      )}
-      <NotifyModal
-        notificationData={notificationData}
-        isNotifyOpen={isNotifyOpen}
-        setIsNotifyOpen={setIsNotifyOpen}
-      />
+      
+      
     </div>
   );
 };

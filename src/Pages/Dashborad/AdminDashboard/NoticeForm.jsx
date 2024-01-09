@@ -87,7 +87,7 @@ const NoticeForm = () => {
         userDetails?.role_id === 5) && (
         <div>
           {userDetails?.role_id === 3 ? (
-            <div className="lg:w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] ">
+            <div className="lg:w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
               <div className="mb-2 flex justify-between items-center">
                 <h1 className={`text-${isBigScreen ? "xl":"base"} text-start text-white font-poppins m-0 p-0`}>
                   Notice Board
