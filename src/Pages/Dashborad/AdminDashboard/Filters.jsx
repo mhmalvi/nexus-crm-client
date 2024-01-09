@@ -1,5 +1,3 @@
-import { Select } from "antd";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Filters = ({
@@ -7,80 +5,40 @@ const Filters = ({
   filterOptions,
   ratings,
   layout,
-  companyEmployeeList,
   handleFilterLeadList,
   handleStaredLeadsFilter,
-  handleFilterAssignedEmployee,
 }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
 
-  const [employeeOptions, setEmployeeOptions] = useState([]);
-
-  useEffect(() => {
-    const options = [
-      {
-        key: null,
-        value: "All",
-        label: "All",
-      },
-    ];
-
-    if (companyEmployeeList?.length) {
-      companyEmployeeList?.map((employee) =>
-        options.push({
-          key: employee?.user_id,
-          value: employee?.full_name,
-          label: employee?.full_name,
-        })
-      );
-    }
-
-    setEmployeeOptions(options);
-  }, [companyEmployeeList]);
-
-  const handleEmployeeChange = (name) => {
-    handleFilterAssignedEmployee(name);
-  };
-
   return (
-    <div className="flex justify-between ">
-      <div>
-        {layout !== "Payment" && (
-          <div
-            className="py-3 px-7 mt-5 bg-[#c7e9ff]"
-            style={{
-              borderRadius: "20px",
-            }}
-          >
-            <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-              Filters
-            </h1>
-            <div className="flex flex-wrap items-center">
-              {/* Status Filters */}
-              {filterOptions.map((option) => (
-                <div
-                  key={option.id}
-                  onClick={() => handleFilterLeadList(option.id)}
+    <div>
+      {layout !== "Payment" && (
+        <div className="p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]">
+          <h1 className="text-2xl text-white font-normal font-poppins  pt-1">
+            Filters
+          </h1>
+          <div className="grid grid-cols-7 gap-2 w-full">
+            {/* Status Filters */}
+            {filterOptions.map((option) => (
+              <div
+                key={option.id}
+                onClick={() => handleFilterLeadList(option.id)}
+              >
+                <h1
+                  className={`text-xs text-center font-normal border-[1px] border-white font-poppins p-2 cursor-pointer ${
+                    activeFilter === option.id
+                      ? "text-white bg-[#460a94] "
+                      : "text-white bg-transparent"
+                  }  rounded-md`}
                 >
-                  <h1
-                    className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 whitespace-nowrap ${
-                      activeFilter === option.id
-                        ? "text-white bg-black"
-                        : "text-black bg-white"
-                    }  rounded-full`}
-                    style={{
-                      border: "1px solid rgba(124, 141, 181, 0.5)",
-                    }}
-                  >
-                    {option.title}
-                  </h1>
-                </div>
-              ))}
-            </div>
+                  {option.title}
+                </h1>
+              </div>
+            ))}
             {userDetails?.role_id === 1 ||
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4 ? (
-              <div className="flex items-center mt-2">
+              <>
                 {/* Star Filters */}
                 {ratings.map((rate) => (
                   <div
@@ -88,57 +46,19 @@ const Filters = ({
                     onClick={() => handleStaredLeadsFilter(rate?.id)}
                   >
                     <h1
-                      className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                      className={`text-xs text-center border-[1px] border-white font-normal font-poppins p-2 cursor-pointer ${
                         activeFilter === rate?.id
-                          ? "text-white bg-black"
-                          : "text-black bg-white"
-                      }  rounded-full`}
-                      style={{
-                        border: "1px solid rgba(124, 141, 181, 0.5)",
-                      }}
+                          ? "text-white bg-[#460a94]"
+                          : "text-white bg-transparent"
+                      }  rounded-md`}
                     >
                       {rate?.title}
                     </h1>
                   </div>
                 ))}
-              </div>
+              </>
             ) : null}
           </div>
-        )}
-      </div>
-
-      {/* Search Option */}
-      {layout.toLowerCase()?.includes("payment") ? (
-        <div>&nbsp;</div>
-      ) : (
-        <div>
-          {(userDetails?.role_id === 1 ||
-            userDetails?.role_id === 2 ||
-            userDetails?.role_id === 3 ||
-            userDetails?.role_id === 4) && (
-            <div
-              className="px-7 py-8 mt-5 ml-6 bg-[#ffecd2]"
-              style={{
-                borderRadius: "20px",
-              }}
-            >
-              <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
-                Search with Assigned Employee
-              </h1>
-
-              <div>
-                <Select
-                  defaultValue="All"
-                  placeholder="Select Employee"
-                  onChange={handleEmployeeChange}
-                  style={{
-                    width: 200,
-                  }}
-                  options={employeeOptions}
-                />
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>

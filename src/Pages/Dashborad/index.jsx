@@ -1,12 +1,9 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Input, message, Modal } from "antd";
+import { Button, Input, message, Modal, ConfigProvider } from "antd";
 import React, { useEffect, useState } from "react";
-import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  handlePasswordReset,
-} from "../../Components/services/auth";
+import { handlePasswordReset } from "../../Components/services/auth";
 import { Storage } from "../../Components/Shared/utils/store";
 import AdminDashboard from "./AdminDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
@@ -14,7 +11,6 @@ import UserDashboard from "./UserDashboard";
 import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
-
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -37,7 +33,6 @@ const Dashboard = () => {
       }
     }
   }, [passwordDetails, userDetails?.userInfo?.flag]);
-
 
   const handleOk = () => {
     setConfirmLoading(true);
@@ -69,105 +64,75 @@ const Dashboard = () => {
     setPasswordDetails(e?.target?.vaue);
   };
 
-
   return (
-    <div>
-      {/* Password Change Modal */}
-      <Modal
-        title="Change Password"
-        centered
-        visible={toggleChanglePassword}
-        confirmLoading={confirmLoading}
-        footer={[
-          <Button key="submit" type="primary" onClick={handleOk}>
-            Save
-          </Button>,
-        ]}
-      >
-        <div className="font-poppins">
-          <div>
-            <div className="mb-6">
-              <span className="text-sm mb-0.5 font-light">Old Password</span>
-              <Input.Password
-                required
-                value={passwordDetails}
-                onChange={handleChange}
-                placeholder="Old Password"
-                prefix={<UserOutlined />}
-              />
-            </div>
-            <div className="mb-3">
-              <span className="text-sm mb-0.5 font-light">New Password</span>
-              <Input.Password
-                required
-                id="new_password"
-                className="bg-white"
-                placeholder="New Password"
-                prefix={<UserOutlined />}
-              />
-            </div>
+    <div className=" min-h-[100vh] "> 
+        {/* Password Change Modal */}
+        <Modal
+          title="Change Password"
+          centered
+          visible={toggleChanglePassword}
+          confirmLoading={confirmLoading}
+          footer={[
+            <Button key="submit" type="primary" onClick={handleOk}>
+              Save
+            </Button>,
+          ]}
+        >
+          <div className="font-poppins">
             <div>
-              <span className="text-sm mb-0.5 font-light">
-                Re-Type New Password
-              </span>
-              <Input.Password
-                required
-                id="re_new_password"
-                className="bg-white"
-                placeholder="Re-Type New Password"
-                prefix={<UserOutlined />}
-              />
+              <div className="mb-6">
+                <span className="text-sm mb-0.5 font-light">Old Password</span>
+                <Input.Password
+                  required
+                  value={passwordDetails}
+                  onChange={handleChange}
+                  placeholder="Old Password"
+                  prefix={<UserOutlined />}
+                />
+              </div>
+              <div className="mb-3">
+                <span className="text-sm mb-0.5 font-light">New Password</span>
+                <Input.Password
+                  required
+                  id="new_password"
+                  className="bg-white"
+                  placeholder="New Password"
+                  prefix={<UserOutlined />}
+                />
+              </div>
+              <div>
+                <span className="text-sm mb-0.5 font-light">
+                  Re-Type New Password
+                </span>
+                <Input.Password
+                  required
+                  id="re_new_password"
+                  className="bg-white"
+                  placeholder="Re-Type New Password"
+                  prefix={<UserOutlined />}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </Modal>
-      <div className="absolute group right-0 mt-4 mr-4 p-1 rounded-full shadow-md">
-        <Avatar
-          className="rounded-full cursor-pointer mr-1"
-          size="38"
-          name={
-            userDetails?.userInfo?.full_name ||
-            userDetails?.userInfo?.name ||
-            ""
-          }
-        />
-        <span className="px-2">
-          {userDetails?.userInfo?.full_name ||
-            userDetails?.userInfo?.name ||
-            ""}
-        </span>
+        </Modal>
 
-        <div className="hidden group-hover:block min-w-40 h-16 bg-white shadow-md absolute right-0 top-[52px] rounded-md">
-          <div className="flex flex-col p-2 text-xs">
-            <div>
-              {userDetails?.userInfo?.full_name ||
-                userDetails?.userInfo?.name ||
-                ""}
-            </div>
-            <div>{userDetails?.userInfo?.email}</div>
-            <div>
-              {userDetails?.userInfo?.contact_number ||
-                userDetails?.userInfo?.phone_number ||
-                ""}
-            </div>
-          </div>
+        <div className="lg:px-0 2xl:ml-4 2xl:mr-4 h-[100vh] flex justify-center items-center">
+          {userDetails?.userInfo?.role_id && (
+            <>
+              {(userDetails?.userInfo?.role_id === 1 ||
+                userDetails?.userInfo?.role_id === 2) && (
+                <SuperAdminDashboard />
+              )}
+              {(userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ||
+                userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
+              {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
+              {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
+              {userDetails?.userInfo?.role_id === 7 && <ManagerDashboard />}
+              {userDetails?.userInfo?.role_id === 8 && <AccountantDashboard />}
+            </>
+          )}
         </div>
-      </div>
-      <div className="lg:px-8 2xl:ml-12 2xl:mr-16 py-24">
-        {userDetails?.userInfo?.role_id && (
-          <div>
-            {(userDetails?.userInfo?.role_id === 1 ||
-              userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}
-            {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
-            {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
-            {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
-            {userDetails?.userInfo?.role_id === 7 && <ManagerDashboard />}
-            {userDetails?.userInfo?.role_id === 8 && <AccountantDashboard />}
-          </div>
-        )}
-      </div>
     </div>
   );
 };

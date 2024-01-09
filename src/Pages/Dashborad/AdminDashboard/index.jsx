@@ -14,7 +14,6 @@ import {
 } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
-import Calendar from "./Calendar";
 import Filters from "./Filters";
 import { Button, Input, Modal, Space, Tooltip, message } from "antd";
 import Highlighter from "react-highlight-words";
@@ -27,6 +26,11 @@ import {
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
 import ViewLeadCallDetails from "./ViewLeadCallDetails";
+import SearchEmployee from "./SearchEmployee";
+import CountryList from "./CountryList";
+import UserLabel from "./UserLabel";
+import NoticeForm from "./NoticeForm";
+import CalendarSmall from "./CalendarSmall";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -226,7 +230,7 @@ const AdminDashboard = () => {
       render: (id, record, idx) => {
         return (
           <>
-            <Button
+            <button
               loading={assignLoading}
               type="primary"
               size="small"
@@ -234,10 +238,10 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className="rounded-lg !bg-green-500 border-none "
+              className="!rounded-xl !p-2 !bg-[#460a94] border-none flex items-center justify-center "
             >
-              Assign
-            </Button>
+              <p className="p-0 m-0 !text-sm text-white">Assign</p>
+            </button>
           </>
         );
       },
@@ -447,7 +451,6 @@ const AdminDashboard = () => {
         width: 120,
       },
     ];
-
     setTableHeaders([...headers]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -657,80 +660,114 @@ const AdminDashboard = () => {
   });
 
   return (
-    <div>
-      {/* Add Lead Modal */}
-      <Modal
-        visible={isAddLeadFormOpen}
-        onCancel={() => setIsAddLeadFormOpen(false)}
-        footer={false}
-      >
-        <AddLeadForm setIsAddLeadFormOpen={setIsAddLeadFormOpen} />
-      </Modal>
-      <Modal
-        className=""
-        visible={openCallCountDetailsModal}
-        onCancel={() => setOpenCallCountDetailsModal(false)}
-        footer={false}
-      >
-        <ViewLeadCallDetails
-          lead_id={clickedLeadId}
-          setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
+    <div className="w-full max-h-full grid grid-cols-12 gap-5 max-h-[90vh] ">
+      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]">
+        <Modal
+          visible={isAddLeadFormOpen}
+          onCancel={() => setIsAddLeadFormOpen(false)}
+          footer={false}
+        >
+          <AddLeadForm setIsAddLeadFormOpen={setIsAddLeadFormOpen} />
+        </Modal>
+        <Modal
+          className=""
+          visible={openCallCountDetailsModal}
+          onCancel={() => setOpenCallCountDetailsModal(false)}
+          footer={false}
+        >
+          <ViewLeadCallDetails
+            lead_id={clickedLeadId}
+            setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
+          />
+        </Modal>
+        <div className="grid grid-cols-5 gap-5">
+          <div className="col-span-3">
+            <Filters
+              layout="Dashboard"
+              handleFilterLeadList={handleFilterLeadList}
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+              activeStars={activeStars}
+              filterOptions={
+                userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4
+                  ? adminFilterOptions
+                  : salesEmployeesFilterOptions
+              }
+              ratings={ratings}
+              handleStaredLeadsFilter={handleStaredLeadsFilter}
+              setActiveStars={setActiveStars}
+              setSearchInput={setSearchInput}
+              companyEmployeeList={companyEmployeeList}
+              handleFilterAssignedEmployee={handleFilterAssignedEmployee}
+            />
+          </div>
+          <div className="col-span-2">
+            <CountryList table_title="Lead List" />
+          </div>
+        </div>
+        <UpdatedTable
+          table_title="Lead List"
+          tableHeaders={tableHeaders}
+          data={leadData}
+          companyEmployeeList={companyEmployeeList}
+          filterOptions={
+            userDetails?.userInfo?.role_id === 3 ||
+            userDetails?.userInfo?.role_id === 4
+              ? adminFilterOptions
+              : salesEmployeesFilterOptions
+          }
+          ratings={ratings}
+          activeFilter={activeFilter}
+          searchInput={searchInput}
+          handleSyncLeadsReq={handleSyncLeadsReq}
+          setIsAddLeadFormOpen={setIsAddLeadFormOpen}
+          setSyncLeads={setSyncLeads}
+          syncLeads={syncLeads}
+          salesOptions={salesOptions}
+          setSalesOptions={setSalesOptions}
+          selectedSales={selectedSales}
+          setSelectedSales={setSelectedSales}
         />
-      </Modal>
-
-      <Calendar
-        filterDate={filterDate}
-        setFilterDate={setFilterDate}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      />
-      <Filters
-        layout="Dashboard"
-        handleFilterLeadList={handleFilterLeadList}
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-        activeStars={activeStars}
-        filterOptions={
-          userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4
-            ? adminFilterOptions
-            : salesEmployeesFilterOptions
-        }
-        ratings={ratings}
-        handleStaredLeadsFilter={handleStaredLeadsFilter}
-        setActiveStars={setActiveStars}
-        setSearchInput={setSearchInput}
-        companyEmployeeList={companyEmployeeList}
-        handleFilterAssignedEmployee={handleFilterAssignedEmployee}
-      />
-
-      <UpdatedTable
-        table_title="Lead List"
-        tableHeaders={tableHeaders}
-        data={leadData}
-        companyEmployeeList={companyEmployeeList}
-        filterOptions={
-          userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4
-            ? adminFilterOptions
-            : salesEmployeesFilterOptions
-        }
-        ratings={ratings}
-        activeFilter={activeFilter}
-        searchInput={searchInput}
-        handleSyncLeadsReq={handleSyncLeadsReq}
-        setIsAddLeadFormOpen={setIsAddLeadFormOpen}
-        setSyncLeads={setSyncLeads}
-        syncLeads={syncLeads}
-        salesOptions={salesOptions}
-        setSalesOptions={setSalesOptions}
-        selectedSales={selectedSales}
-        setSelectedSales={setSelectedSales}
-      />
+        {/* <Calendar
+            filterDate={filterDate}
+            setFilterDate={setFilterDate}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+          /> */}
+      </div>
+      <div className="col-span-3 grid grid-cols-1 gap-5 max-h-[90vh]">
+        <div className="w-full flex items-center justify-between  p-3 rounded-xl min-h-[5vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] z-50">
+          <h1 className="m-0 p-0 text-white">Notification</h1>
+          <UserLabel />
+        </div>
+        <div className="w-full">
+          <SearchEmployee
+            layout="Dashboard"
+            companyEmployeeList={companyEmployeeList}
+            handleFilterAssignedEmployee={handleFilterAssignedEmployee}
+          />
+        </div>
+        <div>
+          <NoticeForm />
+        </div>
+        <div>
+          <CalendarSmall
+            filterDate={filterDate}
+            setFilterDate={setFilterDate}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+          />
+        </div>
+      </div>
     </div>
   );
 };

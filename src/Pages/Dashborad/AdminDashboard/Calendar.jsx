@@ -1,16 +1,7 @@
-import { DatePicker, Dropdown, Menu, message, Modal, Space } from "antd";
+import { DatePicker, Dropdown, Menu, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import Slider from "react-slick";
-
-import {
-  handleAddNotice,
-  handleDeleteNotices,
-  handleFetchNotices,
-} from "../../../Components/services/company";
-import Notice from "./Notice";
-
 const Calendar = ({
   filterDate,
   setFilterDate,
@@ -26,30 +17,13 @@ const Calendar = ({
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
   const [monthPicker, setMonthPicker] = useState(false);
   const [yearPicker, setYearPicker] = useState(false);
-  const [syncNotifications, setSyncNotifications] = useState(false);
-  const [noticeTitle, setNoticeTitle] = useState("");
-  const [noticeDescription, setNoticeDescription] = useState("");
-  const [notices, setNotices] = useState([]);
-  const [showNotices, setShowNotices] = useState(false);
-  const [syncNotices, setSyncNotices] = useState(true);
-
-  const userDetails = useSelector((state) => state?.user?.userInfo);
-
-  useEffect(() => {
-    (async () => {
-      const response = await handleFetchNotices(userDetails?.client_id);
-      if (response?.data) {
-        setNotices(response?.data?.filter((notice) => notice.status));
-      }
-    })();
-  }, [userDetails, syncNotices]);
 
   const slideMonthRef = useRef();
   const slideDateRef = useRef();
 
   const februaryDate = dayjs().$y % 4 === 0 ? 29 : 28;
   const datesInMonth = [
-    { key: 1, month: "Januyary", dates: 31 },
+    { key: 1, month: "January", dates: 31 },
     { key: 2, month: "February", dates: februaryDate },
     { key: 3, month: "March", dates: 31 },
     { key: 4, month: "April", dates: 30 },
@@ -147,26 +121,6 @@ const Calendar = ({
     setSelectedMonth(dateString.slice(5));
   };
 
-  const handleSendNotice = async (e) => {
-    e.preventDefault();
-    if (noticeDescription !== "") {
-
-      const handleAddNotile = await handleAddNotice(
-        userDetails?.client_id,
-        noticeTitle,
-        noticeDescription
-      );
-
-      if (handleAddNotile?.status) {
-        setSyncNotices(!syncNotices);
-        message.success("Notice updated Successfully");
-      }
-      setSyncNotifications(!syncNotifications);
-      setNoticeTitle("");
-      setNoticeDescription("");
-    }
-  };
-
   const handleClearDate = () => {
     setFilterDate("");
     setSelectedDay("");
@@ -175,11 +129,6 @@ const Calendar = ({
     slideMonthRef.current.slickGoTo(dayjs().month());
     slideDateRef.current.slickGoTo(dayjs().date());
     setCurrentDate(dayjs().date() - 1);
-  };
-
-  const handleDeleteNoticeReq = async (id) => {
-    const response = await handleDeleteNotices(id);
-    if (response?.status) setSyncNotices(!syncNotices);
   };
 
   return (
@@ -203,7 +152,7 @@ const Calendar = ({
           </h1>
         </div>
 
-        <div
+        <div  
           className="relative flex justify-center items-center"
           style={{
             width: "42vw",
@@ -338,7 +287,6 @@ const Calendar = ({
           }}
         >
           <div className="ml-14 mb-5">
-
             {/* Creating the dates aray to map */}
             <Slider {...dateSettings} ref={slideDateRef}>
               {Array.from(
@@ -377,113 +325,6 @@ const Calendar = ({
           </div>
         </div>
       </div>
-
-      <Modal
-        visible={showNotices}
-        onCancel={() => setShowNotices(false)}
-        footer={null}
-        width="1000px"
-      >
-        <div className="">
-          <div className="font-poppins text-base font-semibold mb-6">
-            Notices
-          </div>
-          {notices.length ? (
-            <div>
-              {notices?.map((notice) => (
-                <Notice
-                  key={notice.id}
-                  notice={notice}
-                  handleDeleteNoticeReq={handleDeleteNoticeReq}
-                />
-              ))}
-            </div>
-          ) : (
-            <h1 className="font-poppins text-center">No Notices</h1>
-          )}
-        </div>
-      </Modal>
-
-      {(userDetails?.role_id === 3 ||
-        userDetails?.role_id === 4 ||
-        userDetails?.role_id === 5) && (
-        <div>
-          {userDetails?.role_id === 3 ? (
-            <div
-              className="lg:w-64 xl:w-84 mx-0.5 py-2.5 px-6 mt-6 bg-[#e2f3ff]"
-              style={{
-                borderRadius: "20px",
-              }}
-            >
-              <div className="py-2.5 border-b flex flex-col justify-center items-center">
-                <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
-                  Notice Board
-                </h1>
-                <button
-                  onClick={() => {
-                    setShowNotices(true);
-                  }}
-                  className="bg-black px-4 py-2 text-white rounded-lg"
-                >
-                  Preview Notices
-                </button>
-              </div>
-              <div>
-                <form
-                  onSubmit={(e) => handleSendNotice(e)}
-                  className="flex items-start flex-col"
-                >
-                  <input
-                    className="w-full px-2 py-1 rounded-md bg-transparent outline-none border mb-3"
-                    type="text"
-                    placeholder="Notice Title"
-                    value={noticeTitle}
-                    onChange={(e) => setNoticeTitle(e.target.value)}
-                  />
-                  <textarea
-                    className="w-full outline-none border px-2 py-1 rounded-md bg-transparent"
-                    name=""
-                    style={{ resize: "none" }}
-                    id="notice_input"
-                    value={noticeDescription}
-                    onChange={(e) => setNoticeDescription(e.target.value)}
-                    rows="3"
-                    placeholder="Details"
-                  ></textarea>
-                  <input
-                    className="px-2.5 py-1 mt-2 font-poppins font-semibold text-xs leading-5 cursor-pointer border text-white bg-black rounded-md"
-                    type="submit"
-                    value="Post"
-                  />
-                </form>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div
-                className="lg:w-64 h-60 xl:w-84 mx-0.5 py-2.5 px-6 border mt-6"
-                style={{
-                  borderRadius: "20px",
-                }}
-              >
-                <div className="py-2.5 border-b">
-                  <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
-                    Notice Board
-                  </h1>
-                </div>
-                <div className="mt-14 flex items-center justify-center">
-                  <button
-                    onClick={() => setShowNotices(true)}
-                    className="bg-black px-4 py-2 text-white rounded-lg"
-                  >
-                    Preview Notices
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };
