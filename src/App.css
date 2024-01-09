@@ -5,7 +5,6 @@
   background-size: auto;
 }
 
-
 .font-poppins {
   font-family: "Poppins";
 }
@@ -20,7 +19,7 @@ table {
   table-layout: fixed;
   font-family: "Poppins";
 }
-.filterEmployee .ant-select{
+.filterEmployee .ant-select {
   width: 100%;
   border-radius: 10px !important;
 }
@@ -29,13 +28,13 @@ table {
   width: 100%;
   border-radius: 10px !important;
 }
-.selectSales{
+.selectSales {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.selectSales .ant-select{
-  height:100%;
+.selectSales .ant-select {
+  height: 100%;
   border-radius: 8px !important;
   overflow: hidden;
 }
@@ -49,6 +48,9 @@ table {
   overflow: hidden;
   background-color: transparent !important;
 }
+.updatedTable .ant-table-body {
+  overflow: hidden !important;
+}
 .updatedTable th {
   padding: 18px 18px 18px 0;
   text-align: left;
@@ -59,6 +61,10 @@ table {
   border-bottom: 1px solid #e6edff;
   background-color: #0000002f !important;
 }
+/* .updatedTable tbody tr td {
+  padding: 8px;
+} */
+
 .updatedTable .ant-pagination {
   display: flex;
   justify-content: center;
@@ -218,17 +224,17 @@ table {
   color: white !important;
 }
 
-.settingsSidebar{
-  width: 100% ;
+.settingsSidebar {
+  width: 100%;
   padding-left: 10px;
 }
 
-.settingsSidebar .ant-menu-submenu{
-  width:100%;
-  position:relative;
+.settingsSidebar .ant-menu-submenu {
+  width: 100%;
+  position: relative;
 }
-.settingsSidebar .ant-menu-submenu .ant-menu-title-content .pl-1{
-  width:75%;
+.settingsSidebar .ant-menu-submenu .ant-menu-title-content .pl-1 {
+  width: 75%;
 }
 
 td {
