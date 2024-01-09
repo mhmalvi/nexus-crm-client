@@ -52,8 +52,9 @@ const UpdatedTable = ({
         }, 1000);
       }
     })();
-  }, [data, data?.length, dispatch]);
+  }, [data, dispatch]);
 
+  // Payment history
   useEffect(() => {
     if (table_title !== "Payment History") {
       if (!searchInput?.length) {
@@ -74,7 +75,7 @@ const UpdatedTable = ({
     } else {
       setList(data);
     }
-  }, [data, searchInput, activeFilter, userDetails, table_title]);
+  }, [table_title, searchInput, userDetails.role_id, activeFilter, data]);
 
   const handleLeadFileUploadReq = useCallback(
     async (e) => {
@@ -114,7 +115,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  }, [userDetails?.role_id, data]);
+  },[userDetails?.role_id]);
 
   useEffect(() => {
     (async () => {

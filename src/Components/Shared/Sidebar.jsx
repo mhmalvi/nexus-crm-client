@@ -9,23 +9,13 @@ import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
 import Cross from "../../assets/Images/cross.png";
 import Ham from "../../assets/Images/hamburger.png";
-const qq_Logo = require("../../../src/assets/Icons/qq_logo_july.jpeg");
+const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
 
-const Sidebar = ({
-  active,
-  setActive,
-  openSideBar,
-  setOpenSideBar,
-  toggleNotification,
-  setToggleNotification,
-  setNotificationLoading,
-}) => {
+const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
-  const notifications = useSelector(
-    (state) => state?.notifications?.notifications
-  );
+
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
     (state) => state?.user?.companyId,
@@ -106,7 +96,7 @@ const Sidebar = ({
         onClick={() => ToogleSideBar(!openSideBar)}
         className={`w-${
           openSideBar ? "full" : "16"
-        } ease-in duration-200 absolute top-3 right-0 z-[999999]`}
+        } ease-in  absolute top-3 right-0 z-[999999]`}
       >
         {openSideBar ? (
           <img
@@ -129,8 +119,8 @@ const Sidebar = ({
           <div
             className={`h-[100px] w-[100px]
             }]  ${
-              openSideBar ? " rounded-none":"rounded-full"
-            } ease-in duration-200 overflow-hidden flex items-center justify-center bg-white`}
+              openSideBar ? " rounded-none" : "rounded-full"
+            } ease-in  overflow-hidden flex items-center justify-center bg-white`}
           >
             <img
               src={companyDetails?.company_logo}
@@ -143,10 +133,9 @@ const Sidebar = ({
           <div>
             <NavLink
               to={"/dashboard"}
-              className="flex items-center justify-between text-base cursor-pointer my-5 py-0.5 "
-              style={{
-                color: `${active === "dashboard" ? "#7037FF" : "#FFFFFF"}`,
-              }}
+              className={`${
+                active === "dashboard" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+              } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
               onClick={() => setActive("dashboard")}
             >
               <div className="flex w-full items-center justify-around ">
@@ -154,13 +143,13 @@ const Sidebar = ({
                 {openSideBar ? (
                   ""
                 ) : (
-                  <span className="ease-in duration-200 w-3/4 font-medium font-poppins m-0 p-0">
+                  <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
                     Dashboard
                   </span>
                 )}
               </div>
               {active === "dashboard" && (
-                <div className="active-option text-brand-color bg-brand-color">
+                <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                   |
                 </div>
               )}
@@ -174,10 +163,9 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/overview"}
-                className="flex items-center justify-between text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "overview" ? "#7037FF" : "#FFFFFF"}`,
-                }}
+                className={`${
+                  active === "overview" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+                } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                 onClick={() => setActive("overview")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -191,7 +179,7 @@ const Sidebar = ({
                   )}
                 </div>
                 {active === "overview" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -207,62 +195,11 @@ const Sidebar = ({
             userDetails?.userInfo?.role !== 1 &&
             userDetails?.userInfo?.role !== 2 && (
               <div>
-                <div
-                  className="flex items-center justify-between text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${toggleNotification ? "#7037FF" : "#FFFFFF"}`,
-                  }}
-                  onClick={(e) => {
-                    setToggleNotification(!toggleNotification);
-                    setNotificationLoading(true);
-                    e.stopPropagation();
-                  }}
-                >
-                  <div className="flex w-full items-center justify-around">
-                    <Icons.Bell className="w-4" />
-                    {openSideBar ? (
-                      ""
-                    ) : (
-                      <span className="w-3/4 font-medium font-poppins">
-                        Notifications
-                      </span>
-                    )}
-                  </div>
-
-                  {notifications?.filter((notifi) => notifi?.status)?.length !==
-                  0 ? (
-                    <div className="relative right-0 flex justify-center items-center">
-                      <div
-                        className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                        style={{
-                          background: "#FF3B30",
-                        }}
-                      >
-                        {
-                          notifications?.filter((notifi) => notifi?.status)
-                            ?.length
-                        }
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            )}
-
-          {userDetails?.userInfo?.role_id !== 10 &&
-            userDetails?.userInfo?.role_id !== 9 &&
-            userDetails?.userInfo?.role_id !== 8 &&
-            userDetails?.userInfo?.role_id !== 7 &&
-            userDetails?.userInfo?.role_id !== 6 &&
-            userDetails?.userInfo?.role !== 1 &&
-            userDetails?.userInfo?.role !== 2 && (
-              <div>
                 <NavLink
                   to={"/payments"}
-                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${active === "payments" ? "#7037FF" : "#FFFFFF"}`,
-                  }}
+                  className={`${
+                    active === "payments" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+                  } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                   onClick={() => setActive("payments")}
                 >
                   <div className="flex w-full items-center justify-around">
@@ -276,7 +213,7 @@ const Sidebar = ({
                     )}
                   </div>
                   {active === "payments" && (
-                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                       |
                     </div>
                   )}
@@ -289,10 +226,9 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/campaigns"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "campaigns" ? "#7037FF" : "#FFFFFF"}`,
-                }}
+                className={`${
+                  active === "campaigns" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+                } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                 onClick={() => setActive("campaigns")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -306,7 +242,7 @@ const Sidebar = ({
                   )}
                 </div>
                 {active === "campaigns" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -319,10 +255,9 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/courses"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "courses" ? "#7037FF" : "#FFFFFF"}`,
-                }}
+                className={`${
+                  active === "courses" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+                } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                 onClick={() => setActive("courses")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -336,7 +271,7 @@ const Sidebar = ({
                   )}
                 </div>
                 {active === "courses" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -352,26 +287,23 @@ const Sidebar = ({
                 <div>
                   <NavLink
                     to={"/salesEmployee"}
-                    className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                    style={{
-                      color: `${
-                        active === "salesEmployee" ? "#7037FF" : "#FFFFFF"
-                      }`,
-                    }}
+                    className={`${
+                      active === "salesEmployee"
+                        ? "text-[#FFFFFF] "
+                        : "text-[#B3B3B3]"
+                    } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                     onClick={() => setActive("salesEmployee")}
                   >
                     <div className="flex w-full items-center justify-around">
                       <Icons.MoneyCheck className="w-5" />
-                      {openSideBar ? (
-                        ""
-                      ) : (
-                        <span className="w-3/4 font-medium font-poppins bg-[#fc00ff]">
+                     
+                        <span className={`w-3/4 text-[${openSideBar ? "16px" :"0px"}] ease-in duration-100 font-medium font-poppins bg-[#fc00ff]`}>
                           Sales Employee
                         </span>
-                      )}
+                     
                     </div>
                     {active === "salesEmployee" && (
-                      <div className="ml-auto active-option text-brand-color bg-brand-color">
+                      <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                         |
                       </div>
                     )}
@@ -391,12 +323,11 @@ const Sidebar = ({
               <div>
                 <NavLink
                   to={"/salesEmployee"}
-                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${
-                      active === "salesEmployee" ? "#7037FF" : "#FFFFFF"
-                    }`,
-                  }}
+                  className={`${
+                    active === "salesEmployee"
+                      ? "text-[#FFFFFF]"
+                      : "text-[#B3B3B3]"
+                  } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                   onClick={() => setActive("salesEmployee")}
                 >
                   <div className="flex w-full items-center justify-around">
@@ -410,7 +341,7 @@ const Sidebar = ({
                     )}
                   </div>
                   {active === "salesEmployee" && (
-                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                       |
                     </div>
                   )}
@@ -427,10 +358,9 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/calender"}
-                className="flex items-center text-base cursor-pointer mt-1 my-5 py-0.5"
-                style={{
-                  color: `${active === "calender" ? "#7037FF" : "#FFFFFF"}`,
-                }}
+                className={`${
+                  active === "calender" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+                } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                 onClick={() => setActive("calender")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -450,7 +380,7 @@ const Sidebar = ({
                   )}
                 </div>
                 {active === "calender" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -464,7 +394,7 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/requisitions"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${active === "requisitions" ? "#7037FF" : "#FFFFFF"}`,
                 }}
@@ -478,7 +408,7 @@ const Sidebar = ({
                   </span>
                 </div>
                 {active === "requisitions" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -493,7 +423,7 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/studentManagement"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
                     active === "studentManagement" ? "#7037FF" : "#FFFFFF"
@@ -508,7 +438,7 @@ const Sidebar = ({
                   </span>
                 </div>
                 {active === "studentManagement" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -521,7 +451,7 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/courseManagement"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
                     active === "courseManagement" ? "#7037FF" : "#FFFFFF"
@@ -534,7 +464,7 @@ const Sidebar = ({
                   Course Management
                 </span>
                 {active === "courseManagement" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -545,7 +475,7 @@ const Sidebar = ({
             <div>
               <NavLink
                 to={"/paymentSlip"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${active === "paymentSlip" ? "#7037FF" : "#FFFFFF"}`,
                 }}
@@ -556,7 +486,7 @@ const Sidebar = ({
                   Payment Slip
                 </span>
                 {active === "paymentSlip" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
                     |
                   </div>
                 )}
@@ -567,11 +497,9 @@ const Sidebar = ({
 
           {userDetails?.userInfo?.role_id !== 10 && (
             <Menu
-              style={{
-                color: `${active === "settings" ? "#7037FF" : "#FFFFFF"}`,
-                fontSize: 16,
-              }}
-              className="!bg-transparent settingsSidebar"
+              className={`${
+                active === "settings" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+              } !bg-transparent settingsSidebar hover:text-[#ffffff] `}
               onClick={ToggleProfile}
               items={[
                 {
@@ -580,14 +508,22 @@ const Sidebar = ({
                       {openSideBar ? (
                         ""
                       ) : (
-                        <span style={{ color: "#FFFFFF" }} className="pl-1">
+                        <span
+                          className={`${
+                            active === "settings"
+                              ? "text-[#FFFFFF]"
+                              : "text-[#B3B3B3]"
+                          } pl-4 `}
+                        >
                           Settings
                         </span>
                       )}
                     </>
                   ),
                   key: "menu",
-                  icon: <Icons.Settings className="inline text-white" />,
+                  icon: (
+                    <Icons.Settings className="inline text-[#b3b3b3] hover:text-[#ffffff]" />
+                  ),
                   children: [
                     { label: "Profile Settings", key: "profile" },
 
@@ -604,29 +540,33 @@ const Sidebar = ({
           )}
 
           <div
-            className="flex items-center text-base cursor-pointer my-4 py-1.5"
+            className="flex items-center justify-center text-base cursor-pointer my-4 py-1.5"
             onClick={handleLogout}
           >
-            <div className="flex w-full items-center justify-around">
+            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-xl">
               <Icons.LogOut className="text-[#FFFFFF]" />
               {openSideBar ? (
                 ""
               ) : (
-                <span className="w-3/4 font-medium font-poppins text-[#FFFFFF]">
+                <span className=" font-medium font-poppins text-[#FFFFFF] px-2">
                   Log out
                 </span>
               )}
-            </div>
+            </button>
           </div>
-          <div className="flex flex-col justify-end h-[200px]">
-            <div >
+        </div>
+        <div className="flex flex-col justify-center items-center h-[200px]">
+          {openSideBar ? (
+            ""
+          ) : (
+            <div className="flex flex-col justify-center items-center">
               <img
                 className="w-full h-full"
                 src={qq_Logo}
                 alt="QuadQue Leads"
               />
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -14,12 +14,12 @@ const Filters = ({
   return (
     <div>
       {layout !== "Payment" && (
-        <div className="p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]">
+        <div className="h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
           <h1 className="text-2xl text-white font-normal font-poppins  pt-1">
             Filters
           </h1>
           <div
-            className={`grid grid-cols-${isBigScreen ? "7" : "6"} gap-1 w-full`}
+            className={`grid grid-cols-${isBigScreen ? "7" : "6"} gap-2 w-full`}
           >
             {/* Status Filters */}
             {filterOptions.map((option) => (

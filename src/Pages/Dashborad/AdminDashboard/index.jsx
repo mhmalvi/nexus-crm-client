@@ -6,6 +6,10 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+import Icons from "../../../Components/Shared/Icons";
+import Notifications from "../../Notifications/Notification.jsx";
+import NotifyModal from "../../Notifications/NotifyModal.jsx";
+
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
@@ -38,10 +42,13 @@ const AdminDashboard = () => {
 
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
-
+  const notifications = useSelector(
+    (state) => state?.notifications?.notifications
+  );
   const [activeFilter, setActiveFilter] = useState(
     userDetails?.userInfo?.role_id === 5 ? 8 : 0
   );
+
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
   const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
@@ -65,7 +72,12 @@ const AdminDashboard = () => {
   const [assignLoading, setAssignLoading] = useState(false);
   const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
     useState(false);
+  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState({});
+  const [toggleNotification, setToggleNotification] = useState(false);
+  const [notificationLoading, setNotificationLoading] = useState(false);
   let [clickedLeadId, setClickedLeadId] = useState("");
+
   const navigate = useNavigate();
 
   const memoizedFetchLeads = useMemo(
@@ -129,6 +141,7 @@ const AdminDashboard = () => {
     }
   }, [filterDate, leadList]);
 
+  // Sales Option
   useEffect(() => {
     (async () => {
       const res = await handleGetSalesAdmin();
@@ -663,7 +676,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full max-h-full grid grid-cols-12 gap-5 max-h-[90vh] ">
-      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]">
+      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -733,22 +746,62 @@ const AdminDashboard = () => {
             setSelectedSales={setSelectedSales}
           />
         </div>
-        {/* <Calendar
-            filterDate={filterDate}
-            setFilterDate={setFilterDate}
-            selectedDay={selectedDay}
-            setSelectedDay={setSelectedDay}
-            selectedMonth={selectedMonth}
-            setSelectedMonth={setSelectedMonth}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-          /> */}
       </div>
-      <div className={`col-span-3 grid grid-cols-1 gap-${isBigScreen ? "5": "2"} max-h-[90vh]`}>
-        <div className="w-full flex items-center justify-between  p-3 rounded-xl min-h-[5vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] z-50">
-          <h1 className="m-0 p-0 text-white">Notification</h1>
+      <div
+        className={`col-span-3 grid grid-cols-1 relative gap-${
+          isBigScreen ? "5" : "2"
+        } min-h-[85vh]`}
+      >
+        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[5vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] z-50">
+          <div
+            className={`${
+              toggleNotification ? "bg-white rounded-full " : ""
+            } ease-in duration-200  m-0 p-2 cursor-pointer hover:scale-105`}
+          >
+            <Icons.Bell
+              className={`${
+                toggleNotification ? "text-black" : "text-white"
+              } w-4 `}
+              onClick={(e) => {
+                setToggleNotification(!toggleNotification);
+                setNotificationLoading(true);
+                e.stopPropagation();
+                console.log("clicked");
+              }}
+            />
+            {notifications?.filter((notifi) => notifi?.status)?.length !== 0 ? (
+              <div className="relative right-0 flex justify-center items-center">
+                <div
+                  className=" rounded-full text-white text-xs font-poppins"
+                  style={{
+                    background: "#FF3B30",
+                  }}
+                >
+                  {notifications?.filter((notifi) => notifi?.status)?.length}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
           <UserLabel />
         </div>
+        {toggleNotification && (
+          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-xl backdrop-blur-3xl z-50 mt-16 overflow-x-hidden ">
+            <Notifications
+              toggleNotification={toggleNotification}
+              setToggleNotification={setToggleNotification}
+              notificationLoading={notificationLoading}
+              setNotificationLoading={setNotificationLoading}
+              setIsNotifyOpen={setIsNotifyOpen}
+              setNotificationData={setNotificationData}
+            />
+            <NotifyModal
+              notificationData={notificationData}
+              isNotifyOpen={isNotifyOpen}
+              setIsNotifyOpen={setIsNotifyOpen}
+            />
+          </div>
+        )}
         <div className="w-full">
           <SearchEmployee
             layout="Dashboard"

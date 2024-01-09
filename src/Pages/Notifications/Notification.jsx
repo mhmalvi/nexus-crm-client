@@ -78,10 +78,7 @@ const Notification = ({
   return (
     <div>
       <div
-        className="mt-7.5 overflow-y-auto "
-        style={{
-          maxHeight: "65vh",
-        }}
+        className="overflow-y-auto"
       >
         {notificationLoading ? (
           <div className=" mt-6 h-8">
@@ -109,10 +106,10 @@ const Notification = ({
               setIsNotifyOpen(true);
             }}
             key={i}
-            className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
+            className="ease-in duration-200 py-3 px-3 cursor-pointer hover:bg-[#4a0f97]"
           >
-            <div className="flex justify-between items-start ">
-              <div className="text-lg leading-7 font-poppins font-semibold flex items-center">
+            <div className="flex justify-between items-start">
+              <div className="text-base font-poppins font-semibold flex items-center">
                 <span>
                   {notification?.priority ? (
                     <Icons.Bell
@@ -122,13 +119,12 @@ const Notification = ({
                     />
                   ) : null}
                 </span>
-                <span>{notification?.title}</span>
+                <span className="text-white">{notification?.title}</span>
               </div>
-
               {/* Date & Time */}
               <div>
                 <span
-                  className="font-medium text-opacity-50 leading-4 mr-1.5"
+                  className="font-medium text-white mr-1.5"
                   style={{
                     fontSize: "10px",
                   }}
@@ -137,9 +133,9 @@ const Notification = ({
                 </span>
               </div>
             </div>
-            <div className="flex justify-between items-start mb-5 mt-2">
+            <div className="flex justify-between items-start py-2 border-b-[0.5px] border-gray-500">
               <div>
-                <p className="text-sm leading-6 font-medium font-poppins mb-0">
+                <p className="text-sm text-white font-medium font-poppins mb-0">
                   {notification?.description}
                 </p>
               </div>
@@ -147,13 +143,13 @@ const Notification = ({
                 <Icons.Read
                   className={` ${
                     !notification.status
-                      ? "text-brand-color"
-                      : "text-black text-opacity-25"
+                      ? "text-[#00ff00]"
+                      : "text-gray-500"
                   }`}
                 />
               </div>
             </div>
-            <hr onClick={(e) => e.stopPropagation()} />
+            {/* <hr onClick={(e) => e.stopPropagation()} /> */}
           </div>
         ))}
       </div>

@@ -50,7 +50,7 @@ const SearchEmployee = ({
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) && (
             <div
-              className="px-3 py-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]"
+              className="px-3 py-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]"
               
             >
               <h1 className={`text-${isBigScreen ? "xl":"base"} font-normal font-poppins text-white`}>
