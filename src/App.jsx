@@ -34,7 +34,7 @@ import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 
 function App() {
   return (
-    <div>
+    <div className="dashboard-background">
       <Routes>
         <Route path="*" element={<Layout/>}>
           <Route path="dashboard" element={<Dashboard />} />

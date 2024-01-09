@@ -10,6 +10,7 @@ import {
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
 import { addLeads } from "../../../features/Leads/leadsSlice";
+import "../../../App.css";
 
 const UpdatedTable = ({
   table_title,
@@ -130,41 +131,12 @@ const UpdatedTable = ({
   }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
 
   return (
-    <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
+    <div className="!rounded-xl mt-12">
       <div>
         <div className="flex justify-between items-center">
-          <div className="flex items-start">
-            <div>
-              <h1 className="text-xl leading-7 font-poppins font-semibold">
-                {table_title}
-              </h1>
-            </div>
-            <div className="ml-6">
-              <CSVLink
-                data={list?.length ? list : "Empty"}
-                target="_blank"
-                filename={
-                  typeof activeFilter === "number"
-                    ? `${
-                        filterOptions?.find(
-                          (option) => option.id === activeFilter
-                        )?.title
-                      }.csv`
-                    : table_title
-                }
-              >
-                <div
-                  className="bg-black text-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black"
-                  style={{
-                    fontSize: "10px",
-                  }}
-                >
-                  Export CSV
-                </div>
-              </CSVLink>
-            </div>
-          </div>
-
+          <h1 className="text-2xl text-white px-3 m-0 font-poppins">
+            {table_title}
+          </h1>
           <div className="flex items-center">
             {(userDetails?.role_id === 1 || userDetails?.role_id === 3) && (
               <>
@@ -172,14 +144,14 @@ const UpdatedTable = ({
                 window.location.pathname.includes("payments") ? (
                   ""
                 ) : (
-                  <div className="mr-4">
+                  <div className="mr-4 selectSales">
                     <Select
                       defaultValue={""}
                       onChange={(v) => {
                         localStorage.setItem("sales_id", v);
                       }}
                       options={salesOptions}
-                      placeholder="Select Sales"
+                      placeholder="Select Sales ▼"
                     />
                   </div>
                 )}
@@ -188,11 +160,11 @@ const UpdatedTable = ({
             {userDetails?.role_id === 5 && (
               <div className="mr-4">
                 <Select
-                  className=" min-w-[150px]"
+                  className=" min-w-[150px] selectSales"
                   defaultValue={""}
                   onChange={onSelectCompanyData}
                   options={companyList}
-                  placeholder="Select Company"
+                  placeholder="Select Company ▼"
                 />
               </div>
             )}
@@ -206,14 +178,14 @@ const UpdatedTable = ({
                 >
                   <div
                     htmlFor="upload_lead_file"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#76bfff] text-white`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
                   >
                     Upload File
                   </div>
                 </Upload>
 
                 <Tooltip align={"top"} title="Add lead by uploading file">
-                  <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                  <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
                     ?
                   </span>
                 </Tooltip>
@@ -226,13 +198,13 @@ const UpdatedTable = ({
                   <div className="mr-4">
                     <button
                       id="add_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#ff9d88] text-white`}
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
                       Add Lead
                     </button>
                     <Tooltip align={"top"} title="Add lead manually">
-                      <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                      <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
                         ?
                       </span>
                     </Tooltip>
@@ -251,7 +223,7 @@ const UpdatedTable = ({
                     <div className="mr-12">
                       <button
                         id="sync_leads"
-                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#a57cff] text-white`}
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
                         onClick={() => handleSyncLeadsReq()}
                       >
                         Sync Leads
@@ -260,7 +232,7 @@ const UpdatedTable = ({
                         align={"top"}
                         title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
                       >
-                        <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs ml-2 cursor-help">
+                        <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
                           ?
                         </span>
                       </Tooltip>
@@ -269,31 +241,33 @@ const UpdatedTable = ({
               </div>
             ) : null}
           </div>
+          <div className="">
+            <CSVLink
+              data={list?.length ? list : "Empty"}
+              target="_blank"
+              filename={
+                typeof activeFilter === "number"
+                  ? `${
+                      filterOptions?.find(
+                        (option) => option.id === activeFilter
+                      )?.title
+                    }.csv`
+                  : table_title
+              }
+            >
+              <div
+                className="bg-[#2596FB] text-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-[#2596FB]"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                Export CSV
+              </div>
+            </CSVLink>
+          </div>
         </div>
       </div>
-      {table_title === "Lead List" ? (
-        <div className="m-auto justify-center mr-20 mt-4 flex gap-5 ">
-          <div className="flex gap-2">
-            <p>WA</p>
-            <div className="bg-[#fef08a] w-[20px] h-[20px]"></div>
-          </div>
-          <div className="flex gap-2">
-            <p>Vietnam</p>
-            <div className="bg-[#f2d7ff] w-[20px] h-[20px]"></div>
-          </div>
-          <div className="flex gap-2">
-            <p>Philippines</p>
-            <div className="bg-[#d7f7ff] w-[20px] h-[20px]"></div>
-          </div>
-          <div className="flex gap-2">
-            <p>Others</p>
-            <div className="bg-[#d9f99d] w-[20px] h-[20px]"></div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      <div className="pt-6">
+      <div className="pt-3">
         {loadingDetails ? (
           <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
             <Loading />
@@ -302,14 +276,12 @@ const UpdatedTable = ({
           <div>
             <Table
               columns={tableHeaders}
+              className="updatedTable"
               dataSource={Array.isArray(list) ? list : [""]}
               pagination={{
-                defaultPageSize: 10,
+                defaultPageSize: 5,
                 onChange: (pageNum) => {
                   setCurrentPage(pageNum);
-                  console.log(
-                    " This is the size " + pageNum / Math.max(1, list.length)
-                  );
                 },
                 total: list.length,
                 current: currentPage,
@@ -318,7 +290,7 @@ const UpdatedTable = ({
               sortDirections={["ascend", "descend"]}
               scroll={{
                 x: 1700,
-                y: 600,
+                y: 400,
               }}
               rowClassName={(record) => {
                 if (table_title === "Lead List") {
@@ -352,6 +324,7 @@ const UpdatedTable = ({
                     return color;
                   }
                 }
+
                 // if (table_title === "Lead List") {
                 //   // Philipines-1
                 //   if(record.campaign_id === +'120203649998840200'){

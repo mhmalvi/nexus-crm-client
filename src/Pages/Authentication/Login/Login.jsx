@@ -39,29 +39,6 @@ const Login = () => {
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
   const [vantaEffect, setVantaEffect] = useState(null);
-  const gradientShader = {
-    uniforms: {
-      color1: { value: new THREE.Color(0x2596FB) },
-      color2: { value: new THREE.Color(0x8A7CFD) },
-    },
-    vertexShader: `
-      varying vec2 vUv;
-  
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform vec3 color1;
-      uniform vec3 color2;
-      varying vec2 vUv;
-  
-      void main() {
-        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-      }
-    `,
-  };
   const myRef = useRef(null);
   useEffect(() => {
     if (!vantaEffect) {
@@ -364,7 +341,7 @@ const Login = () => {
 
       <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className="shadow-xl backdrop-blur-2xl bg-[#ffffff11] z-10 !col-span-12 w-full !mx-auto relative max-w-md border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
+          className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
           style={{}}
         >
           <Modal

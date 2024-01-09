@@ -147,7 +147,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
         return (
           <>
             <div className="items-center flex">
-              {record?.count ? (
+              {record?.call_count ? (
                 <button
                   onClick={() => {
                     setClickedLeadId(record.lead_id);
@@ -155,7 +155,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                   }}
                   className="bg-zinc-700 text-center rounded-lg border-none text-white m-auto w-[50%]"
                 >
-                  {record?.count.call_count ? record?.count.call_count : 0}
+                  {record?.call_count ? record?.call_count : 0}
                 </button>
               ) : (
                 <p className="text-[red] m-0 p-0">This Lead has no calls</p>

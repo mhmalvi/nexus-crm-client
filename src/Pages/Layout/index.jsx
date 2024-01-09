@@ -5,8 +5,6 @@ import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute
 import Sidebar from "../../Components/Shared/Sidebar";
 import { Storage } from "../../Components/Shared/utils/store";
 import { handleFetchNotificationList } from "../../Components/services/notification";
-import Cross from "../../assets/Images/cross.png";
-import Ham from "../../assets/Images/hamburger.png";
 import { setNotifications } from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
@@ -98,6 +96,7 @@ const Layout = () => {
           Items={Items}
           active={active}
           openSideBar={openSideBar}
+          setOpenSideBar={setOpenSideBar}
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
@@ -109,10 +108,10 @@ const Layout = () => {
       </div>
       <div
         className={`relative ml-auto duration-300 ${
-          openSideBar ? "w-full" : "w-[calc(100vw-277px)]"
+          openSideBar ? "w-[calc(100vw-80px)]" : "w-[calc(100vw-277px)]"
         }`}
       >
-        <div
+        {/* <div
           onClick={() => ToogleSideBar(!openSideBar)}
           className="w-16 h-14 absolute top-3 z-[999999]"
         >
@@ -131,7 +130,7 @@ const Layout = () => {
               className="w-10 m-auto cursor-pointer"
             />
           )}
-        </div>
+        </div> */}
         <Routes>
           <Route path="renew-package" element={<RenewPackage />} />
           <Route path={"success/:id"} element={<Success />} />
