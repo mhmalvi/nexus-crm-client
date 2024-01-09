@@ -10,6 +10,7 @@ import {
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
 import { addLeads } from "../../../features/Leads/leadsSlice";
+import { useMediaQuery } from "react-responsive";
 import "../../../App.css";
 
 const UpdatedTable = ({
@@ -25,6 +26,8 @@ const UpdatedTable = ({
   handleSyncLeadsReq,
   salesOptions,
 }) => {
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const dispatch = useDispatch();
@@ -276,7 +279,7 @@ const UpdatedTable = ({
           <div>
             <Table
               columns={tableHeaders}
-              className="updatedTable"
+              className="updatedTable xl:h-[400px] lg:h-[200px]"
               dataSource={Array.isArray(list) ? list : [""]}
               pagination={{
                 defaultPageSize: 5,
@@ -290,7 +293,7 @@ const UpdatedTable = ({
               sortDirections={["ascend", "descend"]}
               scroll={{
                 x: 1700,
-                y: 360,
+                y: isBigScreen ? 370 : 270,
               }}
               rowClassName={(record) => {
                 if (table_title === "Lead List") {

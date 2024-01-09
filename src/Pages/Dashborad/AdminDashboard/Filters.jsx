@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
 const Filters = ({
   activeFilter,
@@ -9,7 +10,7 @@ const Filters = ({
   handleStaredLeadsFilter,
 }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
-
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
     <div>
       {layout !== "Payment" && (
@@ -17,7 +18,9 @@ const Filters = ({
           <h1 className="text-2xl text-white font-normal font-poppins  pt-1">
             Filters
           </h1>
-          <div className="grid grid-cols-6 gap-1 w-full">
+          <div
+            className={`grid grid-cols-${isBigScreen ? "7" : "6"} gap-1 w-full`}
+          >
             {/* Status Filters */}
             {filterOptions.map((option) => (
               <div

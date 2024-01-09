@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Select } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 const SearchEmployee = ({
   layout,
   handleFilterAssignedEmployee,
   companyEmployeeList,
 }) => {
+  
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const userDetails = useSelector((state) => state.user?.userInfo);
   const handleEmployeeChange = (name) => {
     handleFilterAssignedEmployee(name);
@@ -34,6 +37,7 @@ const SearchEmployee = ({
 
     setEmployeeOptions(options);
   }, [companyEmployeeList]);
+  
   return (
     <div>
       {/* Search Option */}
@@ -49,7 +53,7 @@ const SearchEmployee = ({
               className="px-3 py-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44]"
               
             >
-              <h1 className="text-xl font-normal font-poppins text-white">
+              <h1 className={`text-${isBigScreen ? "xl":"base"} font-normal font-poppins text-white`}>
                 Search with Assigned Employee
               </h1>
 
@@ -58,7 +62,6 @@ const SearchEmployee = ({
                   defaultValue="All"
                   placeholder="Select Employee"
                   onChange={handleEmployeeChange}
-                
                   options={employeeOptions}
                 />
               </div>

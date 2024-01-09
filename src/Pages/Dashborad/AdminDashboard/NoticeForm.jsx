@@ -7,6 +7,8 @@ import {
   handleDeleteNotices,
   handleFetchNotices,
 } from "../../../Components/services/company";
+import { useMediaQuery } from "react-responsive";
+
 const NoticeForm = () => {
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -49,6 +51,9 @@ const NoticeForm = () => {
     const response = await handleDeleteNotices(id);
     if (response?.status) setSyncNotices(!syncNotices);
   };
+  
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+
   return (
     <div >
       <Modal
@@ -84,7 +89,7 @@ const NoticeForm = () => {
           {userDetails?.role_id === 3 ? (
             <div className="lg:w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] ">
               <div className="mb-2 flex justify-between items-center">
-                <h1 className="text-xl text-start text-white font-poppins m-0 p-0">
+                <h1 className={`text-${isBigScreen ? "xl":"base"} text-start text-white font-poppins m-0 p-0`}>
                   Notice Board
                 </h1>
                 <button
@@ -115,7 +120,7 @@ const NoticeForm = () => {
                     id="notice_input"
                     value={noticeDescription}
                     onChange={(e) => setNoticeDescription(e.target.value)}
-                    rows="3"
+                    rows={isBigScreen ? "3" :"1"}
                     placeholder="Details"
                   ></textarea>
                   <button
