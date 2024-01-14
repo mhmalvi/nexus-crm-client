@@ -1,36 +1,27 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Avatar from "react-avatar";
-const UserLabel = () => {
+const UserLabel = ({ setOpenProfile, openProfile }) => {
   const userDetails = useSelector((state) => state?.user);
   return (
-    <div className="absolute group right-0 mr-4 p-1 rounded-full shadow-md ">
+    <div
+      className={`ease-in duration-100 absolute group right-0 bg-${
+        openProfile ? "black" : "brand-color"
+      } m-1 p-1 rounded-lg shadow-md cursor-pointer hover:bg-black`}
+      onClick={() => setOpenProfile(!openProfile)}
+    >
       <Avatar
-        className="rounded-full cursor-pointer mr-1 text-white"
-        size="38"
+        className="rounded-md cursor-pointer"
+        size="32"
+        color="#ffffff"
+        fgColor="#000000"
         name={
           userDetails?.userInfo?.full_name || userDetails?.userInfo?.name || ""
         }
       />
-      <span className="px-2 text-white">
+      <span className="px-2 text-white py-0 m-0">
         {userDetails?.userInfo?.full_name || userDetails?.userInfo?.name || ""}
       </span>
-
-      <div className="hidden group-hover:block min-w-40 h-16 bg-white shadow-md absolute right-0 top-[52px] rounded-md">
-        <div className="flex flex-col p-2 text-xs z-50">
-          <div>
-            {userDetails?.userInfo?.full_name ||
-              userDetails?.userInfo?.name ||
-              ""}
-          </div>
-          <div>{userDetails?.userInfo?.email}</div>
-          <div>
-            {userDetails?.userInfo?.contact_number ||
-              userDetails?.userInfo?.phone_number ||
-              ""}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

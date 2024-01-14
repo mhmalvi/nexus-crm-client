@@ -1,12 +1,8 @@
-import {
-  PlusOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Button, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import {
-  handleGetSalesAdmin,
-} from "../../Components/services/utils";
+import { handleGetSalesAdmin } from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -61,19 +57,16 @@ const Sales = () => {
 
   // Search Features
   useEffect(() => {
-
     searchParams.set("salesEmployeeName", searchName || "");
     searchParams.set("salesEmployeeEmail", searchEmail || "");
     setSearchParams(searchParams);
   }, [searchEmail, searchName, searchParams, setSearchParams]);
-
 
   let salesColumn = [
     {
       title: "Name",
       dataIndex: "full_name",
       key: "full_name",
-
     },
     {
       title: "Email",
@@ -113,27 +106,30 @@ const Sales = () => {
 
   return (
     <>
-      <div className="w-[90%] mx-auto">
-        <div className="w-full flex items-center justify-between mt-18 mb-8">
-          <div className="text-xl font-semibold">All Sales Employees</div>
-        </div>
-        {/* Sales Employees */}
-        <div className="mb-6">
-          <Table
-            style={{
-              textTransform: "uppercase",
-            }}
-            columns={salesColumn || []}
-            dataSource={salesData ? (salesData?.length ? salesData : []) : []}
-            pagination={true}
-            // loading
-            showSorterTooltip={true}
-            scroll={{
-              x: 600,
-              y: 600,
-            }}
-            loading={isLoading}
-          />
+      <div className="h-screen flex justify-center items-center">
+        <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+          <div className="w-full flex items-center justify-between mb-5">
+            <div className="text-xl font-semibold text-white">All Sales Employees</div>
+          </div>
+          {/* Sales Employees */}
+          <div className="mb-6">
+            <Table
+              style={{
+                textTransform: "uppercase",
+              }}
+              className="updatedTable bg-[#ffffff99] rounded-2xl"
+              columns={salesColumn || []}
+              dataSource={salesData ? (salesData?.length ? salesData : []) : []}
+              pagination={true}
+              // loading
+              showSorterTooltip={true}
+              scroll={{
+                x: 600,
+                y: 600,
+              }}
+              loading={isLoading}
+            />
+          </div>
         </div>
       </div>
       <SalesModal

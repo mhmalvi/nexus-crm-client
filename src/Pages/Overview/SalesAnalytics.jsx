@@ -96,7 +96,7 @@ const SalesAnalytics = ({ activeCompany }) => {
       )}
       <div>
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+          <h1 className="text-xl font-semibold text-white font-poppins">
             Sales Team Total Sales Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -123,7 +123,7 @@ const SalesAnalytics = ({ activeCompany }) => {
               <rcElement.Tooltip />
               <rcElement.Bar
                 dataKey="amount"
-                fill="#8884d8"
+                fill="#ffa500"
                 shape={<chartUtils.TriangleBar />}
               >
                 <rcElement.LabelList

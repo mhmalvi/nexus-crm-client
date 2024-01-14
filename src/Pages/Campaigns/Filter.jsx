@@ -1,11 +1,7 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
 
-const Filter = ({
-  activeFilter,
-  setActiveFilter,
-  setSearchCampaign,
-}) => {
+const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
   const filterOptions = [
     {
       id: 0,
@@ -22,9 +18,9 @@ const Filter = ({
   ];
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center mb-5">
       <div>
-        <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+        <h1 className="text-lg text-white font-normal font-poppins ">
           Filters
         </h1>
         <div className="flex items-center">
@@ -49,22 +45,14 @@ const Filter = ({
       </div>
 
       {/* Search Option */}
-      <div>
-        <h1 className="text-lg leading-7 font-normal font-poppins text-opacity-50">
+      <div className="">
+        <h1 className="text-lg text-white font-normal font-poppins ">
           Search Campaign
         </h1>
-        <div
-          className="w-58 px-4 py-2.5 mx-0.5 flex items-center bg-gray-100"
-          style={{
-            borderRadius: "10px",
-          }}
-        >
-          <div>
-            <Icons.Search />
-          </div>
+        <div className="flex justify-between items-center rounded-xl gap-x-5 pr-5 shadow-xl backdrop-blur-2xl bg-[#ffffff44]">
           <div>
             <input
-              className="outline-none text-xs bg-gray-100 leading-5 font-medium font-poppins ml-4"
+              className="appearance-none active:outline-none focus:outline-none outline-none text-xs bg-transparent border-0 font-medium font-poppins ml-4"
               type="search"
               name="search-code"
               id=""
@@ -73,7 +61,7 @@ const Filter = ({
             />
           </div>
           <div>
-            <Icons.Send />
+            <Icons.Search />
           </div>
         </div>
       </div>

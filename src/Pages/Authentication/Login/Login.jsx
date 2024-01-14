@@ -4,7 +4,6 @@ import React, {
   useState,
   useCallback,
   useMemo,
-  useRef,
 } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +23,6 @@ import {
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 import "../Login.css";
-import GLOBE from "vanta/dist/vanta.globe.min";
-import * as THREE from "three";
 const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
 const Login = () => {
   document.title = "Login";
@@ -38,30 +35,7 @@ const Login = () => {
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
-  const [vantaEffect, setVantaEffect] = useState(null);
-  const myRef = useRef(null);
-  useEffect(() => {
-    if (!vantaEffect) {
-      setVantaEffect(
-        GLOBE({
-          THREE,
-          el: myRef.current,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          color: 0x2596FB,
-          color2: 0x8A7CFD,
-          backgroundAlpha:0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-        })
-      );
-    }
-
-    return () => {
-      if (vantaEffect) vantaEffect.destroy();
-    };
-  }, [vantaEffect]);
+  
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -194,13 +168,10 @@ const Login = () => {
   const handleOneClickLogin = useCallback(
     async (credentials) => {
       dispatch(setLoader(true));
-
       const loginFormData = new FormData();
       loginFormData.append("email", credentials?._ue_);
       loginFormData.append("password", credentials?._up_?.split("_")[0]);
-
       const loginResponse = await handleLogin(loginFormData);
-
       console.log("loginResponse", loginResponse);
 
       if (loginResponse?.status === 200) {
@@ -225,9 +196,7 @@ const Login = () => {
               makeid(3)
           );
         }
-
         dispatch(setLoader(false));
-
         message.success("Successfully Logged In");
         setTimeout(() => {
           navigate("/dashboard");
@@ -242,7 +211,6 @@ const Login = () => {
     },
     [dispatch, data.email, data.password, makeid, navigate]
   );
-
   const handleRememberMe = useCallback(
     (e) => {
       if (e.target.checked) {
@@ -301,9 +269,7 @@ const Login = () => {
       ])
     );
     setAddBookMarkOpen(false);
-
     message.success("Added to the Bookmark");
-
     setTimeout(() => {
       navigate("/dashboard");
       window.location.reload();
@@ -316,23 +282,20 @@ const Login = () => {
 
   const handleRemoverBookmarkedAccount = (acoountDetials) => {
     console.log(acoountDetials?._ue_);
-
     setBookMarkedAccounts(
       bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
     );
-
     Storage.setItem(
       "__b__",
       JSON.stringify(
         bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
       )
     );
-
     setSyncBookMarked(!syncBookMarked);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] loginBackground" ref={myRef}>
+    <div className="flex justify-center items-center min-h-[100vh] dashboard-background">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />

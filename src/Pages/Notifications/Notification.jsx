@@ -19,14 +19,14 @@ const Notification = ({
   setNotificationData,
   setIsNotifyOpen,
 }) => {
-  const [notifications, setNotificationss] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
 
   useEffect(() => {
     setInterval(() => {
-      setNotificationss(notify);
+      setNotifications(notify);
     }, 2000);
   }, [notify]);
 
@@ -51,7 +51,7 @@ const Notification = ({
             dispatch(addNotifications(notification));
           }
         });
-        setNotificationss(notify);
+        setNotifications(notify);
       }
 
       const updatedNotifications = allNotifications?.map((notification) => {
@@ -104,6 +104,7 @@ const Notification = ({
               handleReadMessageReq(notification.id);
               setNotificationData(notification || {});
               setIsNotifyOpen(true);
+              console.log("NotifyCLicked")
             }}
             key={i}
             className="ease-in duration-200 py-3 px-3 cursor-pointer hover:bg-[#4a0f97]"

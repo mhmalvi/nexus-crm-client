@@ -1,9 +1,9 @@
 .dashboard-background {
-  background: radial-gradient(#180432, #460a94, #180432);
+  background: radial-gradient(#0c011b, #0b0315, #0c011b);
   background-position: center;
-  /* background: url("./assets/BackgroundPhotos/BACKGROUND.png"); */
-  /* background-repeat: no-repeat;
-  background-size: auto; */
+  background: url("./assets/BackgroundPhotos/darkBG.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .font-poppins {
@@ -56,7 +56,7 @@ table {
   background-color: #1b0538
 }
 .updatedTable .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: #4a0f97
+  background-color: #7037ff
 }
 .updatedTable th {
   padding: 18px 18px 18px 0;
@@ -66,11 +66,13 @@ table {
   line-height: 100%;
   color: #fff !important;
   border-bottom: 1px solid #e6edff;
-  background-color: #0000002f !important;
+  background-color: #ffffff55 !important;
 }
-/* .updatedTable tbody tr td {
-  padding: 8px;
-} */
+
+.updatedTable thead .ant-table-cell-fix-left-last:first-child{
+  background-color: #7037ff !important;
+  color: #ffffff
+}
 
 .updatedTable .ant-pagination {
   display: flex;
@@ -80,13 +82,13 @@ table {
 .updatedTable .ant-pagination li {
   border: 0.5px solid white;
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 .updatedTable .ant-pagination li a {
   color: white;
 }
 .updatedTable .ant-pagination .ant-pagination-item-active {
-  background-color: #460a94;
+  background-color: #7037ff;
 }
 .updatedTable .ant-pagination .ant-pagination-item-ellipsis {
   color: white;
@@ -97,20 +99,23 @@ table {
   overflow: hidden;
 }
 
-.updatedTable .ant-pagination .ant-pagination-disabled > button,
+
 .updatedTable .ant-pagination .ant-pagination-prev > button,
 .updatedTable .ant-pagination .ant-pagination-next > button {
-  background-color: white !important;
-  border-radius: 20px;
+  background-color: #7037ff ;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.updatedTable .ant-pagination .ant-pagination-disabled > button{
+  background-color: white !important;
+}
 .updatedTable .ant-pagination .ant-pagination-disabled > button:hover,
 .updatedTable .ant-pagination .ant-pagination-prev > button:hover,
 .updatedTable .ant-pagination .ant-pagination-next > button:hover {
-  border: 1px solid #7037ff;
+  border: 1px solid #ffffff;
   color: #7037ff;
 }
 .updatedTable .ant-pagination .ant-pagination-item-link-icon {
@@ -123,13 +128,13 @@ table {
   align-items: center;
 }
 .updatedTable .ant-pagination .ant-pagination-options .ant-select-selector {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 .updatedTable
   .ant-pagination
   .ant-pagination-options
   .ant-select-selector:hover {
-  border: 1px solid #7037ff;
+  border: 1px solid #4f8dea;
 }
 .calendarHead {
   display: flex;
@@ -155,7 +160,7 @@ table {
 .calendarHead .ant-radio-group .ant-radio-button-wrapper-checked {
   background-color: transparent !important;
   border: 0px;
-  color: orange;
+  color: #4f8dea;
 }
 .calendarDropHead {
   display: flex;
@@ -185,6 +190,7 @@ table {
 .calendarBody {
   backdrop-filter: blur(40px);
   background-color: #ffffff11;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   border-radius: 10px;
   height: 100%;
   padding-left: 10px;
@@ -192,7 +198,6 @@ table {
   padding-top: 10px;
   margin: 0px;
   width: 100%;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .calendarBody .ant-picker-panel {
   border: 0px;
@@ -218,7 +223,7 @@ table {
   justify-content: center;
 }
 .calendarBody .ant-picker-panel .ant-picker-content tbody > tr > td {
-  color: orange;
+  color: #4f8dea;
 }
 .calendarBody
   .ant-picker-panel
@@ -244,10 +249,23 @@ table {
   border: 0px;
 }
 
-/* .settingsSidebar .ant-menu-submenu-title { */
-  /* padding-left: 0 !important; */
-/* } */
-
+.NotificationModal .ant-modal-content{
+  backdrop-filter: blur(80px);
+  background-color: #ffffff40;
+  box-shadow: 0px 4px 6px -1px rgb(0 0 0 / 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.NotificationModal .ant-modal-title p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding:0 ;
+}
+.NotificationModal .ant-modal-header{
+  background-color: transparent;
+}
 td {
   padding: 16px;
   text-align: center;
