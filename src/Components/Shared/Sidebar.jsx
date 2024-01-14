@@ -200,7 +200,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   to={"/payments"}
                   className={`${
                     active === "payments" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                  }ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
                   onClick={() => setActive("payments")}
                 >
                   <div className="flex w-full items-center justify-around">
