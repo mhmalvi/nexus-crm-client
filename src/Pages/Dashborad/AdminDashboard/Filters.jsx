@@ -30,7 +30,7 @@ const Filters = ({
                 <h1
                   className={`w-full text-xs text-center font-normal border-[1px] border-white font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
-                      ? "text-white bg-[#460a94] "
+                      ? "text-white bg-[#7037ff] "
                       : "text-white bg-transparent"
                   }  rounded-md`}
                 >

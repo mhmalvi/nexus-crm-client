@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from "react";
 import Icons from "../../../Components/Shared/Icons";
-import Notifications from "../../Notifications/Notification.jsx";
+import Notifications from "../../Notifications/index.jsx";
 import NotifyModal from "../../Notifications/NotifyModal.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,6 @@ import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
 import {
   handleAssignLeadToSales,
-  handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +35,7 @@ import UserLabel from "./UserLabel";
 import NoticeForm from "./NoticeForm";
 import CalendarSmall from "./CalendarSmall";
 import { useMediaQuery } from "react-responsive";
+import ProfileSettings from "./ProfileSettings.jsx";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,6 @@ const AdminDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [tableHeaders, setTableHeaders] = useState([]);
-  const [salesOptions, setSalesOptions] = useState([]);
   const [selectedSales, setSelectedSales] = useState("");
   const [assignLoading, setAssignLoading] = useState(false);
   const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
@@ -76,6 +75,7 @@ const AdminDashboard = () => {
   const [notificationData, setNotificationData] = useState({});
   const [toggleNotification, setToggleNotification] = useState(false);
   const [notificationLoading, setNotificationLoading] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   let [clickedLeadId, setClickedLeadId] = useState("");
 
   const navigate = useNavigate();
@@ -142,19 +142,6 @@ const AdminDashboard = () => {
   }, [filterDate, leadList]);
 
   // Sales Option
-  useEffect(() => {
-    (async () => {
-      const res = await handleGetSalesAdmin();
-
-      if (res?.status === 200) {
-        const data = [{ value: "", label: "Select Sales" }];
-        res?.data?.forEach((item, idx) => {
-          data.push({ value: item?.user_id, label: item?.full_name });
-        });
-        setSalesOptions(data);
-      }
-    })();
-  }, [userDetails?.userInfo?.client_id]);
 
   const onAssignLead = useCallback(
     async (lid, sid) => {
@@ -548,13 +535,7 @@ const AdminDashboard = () => {
       setSyncLeads(!syncLeads);
       dispatch(setLoader(false));
     }
-  }, [
-    dispatch,
-    setSyncLeads,
-    userDetails?.userInfo?.client_id,
-    userDetails?.userInfo?.ac_k,
-    syncLeads,
-  ]);
+  }, [dispatch, syncLeads, userDetails?.userInfo?.ac_k, userDetails?.userInfo?.client_id]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -675,7 +656,7 @@ const AdminDashboard = () => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   return (
-    <div className="w-full max-h-full grid grid-cols-12 gap-5 max-h-[90vh] ">
+    <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
       <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
         <Modal
           visible={isAddLeadFormOpen}
@@ -695,8 +676,8 @@ const AdminDashboard = () => {
             setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
           />
         </Modal>
-        <div className="flex flex-col justify-between ">
-          <div className="grid grid-cols-5 gap-5">
+        <div className="relative flex flex-col justify-between ">
+          <div className="grid grid-cols-5 gap-5 z-100">
             <div className="col-span-3">
               <Filters
                 layout="Dashboard"
@@ -740,8 +721,6 @@ const AdminDashboard = () => {
             setIsAddLeadFormOpen={setIsAddLeadFormOpen}
             setSyncLeads={setSyncLeads}
             syncLeads={syncLeads}
-            salesOptions={salesOptions}
-            setSalesOptions={setSalesOptions}
             selectedSales={selectedSales}
             setSelectedSales={setSelectedSales}
           />
@@ -756,37 +735,33 @@ const AdminDashboard = () => {
           <div
             className={`${
               toggleNotification ? "bg-white rounded-full " : ""
-            } ease-in duration-200  m-0 p-2 cursor-pointer hover:scale-105`}
+            } realtive ease-in duration-200  m-0 p-2 cursor-pointer flex hover:scale-105 `}
+            onClick={(e) => {
+              setToggleNotification(!toggleNotification);
+              setNotificationLoading(true);
+              e.stopPropagation();
+            }}
           >
             <Icons.Bell
               className={`${
                 toggleNotification ? "text-black" : "text-white"
               } w-4 `}
-              onClick={(e) => {
-                setToggleNotification(!toggleNotification);
-                setNotificationLoading(true);
-                e.stopPropagation();
-                console.log("clicked");
-              }}
             />
             {notifications?.filter((notifi) => notifi?.status)?.length !== 0 ? (
-              <div className="relative right-0 flex justify-center items-center">
-                <div
-                  className=" rounded-full text-white text-xs font-poppins"
-                  style={{
-                    background: "#FF3B30",
-                  }}
-                >
+              <div className="fixed flex justify-center items-center">
+                <div className="bg-[#FF3B30] rounded-full text-white text-[10px] font-poppins px-2 mt-[-8px] ml-3">
                   {notifications?.filter((notifi) => notifi?.status)?.length}
                 </div>
               </div>
             ) : null}
           </div>
-
-          <UserLabel />
+          <UserLabel
+            setOpenProfile={setOpenProfile}
+            openProfile={openProfile}
+          />
         </div>
         {toggleNotification && (
-          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-xl backdrop-blur-3xl z-50 mt-16 overflow-x-hidden ">
+          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-xl backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
             <Notifications
               toggleNotification={toggleNotification}
               setToggleNotification={setToggleNotification}
@@ -795,35 +770,41 @@ const AdminDashboard = () => {
               setIsNotifyOpen={setIsNotifyOpen}
               setNotificationData={setNotificationData}
             />
-            <NotifyModal
-              notificationData={notificationData}
-              isNotifyOpen={isNotifyOpen}
-              setIsNotifyOpen={setIsNotifyOpen}
-            />
           </div>
         )}
-        <div className="w-full">
-          <SearchEmployee
-            layout="Dashboard"
-            companyEmployeeList={companyEmployeeList}
-            handleFilterAssignedEmployee={handleFilterAssignedEmployee}
-          />
-        </div>
-        <div>
-          <NoticeForm />
-        </div>
-        <div>
-          <CalendarSmall
-            filterDate={filterDate}
-            setFilterDate={setFilterDate}
-            selectedDay={selectedDay}
-            setSelectedDay={setSelectedDay}
-            selectedMonth={selectedMonth}
-            setSelectedMonth={setSelectedMonth}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-          />
-        </div>
+        <NotifyModal
+          notificationData={notificationData}
+          isNotifyOpen={isNotifyOpen}
+          setIsNotifyOpen={setIsNotifyOpen}
+        />
+        {openProfile ? (
+          <ProfileSettings />
+        ) : (
+          <>
+            <div className="w-full">
+              <SearchEmployee
+                layout="Dashboard"
+                companyEmployeeList={companyEmployeeList}
+                handleFilterAssignedEmployee={handleFilterAssignedEmployee}
+              />
+            </div>
+            <div>
+              <NoticeForm />
+            </div>
+            <div>
+              <CalendarSmall
+                filterDate={filterDate}
+                setFilterDate={setFilterDate}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+                selectedMonth={selectedMonth}
+                setSelectedMonth={setSelectedMonth}
+                selectedYear={selectedYear}
+                setSelectedYear={setSelectedYear}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="dashboard-background">
       <Routes>
-        <Route path="*" element={<Layout/>}>
+        <Route element={<Layout/>}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
@@ -66,7 +66,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="welcome" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
   );

@@ -32,7 +32,7 @@ const Dashboard = () => {
         setToggleChanglePassword(false);
       }
     }
-  }, [passwordDetails, userDetails?.userInfo?.flag]);
+  }, [passwordDetails]);
 
   const handleOk = () => {
     setConfirmLoading(true);
@@ -116,7 +116,7 @@ const Dashboard = () => {
         </div>
       </Modal>
 
-      <div className="lg:px-0 2xl:ml-4 2xl:mr-4 h-[100vh] flex justify-center items-center">
+      <div className="2xl:px-5 h-[100vh] flex justify-center items-center">
         {userDetails?.userInfo?.role_id && (
           <>
             {(userDetails?.userInfo?.role_id === 1 ||

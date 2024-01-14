@@ -198,12 +198,12 @@ const CourseList = ({
 
   return (
     <div>
-      <div className="w-full flex items-center justify-between mb-12">
+      <div className="w-full flex items-center justify-between mb-5 ">
         <div className="text-xl font-semibold">All Courses</div>
         <Button
           type="primary"
           onClick={() => setAddCourseOpen(true)}
-          className=" !rounded"
+          className=" !rounded text-white"
         >
           Add Course
         </Button>
@@ -211,7 +211,7 @@ const CourseList = ({
       {/* Courses */}
       <div>
         <Table
-          className=" border rounded-2xl"
+          className=" rounded-2xl updatedTable bg-[#ffffff99]"
           loading={courseListLoading}
           style={{
             textTransform: "uppercase",

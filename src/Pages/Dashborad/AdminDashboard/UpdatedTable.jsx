@@ -12,7 +12,9 @@ import {
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { useMediaQuery } from "react-responsive";
 import "../../../App.css";
-
+import {
+  handleGetSalesAdmin,
+} from "../../../Components/services/utils";
 const UpdatedTable = ({
   table_title,
   tableHeaders,
@@ -24,7 +26,7 @@ const UpdatedTable = ({
   setIsAddLeadFormOpen,
   searchInput,
   handleSyncLeadsReq,
-  salesOptions,
+  // salesOptions,
 }) => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
@@ -36,6 +38,7 @@ const UpdatedTable = ({
   const [leadFile, setLeadFile] = useState([]);
   const [companyList, setCompanyList] = useState([]);
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
+  const [salesOptions, setSalesOptions] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
   const [currentPage, setCurrentPage] = useState();
 
@@ -56,6 +59,17 @@ const UpdatedTable = ({
 
   // Payment history
   useEffect(() => {
+    (async () => {
+      const res = await handleGetSalesAdmin();
+
+      if (res?.status === 200) {
+        const data = [{ value: "", label: "Select Sales" }];
+        res?.data?.forEach((item, idx) => {
+          data.push({ value: item?.user_id, label: item?.full_name });
+        });
+        setSalesOptions(data);
+      }
+    })();
     if (table_title !== "Payment History") {
       if (!searchInput?.length) {
         setList(
@@ -75,7 +89,7 @@ const UpdatedTable = ({
     } else {
       setList(data);
     }
-  }, [table_title, searchInput, userDetails.role_id, activeFilter, data]);
+  }, [activeFilter, data, searchInput, table_title, userDetails?.role_id]);
 
   const handleLeadFileUploadReq = useCallback(
     async (e) => {
@@ -97,10 +111,10 @@ const UpdatedTable = ({
         message.warn("Something went wrong. Please try again");
       }
     },
-    [userDetails?.client_id, setSyncLeads, syncLeads]
+    [setSyncLeads, syncLeads, userDetails?.client_id]
   );
 
-  const onSelectCompanyData = (v, option) => {
+  const onSelectCompanyData = (option) => {
     setSelectedCompany(option);
   };
 
@@ -115,7 +129,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  },[userDetails?.role_id]);
+  });
 
   useEffect(() => {
     (async () => {

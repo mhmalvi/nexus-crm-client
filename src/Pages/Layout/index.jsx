@@ -76,7 +76,7 @@ const Layout = () => {
 
   return (
     <div
-      className="flex justify-start items-start font-poppins overflow-x-hidden"
+      className="flex justify-start items-start font-poppins overflow-x-hidden dashboard-background"
       onClick={() => {
         setToggleMessage(false);
       }}
@@ -134,9 +134,6 @@ const Layout = () => {
           setToggleMessage={setToggleMessage}
         />
       )}
-      {/* ----------- For notification pop up ------------- */}
-      
-      
     </div>
   );
 };
@@ -147,7 +144,6 @@ const Items = [
   {
     key: "dashboard",
     name: "dashboard",
-    // icon: <Icons.Dashboard />,
     label: "Dashboard",
     component: <Dashboard />,
     count: 0,
@@ -155,7 +151,6 @@ const Items = [
   {
     key: "overview",
     name: "overview",
-    // icon: <Icons.Chart />,
     label: "Overview",
     component: <Overview />,
     count: 0,
@@ -163,7 +158,6 @@ const Items = [
   {
     key: "payments",
     name: "payment",
-    // icon: <Icons.Payment />,
     label: "Payments",
     component: <PaymentStatus />,
     count: 0,
@@ -171,7 +165,6 @@ const Items = [
   {
     key: "campaigns",
     name: "campaigns",
-    // icon: <Icons.Campaigns />,
     label: "Campaigns",
     component: <Campaigns />,
     count: 0,
@@ -180,7 +173,6 @@ const Items = [
   {
     key: "courses",
     name: "courses",
-    // icon: <Icons.Campaigns />,
     label: "Courses",
     component: <Courses />,
     count: 0,
@@ -188,7 +180,6 @@ const Items = [
   {
     key: "salesEmployee",
     name: "salesEmployee",
-    // icon: <Icons.Campaigns />,
     label: "Sales Employee",
     component: <Sales />,
     count: 0,
@@ -203,7 +194,6 @@ const Items = [
   {
     key: "requisitions",
     name: "requisitions",
-    // icon: <Icons.Campaigns />,
     label: "requisitions",
     component: <Requisitions />,
     count: 0,
@@ -211,7 +201,6 @@ const Items = [
   {
     key: "studentManagement",
     name: "studentManagement",
-    // icon: <Icons.Campaigns />,
     label: "Student Management",
     component: <ManageStudnet />,
     count: 0,
@@ -219,7 +208,6 @@ const Items = [
   {
     key: "courseManagement",
     name: "courseManagement",
-    // icon: <Icons.Campaigns />,
     label: "Course Management",
     component: <CourseMangemnet />,
     count: 0,
@@ -227,7 +215,6 @@ const Items = [
   {
     key: "paymentSlip",
     name: "paymentSlip",
-    // icon: <Icons.Campaigns />,
     label: "Pay Slip",
     component: <PaySlip />,
     count: 0,
@@ -235,7 +222,6 @@ const Items = [
   {
     key: "gmail",
     name: "gmail",
-    // icon: <Icons.Settings />,
     label: "Gmail",
     component: <GmailModule />,
     count: 0,
@@ -243,7 +229,6 @@ const Items = [
   {
     key: "settings",
     name: "settings",
-    // icon: <Icons.Settings />,
     label: "Settings",
     component: <Settings />,
     count: 0,
@@ -251,7 +236,6 @@ const Items = [
   {
     key: "email-setting",
     name: "email-setting",
-    // icon: <Icons.Settings />,
     label: "Email Setting",
     component: <EmailSetting />,
     count: 0,

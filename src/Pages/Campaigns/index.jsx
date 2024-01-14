@@ -93,33 +93,35 @@ const Campaigns = () => {
   };
 
   return (
-    <div className="lg:mx-6 2xl:ml-12 2xl:mr-16 py-12">
-      <Modal
-        visible={toggleCourses}
-        footer={null}
-        onCancel={handleCancelCourseModal}
-        width={900}
-      >
-        <Courses />
-      </Modal>
+    <div className="h-screen flex justify-center items-center">
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <Modal
+          visible={toggleCourses}
+          footer={null}
+          onCancel={handleCancelCourseModal}
+          width={900}
+        >
+          <Courses />
+        </Modal>
 
-      <Filter
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-        setSearchCampaign={setSearchCampaign}
-      />
+        <Filter
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+          setSearchCampaign={setSearchCampaign}
+        />
 
-      {loadingDetails ? (
-        <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
-          <Loading />
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 mt-6">
-          {campaignList
-            ?.map((campaign, i) => <Campaign key={i} campaign={campaign} />)
-            .reverse()}
-        </div>
-      )}
+        {loadingDetails ? (
+          <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+            <Loading />
+          </div>
+        ) : (
+          <div className="h-[75vh] grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 overflow-y-scroll">
+            {campaignList
+              ?.map((campaign, i) => <Campaign key={i} campaign={campaign} />)
+              .reverse()}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const Settings = () => {
   const userDetails = useSelector((state) => state?.user);
 
   return (
-    <div className="pt-1 pb-10">
+    <div className="h-screen flex justify-center items-center">
       {(userDetails?.userInfo?.role_id === 1 ||
         userDetails?.userInfo?.role_id === 2 ||
         userDetails?.userInfo?.role_id === 3 ||
