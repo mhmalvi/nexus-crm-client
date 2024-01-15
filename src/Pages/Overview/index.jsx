@@ -27,6 +27,8 @@ const Overview = () => {
   const pdfRef = useRef(null);
   const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
+  
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const [comapnyEmployees, setComapnyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();

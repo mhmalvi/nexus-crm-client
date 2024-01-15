@@ -198,14 +198,14 @@ const UpdatedTable = ({
                 >
                   <div
                     htmlFor="upload_lead_file"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
                   >
                     Upload File
                   </div>
                 </Upload>
 
                 <Tooltip align={"top"} title="Add lead by uploading file">
-                  <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
+                  <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
                     ?
                   </span>
                 </Tooltip>
@@ -218,13 +218,13 @@ const UpdatedTable = ({
                   <div className="mr-4">
                     <button
                       id="add_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
                       Add Lead
                     </button>
                     <Tooltip align={"top"} title="Add lead manually">
-                      <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
+                      <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
                         ?
                       </span>
                     </Tooltip>
@@ -243,7 +243,7 @@ const UpdatedTable = ({
                     <div className="mr-12">
                       <button
                         id="sync_leads"
-                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-white text-white ease-in duration-200 hover:bg-black`}
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
                         onClick={() => handleSyncLeadsReq()}
                       >
                         Sync Leads
@@ -252,7 +252,7 @@ const UpdatedTable = ({
                         align={"top"}
                         title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
                       >
-                        <span className="px-1.5 font-semibold border border-white text-white rounded-full text-xs ml-2 cursor-help">
+                        <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
                           ?
                         </span>
                       </Tooltip>
@@ -276,7 +276,7 @@ const UpdatedTable = ({
               }
             >
               <div
-                className="bg-[#2596FB] text-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-[#2596FB]"
+                className="bg-[#2596FB] text-white px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#2596FB]"
                 style={{
                   fontSize: "10px",
                 }}

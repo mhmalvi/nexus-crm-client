@@ -18,6 +18,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const campaignRatio = [];
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
@@ -110,7 +111,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
         )}
         <div className="flex justify-between items-center w-full gap-5">
           <div className="w-1/2 h-full py-4 ">
-            <h1 className="text-xl font-semibold font-poppins text-white">
+            <h1 className={`text-xl font-semibold font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>
               Summary
             </h1>
             <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 py-3">
@@ -119,7 +120,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     $ {totalRevenue}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Total Revenue
                   </p>
                 </div>
@@ -135,7 +136,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                       ? (totalRevenue / (dayjs().month() + 1)).toFixed(2)
                       : 0}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Average Income (Per Month)
                   </p>
                 </div>
@@ -151,7 +152,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                       ? (totalLastWeekIncome / 7)?.toFixed(2)
                       : 0}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Average Income Per Day (Last Week)
                   </p>
                 </div>
@@ -164,7 +165,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     {campaigns?.length}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Total Campaigns
                   </p>
                 </div>
@@ -180,7 +181,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                       ? (totalRevenue / campaigns?.length).toFixed(2)
                       : 0}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Average Income (Per Campaign)
                   </p>
                 </div>
@@ -193,7 +194,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     {comapnyEmployees?.length}
                   </h1>
-                  <p className="text-xs font-medium text-white mb-0">
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
                     Sales Team
                   </p>
                 </div>
@@ -206,7 +207,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
 
           {/* Income/ Day */}
           <div className=" w-1/2 rounded-xl py-4 flex flex-col h-full ">
-            <h1 className="text-xl font-semibold px-4 font-poppins text-white">
+            <h1 className={`text-xl font-semibold px-4 font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>
               {/* Last 7 Days Income */}
               Income/Day
             </h1>

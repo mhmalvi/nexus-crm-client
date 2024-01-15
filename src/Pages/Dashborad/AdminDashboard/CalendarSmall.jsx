@@ -2,8 +2,10 @@ import React from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import dayLocaleData from "dayjs/plugin/localeData";
-import { Calendar,  Radio, Select } from "antd";
+import { Calendar, Radio, Select } from "antd";
 import { useMediaQuery } from "react-responsive";
+import { useSelector } from "react-redux";
+import { VscColorMode } from "react-icons/vsc";
 dayjs.extend(dayLocaleData);
 const CalendarSmall = ({
   // filterDate,
@@ -56,17 +58,18 @@ const CalendarSmall = ({
     setSelectedYear("");
   };
 
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
     <>
       <Calendar
-        className="calendarBody"
+        className={colorMode ? "calendarBodyDark" : "calendarBodyWhite"}
         fullscreen={false}
         locale={{
           lang: {
-            locale: 'en',
-            weekdaysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-          }
+            locale: "en",
+            weekdaysMin: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+          },
         }}
         headerRender={({ value, type, onChange, onTypeChange }) => {
           const start = 0;
@@ -99,11 +102,20 @@ const CalendarSmall = ({
           }
           return (
             <div>
-              <h1 level={4} className={`text-${isBigScreen ? "xl":"base"}  text-white`}>
+              <h1
+                level={4}
+                className={`text-${isBigScreen ? "xl" : "base"} ${
+                  colorMode ? " text-white" : "text-gray-800"
+                }`}
+              >
                 {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
                 {datesInMonth[dayjs().month()].month} {dayjs().year()}
               </h1>
-              <div className="calendarHead mb-2">
+              <div
+                className={`${
+                  colorMode ? "calendarHeadDark" : "calendarHeadWhite"
+                } mb-2 flex justify-between items-center`}
+              >
                 <Radio.Group
                   size="small"
                   onChange={(e) => onTypeChange(e.target.value)}
@@ -112,7 +124,11 @@ const CalendarSmall = ({
                   <Radio.Button value="month">Month</Radio.Button>
                   <Radio.Button value="year">Year</Radio.Button>
                 </Radio.Group>
-                <div className="calendarDropHead">
+                <div
+                  className={
+                    colorMode ? "calendarDropHeadDark" : "calendarDropHeadWhite"
+                  }
+                >
                   <Select
                     size="small"
                     dropdownMatchSelectWidth={false}
@@ -143,7 +159,7 @@ const CalendarSmall = ({
                 </div>
 
                 <button
-                  className="text-white"
+                  className={colorMode ? "text-white":"text-gray-800"}
                   size="small"
                   onClick={handleClearDate}
                 >
