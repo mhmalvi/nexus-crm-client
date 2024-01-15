@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import "./style.css";
 
 const Sales = () => {
+  
   const [searchParams, setSearchParams] = useSearchParams();
   const [salesData, setSalesData] = useState([]);
   const [userData, setUserData] = useState({});
@@ -27,6 +28,7 @@ const Sales = () => {
   };
 
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const companyId = useSelector(
     (state) => state?.user?.companyId,
     shallowEqual
@@ -109,7 +111,7 @@ const Sales = () => {
       <div className="h-screen flex justify-center items-center">
         <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
           <div className="w-full flex items-center justify-between mb-5">
-            <div className="text-xl font-semibold text-white">All Sales Employees</div>
+            <div className={`text-xl font-semibold ${colorMode?"text-white":"text-gray-800"}`}>All Sales Employees</div>
           </div>
           {/* Sales Employees */}
           <div className="mb-6">
