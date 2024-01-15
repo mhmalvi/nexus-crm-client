@@ -23,6 +23,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const loadingDetails = useSelector((state) => state.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const COLORS = [
     "#34C759",
@@ -461,8 +462,8 @@ const CampaignAnalytics = ({ activeCompany }) => {
       )}
       <div>
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 text-white font-poppins">
-            Campaigns Details
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
+            Campaign Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
             This Year
@@ -504,7 +505,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
       <div className="mt-4">
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 text-white font-poppins">
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Campaigns Revenue
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -544,7 +545,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
       <div className="mt-12">
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 text-white font-poppins">
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Lead Quality Ratio
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -588,7 +589,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
         <div className="w-1/2 p-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
           <div className="relative flex justify-between items-center">
-            <h1 className="text-xl font-semibold text-white font-poppins m-0 p-0">
+            <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} font-poppins m-0 p-0`}>
               Areawise Lead Details
             </h1>
             <div className="font-light">
@@ -637,7 +638,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
         {/* Lead Status Summary */}
         <div className="w-1/2 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
           <div className="relative flex justify-between items-center">
-            <h1 className="text-xl font-semibold text-white m-0 p-0 font-poppins">
+            <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} m-0 p-0 font-poppins`}>
               Lead Status Summary
             </h1>
             <div className="font-light">

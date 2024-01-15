@@ -4,16 +4,16 @@
   background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
   background-size: 110vw;
-  transition: 0.1s background-image; background-attachment: fixed;
+  background-attachment: fixed;
 }
 
-.light-background{
+.light-background {
   background-color: linear-gradient(#ffffff, #dbdbdb, #ffffff);
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/lightBG.svg");
   background-repeat: no-repeat;
   background-size: 100vw;
-  transition: 0.1s background-image; background-attachment: fixed;
+  background-attachment: fixed;
 }
 
 .colorModeToggler {
@@ -149,13 +149,10 @@ table {
   .ant-select-selector:hover {
   border: 1px solid #4f8dea;
 }
-.calendarHead {
-  display: flex;
+.calendarHeadDark {
   height: 100%;
-  justify-content: space-between;
-  align-items: center;
 }
-.calendarHead .ant-radio-group {
+.calendarHeadDark .ant-radio-group {
   border-radius: 5px;
   background-color: transparent !important;
   overflow: hidden;
@@ -165,30 +162,35 @@ table {
   display: flex;
   justify-content: center;
 }
-.calendarHead .ant-radio-group .ant-radio-button-wrapper {
+.calendarHeadDark .ant-radio-group .ant-radio-button-wrapper {
   background-color: transparent !important;
   border: 0px;
   color: white;
 }
-.calendarHead .ant-radio-group .ant-radio-button-wrapper-checked {
+.calendarHeadDark .ant-radio-group .ant-radio-button-wrapper-checked {
   background-color: transparent !important;
   border: 0px;
   color: #4f8dea;
 }
-.calendarDropHead {
+.calendarDropHeadDark {
   display: flex;
   height: 100%;
   justify-content: space-between;
   align-items: center;
 }
-.calendarDropHead .ant-select {
+.calendarDropHeadDark
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  border: 1px solid white;
+}
+.calendarDropHeadDark .ant-select {
   border-radius: 5px;
   background-color: transparent !important;
   color: white;
   height: 100%;
   overflow: hidden;
 }
-.calendarDropHead .ant-select-selector {
+.calendarDropHeadDark .ant-select-selector {
   display: flex;
   border-radius: 5px !important;
   background-color: transparent !important;
@@ -197,10 +199,11 @@ table {
   overflow: hidden;
   padding: 0;
 }
-.calendarDropHead .ant-select-selector .ant-select-selection-item {
+.calendarDropHeadDark .ant-select-selector .ant-select-selection-item {
   padding: 0 !important;
 }
-.calendarBody {
+
+.calendarBodyDark {
   backdrop-filter: blur(40px);
   background-color: #ffffff11;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -212,19 +215,19 @@ table {
   margin: 0px;
   width: 100%;
 }
-.calendarBody .ant-picker-panel {
+.calendarBodyDark .ant-picker-panel {
   border: 0px;
   background-color: transparent;
 }
-.calendarBody .ant-picker-panel .ant-picker-content thead {
+.calendarBodyDark .ant-picker-panel .ant-picker-content thead {
   padding-bottom: 8px;
   border-bottom: 1px solid white;
 }
-.calendarBody .ant-picker-panel .ant-picker-content thead th {
+.calendarBodyDark .ant-picker-panel .ant-picker-content thead th {
   color: #ffffff;
   padding-bottom: 8px;
 }
-.calendarBody
+.calendarBodyDark
   .ant-picker-panel
   .ant-picker-content
   tbody
@@ -235,16 +238,119 @@ table {
   align-items: center;
   justify-content: center;
 }
-.calendarBody .ant-picker-panel .ant-picker-content tbody > tr > td {
+.calendarBodyDark .ant-picker-panel .ant-picker-content tbody > tr > td {
   color: #4f8dea;
 }
-.calendarBody
+.calendarBodyDark
   .ant-picker-panel
   .ant-picker-content
   tbody
   > tr
   > .ant-picker-cell-in-view {
   color: white !important;
+}
+
+---x---
+/* White Calendar Background */
+.calendarHeadWhite {
+  height: 100%;
+}
+.calendarHeadWhite .ant-radio-group {
+  border-radius: 5px;
+  background-color: transparent !important;
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  border: 0.5px solid #1f2937;
+  display: flex;
+  justify-content: center;
+}
+.calendarHeadWhite .ant-radio-group .ant-radio-button-wrapper {
+  background-color: transparent !important;
+  border: 0px;
+  color: #1f2937;
+}
+.calendarHeadWhite .ant-radio-group .ant-radio-button-wrapper-checked {
+  background-color: transparent !important;
+  border: 0px;
+  color: #4f8dea;
+}
+.calendarDropHeadWhite {
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.calendarDropHeadWhite
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  border: 1px solid #1f2937;
+  height: 100%;
+}
+.calendarDropHeadWhite .ant-select {
+  border-radius: 5px;
+  background-color: transparent !important;
+  color: #1f2937;
+  height: 100%;
+  overflow: hidden;
+}
+.calendarDropHeadWhite .ant-select-selector {
+  display: flex;
+  border-radius: 5px !important;
+  background-color: transparent !important;
+  color: #1f2937;
+  border: 0.5px solid #1f2937;
+  overflow: hidden;
+  padding: 0;
+}
+.calendarDropHeadWhite .ant-select-selector .ant-select-selection-item {
+  padding: 0 !important;
+}
+.calendarBodyWhite {
+  backdrop-filter: blur(40px);
+  background-color: #ffffff11;
+  box-shadow: 0 0px 8px 2px rgb(0 0 0 / 0.1);
+  border-radius: 10px;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  margin: 0px;
+  width: 100%;
+}
+.calendarBodyWhite .ant-picker-panel {
+  border: 0px;
+  background-color: transparent;
+}
+.calendarBodyWhite .ant-picker-panel .ant-picker-content thead {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1f2937;
+}
+.calendarBodyWhite .ant-picker-panel .ant-picker-content thead th {
+  color: #1f2937;
+  padding-bottom: 8px;
+}
+.calendarBodyWhite
+  .ant-picker-panel
+  .ant-picker-content
+  tbody
+  > tr
+  > td
+  > .ant-picker-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calendarBodyWhite .ant-picker-panel .ant-picker-content tbody > tr > td {
+  color: #4f8dea;
+}
+.calendarBodyWhite
+  .ant-picker-panel
+  .ant-picker-content
+  tbody
+  > tr
+  > .ant-picker-cell-in-view {
+  color: #1f2937 !important;
 }
 
 .settingsSidebar {
