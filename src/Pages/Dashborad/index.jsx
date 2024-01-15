@@ -32,7 +32,7 @@ const Dashboard = () => {
         setToggleChanglePassword(false);
       }
     }
-  }, [passwordDetails]);
+  }, [passwordDetails, userDetails?.userInfo?.flag]);
 
   const handleOk = () => {
     setConfirmLoading(true);

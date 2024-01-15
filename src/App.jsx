@@ -31,14 +31,17 @@ import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 function App() {
-  
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div className={colorMode ? "dark-background" :"light-background"}>
+    <div
+      className={`${
+        colorMode ? "dark-background " : "light-background"
+      }`}
+    >
       <Routes>
-        <Route element={<Layout/>}>
+        <Route element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />

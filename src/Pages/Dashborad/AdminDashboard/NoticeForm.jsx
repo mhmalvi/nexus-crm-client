@@ -10,6 +10,7 @@ import {
 import { useMediaQuery } from "react-responsive";
 
 const NoticeForm = () => {
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user?.userInfo);
 
   const [syncNotices, setSyncNotices] = useState(true);
@@ -51,11 +52,11 @@ const NoticeForm = () => {
     const response = await handleDeleteNotices(id);
     if (response?.status) setSyncNotices(!syncNotices);
   };
-  
+
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   return (
-    <div >
+    <div>
       <Modal
         visible={showNotices}
         onCancel={() => setShowNotices(false)}
@@ -63,7 +64,11 @@ const NoticeForm = () => {
         width="1000px"
       >
         <div className="">
-          <div className="font-poppins text-xl text-white mb-6">
+          <div
+            className={`font-poppins text-xl text-${
+              colorMode ? "white" : "gray-800"
+            } mb-6`}
+          >
             Notices
           </div>
           {notices.length ? (
@@ -89,7 +94,13 @@ const NoticeForm = () => {
           {userDetails?.role_id === 3 ? (
             <div className="lg:w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
               <div className="mb-2 flex justify-between items-center">
-                <h1 className={`text-${isBigScreen ? "xl":"base"} text-start text-white font-poppins m-0 p-0`}>
+                <h1
+                  className={`text-${
+                    isBigScreen ? "xl" : "base"
+                  } text-start text-${
+                    colorMode ? "white" : "gray-800"
+                  } font-poppins m-0 p-0`}
+                >
                   Notice Board
                 </h1>
                 <button
@@ -107,27 +118,33 @@ const NoticeForm = () => {
                   className="flex items-center flex-col justify-center "
                 >
                   <input
-                    className="w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3"
+                    className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
+                      colorMode ? "placeholder:text-white" : "placeholder:text-gray-800"
+                    }`}
                     type="text"
                     placeholder="Notice Title"
                     value={noticeTitle}
                     onChange={(e) => setNoticeTitle(e.target.value)}
                   />
                   <textarea
-                    className="w-full outline-none border px-3 py-1 rounded-md bg-transparent"
+                    className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
+                      colorMode ? "placeholder:text-white" : "placeholder:text-gray-800"
+                    }`}
                     name=""
                     style={{ resize: "none" }}
                     id="notice_input"
                     value={noticeDescription}
                     onChange={(e) => setNoticeDescription(e.target.value)}
-                    rows={isBigScreen ? "3" :"1"}
+                    rows={isBigScreen ? "3" : "1"}
                     placeholder="Details"
                   ></textarea>
                   <button
                     className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-white bg-[#2596FB] hover:bg-black rounded-md"
                     type="submit"
                     value="Post"
-                  >Post</button>
+                  >
+                    Post
+                  </button>
                 </form>
               </div>
             </div>
@@ -139,19 +156,25 @@ const NoticeForm = () => {
                   borderRadius: "20px",
                 }}
               >
-                <div className="py-2.5 border-b">
-                  <h1 className="text-xl text-center font-semibold leading-8 font-poppins">
-                    Notice Board
-                  </h1>
-                </div>
-                <div className="mt-14 flex items-center justify-center">
-                  <button
-                    onClick={() => setShowNotices(true)}
-                    className="bg-black px-4 py-2 text-white rounded-lg"
-                  >
-                    Preview Notices
-                  </button>
-                </div>
+               <div className="mb-2 flex justify-between items-center">
+                <h1
+                  className={`text-${
+                    isBigScreen ? "xl" : "base"
+                  } text-start text-${
+                    colorMode ? "white" : "gray-800"
+                  } font-poppins m-0 p-0`}
+                >
+                  Notice Board
+                </h1>
+                <button
+                  onClick={() => {
+                    setShowNotices(true);
+                  }}
+                  className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-white rounded-md "
+                >
+                  Preview Notices
+                </button>
+              </div>
               </div>
             </div>
           )}

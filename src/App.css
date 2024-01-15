@@ -1,18 +1,17 @@
 .dark-background {
-  background: radial-gradient(#0c011b, #0b0315, #0c011b);
+  background-color: linear-gradient(#0c011b, #0b0315, #0c011b);
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
-  background-position: center;
   transition: 0.1s background-image; 
 }
 
 .light-background{
-  background: radial-gradient(#ffffff, #dbdbdb, #ffffff);
+  background-color: linear-gradient(#ffffff, #dbdbdb, #ffffff);
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/lightBG.svg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-size: 100vw;
   transition: 0.1s background-image; 
 }
 

@@ -30,6 +30,7 @@ const UpdatedTable = ({
 }) => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const dispatch = useDispatch();
@@ -152,7 +153,8 @@ const UpdatedTable = ({
     <div className="!rounded-xl mt-12">
       <div>
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl text-white px-3 m-0 font-poppins">
+          
+          <h1 className={`text-2xl text-${colorMode ? "white" : "gray-800"} px-3 m-0 font-poppins`}>
             {table_title}
           </h1>
           <div className="flex items-center">

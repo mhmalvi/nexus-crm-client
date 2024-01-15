@@ -8,8 +8,9 @@ const SearchEmployee = ({
   handleFilterAssignedEmployee,
   companyEmployeeList,
 }) => {
-  
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user?.userInfo);
   const handleEmployeeChange = (name) => {
     handleFilterAssignedEmployee(name);
@@ -37,7 +38,7 @@ const SearchEmployee = ({
 
     setEmployeeOptions(options);
   }, [companyEmployeeList]);
-  
+
   return (
     <div>
       {/* Search Option */}
@@ -49,11 +50,14 @@ const SearchEmployee = ({
             userDetails?.role_id === 2 ||
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) && (
-            <div
-              className="px-3 py-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]"
-              
-            >
-              <h1 className={`text-${isBigScreen ? "xl":"base"} font-normal font-poppins text-white`}>
+            <div className="px-3 py-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <h1
+                className={`text-${
+                  isBigScreen ? "xl" : "base"
+                } font-normal font-poppins text-${
+                  colorMode ? "white" : "gray-800"
+                }`}
+              >
                 Search with Assigned Employee
               </h1>
 
