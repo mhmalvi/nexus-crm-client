@@ -10,12 +10,18 @@ const Filters = ({
   handleStaredLeadsFilter,
 }) => {
   const userDetails = useSelector((state) => state.user?.userInfo);
+
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
     <div>
       {layout !== "Payment" && (
         <div className="h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
-          <h1 className="text-2xl text-white font-normal font-poppins  pt-1">
+          <h1
+            className={`text-2xl text-${
+              colorMode ? "white" : "gray-800"
+            } font-normal font-poppins  pt-1`}
+          >
             Filters
           </h1>
           <div
@@ -28,10 +34,14 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`w-full text-xs text-center font-normal border-[1px] border-white font-poppins p-1 cursor-pointer ${
+                  className={`w-full text-xs text-center font-normal border-[1px] border-${
+                    colorMode ? "white" : "gray-800"
+                  } font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
                       ? "text-white bg-[#7037ff] "
-                      : "text-white bg-transparent"
+                      : colorMode
+                      ? "text-white bg-transparent"
+                      : "text-gray-800 bg-transparent"
                   }  rounded-md`}
                 >
                   {option.title}
@@ -49,10 +59,14 @@ const Filters = ({
                     onClick={() => handleStaredLeadsFilter(rate?.id)}
                   >
                     <h1
-                      className={`text-xs text-center border-[1px] border-white font-normal font-poppins p-1 cursor-pointer ${
+                      className={`text-xs text-center border-[1px] border-${
+                        colorMode ? "white" : "gray-800"
+                      } font-normal font-poppins p-1 cursor-pointer ${
                         activeFilter === rate?.id
-                          ? "text-white bg-[#460a94]"
-                          : "text-white bg-transparent"
+                          ? "text-white bg-[#7037ff] "
+                          : colorMode
+                          ? "text-white bg-transparent"
+                          : "text-gray-800 bg-transparent"
                       }  rounded-md`}
                     >
                       {rate?.title}

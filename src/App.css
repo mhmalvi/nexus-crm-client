@@ -1,9 +1,23 @@
-.dashboard-background {
+.dark-background {
   background: radial-gradient(#0c011b, #0b0315, #0c011b);
   background-position: center;
-  background: url("./assets/BackgroundPhotos/darkBG.svg");
+  background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
   background-position: center;
+  transition: 0.1s background-image; 
+}
+
+.light-background{
+  background: radial-gradient(#ffffff, #dbdbdb, #ffffff);
+  background-position: center;
+  background-image: url("./assets/BackgroundPhotos/lightBG.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.1s background-image; 
+}
+
+.colorModeToggler {
+  background-image: linear-gradient(to right, #4500c5, #140038);
 }
 
 .font-poppins {
@@ -53,10 +67,10 @@ table {
   background-color: transparent;
 }
 .updatedTable .ant-table-body::-webkit-scrollbar-track {
-  background-color: #1b0538
+  background-color: #1b0538;
 }
 .updatedTable .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: #7037ff
+  background-color: #7037ff;
 }
 .updatedTable th {
   padding: 18px 18px 18px 0;
@@ -69,9 +83,9 @@ table {
   background-color: #ffffff55 !important;
 }
 
-.updatedTable thead .ant-table-cell-fix-left-last:first-child{
+.updatedTable thead .ant-table-cell-fix-left-last:first-child {
   background-color: #7037ff !important;
-  color: #ffffff
+  color: #ffffff;
 }
 
 .updatedTable .ant-pagination {
@@ -99,17 +113,16 @@ table {
   overflow: hidden;
 }
 
-
 .updatedTable .ant-pagination .ant-pagination-prev > button,
 .updatedTable .ant-pagination .ant-pagination-next > button {
-  background-color: #7037ff ;
+  background-color: #7037ff;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.updatedTable .ant-pagination .ant-pagination-disabled > button{
+.updatedTable .ant-pagination .ant-pagination-disabled > button {
   background-color: white !important;
 }
 .updatedTable .ant-pagination .ant-pagination-disabled > button:hover,
@@ -243,27 +256,29 @@ table {
   width: 100%;
   position: relative;
 }
-.settingsSidebar .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
+.settingsSidebar .ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
   /* background-color: #17cdd9 !important; */
-  color:transparent !important;
+  color: transparent !important;
   border: 0px;
 }
 
-.NotificationModal .ant-modal-content{
+.NotificationModal .ant-modal-content {
   backdrop-filter: blur(80px);
   background-color: #ffffff40;
   box-shadow: 0px 4px 6px -1px rgb(0 0 0 / 0.5);
   border-radius: 10px;
   overflow: hidden;
 }
-.NotificationModal .ant-modal-title p{
+.NotificationModal .ant-modal-title p {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
-  padding:0 ;
+  padding: 0;
 }
-.NotificationModal .ant-modal-header{
+.NotificationModal .ant-modal-header {
   background-color: transparent;
 }
 td {

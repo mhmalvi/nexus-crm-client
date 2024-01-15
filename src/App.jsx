@@ -31,10 +31,12 @@ import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
-
+import {useSelector} from "react-redux";
 function App() {
+  
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div className="dashboard-background">
+    <div className={colorMode ? "dark-background" :"light-background"}>
       <Routes>
         <Route element={<Layout/>}>
           <Route path="dashboard" element={<Dashboard />} />

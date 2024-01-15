@@ -1,4 +1,5 @@
 import { handleLogout } from "../../Components/services/auth";
+import { Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,14 +8,22 @@ import Icons from "./Icons";
 import { Storage } from "./utils/store";
 import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
-import Cross from "../../assets/Images/crossW.png";
-import Ham from "../../assets/Images/hamburgerW.png";
+import CrossW from "../../assets/Images/crossW.png";
+import HamW from "../../assets/Images/hamburgerW.png";
+
+import CrossD from "../../assets/Images/crossB.png";
+import HamD from "../../assets/Images/hamburgerB.png";
+import { setColorMode } from "../../features/user/userSlice";
+import { ReactComponent as SunIcon } from "../../../src/assets/PNGS/sun.svg";
+import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
+
 const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
 
 const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
@@ -101,14 +110,14 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
       >
         {openSideBar ? (
           <img
-            src={Ham}
+            src={colorMode ? HamW : HamD}
             title="Show sidebar"
             alt=""
             className="w-8 m-auto cursor-pointer text-white"
           />
         ) : (
           <img
-            src={Cross}
+            src={colorMode ? CrossW : CrossD}
             title="Hide sidebar"
             alt=""
             className="w-10 m-auto cursor-pointer text-white"
@@ -135,8 +144,16 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             <NavLink
               to={"/dashboard"}
               className={`${
-                active === "dashboard" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                active === "dashboard"
+                  ? colorMode
+                    ? "text-[#FFFFFF]"
+                    : "text-[#7037FF]"
+                  : colorMode
+                  ? "text-[#B3B3B3]"
+                  : "text-gray-800"
+              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+              }`}
               onClick={() => setActive("dashboard")}
             >
               <div className="flex w-full items-center justify-around ">
@@ -150,7 +167,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 )}
               </div>
               {active === "dashboard" && (
-                <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                   |
                 </div>
               )}
@@ -165,8 +182,16 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               <NavLink
                 to={"/overview"}
                 className={`${
-                  active === "overview" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  active === "overview"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("overview")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -180,7 +205,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "overview" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -199,8 +224,16 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 <NavLink
                   to={"/payments"}
                   className={`${
-                    active === "payments" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                    active === "payments"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
                   onClick={() => setActive("payments")}
                 >
                   <div className="flex w-full items-center justify-around">
@@ -214,7 +247,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     )}
                   </div>
                   {active === "payments" && (
-                    <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                       |
                     </div>
                   )}
@@ -228,8 +261,16 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               <NavLink
                 to={"/campaigns"}
                 className={`${
-                  active === "campaigns" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  active === "campaigns"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("campaigns")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -243,7 +284,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "campaigns" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -257,8 +298,16 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               <NavLink
                 to={"/courses"}
                 className={`${
-                  active === "courses" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  active === "courses"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("courses")}
               >
                 <div className="flex w-full items-center justify-around">
@@ -272,7 +321,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "courses" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -290,9 +339,17 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     to={"/salesEmployee"}
                     className={`${
                       active === "salesEmployee"
-                        ? "text-[#FFFFFF] "
-                        : "text-[#B3B3B3]"
-                    } flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
+                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                      colorMode
+                        ? "hover:text-[#ffffff]"
+                        : "hover:text-[#7037FF]"
+                    }`}
                     onClick={() => setActive("salesEmployee")}
                   >
                     <div className="flex w-full items-center justify-around">
@@ -307,7 +364,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                       </span>
                     </div>
                     {active === "salesEmployee" && (
-                      <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                         |
                       </div>
                     )}
@@ -329,9 +386,15 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   to={"/salesEmployee"}
                   className={`${
                     active === "salesEmployee"
-                      ? "text-[#FFFFFF]"
-                      : "text-[#B3B3B3]"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
                   onClick={() => setActive("salesEmployee")}
                 >
                   <div className="flex w-full items-center justify-around">
@@ -345,7 +408,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     )}
                   </div>
                   {active === "salesEmployee" && (
-                    <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                       |
                     </div>
                   )}
@@ -363,16 +426,28 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               <NavLink
                 to={"/calender"}
                 className={`${
-                  active === "calender" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  active === "calender"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("calender")}
               >
                 <div className="flex w-full items-center justify-around">
                   <Icons.Calender
                     className={`${
                       active === "calender"
-                        ? "text-[#7037FF]"
-                        : "text-[#FFFFFF]"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
                     } w-5`}
                   />
                   {openSideBar ? (
@@ -384,7 +459,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "calender" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -412,7 +487,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   </span>
                 </div>
                 {active === "requisitions" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -442,7 +517,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   </span>
                 </div>
                 {active === "studentManagement" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -468,7 +543,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   Course Management
                 </span>
                 {active === "courseManagement" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -490,7 +565,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   Payment Slip
                 </span>
                 {active === "paymentSlip" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -504,16 +579,28 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               <NavLink
                 to={"/settings"}
                 className={`${
-                  active === "settings" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]`}
+                  active === "settings"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("calender")}
               >
                 <div className="flex w-full items-center justify-around">
                   <Icons.Settings
                     className={`${
                       active === "settings"
-                        ? "text-[#7037FF]"
-                        : "text-[#FFFFFF]"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
                     } w-5`}
                   />
                   {openSideBar ? (
@@ -525,7 +612,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "settings" && (
-                  <div className="active-option text-[#FFFFFF] bg-[#FFFFFF]">
+                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
                     |
                   </div>
                 )}
@@ -579,7 +666,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             onClick={logoutHandler}
           >
             <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-xl">
-              <Icons.LogOut className="text-[#FFFFFF]" />
+              <Icons.LogOut />
               {openSideBar ? (
                 ""
               ) : (
@@ -588,6 +675,17 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 </span>
               )}
             </button>
+          </div>
+          <div className="flex justify-center items-center">
+            <Switch
+              onClick={() => {
+                dispatch(setColorMode(!colorMode));
+              }}
+              className="colorModeToggler"
+              checkedChildren={<SunIcon />}
+              unCheckedChildren={<MoonIcon />}
+              defaultChecked
+            />
           </div>
         </div>
         <div className="ease-in duration-200 flex flex-col justify-center items-center h-[200px]">

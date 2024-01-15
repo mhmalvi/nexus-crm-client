@@ -295,7 +295,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] dashboard-background">
+    <div className="flex justify-center items-center min-h-[100vh] dark-background">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
