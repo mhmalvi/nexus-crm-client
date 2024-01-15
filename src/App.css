@@ -3,7 +3,8 @@
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
-  transition: 0.1s background-image; 
+  background-size: 110vw;
+  transition: 0.1s background-image; background-attachment: fixed;
 }
 
 .light-background{
@@ -12,7 +13,7 @@
   background-image: url("./assets/BackgroundPhotos/lightBG.svg");
   background-repeat: no-repeat;
   background-size: 100vw;
-  transition: 0.1s background-image; 
+  transition: 0.1s background-image; background-attachment: fixed;
 }
 
 .colorModeToggler {
