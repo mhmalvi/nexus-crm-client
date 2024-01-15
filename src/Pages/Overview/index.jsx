@@ -28,7 +28,6 @@ const Overview = () => {
   const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
   
-  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const [comapnyEmployees, setComapnyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();
@@ -44,13 +43,10 @@ const Overview = () => {
         setActiveCompanies(companiesResponse?.data?.[0]?.id);
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
-
-      console.log("companiesResponse", companiesResponse);
     })();
   }, []);
 
   useEffect(() => {
-    console.log("activeCompany activeCompany", activeCompany);
     dispatch(setLoader(true));
 
     (async () => {

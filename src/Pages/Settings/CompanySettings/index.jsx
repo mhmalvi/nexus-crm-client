@@ -12,7 +12,6 @@ import {
   handleUploadFile,
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
-import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader, updateFbToken } from "../../../features/user/userSlice";
 import SalesAdmins from "./SalesAdmins";
@@ -20,7 +19,7 @@ import SalesAdmins from "./SalesAdmins";
 const CompanySettings = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
@@ -172,13 +171,6 @@ const CompanySettings = () => {
   return (
     <div className="h-[90vh] w-full mx-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] grid grid-cols-2 gap-8 ">
       <div className="h-[85vh] font-poppins flex flex-col justify-between items-center h-full gap-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
-        {/* {loadingDetails && (
-          <div className="absolute left-0 z-50 w-screen h-full bg-white bg-opacity-70">
-            <div className="lg:w-[62%] xl:w-[64%] 2xl:w-[69%] h-screen text-7xl flex justify-start items-center">
-              <Loading />
-            </div>
-          </div>
-        )} */}
         <div className="h-1/6 w-full flex justify-between items-center ">
           <div className="relative flex w-24">
             <img
@@ -203,7 +195,9 @@ const CompanySettings = () => {
           <div className="">
             <input
               id="name"
-              className={`text-xl text-white font-semibold rounded-xl backdrop-blur-xl bg-[#ffffff11] ${
+              className={`text-xl ${
+                colorMode ? "text-white" : "text-gray-800"
+              } font-semibold rounded-xl backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
                   ? "outline-none bg-[#ffffff11] px-2"
                   : "bg-transparent "
@@ -216,9 +210,9 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`overflow-y-auto text-right text-white justify-end pt-2 ${
-                toggleEditDetails && "outline-none"
-              }`}
+              className={`overflow-y-auto text-right ${
+                colorMode ? "text-white" : "text-gray-800"
+              } justify-end pt-2 ${toggleEditDetails && "outline-none"}`}
             >
               {companyDetails?.description
                 ? companyDetails?.description
@@ -229,7 +223,11 @@ const CompanySettings = () => {
         {/* Company Details */}
         <div className="h-5/6 w-full rounded-xl pt-5 px-5">
           <div className="flex justify-between">
-            <h1 className="text-lg font-semibold text-white">
+            <h1
+              className={`text-lg font-semibold ${
+                colorMode ? "text-white" : "text-gray-800"
+              }`}
+            >
               Company Details
             </h1>
             {!toggleEditDetails ? (
@@ -244,107 +242,167 @@ const CompanySettings = () => {
           </div>
           <div className="flex flex-col justify-evenly">
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">Trading Name :&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Trading Name :&nbsp;
+              </span>
               {toggleEditDetails ? (
                 <input
                   id="trading_name"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0  ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.trading_name}
                 />
               ) : (
-                <span className="w-full px-3">
+                <span
+                  className={`w-full px-3 ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   {companyDetails?.trading_name}
                 </span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">Contact:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Contact:&nbsp;
+              </span>
               {toggleEditDetails ? (
                 <input
                   id="contact"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.contact}
                 />
               ) : (
-                <span className="w-full px-3">{companyDetails?.contact}</span>
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.contact}</span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">Email:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Email:&nbsp;
+              </span>
               {toggleEditDetails ? (
                 <input
                   id="business_email"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.business_email}
                 />
               ) : (
-                <span className="w-full px-3">
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>
                   {companyDetails?.business_email}
                 </span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">Address:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Address:&nbsp;
+              </span>
 
               {toggleEditDetails ? (
                 <input
                   id="address"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.address}
                 />
               ) : (
-                <span className="w-full px-3">{companyDetails?.address}</span>
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.address}</span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">ABN:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                ABN:&nbsp;
+              </span>
               {toggleEditDetails ? (
                 <input
                   id="abn"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.abn}
                 />
               ) : (
-                <span className="w-full px-3">{companyDetails?.abn}</span>
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.abn}</span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">RTO Code:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                RTO Code:&nbsp;
+              </span>
               {toggleEditDetails ? (
                 <input
                   id="rto_code"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.rto_code}
                 />
               ) : (
-                <span className="w-full px-3">{companyDetails?.rto_code}</span>
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.rto_code}</span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">Website:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Website:&nbsp;
+              </span>
 
               {toggleEditDetails ? (
                 <input
                   id="website"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-white bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -362,31 +420,47 @@ const CompanySettings = () => {
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className=" w-48">Country:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Country:&nbsp;
+              </span>
 
               {toggleEditDetails ? (
                 <input
                   id="country_name"
-                  className={`w-full outline-none border-0 bg-[#ffffff11] py-0`}
+                  className={`w-full outline-none border-0 ${colorMode ? "text-white" : "text-gray-800"} ${
+                    colorMode
+                      ? " bg-[#ffffff11]"
+                      : "bg-[#33333322]"
+                  } py-0`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
                   defaultValue={companyDetails?.country_name}
                 />
               ) : (
-                <span className="w-full px-3">
+                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>
                   {companyDetails?.country_name}
                 </span>
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">FB Credential :&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                FB Credential :&nbsp;
+              </span>
 
               <input
                 id="fb_ac_credential"
-                className={`w-full ${
+                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
                   toggleEditDetails
-                    ? "outline-none border-0 bg-[#ffffff11] py-0"
+                    ? `outline-none border-0 ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
                     : "bg-transparent border-transparent"
                 }`}
                 type="password"
@@ -408,12 +482,20 @@ const CompanySettings = () => {
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
-              <span className="w-48">FB Secret :&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                FB Secret :&nbsp;
+              </span>
               <input
                 id="secret_key"
-                className={`w-full ${
+                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
                   toggleEditDetails
-                    ? "w-full outline-none border-0 bg-[#ffffff11] py-0"
+                    ? `outline-none border-0  ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
                     : "bg-transparent border-transparent"
                 }`}
                 type="password"
@@ -435,13 +517,21 @@ const CompanySettings = () => {
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10 w-full">
-              <span className="w-48">FB AppID :&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                FB AppID :&nbsp;
+              </span>
 
               <input
                 id="app_id"
-                className={`w-full ${
+                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
                   toggleEditDetails
-                    ? "w-full outline-none border-0 bg-[#ffffff11] py-0"
+                    ? `outline-none border-0 ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
                     : "bg-transparent border-transparent"
                 }`}
                 type="password"
@@ -463,7 +553,11 @@ const CompanySettings = () => {
               )}
             </div>
             <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10 w-full">
-              <span className=" w-48">Active Package:&nbsp;</span>
+              <span
+                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+              >
+                Active Package:&nbsp;
+              </span>
               {companyDetails?.pid ? (
                 <div
                   className={`w-full cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
@@ -490,7 +584,13 @@ const CompanySettings = () => {
                   </div>
                 </div>
               ) : (
-                <h1 className="pl-1 w-full text-white">No Package Yet</h1>
+                <h1
+                  className={`pl-1 w-full  ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  No Package Yet
+                </h1>
               )}
             </div>
           </div>

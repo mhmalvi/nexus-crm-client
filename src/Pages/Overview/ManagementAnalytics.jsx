@@ -251,7 +251,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
       {/* Monthly Revenue */}
       {userDetails?.role_id !== 1 && (
         <div className="w-full mt-12">
-          <h1 className="text-xl font-semibold mb-4 text-white font-poppins">
+          <h1 className={`text-xl font-semibold mb-4 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Monthly Revenue
           </h1>
           <div>
@@ -288,7 +288,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
       {/* Lead Convertion Ratio */}
       <div className="mt-10">
         <div>
-          <h1 className="text-xl font-semibold -mb-8 text-white font-poppins">
+          <h1 className={`text-xl font-semibold -mb-8 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Lead Conversion Ratio
           </h1>
         </div>

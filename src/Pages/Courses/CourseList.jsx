@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
+import { useSelector } from "react-redux";
 
 const CourseList = ({
   courses,
@@ -24,6 +25,8 @@ const CourseList = ({
   const showModal = () => {
     setOpen(true);
   };
+  
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const tableSearchInput = useRef(null);
 
@@ -199,7 +202,7 @@ const CourseList = ({
   return (
     <div>
       <div className="w-full flex items-center justify-between mb-5 ">
-        <div className="text-xl font-semibold">All Courses</div>
+        <div className={`text-xl ${colorMode? "text-white" : "text-gray-800"} font-semibold`}>All Courses</div>
         <Button
           type="primary"
           onClick={() => setAddCourseOpen(true)}

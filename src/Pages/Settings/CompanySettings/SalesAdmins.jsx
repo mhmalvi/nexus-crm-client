@@ -15,6 +15,7 @@ import { handleGetSalesAdmin } from "../../../Components/services/utils";
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
@@ -278,24 +279,32 @@ const SalesAdmins = ({ clientId }) => {
           </Modal>
 
           <div className="flex items-center w-full pb-2">
-            <h1 className="font-semibold text-xl text-white m-0 p-0">Admins</h1>
+            <h1
+              className={`font-semibold text-xl ${
+                colorMode ? "text-white" : "text-gray-800"
+              } m-0 p-0`}
+            >
+              Admins
+            </h1>
             {(parseInt(userDetails?.userInfo?.client_id) ===
               parseInt(clientId) &&
               userDetails?.userInfo?.role_id === 1) ||
             userDetails?.userInfo?.role_id === 3 ? (
               <div>
-                <div>
-                  <button
-                    className="py-1 whitespace-nowrap px-2 text-xs font-medium border border-white rounded-md text-white 2xl:ml-29"
-                    onClick={() => setActiveAddSupervisor(true)}
-                  >
-                    Add Supervisor
-                  </button>
-                </div>
+                <button
+                  className={`py-1 whitespace-nowrap px-2 text-xs font-medium border ${
+                    colorMode
+                      ? "text-white border-white"
+                      : "text-gray-800 border-gray-800"
+                  } rounded-lg 2xl:ml-29`}
+                  onClick={() => setActiveAddSupervisor(true)}
+                >
+                  Add Supervisor
+                </button>
               </div>
             ) : null}
           </div>
-          <hr />
+          <hr className={colorMode ? "border-white" : "border-gray-800"} />
         </div>
 
         <div className="mt-5 h-48 overflow-y-scroll">
@@ -310,7 +319,7 @@ const SalesAdmins = ({ clientId }) => {
                 color="volcano"
                 size="small"
               >
-                <div className="flex justify-start items-center p-2 shadow-lg shadow-inner shadow-[#ffffff22] rounded-md">
+                <div className={`flex justify-start items-center p-2 shadow-lg shadow-inner ${colorMode ? "shadow-[#ffffff22]":"shadow-[#33333322]"} rounded-md`}>
                   <Avatar
                     className="rounded-full cursor-pointer "
                     size="38"
@@ -318,10 +327,18 @@ const SalesAdmins = ({ clientId }) => {
                     name={companyAdminEmployee?.full_name}
                   />
                   <div className="ml-4 w-52 py-2">
-                    <h1 className="font-semibold text-lg text-white m-0">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      } m-0`}
+                    >
                       {companyAdminEmployee?.full_name}
                     </h1>
-                    <p className="font-medium text-xs m-0 text-white">
+                    <p
+                      className={`font-medium text-xs m-0 ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
                       {companyAdminEmployee?.email}
                     </p>
                   </div>
@@ -339,10 +356,18 @@ const SalesAdmins = ({ clientId }) => {
                     name={employee?.full_name}
                   />
                   <div className="ml-4 w-52 flex flex-col justify-around">
-                    <h1 className="font-semibold text-lg text-white m-0">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      } m-0`}
+                    >
                       {employee?.full_name}
                     </h1>
-                    <p className="font-medium text-xs mb-0 text-white">
+                    <p
+                      className={`font-medium text-xs mb-0 ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
                       {employee?.email}
                     </p>
                     {userDetails?.userInfo?.role_id === 1 ||
@@ -361,7 +386,13 @@ const SalesAdmins = ({ clientId }) => {
                               handleRemoveUser(employee?.user_id)
                             }
                           >
-                            <button className="border border-white px-1 py-0.5 text-xs rounded-md font-semibold text-white mt-3 mr-2">
+                            <button
+                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                colorMode
+                                  ? "text-white border-white"
+                                  : "text-gray-800 border-gray-800"
+                              } mt-3 mr-2`}
+                            >
                               Remove
                             </button>
                           </Popconfirm>
@@ -424,7 +455,11 @@ const SalesAdmins = ({ clientId }) => {
       {/* Sales admins box */}
       <div className="h-3/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
         <div className="flex items-center w-full pb-2">
-          <h1 className="font-semibold text-xl text-white m-0 p-0">
+          <h1
+            className={`font-semibold text-xl ${
+              colorMode ? "text-white" : "text-gray-800"
+            } m-0 p-0`}
+          >
             Sales Admins
           </h1>
 
@@ -434,7 +469,11 @@ const SalesAdmins = ({ clientId }) => {
           userDetails?.userInfo?.role_id === 4 ? (
             <div>
               <button
-                className="py-1 px-2 text-xs font-medium border border-white rounded-md text-white ml-29"
+                className={`py-1 px-2 text-xs font-medium border rounded-md  ${
+                  colorMode
+                    ? "text-white border-white "
+                    : "text-gray-800 border-gray-800"
+                } ml-29`}
                 onClick={() => setActiveAddSeals(true)}
               >
                 Add Sales
@@ -442,7 +481,7 @@ const SalesAdmins = ({ clientId }) => {
             </div>
           ) : null}
         </div>
-        <hr />
+        <hr className={colorMode ? "border-white" : "border-gray-800"} />
 
         <div className="mt-5 h-80 overflow-y-scroll">
           <div className="grid grid-cols-2 gap-8 ">
@@ -456,10 +495,18 @@ const SalesAdmins = ({ clientId }) => {
                     name={employee?.full_name}
                   />
                   <div className="ml-4 w-52 flex flex-col justify-around">
-                    <h1 className="font-semibold text-lg text-white m-0">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      } m-0`}
+                    >
                       {employee?.full_name}
                     </h1>
-                    <p className="font-medium text-xs mb-0 text-white">
+                    <p
+                      className={`font-medium text-xs mb-0 ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
                       {employee?.email}
                     </p>
 
@@ -480,7 +527,13 @@ const SalesAdmins = ({ clientId }) => {
                             }
                             okText="Yes"
                           >
-                            <button className="border border-white px-1 py-0.5 text-xs rounded-md font-semibold text-white mt-3 mr-2">
+                            <button
+                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                colorMode
+                                  ? "text-white border-white"
+                                  : "text-gray-800 border-gray-800"
+                              } mt-3 mr-2`}
+                            >
                               Remove
                             </button>
                           </Popconfirm>
@@ -498,7 +551,11 @@ const SalesAdmins = ({ clientId }) => {
                 </div>
               ))
             ) : (
-              <h1 className="font-semibold text-base text-white">
+              <h1
+                className={`font-semibold text-base ${
+                  colorMode ? "text-white" : "text-gray-800"
+                }`}
+              >
                 No Employee Added Yet
               </h1>
             )}
@@ -506,10 +563,14 @@ const SalesAdmins = ({ clientId }) => {
 
           {inactiveSalesEmployees.length ? (
             <div className="mt-2">
-              <h1 className="font-semibold text-xl py-5 px-4 my-0 text-white">
+              <h1
+                className={`font-semibold text-xl py-5 px-4 my-0 ${
+                  colorMode ? "text-white" : "text-gray-800"
+                }`}
+              >
                 Inactive Sales Admins
               </h1>
-              <hr/>
+              <hr />
               <div className="mt-3 grid grid-cols-2 gap-6 px-4">
                 {inactiveSalesEmployees.map((employee, i) => (
                   <div key={i} className="flex ">

@@ -1,7 +1,9 @@
 import React from "react";
 import Icons from "../../Components/Shared/Icons";
+import { useSelector } from "react-redux";
 
 const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const filterOptions = [
     {
       id: 0,
@@ -20,7 +22,11 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
   return (
     <div className="flex justify-between items-center mb-5">
       <div>
-        <h1 className="text-lg text-white font-normal font-poppins ">
+        <h1
+          className={`text-lg ${
+            colorMode ? "text-white" : "text-gray-800"
+          } font-normal font-poppins`}
+        >
           Filters
         </h1>
         <div className="flex items-center">
@@ -30,12 +36,10 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
               <h1
                 className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
                   activeFilter === option.id
-                    ? "text-white bg-black"
+                    ? "text-white bg-brand-color"
                     : "text-black bg-white"
                 }  rounded-full`}
-                style={{
-                  border: "1px solid rgba(124, 141, 181, 0.5)",
-                }}
+            
               >
                 {option.title}
               </h1>
@@ -46,7 +50,11 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
 
       {/* Search Option */}
       <div className="">
-        <h1 className="text-lg text-white font-normal font-poppins ">
+        <h1
+          className={`text-lg ${
+            colorMode ? "text-white" : "text-gray-800"
+          } font-normal font-poppins`}
+        >
           Search Campaign
         </h1>
         <div className="flex justify-between items-center rounded-xl gap-x-5 pr-5 shadow-xl backdrop-blur-2xl bg-[#ffffff44]">

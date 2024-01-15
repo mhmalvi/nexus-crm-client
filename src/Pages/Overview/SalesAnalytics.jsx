@@ -136,7 +136,6 @@ const SalesAnalytics = ({ activeCompany }) => {
           </rcElement.ResponsiveContainer>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };
