@@ -9,7 +9,6 @@ import {
 import { handlePaymentDetails } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
-import Conversation from "./Conversation";
 import LeadStatus from "./LeadStatus";
 import UserDetails from "./UserDetails";
 
@@ -18,6 +17,7 @@ const LeadDetails = () => {
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const userDetails = useSelector((state) => state?.user)?.userInfo;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [leadDetails, setleadDetails] = useState();
   const [syncDetails, setSyncDetails] = useState(false);
@@ -132,7 +132,7 @@ const LeadDetails = () => {
   return (
     <div className="h-screen flex flex-col mx-5 justify-center items-center">
       <div className="w-full">
-      <button className="px-2 py-1 text-white">
+      <button className={`px-2 py-1 ${colorMode?"text-white":"text-gray-800"}`}>
         {"< "} Back
       </button></div>
       <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
@@ -169,7 +169,7 @@ const LeadDetails = () => {
                 totalPaid={totalPaid}
               />
             </div>
-            {/* {leadDetails?.leadDetails?.lead_details_status === 0 && (
+            {leadDetails?.leadDetails?.lead_details_status === 0 && (
               <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
                 <div>Lead has been suspended</div>
                 <div className="xl:ml-4 mt-8">
@@ -196,7 +196,7 @@ const LeadDetails = () => {
                   </Popconfirm>
                 </div>
               </div>
-            )} */}
+            )}
         </div>
       </div>
     </div>
