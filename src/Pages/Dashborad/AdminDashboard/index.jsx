@@ -40,6 +40,7 @@ import ProfileSettings from "./ProfileSettings.jsx";
 const AdminDashboard = () => {
   const dispatch = useDispatch();
 
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
   const notifications = useSelector(
@@ -744,7 +745,7 @@ const AdminDashboard = () => {
           >
             <Icons.Bell
               className={`${
-                toggleNotification ? "text-black" : "text-white"
+                toggleNotification ? "text-black" : colorMode ? "text-white" : "text-gray-800"
               } w-4 `}
             />
             {notifications?.filter((notifi) => notifi?.status)?.length !== 0 ? (
