@@ -25,6 +25,7 @@ import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
 import {
   handleAssignLeadToSales,
+  handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
 import { useNavigate } from "react-router-dom";
@@ -46,10 +47,10 @@ const AdminDashboard = () => {
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
   );
+
   const [activeFilter, setActiveFilter] = useState(
     userDetails?.userInfo?.role_id === 5 ? 8 : 0
   );
-
   const [activeStars, setActiveStars] = useState(0);
   const [leadData, setLeadData] = useState([]);
   const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
@@ -57,6 +58,9 @@ const AdminDashboard = () => {
   const [filterDate, setFilterDate] = useState("");
   const [syncLeads, setSyncLeads] = useState(false);
   const [isAddLeadFormOpen, setIsAddLeadFormOpen] = useState(false);
+
+  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState({});
 
   // For Search Table Data
   const [searchText, setSearchText] = useState("");
@@ -68,18 +72,17 @@ const AdminDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [tableHeaders, setTableHeaders] = useState([]);
+  const [salesOptions, setSalesOptions] = useState([]);
   const [selectedSales, setSelectedSales] = useState("");
   const [assignLoading, setAssignLoading] = useState(false);
-  const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
-    useState(false);
-  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
-  const [notificationData, setNotificationData] = useState({});
-  const [toggleNotification, setToggleNotification] = useState(false);
+
   const [notificationLoading, setNotificationLoading] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
+    useState(false);
   let [clickedLeadId, setClickedLeadId] = useState("");
-
   const navigate = useNavigate();
+  const [toggleNotification, setToggleNotification] = useState(false);
 
   const memoizedFetchLeads = useMemo(
     () => async () => {
@@ -142,7 +145,19 @@ const AdminDashboard = () => {
     }
   }, [filterDate, leadList]);
 
-  // Sales Option
+  useEffect(() => {
+    (async () => {
+      const res = await handleGetSalesAdmin();
+
+      if (res?.status === 200) {
+        const data = [{ value: "", label: "Select Sales" }];
+        res?.data?.forEach((item, idx) => {
+          data.push({ value: item?.user_id, label: item?.full_name });
+        });
+        setSalesOptions(data);
+      }
+    })();
+  }, [userDetails?.userInfo?.client_id]);
 
   const onAssignLead = useCallback(
     async (lid, sid) => {
@@ -536,7 +551,13 @@ const AdminDashboard = () => {
       setSyncLeads(!syncLeads);
       dispatch(setLoader(false));
     }
-  }, [dispatch, syncLeads, userDetails?.userInfo?.ac_k, userDetails?.userInfo?.client_id]);
+  }, [
+    dispatch,
+    setSyncLeads,
+    userDetails?.userInfo?.client_id,
+    userDetails?.userInfo?.ac_k,
+    syncLeads,
+  ]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -724,6 +745,8 @@ const AdminDashboard = () => {
             syncLeads={syncLeads}
             selectedSales={selectedSales}
             setSelectedSales={setSelectedSales}
+            // salesOptions={salesOptions}
+            // setSalesOptions={setSalesOptions}
           />
         </div>
       </div>
@@ -745,7 +768,11 @@ const AdminDashboard = () => {
           >
             <Icons.Bell
               className={`${
-                toggleNotification ? "text-black" : colorMode ? "text-white" : "text-gray-800"
+                toggleNotification
+                  ? "text-black"
+                  : colorMode
+                  ? "text-white"
+                  : "text-gray-800"
               } w-4 `}
             />
             {notifications?.filter((notifi) => notifi?.status)?.length !== 0 ? (

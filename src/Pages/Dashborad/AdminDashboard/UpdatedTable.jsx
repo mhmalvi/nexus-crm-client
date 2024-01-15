@@ -12,9 +12,7 @@ import {
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { useMediaQuery } from "react-responsive";
 import "../../../App.css";
-import {
-  handleGetSalesAdmin,
-} from "../../../Components/services/utils";
+import { handleGetSalesAdmin } from "../../../Components/services/utils";
 const UpdatedTable = ({
   table_title,
   tableHeaders,
@@ -26,7 +24,7 @@ const UpdatedTable = ({
   setIsAddLeadFormOpen,
   searchInput,
   handleSyncLeadsReq,
-  // salesOptions,
+  salesOptions,
 }) => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
@@ -39,7 +37,6 @@ const UpdatedTable = ({
   const [leadFile, setLeadFile] = useState([]);
   const [companyList, setCompanyList] = useState([]);
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
-  const [salesOptions, setSalesOptions] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
   const [currentPage, setCurrentPage] = useState();
 
@@ -56,21 +53,9 @@ const UpdatedTable = ({
         }, 1000);
       }
     })();
-  }, [data, dispatch]);
+  }, [data, data?.length, dispatch]);
 
-  // Payment history
   useEffect(() => {
-    (async () => {
-      const res = await handleGetSalesAdmin();
-
-      if (res?.status === 200) {
-        const data = [{ value: "", label: "Select Sales" }];
-        res?.data?.forEach((item, idx) => {
-          data.push({ value: item?.user_id, label: item?.full_name });
-        });
-        setSalesOptions(data);
-      }
-    })();
     if (table_title !== "Payment History") {
       if (!searchInput?.length) {
         setList(
@@ -90,7 +75,7 @@ const UpdatedTable = ({
     } else {
       setList(data);
     }
-  }, [activeFilter, data, searchInput, table_title, userDetails?.role_id]);
+  }, [data, searchInput, activeFilter, userDetails, table_title]);
 
   const handleLeadFileUploadReq = useCallback(
     async (e) => {
@@ -112,10 +97,10 @@ const UpdatedTable = ({
         message.warn("Something went wrong. Please try again");
       }
     },
-    [setSyncLeads, syncLeads, userDetails?.client_id]
+    [userDetails?.client_id, setSyncLeads, syncLeads]
   );
 
-  const onSelectCompanyData = (option) => {
+  const onSelectCompanyData = (v, option) => {
     setSelectedCompany(option);
   };
 
@@ -130,7 +115,7 @@ const UpdatedTable = ({
         setCompanyList(data);
       }
     })();
-  });
+  }, [userDetails?.role_id, data]);
 
   useEffect(() => {
     (async () => {
@@ -153,8 +138,11 @@ const UpdatedTable = ({
     <div className="!rounded-xl mt-12">
       <div>
         <div className="flex justify-between items-center">
-          
-          <h1 className={`text-2xl text-${colorMode ? "white" : "gray-800"} px-3 m-0 font-poppins`}>
+          <h1
+            className={`text-2xl text-${
+              colorMode ? "white" : "gray-800"
+            } px-3 m-0 font-poppins`}
+          >
             {table_title}
           </h1>
           <div className="flex items-center">
@@ -198,14 +186,24 @@ const UpdatedTable = ({
                 >
                   <div
                     htmlFor="upload_lead_file"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
+                      colorMode ? "white" : "gray-800"
+                    } text-${
+                      colorMode ? "white" : "gray-800"
+                    } ease-in duration-200 hover:bg-black`}
                   >
                     Upload File
                   </div>
                 </Upload>
 
                 <Tooltip align={"top"} title="Add lead by uploading file">
-                  <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
+                  <span
+                    className={`px-1.5 font-semibold border border-${
+                      colorMode ? "white" : "gray-800"
+                    } text-${
+                      colorMode ? "white" : "gray-800"
+                    } rounded-full text-xs ml-2 cursor-help`}
+                  >
                     ?
                   </span>
                 </Tooltip>
@@ -218,13 +216,23 @@ const UpdatedTable = ({
                   <div className="mr-4">
                     <button
                       id="add_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
+                        colorMode ? "white" : "gray-800"
+                      } text-${
+                        colorMode ? "white" : "gray-800"
+                      } ease-in duration-200 hover:bg-black`}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
                       Add Lead
                     </button>
                     <Tooltip align={"top"} title="Add lead manually">
-                      <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
+                      <span
+                        className={`px-1.5 font-semibold border border-${
+                          colorMode ? "white" : "gray-800"
+                        } text-${
+                          colorMode ? "white" : "gray-800"
+                        } rounded-full text-xs ml-2 cursor-help`}
+                      >
                         ?
                       </span>
                     </Tooltip>
@@ -243,7 +251,11 @@ const UpdatedTable = ({
                     <div className="mr-12">
                       <button
                         id="sync_leads"
-                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} ease-in duration-200 hover:bg-black`}
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
+                          colorMode ? "white" : "gray-800"
+                        } text-${
+                          colorMode ? "white" : "gray-800"
+                        } ease-in duration-200 hover:bg-black`}
                         onClick={() => handleSyncLeadsReq()}
                       >
                         Sync Leads
@@ -252,7 +264,13 @@ const UpdatedTable = ({
                         align={"top"}
                         title="Please do not press it for multiple times. Sync Leads 3/4 time in a day."
                       >
-                        <span className={`px-1.5 font-semibold border border-${colorMode ? "white" : "gray-800"} text-${colorMode ? "white" : "gray-800"} rounded-full text-xs ml-2 cursor-help`}>
+                        <span
+                          className={`px-1.5 font-semibold border border-${
+                            colorMode ? "white" : "gray-800"
+                          } text-${
+                            colorMode ? "white" : "gray-800"
+                          } rounded-full text-xs ml-2 cursor-help`}
+                        >
                           ?
                         </span>
                       </Tooltip>

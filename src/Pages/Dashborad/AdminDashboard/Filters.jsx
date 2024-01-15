@@ -16,7 +16,7 @@ const Filters = ({
   return (
     <div>
       {layout !== "Payment" && (
-        <div className="h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
             className={`text-2xl text-${
               colorMode ? "white" : "gray-800"

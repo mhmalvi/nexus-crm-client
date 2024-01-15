@@ -58,6 +58,7 @@ const LeadStatus = (props) => {
 
   const userDetails = useSelector((state) => state?.user);
   const companyDetails = useSelector((state) => state?.company.companyDetails);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
@@ -404,7 +405,11 @@ const LeadStatus = (props) => {
   return (
     <div className="min-h-full flex flex-col justify-center items-start rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
       <div className="flex justify-center gap-8">
-        <h1 className="text-xl font-semibold font-poppins text-white m-0 p-0">
+        <h1
+          className={`text-xl font-semibold font-poppins ${
+            colorMode ? "text-white" : "text-gray-800"
+          } m-0 p-0`}
+        >
           User Activity Timeline
         </h1>
         <div className="lead_status flex items-center gap-y-3">
@@ -427,309 +432,311 @@ const LeadStatus = (props) => {
           <div className="flex items-center">
             {/* For Counting Calls */}
             {activeStatusTitle === "Called" &&
-            (userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip
-                placement="top"
-                title={"No. of phone calls you have made"}
-              >
-                <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
-                  <div>
-                    <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
-                      {leadDetails?.leadCallHistory?.length}
-                    </h1>
+              (userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip
+                  placement="top"
+                  title={"No. of phone calls you have made"}
+                >
+                  <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+                    <div>
+                      <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                        {leadDetails?.leadCallHistory?.length}
+                      </h1>
+                    </div>
+                    <div className="ml-3 mb-0 flex justify-center items-center">
+                      <button
+                        className="px-1.5 py-0.5 rounded-md bg-black text-white"
+                        onClick={showCallDetailsModal}
+                      >
+                        <Icons.PhoneVolume className="w-3 text-white py-1" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="ml-3 mb-0 flex justify-center items-center">
-                    <button
-                      className="px-1.5 py-0.5 rounded-md bg-black text-white"
-                      onClick={showCallDetailsModal}
-                    >
-                      <Icons.PhoneVolume className="w-3 text-white py-1" />
-                    </button>
-                  </div>
-                </div>
-              </Tooltip>
-            ) : null)}
+                </Tooltip>
+              ) : null)}
 
             {/* For Call History */}
             {activeStatusTitle === "Called" || activeStatusTitle === "Paid" ? (
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip placement="top" title={"All Call Histories"}>
-                <div>
-                  <Icons.CallHistory
-                    className="w-6 text-gray-700 mx-2 cursor-pointer"
-                    onClick={() => setIsCallHistoryOpen(true)}
-                  />
-                </div>
-              </Tooltip>
-            ) : null
-          ) : null}
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip placement="top" title={"All Call Histories"}>
+                  <div>
+                    <Icons.CallHistory
+                      className="w-6 text-gray-700 mx-2 cursor-pointer"
+                      onClick={() => setIsCallHistoryOpen(true)}
+                    />
+                  </div>
+                </Tooltip>
+              ) : null
+            ) : null}
           </div>
 
           {/* Call Details Form */}
           <Modal
-          visible={isCallDetailsOpen}
-          onOk={handleCallDetails}
-          onCancel={handleCancel}
-          okText="Save"
-        >
-          <div>
-            <div className="">
-              <div className="font-poppins text-base font-semibold mb-6">
-                Call Details
-              </div>
-
-              <div className="flex items-end mb-4">
-                <div className="mr-4">
-                  <h1 className="text-sm font-poppins">Duration:</h1>
+            visible={isCallDetailsOpen}
+            onOk={handleCallDetails}
+            onCancel={handleCancel}
+            okText="Save"
+          >
+            <div>
+              <div className="">
+                <div className="font-poppins text-base font-semibold mb-6">
+                  Call Details
                 </div>
-                <div className="flex items-start">
-                  <Space
-                    className=" border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-                    direction="vertical"
-                    // size={12}
-                    style={{
-                      width: "10rem",
-                    }}
-                  >
-                    <DatePicker
-                      className="date-time-picker"
-                      suffixIcon={callStart}
-                      bordered={false}
-                      showTime
-                      onOk={onCallStart}
-                      onChange={onCallStartChange}
-                    />
-                  </Space>
 
-                  <div>
-                    <span className="text-3xl font-semibold px-1 text-center">
-                      -
-                    </span>
+                <div className="flex items-end mb-4">
+                  <div className="mr-4">
+                    <h1 className="text-sm font-poppins">Duration:</h1>
                   </div>
+                  <div className="flex items-start">
+                    <Space
+                      className=" border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                      direction="vertical"
+                      // size={12}
+                      style={{
+                        width: "10rem",
+                      }}
+                    >
+                      <DatePicker
+                        className="date-time-picker"
+                        suffixIcon={callStart}
+                        bordered={false}
+                        showTime
+                        onOk={onCallStart}
+                        onChange={onCallStartChange}
+                      />
+                    </Space>
 
-                  <Space
-                    className="border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-                    direction="vertical"
-                    size={12}
-                    style={{
-                      width: "10rem",
-                    }}
-                  >
-                    <DatePicker
-                      className="date-time-picker"
-                      suffixIcon={callEnd}
-                      bordered={false}
-                      showTime
-                      onOk={onCallEnd}
-                      onChange={onCallEndChange}
-                    />
-                  </Space>
+                    <div>
+                      <span className="text-3xl font-semibold px-1 text-center">
+                        -
+                      </span>
+                    </div>
+
+                    <Space
+                      className="border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                      direction="vertical"
+                      size={12}
+                      style={{
+                        width: "10rem",
+                      }}
+                    >
+                      <DatePicker
+                        className="date-time-picker"
+                        suffixIcon={callEnd}
+                        bordered={false}
+                        showTime
+                        onOk={onCallEnd}
+                        onChange={onCallEndChange}
+                      />
+                    </Space>
+                  </div>
                 </div>
-              </div>
 
-              <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
-                <input
-                  className="w-full font-poppins outline-none"
-                  type="text"
-                  placeholder="Write Remark"
-                  name="remark"
-                  id="remark"
-                  value={callRemark}
-                  onChange={(e) => setCallRemark(e.target.value)}
-                />
+                <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+                  <input
+                    className="w-full font-poppins outline-none"
+                    type="text"
+                    placeholder="Write Remark"
+                    name="remark"
+                    id="remark"
+                    value={callRemark}
+                    onChange={(e) => setCallRemark(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
 
           {/* Call History Details */}
           <Modal
-          visible={isCallHistoryOpen}
-          onCancel={() => setIsCallHistoryOpen(false)}
-          footer={false}
-          width={800}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Call History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Remark</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {leadDetails?.leadCallHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {leadDetails?.leadCallHistory?.map((history, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>
-                        {new Date(history.call_start_time).toLocaleString()}
-                      </td>
-                      <td>
-                        {new Date(history.call_end_time).toLocaleString()}
-                      </td>
-                      <td>{history.call_remark}</td>
-                    </tr>
-                  ))}
-                </tbody>
+            visible={isCallHistoryOpen}
+            onCancel={() => setIsCallHistoryOpen(false)}
+            footer={false}
+            width={800}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Call History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Remark</th>
+                  </tr>
+                </thead>
               </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Call History</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
+            </div>
+            <div className="">
+              {leadDetails?.leadCallHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {leadDetails?.leadCallHistory?.map((history, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>
+                          {new Date(history.call_start_time).toLocaleString()}
+                        </td>
+                        <td>
+                          {new Date(history.call_end_time).toLocaleString()}
+                        </td>
+                        <td>{history.call_remark}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">No Call History</h1>
+                </div>
+              )}
+            </div>
+          </Modal>
 
           {/* Amount History Details */}
           <Modal
-          visible={isAmountHistoryOpen}
-          onCancel={() => setIsAmountHistoryOpen(false)}
-          footer={false}
-          width={500}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Amount History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Date</th>
-                  <th className="w-32">Amount</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {leadDetails?.leadAmountHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {leadDetails?.leadAmountHistory?.map((history, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>{new Date(history.created_at)?.toLocaleString()}</td>
-                      <td className="w-32">
-                        <span>${history.amount}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+            visible={isAmountHistoryOpen}
+            onCancel={() => setIsAmountHistoryOpen(false)}
+            footer={false}
+            width={500}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Amount History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Date</th>
+                    <th className="w-32">Amount</th>
+                  </tr>
+                </thead>
               </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Amount History</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
+            </div>
+            <div className="">
+              {leadDetails?.leadAmountHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {leadDetails?.leadAmountHistory?.map((history, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>
+                          {new Date(history.created_at)?.toLocaleString()}
+                        </td>
+                        <td className="w-32">
+                          <span>${history.amount}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">No Amount History</h1>
+                </div>
+              )}
+            </div>
+          </Modal>
 
           {/* Payment History Details */}
           <Modal
-          visible={isPaymentHistoryOpen}
-          onCancel={() => setIsPaymentHistoryOpen(false)}
-          footer={false}
-          width={900}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Payment History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Date Time</th>
-                  <th className="w-24">Amount</th>
-                  <th>Transaction ID</th>
-                  <th>Invoice ID</th>
-                  <th className="w-20">Action</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {paymentHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {paymentHistory?.map((payment, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>{new Date(payment.created_at).toLocaleString()}</td>
-                      <td className="w-24">{payment.payment_amount}</td>
-                      <td>{payment.transaction_id}</td>
-                      <td>{payment.invoice_number}</td>
-                      <td className="w-20">
-                        <Icons.Cross
-                          className="w-2.5 text-red-600"
-                          onClick={() =>
-                            handleDeletePaymentHistoryReq(payment?.id)
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+            visible={isPaymentHistoryOpen}
+            onCancel={() => setIsPaymentHistoryOpen(false)}
+            footer={false}
+            width={900}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Payment History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Date Time</th>
+                    <th className="w-24">Amount</th>
+                    <th>Transaction ID</th>
+                    <th>Invoice ID</th>
+                    <th className="w-20">Action</th>
+                  </tr>
+                </thead>
               </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">Not Paid Yet</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
+            </div>
+            <div className="">
+              {paymentHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {paymentHistory?.map((payment, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>{new Date(payment.created_at).toLocaleString()}</td>
+                        <td className="w-24">{payment.payment_amount}</td>
+                        <td>{payment.transaction_id}</td>
+                        <td>{payment.invoice_number}</td>
+                        <td className="w-20">
+                          <Icons.Cross
+                            className="w-2.5 text-red-600"
+                            onClick={() =>
+                              handleDeletePaymentHistoryReq(payment?.id)
+                            }
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">Not Paid Yet</h1>
+                </div>
+              )}
+            </div>
+          </Modal>
 
           {/* Add Payment History */}
           <Modal
-          visible={isAddPaymentHistoryOpen}
-          onCancel={() => setIsAddPaymentHistoryOpen(false)}
-          footer={false}
-          width={900}
-        >
-          <AddPaymentHistory
-            leadDetails={leadDetails}
-            setIsAddPaymentHistoryOpen={setIsAddPaymentHistoryOpen}
-            syncDetails={syncDetails}
-            setSyncDetails={setSyncDetails}
-            syncTotalPaid={syncTotalPaid}
-            setSyncTotalPaid={setSyncTotalPaid}
-          />
-        </Modal>
+            visible={isAddPaymentHistoryOpen}
+            onCancel={() => setIsAddPaymentHistoryOpen(false)}
+            footer={false}
+            width={900}
+          >
+            <AddPaymentHistory
+              leadDetails={leadDetails}
+              setIsAddPaymentHistoryOpen={setIsAddPaymentHistoryOpen}
+              syncDetails={syncDetails}
+              setSyncDetails={setSyncDetails}
+              syncTotalPaid={syncTotalPaid}
+              setSyncTotalPaid={setSyncTotalPaid}
+            />
+          </Modal>
 
           {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
             <div className="flex items-center">
@@ -809,8 +816,12 @@ const LeadStatus = (props) => {
         <div className="w-full flex justify-between">
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
-              <div className="w-full">
-                <hr className="w-full" />
+              <div className=" w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
                 <div
@@ -822,25 +833,41 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["New Lead"]
                         ? "bg-green-500"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins ">
-                  <span>New Lead</span>
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  New Lead
                 </h6>
-                <h6 className="mb-0 text-sm font-semibold font-poppins ">
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   # {leadDetails?.leadDetails?.course_code}
                 </h6>
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
                       ? new Date(
                           leadDetails?.leadDetails?.lead_apply_date?.toString()
@@ -863,7 +890,11 @@ const LeadStatus = (props) => {
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
                 <div
@@ -875,21 +906,33 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Skilled"]
                         ? "bg-orange-400"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins">
-                  <span>Skilled</span>
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  Skilled
                 </h6>
-                <h6 className="mb-0 text-sm font-normal font-poppins">
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   {leadStatus["Skilled"] ? (
                     <span>Eligible</span>
                   ) : (
@@ -897,7 +940,11 @@ const LeadStatus = (props) => {
                   )}
                 </h6>
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {statusDateTime["Skilled"] !== "Not Yet"
                       ? new Date(statusDateTime["Skilled"]?.toString())
                           ?.toGMTString()
@@ -921,7 +968,11 @@ const LeadStatus = (props) => {
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
                 <div
@@ -933,25 +984,41 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Called"]
                         ? "bg-blue-400"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   <span>Called</span>
                 </h6>
-                <h6 className="mb-0 text-sm font-normal font-poppins">
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   No. of Calls: {leadDetails?.leadCallHistory?.length}
                 </h6>
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {statusDateTime["Called"] !== "Not Yet"
                       ? new Date(statusDateTime["Called"]?.toString())
                           ?.toGMTString()
@@ -999,7 +1066,11 @@ const LeadStatus = (props) => {
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
                 <div
@@ -1011,19 +1082,27 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Paid"]
                         ? "bg-teal-400"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins">
-                  <span>Paid</span>
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  Paid
                 </h6>
 
                 {userDetails?.userinfo?.role_id !== 1 ||
@@ -1039,13 +1118,21 @@ const LeadStatus = (props) => {
                           className="w-5 text-gray-700 mr-2 cursor-pointer"
                           onClick={() => setIsAmountHistoryOpen(true)}
                         />
-                        <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
+                        <h6
+                          className={`mb-0 text-base font-normal font-poppins ${
+                            colorMode ? "text-white" : "text-gray-800"
+                          }`}
+                        >
                           Payment History
                         </h6>
                       </div>
                     </Tooltip>
                   ) : (
-                    <div className="text-sm font-poppins text-center">
+                    <div
+                      className={`mb-0 text-sm font-thin font-poppins ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
                       No transaction
                     </div>
                   )
@@ -1063,7 +1150,7 @@ const LeadStatus = (props) => {
                       ).toFixed(2)}
                       %)
                     </h6>
-                    <h6 className="text-sm font-normal font-poppins">
+                    <h6 className="text-sm font-thin font-poppins">
                       Due: $
                       {leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
                     </h6>
@@ -1082,7 +1169,11 @@ const LeadStatus = (props) => {
                   </div>
                 ) : null}
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {statusDateTime["Paid"] !== "Not Yet"
                       ? new Date(statusDateTime["Paid"]?.toString())
                           ?.toGMTString()
@@ -1106,7 +1197,11 @@ const LeadStatus = (props) => {
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
                 <div
@@ -1118,21 +1213,33 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Verified"]
                         ? "bg-violet-500"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                  <span>Verified</span>
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  Verified
                 </h6>
-                <h6 className="mb-0 text-sm font-normal font-poppins">
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   {leadStatus["Verified"] ? (
                     <span>Verified</span>
                   ) : (
@@ -1140,12 +1247,20 @@ const LeadStatus = (props) => {
                   )}
                 </h6>
 
-                <h6 className="mb-0 italic text-xs font-medium font-poppins">
+                <h6
+                  className={`mb-0 text-xs font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   <span className="text-red-500">*</span> Please Check The
                   Checklist Section
                 </h6>
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {statusDateTime["Verified"] !== "Not Yet"
                       ? new Date(statusDateTime["Verified"]?.toString())
                           ?.toGMTString()
@@ -1169,7 +1284,11 @@ const LeadStatus = (props) => {
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-4">
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div>
                 <div
@@ -1181,21 +1300,33 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Completed"]
                         ? "bg-red-500"
-                        : "bg-gray-300 animate-custom-ping"
+                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
               </div>
               <div className="w-full">
-                <hr className="w-full" />
+                <hr
+                  className={`${
+                    colorMode ? "border-white" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <h6 className="mb-0 text-base font-semibold font-poppins">
-                  <span>Completed</span>
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  Completed
                 </h6>
-                <h6 className="mb-0 text-sm font-normal font-poppins">
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   {leadDetails?.leadDetails?.document_certificate_id > 0
                     ? "Certificate Provided"
                     : "Certificate Not Provided Yet"}
@@ -1247,7 +1378,11 @@ const LeadStatus = (props) => {
                   </div>
                 )}
                 <Tooltip placement="top" title={"Activity Time"}>
-                  <div className="text-[10px]">
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-white" : "text-gray-800"
+                    }`}
+                  >
                     {statusDateTime["Completed"] !== "Not Yet"
                       ? new Date(statusDateTime["Completed"]?.toString())
                           ?.toGMTString()
