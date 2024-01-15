@@ -745,8 +745,8 @@ const AdminDashboard = () => {
             syncLeads={syncLeads}
             selectedSales={selectedSales}
             setSelectedSales={setSelectedSales}
-            // salesOptions={salesOptions}
-            // setSalesOptions={setSalesOptions}
+            salesOptions={salesOptions}
+            setSalesOptions={setSalesOptions}
           />
         </div>
       </div>
