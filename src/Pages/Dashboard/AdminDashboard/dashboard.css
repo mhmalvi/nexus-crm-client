@@ -2,7 +2,9 @@
 .updatedTableDark .ant-table {
   border-radius: 10px !important;
   overflow: hidden;
-  background-color: transparent !important;
+  backdrop-filter: blur(40px);
+  background-color: #0000007f;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .updatedTableDark .ant-table-body::-webkit-scrollbar {
   height: 5px !important;
@@ -36,8 +38,10 @@
   padding: 8px;
 }
 .updatedTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  background-color: #ffffff;
-  color: #1b0538;
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #ffffff;
 }
 
 .updatedTableDark .ant-pagination {
@@ -115,7 +119,9 @@
 .updatedTableLight .ant-table {
   border-radius: 10px !important;
   overflow: hidden;
-  background-color: transparent !important;
+  backdrop-filter: blur(40px);
+  background-color: #ffffff7f;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .updatedTableLight .ant-table-body::-webkit-scrollbar {
   height: 5px !important;
@@ -200,7 +206,7 @@
 .updatedTableLight .ant-pagination .ant-pagination-prev > button:hover,
 .updatedTableLight .ant-pagination .ant-pagination-next > button:hover {
   border: 1px solid #ffffff;
-  color: #;
+  color: #7037ff;
 }
 .updatedTableLight .ant-pagination .ant-pagination-item-link-icon {
   color: white;
