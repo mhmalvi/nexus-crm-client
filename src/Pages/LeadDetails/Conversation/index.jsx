@@ -29,7 +29,7 @@ const Conversation = ({ leadDetails, id }) => {
     <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
       <h1
         className={`px-5 py-2 text-lg font-poppins ${
-          colorMode ? "text-white" : "text-gray-800"
+          colorMode ? "text-slate-300" : "text-gray-800"
         } shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl`}
       >
         Contact
@@ -49,7 +49,7 @@ const Conversation = ({ leadDetails, id }) => {
               <img className="w-6" src={whatsappLogo} alt="" />
               <span
                 className={`${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 } text-base ml-3`}
               >
                 Open in Whatsapp
@@ -67,7 +67,7 @@ const Conversation = ({ leadDetails, id }) => {
             <img className="w-6" src={mailLogo} alt="" />
             <span
               className={`${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               } text-base ml-3`}
             >
               Send Mail

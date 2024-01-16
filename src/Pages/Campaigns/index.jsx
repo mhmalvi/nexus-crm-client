@@ -111,7 +111,7 @@ const Campaigns = () => {
         />
 
         {loadingDetails ? (
-          <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-100 z-50 flex justify-center items-center bg-transparent">
             <Loading />
           </div>
         ) : (

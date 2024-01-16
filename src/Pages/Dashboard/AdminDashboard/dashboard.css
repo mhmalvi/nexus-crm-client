@@ -20,7 +20,7 @@
 }
 .updatedTableDark .ant-table-body .ant-table-cell,
 .updatedTableDark .ant-table-body .ant-table-cell h4 {
-  color: #ffffff;
+  color: #cbd5e1;
   margin: 0;
   text-align: center;
 }
@@ -30,18 +30,27 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 100%;
-  color: #fff !important;
-  border-bottom: 1px solid #e6edff;
+  color: #cbd5e1 !important;
+  border-bottom:1px solid #c0c0c02f !important;
   background-color: #7037ff !important;
 }
 .updatedTableDark .ant-table-body tr td {
   padding: 8px;
 }
+.updatedTableDark .ant-table-body tr td {
+  border-bottom:1px solid #c0c0c02f !important;
+  border-right:1px solid #c0c0c02f !important;
+}
+.updatedTableDark .ant-table-thead tr th{
+  border-right:1px solid #c0c0c02f !important;
+  text-align: center;
+}
+
 .updatedTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
   backdrop-filter: blur(8px);
   background-color: #1f2937;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  color: #ffffff;
+  color: #cbd5e1;
 }
 
 .updatedTableDark .ant-pagination {
@@ -50,18 +59,18 @@
   align-items: center;
 }
 .updatedTableDark .ant-pagination li {
-  border: 0.5px solid white;
+  border: 0.5px solid #cbd5e1;
   background-color: transparent;
   border-radius: 10px;
 }
 .updatedTableDark .ant-pagination li a {
-  color: white;
+  color: #cbd5e1;
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-active {
   background-color: #7037ff;
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-ellipsis {
-  color: white;
+  color: #cbd5e1;
 }
 .updatedTableDark .ant-pagination .ant-pagination-disabled,
 .updatedTableDark .ant-pagination .ant-pagination-prev,
@@ -77,20 +86,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: #cbd5e1;
 }
 .updatedTableDark .ant-pagination .ant-pagination-disabled > button {
-  background-color: white;
+  background-color: #cbd5e1;
   color: #1f293797;
 }
 .updatedTableDark .ant-pagination .ant-pagination-disabled > button:hover,
 .updatedTableDark .ant-pagination .ant-pagination-prev > button:hover,
 .updatedTableDark .ant-pagination .ant-pagination-next > button:hover {
-  border: 1px solid #ffffff;
+  border: 1px solid #cbd5e1;
   color: #7037ff;
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-link-icon {
-  color: white;
+  color: #cbd5e1;
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-container {
   height: 100%;
@@ -120,7 +129,7 @@
   border-radius: 10px !important;
   overflow: hidden;
   backdrop-filter: blur(40px);
-  background-color: #ffffff7f;
+  background-color: #cbd5e17f;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .updatedTableLight .ant-table-body::-webkit-scrollbar {
@@ -147,12 +156,20 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 100%;
-  color: #fff !important;
-  border-bottom: 1px solid #1f2937;
+  color: #cbd5e1 !important;
   background-color: #7037ff !important;
+  border-bottom:1px solid #1f293729 !important;
 }
 .updatedTableLight .ant-table-body tr td {
   padding: 8px;
+}
+.updatedTableLight .ant-table-body tr td {
+  border-bottom:1px solid #1f293729 !important;
+  border-right:1px solid #1f293729 !important;
+}
+.updatedTableLight .ant-table-thead tr th{
+  border-right:1px solid #1f293729 !important;
+  text-align: center;
 }
 
 .updatedTableLight thead .ant-table-cell-fix-left-last:first-child {
@@ -177,7 +194,7 @@
   background-color: #7037ff;
 }
 .updatedTableLight .ant-pagination .ant-pagination-item-active a {
-  color: #ffffff !important;
+  color: #cbd5e1 !important;
 }
 .updatedTableLight .ant-pagination .ant-pagination-item-ellipsis {
   color: #1f2937;
@@ -196,26 +213,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #cbd5e1;
 }
 .updatedTableLight .ant-pagination .ant-pagination-disabled > button {
-  background-color: white;
+  background-color: #cbd5e1;
   color: #1f293797;
 }
 .updatedTableLight .ant-pagination .ant-pagination-disabled > button:hover,
 .updatedTableLight .ant-pagination .ant-pagination-prev > button:hover,
 .updatedTableLight .ant-pagination .ant-pagination-next > button:hover {
-  border: 1px solid #ffffff;
+  border: 1px solid #cbd5e1;
   color: #7037ff;
 }
 .updatedTableLight .ant-pagination .ant-pagination-item-link-icon {
-  color: white;
+  color: #cbd5e1;
 }
 .updatedTableLight .ant-pagination .ant-pagination-item-container {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.updatedTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
 }
 .updatedTableLight
   .ant-pagination

@@ -62,7 +62,7 @@ const AddPaymentHistory = ({
       <div className="flex justify-center my-10 gap-1">
         <div>
           <button
-            className="py-1 font-semibold px-4 w-full mr-4 text-red-500 bg-white border border-red-500 rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-gray-800 hover:text-gray-800 tracking-wide"
+            className="py-1 font-semibold px-4 w-full mr-4 text-red-500 bg-slate-300 border border-red-500 rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-gray-800 hover:text-gray-800 tracking-wide"
             onClick={() => setIsAddPaymentHistoryOpen(false)}
           >
             Cancel
@@ -72,7 +72,7 @@ const AddPaymentHistory = ({
           <button
             key="submit"
             onClick={handleAddPaymentHistoryReq}
-            className="py-1 font-semibold px-4 w-full border border-black text-white bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-gray-800 tracking-wide"
+            className="py-1 font-semibold px-4 w-full border border-black text-slate-300 bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-gray-800 tracking-wide"
           >
             Save
           </button>

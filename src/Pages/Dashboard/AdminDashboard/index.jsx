@@ -255,9 +255,9 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className="rounded-md px-2 py-1  ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] border-none flex items-center justify-center w-full"
+              className="rounded-md px-2 py-1 ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] border-none flex items-center justify-center w-full"
             >
-              <p className="p-0 m-0 !text-sm text-white">Assign</p>
+              <p className="p-0 m-0 text-xs text-white">Assign</p>
             </button>
           </>
         );
@@ -363,10 +363,10 @@ const AdminDashboard = () => {
               className="btn btn-block w-[100px] h-[28px]  text-white rounded-md ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] flex flex-row m-auto "
             >
               <div className="flex flex-row m-auto justify-between">
-                <p className="m-auto p-1">
+                <p className="text-xs m-0 p-1">
                   {record.call_count != null ? record.call_count : 0}
                 </p>
-                <p className="m-auto p-1">Call Details</p>
+                <p className="text-xs  m-0 p-1">Call Details</p>
               </div>
             </button>
           </h4>

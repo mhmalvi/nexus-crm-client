@@ -68,14 +68,14 @@ table {
   overflow: hidden;
   height: 100%;
   margin: 0;
-  border: 1px solid white;
+  border: 1px solid #cbd5e1;
   display: flex;
   justify-content: center;
 }
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper {
   background-color: transparent !important;
   border: 0px;
-  color: white;
+  color: #cbd5e1;
 }
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper-checked {
   background-color: transparent !important;
@@ -91,12 +91,12 @@ table {
 .calendarDropHeadDark
   .ant-select:not(.ant-select-customize-input)
   .ant-select-selector {
-  border: 1px solid white;
+  border: 1px solid #cbd5e1;
 }
 .calendarDropHeadDark .ant-select {
   border-radius: 5px;
   background-color: transparent !important;
-  color: white;
+  color: #cbd5e1;
   height: 100%;
   overflow: hidden;
 }
@@ -104,8 +104,8 @@ table {
   display: flex;
   border-radius: 5px !important;
   background-color: transparent !important;
-  color: white;
-  border: 1px solid white;
+  color: #cbd5e1;
+  border: 1px solid #cbd5e1;
   overflow: hidden;
   padding: 0;
 }
@@ -131,7 +131,7 @@ table {
 }
 .calendarBodyDark .ant-picker-panel .ant-picker-content thead {
   padding-bottom: 8px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #cbd5e1;
 }
 .calendarBodyDark .ant-picker-panel .ant-picker-content thead th {
   color: #ffffff;
@@ -157,7 +157,7 @@ table {
   tbody
   > tr
   > .ant-picker-cell-in-view {
-  color: white !important;
+  color: #cbd5e1 !important;
 }
 
 ---x---
@@ -387,9 +387,9 @@ td {
 }
 .custom-picker::after {
   /* display: none; */
-  background: white !important;
+  background: #cbd5e1 !important;
   content: "" !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   cursor: pointer;
 }
 
@@ -400,7 +400,7 @@ td {
 /* .lead_status > .ant-select-selector { */
 /* .lead_status > .ant-space-item { */
 .lead_status .ant-space {
-  color: white;
+  color: #cbd5e1;
   white-space: nowrap;
   border-radius: 5px !important;
   height: 2.3rem !important;
@@ -433,49 +433,49 @@ td {
 
 .color-black > .ant-space {
   background-color: #000000 !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-green > .ant-space {
   background-color: #34c759 !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-orange > .ant-space {
   background-color: #ff9500 !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-blue > .ant-space {
   background-color: #4f8dea !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-teal > .ant-space {
   background-color: #17cdd9 !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-violet > .ant-space {
   background-color: #7037ff !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
 
 .color-red > .ant-space {
   background-color: #ff0000 !important;
-  color: white !important;
+  color: #cbd5e1 !important;
   outline: none !important;
   border: none !important;
 }
@@ -509,7 +509,7 @@ td {
   margin-right: auto;
   position: absolute;
   left: -10px;
-  background-color: white;
+  background-color: #cbd5e1;
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
   padding: 0px 6px 6px 6px;
   /* border: 1px solid rgb(122, 122, 122); */

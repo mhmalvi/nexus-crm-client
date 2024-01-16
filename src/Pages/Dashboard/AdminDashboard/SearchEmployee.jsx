@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Select } from "antd";
 import { useMediaQuery } from "react-responsive";
+import { DownCircleTwoTone } from '@ant-design/icons'
 
 const SearchEmployee = ({
   layout,
@@ -50,12 +51,12 @@ const SearchEmployee = ({
             userDetails?.role_id === 2 ||
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) && (
-            <div className="px-3 py-3 rounded-xl shadowmdl backdrop-blur-2xl bg-[#ffffff11]">
+            <div className="px-3 py-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
               <h1
                 className={`text-${
                   isBigScreen ? "xl" : "base"
                 } font-normal font-poppins text-${
-                  colorMode ? "white" : "gray-800"
+                  colorMode ? "slate-300" : "gray-800"
                 }`}
               >
                 Search with Assigned Employee
@@ -63,7 +64,9 @@ const SearchEmployee = ({
 
               <div className="filterEmployee">
                 <Select
-                  defaultValue="All"
+                p
+                suffixIcon={<DownCircleTwoTone />}
+                  defaultValue={`All`}
                   placeholder="Select Employee"
                   onChange={handleEmployeeChange}
                   options={employeeOptions}

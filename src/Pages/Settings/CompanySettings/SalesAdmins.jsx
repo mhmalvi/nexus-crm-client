@@ -281,7 +281,7 @@ const SalesAdmins = ({ clientId }) => {
           <div className="flex items-center w-full pb-2">
             <h1
               className={`font-semibold text-xl ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               } m-0 p-0`}
             >
               Admins
@@ -292,9 +292,9 @@ const SalesAdmins = ({ clientId }) => {
             userDetails?.userInfo?.role_id === 3 ? (
               <div>
                 <button
-                  className={`py-1 whitespace-nowrap px-2 text-xs font-medium border ${
+                  className={`py-1 slate-300space-nowrap px-2 text-xs font-medium border ${
                     colorMode
-                      ? "text-white border-white"
+                      ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
                   } rounded-lg 2xl:ml-29`}
                   onClick={() => setActiveAddSupervisor(true)}
@@ -304,7 +304,7 @@ const SalesAdmins = ({ clientId }) => {
               </div>
             ) : null}
           </div>
-          <hr className={colorMode ? "border-white" : "border-gray-800"} />
+          <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
         </div>
 
         <div className="mt-5 h-48 overflow-y-scroll">
@@ -329,14 +329,14 @@ const SalesAdmins = ({ clientId }) => {
                   <div className="ml-4 w-52 py-2">
                     <h1
                       className={`font-semibold text-lg ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       } m-0`}
                     >
                       {companyAdminEmployee?.full_name}
                     </h1>
                     <p
                       className={`font-medium text-xs m-0 ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       }`}
                     >
                       {companyAdminEmployee?.email}
@@ -358,14 +358,14 @@ const SalesAdmins = ({ clientId }) => {
                   <div className="ml-4 w-52 flex flex-col justify-around">
                     <h1
                       className={`font-semibold text-lg ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       } m-0`}
                     >
                       {employee?.full_name}
                     </h1>
                     <p
                       className={`font-medium text-xs mb-0 ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       }`}
                     >
                       {employee?.email}
@@ -389,7 +389,7 @@ const SalesAdmins = ({ clientId }) => {
                             <button
                               className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
                                 colorMode
-                                  ? "text-white border-white"
+                                  ? "text-slate-300 border-slate-300"
                                   : "text-gray-800 border-gray-800"
                               } mt-3 mr-2`}
                             >
@@ -416,7 +416,7 @@ const SalesAdmins = ({ clientId }) => {
           </div>
           {inactiveAdminEmployees.length ? (
             <div className="mt-2 shadow-md">
-              <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-white">
+              <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-slate-300">
                 Inactive Admins
               </h1>
               <hr />
@@ -457,7 +457,7 @@ const SalesAdmins = ({ clientId }) => {
         <div className="flex items-center w-full pb-2">
           <h1
             className={`font-semibold text-xl ${
-              colorMode ? "text-white" : "text-gray-800"
+              colorMode ? "text-slate-300" : "text-gray-800"
             } m-0 p-0`}
           >
             Sales Admins
@@ -471,7 +471,7 @@ const SalesAdmins = ({ clientId }) => {
               <button
                 className={`py-1 px-2 text-xs font-medium border rounded-md  ${
                   colorMode
-                    ? "text-white border-white "
+                    ? "text-slate-300 border-slate-300 "
                     : "text-gray-800 border-gray-800"
                 } ml-29`}
                 onClick={() => setActiveAddSeals(true)}
@@ -481,7 +481,7 @@ const SalesAdmins = ({ clientId }) => {
             </div>
           ) : null}
         </div>
-        <hr className={colorMode ? "border-white" : "border-gray-800"} />
+        <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
 
         <div className="mt-5 h-80 overflow-y-scroll">
           <div className="grid grid-cols-2 gap-8 ">
@@ -497,14 +497,14 @@ const SalesAdmins = ({ clientId }) => {
                   <div className="ml-4 w-52 flex flex-col justify-around">
                     <h1
                       className={`font-semibold text-lg ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       } m-0`}
                     >
                       {employee?.full_name}
                     </h1>
                     <p
                       className={`font-medium text-xs mb-0 ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       }`}
                     >
                       {employee?.email}
@@ -530,7 +530,7 @@ const SalesAdmins = ({ clientId }) => {
                             <button
                               className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
                                 colorMode
-                                  ? "text-white border-white"
+                                  ? "text-slate-300 border-slate-300"
                                   : "text-gray-800 border-gray-800"
                               } mt-3 mr-2`}
                             >
@@ -553,7 +553,7 @@ const SalesAdmins = ({ clientId }) => {
             ) : (
               <h1
                 className={`font-semibold text-base ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
                 No Employee Added Yet
@@ -565,7 +565,7 @@ const SalesAdmins = ({ clientId }) => {
             <div className="mt-2">
               <h1
                 className={`font-semibold text-xl py-5 px-4 my-0 ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
                 Inactive Sales Admins

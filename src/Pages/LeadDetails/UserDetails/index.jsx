@@ -221,7 +221,7 @@ const UserDetails = ({
           <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <h4
               className={`text-lg px-5 py-2 m-0 font-poppins ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               } backdrop-blur-2xl bg-[#ffffff11] shadow-md rounded-t-xl`}
             >
               Details
@@ -239,7 +239,7 @@ const UserDetails = ({
                     />
                     <div
                       className={`text-[10px] ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       } font-poppins mt-1 text-center font-medium`}
                     >
                       Scan To Call
@@ -259,7 +259,7 @@ const UserDetails = ({
                         title={"If it's a bad lead then you can Suspend it"}
                       >
                         <button
-                          className={`ease-in duration-200 w-32 px-1.5 py-2 border border-red-500 hover:bg-red-500 hover:text-white text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
+                          className={`ease-in duration-200 w-32 px-1.5 py-2 border border-red-500 hover:bg-red-500 hover:text-slate-300 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
                           // onClick={handleLeadSuspend}
                         >
                           Suspend
@@ -272,7 +272,7 @@ const UserDetails = ({
               <div className=" w-full flex flex-col justify-around ml-8">
                 <div
                   className={`font-normal 2xl:text-xs ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap `}
                 >
                   <span>Contact:&nbsp;&nbsp;</span>
@@ -280,7 +280,7 @@ const UserDetails = ({
                 </div>
                 <div
                   className={`font-normal 2xl:text-xs ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap pt-1`}
                 >
                   <span>Email:&nbsp;&nbsp;</span>
@@ -288,7 +288,7 @@ const UserDetails = ({
                 </div>
                 <div
                   className={`font-normal 2xl:text-xs ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap items-center pt-1`}
                 >
                   <span>Courses:&nbsp;&nbsp;</span>
@@ -298,7 +298,7 @@ const UserDetails = ({
                 </div>
                 <div
                   className={`font-normal 2xl:text-xs ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex items-center pt-1`}
                 >
                   <span>Location:&nbsp;&nbsp;</span>
@@ -308,7 +308,7 @@ const UserDetails = ({
                 </div>
                 <div
                   className={`font-normal 2xl:text-xs ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex items-center pt-1`}
                 >
                   <span>Experience:&nbsp;&nbsp;</span>
@@ -319,7 +319,7 @@ const UserDetails = ({
               </div>
               <div
                 className={`absolute ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 } top-2 right-5 hover:text-brand-color cursor-pointer`}
                 onClick={() => setToggleEditDetials(true)}
               >
@@ -331,7 +331,7 @@ const UserDetails = ({
             <div className="flex justify-between items-center">
               <h1
                 className={`text-xl font-poppins ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
                 {leadDetails?.leadDetails?.full_name}
@@ -389,14 +389,14 @@ const UserDetails = ({
                         size="45"
                         name={salesEmployeeName}
                       />
-                      <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
+                      <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-slate-300 shadow-md bg-green-500 rounded-full">
                         &nbsp;
                       </div>
                     </div>
                   ) : userDetails?.userInfo?.role_id === 3 ||
                     userDetails?.userInfo?.role_id === 4 ? (
                     <div
-                      className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
+                      className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-slate-300 cursor-pointer"
                       onClick={() => {
                         setAddSealsman(true);
                       }}
@@ -419,7 +419,7 @@ const UserDetails = ({
                     okText="Yes"
                     cancelText="No"
                   >
-                    <span className="absolute cursor-pointer -top-1 -right-2 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0">
+                    <span className="absolute cursor-pointer -top-1 -right-2 text-xs px-1.5 border border-slate-300 pb-0.5 rounded-full bg-black text-slate-300 m-0">
                       x
                     </span>
                   </Popconfirm>
@@ -428,7 +428,7 @@ const UserDetails = ({
             </div>
             <h1
               className={`text-xl font-poppins ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               #{leadDetails?.leadDetails?.lead_id}
@@ -456,7 +456,7 @@ const UserDetails = ({
                 <form className="flex justify-between items-center w-full gap-4">
                   <input
                     className={`w-5/6 outline-none border-b ${
-                      colorMode ? "border-white" : "border-gray-800"
+                      colorMode ? "border-slate-300" : "border-gray-800"
                     } bg-transparent text-sm font-poppins text-black text-opacity-75`}
                     onChange={(e) => setRatingRemarks(e.currentTarget.value)}
                     value={ratingRemarks}
@@ -465,7 +465,7 @@ const UserDetails = ({
                   <button
                     className={`border ${
                       colorMode
-                        ? "border-white text-white"
+                        ? "border-slate-300 text-slate-300"
                         : "border-gray-800 text-gray-800"
                     }  px-3 py-0.5 rounded-xl cursor-pointer`}
                     onClick={handleReviewRemarksSubmit}
@@ -485,7 +485,7 @@ const UserDetails = ({
             <div className="flex flex-col justify-between items-center">
               <h1
                 className={`text-lg font-poppins ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 } m-0 p-0`}
               >
                 Lead Generation Form
@@ -493,7 +493,7 @@ const UserDetails = ({
               <button
                 className={`w-full px-1.5 py-2 bg-transparent border ${
                   colorMode
-                    ? "text-white border-white"
+                    ? "text-slate-300 border-slate-300"
                     : "text-gray-800 border-gray-800"
                 } text-base font-medium font-poppins rounded-md`}
                 onClick={() => setToggleApplication(!toggleApplication)}
@@ -504,7 +504,7 @@ const UserDetails = ({
             <div className="flex flex-col justify-between items-center">
               <h1
                 className={`text-lg ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 } m-0 p-0`}
               >
                 Application Form
@@ -514,18 +514,18 @@ const UserDetails = ({
                 onClick={() => message.success("No file available")}
                 className={`w-full px-1.5 py-2 bg-transparent border ${
                   colorMode
-                    ? "text-white border-white"
+                    ? "text-slate-300 border-slate-300"
                     : "text-gray-800 border-gray-800"
                 } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
               >
-                <Icons.DownArrow className="w-6 rounded-full text-white text-opacity-50" />
+                <Icons.DownArrow className="w-6 rounded-full text-slate-300 text-opacity-50" />
                 <span className="ml-2">Download</span>
               </button>
             </div>
             <div className="flex flex-col justify-between items-center">
               <h1
                 className={`text-lg font-poppins ${
-                  colorMode ? "text-white" : "text-gray-800"
+                  colorMode ? "text-slate-300" : "text-gray-800"
                 } m-0 p-0`}
               >
                 Check Lists
@@ -542,7 +542,7 @@ const UserDetails = ({
               <button
                 className={`w-full px-1.5 py-2 bg-transparent border ${
                   colorMode
-                    ? "text-white border-white"
+                    ? "text-slate-300 border-slate-300"
                     : "text-gray-800 border-gray-800"
                 } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
                 onClick={() => setToggleChcekList(true)}
@@ -557,7 +557,7 @@ const UserDetails = ({
                 </h1>
                 <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
                   <button
-                    className="w-full px-1.5 py-2 bg-transparent border border-white text-white text-base font-medium font-poppins rounded-md flex items-center justify-center"
+                    className="w-full px-1.5 py-2 bg-transparent border border-slate-300 text-slate-300 text-base font-medium font-poppins rounded-md flex items-center justify-center"
                     onClick={() => {
                       Storage.setItem("_tp_", totalPaid);
                     }}
@@ -572,17 +572,17 @@ const UserDetails = ({
         <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
           {userDetails?.userInfo?.role_id !== 6 ? (
             <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-              <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-white px-5 py-2 rounded-t-xl overflow-hidden">
+              <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
                 <h1
                   className={`text-lg m-0 p-0 ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } `}
                 >
                   Comments
                 </h1>
                 <Icons.History
                   className={`${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   } hover:text-brand-color w-6 cursor-pointer`}
                   onClick={() => {
                     setIsCommentHistoryOpen(true);
@@ -609,7 +609,7 @@ const UserDetails = ({
                     <input
                       id="lead_comment"
                       className={`w-full outline-none border-b ${
-                        colorMode ? "border-white" : "border-gray-800"
+                        colorMode ? "border-slate-300" : "border-gray-800"
                       } bg-transparent text-base font-poppins text-black text-opacity-75`}
                       onChange={(e) => handleCommentChange(e)}
                       placeholder={"Write your comment"}
@@ -619,7 +619,7 @@ const UserDetails = ({
                       type="submit"
                       className={`bg-transparent border ${
                         colorMode
-                          ? "text-white border-white"
+                          ? "text-slate-300 border-slate-300"
                           : "text-gray-800 border-gray-800"
                       } px-2 py-0.5 rounded-md cursor-pointer`}
                       value="Post"
