@@ -16,7 +16,7 @@ const Filters = ({
   return (
     <div>
       {layout !== "Payment" && (
-        <div className="h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
+        <div className="h-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
             className={`text-2xl text-${
               colorMode ? "white" : "gray-800"
@@ -34,14 +34,14 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`w-full text-xs text-center font-normal border-[1px] border-${
+                  className={`w-full text-xs text-center font-normal  border-${
                     colorMode ? "white" : "gray-800"
                   } font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
-                      ? "text-white bg-[#7037ff] "
+                      ? "text-white bg-[#7037ff] border-[0.5px] "
                       : colorMode
-                      ? "text-white bg-transparent"
-                      : "text-gray-800 bg-transparent"
+                      ? "text-white bg-transparent border-[0.1px] "
+                      : "text-gray-800 bg-transparent border-[0.1px]"
                   }  rounded-md`}
                 >
                   {option.title}

@@ -115,7 +115,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
               Summary
             </h1>
             <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 py-3">
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     $ {totalRevenue}
@@ -128,7 +128,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <Icons.Briefcase className="w-5 text-[#ffa500]" />
                 </div>
               </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     ${" "}
@@ -144,7 +144,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <Icons.CalendarMonth className="w-5 text-[#ffa500]" />
                 </div>
               </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     ${" "}
@@ -160,7 +160,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <Icons.CalendarWeek className="w-5 text-[#ffa500]" />
                 </div>
               </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     {campaigns?.length}
@@ -173,7 +173,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <Icons.Campaigns className="w-5 text-[#ffa500]" />
                 </div>
               </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     ${" "}
@@ -189,7 +189,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   <Icons.MoneyCheck className="w-5 text-[#ffa500]" />
                 </div>
               </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
                 <div>
                   <h1 className="text-lg font-semibold text-[#ffa500]">
                     {comapnyEmployees?.length}

@@ -109,7 +109,7 @@ const Sales = () => {
   return (
     <>
       <div className="h-screen flex justify-center items-center">
-        <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
           <div className="w-full flex items-center justify-between mb-5">
             <div className={`text-xl font-semibold ${colorMode?"text-white":"text-gray-800"}`}>All Sales Employees</div>
           </div>

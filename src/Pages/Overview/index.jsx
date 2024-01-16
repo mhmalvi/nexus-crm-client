@@ -136,7 +136,7 @@ const Overview = () => {
       >
         Capture Report
       </button>
-      <div className="font-poppins rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] h-[90vh] w-full mx-5 overflow-y-scroll overflow-x-hidden">
+      <div className="font-poppins rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[90vh] w-full mx-5 overflow-y-scroll overflow-x-hidden">
         <div>
           {userDetails?.userInfo?.role_id === 1 ? (
             <div className="font-light">

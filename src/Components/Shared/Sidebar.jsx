@@ -2,7 +2,7 @@ import { handleLogout } from "../../Components/services/auth";
 import { Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
@@ -82,16 +82,6 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
     window.location.reload();
   };
 
-  const ToggleProfile = (e) => {
-    if (e?.key === "profile") {
-      navigate("/user-profile");
-    } else if (e?.key === "email-setting") {
-      navigate("/email-setting");
-    } else if (e?.key === "company") {
-      navigate("/settings");
-    }
-  };
-
   return (
     <div
       className={` bg-[#ffffff11] duration-300 ${
@@ -141,7 +131,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
         </div>
         <div className="w-full h-full">
           <div>
-            <NavLink
+            <Link
               to={"/dashboard"}
               className={`${
                 active === "dashboard"
@@ -171,7 +161,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   |
                 </div>
               )}
-            </NavLink>
+            </Link>
           </div>
 
           {(userDetails?.userInfo?.role_id === 1 ||
@@ -179,7 +169,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/overview"}
                 className={`${
                   active === "overview"
@@ -209,7 +199,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -221,7 +211,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             userDetails?.userInfo?.role !== 1 &&
             userDetails?.userInfo?.role !== 2 && (
               <div>
-                <NavLink
+                <Link
                   to={"/payments"}
                   className={`${
                     active === "payments"
@@ -251,14 +241,14 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                       |
                     </div>
                   )}
-                </NavLink>
+                </Link>
               </div>
             )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/campaigns"}
                 className={`${
                   active === "campaigns"
@@ -288,14 +278,14 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/courses"}
                 className={`${
                   active === "courses"
@@ -325,7 +315,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -335,7 +325,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4) && (
                 <div>
-                  <NavLink
+                  <Link
                     to={"/salesEmployee"}
                     className={`${
                       active === "salesEmployee"
@@ -368,7 +358,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                         |
                       </div>
                     )}
-                  </NavLink>
+                  </Link>
                 </div>
               )
             ) : (
@@ -382,7 +372,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4) && (
               <div>
-                <NavLink
+                <Link
                   to={"/salesEmployee"}
                   className={`${
                     active === "salesEmployee"
@@ -412,7 +402,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                       |
                     </div>
                   )}
-                </NavLink>
+                </Link>
               </div>
             )
           )}
@@ -423,7 +413,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             userDetails?.userInfo?.role_id === 4 ||
             userDetails?.userInfo?.role_id === 5) && (
             <div>
-              <NavLink
+              <Link
                 to={"/calender"}
                 className={`${
                   active === "calender"
@@ -463,7 +453,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -471,7 +461,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2) && (
             <div>
-              <NavLink
+              <Link
                 to={"/requisitions"}
                 className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
@@ -491,7 +481,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -500,7 +490,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             userDetails?.userInfo?.role_id === 9 ||
             userDetails?.userInfo?.role_id === 7) && (
             <div>
-              <NavLink
+              <Link
                 to={"/studentManagement"}
                 className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
@@ -521,14 +511,14 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {/* Agency menu items end */}
           {/* // Accountant menu items */}
           {userDetails?.userInfo?.role_id === 8 && (
             <div>
-              <NavLink
+              <Link
                 to={"/courseManagement"}
                 className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
@@ -547,12 +537,12 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {userDetails?.userInfo?.role_id === 8 && (
             <div>
-              <NavLink
+              <Link
                 to={"/paymentSlip"}
                 className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
@@ -569,14 +559,14 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {/* // Accountant menu end */}
 
           {userDetails?.userInfo?.role_id !== 10 && (
             <div>
-              <NavLink
+              <Link
                 to={"/settings"}
                 className={`${
                   active === "settings"
@@ -616,7 +606,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
             // <Menu
             //   className={`${
@@ -665,8 +655,8 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4 py-1.5"
             onClick={logoutHandler}
           >
-            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-xl">
-              <Icons.LogOut />
+            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md">
+              <Icons.LogOut className="text-white"/>
               {openSideBar ? (
                 ""
               ) : (

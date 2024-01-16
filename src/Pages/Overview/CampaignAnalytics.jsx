@@ -587,7 +587,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
       <div className="flex mt-12 justify-between gap-5">
         {/* Areawise Lead */}
 
-        <div className="w-1/2 p-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="w-1/2 p-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
           <div className="relative flex justify-between items-center">
             <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} font-poppins m-0 p-0`}>
               Areawise Lead Details
@@ -636,7 +636,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
         </div>
 
         {/* Lead Status Summary */}
-        <div className="w-1/2 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="w-1/2 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
           <div className="relative flex justify-between items-center">
             <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} m-0 p-0 font-poppins`}>
               Lead Status Summary

@@ -14,10 +14,10 @@ import campaignBg from "../../../assets/Images/campaign_bg.jpg";
 import inactiveImg from "../../../assets/Images/inactive.png";
 import { addCampaigns } from "../../../features/Leads/campaignSlice";
 import { addLeads } from "../../../features/Leads/leadsSlice";
-import Calendar from "../../Dashborad/AdminDashboard/Calendar";
-import Filters from "../../Dashborad/AdminDashboard/Filters";
-import UpdatedTable from "../../Dashborad/AdminDashboard/UpdatedTable";
-import data from "../../Dashborad/AdminDashboard/leadData.json";
+import Calendar from "../../Dashboard/AdminDashboard/Calendar";
+import Filters from "../../Dashboard/AdminDashboard/Filters";
+import UpdatedTable from "../../Dashboard/AdminDashboard/UpdatedTable";
+import data from "../../Dashboard/AdminDashboard/leadData.json";
 
 const CampaignDetails = () => {
   const { id } = useParams();

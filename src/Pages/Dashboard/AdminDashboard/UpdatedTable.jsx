@@ -11,8 +11,7 @@ import {
 } from "../../../Components/services/utils";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { useMediaQuery } from "react-responsive";
-import "../../../App.css";
-import { handleGetSalesAdmin } from "../../../Components/services/utils";
+import "./dashboard.css";
 const UpdatedTable = ({
   table_title,
   tableHeaders,
@@ -155,6 +154,7 @@ const UpdatedTable = ({
                   <div className="mr-4 selectSales">
                     <Select
                       defaultValue={""}
+                      className="min-w-[150px] "
                       onChange={(v) => {
                         localStorage.setItem("sales_id", v);
                       }}
@@ -166,9 +166,9 @@ const UpdatedTable = ({
               </>
             )}
             {userDetails?.role_id === 5 && (
-              <div className="mr-4">
+              <div className="mr-4 selectSales">
                 <Select
-                  className=" min-w-[150px] selectSales"
+                  className=" min-w-[150px] "
                   defaultValue={""}
                   onChange={onSelectCompanyData}
                   options={companyList}
@@ -307,17 +307,19 @@ const UpdatedTable = ({
       </div>
       <div className="pt-3">
         {loadingDetails ? (
-          <div className="w-full h-100 z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-100 z-50 flex justify-center items-center bg-transparent">
             <Loading />
           </div>
         ) : (
           <div>
             <Table
               columns={tableHeaders}
-              className="updatedTable xl:h-[400px] lg:h-[200px]"
+              className={`${
+                colorMode ? "updatedTableDark" : "updatedTableLight"
+              }`}
               dataSource={Array.isArray(list) ? list : [""]}
               pagination={{
-                defaultPageSize: 5,
+                defaultPageSize: table_title === "Lead List" ? 10 : 20,
                 onChange: (pageNum) => {
                   setCurrentPage(pageNum);
                 },
@@ -327,8 +329,14 @@ const UpdatedTable = ({
               showSorterTooltip={true}
               sortDirections={["ascend", "descend"]}
               scroll={{
-                x: 1700,
-                y: isBigScreen ? 370 : 270,
+                x: 2000,
+                y: isBigScreen
+                  ? table_title === "Lead List"
+                    ? 390
+                    : 580
+                  : table_title === "Lead List"
+                  ? 270
+                  : 400,
               }}
               rowClassName={(record) => {
                 if (table_title === "Lead List") {
@@ -340,14 +348,14 @@ const UpdatedTable = ({
                     JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
                     JSON.parse(record.form_data)[2].values[0] !== "philippines"
                   ) {
-                    let color = "bg-[#fef08a]";
+                    let color = "bg-[#26D4AB7f]";
                     return color;
                   } else if (
                     record.form_data &&
                     JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = "bg-[#f2d7ff]";
+                    let color = "bg-[#F3E45B7f]";
                     return color;
                   } else if (
                     record.form_data &&
@@ -355,10 +363,10 @@ const UpdatedTable = ({
                       "philippines" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = "bg-[#d7f7ff]";
+                    let color = "bg-[#FF8A8A7f]";
                     return color;
                   } else {
-                    let color = "bg-[#d9f99d]";
+                    let color = "bg-[#2FA3F67f]";
                     return color;
                   }
                 }

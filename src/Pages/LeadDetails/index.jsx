@@ -11,6 +11,7 @@ import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import LeadStatus from "./LeadStatus";
 import UserDetails from "./UserDetails";
+import { Link } from "react-router-dom";
 
 const LeadDetails = () => {
   const { id } = useParams();
@@ -132,10 +133,17 @@ const LeadDetails = () => {
   return (
     <div className="h-screen flex flex-col mx-5 justify-center items-center">
       <div className="w-full">
-      <button className={`px-2 py-1 ${colorMode?"text-white":"text-gray-800"}`}>
-        {"< "} Back
-      </button></div>
-      <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
+        <Link to={"/dashboard"}>
+          <button
+            className={`px-2 py-1 ${
+              colorMode ? "text-white" : "text-gray-800"
+            }`}
+          >
+            {"< "} Back
+          </button>
+        </Link>
+      </div>
+      <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
         {loadingDetails && (
           <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
             <Loading />
@@ -155,48 +163,43 @@ const LeadDetails = () => {
               setSyncTotalPaid={setSyncTotalPaid}
             />
           </div>
-          {/* {userDetails?.role_id !== 6 && (
-              <div>
-                <Conversation leadDetails={leadDetails} id={id} />
-              </div>
-            )} */}
-            <div>
-              <UserDetails
-                leadDetails={leadDetails}
-                syncDetails={syncDetails}
-                setSyncDetails={setSyncDetails}
-                paymentHistory={paymentHistory}
-                totalPaid={totalPaid}
-              />
-            </div>
-            {leadDetails?.leadDetails?.lead_details_status === 0 && (
-              <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
-                <div>Lead has been suspended</div>
-                <div className="xl:ml-4 mt-8">
-                  <Popconfirm
-                    title="Do you want to Release this lead from the Suspension?"
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText="Yes"
-                    cancelText="No"
+          <div>
+            <UserDetails
+              leadDetails={leadDetails}
+              syncDetails={syncDetails}
+              setSyncDetails={setSyncDetails}
+              paymentHistory={paymentHistory}
+              totalPaid={totalPaid}
+            />
+          </div>
+          {leadDetails?.leadDetails?.lead_details_status === 0 && (
+            <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+              <div>Lead has been suspended</div>
+              <div className="xl:ml-4 mt-8">
+                <Popconfirm
+                  title="Do you want to Release this lead from the Suspension?"
+                  onConfirm={confirm}
+                  onCancel={cancel}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Tooltip
+                    placement="right"
+                    title={
+                      "If you think to Release the lead from the Suspension"
+                    }
                   >
-                    <Tooltip
-                      placement="right"
-                      title={
-                        "If you think to Release the lead from the Suspension"
-                      }
+                    <button
+                      className={`w-32 px-1.5 py-2 border border-green-600 text-green-600 text-xs font-medium leading-4 font-poppins rounded-md`}
+                      // onClick={handleLeadSuspend}
                     >
-                      <button
-                        className={`w-32 px-1.5 py-2 border border-green-600 text-green-600 text-xs font-medium leading-4 font-poppins rounded-md`}
-                        // onClick={handleLeadSuspend}
-                      >
-                        Release
-                      </button>
-                    </Tooltip>
-                  </Popconfirm>
-                </div>
+                      Release
+                    </button>
+                  </Tooltip>
+                </Popconfirm>
               </div>
-            )}
+            </div>
+          )}
         </div>
       </div>
     </div>

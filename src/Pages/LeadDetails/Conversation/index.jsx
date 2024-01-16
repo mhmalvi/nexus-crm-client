@@ -10,6 +10,7 @@ import MailModal from "./MailModal";
 const Conversation = ({ leadDetails, id }) => {
   let dayPickerDays = [];
 
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user);
   const [openMailModal, setOpenMailModal] = useState(false);
 
@@ -25,8 +26,12 @@ const Conversation = ({ leadDetails, id }) => {
   }
 
   return (
-    <div className="w-full shadow-xl backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-      <h1 className="px-5 py-2 text-lg font-poppins text-white shadow-xl backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl">
+    <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+      <h1
+        className={`px-5 py-2 text-lg font-poppins ${
+          colorMode ? "text-white" : "text-gray-800"
+        } shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl`}
+      >
         Contact
       </h1>
       <div className="flex flex-col gap-4 p-5 rounded-t-xl">
@@ -42,7 +47,11 @@ const Conversation = ({ leadDetails, id }) => {
               rel="noreferrer"
             >
               <img className="w-6" src={whatsappLogo} alt="" />
-              <span className="text-white text-base ml-3">
+              <span
+                className={`${
+                  colorMode ? "text-white" : "text-gray-800"
+                } text-base ml-3`}
+              >
                 Open in Whatsapp
               </span>
             </a>
@@ -56,7 +65,13 @@ const Conversation = ({ leadDetails, id }) => {
         >
           <div className="flex items-center">
             <img className="w-6" src={mailLogo} alt="" />
-            <span className="text-white text-base ml-3">Send Mail</span>
+            <span
+              className={`${
+                colorMode ? "text-white" : "text-gray-800"
+              } text-base ml-3`}
+            >
+              Send Mail
+            </span>
           </div>
         </button>
 

@@ -304,7 +304,7 @@ const Login = () => {
 
       <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-xl backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
+          className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
           style={{}}
         >
           <Modal

@@ -57,7 +57,7 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
         >
           Search Campaign
         </h1>
-        <div className="flex justify-between items-center rounded-xl gap-x-5 pr-5 shadow-xl backdrop-blur-2xl bg-[#ffffff44]">
+        <div className="flex justify-between items-center rounded-xl gap-x-5 pr-5 shadow-md backdrop-blur-2xl bg-[#ffffff44]">
           <div>
             <input
               className="appearance-none active:outline-none focus:outline-none outline-none text-xs bg-transparent border-0 font-medium font-poppins ml-4"

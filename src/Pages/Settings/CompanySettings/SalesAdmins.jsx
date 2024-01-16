@@ -201,7 +201,7 @@ const SalesAdmins = ({ clientId }) => {
 
   return (
     <div className="relative flex flex-col justify-between gap-5 w-full h-full">
-      <div className="h-2/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+      <div className="h-2/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
         <div>
           <Modal
             title="Add Admin Employee"
@@ -319,7 +319,7 @@ const SalesAdmins = ({ clientId }) => {
                 color="volcano"
                 size="small"
               >
-                <div className={`flex justify-start items-center p-2 shadow-lg shadow-inner ${colorMode ? "shadow-[#ffffff22]":"shadow-[#33333322]"} rounded-md`}>
+                <div className={`flex justify-start items-center p-2 shadow-md shadow-inner ${colorMode ? "shadow-[#ffffff22]":"shadow-[#33333322]"} rounded-md`}>
                   <Avatar
                     className="rounded-full cursor-pointer "
                     size="38"
@@ -415,7 +415,7 @@ const SalesAdmins = ({ clientId }) => {
             )}
           </div>
           {inactiveAdminEmployees.length ? (
-            <div className="mt-2 shadow-xl">
+            <div className="mt-2 shadow-md">
               <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-white">
                 Inactive Admins
               </h1>
@@ -453,7 +453,7 @@ const SalesAdmins = ({ clientId }) => {
       </div>
 
       {/* Sales admins box */}
-      <div className="h-3/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+      <div className="h-3/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
         <div className="flex items-center w-full pb-2">
           <h1
             className={`font-semibold text-xl ${
