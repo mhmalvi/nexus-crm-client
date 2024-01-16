@@ -66,7 +66,7 @@ const NoticeForm = () => {
         <div className="">
           <div
             className={`font-poppins text-xl text-${
-              colorMode ? "white" : "gray-800"
+              colorMode ? "slate-300" : "gray-800"
             } mb-6`}
           >
             Notices
@@ -98,7 +98,7 @@ const NoticeForm = () => {
                   className={`text-${
                     isBigScreen ? "xl" : "base"
                   } text-start text-${
-                    colorMode ? "white" : "gray-800"
+                    colorMode ? "slate-300" : "gray-800"
                   } font-poppins m-0 p-0`}
                 >
                   Notice Board
@@ -107,7 +107,7 @@ const NoticeForm = () => {
                   onClick={() => {
                     setShowNotices(true);
                   }}
-                  className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-white rounded-md "
+                  className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-slate-300 rounded-md "
                 >
                   Preview Notices
                 </button>
@@ -120,7 +120,7 @@ const NoticeForm = () => {
                   <input
                     className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
                       colorMode
-                        ? "placeholder:text-white"
+                        ? "placeholder:text-slate-300"
                         : "placeholder:text-gray-800"
                     }`}
                     type="text"
@@ -131,7 +131,7 @@ const NoticeForm = () => {
                   <textarea
                     className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
                       colorMode
-                        ? "placeholder:text-white"
+                        ? "placeholder:text-slate-300"
                         : "placeholder:text-gray-800"
                     }`}
                     name=""
@@ -143,7 +143,7 @@ const NoticeForm = () => {
                     placeholder="Details"
                   ></textarea>
                   <button
-                    className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-white bg-[#2596FB] hover:bg-black rounded-md"
+                    className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-[#2596FB] hover:bg-black rounded-md"
                     type="submit"
                     value="Post"
                   >
@@ -160,7 +160,7 @@ const NoticeForm = () => {
                     className={`text-${
                       isBigScreen ? "xl" : "base"
                     } text-start text-${
-                      colorMode ? "white" : "gray-800"
+                      colorMode ? "slate-300" : "gray-800"
                     } font-poppins m-0 p-0`}
                   >
                     Notice Board
@@ -169,7 +169,7 @@ const NoticeForm = () => {
                     onClick={() => {
                       setShowNotices(true);
                     }}
-                    className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-white rounded-md "
+                    className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-slate-300 rounded-md "
                   >
                     Preview Notices
                   </button>
@@ -182,7 +182,7 @@ const NoticeForm = () => {
                     <input
                       className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
                         colorMode
-                          ? "placeholder:text-white"
+                          ? "placeholder:text-slate-300"
                           : "placeholder:text-gray-800"
                       }`}
                       type="text"
@@ -193,7 +193,7 @@ const NoticeForm = () => {
                     <textarea
                       className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
                         colorMode
-                          ? "placeholder:text-white"
+                          ? "placeholder:text-slate-300"
                           : "placeholder:text-gray-800"
                       }`}
                       name=""
@@ -205,7 +205,7 @@ const NoticeForm = () => {
                       placeholder="Details"
                     ></textarea>
                     <button
-                      className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-white bg-[#2596FB] hover:bg-black rounded-md"
+                      className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-[#2596FB] hover:bg-black rounded-md"
                       type="submit"
                       value="Post"
                     >

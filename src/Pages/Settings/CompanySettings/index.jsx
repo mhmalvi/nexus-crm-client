@@ -187,7 +187,7 @@ const CompanySettings = () => {
                 fileList={fileList}
               >
                 <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
-                  <Icons.AddImage className="w-4 text-white" />
+                  <Icons.AddImage className="w-4 text-slate-300" />
                 </div>
               </Upload>
             ) : null}
@@ -196,7 +196,7 @@ const CompanySettings = () => {
             <input
               id="name"
               className={`text-xl ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               } font-semibold rounded-xl backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
                   ? "outline-none bg-[#ffffff11] px-2"
@@ -211,7 +211,7 @@ const CompanySettings = () => {
               id="description"
               contentEditable={toggleEditDetails}
               className={`overflow-y-auto text-right ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               } justify-end pt-2 ${toggleEditDetails && "outline-none"}`}
             >
               {companyDetails?.description
@@ -225,14 +225,14 @@ const CompanySettings = () => {
           <div className="flex justify-between">
             <h1
               className={`text-lg font-semibold ${
-                colorMode ? "text-white" : "text-gray-800"
+                colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               Company Details
             </h1>
             {!toggleEditDetails ? (
               <button
-                className="flex items-center justify-center gap-2 px-2 bg-white rounded-md"
+                className="flex items-center justify-center gap-2 px-2 bg-slate-300 rounded-md"
                 onClick={() => setToggleEditDetails(true)}
               >
                 <span className="text-brand-color">Edit</span>
@@ -241,9 +241,9 @@ const CompanySettings = () => {
             ) : null}
           </div>
           <div className="flex flex-col justify-evenly">
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Trading Name :&nbsp;
               </span>
@@ -252,7 +252,7 @@ const CompanySettings = () => {
                   id="trading_name"
                   className={`w-full outline-none border-0  ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -263,16 +263,16 @@ const CompanySettings = () => {
               ) : (
                 <span
                   className={`w-full px-3 ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   {companyDetails?.trading_name}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Contact:&nbsp;
               </span>
@@ -281,7 +281,7 @@ const CompanySettings = () => {
                   id="contact"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -290,12 +290,12 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.contact}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.contact}</span>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.contact}</span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Email:&nbsp;
               </span>
@@ -304,7 +304,7 @@ const CompanySettings = () => {
                   id="business_email"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -313,14 +313,14 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.business_email}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>
                   {companyDetails?.business_email}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Address:&nbsp;
               </span>
@@ -330,7 +330,7 @@ const CompanySettings = () => {
                   id="address"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -339,12 +339,12 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.address}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.address}</span>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.address}</span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 ABN:&nbsp;
               </span>
@@ -353,7 +353,7 @@ const CompanySettings = () => {
                   id="abn"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -362,12 +362,12 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.abn}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.abn}</span>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.abn}</span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 RTO Code:&nbsp;
               </span>
@@ -376,7 +376,7 @@ const CompanySettings = () => {
                   id="rto_code"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -385,12 +385,12 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.rto_code}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>{companyDetails?.rto_code}</span>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.rto_code}</span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Website:&nbsp;
               </span>
@@ -400,7 +400,7 @@ const CompanySettings = () => {
                   id="website"
                   className={`w-full outline-none border-0 ${
                     colorMode
-                      ? "text-white bg-[#ffffff11]"
+                      ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
                   } py-0`}
                   type="text"
@@ -419,9 +419,9 @@ const CompanySettings = () => {
                 </a>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Country:&nbsp;
               </span>
@@ -429,7 +429,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="country_name"
-                  className={`w-full outline-none border-0 ${colorMode ? "text-white" : "text-gray-800"} ${
+                  className={`w-full outline-none border-0 ${colorMode ? "text-slate-300" : "text-gray-800"} ${
                     colorMode
                       ? " bg-[#ffffff11]"
                       : "bg-[#33333322]"
@@ -440,21 +440,21 @@ const CompanySettings = () => {
                   defaultValue={companyDetails?.country_name}
                 />
               ) : (
-                <span className={`${colorMode ? "text-white" : "text-gray-800"} w-full px-3`}>
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>
                   {companyDetails?.country_name}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 FB Credential :&nbsp;
               </span>
 
               <input
                 id="fb_ac_credential"
-                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
                   toggleEditDetails
                     ? `outline-none border-0 ${
                         colorMode
@@ -481,15 +481,15 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 FB Secret :&nbsp;
               </span>
               <input
                 id="secret_key"
-                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
                   toggleEditDetails
                     ? `outline-none border-0  ${
                         colorMode
@@ -516,16 +516,16 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10 w-full">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10 w-full">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 FB AppID :&nbsp;
               </span>
 
               <input
                 id="app_id"
-                className={`w-full  ${colorMode ? "text-white" : "text-gray-800"} ${
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
                   toggleEditDetails
                     ? `outline-none border-0 ${
                         colorMode
@@ -552,17 +552,17 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-white font-poppins h-10 w-full">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10 w-full">
               <span
-                className={`w-48 ${colorMode ? "text-white" : "text-gray-800"}`}
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
               >
                 Active Package:&nbsp;
               </span>
               {companyDetails?.pid ? (
                 <div
-                  className={`w-full cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                  className={`w-full cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-slate-300 p-6 rounded-xl text-center`}
                 >
-                  <h3 className="font-bold py-2 text-xs text-white">
+                  <h3 className="font-bold py-2 text-xs text-slate-300">
                     {companyDetails?.package_name}
                   </h3>
                   <h1 className="text-xs text-brand-color mb-0">
@@ -586,7 +586,7 @@ const CompanySettings = () => {
               ) : (
                 <h1
                   className={`pl-1 w-full  ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   No Package Yet
@@ -597,13 +597,13 @@ const CompanySettings = () => {
           {toggleEditDetails ? (
             <div className="flex items-center justify-end w-full mt-4">
               <button
-                className="px-4 py-1 rounded-md bg-black text-white"
+                className="px-4 py-1 rounded-md bg-black text-slate-300"
                 onClick={() => setToggleEditDetails(false)}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-1 ml-2 rounded-md bg-brand-color text-white"
+                className="px-4 py-1 ml-2 rounded-md bg-brand-color text-slate-300"
                 onClick={handleUpdateCompanyDetailsReq}
               >
                 Save

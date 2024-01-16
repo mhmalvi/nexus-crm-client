@@ -89,7 +89,7 @@ const EmployeeRegistrationForm = ({
   return (
     <div className="py-8 px-6">
       {loadingDetails && (
-        <div className="w-full h-full text-7xl absolute top-0 left-0 z-50 flex justify-center items-center bg-white bg-opacity-70">
+        <div className="w-full h-full text-7xl absolute top-0 left-0 z-50 flex justify-center items-center bg-slate-300 bg-opacity-70">
           <Loading />
           &nbsp;
         </div>
@@ -110,7 +110,7 @@ const EmployeeRegistrationForm = ({
                   name="full_name"
                   id="full_name"
                   placeholder="Full Name"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
+                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
                   value={employeeDetails.full_name}
                   onChange={handleChange}
                 />
@@ -126,7 +126,7 @@ const EmployeeRegistrationForm = ({
                 name="email"
                 type="email"
                 id="email"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                 placeholder="email"
                 value={employeeDetails.email}
                 onChange={handleChange}
@@ -146,7 +146,7 @@ const EmployeeRegistrationForm = ({
                     name="contact_number"
                     type="text"
                     id="contact_number"
-                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                     placeholder="Contact No."
                     value={employeeDetails.contact_number}
                     onChange={handleChange}
@@ -170,7 +170,7 @@ const EmployeeRegistrationForm = ({
                     id="abn_number"
                     maxLength={12}
                     minLength={9}
-                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                     placeholder="ABN Number"
                     value={employeeDetails.abn_number}
                     onChange={handleChange}
@@ -194,7 +194,7 @@ const EmployeeRegistrationForm = ({
                     id="website"
                     maxLength={12}
                     minLength={9}
-                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                     placeholder="Web address"
                     value={employeeDetails.website}
                     onChange={handleChange}
@@ -220,7 +220,7 @@ const EmployeeRegistrationForm = ({
                     id="address"
                     maxLength={12}
                     minLength={9}
-                    className="block w-full py-2 px-3 border-b border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    className="block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
                     placeholder="Address"
                     value={employeeDetails.address}
                     onChange={handleChange}
@@ -232,7 +232,7 @@ const EmployeeRegistrationForm = ({
         )}
         <div className="pt-10 pb-6">
           <button
-            className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-white"
+            className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-slate-300"
             onClick={() => {
               handleAddEmployee();
             }}

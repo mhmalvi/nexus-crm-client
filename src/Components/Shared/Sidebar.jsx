@@ -157,7 +157,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 )}
               </div>
               {active === "dashboard" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                <div
+                  className={`active-option text-[${
+                    colorMode ? "#FFFFFF" : "#7037FF"
+                  }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                >
                   |
                 </div>
               )}
@@ -195,7 +199,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "overview" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -237,7 +245,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     )}
                   </div>
                   {active === "payments" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                    <div
+                      className={`active-option text-[${
+                        colorMode ? "#FFFFFF" : "#7037FF"
+                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    >
                       |
                     </div>
                   )}
@@ -274,7 +286,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "campaigns" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -311,7 +327,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "courses" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -354,7 +374,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                       </span>
                     </div>
                     {active === "salesEmployee" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                      <div
+                        className={`active-option text-[${
+                          colorMode ? "#FFFFFF" : "#7037FF"
+                        }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                      >
                         |
                       </div>
                     )}
@@ -398,7 +422,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     )}
                   </div>
                   {active === "salesEmployee" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                    <div
+                      className={`active-option text-[${
+                        colorMode ? "#FFFFFF" : "#7037FF"
+                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    >
                       |
                     </div>
                   )}
@@ -449,7 +477,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "calender" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -477,7 +509,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   </span>
                 </div>
                 {active === "requisitions" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -507,7 +543,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   </span>
                 </div>
                 {active === "studentManagement" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -533,7 +573,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   Course Management
                 </span>
                 {active === "courseManagement" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -555,7 +599,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   Payment Slip
                 </span>
                 {active === "paymentSlip" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -602,7 +650,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   )}
                 </div>
                 {active === "settings" && (
-                <div className={`active-option text-[${colorMode ? "#FFFFFF":"#7037FF"}] bg-[${colorMode ? "#FFFFFF":"#7037FF"}]`}>
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
@@ -656,7 +708,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             onClick={logoutHandler}
           >
             <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md">
-              <Icons.LogOut className="text-white"/>
+              <Icons.LogOut className="text-white" />
               {openSideBar ? (
                 ""
               ) : (
@@ -683,11 +735,15 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             ""
           ) : (
             <div className="ease-in duration-200 flex flex-col justify-center items-center">
-              <img
-                className="w-full h-full"
-                src={qq_Logo}
-                alt="QuadQue Leads"
-              />
+              <div className="w-5/6 flex flex-col justify-center items-center">
+                <img
+                  className="w-full h-full"
+                  src={qq_Logo}
+                  alt="QuadQue Leads"
+                />
+                <p className={`m-0 p-0 text-center text-xs ${colorMode?"text-slate-500":"text-gray-800"}`}>A product of</p>
+                <p className={`m-0 p-0 text-center text-xs ${colorMode?"text-slate-500":"text-gray-800"}`}>Quadque Technologies Pty Limited</p>
+              </div>
             </div>
           )}
         </div>

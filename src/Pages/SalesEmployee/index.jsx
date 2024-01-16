@@ -9,13 +9,14 @@ import { useSearchParams } from "react-router-dom";
 import "./style.css";
 
 const Sales = () => {
-  
   const [searchParams, setSearchParams] = useSearchParams();
   const [salesData, setSalesData] = useState([]);
   const [userData, setUserData] = useState({});
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  
+  const [currentPage, setCurrentPage] = useState();
   const [searchName, setSearchName] = useState(
     searchParams.get("salesEmployeeName") || ""
   );
@@ -111,18 +112,29 @@ const Sales = () => {
       <div className="h-screen flex justify-center items-center">
         <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
           <div className="w-full flex items-center justify-between mb-5">
-            <div className={`text-xl font-semibold ${colorMode?"text-white":"text-gray-800"}`}>All Sales Employees</div>
+            <div
+              className={`text-xl font-semibold ${
+                colorMode ? "text-white" : "text-gray-800"
+              }`}
+            >
+              All Sales Employees
+            </div>
           </div>
           {/* Sales Employees */}
           <div className="mb-6">
             <Table
-              style={{
-                textTransform: "uppercase",
-              }}
-              className="updatedTable bg-[#ffffff99] rounded-2xl"
+              className={`${
+                colorMode ? "updatedTableDark" : "updatedTableLight"
+              }`}
               columns={salesColumn || []}
               dataSource={salesData ? (salesData?.length ? salesData : []) : []}
-              pagination={true}
+              pagination={{
+                defaultPageSize: 20,
+                onChange: (pageNum) => {
+                  setCurrentPage(pageNum);
+                },
+                current: currentPage,
+              }}
               // loading
               showSorterTooltip={true}
               scroll={{

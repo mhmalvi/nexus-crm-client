@@ -407,7 +407,7 @@ const LeadStatus = (props) => {
       <div className="flex justify-center gap-8">
         <h1
           className={`text-xl font-semibold font-poppins ${
-            colorMode ? "text-white" : "text-gray-800"
+            colorMode ? "text-slate-300" : "text-gray-800"
           } m-0 p-0`}
         >
           User Activity Timeline
@@ -447,10 +447,10 @@ const LeadStatus = (props) => {
                     </div>
                     <div className="ml-3 mb-0 flex justify-center items-center">
                       <button
-                        className="px-1.5 py-0.5 rounded-md bg-black text-white"
+                        className="px-1.5 py-0.5 rounded-md bg-black text-slate-300"
                         onClick={showCallDetailsModal}
                       >
-                        <Icons.PhoneVolume className="w-3 text-white py-1" />
+                        <Icons.PhoneVolume className="w-3 text-slate-300 py-1" />
                       </button>
                     </div>
                   </div>
@@ -493,7 +493,7 @@ const LeadStatus = (props) => {
                   </div>
                   <div className="flex items-start">
                     <Space
-                      className=" border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                      className=" border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
                       direction="vertical"
                       // size={12}
                       style={{
@@ -517,7 +517,7 @@ const LeadStatus = (props) => {
                     </div>
 
                     <Space
-                      className="border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
+                      className="border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
                       direction="vertical"
                       size={12}
                       style={{
@@ -819,7 +819,7 @@ const LeadStatus = (props) => {
               <div className=" w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -833,7 +833,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["New Lead"]
                         ? "bg-green-500"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -841,7 +841,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -850,14 +850,14 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   New Lead
                 </h6>
                 <h6
                   className={`mb-0 text-sm font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   # {leadDetails?.leadDetails?.course_code}
@@ -865,7 +865,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
@@ -892,7 +892,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -906,7 +906,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Skilled"]
                         ? "bg-orange-400"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -914,7 +914,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -923,14 +923,14 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   Skilled
                 </h6>
                 <h6
                   className={`mb-0 text-sm font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   {leadStatus["Skilled"] ? (
@@ -942,7 +942,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {statusDateTime["Skilled"] !== "Not Yet"
@@ -970,7 +970,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -984,7 +984,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Called"]
                         ? "bg-blue-400"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -992,7 +992,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1001,14 +1001,14 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   <span>Called</span>
                 </h6>
                 <h6
                   className={`mb-0 text-sm font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   No. of Calls: {leadDetails?.leadCallHistory?.length}
@@ -1016,7 +1016,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {statusDateTime["Called"] !== "Not Yet"
@@ -1068,7 +1068,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1082,7 +1082,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Paid"]
                         ? "bg-teal-400"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1090,7 +1090,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1099,7 +1099,7 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   Paid
@@ -1120,7 +1120,7 @@ const LeadStatus = (props) => {
                         />
                         <h6
                           className={`mb-0 text-base font-normal font-poppins ${
-                            colorMode ? "text-white" : "text-gray-800"
+                            colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
                           Payment History
@@ -1130,7 +1130,7 @@ const LeadStatus = (props) => {
                   ) : (
                     <div
                       className={`mb-0 text-sm font-thin font-poppins ${
-                        colorMode ? "text-white" : "text-gray-800"
+                        colorMode ? "text-slate-300" : "text-gray-800"
                       }`}
                     >
                       No transaction
@@ -1171,7 +1171,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {statusDateTime["Paid"] !== "Not Yet"
@@ -1199,7 +1199,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1213,7 +1213,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Verified"]
                         ? "bg-violet-500"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1221,7 +1221,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1230,14 +1230,14 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   Verified
                 </h6>
                 <h6
                   className={`mb-0 text-sm font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   {leadStatus["Verified"] ? (
@@ -1249,7 +1249,7 @@ const LeadStatus = (props) => {
 
                 <h6
                   className={`mb-0 text-xs font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   <span className="text-red-500">*</span> Please Check The
@@ -1258,7 +1258,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {statusDateTime["Verified"] !== "Not Yet"
@@ -1286,7 +1286,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1300,7 +1300,7 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Completed"]
                         ? "bg-red-500"
-                        : `${colorMode ? "bg-white":"bg-gray-800"} animate-custom-ping`
+                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1308,7 +1308,7 @@ const LeadStatus = (props) => {
               <div className="w-full">
                 <hr
                   className={`${
-                    colorMode ? "border-white" : "border-gray-800"
+                    colorMode ? "border-slate-300" : "border-gray-800"
                   } w-full`}
                 />
               </div>
@@ -1317,14 +1317,14 @@ const LeadStatus = (props) => {
               <div className="flex flex-col justify-center items-center">
                 <h6
                   className={`mb-0 text-base font-semibold font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   Completed
                 </h6>
                 <h6
                   className={`mb-0 text-sm font-thin font-poppins ${
-                    colorMode ? "text-white" : "text-gray-800"
+                    colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   {leadDetails?.leadDetails?.document_certificate_id > 0
@@ -1380,7 +1380,7 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"Activity Time"}>
                   <div
                     className={`mb-0 text-xs font-thin font-poppins ${
-                      colorMode ? "text-white" : "text-gray-800"
+                      colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
                     {statusDateTime["Completed"] !== "Not Yet"

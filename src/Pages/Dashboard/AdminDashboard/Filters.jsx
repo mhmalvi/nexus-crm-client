@@ -19,7 +19,7 @@ const Filters = ({
         <div className="h-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
             className={`text-2xl text-${
-              colorMode ? "white" : "gray-800"
+              colorMode ? "slate-300" : "gray-800"
             } font-normal font-poppins  pt-1`}
           >
             Filters
@@ -35,12 +35,12 @@ const Filters = ({
               >
                 <h1
                   className={`w-full text-xs text-center font-normal  border-${
-                    colorMode ? "white" : "gray-800"
+                    colorMode ? "slate-300" : "gray-800"
                   } font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
-                      ? "text-white bg-[#7037ff] border-[0.5px] "
+                      ? "text-slate-300 bg-[#7037ff] border-[0.5px] "
                       : colorMode
-                      ? "text-white bg-transparent border-[0.1px] "
+                      ? "text-slate-300 bg-transparent border-[0.1px] "
                       : "text-gray-800 bg-transparent border-[0.1px]"
                   }  rounded-md`}
                 >
@@ -60,12 +60,12 @@ const Filters = ({
                   >
                     <h1
                       className={`text-xs text-center border-[1px] border-${
-                        colorMode ? "white" : "gray-800"
+                        colorMode ? "slate-200" : "gray-800"
                       } font-normal font-poppins p-1 cursor-pointer ${
                         activeFilter === rate?.id
-                          ? "text-white bg-[#7037ff] "
+                          ? "text-slate-300 bg-[#7037ff] "
                           : colorMode
-                          ? "text-white bg-transparent"
+                          ? "text-slate-300 bg-transparent"
                           : "text-gray-800 bg-transparent"
                       }  rounded-md`}
                     >

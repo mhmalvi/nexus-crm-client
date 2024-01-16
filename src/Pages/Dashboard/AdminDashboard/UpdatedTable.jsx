@@ -139,7 +139,7 @@ const UpdatedTable = ({
         <div className="flex justify-between items-center">
           <h1
             className={`text-2xl text-${
-              colorMode ? "white" : "gray-800"
+              colorMode ? "slate-300" : "gray-800"
             } px-3 m-0 font-poppins`}
           >
             {table_title}
@@ -159,7 +159,7 @@ const UpdatedTable = ({
                         localStorage.setItem("sales_id", v);
                       }}
                       options={salesOptions}
-                      placeholder="Select Sales ▼"
+                      placeholder="Select Sales"
                     />
                   </div>
                 )}
@@ -172,7 +172,7 @@ const UpdatedTable = ({
                   defaultValue={""}
                   onChange={onSelectCompanyData}
                   options={companyList}
-                  placeholder="Select Company ▼"
+                  placeholder="Select Company"
                 />
               </div>
             )}
@@ -187,9 +187,9 @@ const UpdatedTable = ({
                   <div
                     htmlFor="upload_lead_file"
                     className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                      colorMode ? "white" : "gray-800"
+                      colorMode ? "slate-300" : "gray-800"
                     } text-${
-                      colorMode ? "white" : "gray-800"
+                      colorMode ? "slate-300" : "gray-800"
                     } ease-in duration-200 hover:bg-black`}
                   >
                     Upload File
@@ -199,9 +199,9 @@ const UpdatedTable = ({
                 <Tooltip align={"top"} title="Add lead by uploading file">
                   <span
                     className={`px-1.5 font-semibold border border-${
-                      colorMode ? "white" : "gray-800"
+                      colorMode ? "slate-300" : "gray-800"
                     } text-${
-                      colorMode ? "white" : "gray-800"
+                      colorMode ? "slate-300" : "gray-800"
                     } rounded-full text-xs ml-2 cursor-help`}
                   >
                     ?
@@ -217,9 +217,9 @@ const UpdatedTable = ({
                     <button
                       id="add_leads"
                       className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                        colorMode ? "white" : "gray-800"
+                        colorMode ? "slate-300" : "gray-800"
                       } text-${
-                        colorMode ? "white" : "gray-800"
+                        colorMode ? "slate-300" : "gray-800"
                       } ease-in duration-200 hover:bg-black`}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
@@ -228,9 +228,9 @@ const UpdatedTable = ({
                     <Tooltip align={"top"} title="Add lead manually">
                       <span
                         className={`px-1.5 font-semibold border border-${
-                          colorMode ? "white" : "gray-800"
+                          colorMode ? "slate-300" : "gray-800"
                         } text-${
-                          colorMode ? "white" : "gray-800"
+                          colorMode ? "slate-300" : "gray-800"
                         } rounded-full text-xs ml-2 cursor-help`}
                       >
                         ?
@@ -252,9 +252,9 @@ const UpdatedTable = ({
                       <button
                         id="sync_leads"
                         className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                          colorMode ? "white" : "gray-800"
+                          colorMode ? "slate-300" : "gray-800"
                         } text-${
-                          colorMode ? "white" : "gray-800"
+                          colorMode ? "slate-300" : "gray-800"
                         } ease-in duration-200 hover:bg-black`}
                         onClick={() => handleSyncLeadsReq()}
                       >
@@ -266,9 +266,9 @@ const UpdatedTable = ({
                       >
                         <span
                           className={`px-1.5 font-semibold border border-${
-                            colorMode ? "white" : "gray-800"
+                            colorMode ? "slate-300" : "gray-800"
                           } text-${
-                            colorMode ? "white" : "gray-800"
+                            colorMode ? "slate-300" : "gray-800"
                           } rounded-full text-xs ml-2 cursor-help`}
                         >
                           ?
@@ -294,7 +294,7 @@ const UpdatedTable = ({
               }
             >
               <div
-                className="bg-[#2596FB] text-white px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#2596FB]"
+                className="bg-[#2596FB] text-slate-300 px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#2596FB]"
                 style={{
                   fontSize: "10px",
                 }}

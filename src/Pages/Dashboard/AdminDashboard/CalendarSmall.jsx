@@ -105,7 +105,7 @@ const CalendarSmall = ({
               <h1
                 level={4}
                 className={`text-${isBigScreen ? "xl" : "base"} ${
-                  colorMode ? " text-white" : "text-gray-800"
+                  colorMode ? " text-slate-300" : "text-gray-800"
                 }`}
               >
                 {weekDays[dayjs().day()]}, {dayjs()?.$D}{" "}
@@ -159,7 +159,7 @@ const CalendarSmall = ({
                 </div>
 
                 <button
-                  className={colorMode ? "text-white":"text-gray-800"}
+                  className={colorMode ? "text-slate-300":"text-gray-800"}
                   size="small"
                   onClick={handleClearDate}
                 >

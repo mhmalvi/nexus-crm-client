@@ -105,7 +105,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
         {/* Overall Summary */}
 
         {loadingDetails && (
-          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-transparent">
             <Loading />
           </div>
         )}

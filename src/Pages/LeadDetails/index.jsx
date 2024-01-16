@@ -136,7 +136,7 @@ const LeadDetails = () => {
         <Link to={"/dashboard"}>
           <button
             className={`px-2 py-1 ${
-              colorMode ? "text-white" : "text-gray-800"
+              colorMode ? "text-slate-300" : "text-gray-800"
             }`}
           >
             {"< "} Back
@@ -145,7 +145,7 @@ const LeadDetails = () => {
       </div>
       <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
         {loadingDetails && (
-          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-slate-300 bg-opacity-70">
             <Loading />
           </div>
         )}
@@ -173,7 +173,7 @@ const LeadDetails = () => {
             />
           </div>
           {leadDetails?.leadDetails?.lead_details_status === 0 && (
-            <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+            <div className="w-full h-full bg-slate-300 bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
               <div>Lead has been suspended</div>
               <div className="xl:ml-4 mt-8">
                 <Popconfirm

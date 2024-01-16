@@ -6,6 +6,7 @@ import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
 const CourseList = ({
   courses,
@@ -22,10 +23,13 @@ const CourseList = ({
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
   const [addCourseOpen, setAddCourseOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState();
   const showModal = () => {
     setOpen(true);
   };
   
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const tableSearchInput = useRef(null);
@@ -214,18 +218,26 @@ const CourseList = ({
       {/* Courses */}
       <div>
         <Table
-          className=" rounded-2xl updatedTable bg-[#ffffff99]"
+          className={`${
+            colorMode ? "updatedTableDark" : "updatedTableLight"
+          }`}
           loading={courseListLoading}
-          style={{
-            textTransform: "uppercase",
-          }}
+          
           columns={courseLinstTableHeaders}
           dataSource={courses}
-          pagination={true}
+          pagination={{
+            defaultPageSize: 20,
+            onChange: (pageNum) => {
+              setCurrentPage(pageNum);
+            },
+            current: currentPage,
+          }}
           showSorterTooltip={true}
           scroll={{
-            x: 600,
-            y: 600,
+            
+            y: isBigScreen
+              ? 600
+              : 400,
           }}
           // Do not need to use on row view course detais by onClick in onRow it is used in Clicked by view button on colum list
         />
