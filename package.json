@@ -1,7 +1,7 @@
 {
   "name": "crm-system",
   "version": "0.1.0",
-  "homepage": "http://smartcrm.quadque.tech/",
+  "homepage": "http://queleadscrm.com/",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.1.4",

@@ -11,11 +11,11 @@ import {
   handleFetchStudentsPaymentHistory,
 } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
-// import Calendar from "../Dashborad/AdminDashboard/Calendar";
-import NoticeForm from "../Dashborad/AdminDashboard/NoticeForm";
-import Table from "../Dashborad/AdminDashboard/Table";
-import UpdatedTable from "../Dashborad/AdminDashboard/UpdatedTable";
-import CalendarSmall from "../Dashborad/AdminDashboard/CalendarSmall";
+// import Calendar from "../Dashboard/AdminDashboard/Calendar";
+import NoticeForm from "../Dashboard/AdminDashboard/NoticeForm";
+import Table from "../Dashboard/AdminDashboard/Table";
+import UpdatedTable from "../Dashboard/AdminDashboard/UpdatedTable";
+import CalendarSmall from "../Dashboard/AdminDashboard/CalendarSmall";
 
 const Payment = () => {
   document.title = `Payments | Queleads CRM`;
@@ -343,8 +343,8 @@ const Payment = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] overflow-hidden grid grid-cols-12 gap-4">
-        <div className="col-span-9 rounded-xl px-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden grid grid-cols-12 gap-4">
+        <div className="col-span-9 rounded-xl px-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
           {toggleTabs === "payment" ? (
             <UpdatedTable
               table_title="Payment History"
@@ -370,7 +370,7 @@ const Payment = () => {
             />
           )}
         </div>
-        <div className="col-span-3 flex flex-col justify-around items-center  gap-8 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="col-span-3 flex flex-col justify-around items-center  gap-8 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
           <div className="w-full max-h-1/2">
           <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
           </div>

@@ -1,11 +1,13 @@
 import { message } from "antd";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { handleDeleteComment } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
 
 const Comments = ({ Comments }) => {
   const [allComents, setAllComents] = useState([]);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   useEffect(() => {
     setAllComents(Comments);
@@ -21,12 +23,12 @@ const Comments = ({ Comments }) => {
   };
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-white px-5 py-2 rounded-t-xl overflow-hidden">
-        <h1 className="text-lg m-0 p-0 text-white ">Comments History</h1>
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-xl overflow-hidden">
+        <h1 className={`text-lg m-0 p-0 ${colorMode ? "text-white" :"text-gray-800"}`}>Comments History</h1>
       </div>
 
       <div className="flex items-end p-5">
-        <div className="w-full text-white text-opacity-40">
+        <div className={`w-full ${colorMode ?"text-white":"text-gray-800"}  text-opacity-40`}>
           {allComents?.length
             ? allComents?.map((history) => (
                 <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">

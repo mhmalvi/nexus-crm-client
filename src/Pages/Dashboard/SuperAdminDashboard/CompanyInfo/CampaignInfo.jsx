@@ -9,10 +9,10 @@ import {
   handleFetchLeads,
 } from "../../../../Components/services/leads";
 import { addLeads } from "../../../../features/Leads/leadsSlice";
-import Calendar from "../../../Dashborad/AdminDashboard/Calendar";
-import Filters from "../../../Dashborad/AdminDashboard/Filters";
-import Table from "../../../Dashborad/AdminDashboard/Table";
-import data from "../../../Dashborad/AdminDashboard/leadData.json";
+import Calendar from "../../../Dashboard/AdminDashboard/Calendar";
+import Filters from "../../../Dashboard/AdminDashboard/Filters";
+import Table from "../../../Dashboard/AdminDashboard/Table";
+import data from "../../../Dashboard/AdminDashboard/leadData.json";
 import { addCampaigns } from "../../../../features/Leads/campaignSlice";
 
 const CampaignInfo = () => {

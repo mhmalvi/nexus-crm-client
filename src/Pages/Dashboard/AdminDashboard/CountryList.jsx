@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const CountryList = ({ table_title }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div className=" h-full w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+    <div className=" h-full w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
       <h1
         className={`text-2xl text-${
           colorMode ? "white" : "gray-800"
@@ -13,21 +13,21 @@ const CountryList = ({ table_title }) => {
         Countries
       </h1>
       {table_title === "Lead List" ? (
-        <div className="grid grid-cols-2 ">
+        <div className="grid grid-cols-2 items-center justify-center">
           <div className={`flex text-${colorMode ? "white" : "gray-800"} `}>
-            <div className="bg-[#fef08a] w-[30px] h-[20px] rounded-full mr-2"></div>
+            <div className="bg-[#26D4AB7f] w-[25px] h-[25px] rounded-full mr-2 border-4 border-white"></div>
             <p className="w-1/2">WA</p>
           </div>
           <div className={`flex text-${colorMode ? "white" : "gray-800"} `}>
-            <div className="bg-[#f2d7ff] w-[30px] h-[20px] rounded-full mr-2"></div>
+            <div className="bg-[#F3E45B7f] w-[25px] h-[25px] rounded-full mr-2 border-4 border-white"></div>
             <p className="w-1/2">Vietnam</p>
           </div>
           <div className={`flex text-${colorMode ? "white" : "gray-800"} `}>
-            <div className="bg-[#d7f7ff] w-[30px] h-[20px] rounded-full mr-2"></div>
+            <div className="bg-[#FF8A8A7f] w-[25px] h-[25px] rounded-full mr-2 border-4 border-white"></div>
             <p className="w-1/2">Philippines</p>
           </div>
           <div className={`flex text-${colorMode ? "white" : "gray-800"} `}>
-            <div className="bg-[#d9f99d] w-[30px] h-[20px] rounded-full mr-2"></div>
+            <div className="bg-[#2FA3F67f] w-[25px] h-[25px] rounded-full mr-2 border-4 border-white"></div>
             <p className="w-1/2">Others</p>
           </div>
         </div>

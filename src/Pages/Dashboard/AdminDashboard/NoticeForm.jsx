@@ -92,7 +92,7 @@ const NoticeForm = () => {
         userDetails?.role_id === 5) && (
         <div>
           {userDetails?.role_id === 3 ? (
-            <div className="lg:w-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
+            <div className="lg:w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
               <div className="mb-2 flex justify-between items-center">
                 <h1
                   className={`text-${
@@ -119,7 +119,9 @@ const NoticeForm = () => {
                 >
                   <input
                     className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
-                      colorMode ? "placeholder:text-white" : "placeholder:text-gray-800"
+                      colorMode
+                        ? "placeholder:text-white"
+                        : "placeholder:text-gray-800"
                     }`}
                     type="text"
                     placeholder="Notice Title"
@@ -128,7 +130,9 @@ const NoticeForm = () => {
                   />
                   <textarea
                     className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
-                      colorMode ? "placeholder:text-white" : "placeholder:text-gray-800"
+                      colorMode
+                        ? "placeholder:text-white"
+                        : "placeholder:text-gray-800"
                     }`}
                     name=""
                     style={{ resize: "none" }}
@@ -150,31 +154,65 @@ const NoticeForm = () => {
             </div>
           ) : (
             <div>
-              <div
-                className="lg:w-64 h-60 xl:w-84 p-3 border"
-                style={{
-                  borderRadius: "20px",
-                }}
-              >
-               <div className="mb-2 flex justify-between items-center">
-                <h1
-                  className={`text-${
-                    isBigScreen ? "xl" : "base"
-                  } text-start text-${
-                    colorMode ? "white" : "gray-800"
-                  } font-poppins m-0 p-0`}
-                >
-                  Notice Board
-                </h1>
-                <button
-                  onClick={() => {
-                    setShowNotices(true);
-                  }}
-                  className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-white rounded-md "
-                >
-                  Preview Notices
-                </button>
-              </div>
+              <div className="lg:w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+                <div className="mb-2 flex justify-between items-center">
+                  <h1
+                    className={`text-${
+                      isBigScreen ? "xl" : "base"
+                    } text-start text-${
+                      colorMode ? "white" : "gray-800"
+                    } font-poppins m-0 p-0`}
+                  >
+                    Notice Board
+                  </h1>
+                  <button
+                    onClick={() => {
+                      setShowNotices(true);
+                    }}
+                    className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-white rounded-md "
+                  >
+                    Preview Notices
+                  </button>
+                </div>
+                <div>
+                  <form
+                    onSubmit={(e) => handleSendNotice(e)}
+                    className="flex items-center flex-col justify-center "
+                  >
+                    <input
+                      className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
+                        colorMode
+                          ? "placeholder:text-white"
+                          : "placeholder:text-gray-800"
+                      }`}
+                      type="text"
+                      placeholder="Notice Title"
+                      value={noticeTitle}
+                      onChange={(e) => setNoticeTitle(e.target.value)}
+                    />
+                    <textarea
+                      className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
+                        colorMode
+                          ? "placeholder:text-white"
+                          : "placeholder:text-gray-800"
+                      }`}
+                      name=""
+                      style={{ resize: "none" }}
+                      id="notice_input"
+                      value={noticeDescription}
+                      onChange={(e) => setNoticeDescription(e.target.value)}
+                      rows={isBigScreen ? "3" : "1"}
+                      placeholder="Details"
+                    ></textarea>
+                    <button
+                      className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-white bg-[#2596FB] hover:bg-black rounded-md"
+                      type="submit"
+                      value="Post"
+                    >
+                      Post
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           )}

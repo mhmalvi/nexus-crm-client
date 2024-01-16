@@ -255,7 +255,7 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className="!rounded-xl !p-2 !bg-[#460a94] border-none flex items-center justify-center "
+              className="rounded-md px-2 py-1  ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] border-none flex items-center justify-center w-full"
             >
               <p className="p-0 m-0 !text-sm text-white">Assign</p>
             </button>
@@ -360,7 +360,7 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className=" btn btn-block w-[100px] h-[28px] bg-indigo-700 text-white rounded-full hover:bg-purple-900 flex flex-row m-auto "
+              className="btn btn-block w-[100px] h-[28px]  text-white rounded-md ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] flex flex-row m-auto "
             >
               <div className="flex flex-row m-auto justify-between">
                 <p className="m-auto p-1">
@@ -679,7 +679,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
-      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
+      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -755,7 +755,7 @@ const AdminDashboard = () => {
           isBigScreen ? "5" : "2"
         } min-h-[85vh]`}
       >
-        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[5vh] shadow-xl backdrop-blur-2xl bg-[#ffffff11] z-50">
+        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[5vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
             className={`${
               toggleNotification ? "bg-white rounded-full " : ""
@@ -789,7 +789,7 @@ const AdminDashboard = () => {
           />
         </div>
         {toggleNotification && (
-          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-xl backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
+          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-md backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
             <Notifications
               toggleNotification={toggleNotification}
               setToggleNotification={setToggleNotification}

@@ -58,97 +58,7 @@ table {
   color: #ffffff;
   border-radius: 8px !important;
 }
-.updatedTable .ant-table {
-  border-radius: 20px !important;
-  overflow: hidden;
-  background-color: transparent !important;
-}
-.updatedTable .ant-table-body::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-.updatedTable .ant-table-body::-webkit-scrollbar-track {
-  background-color: #1b0538;
-}
-.updatedTable .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: #7037ff;
-}
-.updatedTable th {
-  padding: 18px 18px 18px 0;
-  text-align: left;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 100%;
-  color: #fff !important;
-  border-bottom: 1px solid #e6edff;
-  background-color: #ffffff55 !important;
-}
 
-.updatedTable thead .ant-table-cell-fix-left-last:first-child {
-  background-color: #7037ff !important;
-  color: #ffffff;
-}
-
-.updatedTable .ant-pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.updatedTable .ant-pagination li {
-  border: 0.5px solid white;
-  background-color: transparent;
-  border-radius: 10px;
-}
-.updatedTable .ant-pagination li a {
-  color: white;
-}
-.updatedTable .ant-pagination .ant-pagination-item-active {
-  background-color: #7037ff;
-}
-.updatedTable .ant-pagination .ant-pagination-item-ellipsis {
-  color: white;
-}
-.updatedTable .ant-pagination .ant-pagination-disabled,
-.updatedTable .ant-pagination .ant-pagination-prev,
-.updatedTable .ant-pagination .ant-pagination-next {
-  overflow: hidden;
-}
-
-.updatedTable .ant-pagination .ant-pagination-prev > button,
-.updatedTable .ant-pagination .ant-pagination-next > button {
-  background-color: #7037ff;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.updatedTable .ant-pagination .ant-pagination-disabled > button {
-  background-color: white !important;
-}
-.updatedTable .ant-pagination .ant-pagination-disabled > button:hover,
-.updatedTable .ant-pagination .ant-pagination-prev > button:hover,
-.updatedTable .ant-pagination .ant-pagination-next > button:hover {
-  border: 1px solid #ffffff;
-  color: #7037ff;
-}
-.updatedTable .ant-pagination .ant-pagination-item-link-icon {
-  color: white;
-}
-.updatedTable .ant-pagination .ant-pagination-item-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.updatedTable .ant-pagination .ant-pagination-options .ant-select-selector {
-  border-radius: 10px;
-}
-.updatedTable
-  .ant-pagination
-  .ant-pagination-options
-  .ant-select-selector:hover {
-  border: 1px solid #4f8dea;
-}
 .calendarHeadDark {
   height: 100%;
 }
@@ -396,11 +306,11 @@ td {
   color: #000000;
   text-align: left;
 }
-table.custom-table > tbody > tr:hover td {
+/* table.custom-table > tbody > tr:hover td {
   background-color: rgb(250, 250, 250) !important;
   cursor: pointer;
   transition: background-color 0.2s ease-in;
-}
+} */
 
 ::-webkit-scrollbar {
   width: 4px;

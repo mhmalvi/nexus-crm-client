@@ -169,8 +169,8 @@ const CompanySettings = () => {
   };
 
   return (
-    <div className="h-[90vh] w-full mx-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] grid grid-cols-2 gap-8 ">
-      <div className="h-[85vh] font-poppins flex flex-col justify-between items-center h-full gap-6 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+    <div className="h-[90vh] w-full mx-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] grid grid-cols-2 gap-8 ">
+      <div className="h-[85vh] font-poppins flex flex-col justify-between items-center h-full gap-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
         <div className="h-1/6 w-full flex justify-between items-center ">
           <div className="relative flex w-24">
             <img

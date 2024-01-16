@@ -1,5 +1,5 @@
-import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Input, Modal, Popover, Table, message } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Modal, Popover, Table, message } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -10,7 +10,7 @@ import {
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import ViewLeadCallDetails from "../../Pages/Dashborad/AdminDashboard/ViewLeadCallDetails";
+import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();

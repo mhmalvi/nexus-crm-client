@@ -108,7 +108,7 @@ const ProfileSettings = () => {
   );
 
   return (
-    <div className="h-[83vh] max-h-full p-3 rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff55] overflow-y-scroll">
+    <div className="h-[83vh] max-h-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff55] overflow-y-scroll">
       <div className="flex justify-between items-center ">
         <div className="flex">
           <div className="rounded-full mr-4">

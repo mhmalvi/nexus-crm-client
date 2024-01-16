@@ -35,10 +35,11 @@ const UserDetails = ({
   leadDetails,
   syncDetails,
   setSyncDetails,
-  paymentHistory,
   totalPaid,
 }) => {
   const userDetails = useSelector((state) => state?.user);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
+
   const navigate = useNavigate();
   const [addSealsman, setAddSealsman] = useState(false);
   const [salesEmployeeName, setSalesEmployeeName] = useState("");
@@ -217,8 +218,12 @@ const UserDetails = ({
     <div className="mt-5">
       <div className="grid grid-cols-3 gap-4 h-[55vh] ">
         <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
-          <div className="h-full w-full rounded-xl shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
-            <h4 className="text-lg px-5 py-2 m-0 font-poppins text-white backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl">
+          <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+            <h4
+              className={`text-lg px-5 py-2 m-0 font-poppins ${
+                colorMode ? "text-white" : "text-gray-800"
+              } backdrop-blur-2xl bg-[#ffffff11] shadow-md rounded-t-xl`}
+            >
               Details
             </h4>
             <div className="relative flex justify-center items-center p-5 ">
@@ -232,7 +237,11 @@ const UserDetails = ({
                       src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
                       alt=""
                     />
-                    <div className="text-[10px] text-white font-poppins mt-1 text-center font-medium">
+                    <div
+                      className={`text-[10px] ${
+                        colorMode ? "text-white" : "text-gray-800"
+                      } font-poppins mt-1 text-center font-medium`}
+                    >
                       Scan To Call
                     </div>
                   </div>
@@ -261,27 +270,47 @@ const UserDetails = ({
                 </div>
               )}
               <div className=" w-full flex flex-col justify-around ml-8">
-                <div className="font-normal 2xl:text-xs text-white font-poppins flex flex-wrap ">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-poppins flex flex-wrap `}
+                >
                   <span>Contact:&nbsp;&nbsp;</span>
                   <span> {leadDetails?.leadDetails?.phone_number}</span>
                 </div>
-                <div className="font-normal 2xl:text-xs text-white font-poppins flex flex-wrap pt-1">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-poppins flex flex-wrap pt-1`}
+                >
                   <span>Email:&nbsp;&nbsp;</span>
                   <span>{leadDetails?.leadDetails?.student_email}</span>
                 </div>
-                <div className="font-normal 2xl:text-xs text-white font-poppins flex flex-wrap items-center pt-1">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-poppins flex flex-wrap items-center pt-1`}
+                >
                   <span>Courses:&nbsp;&nbsp;</span>
                   <span className="text-xs uppercase">
                     {leadDetails?.leadDetails?.course_title}
                   </span>
                 </div>
-                <div className="font-normal 2xl:text-xs text-white font-poppins flex items-center pt-1">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-poppins flex items-center pt-1`}
+                >
                   <span>Location:&nbsp;&nbsp;</span>
                   <span className="uppercase">
                     {leadDetails?.leadDetails?.work_location}
                   </span>
                 </div>
-                <div className="font-normal 2xl:text-xs text-white font-poppins flex items-center pt-1">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-poppins flex items-center pt-1`}
+                >
                   <span>Experience:&nbsp;&nbsp;</span>
                   <span className="uppercase">
                     <div>{experience}</div>
@@ -289,16 +318,22 @@ const UserDetails = ({
                 </div>
               </div>
               <div
-                className="absolute text-white top-2 right-5 hover:text-brand-color cursor-pointer"
+                className={`absolute ${
+                  colorMode ? "text-white" : "text-gray-800"
+                } top-2 right-5 hover:text-brand-color cursor-pointer`}
                 onClick={() => setToggleEditDetials(true)}
               >
                 <Icons.Edit />
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div className="flex justify-between items-center">
-              <h1 className="text-xl font-poppins text-white">
+              <h1
+                className={`text-xl font-poppins ${
+                  colorMode ? "text-white" : "text-gray-800"
+                }`}
+              >
                 {leadDetails?.leadDetails?.full_name}
               </h1>
               <div className="relative flex items-center">
@@ -391,7 +426,11 @@ const UserDetails = ({
                 ) : null}
               </div>
             </div>
-            <h1 className="text-xl font-poppins text-white">
+            <h1
+              className={`text-xl font-poppins ${
+                colorMode ? "text-white" : "text-gray-800"
+              }`}
+            >
               #{leadDetails?.leadDetails?.lead_id}
             </h1>
             {userDetails?.userInfo?.role_id !== 6 ? (
@@ -411,18 +450,24 @@ const UserDetails = ({
                   emptyIcon={<Icons.Star />}
                   half={false}
                   fullIcon={<Icons.Star />}
-                  color1="#E9E9E9"
+                  color1="#1f2937"
                   color2="#8C64D2"
                 />
                 <form className="flex justify-between items-center w-full gap-4">
                   <input
-                    className="w-5/6 outline-none border-b border-white bg-transparent text-sm font-poppins text-black text-opacity-75"
+                    className={`w-5/6 outline-none border-b ${
+                      colorMode ? "border-white" : "border-gray-800"
+                    } bg-transparent text-sm font-poppins text-black text-opacity-75`}
                     onChange={(e) => setRatingRemarks(e.currentTarget.value)}
                     value={ratingRemarks}
                     placeholder="No comments yet"
                   />
                   <button
-                    className="border border-white text-white px-3 py-0.5 rounded-xl cursor-pointer"
+                    className={`border ${
+                      colorMode
+                        ? "border-white text-white"
+                        : "border-gray-800 text-gray-800"
+                    }  px-3 py-0.5 rounded-xl cursor-pointer`}
                     onClick={handleReviewRemarksSubmit}
                   >
                     Save
@@ -436,31 +481,55 @@ const UserDetails = ({
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
           )}
-          <div className="w-full h-full flex flex-col gap-4 rounded-xl p-5 shadow-xl backdrop-blur-2xl bg-[#ffffff11] ">
+          <div className="w-full h-full flex flex-col gap-4 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
             <div className="flex flex-col justify-between items-center">
-              <h1 className="text-lg font-poppins text-white m-0 p-0">
+              <h1
+                className={`text-lg font-poppins ${
+                  colorMode ? "text-white" : "text-gray-800"
+                } m-0 p-0`}
+              >
                 Lead Generation Form
               </h1>
               <button
-                className="w-full px-1.5 py-2 bg-transparent border border-white text-white text-base font-medium font-poppins rounded-md"
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-white border-white"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md`}
                 onClick={() => setToggleApplication(!toggleApplication)}
               >
                 View
               </button>
             </div>
             <div className="flex flex-col justify-between items-center">
-              <h1 className="text-lg text-white m-0 p-0">Application Form</h1>
+              <h1
+                className={`text-lg ${
+                  colorMode ? "text-white" : "text-gray-800"
+                } m-0 p-0`}
+              >
+                Application Form
+              </h1>
 
               <button
                 onClick={() => message.success("No file available")}
-                className="w-full px-1.5 py-2 bg-transparent border border-white text-white text-base font-medium font-poppins rounded-md flex items-center justify-center"
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-white border-white"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
               >
                 <Icons.DownArrow className="w-6 rounded-full text-white text-opacity-50" />
                 <span className="ml-2">Download</span>
               </button>
             </div>
             <div className="flex flex-col justify-between items-center">
-              <h1 className="text-lg text-white m-0 p-0">Check Lists</h1>
+              <h1
+                className={`text-lg font-poppins ${
+                  colorMode ? "text-white" : "text-gray-800"
+                } m-0 p-0`}
+              >
+                Check Lists
+              </h1>
 
               <Modal
                 visible={toggleChcekList}
@@ -471,7 +540,11 @@ const UserDetails = ({
               </Modal>
 
               <button
-                className="w-full px-1.5 py-2 bg-transparent border border-white text-white text-base font-medium font-poppins rounded-md flex items-center justify-center"
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-white border-white"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
                 onClick={() => setToggleChcekList(true)}
               >
                 View
@@ -500,9 +573,17 @@ const UserDetails = ({
           {userDetails?.userInfo?.role_id !== 6 ? (
             <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
               <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-white px-5 py-2 rounded-t-xl overflow-hidden">
-                <h1 className="text-lg m-0 p-0 text-white ">Comments</h1>
+                <h1
+                  className={`text-lg m-0 p-0 ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } `}
+                >
+                  Comments
+                </h1>
                 <Icons.History
-                  className="w-6 cursor-pointer"
+                  className={`${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } hover:text-brand-color w-6 cursor-pointer`}
                   onClick={() => {
                     setIsCommentHistoryOpen(true);
                     // setSyncDetails(!syncDetails);
@@ -527,14 +608,20 @@ const UserDetails = ({
                   <>
                     <input
                       id="lead_comment"
-                      className="w-full outline-none border-b border-white bg-transparent text-base font-poppins text-black text-opacity-75"
+                      className={`w-full outline-none border-b ${
+                        colorMode ? "border-white" : "border-gray-800"
+                      } bg-transparent text-base font-poppins text-black text-opacity-75`}
                       onChange={(e) => handleCommentChange(e)}
                       placeholder={"Write your comment"}
                       value={comment}
                     />
                     <button
                       type="submit"
-                      className="bg-transparent text-white border border-white px-2 py-0.5 rounded-md cursor-pointer"
+                      className={`bg-transparent border ${
+                        colorMode
+                          ? "text-white border-white"
+                          : "text-gray-800 border-gray-800"
+                      } px-2 py-0.5 rounded-md cursor-pointer`}
                       value="Post"
                     >
                       Post
@@ -545,7 +632,7 @@ const UserDetails = ({
             </div>
           ) : null}
           <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-            <div className="lead-comments h-[150px] overflow-y-auto crm-scroll-none rounded-t-xl">
+            <div className="h-[150px] overflow-hidden">
               <Comments Comments={leadDtls?.leadComments} />
             </div>
           </div>
@@ -625,7 +712,7 @@ const UserDetails = ({
       </div>
 
       {/* Comments History */}
-      {/* <Modal
+      <Modal
         visible={isCommentHistoryOpen}
         onCancel={() => setIsCommentHistoryOpen(false)}
         footer={false}
@@ -660,7 +747,7 @@ const UserDetails = ({
             </div>
           </div>
         </div>
-      </Modal> */}
+      </Modal>
     </div>
   );
 };
