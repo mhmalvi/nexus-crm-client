@@ -5,7 +5,6 @@ import dayLocaleData from "dayjs/plugin/localeData";
 import { Calendar, Radio, Select } from "antd";
 import { useMediaQuery } from "react-responsive";
 import { useSelector } from "react-redux";
-import { VscColorMode } from "react-icons/vsc";
 dayjs.extend(dayLocaleData);
 const CalendarSmall = ({
   // filterDate,
@@ -46,8 +45,8 @@ const CalendarSmall = ({
   const onYearChange = (value) => {
     setSelectedYear(value.format("YYYY"));
   };
+  
   const onMonthChange = (value) => {
-    console.log(value.format("YYYY-MM"));
     setSelectedMonth(value.format("YYYY-MM").slice(5));
   };
 
@@ -56,6 +55,14 @@ const CalendarSmall = ({
     setSelectedDay("");
     setSelectedMonth("");
     setSelectedYear("");
+  };
+
+  const handlePanelChange = (value, mode) => {
+    if (mode === 'year' && value.month) {
+      const selectedYear = value.format("YYYY");
+      const selectedMonth = value.month() + 1;
+      console.log(`Selected Year: ${selectedYear}, Selected Month: ${selectedMonth}`);
+    }
   };
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -159,7 +166,7 @@ const CalendarSmall = ({
                 </div>
 
                 <button
-                  className={colorMode ? "text-slate-300":"text-gray-800"}
+                  className={colorMode ? "text-slate-300" : "text-gray-800"}
                   size="small"
                   onClick={handleClearDate}
                 >
@@ -169,11 +176,10 @@ const CalendarSmall = ({
             </div>
           );
         }}
-        // onPanelChange={onPanelChange}
+        onPanelChange={handlePanelChange}
         onChange={(value) => {
           const date = parseInt(value.format("DD"));
           setSelectedDay(date < 10 ? `0${date}` : `${date}`);
-          console.log("This is the selectedDay: ", selectedDay);
         }}
       />
     </>
