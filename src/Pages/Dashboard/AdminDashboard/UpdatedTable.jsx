@@ -366,7 +366,7 @@ const UpdatedTable = ({
                     let color = "bg-[#FF8A8A7f]";
                     return color;
                   } else {
-                    let color = "bg-[#2FA3F67f]";
+                    let color = "bg-[#9ed8ff7f]";
                     return color;
                   }
                 }

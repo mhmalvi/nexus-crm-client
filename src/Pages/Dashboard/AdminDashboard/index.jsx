@@ -37,6 +37,7 @@ import NoticeForm from "./NoticeForm";
 import CalendarSmall from "./CalendarSmall";
 import { useMediaQuery } from "react-responsive";
 import ProfileSettings from "./ProfileSettings.jsx";
+import "./dashboard.css";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -805,34 +806,40 @@ const AdminDashboard = () => {
           isNotifyOpen={isNotifyOpen}
           setIsNotifyOpen={setIsNotifyOpen}
         />
-        {openProfile ? (
+        <Modal
+          visible={openProfile}
+          onCancel={() => setOpenProfile(false)}
+          footer={null}
+          closable={false}
+          className="profileSettingsModal"
+        >
           <ProfileSettings />
-        ) : (
-          <>
-            <div className="w-full">
-              <SearchEmployee
-                layout="Dashboard"
-                companyEmployeeList={companyEmployeeList}
-                handleFilterAssignedEmployee={handleFilterAssignedEmployee}
-              />
-            </div>
-            <div>
-              <NoticeForm />
-            </div>
-            <div>
-              <CalendarSmall
-                filterDate={filterDate}
-                setFilterDate={setFilterDate}
-                selectedDay={selectedDay}
-                setSelectedDay={setSelectedDay}
-                selectedMonth={selectedMonth}
-                setSelectedMonth={setSelectedMonth}
-                selectedYear={selectedYear}
-                setSelectedYear={setSelectedYear}
-              />
-            </div>
-          </>
-        )}
+        </Modal>
+      
+        <>
+          <div className="w-full">
+            <SearchEmployee
+              layout="Dashboard"
+              companyEmployeeList={companyEmployeeList}
+              handleFilterAssignedEmployee={handleFilterAssignedEmployee}
+            />
+          </div>
+          <div>
+            <NoticeForm />
+          </div>
+          <div>
+            <CalendarSmall
+              filterDate={filterDate}
+              setFilterDate={setFilterDate}
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+          </div>
+        </>
       </div>
     </div>
   );

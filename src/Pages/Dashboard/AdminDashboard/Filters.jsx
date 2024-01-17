@@ -34,14 +34,12 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`w-full text-xs text-center font-normal  border-${
-                    colorMode ? "slate-300" : "gray-800"
-                  } font-poppins p-1 cursor-pointer ${
+                  className={`w-full text-xs text-center font-normal font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
-                      ? "text-slate-300 bg-[#7037ff] border-[0.5px] "
+                      ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color"
                       : colorMode
-                      ? "text-slate-300 bg-transparent border-[0.1px] "
-                      : "text-gray-800 bg-transparent border-[0.1px]"
+                      ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
+                      : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
                   }  rounded-md`}
                 >
                   {option.title}
