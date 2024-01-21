@@ -85,6 +85,8 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
 
+  
+
   const memoizedFetchLeads = useMemo(
     () => async () => {
       const response = await handleFetchLeads({
@@ -256,7 +258,7 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className="rounded-md px-2 py-1 ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] border-none flex items-center justify-center w-full"
+              className="rounded-md px-2 py-1 ease-in duration-100 hover:bg-gray-800 bg-[#7037ff] border-none flex items-center justify-center w-full"
             >
               <p className="p-0 m-0 text-xs text-white">Assign</p>
             </button>
@@ -361,7 +363,7 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className="btn btn-block w-[100px] h-[28px]  text-white rounded-md ease-in duration-100 bg-gray-800 hover:bg-[#7037ff] flex flex-row m-auto "
+              className="btn btn-block w-[100px] h-[28px]  text-white rounded-md ease-in duration-100 hover:bg-gray-800 bg-[#7037ff] flex flex-row m-auto "
             >
               <div className="flex flex-row m-auto justify-between">
                 <p className="text-xs m-0 p-1">
@@ -723,7 +725,9 @@ const AdminDashboard = () => {
               />
             </div>
             <div className="col-span-2">
-              <CountryList table_title="Lead List" />
+              <CountryList
+                table_title="Lead List"
+              />
             </div>
           </div>
           <UpdatedTable
@@ -815,7 +819,7 @@ const AdminDashboard = () => {
         >
           <ProfileSettings />
         </Modal>
-      
+
         <>
           <div className="w-full">
             <SearchEmployee

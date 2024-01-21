@@ -9,6 +9,8 @@ import {
   handleCompanyList,
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
+import { handleFetchLocation } from "../../../Components/services/locationFilter";
+
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { useMediaQuery } from "react-responsive";
 import "./dashboard.css";
@@ -38,6 +40,16 @@ const UpdatedTable = ({
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
   const [currentPage, setCurrentPage] = useState();
+  const [locationColor, setLocationColor] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await handleFetchLocation(userDetails?.client_id);
+      if (response?.data) {
+        setLocationColor(response?.data?.filter((item) => item.location));
+      }
+    })();
+  }, [userDetails?.client_id]);
 
   useEffect(() => {
     (async () => {
@@ -339,7 +351,8 @@ const UpdatedTable = ({
                   : 400,
               }}
               rowClassName={(record) => {
-                if (table_title === "Lead List") {
+                
+                // console.log(JSON.parse(record.form_data))
                   if (
                     (record.work_location === "wa" ||
                       record.work_location === "WA") &&
@@ -369,7 +382,47 @@ const UpdatedTable = ({
                     let color = "bg-[#9ed8ff7f]";
                     return color;
                   }
+                  
                 }
+
+
+                // 
+                // CURRENT ONE
+                //
+
+                // if (
+                //   (record.work_location === "wa" ||
+                //     record.work_location === "WA") &&
+                //   record.campaign_id >= 0 &&
+                //   record.form_data &&
+                //   JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
+                //   JSON.parse(record.form_data)[2].values[0] !== "philippines"
+                // ) {
+                //   let color = "bg-[#26D4AB7f]";
+                //   return color;
+                // } else if (
+                //   record.form_data &&
+                //   JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
+                //   record.campaign_id >= 0
+                // ) {
+                //   let color = "bg-[#F3E45B7f]";
+                //   return color;
+                // } else if (
+                //   record.form_data &&
+                //   JSON.parse(record.form_data)[2].values[0] ===
+                //     "philippines" &&
+                //   record.campaign_id >= 0
+                // ) {
+                //   let color = "bg-[#FF8A8A7f]";
+                //   return color;
+                // } else {
+                //   let color = "bg-[#9ed8ff7f]";
+                //   return color;
+                // }
+
+
+                // CHANGE THIS LATER
+
 
                 // if (table_title === "Lead List") {
                 //   // Philipines-1
@@ -468,7 +521,7 @@ const UpdatedTable = ({
                 //     return color;
                 //   }
                 // }
-              }}
+              }
             />
           </div>
         )}
