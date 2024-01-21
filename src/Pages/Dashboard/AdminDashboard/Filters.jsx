@@ -14,15 +14,15 @@ const Filters = ({
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
-    <div>
+    <div className="h-full w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
       {layout !== "Payment" && (
-        <div className="h-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
+        <div className=" p-3 min-h-[16vh]">
           <h1
-            className={`text-2xl text-${
+            className={`text-xl text-${
               colorMode ? "slate-300" : "gray-800"
             } font-normal font-poppins  pt-1`}
           >
-            Filters
+            <span className="text-base">Filter by</span> Status
           </h1>
           <div
             className={`grid grid-cols-${isBigScreen ? "7" : "6"} gap-2 w-full`}

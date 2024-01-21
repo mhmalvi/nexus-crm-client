@@ -741,8 +741,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   src={qq_Logo}
                   alt="QuadQue Leads"
                 />
-                <p className={`m-0 p-0 text-center text-xs ${colorMode?"text-slate-500":"text-gray-800"}`}>A product of</p>
-                <p className={`m-0 p-0 text-center text-xs ${colorMode?"text-slate-500":"text-gray-800"}`}>Quadque Technologies Pty Limited</p>
+                <p
+                  className={`m-0 p-0 text-center text-xs ${
+                    colorMode ? "text-slate-500" : "text-gray-800"
+                  }`}
+                >
+                  A product of
+                </p>
+                <p
+                  className={`m-0 p-0 text-center text-xs ${
+                    colorMode ? "text-slate-500" : "text-gray-800"
+                  }`}
+                >
+                  Quadque Technologies Pty Limited
+                </p>
               </div>
             </div>
           )}

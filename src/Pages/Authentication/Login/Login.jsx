@@ -24,6 +24,7 @@ import {
 import ForgotPassword from "./ForgotModal";
 import "../Login.css";
 const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
+
 const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();

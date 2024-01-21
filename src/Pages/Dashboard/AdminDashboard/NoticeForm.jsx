@@ -174,45 +174,7 @@ const NoticeForm = () => {
                     Preview Notices
                   </button>
                 </div>
-                <div>
-                  <form
-                    onSubmit={(e) => handleSendNotice(e)}
-                    className="flex items-center flex-col justify-center "
-                  >
-                    <input
-                      className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
-                        colorMode
-                          ? "placeholder:text-slate-300"
-                          : "placeholder:text-gray-800"
-                      }`}
-                      type="text"
-                      placeholder="Notice Title"
-                      value={noticeTitle}
-                      onChange={(e) => setNoticeTitle(e.target.value)}
-                    />
-                    <textarea
-                      className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
-                        colorMode
-                          ? "placeholder:text-slate-300"
-                          : "placeholder:text-gray-800"
-                      }`}
-                      name=""
-                      style={{ resize: "none" }}
-                      id="notice_input"
-                      value={noticeDescription}
-                      onChange={(e) => setNoticeDescription(e.target.value)}
-                      rows={isBigScreen ? "3" : "1"}
-                      placeholder="Details"
-                    ></textarea>
-                    <button
-                      className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-[#2596FB] hover:bg-black rounded-md"
-                      type="submit"
-                      value="Post"
-                    >
-                      Post
-                    </button>
-                  </form>
-                </div>
+                
               </div>
             </div>
           )}
