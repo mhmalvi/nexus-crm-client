@@ -14,9 +14,9 @@ const Filters = ({
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
-    <div className="h-full w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+    <div className="h-full w-full rounded-xl overflow-hidden shadow-md">
       {layout !== "Payment" && (
-        <div className=" p-3 min-h-[16vh]">
+        <div className="h-full p-3  backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
             className={`text-xl text-${
               colorMode ? "slate-300" : "gray-800"

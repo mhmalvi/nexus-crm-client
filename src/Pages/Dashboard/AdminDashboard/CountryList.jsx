@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 const CountryList = ({ table_title }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div className=" h-full w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+    <div className="h-full p-3 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
       <h1
-        className={`text-2xl text-${
+        className={`text-xl text-${
           colorMode ? "slate-300" : "gray-800"
-        } font-normal font-poppins pt-1`}
+        } font-normal font-poppins  pt-1`}
       >
-        Countries
+        <span className="text-base">Filter by</span> Location
       </h1>
       {table_title === "Lead List" ? (
         <div className="grid grid-cols-2 items-center justify-center">
