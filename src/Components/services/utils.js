@@ -17,7 +17,7 @@ export const handleLeadMailUpload = async (data) => {
   console.log("data: ", data);
   try {
     const result = await axios.post(
-      `https://crmleads.queleadscrm.com/api/lead/mail`,
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/mail`,
       data
     );
     return result.data;
@@ -488,7 +488,7 @@ export const handleGetSalesAdmin = async () => {
   };
   try {
     const result = await axios.get(
-      `https://crmcompany.queleadscrm.com/api/sales-employee`,
+      `${process.env?.REACT_APP_COMPANY_URL}/api/sales-employee`,
       config
     );
     return result.data;
@@ -769,7 +769,7 @@ export const handleSearchStudent = async (data) => {
   };
   try {
     const result = await axios.post(
-      `https://crmbtob.queleadscrm.com/student/student-search`,
+      `${btob_dev}/student/student-search`,
       data,
       config
     );
@@ -787,7 +787,7 @@ export const handleCompanyList = async (rid) => {
   };
   try {
     const result = await axios.get(
-      `https://crmcompany.queleadscrm.com/api/role_id=${rid}/company-list-in-sales`,
+      `${process.env?.REACT_APP_COMPANY_URL}/api/role_id=${rid}/company-list-in-sales`,
       config
     );
     return result.data;
@@ -804,7 +804,7 @@ export const handleCompanyWiseLeadList = async (sid, cid) => {
   };
   try {
     const result = await axios.post(
-      `https://crmleads.queleadscrm.com/api/sales_id=${sid}/company_id=${cid}/get-lead-list-in-sales`,
+      `${process.env?.REACT_APP_LEAD_URL}/api/sales_id=${sid}/company_id=${cid}/get-lead-list-in-sales`,
       {},
       config
     );
