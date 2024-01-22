@@ -60,7 +60,7 @@ const Layout = () => {
     setInterval(() => {
       fetchFollowUpNotification();
     }, 1000);
-  });
+  }, []);
 
   useEffect(() => {
     if (window.location.pathname === "/") {

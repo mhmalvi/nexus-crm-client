@@ -29,7 +29,6 @@ import Sales from "./Pages/SalesEmployee";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
-import Landing from "./Pages/LandingPage/Landing";
 import Register from "./Pages/Authentication/Register/Register";
 import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
