@@ -1,10 +1,5 @@
 import { Input, Modal, Tooltip, message } from "antd";
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -36,7 +31,7 @@ const Login = () => {
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
-  
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -340,15 +335,17 @@ const Login = () => {
           </Modal>
           <div className="m-6 min-h-[60vh] flex flex-col justify-between">
             <div className="flex flex-col items-center ">
-              <img
-                src={companyLogo}
-                alt="companyLogo"
-                srcset=""
-                className="w-60 cursor-pointer"
-                onClick={() => {
-                  navigate("/");
-                }}
-              />
+              <a href="https://queleadscrm.com">
+                <img
+                  src={companyLogo}
+                  alt="companyLogo"
+                  srcset=""
+                  className="w-60 cursor-pointer"
+                  // onClick={() => {
+                  //   navigate("https://www.queleadscrm.com");
+                  // }}
+                />
+              </a>
             </div>
             <form className="mb-4" onSubmit={handleLoginReq}>
               <div className="mb-6 font-poppins ">
