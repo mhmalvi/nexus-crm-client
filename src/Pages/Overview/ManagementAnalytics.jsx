@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as rcElement from "recharts";
@@ -6,13 +6,13 @@ import {
   fetchAverageIncomeOfLastWeek,
   fetchMonthPaymentDataOfCompany,
 } from "../../Components/services/payment";
-import Icons from "../../Components/Shared/Icons";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 
 import * as chartUtils from "./utils";
+import Summary from "./Summary";
 
-const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
+const ManagementAnalytics = ({ activeCompany }) => {
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state.user)?.loading;
   const userDetails = useSelector((state) => state.user)?.userInfo;
@@ -110,100 +110,6 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
           </div>
         )}
         <div className="flex justify-between items-center w-full gap-5">
-          <div className="w-1/2 h-full py-4 ">
-            <h1 className={`text-xl font-semibold font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>
-              Summary
-            </h1>
-            <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 py-3">
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    $ {totalRevenue}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Total Revenue
-                  </p>
-                </div>
-                <div>
-                  <Icons.Briefcase className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    ${" "}
-                    {totalRevenue
-                      ? (totalRevenue / (dayjs().month() + 1)).toFixed(2)
-                      : 0}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Average Income (Per Month)
-                  </p>
-                </div>
-                <div>
-                  <Icons.CalendarMonth className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    ${" "}
-                    {totalLastWeekIncome
-                      ? (totalLastWeekIncome / 7)?.toFixed(2)
-                      : 0}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Average Income Per Day (Last Week)
-                  </p>
-                </div>
-                <div>
-                  <Icons.CalendarWeek className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    {campaigns?.length}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Total Campaigns
-                  </p>
-                </div>
-                <div>
-                  <Icons.Campaigns className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    ${" "}
-                    {totalRevenue > 0 && campaigns?.length > 0
-                      ? (totalRevenue / campaigns?.length).toFixed(2)
-                      : 0}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Average Income (Per Campaign)
-                  </p>
-                </div>
-                <div>
-                  <Icons.MoneyCheck className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-                <div>
-                  <h1 className="text-lg font-semibold text-[#ffa500]">
-                    {comapnyEmployees?.length}
-                  </h1>
-                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
-                    Sales Team
-                  </p>
-                </div>
-                <div>
-                  <Icons.PeopleGroup className="w-5 text-[#ffa500]" />
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Income/ Day */}
           <div className=" w-1/2 rounded-xl py-4 flex flex-col h-full ">
