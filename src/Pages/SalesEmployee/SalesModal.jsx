@@ -1,5 +1,5 @@
-import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Input, Modal, Popover, Table, message } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Modal, Popover, Table, message } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -10,7 +10,7 @@ import {
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import ViewLeadCallDetails from "../../Pages/Dashborad/AdminDashboard/ViewLeadCallDetails";
+import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -147,7 +147,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
         return (
           <>
             <div className="items-center flex">
-              {record?.count ? (
+              {record?.call_count ? (
                 <button
                   onClick={() => {
                     setClickedLeadId(record.lead_id);
@@ -155,7 +155,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                   }}
                   className="bg-zinc-700 text-center rounded-lg border-none text-white m-auto w-[50%]"
                 >
-                  {record?.count.call_count ? record?.count.call_count : 0}
+                  {record?.call_count ? record?.call_count : 0}
                 </button>
               ) : (
                 <p className="text-[red] m-0 p-0">This Lead has no calls</p>

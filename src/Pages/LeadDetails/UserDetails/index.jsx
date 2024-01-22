@@ -21,21 +21,26 @@ import {
 import Icons from "../../../Components/Shared/Icons";
 import { Storage } from "../../../Components/Shared/utils/store";
 import CheckList from "./CheckList";
+import Conversation from "../Conversation";
+import Comments from "../Conversation/Comments";
 import EditDetails from "./EditDetails";
 import EmployeeHistory from "./EmployeeHistory";
 import SalesEmployees from "./SalesEmployees";
+import { useParams } from "react-router-dom";
 import { handleSalesManRemove } from "../../../Components/services/utils";
+import { handleLeadDetails } from "../../../Components/services/leads";
+import StatusShow from "../Conversation/StatusShow";
 
 const UserDetails = ({
   leadDetails,
   syncDetails,
   setSyncDetails,
-  paymentHistory,
   totalPaid,
 }) => {
   const userDetails = useSelector((state) => state?.user);
-  const navigate = useNavigate();
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
+  const navigate = useNavigate();
   const [addSealsman, setAddSealsman] = useState(false);
   const [salesEmployeeName, setSalesEmployeeName] = useState("");
   const [closeSealsman, setCloseSealsman] = useState(false);
@@ -51,6 +56,9 @@ const UserDetails = ({
   const [allComents, setAllComents] = useState([]);
   const [ratingRemarks, setRatingRemarks] = useState("");
   const [experience, setExperience] = useState("");
+  const [leadDtls, setLeadDtls] = useState({});
+
+  const params = useParams();
 
   useEffect(() => {
     console.log(leadDetails);
@@ -98,6 +106,15 @@ const UserDetails = ({
         : leadDetails?.leadDetails?.comment
     );
   }, [leadDetails]);
+
+  useEffect(() => {
+    (async () => {
+      const lDtails = await handleLeadDetails(params?.id);
+      if (lDtails) {
+        setLeadDtls(lDtails);
+      }
+    })();
+  }, [params?.id]);
 
   const handleCancel = () => {
     setToggleChcekList(false);
@@ -196,403 +213,503 @@ const UserDetails = ({
       setAllComents(currentComments);
     }
   };
-
+  const { id } = useParams();
   return (
-    <div className="mx-6">
-      <div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl leading-8 font-poppins font-semibold mb-0">
-            {leadDetails?.leadDetails?.full_name}
-          </h1>
-
-          {/* Sales Employee History */}
-          <Modal
-            visible={toggleSalesEmployeeHistory}
-            onCancel={() => setToggleSalesEmployeeHistory(false)}
-            footer={false}
-          >
-            <EmployeeHistory
-              employeeList={leadDetails?.leadSalesEmployeeHistory}
-            />
-          </Modal>
-
-          {/* Edit Lead Contact Details Section */}
-          <Modal
-            visible={toggleEditDetials}
-            onCancel={() => setToggleEditDetials(false)}
-            footer={false}
-          >
-            <EditDetails
-              leadDetails={leadDetails}
-              setToggleEditDetials={setToggleEditDetials}
-              setSyncDetails={setSyncDetails}
-              syncDetails={syncDetails}
-            />
-          </Modal>
-
-          {/* Application Form Modal */}
-          <Modal
-            visible={toggleApplication}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <div>
-              <h1 className="font-poppins text-xl font-extrabold">
-                Answer of all Questions
-              </h1>
-            </div>
-            {/* <div className="flex flex-col justify-center items-center py-6 "> */}
-            <div className="py-6">
-              {/* {JSON.parse(leadDetails?.leadDetails?.form_data).map((question) => ( */}
-              <div className="my-2">
-                {leadDetails?.leadDetails?.form_data?.map((question, i) => (
-                  <div key={i} className="ml-2 font-poppins">
-                    <li className="text-base list-disc font-semibold">
-                      {/* for removing underscores and capitalize the first letter of the Question */}
-                      {question?.name?.charAt(0)?.toUpperCase() +
-                        question?.name?.replaceAll("_", " ")?.slice(1)}
-                    </li>
-                    <p className="ml-6 mt-2 font-normal">
-                      -{" "}
-                      {question?.values[0]?.includes("_")
-                        ? question?.values[0]?.charAt(0)?.toUpperCase() +
-                          question?.values[0]?.replaceAll("_", " ")?.slice(1)
-                        : question?.values[0]}
-                    </p>
+    <div className="mt-5">
+      <div className="grid grid-cols-3 gap-4 h-[55vh] ">
+        <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
+          <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+            <h4
+              className={`text-lg px-5 py-2 m-0 font-poppins ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } backdrop-blur-2xl bg-[#ffffff11] shadow-md rounded-t-xl`}
+            >
+              Details
+            </h4>
+            <div className="relative flex justify-center items-center p-5 ">
+              {(userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ||
+                userDetails?.userInfo?.role_id === 5) && (
+                <div className="flex flex-col justify-center items-center">
+                  <div className=" 2xl:w-20">
+                    <img
+                      className="w-full"
+                      src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
+                      alt=""
+                    />
+                    <div
+                      className={`text-[10px] ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } font-poppins mt-1 text-center font-medium`}
+                    >
+                      Scan To Call
+                    </div>
                   </div>
-                ))}
-              </div>
-              {/* // ))} */}
-            </div>
-          </Modal>
 
-          <div className="relative flex items-center">
-            {userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ? (
-              <div onClick={() => setToggleSalesEmployeeHistory(true)}>
-                <AntdAvatar.Group
-                  className="mr-1 cursor-pointer"
-                  maxCount={1}
-                  maxStyle={{
-                    color: "#f56a00",
-                    backgroundColor: "#fde3cf",
-                  }}
+                  <div className="mt-5">
+                    <Popconfirm
+                      title="Are you sure to Suspend this lead?"
+                      onConfirm={confirm}
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Tooltip
+                        placement="right"
+                        title={"If it's a bad lead then you can Suspend it"}
+                      >
+                        <button
+                          className={`ease-in duration-200 w-32 px-1.5 py-2 border border-red-500 hover:bg-red-500 hover:text-slate-300 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
+                          // onClick={handleLeadSuspend}
+                        >
+                          Suspend
+                        </button>
+                      </Tooltip>
+                    </Popconfirm>
+                  </div>
+                </div>
+              )}
+              <div className=" w-full flex flex-col justify-around ml-8">
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } font-poppins flex flex-wrap `}
                 >
-                  {prevSalesEmployeesName?.length ? (
-                    <>
+                  <span>Contact:&nbsp;&nbsp;</span>
+                  <span> {leadDetails?.leadDetails?.phone_number}</span>
+                </div>
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } font-poppins flex flex-wrap pt-1`}
+                >
+                  <span>Email:&nbsp;&nbsp;</span>
+                  <span>{leadDetails?.leadDetails?.student_email}</span>
+                </div>
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } font-poppins flex flex-wrap items-center pt-1`}
+                >
+                  <span>Courses:&nbsp;&nbsp;</span>
+                  <span className="text-xs uppercase">
+                    {leadDetails?.leadDetails?.course_title}
+                  </span>
+                </div>
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } font-poppins flex items-center pt-1`}
+                >
+                  <span>Location:&nbsp;&nbsp;</span>
+                  <span className="uppercase">
+                    {leadDetails?.leadDetails?.work_location}
+                  </span>
+                </div>
+                <div
+                  className={`font-normal 2xl:text-xs ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } font-poppins flex items-center pt-1`}
+                >
+                  <span>Experience:&nbsp;&nbsp;</span>
+                  <span className="uppercase">
+                    <div>{experience}</div>
+                  </span>
+                </div>
+              </div>
+              <div
+                className={`absolute ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } top-2 right-5 hover:text-brand-color cursor-pointer`}
+                onClick={() => setToggleEditDetials(true)}
+              >
+                <Icons.Edit />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+            <div className="flex justify-between items-center">
+              <h1
+                className={`text-xl font-poppins ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                {leadDetails?.leadDetails?.full_name}
+              </h1>
+              <div className="relative flex items-center">
+                {userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4 ? (
+                  <div onClick={() => setToggleSalesEmployeeHistory(true)}>
+                    <AntdAvatar.Group
+                      className="mr-1 cursor-pointer"
+                      maxCount={1}
+                      maxStyle={{
+                        color: "#f56a00",
+                        backgroundColor: "#fde3cf",
+                      }}
+                    >
+                      {prevSalesEmployeesName?.length ? (
+                        <>
+                          <Avatar
+                            className="rounded-full shadow-sm cursor-pointer"
+                            size="30"
+                            name={prevSalesEmployeesName?.[0]}
+                          />
+                          {prevSalesEmployeesName?.length > 1 ? (
+                            <Tooltip
+                              title="Previous Sales Employee"
+                              placement="top"
+                            >
+                              {prevSalesEmployeesName
+                                .slice(1)
+                                .map((name, i) => (
+                                  <Avatar
+                                    key={i}
+                                    className="rounded-full shadow-sm cursor-pointer"
+                                    size="30"
+                                    name={name}
+                                  />
+                                ))}
+                            </Tooltip>
+                          ) : null}
+                        </>
+                      ) : null}
+                    </AntdAvatar.Group>
+                  </div>
+                ) : null}
+
+                {(userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4 ||
+                  userDetails?.userInfo?.role_id === 5) &&
+                  (leadDetails?.leadDetails?.sales_user_id !== 0 &&
+                  closeSealsman ? (
+                    <div className="relative">
                       <Avatar
                         className="rounded-full shadow-sm cursor-pointer"
-                        size="30"
-                        name={prevSalesEmployeesName?.[0]}
+                        size="45"
+                        name={salesEmployeeName}
                       />
-                      {prevSalesEmployeesName?.length > 1 ? (
-                        <Tooltip
-                          title="Previous Sales Employee"
-                          placement="top"
-                        >
-                          {prevSalesEmployeesName.slice(1).map((name, i) => (
-                            <Avatar
-                              key={i}
-                              className="rounded-full shadow-sm cursor-pointer"
-                              size="30"
-                              name={name}
-                            />
-                          ))}
-                        </Tooltip>
-                      ) : null}
-                    </>
-                  ) : null}
-                </AntdAvatar.Group>
-              </div>
-            ) : null}
+                      <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-slate-300 shadow-md bg-green-500 rounded-full">
+                        &nbsp;
+                      </div>
+                    </div>
+                  ) : userDetails?.userInfo?.role_id === 3 ||
+                    userDetails?.userInfo?.role_id === 4 ? (
+                    <div
+                      className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-slate-300 cursor-pointer"
+                      onClick={() => {
+                        setAddSealsman(true);
+                      }}
+                    >
+                      +
+                    </div>
+                  ) : null)}
 
-            {(userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) &&
-              (leadDetails?.leadDetails?.sales_user_id !== 0 &&
-              closeSealsman ? (
-                <div className="relative">
-                  <Avatar
-                    className="rounded-full shadow-sm cursor-pointer"
-                    size="45"
-                    name={salesEmployeeName}
+                {closeSealsman &&
+                (userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4) ? (
+                  <Popconfirm
+                    title="Are you sure to remove this Salesman?"
+                    onConfirm={() => {
+                      confirmCancleSalesEmployee(
+                        leadDetails?.leadDetails?.lead_id
+                      );
+                    }}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <span className="absolute cursor-pointer -top-1 -right-2 text-xs px-1.5 border border-slate-300 pb-0.5 rounded-full bg-black text-slate-300 m-0">
+                      x
+                    </span>
+                  </Popconfirm>
+                ) : null}
+              </div>
+            </div>
+            <h1
+              className={`text-xl font-poppins ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              #{leadDetails?.leadDetails?.lead_id}
+            </h1>
+            {userDetails?.userInfo?.role_id !== 6 ? (
+              <div className="w-full flex flex-col">
+                <ReactStars
+                  edit={
+                    userDetails?.userInfo?.role_id === 3 ||
+                    userDetails?.userInfo?.role_id === 4 ||
+                    userDetails?.userInfo?.role_id === 5
+                      ? true
+                      : false
+                  }
+                  count={5}
+                  onChange={ratingChanged}
+                  size={24}
+                  value={rating}
+                  emptyIcon={<Icons.Star />}
+                  half={false}
+                  fullIcon={<Icons.Star />}
+                  color1="#1f2937"
+                  color2="#8C64D2"
+                />
+                <form className="flex justify-between items-center w-full gap-4">
+                  <input
+                    className={`w-5/6 outline-none border-b ${
+                      colorMode ? "border-slate-300" : "border-gray-800"
+                    } bg-transparent text-sm font-poppins text-black text-opacity-75`}
+                    onChange={(e) => setRatingRemarks(e.currentTarget.value)}
+                    value={ratingRemarks}
+                    placeholder="No comments yet"
                   />
-                  <div className="absolute right-0.5 bottom-0.5 w-2.5 h-2.5 border border-white shadow-md bg-green-500 rounded-full">
-                    &nbsp;
-                  </div>
-                </div>
-              ) : userDetails?.userInfo?.role_id === 3 ||
-                userDetails?.userInfo?.role_id === 4 ? (
-                <div
-                  className="px-4 py-2 rounded-full bg-brand-color font-semibold text-xl text-white cursor-pointer"
-                  onClick={() => {
-                    setAddSealsman(true);
-                  }}
-                >
-                  +
-                </div>
-              ) : null)}
-
-            {closeSealsman &&
-            (userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4) ? (
-              <Popconfirm
-                title="Are you sure to remove this Salesman?"
-                onConfirm={() => {
-                  confirmCancleSalesEmployee(leadDetails?.leadDetails?.lead_id);
-                }}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <span className="absolute cursor-pointer -top-1 -right-2 text-xs px-1.5 border border-white pb-0.5 rounded-full bg-black text-white m-0">
-                  x
-                </span>
-              </Popconfirm>
+                  <button
+                    className={`border ${
+                      colorMode
+                        ? "border-slate-300 text-slate-300"
+                        : "border-gray-800 text-gray-800"
+                    }  px-3 py-0.5 rounded-xl cursor-pointer`}
+                    onClick={handleReviewRemarksSubmit}
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
             ) : null}
           </div>
-
-          {/* Sales Team List Modal */}
-          <SalesEmployees
-            addSealsman={addSealsman}
-            setAddSealsman={setAddSealsman}
-            handleCancel={handleCancel}
-            leadDetails={leadDetails}
-            syncDetails={syncDetails}
-            setSyncDetails={setSyncDetails}
-          />
         </div>
-
-        <h1 className="text-xl leading-8 font-poppins font-semibold mt-2">
-          #{leadDetails?.leadDetails?.lead_id}
-        </h1>
-      </div>
-      {userDetails?.userInfo?.role_id !== 6 ? (
-        <div>
-          <ReactStars
-            edit={
-              userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5
-                ? true
-                : false
-            }
-            count={5}
-            onChange={ratingChanged}
-            size={24}
-            value={rating}
-            emptyIcon={<Icons.Star />}
-            half={false}
-            fullIcon={<Icons.Star />}
-            color1="#E9E9E9"
-            color2="#8C64D2"
-          />
-
-          <div>
-            <input
-              className="outline-none border-b border-brand-color bg-transparent text-sm leading-6 font-poppins text-black text-opacity-75"
-              onChange={(e) => setRatingRemarks(e.currentTarget.value)}
-              value={ratingRemarks}
-              placeholder="No comments yet"
-            />
-            <span
-              className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
-              onClick={handleReviewRemarksSubmit}
-            >
-              Save
-            </span>
-          </div>
-        </div>
-      ) : null}
-
-      {/* User info */}
-      <div className="mt-5">
-        <div>
-          <h4 className="text-lg leading-6 font-poppins font-semibold text-black text-opacity-80">
-            Details
-          </h4>
-          <hr />
-        </div>
-        <div className="relative flex pt-4 pb-2">
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5) && (
-            <div className="w-1/3 2xl:w-20 mt-1">
-              <img
-                className="w-full"
-                src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
-                alt=""
-              />
-              <div
-                className="font-poppins my-2 text-center font-medium"
-                style={{
-                  fontSize: "10px",
-                }}
-              >
-                Scan To Call
-              </div>
-            </div>
+        <div className="flex flex-col justify-between items-center gap-4 h-[55vh] ">
+          {userDetails?.role_id !== 6 && (
+            <Conversation leadDetails={leadDetails} id={id} />
           )}
-          <div className=" w-2/3 ml-5">
-            <div className="font-normal text-sm 2xl:text-base leading-6 flex flex-wrap font-poppins">
-              <span>Contact:&nbsp;&nbsp;</span>
-              <span> {leadDetails?.leadDetails?.phone_number}</span>
-            </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex flex-wrap mt-2">
-              <span>Email:&nbsp;&nbsp;</span>
-              <span>{leadDetails?.leadDetails?.student_email}</span>
-            </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mt-2 flex flex-wrap items-center">
-              <span>Courses:&nbsp;&nbsp;</span>
-              <span className="text-xs uppercase">
-                {leadDetails?.leadDetails?.course_title}
-              </span>
-            </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-              <span>Location:&nbsp;&nbsp;</span>
-              <span className="uppercase">
-                {leadDetails?.leadDetails?.work_location}
-              </span>
-            </div>
-            <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-              <span>Experience:&nbsp;&nbsp;</span>
-              <span className="uppercase">
-                <div>{experience}</div>
-              </span>
-            </div>
-          </div>
-
-          <div
-            className="absolute top-2 right-6 hover:text-brand-color cursor-pointer"
-            onClick={() => setToggleEditDetials(true)}
-          >
-            <Icons.Edit />
-          </div>
-        </div>
-
-        {(userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4 ||
-          userDetails?.userInfo?.role_id === 5) && (
-          <div className="xl:ml-4 mt-5">
-            <Popconfirm
-              title="Are you sure to Suspend this lead?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Tooltip
-                placement="right"
-                title={"If it's a bad lead then you can Suspend it"}
+          <div className="w-full h-full flex flex-col gap-4 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+            <div className="flex flex-col justify-between items-center">
+              <h1
+                className={`text-lg font-poppins ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } m-0 p-0`}
               >
-                <button
-                  className={`w-32 px-1.5 py-2 border border-red-500 text-red-500 text-xs font-medium leading-4 font-poppins rounded-md`}
-                  // onClick={handleLeadSuspend}
-                >
-                  Suspend
-                </button>
-              </Tooltip>
-            </Popconfirm>
-          </div>
-        )}
-
-        {/* --------------- If user wants to Pay------------- */}
-        <div className="mt-7.5">
-          <div>
-            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Lead Generation Form
-            </h1>
-          </div>
-          <div className="xl:ml-4 mt-5 flex">
-            <button
-              className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md"
-              onClick={() => setToggleApplication(!toggleApplication)}
-            >
-              View
-            </button>
-            {/* <button className="w-32 px-1.5 py-2 border border-black text-black ml-4 text-xs font-medium leading-4 font-poppins rounded-md">
-              Edit
-            </button> */}
-          </div>
-        </div>
-        <div className="mt-7.5">
-          <div>
-            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Application Form
-            </h1>
-            <div
-              className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
-              onClick={() => message.success("No file available")}
-            >
-              <button className="flex items-center justify-center">
-                <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
-                <span className="ml-2">Download</span>
-              </button>
-            </div>
-            {/* <a
-              className="text-black hover:text-black text-base leading-6 font-normal font-poppins"
-              href="http://smartcrm.quadque.tech/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <button className="flex items-center justify-center">
-                <Icons.DownArrow className="w-6 rounded-full text-black text-opacity-50" />
-                <span className="ml-2">Download</span>
-              </button>
-            </a> */}
-          </div>
-        </div>
-
-        {userDetails?.userInfo?.role_id === 6 && (
-          <div className="mt-7.5">
-            <div>
-              <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-                Payment
+                Lead Generation Form
               </h1>
+              <button
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-slate-300 border-slate-300"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md`}
+                onClick={() => setToggleApplication(!toggleApplication)}
+              >
+                View
+              </button>
             </div>
-            <div
-              className="ml-4 mt-5"
-              onClick={() => {
-                Storage.setItem("_tp_", totalPaid);
-              }}
-            >
-              <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
-                <button className="w-32 px-1.5 py-2 bg-green-500 text-white text-xs font-medium leading-4 font-poppins rounded-md">
-                  Pay
-                </button>
-              </Link>
+            <div className="flex flex-col justify-between items-center">
+              <h1
+                className={`text-lg ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } m-0 p-0`}
+              >
+                Application Form
+              </h1>
+
+              <button
+                onClick={() => message.success("No file available")}
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-slate-300 border-slate-300"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
+              >
+                <Icons.DownArrow className="w-6 rounded-full text-slate-300 text-opacity-50" />
+                <span className="ml-2">Download</span>
+              </button>
             </div>
-          </div>
-        )}
+            <div className="flex flex-col justify-between items-center">
+              <h1
+                className={`text-lg font-poppins ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } m-0 p-0`}
+              >
+                Check Lists
+              </h1>
 
-        <div className="mt-7.5">
-          <div>
-            <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-              Check Lists
-            </h1>
-          </div>
+              <Modal
+                visible={toggleChcekList}
+                footer={null}
+                onCancel={handleCancel}
+              >
+                <CheckList leadDetails={leadDetails?.leadDetails} />
+              </Modal>
 
-          {/* Checklist Modal */}
-          <Modal
-            visible={toggleChcekList}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <CheckList leadDetails={leadDetails?.leadDetails} />
-          </Modal>
-
-          <div className="ml-4 mt-5">
-            <button
-              className="w-32 px-1.5 py-2 border border-black text-black text-xs font-medium leading-4 font-poppins rounded-md"
-              onClick={() => setToggleChcekList(true)}
-            >
-              View
-            </button>
+              <button
+                className={`w-full px-1.5 py-2 bg-transparent border ${
+                  colorMode
+                    ? "text-slate-300 border-slate-300"
+                    : "text-gray-800 border-gray-800"
+                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
+                onClick={() => setToggleChcekList(true)}
+              >
+                View
+              </button>
+            </div>
+            {userDetails?.userInfo?.role_id === 6 && (
+              <div className="flex flex-col justify-between items-center">
+                <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+                  Payment
+                </h1>
+                <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
+                  <button
+                    className="w-full px-1.5 py-2 bg-transparent border border-slate-300 text-slate-300 text-base font-medium font-poppins rounded-md flex items-center justify-center"
+                    onClick={() => {
+                      Storage.setItem("_tp_", totalPaid);
+                    }}
+                  >
+                    Pay
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+        <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
+          {userDetails?.userInfo?.role_id !== 6 ? (
+            <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+              <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
+                <h1
+                  className={`text-lg m-0 p-0 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } `}
+                >
+                  Comments
+                </h1>
+                <Icons.History
+                  className={`${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } hover:text-brand-color w-6 cursor-pointer`}
+                  onClick={() => {
+                    setIsCommentHistoryOpen(true);
+                    // setSyncDetails(!syncDetails);
+                  }}
+                />
+              </div>
+              <form
+                onSubmit={handleUpdateComment}
+                className="w-full flex justify-between items-center gap-4 p-5"
+              >
+                {userDetails?.userInfo?.role_id === 1 ||
+                userDetails?.userInfo?.role_id === 2 ||
+                userDetails?.userInfo?.role_id === 6 ? (
+                  <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
+                    {leadDetails?.leadComments?.length
+                      ? leadDetails?.leadComments[
+                          leadDetails?.leadComments.length - 1
+                        ]?.comments
+                      : "No comments yet"}
+                  </h1>
+                ) : (
+                  <>
+                    <input
+                      id="lead_comment"
+                      className={`w-full outline-none border-b ${
+                        colorMode ? "border-slate-300" : "border-gray-800"
+                      } bg-transparent text-base font-poppins text-black text-opacity-75`}
+                      onChange={(e) => handleCommentChange(e)}
+                      placeholder={"Write your comment"}
+                      value={comment}
+                    />
+                    <button
+                      type="submit"
+                      className={`bg-transparent border ${
+                        colorMode
+                          ? "text-slate-300 border-slate-300"
+                          : "text-gray-800 border-gray-800"
+                      } px-2 py-0.5 rounded-md cursor-pointer`}
+                      value="Post"
+                    >
+                      Post
+                    </button>
+                  </>
+                )}
+              </form>
+            </div>
+          ) : null}
+          <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+            <div className="h-[150px] overflow-hidden">
+              <Comments Comments={leadDtls?.leadComments} />
+            </div>
+          </div>
+          <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+            <div className="h-[200px] overflow-hidden">
+              <StatusShow leadDetails={leadDetails} />
+            </div>
+          </div>
+        </div>
 
-      {/* Comments */}
+        {/* Sales Employee History */}
+        <Modal
+          visible={toggleSalesEmployeeHistory}
+          onCancel={() => setToggleSalesEmployeeHistory(false)}
+          footer={false}
+        >
+          <EmployeeHistory
+            employeeList={leadDetails?.leadSalesEmployeeHistory}
+          />
+        </Modal>
+
+        {/* Edit Lead Contact Details Section */}
+        <Modal
+          visible={toggleEditDetials}
+          onCancel={() => setToggleEditDetials(false)}
+          footer={false}
+        >
+          <EditDetails
+            leadDetails={leadDetails}
+            setToggleEditDetials={setToggleEditDetials}
+            setSyncDetails={setSyncDetails}
+            syncDetails={syncDetails}
+          />
+        </Modal>
+
+        {/* Application Form Modal */}
+        <Modal
+          visible={toggleApplication}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <div>
+            <h1 className="font-poppins text-xl font-extrabold">
+              Answer of all Questions
+            </h1>
+          </div>
+          <div className="py-6">
+            <div className="my-2">
+              {leadDetails?.leadDetails?.form_data?.map((question, i) => (
+                <div key={i} className="ml-2 font-poppins">
+                  <li className="text-base list-disc font-semibold">
+                    {question?.name?.charAt(0)?.toUpperCase() +
+                      question?.name?.replaceAll("_", " ")?.slice(1)}
+                  </li>
+                  <p className="ml-6 mt-2 font-normal">
+                    -{" "}
+                    {question?.values[0]?.includes("_")
+                      ? question?.values[0]?.charAt(0)?.toUpperCase() +
+                        question?.values[0]?.replaceAll("_", " ")?.slice(1)
+                      : question?.values[0]}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Modal>
+
+        {/* Sales Team List Modal */}
+        <SalesEmployees
+          addSealsman={addSealsman}
+          setAddSealsman={setAddSealsman}
+          handleCancel={handleCancel}
+          leadDetails={leadDetails}
+          syncDetails={syncDetails}
+          setSyncDetails={setSyncDetails}
+        />
+      </div>
 
       {/* Comments History */}
       <Modal
@@ -608,7 +725,6 @@ const UserDetails = ({
 
             <div className="flex items-end mb-4">
               <div className="w-full">
-                {/* <h1 className="text-sm font-poppins">Comments:</h1> */}
                 {allComents?.length
                   ? allComents?.map((history) => (
                       <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">
@@ -632,56 +748,6 @@ const UserDetails = ({
           </div>
         </div>
       </Modal>
-
-      {userDetails?.userInfo?.role_id !== 6 ? (
-        <div
-          className="mt-12 border py-3 px-7"
-          style={{
-            borderRadius: "20px",
-          }}
-        >
-          <div className="border-b flex mb-2">
-            <h1 className="text-xl leading-8 mb-0 font-semibold font-poppins text-black text-opacity-50">
-              Comments
-            </h1>
-            <Icons.History
-              className="w-6 ml-2 cursor-pointer"
-              onClick={() => {
-                setIsCommentHistoryOpen(true);
-                // setSyncDetails(!syncDetails);
-              }}
-            />
-          </div>
-          <form onSubmit={handleUpdateComment} className="2xl:w-84 mt-5 ">
-            {userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2 ||
-            userDetails?.userInfo?.role_id === 6 ? (
-              <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
-                {leadDetails?.leadComments?.length
-                  ? leadDetails?.leadComments[
-                      leadDetails?.leadComments.length - 1
-                    ]?.comments
-                  : "No comments yet"}
-              </h1>
-            ) : (
-              <>
-                <input
-                  id="lead_comment"
-                  className="outline-none border-b border-brand-color bg-transparent text-base leading-6 font-poppins text-black text-opacity-75"
-                  onChange={(e) => handleCommentChange(e)}
-                  placeholder={"Write you comment"}
-                  value={comment}
-                />
-                <input
-                  type="submit"
-                  className="bg-black text-white px-2 py-0.5 rounded-md cursor-pointer ml-4"
-                  value="Post"
-                ></input>
-              </>
-            )}
-          </form>
-        </div>
-      ) : null}
     </div>
   );
 };

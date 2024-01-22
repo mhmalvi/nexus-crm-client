@@ -72,8 +72,8 @@ export const handleFetchLeadsBySalesId = async (id) => {
     return error.response;
   }
 };
-// fetch unassigned lead list
 
+// fetch unassigned lead list
 export const handleFetchUnassignedLeadList = async (id) => {
   const config = {
     headers: {
@@ -287,7 +287,6 @@ export const handleGetStudentAdmissionDetailsAgency = async (aid, sid) => {
   }
 };
 // Change status admission complete
-
 export const handleAdmissionStatusChange = async (data) => {
   const config = {
     headers: {
@@ -306,7 +305,6 @@ export const handleAdmissionStatusChange = async (data) => {
   }
 };
 // get students details agency check
-
 export const handleGetStudentCompleteDetailsCheck = async (id) => {
   const config = {
     headers: {

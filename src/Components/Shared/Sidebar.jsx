@@ -1,28 +1,30 @@
-import { Menu } from "antd";
+import { handleLogout } from "../../Components/services/auth";
+import { Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
 import { Storage } from "./utils/store";
 import { addCompanyDetails } from "../../features/Company/companySlice";
 import { handleFetchFile } from "../services/utils";
-const qq_Logo = require("../../../src/assets/Icons/qq_logo_july.jpeg");
+import CrossW from "../../assets/Images/crossW.png";
+import HamW from "../../assets/Images/hamburgerW.png";
 
-const Sidebar = ({
-  active,
-  setActive,
-  openSideBar,
-  toggleNotification,
-  setToggleNotification,
-  setNotificationLoading,
-}) => {
+import CrossD from "../../assets/Images/crossB.png";
+import HamD from "../../assets/Images/hamburgerB.png";
+import { setColorMode } from "../../features/user/userSlice";
+import { ReactComponent as SunIcon } from "../../../src/assets/PNGS/sun.svg";
+import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
+
+const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
+
+const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
-  const notifications = useSelector(
-    (state) => state?.notifications?.notifications
-  );
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
+
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
     (state) => state?.user?.companyId,
@@ -33,6 +35,9 @@ const Sidebar = ({
     company_name: null,
     company_logo: null,
   });
+  const ToogleSideBar = (index) => {
+    setOpenSideBar(index);
+  };
 
   useEffect(() => {
     (async () => {
@@ -68,7 +73,8 @@ const Sidebar = ({
     })();
   }, [dispatch, userDetails]);
 
-  const handleLogout = () => {
+  const logoutHandler = () => {
+    handleLogout();
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
@@ -76,54 +82,90 @@ const Sidebar = ({
     window.location.reload();
   };
 
-  const ToggleProfile = (e) => {
-    if (e?.key === "profile") {
-      navigate("/user-profile");
-    } else if (e?.key === "email-setting") {
-      navigate("/email-setting");
-    } else if (e?.key === "company") {
-      navigate("/settings");
-    }
-  };
-
   return (
     <div
-      className={`bg-white duration-300 ${openSideBar ? "w-0" : "w-[277px]"}`}
+      className={` bg-[#ffffff11] duration-300 ${
+        openSideBar ? "w-[80px] h-full" : "w-[277px] h-full"
+      }`}
       style={{
         overflowX: "hidden",
         overflowY: "scroll",
       }}
     >
-      <div className="ml-10">
-        <div className="pb-2 pt-10 flex flex-col items-center justify-center -ml-28">
-          <img src={companyDetails?.company_logo} className="w-32" alt="" />
+      <div
+        onClick={() => ToogleSideBar(!openSideBar)}
+        className={`w-${
+          openSideBar ? "full" : "16"
+        } ease-in  absolute top-3 right-0 z-[999999]`}
+      >
+        {openSideBar ? (
+          <img
+            src={colorMode ? HamW : HamD}
+            title="Show sidebar"
+            alt=""
+            className="w-8 m-auto cursor-pointer text-white"
+          />
+        ) : (
+          <img
+            src={colorMode ? CrossW : CrossD}
+            title="Hide sidebar"
+            alt=""
+            className="w-10 m-auto cursor-pointer text-white"
+          />
+        )}
+      </div>
+      <div className="flex flex-col items-center justify-around h-screen">
+        <div className=" flex items-center justify-center min-h-[200px] origin-center ">
+          <div
+            className={`h-[100px] w-[100px]
+            }]  ${
+              openSideBar ? " hidden" : "rounded-full"
+            } ease-in duration-200 overflow-hidden flex items-center justify-center bg-white`}
+          >
+            <img
+              src={companyDetails?.company_logo}
+              className=""
+              alt={companyDetails?.company_logo}
+            />
+          </div>
         </div>
-        <div
-          className="border-r 2xl:pt-0 pb-20 overflow-y-scroll"
-          style={{
-            height: `calc(100vh - 100px)`,
-            overflowX: "hidden",
-          }}
-        >
+        <div className="w-full h-full">
           <div>
-            <NavLink
+            <Link
               to={"/dashboard"}
-              className="flex items-center text-base cursor-pointer my-5 py-0.5"
-              style={{
-                color: `${active === "dashboard" ? "#7037FF" : "#7C8DB5"}`,
-              }}
+              className={`${
+                active === "dashboard"
+                  ? colorMode
+                    ? "text-[#FFFFFF]"
+                    : "text-[#7037FF]"
+                  : colorMode
+                  ? "text-[#B3B3B3]"
+                  : "text-gray-800"
+              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+              }`}
               onClick={() => setActive("dashboard")}
             >
-              <Icons.Dashboard />
-              <span className="ml-4 leading-6 font-medium font-poppins">
-                Dashboard
-              </span>
+              <div className="flex w-full items-center justify-around ">
+                <Icons.Dashboard />
+                {openSideBar ? (
+                  ""
+                ) : (
+                  <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
+                    Dashboard
+                  </span>
+                )}
+              </div>
               {active === "dashboard" && (
-                <div className="ml-auto active-option text-brand-color bg-brand-color">
+                <div
+                  className={`active-option text-[${
+                    colorMode ? "#FFFFFF" : "#7037FF"
+                  }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                >
                   |
                 </div>
               )}
-            </NavLink>
+            </Link>
           </div>
 
           {(userDetails?.userInfo?.role_id === 1 ||
@@ -131,24 +173,41 @@ const Sidebar = ({
             userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/overview"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "overview" ? "#7037FF" : "#7C8DB5"}`,
-                }}
+                className={`${
+                  active === "overview"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("overview")}
               >
-                <Icons.Chart />
-                <span className="ml-3 leading-6 font-medium font-poppins">
-                  Overview
-                </span>
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Chart />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="w-3/4 font-medium font-poppins">
+                      Overview
+                    </span>
+                  )}
+                </div>
                 {active === "overview" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -160,116 +219,123 @@ const Sidebar = ({
             userDetails?.userInfo?.role !== 1 &&
             userDetails?.userInfo?.role !== 2 && (
               <div>
-                <div
-                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${toggleNotification ? "#7037FF" : "#7C8DB5"}`,
-                  }}
-                  onClick={(e) => {
-                    setToggleNotification(!toggleNotification);
-                    setNotificationLoading(true);
-                    e.stopPropagation();
-                  }}
-                >
-                  <Icons.Bell className="w-4" />
-                  <span className="ml-4 leading-6 font-medium font-poppins">
-                    Notifications
-                  </span>
-
-                  {notifications?.filter((notifi) => notifi?.status)?.length !==
-                  0 ? (
-                    <div className="relative right-0 flex justify-center items-center">
-                      <div
-                        className="w-5 py-0.5 text-center ml-15.5 rounded-full text-white text-xs font-poppins"
-                        style={{
-                          background: "#FF3B30",
-                        }}
-                      >
-                        {
-                          notifications?.filter((notifi) => notifi?.status)
-                            ?.length
-                        }
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            )}
-
-          {userDetails?.userInfo?.role_id !== 10 &&
-            userDetails?.userInfo?.role_id !== 9 &&
-            userDetails?.userInfo?.role_id !== 8 &&
-            userDetails?.userInfo?.role_id !== 7 &&
-            userDetails?.userInfo?.role_id !== 6 &&
-            userDetails?.userInfo?.role !== 1 &&
-            userDetails?.userInfo?.role !== 2 && (
-              <div>
-                <NavLink
+                <Link
                   to={"/payments"}
-                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${active === "payments" ? "#7037FF" : "#7C8DB5"}`,
-                  }}
+                  className={`${
+                    active === "payments"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
                   onClick={() => setActive("payments")}
                 >
-                  <Icons.Payment />
-                  <span className="ml-4 leading-6 font-medium font-poppins">
-                    Payments
-                  </span>
+                  <div className="flex w-full items-center justify-around">
+                    <Icons.Payment />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins">
+                        Payments
+                      </span>
+                    )}
+                  </div>
                   {active === "payments" && (
-                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    <div
+                      className={`active-option text-[${
+                        colorMode ? "#FFFFFF" : "#7037FF"
+                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    >
                       |
                     </div>
                   )}
-                </NavLink>
+                </Link>
               </div>
             )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/campaigns"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "campaigns" ? "#7037FF" : "#7C8DB5"}`,
-                }}
+                className={`${
+                  active === "campaigns"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("campaigns")}
               >
-                <Icons.Campaigns />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Campaigns
-                </span>
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Campaigns />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="w-3/4 font-medium font-poppins">
+                      Campaigns
+                    </span>
+                  )}
+                </div>
                 {active === "campaigns" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
           {(userDetails?.userInfo?.role_id === 3 ||
             userDetails?.userInfo?.role_id === 4) && (
             <div>
-              <NavLink
+              <Link
                 to={"/courses"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                style={{
-                  color: `${active === "courses" ? "#7037FF" : "#7C8DB5"}`,
-                }}
+                className={`${
+                  active === "courses"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("courses")}
               >
-                <Icons.Courses className="w-5" />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Courses
-                </span>
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Courses className="w-5" />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="w-3/4 font-medium font-poppins">
+                      Courses
+                    </span>
+                  )}
+                </div>
                 {active === "courses" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -279,26 +345,44 @@ const Sidebar = ({
                 userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4) && (
                 <div>
-                  <NavLink
+                  <Link
                     to={"/salesEmployee"}
-                    className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                    style={{
-                      color: `${
-                        active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
-                      }`,
-                    }}
+                    className={`${
+                      active === "salesEmployee"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
+                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                      colorMode
+                        ? "hover:text-[#ffffff]"
+                        : "hover:text-[#7037FF]"
+                    }`}
                     onClick={() => setActive("salesEmployee")}
                   >
-                    <Icons.MoneyCheck className="w-5" />
-                    <span className="ml-4 leading-6 font-medium font-poppins">
-                      Sales Employee
-                    </span>
+                    <div className="flex w-full items-center justify-around">
+                      <Icons.MoneyCheck className="w-5" />
+
+                      <span
+                        className={`w-3/4 text-[${
+                          openSideBar ? "16px" : "0px"
+                        }] ease-in duration-100 font-medium font-poppins bg-[#fc00ff]`}
+                      >
+                        Sales Employee
+                      </span>
+                    </div>
                     {active === "salesEmployee" && (
-                      <div className="ml-auto active-option text-brand-color bg-brand-color">
+                      <div
+                        className={`active-option text-[${
+                          colorMode ? "#FFFFFF" : "#7037FF"
+                        }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                      >
                         |
                       </div>
                     )}
-                  </NavLink>
+                  </Link>
                 </div>
               )
             ) : (
@@ -312,26 +396,41 @@ const Sidebar = ({
               userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4) && (
               <div>
-                <NavLink
+                <Link
                   to={"/salesEmployee"}
-                  className="flex items-center text-base cursor-pointer my-5 py-0.5"
-                  style={{
-                    color: `${
-                      active === "salesEmployee" ? "#7037FF" : "#7C8DB5"
-                    }`,
-                  }}
+                  className={`${
+                    active === "salesEmployee"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
                   onClick={() => setActive("salesEmployee")}
                 >
-                  <Icons.MoneyCheck className="w-5" />
-                  <span className="ml-4 leading-6 font-medium font-poppins">
-                    Sales Employee
-                  </span>
+                  <div className="flex w-full items-center justify-around">
+                    <Icons.MoneyCheck className="w-5" />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins">
+                        Sales Employee
+                      </span>
+                    )}
+                  </div>
                   {active === "salesEmployee" && (
-                    <div className="ml-auto active-option text-brand-color bg-brand-color">
+                    <div
+                      className={`active-option text-[${
+                        colorMode ? "#FFFFFF" : "#7037FF"
+                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    >
                       |
                     </div>
                   )}
-                </NavLink>
+                </Link>
               </div>
             )
           )}
@@ -342,28 +441,51 @@ const Sidebar = ({
             userDetails?.userInfo?.role_id === 4 ||
             userDetails?.userInfo?.role_id === 5) && (
             <div>
-              <NavLink
+              <Link
                 to={"/calender"}
-                className="flex items-center text-base cursor-pointer mt-1 my-5 py-0.5"
-                style={{
-                  color: `${active === "calender" ? "#7037FF" : "#7C8DB5"}`,
-                }}
+                className={`${
+                  active === "calender"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
                 onClick={() => setActive("calender")}
               >
-                <Icons.Calender
-                  className={`${
-                    active === "calender" ? "text-[#7037FF]" : "text-[#7C8DB5]"
-                  } w-5`}
-                />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Calender
-                </span>
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Calender
+                    className={`${
+                      active === "calender"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
+                    } w-5`}
+                  />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="w-3/4 font-medium font-poppins">
+                      Calender
+                    </span>
+                  )}
+                </div>
                 {active === "calender" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -371,24 +493,31 @@ const Sidebar = ({
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2) && (
             <div>
-              <NavLink
+              <Link
                 to={"/requisitions"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
-                  color: `${active === "requisitions" ? "#7037FF" : "#7C8DB5"}`,
+                  color: `${active === "requisitions" ? "#7037FF" : "#FFFFFF"}`,
                 }}
                 onClick={() => setActive("requisitions")}
               >
-                <Icons.Pricing />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Requisitions
-                </span>
+                {" "}
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Pricing />
+                  <span className="ml-4 leading-6 font-medium font-poppins">
+                    Requisitions
+                  </span>
+                </div>
                 {active === "requisitions" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
 
@@ -397,38 +526,44 @@ const Sidebar = ({
             userDetails?.userInfo?.role_id === 9 ||
             userDetails?.userInfo?.role_id === 7) && (
             <div>
-              <NavLink
+              <Link
                 to={"/studentManagement"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
-                    active === "studentManagement" ? "#7037FF" : "#7C8DB5"
+                    active === "studentManagement" ? "#7037FF" : "#FFFFFF"
                   }`,
                 }}
                 onClick={() => setActive("studentManagement")}
               >
-                <Icons.Pricing />
-                <span className="ml-4 leading-6 font-medium font-poppins">
-                  Student Management
-                </span>
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Pricing />
+                  <span className="ml-4 leading-6 font-medium font-poppins">
+                    Student Management
+                  </span>
+                </div>
                 {active === "studentManagement" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {/* Agency menu items end */}
           {/* // Accountant menu items */}
           {userDetails?.userInfo?.role_id === 8 && (
             <div>
-              <NavLink
+              <Link
                 to={"/courseManagement"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
-                    active === "courseManagement" ? "#7037FF" : "#7C8DB5"
+                    active === "courseManagement" ? "#7037FF" : "#FFFFFF"
                   }`,
                 }}
                 onClick={() => setActive("courseManagement")}
@@ -438,20 +573,24 @@ const Sidebar = ({
                   Course Management
                 </span>
                 {active === "courseManagement" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {userDetails?.userInfo?.role_id === 8 && (
             <div>
-              <NavLink
+              <Link
                 to={"/paymentSlip"}
-                className="flex items-center text-base cursor-pointer my-5 py-0.5"
+                className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
-                  color: `${active === "paymentSlip" ? "#7037FF" : "#7C8DB5"}`,
+                  color: `${active === "paymentSlip" ? "#7037FF" : "#FFFFFF"}`,
                 }}
                 onClick={() => setActive("paymentSlip")}
               >
@@ -460,68 +599,165 @@ const Sidebar = ({
                   Payment Slip
                 </span>
                 {active === "paymentSlip" && (
-                  <div className="ml-auto active-option text-brand-color bg-brand-color">
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
                     |
                   </div>
                 )}
-              </NavLink>
+              </Link>
             </div>
           )}
           {/* // Accountant menu end */}
 
           {userDetails?.userInfo?.role_id !== 10 && (
-            <Menu
-              style={{
-                width: 226,
-                color: `${active === "settings" ? "#7037FF" : "#7C8DB5"}`,
-                fontSize: 16,
-              }}
-              onClick={ToggleProfile}
-              items={[
-                {
-                  label: (
-                    <span style={{ color: "#7C8DB5" }} className="pl-1">
-                      Settings
+            <div>
+              <Link
+                to={"/settings"}
+                className={`${
+                  active === "settings"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
+                onClick={() => setActive("calender")}
+              >
+                <div className="flex w-full items-center justify-around">
+                  <Icons.Settings
+                    className={`${
+                      active === "settings"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
+                    } w-5`}
+                  />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="w-3/4 font-medium font-poppins">
+                      Company Settings
                     </span>
-                  ),
-                  key: "menu",
-                  icon: (
-                    <Icons.Settings className="inline text-gray-500 text-opacity-75" />
-                  ),
-                  children: [
-                    { label: "Profile Settings", key: "profile" },
+                  )}
+                </div>
+                {active === "settings" && (
+                  <div
+                    className={`active-option text-[${
+                      colorMode ? "#FFFFFF" : "#7037FF"
+                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  >
+                    |
+                  </div>
+                )}
+              </Link>
+            </div>
+            // <Menu
+            //   className={`${
+            //     active === "settings" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
+            //   } !bg-transparent settingsSidebar hover:text-[#ffffff] `}
+            //   onClick={ToggleProfile}
+            //   items={[
+            //     {
+            //       label: (
+            //         <>
+            //           {openSideBar ? (
+            //             ""
+            //           ) : (
+            //             <span
+            //               className={`${
+            //                 active === "settings"
+            //                   ? "text-[#FFFFFF]"
+            //                   : "text-[#B3B3B3]"
+            //               } pl-4 `}
+            //             >
+            //               Settings
+            //             </span>
+            //           )}
+            //         </>
+            //       ),
+            //       key: "menu",
+            //       icon: (
+            //         <Icons.Settings className="inline text-[#b3b3b3] hover:text-[#ffffff]" />
+            //       ),
+            //       children: [
+            //         { label: "Profile Settings", key: "profile" },
 
-                    userDetails?.userInfo?.role_id === 1 ||
-                    userDetails?.userInfo?.role_id === 2 ||
-                    userDetails?.userInfo?.role_id === 3 ||
-                    userDetails?.userInfo?.role_id === 4
-                      ? { label: "Company Settings", key: "company" }
-                      : null,
-                  ],
-                },
-              ]}
-            />
+            //         userDetails?.userInfo?.role_id === 1 ||
+            //         userDetails?.userInfo?.role_id === 2 ||
+            //         userDetails?.userInfo?.role_id === 3 ||
+            //         userDetails?.userInfo?.role_id === 4
+            //           ? { label: "Company Settings", key: "company" }
+            //           : null,
+            //       ],
+            //     },
+            //   ]}
+            // />
           )}
 
-          <div className="lg:mt-20 2xl:mt-36 pt-1.5">
-            <div className="mx-auto w-[250px]">
-              <img
-                className="w-full h-full ml-[-25px]"
-                src={qq_Logo}
-                alt="QuadQue Leads"
-              />
-            </div>
-
-            <div
-              className="flex items-center text-base cursor-pointer my-4 py-1.5"
-              onClick={handleLogout}
-            >
-              <Icons.LogOut className="text-[#7C8DB5]" />
-              <span className="ml-4 leading-6 font-medium font-poppins text-[#7C8DB5]">
-                Log out
-              </span>
-            </div>
+          <div
+            className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4 py-1.5"
+            onClick={logoutHandler}
+          >
+            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md">
+              <Icons.LogOut className="text-white" />
+              {openSideBar ? (
+                ""
+              ) : (
+                <span className=" font-medium font-poppins text-[#FFFFFF] px-2">
+                  Log out
+                </span>
+              )}
+            </button>
           </div>
+          <div className="flex justify-center items-center">
+            <Switch
+              onClick={() => {
+                dispatch(setColorMode(!colorMode));
+              }}
+              className="colorModeToggler"
+              checkedChildren={<SunIcon />}
+              unCheckedChildren={<MoonIcon />}
+              defaultChecked
+            />
+          </div>
+        </div>
+        <div className="ease-in duration-200 flex flex-col justify-center items-center h-[200px]">
+          {openSideBar ? (
+            ""
+          ) : (
+            <div className="ease-in duration-200 flex flex-col justify-center items-center">
+              <div className="w-5/6 flex flex-col justify-center items-center">
+                <img
+                  className="w-full h-full"
+                  src={qq_Logo}
+                  alt="QuadQue Leads"
+                />
+                <p
+                  className={`m-0 p-0 text-center text-xs ${
+                    colorMode ? "text-slate-500" : "text-gray-800"
+                  }`}
+                >
+                  A product of
+                </p>
+                <p
+                  className={`m-0 p-0 text-center text-xs ${
+                    colorMode ? "text-slate-500" : "text-gray-800"
+                  }`}
+                >
+                  Quadque Technologies Pty Limited
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

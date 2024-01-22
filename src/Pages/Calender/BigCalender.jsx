@@ -90,7 +90,7 @@ const BigCalendar = () => {
     <div>
       {loading ? (
         <>
-          <div className="w-full h-[100vh] flex justify-center items-center">
+          <div className="w-[80vw] h-[80vh] flex justify-center items-center">
             <Loader />
           </div>
         </>
@@ -103,10 +103,10 @@ const BigCalendar = () => {
             defaultDate={new Date()}
             defaultView="month"
             events={eventsData}
-            // events={events}
-            style={{ height: "90vh" }}
+            style={{ height: "80vh",backgroundColor: "#ffffff99" }}
             onSelectEvent={(e) => handleUpdateEvent(e)}
             onSelectSlot={handleSelect}
+            className="calendar"
           />
           <Modal
             className="cross_btn"

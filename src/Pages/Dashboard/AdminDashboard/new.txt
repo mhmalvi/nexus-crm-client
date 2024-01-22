@@ -1,0 +1,95 @@
+// import React, { useState, useEffect } from "react";
+// import { useSelector } from "react-redux";
+// import Icons from "../../../Components/Shared/Icons";
+// import { handleFetchLocation } from "../../../Components/services/locationFilter";
+// import { Modal } from "antd";
+// import CountryFilter from "./CountryFilter";
+// import "./dashboard.css";
+
+// const CountryList = ({ table_title }) => {
+//   const colorMode = useSelector((state) => state?.user)?.colorMode;
+//   const [showCountrySettings, setShowCountrySettings] = useState(false);
+//   const userDetails = useSelector((state) => state?.user?.userInfo);
+
+//   const [locationColor, setLocationColor] = useState([]);
+
+//   useEffect(() => {
+//     (async () => {
+//       const response = await handleFetchLocation(userDetails?.client_id);
+//       if (response?.data) {
+//         setLocationColor(response?.data?.filter((item) => item.location));
+//       }
+//     })();
+//   }, [userDetails?.client_id]);
+
+//   return (
+//     <div className="h-5/6 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+//       <Modal
+//         visible={showCountrySettings}
+//         onCancel={() => setShowCountrySettings(false)}
+//         footer={null}
+//         className="locationfilterModal"
+//         closable={false}
+//       >
+//         <CountryFilter
+//           locationColor={locationColor}
+//           setLocationColor={setLocationColor}
+//         />
+//       </Modal>
+//       <div className="w-full flex justify-between items-center p-3">
+//         <h1
+//           className={`text-xl m-0 p-0 text-${
+//             colorMode ? "slate-300" : "gray-800"
+//           } font-normal font-poppins pt-1`}
+//         >
+//           <span className="text-base">Filter by</span> Location
+//         </h1>
+//         <div
+//           className={`rounded-md cursor-pointer ease-in duration-100 ${
+//             colorMode
+//               ? "text-slate-300 hover:text-brand-color"
+//               : "text-gray-800 hover:text-brand-color"
+//           }`}
+//           onClick={() => {
+//             setShowCountrySettings(true);
+//           }}
+//         >
+//           <Icons.Edit />
+//         </div>
+//       </div>
+//       {table_title === "Lead List" ? (
+//         <div className="h-3/5 overflow-y-scroll">
+//           <div className="grid grid-cols-3 items-center justify-center gap-x-2 gap-y-3 px-3">
+//             {locationColor.length
+//               ? locationColor.map((items) => {
+//                   return (
+//                     <div
+//                       className={`w-full flex flex justify-between items-center py-3 ${
+//                         colorMode ? "text-slate-300" : "text-gray-800"
+//                       } `}
+//                     >
+//                       <div
+//                         style={{
+//                           backgroundColor: items.color,
+//                         }}
+//                         className={` w-[25px] h-[25px] rounded-full border-3 ${
+//                           colorMode ? "border-slate-200" : "border-gray-800"
+//                         }`}
+//                       ></div>
+//                       <p className="w-9/12 text-xs m-0 p-0 ">
+//                         {items.location}
+//                       </p>
+//                     </div>
+//                   );
+//                 })
+//               : "No data"}
+//           </div>
+//         </div>
+//       ) : (
+//         ""
+//       )}
+//     </div>
+//   );
+// };
+
+// export default CountryList;

@@ -18,6 +18,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const campaignRatio = [];
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
@@ -76,7 +77,6 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCompany, userDetails]);
 
-
   campaigns?.forEach((campaign) => {
     campaignRatio.push({
       campaign_name: campaign?.campaign_name,
@@ -105,144 +105,153 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
         {/* Overall Summary */}
 
         {loadingDetails && (
-          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
+          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-transparent">
             <Loading />
           </div>
         )}
-
-        <div className="w-1/2 mr-10">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
-            Summary
-          </h1>
-          <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6">
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">$ {totalRevenue}</h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Total Revenue
-                </p>
+        <div className="flex justify-between items-center w-full gap-5">
+          <div className="w-1/2 h-full py-4 ">
+            <h1 className={`text-xl font-semibold font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>
+              Summary
+            </h1>
+            <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 py-3">
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    $ {totalRevenue}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Total Revenue
+                  </p>
+                </div>
+                <div>
+                  <Icons.Briefcase className="w-5 text-[#ffa500]" />
+                </div>
               </div>
-              <div>
-                <Icons.Briefcase className="w-5 text-purple-900 text-opacity-80" />
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    ${" "}
+                    {totalRevenue
+                      ? (totalRevenue / (dayjs().month() + 1)).toFixed(2)
+                      : 0}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Average Income (Per Month)
+                  </p>
+                </div>
+                <div>
+                  <Icons.CalendarMonth className="w-5 text-[#ffa500]" />
+                </div>
               </div>
-            </div>
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">
-                  ${" "}
-                  {totalRevenue
-                    ? (totalRevenue / (dayjs().month() + 1)).toFixed(2)
-                    : 0}
-                </h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Average Income (Per Month)
-                </p>
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    ${" "}
+                    {totalLastWeekIncome
+                      ? (totalLastWeekIncome / 7)?.toFixed(2)
+                      : 0}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Average Income Per Day (Last Week)
+                  </p>
+                </div>
+                <div>
+                  <Icons.CalendarWeek className="w-5 text-[#ffa500]" />
+                </div>
               </div>
-              <div>
-                <Icons.CalendarMonth className="w-5 text-rose-600 text-opacity-60" />
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    {campaigns?.length}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Total Campaigns
+                  </p>
+                </div>
+                <div>
+                  <Icons.Campaigns className="w-5 text-[#ffa500]" />
+                </div>
               </div>
-            </div>
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">
-                  ${" "}
-                  {totalLastWeekIncome
-                    ? (totalLastWeekIncome / 7)?.toFixed(2)
-                    : 0}
-                </h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Average Income Per Day (Last Week)
-                </p>
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    ${" "}
+                    {totalRevenue > 0 && campaigns?.length > 0
+                      ? (totalRevenue / campaigns?.length).toFixed(2)
+                      : 0}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Average Income (Per Campaign)
+                  </p>
+                </div>
+                <div>
+                  <Icons.MoneyCheck className="w-5 text-[#ffa500]" />
+                </div>
               </div>
-              <div>
-                <Icons.CalendarWeek className="w-5 text-blue-600 text-opacity-60" />
-              </div>
-            </div>
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">{campaigns?.length}</h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Total Campaigns
-                </p>
-              </div>
-              <div>
-                <Icons.Campaigns className="w-5 text-yellow-500" />
-              </div>
-            </div>
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">
-                  ${" "}
-                  {totalRevenue > 0 && campaigns?.length > 0
-                    ? (totalRevenue / campaigns?.length).toFixed(2)
-                    : 0}
-                </h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Average Income (Per Campaign)
-                </p>
-              </div>
-              <div>
-                <Icons.MoneyCheck className="w-5 text-indigo-600 text-opacity-80" />
-              </div>
-            </div>
-
-            <div className="w-52 xl:w-56 rounded-lg shadow-md px-6 py-7 border border-gray-50 flex justify-between">
-              <div>
-                <h1 className="text-lg font-semibold ">
-                  {comapnyEmployees?.length}
-                </h1>
-                <p className="text-xs font-medium text-black text-opacity-70 mb-0">
-                  Sales Team
-                </p>
-              </div>
-              <div>
-                <Icons.PeopleGroup className="w-5 text-emerald-600" />
+              <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+                <div>
+                  <h1 className="text-lg font-semibold text-[#ffa500]">
+                    {comapnyEmployees?.length}
+                  </h1>
+                  <p className={`text-xs font-medium ${colorMode ? "text-white":"text-gray-800"} mb-0`}>
+                    Sales Team
+                  </p>
+                </div>
+                <div>
+                  <Icons.PeopleGroup className="w-5 text-[#ffa500]" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Monthly Revenue */}
-
-        <div className=" w-1/2">
-          <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
-            {/* Last 7 Days Income */}
-            Income/Day
-          </h1>
-          <div>
-            <rcElement.ResponsiveContainer width="100%" height={300}>
-              <rcElement.LineChart
-                width={500}
-                height={200}
-                data={lastWeekIncome}
-                margin={{
-                  top: 0,
-                  right: 30,
-                  left: 0,
-                  bottom: 0,
-                }}
+          {/* Income/ Day */}
+          <div className=" w-1/2 rounded-xl py-4 flex flex-col h-full ">
+            <h1 className={`text-xl font-semibold px-4 font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>
+              {/* Last 7 Days Income */}
+              Income/Day
+            </h1>
+            <div className="">
+              <rcElement.ResponsiveContainer
+                width="100%"
+                height={250}
+                className={"ml-[-40px]"}
               >
-                <rcElement.CartesianGrid strokeDasharray="3 3" />
-                <rcElement.XAxis dataKey="dates" />
-                <rcElement.YAxis />
-                <rcElement.Tooltip />
-                <rcElement.Legend />
-                <rcElement.Line
-                  connectNulls
-                  type="monotone"
-                  dataKey="Income"
-                  stroke="#8884d8"
-                  fill="#8884d8"
-                />
-              </rcElement.LineChart>
-            </rcElement.ResponsiveContainer>
+                <rcElement.LineChart
+                  width={500}
+                  height={200}
+                  data={lastWeekIncome}
+                  margin={{
+                    top: 0,
+                    right: 0,
+                    left: "0",
+                    bottom: 0,
+                  }}
+                >
+                  <rcElement.CartesianGrid strokeDasharray="5 5" />
+                  <rcElement.XAxis dataKey="dates" />
+                  <rcElement.YAxis />
+                  <rcElement.Tooltip />
+                  <rcElement.Legend />
+                  <rcElement.Line
+                    connectNulls
+                    type="monotone"
+                    dataKey="Income"
+                    stroke="#ffa500"
+                    fill="#ffa500"
+                    className="margin"
+                  />
+                </rcElement.LineChart>
+              </rcElement.ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Monthly Revenue */}
       {userDetails?.role_id !== 1 && (
         <div className="w-full mt-12">
-          <h1 className="text-xl font-semibold mb-4 leading-8 font-poppins">
+          <h1 className={`text-xl font-semibold mb-4 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Monthly Revenue
           </h1>
           <div>
@@ -267,8 +276,8 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                   connectNulls
                   type="monotone"
                   dataKey="Income"
-                  stroke="#8884d8"
-                  fill="#8884d8"
+                  stroke="#ffa500"
+                  fill="#ffa500"
                 />
               </rcElement.LineChart>
             </rcElement.ResponsiveContainer>
@@ -279,7 +288,7 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
       {/* Lead Convertion Ratio */}
       <div className="mt-10">
         <div>
-          <h1 className="text-xl font-semibold -mb-8 leading-8 font-poppins">
+          <h1 className={`text-xl font-semibold -mb-8 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Lead Conversion Ratio
           </h1>
         </div>
@@ -307,8 +316,8 @@ const ManagementAnalytics = ({ comapnyEmployees, activeCompany }) => {
                 <rcElement.XAxis dataKey="campaign_name" />
                 <rcElement.YAxis domain={[0, 100]} />
                 <rcElement.Tooltip />
-                <rcElement.Legend />
-                <rcElement.Bar dataKey="rate" fill="#8884d8" minPointSize={5}>
+                <rcElement.Legend color="#ffa500"/>
+                <rcElement.Bar dataKey="rate" fill="#ffa500" minPointSize={5}>
                   <rcElement.LabelList
                     dataKey="rate"
                     content={chartUtils.LeadConvertionCustomizedLabel}

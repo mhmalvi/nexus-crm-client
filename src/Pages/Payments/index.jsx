@@ -11,10 +11,11 @@ import {
   handleFetchStudentsPaymentHistory,
 } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
-import Calendar from "../Dashborad/AdminDashboard/Calendar";
-import Filters from "../Dashborad/AdminDashboard/Filters";
-import Table from "../Dashborad/AdminDashboard/Table";
-import UpdatedTable from "../Dashborad/AdminDashboard/UpdatedTable";
+// import Calendar from "../Dashboard/AdminDashboard/Calendar";
+import NoticeForm from "../Dashboard/AdminDashboard/NoticeForm";
+import Table from "../Dashboard/AdminDashboard/Table";
+import UpdatedTable from "../Dashboard/AdminDashboard/UpdatedTable";
+import CalendarSmall from "../Dashboard/AdminDashboard/CalendarSmall";
 
 const Payment = () => {
   document.title = `Payments | Queleads CRM`;
@@ -341,49 +342,56 @@ const Payment = () => {
   console.log("paymentData ++++++", paymentData);
 
   return (
-    <div className="mx-6 2xl:ml-12 2xl:mr-16 py-24">
-      <Calendar
-        filterDate={filterDate}
-        setFilterDate={setFilterDate}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      />
-      <Filters layout="Payment" setSearchInput={setSearchInput} />
-
-      {toggleTabs === "payment" ? (
-        <UpdatedTable
-          table_title="Payment History"
-          tableHeaders={tableHeaders}
-          data={paymentData}
-          companyEmployeeList={companyEmployeeList}
-          filterOptions={null}
-          ratings={null}
-          activeFilter={1}
-          searchInput={searchInput}
-          handleSyncLeadsReq={null}
-          setIsAddLeadFormOpen={null}
-          setSyncLeads={null}
-          syncLeads={null}
-        />
-      ) : (
-        <Table
-          title="Invoice History"
-          tableHeaders={invoiceHistoryTableHeaders}
-          data={invoiceHistory}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-        />
-      )}
+    <div className="h-screen flex justify-center items-center">
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden grid grid-cols-12 gap-4">
+        <div className="col-span-9 rounded-xl px-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          {toggleTabs === "payment" ? (
+            <UpdatedTable
+              table_title="Payment History"
+              tableHeaders={tableHeaders}
+              data={paymentData}
+              companyEmployeeList={companyEmployeeList}
+              filterOptions={null}
+              ratings={null}
+              activeFilter={1}
+              searchInput={searchInput}
+              handleSyncLeadsReq={null}
+              setIsAddLeadFormOpen={null}
+              setSyncLeads={null}
+              syncLeads={null}
+            />
+          ) : (
+            <Table
+              title="Invoice History"
+              tableHeaders={invoiceHistoryTableHeaders}
+              data={invoiceHistory}
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+            />
+          )}
+        </div>
+        <div className="col-span-3 flex flex-col justify-around items-center  gap-8 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="w-full max-h-1/2">
+          <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
+          </div>
+          <div className="max-h-1/2">
+          <CalendarSmall
+            filterDate={filterDate}
+            setFilterDate={setFilterDate}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+          /></div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Payment;
-
 
 const invoiceHistoryTableHeaders = [
   "Invoice ID",
@@ -394,4 +402,3 @@ const invoiceHistoryTableHeaders = [
   "Amount",
   "Payment Via",
 ];
-

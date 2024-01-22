@@ -5,20 +5,17 @@ import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute
 import Sidebar from "../../Components/Shared/Sidebar";
 import { Storage } from "../../Components/Shared/utils/store";
 import { handleFetchNotificationList } from "../../Components/services/notification";
-import Cross from "../../assets/Images/cross.png";
-import Ham from "../../assets/Images/hamburger.png";
 import { setNotifications } from "../../features/user/notificationSlice";
 import Calender from "../Calender";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
 import Courses from "../Courses";
-import Dashboard from "../Dashborad";
-import CompanyDetails from "../Dashborad/SuperAdminDashboard/CompanyDetails";
-import CampaignInfo from "../Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
+import Dashboard from "../Dashboard";
+import CompanyDetails from "../Dashboard/SuperAdminDashboard/CompanyDetails";
+import CampaignInfo from "../Dashboard/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import GmailModule from "../Gmail";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
-import Notifications from "../Notifications";
 import Overview from "../Overview";
 import RenewPackage from "../Package/RenewPackage";
 import Pay from "../Pay";
@@ -32,7 +29,6 @@ import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import ManageStudnet from "../StudentManagement/index";
-import NotifyModal from "../Notifications/NotifyModal.jsx";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
@@ -44,17 +40,7 @@ const Layout = () => {
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  const [toggleNotification, setToggleNotification] = useState(false);
-  const [notificationLoading, setNotificationLoading] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
-  const [isNotifyOpen, setIsNotifyOpen] = useState(false);
-  const [notificationData, setNotificationData] = useState({});
-
-  const ToogleSideBar = (index) => {
-    setOpenSideBar(index);
-  };
-
-
 
 
   const fetchFollowUpNotification = async () => {
@@ -88,55 +74,29 @@ const Layout = () => {
     }
   }, [navigate]);
 
-
   return (
     <div
-      className="flex justify-start items-start font-poppins overflow-x-hidden"
+      className="flex justify-start items-start font-poppins overflow-x-hidden dashboard-background"
       onClick={() => {
         setToggleMessage(false);
-        setToggleNotification(false);
       }}
     >
       <div className="fixed top-0 left-0 overflow-x-hidden">
         <Sidebar
           Items={Items}
-          // Items2={Items2}
           active={active}
           openSideBar={openSideBar}
+          setOpenSideBar={setOpenSideBar}
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
-          toggleNotification={toggleNotification}
-          setToggleNotification={setToggleNotification}
-          notificationLoading={notificationLoading}
-          setNotificationLoading={setNotificationLoading}
         />
       </div>
       <div
         className={`relative ml-auto duration-300 ${
-          openSideBar ? "w-full" : "w-[calc(100vw-277px)]"
+          openSideBar ? "w-[calc(100vw-80px)]" : "w-[calc(100vw-277px)]"
         }`}
       >
-        <div
-          onClick={() => ToogleSideBar(!openSideBar)}
-          className="w-16 h-14 absolute top-3 z-[999999]"
-        >
-          {openSideBar ? (
-            <img
-              src={Ham}
-              title="Show sidebar"
-              alt=""
-              className="w-8 my-[10px] mx-[20px] cursor-pointer fixed"
-            />
-          ) : (
-            <img
-              src={Cross}
-              title="Hide sidebar"
-              alt=""
-              className="w-10 m-auto cursor-pointer bg-[#c5c5c5] fixed"
-            />
-          )}
-        </div>
         <Routes>
           <Route path="renew-package" element={<RenewPackage />} />
           <Route path={"success/:id"} element={<Success />} />
@@ -174,22 +134,6 @@ const Layout = () => {
           setToggleMessage={setToggleMessage}
         />
       )}
-      {/* ----------- For notification pop up ------------- */}
-      {toggleNotification && (
-        <Notifications
-          toggleNotification={toggleNotification}
-          setToggleNotification={setToggleNotification}
-          notificationLoading={notificationLoading}
-          setNotificationLoading={setNotificationLoading}
-          setIsNotifyOpen={setIsNotifyOpen}
-          setNotificationData={setNotificationData}
-        />
-      )}
-      <NotifyModal
-        notificationData={notificationData}
-        isNotifyOpen={isNotifyOpen}
-        setIsNotifyOpen={setIsNotifyOpen}
-      />
     </div>
   );
 };
@@ -200,7 +144,6 @@ const Items = [
   {
     key: "dashboard",
     name: "dashboard",
-    // icon: <Icons.Dashboard />,
     label: "Dashboard",
     component: <Dashboard />,
     count: 0,
@@ -208,7 +151,6 @@ const Items = [
   {
     key: "overview",
     name: "overview",
-    // icon: <Icons.Chart />,
     label: "Overview",
     component: <Overview />,
     count: 0,
@@ -216,7 +158,6 @@ const Items = [
   {
     key: "payments",
     name: "payment",
-    // icon: <Icons.Payment />,
     label: "Payments",
     component: <PaymentStatus />,
     count: 0,
@@ -224,7 +165,6 @@ const Items = [
   {
     key: "campaigns",
     name: "campaigns",
-    // icon: <Icons.Campaigns />,
     label: "Campaigns",
     component: <Campaigns />,
     count: 0,
@@ -233,7 +173,6 @@ const Items = [
   {
     key: "courses",
     name: "courses",
-    // icon: <Icons.Campaigns />,
     label: "Courses",
     component: <Courses />,
     count: 0,
@@ -241,7 +180,6 @@ const Items = [
   {
     key: "salesEmployee",
     name: "salesEmployee",
-    // icon: <Icons.Campaigns />,
     label: "Sales Employee",
     component: <Sales />,
     count: 0,
@@ -256,7 +194,6 @@ const Items = [
   {
     key: "requisitions",
     name: "requisitions",
-    // icon: <Icons.Campaigns />,
     label: "requisitions",
     component: <Requisitions />,
     count: 0,
@@ -264,7 +201,6 @@ const Items = [
   {
     key: "studentManagement",
     name: "studentManagement",
-    // icon: <Icons.Campaigns />,
     label: "Student Management",
     component: <ManageStudnet />,
     count: 0,
@@ -272,7 +208,6 @@ const Items = [
   {
     key: "courseManagement",
     name: "courseManagement",
-    // icon: <Icons.Campaigns />,
     label: "Course Management",
     component: <CourseMangemnet />,
     count: 0,
@@ -280,7 +215,6 @@ const Items = [
   {
     key: "paymentSlip",
     name: "paymentSlip",
-    // icon: <Icons.Campaigns />,
     label: "Pay Slip",
     component: <PaySlip />,
     count: 0,
@@ -288,7 +222,6 @@ const Items = [
   {
     key: "gmail",
     name: "gmail",
-    // icon: <Icons.Settings />,
     label: "Gmail",
     component: <GmailModule />,
     count: 0,
@@ -296,7 +229,6 @@ const Items = [
   {
     key: "settings",
     name: "settings",
-    // icon: <Icons.Settings />,
     label: "Settings",
     component: <Settings />,
     count: 0,
@@ -304,10 +236,8 @@ const Items = [
   {
     key: "email-setting",
     name: "email-setting",
-    // icon: <Icons.Settings />,
     label: "Email Setting",
     component: <EmailSetting />,
     count: 0,
   },
 ];
-

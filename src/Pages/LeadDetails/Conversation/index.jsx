@@ -5,33 +5,18 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import mailLogo from "../../../assets/Images/gmail.png";
 import whatsappLogo from "../../../assets/Images/whatsapp.png";
-import { handleLeadDetails } from "../../../Components/services/leads";
-import Comments from "./Comments";
 import MailModal from "./MailModal";
-import StatusShow from "./StatusShow";
 
 const Conversation = ({ leadDetails, id }) => {
   let dayPickerDays = [];
 
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user);
-  const [leadDtls, setLeadDtls] = useState({});
   const [openMailModal, setOpenMailModal] = useState(false);
-  const params = useParams();
 
   const showMailModal = () => {
     setOpenMailModal(true);
   };
-
-
-  useEffect(() => {
-    (async () => {
-      const lDtails = await handleLeadDetails(params?.id);
-      if (lDtails) {
-        setLeadDtls(lDtails);
-      }
-    })();
-  }, [params?.id]);
-  console.log("ldetails: ", leadDtls);
 
   for (let i = 0; i < 31; i++) {
     dayPickerDays.push({
@@ -41,60 +26,54 @@ const Conversation = ({ leadDetails, id }) => {
   }
 
   return (
-    <div className="min-h-full px-6 border-r">
-      <div>
-        {/* --------------- Conversation Section -------------- */}
-        <div
-          style={{
-            height: "500px",
-          }}
-        >
-          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-            Contact
-          </h1>
-
-          <div>
-            {userDetails?.userInfo?.role_id !== 6 ? (
-              <button className="px-4 py-2 bg-white rounded-full shadow-md w-56">
-                <a
-                  className="flex items-center "
-                  href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
-                    "+",
-                    ""
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img className="w-6" src={whatsappLogo} alt="" />
-                  <span className="text-black font-semibold text-base ml-3">
-                    Open in Whatsapp
-                  </span>
-                </a>
-              </button>
-            ) : null}
-          </div>
-
-          {/* Custom click to open modal message */}
-          <div className=" mt-6">
-            <button
-              className="px-4 py-2 bg-white rounded-full shadow-md flex items-center w-56"
-              onClick={showMailModal}
+    <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+      <h1
+        className={`px-5 py-2 text-lg font-poppins ${
+          colorMode ? "text-slate-300" : "text-gray-800"
+        } shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl`}
+      >
+        Contact
+      </h1>
+      <div className="flex flex-col gap-4 p-5 rounded-t-xl">
+        {userDetails?.userInfo?.role_id !== 6 ? (
+          <button className="px-4 py-2 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]">
+            <a
+              className="flex items-center"
+              href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
+                "+",
+                ""
+              )}`}
+              target="_blank"
+              rel="noreferrer"
             >
-              <img className="w-6" src={mailLogo} alt="" />
-              <span className="text-black font-semibold text-base ml-3">
-                Send Mail
+              <img className="w-6" src={whatsappLogo} alt="" />
+              <span
+                className={`${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } text-base ml-3`}
+              >
+                Open in Whatsapp
               </span>
-            </button>
-          </div>
+            </a>
+          </button>
+        ) : null}
+        {/* Custom click to open modal message */}
 
-          {/* Coments and Comments history*/}
-          <div className="lead-comments mt-12 h-[300px] overflow-y-auto crm-scroll-none">
-            <Comments Comments={leadDtls?.leadComments} />
+        <button
+          className="px-4 py-2 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]"
+          onClick={showMailModal}
+        >
+          <div className="flex items-center">
+            <img className="w-6" src={mailLogo} alt="" />
+            <span
+              className={`${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base ml-3`}
+            >
+              Send Mail
+            </span>
           </div>
-          <div className="lead-comments mt-12  h-[400px] overflow-y-auto crm-scroll-none ">
-            <StatusShow leadDetails={leadDetails} />
-          </div>
-        </div>
+        </button>
 
         <script
           src="https://secure.ewaypayments.com/scripts/eCrypt.js"

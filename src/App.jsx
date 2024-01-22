@@ -1,5 +1,8 @@
 import "antd/dist/antd.css";
-import { Route, Routes } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { handleLogout } from "./Components/services/auth";
+import { Storage } from "./Components/Shared/utils/store";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./App.css";
@@ -8,9 +11,9 @@ import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 import Calender from "./Pages/Calender";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
-import Dashboard from "./Pages/Dashborad";
-import CompanyDetails from "./Pages/Dashborad/SuperAdminDashboard/CompanyDetails";
-import CampaignInfo from "./Pages/Dashborad/SuperAdminDashboard/CompanyInfo/CampaignInfo";
+import Dashboard from "./Pages/Dashboard";
+import CompanyDetails from "./Pages/Dashboard/SuperAdminDashboard/CompanyDetails";
+import CampaignInfo from "./Pages/Dashboard/SuperAdminDashboard/CompanyInfo/CampaignInfo";
 import GmailModule from "./Pages/Gmail";
 import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
@@ -32,13 +35,53 @@ import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
-
+import { useSelector } from "react-redux";
+import { useIdleTimer } from "react-idle-timer/legacy";
 function App() {
+  const [state, setState] = useState("Active");
+  const [count, setCount] = useState(0);
+  const [remaining, setRemaining] = useState(0);
+  const navigate = useNavigate();
 
+  const onIdle = () => {
+    handleLogout();
+    Storage.removeItem("auth_tok");
+    Storage.removeItem("user_info");
+    Storage.removeItem("fac_t");
+    navigate("/login");
+    window.location.reload();
+    setState("Idle");
+  };
+
+  const onActive = () => {
+    setState("Active");
+  };
+
+  const onAction = () => {
+    setCount(count + 1);
+  };
+
+  const { getRemainingTime } = useIdleTimer({
+    onIdle,
+    onActive,
+    onAction,
+    timeout: 30 * 60 * 1000,
+    throttle: 500,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRemaining(Math.ceil(getRemainingTime() / 1000));
+    }, 500);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div>
+    <div className={`${colorMode ? "dark-background " : "light-background"}`}>
       <Routes>
-        <Route path="*" element={<Layout />}>
+        <Route element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
           <Route path="lead/:id" element={<LeadDetails />} />
@@ -68,7 +111,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="welcome" element={<Landing />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
   );

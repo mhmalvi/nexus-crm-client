@@ -1,29 +1,28 @@
 import React from "react";
 import BigCalendar from "./BigCalender";
-import Loading from "../../Components/Shared/Loader";
 import { useSelector } from "react-redux";
-
 const Calender = () => {
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   return (
-    <div>
-      <div>
-        {loadingDetails && (
-          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
-            <Loading />
+    <div className="h-screen flex justify-center items-center">
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <div className="relative font-poppins">
+          <h1
+            className={`text-2xl font-semibold ${
+              colorMode ? "text-white" : "text-gray-800"
+            }`}
+          >
+            Add Reminders
+          </h1>
+          <div className="w-full">
+            <BigCalendar />
           </div>
-        )}
-      </div>
-      <div className="relative lg:mx-6 2xl:ml-12 2xl:mr-16 py-16 font-poppins">
-        <h1 className="text-2xl font-semibold">Add Reminders</h1>
-        <div className="w-full">
-          <BigCalendar />
-        </div>
 
-        {/* <div className="h-full w-full bg-black/50 backdrop-blur-sm absolute top-10 -bottom-10 z-50 flex items-center justify-center">
+          {/* <div className="h-full w-full bg-black/50 backdrop-blur-sm absolute top-10 -bottom-10 z-50 flex items-center justify-center">
         <div className="text-xl text-white">Feature Coming Soon</div>
       </div> */}
+        </div>
       </div>
     </div>
   );

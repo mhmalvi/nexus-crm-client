@@ -13,6 +13,7 @@ const SalesAnalytics = ({ activeCompany }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
   const loadingDetails = useSelector((state) => state.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [employeesSales, setEmployeesSales] = useState([]);
@@ -96,7 +97,7 @@ const SalesAnalytics = ({ activeCompany }) => {
       )}
       <div>
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+          <h1 className={`text-xl font-semibold ${colorMode ? "text-white" : "text-gray-800"} font-poppins`}>
             Sales Team Total Sales Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -123,7 +124,7 @@ const SalesAnalytics = ({ activeCompany }) => {
               <rcElement.Tooltip />
               <rcElement.Bar
                 dataKey="amount"
-                fill="#8884d8"
+                fill="#ffa500"
                 shape={<chartUtils.TriangleBar />}
               >
                 <rcElement.LabelList
@@ -135,7 +136,6 @@ const SalesAnalytics = ({ activeCompany }) => {
           </rcElement.ResponsiveContainer>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };
