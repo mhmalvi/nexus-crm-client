@@ -404,7 +404,7 @@ const LeadStatus = (props) => {
 
   return (
     <div className="min-h-full flex flex-col justify-center items-start rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-      <div className="flex justify-center gap-8">
+      <div className="flex justify-center items-center gap-4">
         <h1
           className={`text-xl font-semibold font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
@@ -412,7 +412,7 @@ const LeadStatus = (props) => {
         >
           User Activity Timeline
         </h1>
-        <div className="lead_status flex items-center gap-y-3">
+        <div className="lead_status flex items-center">
           <Dropdown
             disabled={
               userDetails?.userInfo?.role_id === 1 ||
@@ -439,13 +439,19 @@ const LeadStatus = (props) => {
                   placement="top"
                   title={"No. of phone calls you have made"}
                 >
-                  <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
+                  <div
+                    className={`${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    } shadow-md backdrop-blur-2xl bg-[#ffffff11] ml-3 p-1.5 rounded-md flex items-center `}
+                  >
                     <div>
-                      <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
+                      <h1 className={`w-6 text-center mb-0 text-sm font-medium font-poppins ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } `}>
                         {leadDetails?.leadCallHistory?.length}
                       </h1>
                     </div>
-                    <div className="ml-3 mb-0 flex justify-center items-center">
+                    <div className="ml-3 mb-0 flex justify-center items-center ">
                       <button
                         className="px-1.5 py-0.5 rounded-md bg-black text-slate-300"
                         onClick={showCallDetailsModal}
@@ -465,7 +471,9 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"All Call Histories"}>
                   <div>
                     <Icons.CallHistory
-                      className="w-6 text-gray-700 mx-2 cursor-pointer"
+                      className={`w-6 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }  mx-2 cursor-pointer`}
                       onClick={() => setIsCallHistoryOpen(true)}
                     />
                   </div>
@@ -739,20 +747,26 @@ const LeadStatus = (props) => {
           </Modal>
 
           {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
-            <div className="flex items-center">
+            <div className="flex justify-center items-center ">
               {userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4 ||
               userDetails?.userInfo?.role_id === 5 ? (
                 <Tooltip placement="top" title={"Add amount add press enter"}>
                   <form
                     onSubmit={(e) => handleAddLeadAmount(e)}
-                    className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border"
+                    className="ml-3 px-2 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md flex items-center"
                   >
-                    <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
+                    <span
+                      className={`mr-0.5 font-poppins font-medium ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
                       $
                     </span>
                     <input
-                      className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
+                      className={`w-14 text-sm font-medium font-poppins outline-none border-[0px] bg-transparent ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
                       type="text"
                       name=""
                       defaultValue={
@@ -775,7 +789,9 @@ const LeadStatus = (props) => {
                 <Tooltip placement="top" title={"All Amount Histories"}>
                   <div>
                     <Icons.AmountHistory
-                      className="w-6 text-gray-700 mx-2 cursor-pointer"
+                      className={`w-6 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }  mx-2 cursor-pointer`}
                       onClick={() => setIsAmountHistoryOpen(true)}
                     />
                   </div>
@@ -833,7 +849,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["New Lead"]
                         ? "bg-green-500"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -906,7 +924,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Skilled"]
                         ? "bg-orange-400"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -984,7 +1004,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Called"]
                         ? "bg-blue-400"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1034,13 +1056,27 @@ const LeadStatus = (props) => {
                     <Radio.Group
                       onChange={onCallResponseChange}
                       value={callResponse}
-                      className="flex items-center"
+                      className="!flex items-center justify-center"
                     >
                       <span>
-                        <Radio value={1}>Responded</Radio>
+                        <Radio
+                          className={` !text-xs
+                            ${colorMode ? "!text-slate-300" : "!text-gray-800"}
+                          `}
+                          value={1}
+                        >
+                          Responded
+                        </Radio>
                       </span>
                       <span>
-                        <Radio value={0}>Not Responded</Radio>
+                        <Radio
+                          className={` !text-xs
+                          ${colorMode ? "!text-slate-300" : "!text-gray-800"}
+                        `}
+                          value={0}
+                        >
+                          Not Responded
+                        </Radio>
                       </span>
                     </Radio.Group>
                     <div className="text-xs text-red-500 mx-2 rounded-md">
@@ -1082,7 +1118,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Paid"]
                         ? "bg-teal-400"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1115,7 +1153,7 @@ const LeadStatus = (props) => {
                         onClick={() => setIsPaymentHistoryOpen(true)}
                       >
                         <Icons.AmountHistory
-                          className="w-5 text-gray-700 mr-2 cursor-pointer"
+                          className={`w-5 ${colorMode?"text-slate-300":"text-gray-800"} mr-2 cursor-pointer`}
                           onClick={() => setIsAmountHistoryOpen(true)}
                         />
                         <h6
@@ -1140,7 +1178,11 @@ const LeadStatus = (props) => {
 
                 {leadDetails?.leadAmountHistory?.length ? (
                   <>
-                    <h6 className="mb-0 text-sm font-normal font-poppins">
+                    <h6
+                      className={` ${
+                        colorMode ? "!text-slate-300" : "!text-gray-800"
+                      } mb-0 text-xs font-normal font-poppins`}
+                    >
                       Paid ${totalPaid} of $
                       {leadDetails?.leadAmountHistory[0]?.amount}(
                       {(
@@ -1150,7 +1192,11 @@ const LeadStatus = (props) => {
                       ).toFixed(2)}
                       %)
                     </h6>
-                    <h6 className="text-sm font-thin font-poppins">
+                    <h6
+                      className={` ${
+                        colorMode ? "!text-white" : "!text-gray-800"
+                      } text-xs font-thin font-poppins`}
+                    >
                       Due: $
                       {leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
                     </h6>
@@ -1161,7 +1207,7 @@ const LeadStatus = (props) => {
                 activeStatusTitle !== "Skilled" ? (
                   <div>
                     <button
-                      className="text-sm font-medium bg-gray-100 px-2 rounded-sm border border-gray-200"
+                      className={`text-sm font-medium bg-slate-300 px-2 rounded-md border border-gray-200`}
                       onClick={() => setIsAddPaymentHistoryOpen(true)}
                     >
                       Add Payment History
@@ -1213,7 +1259,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Verified"]
                         ? "bg-violet-500"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
@@ -1300,7 +1348,9 @@ const LeadStatus = (props) => {
                     className={`w-3 h-3 rounded-full ${
                       leadStatus["Completed"]
                         ? "bg-red-500"
-                        : `${colorMode ? "bg-slate-300":"bg-gray-800"} animate-custom-ping`
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
                     }`}
                   ></div>
                 </div>
