@@ -12,7 +12,6 @@ import {
   handleUploadFile,
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
-import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader, updateFbToken } from "../../../features/user/userSlice";
 import SalesAdmins from "./SalesAdmins";
@@ -20,7 +19,7 @@ import SalesAdmins from "./SalesAdmins";
 const CompanySettings = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [companyDetails, setCompanyDetails] = useState(initialState);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
@@ -35,7 +34,6 @@ const CompanySettings = () => {
   const [packageEndTime, setpackageEndTime] = useState("");
 
   useEffect(() => {
-
     dispatch(setLoader(true));
 
     (async () => {
@@ -49,7 +47,6 @@ const CompanySettings = () => {
             companyDetailsResponse?.data?.[0].logo_id
           );
 
-          console.log("fetchFile", fetchFile);
           if (fetchFile?.status === 200) {
             setAvatarPreviewer(
               (
@@ -78,19 +75,13 @@ const CompanySettings = () => {
         }, 3000);
       }
     })();
-  }, [
-    dispatch,
-    userDetails?.userInfo?.client_id,
-  ]);
-
+  }, [dispatch, userDetails?.userInfo?.client_id]);
 
   const handleLoadCompanyDetails = (e) => {
     const data = { ...companyDetails };
     data[e.target.id] = e.target.value;
     setCompanyDetails(data);
   };
-
-  console.log("companyDetails", companyDetails);
 
   const handleUpdateCompanyDetailsReq = async () => {
     const updateCompany = await handleUpdateCompany({
@@ -114,8 +105,6 @@ const CompanySettings = () => {
       subscription_id: companyDetails?.subscription_id,
       business_type: 1,
     });
-
-    console.log("updateCompany", updateCompany);
 
     if (updateCompany?.key === "success") {
       setToggleEditDetails(false);
@@ -180,54 +169,38 @@ const CompanySettings = () => {
   };
 
   return (
-    <div className="mx-6 py-12">
-
-      <div
-        className="lg:w-[100%] xl:w-[80%] font-poppins border py-10 px-8 mx-auto mb-28"
-        style={{
-          borderRadius: "20px",
-        }}
-      >
-        <div className="flex justify-between items-stretch">
-          {loadingDetails && (
-            <div className="absolute left-0 z-50 w-screen h-full bg-white bg-opacity-70">
-              <div className="lg:w-[62%] xl:w-[64%] 2xl:w-[69%] h-screen text-7xl flex justify-start items-center">
-                <Loading />
-              </div>
-            </div>
-          )}
-
-          <div className="w-1/2 border-r mr-4">
-            <div className="mb-8">
-              <div className="relative w-24">
-                <img
-                  className="w-full rounded-md shadow-sm"
-                  src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
-                  alt=""
-                />
-
-                {toggleEditDetails ? (
-                  <Upload
-                    className="company_avatar"
-                    onChange={(e) => handleChangeAvatar(e)}
-                    id="avatar"
-                    accept="image/png, image/jpeg, image/jpg"
-                    fileList={fileList}
-                  >
-                    <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
-                      <Icons.AddImage className="w-4 text-white" />
-                    </div>
-                  </Upload>
-                ) : null}
-              </div>
-            </div>
-
+    <div className="h-[90vh] w-full mx-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] grid grid-cols-2 gap-8 ">
+      <div className="h-[85vh] font-poppins flex flex-col justify-between items-center h-full gap-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="h-1/6 w-full flex justify-between items-center ">
+          <div className="relative flex w-24">
+            <img
+              className="w-full rounded-md shadow-sm"
+              src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
+              alt=""
+            />
+            {toggleEditDetails ? (
+              <Upload
+                className="company_avatar"
+                onChange={(e) => handleChangeAvatar(e)}
+                id="avatar"
+                accept="image/png, image/jpeg, image/jpg"
+                fileList={fileList}
+              >
+                <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
+                  <Icons.AddImage className="w-4 text-slate-300" />
+                </div>
+              </Upload>
+            ) : null}
+          </div>
+          <div className="">
             <input
               id="name"
-              className={`text-xl font-semibold ${
+              className={`text-xl ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } font-semibold rounded-xl backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
-                  ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                  : "bg-transparent"
+                  ? "outline-none bg-[#ffffff11] px-2"
+                  : "bg-transparent "
               }`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
@@ -237,326 +210,415 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`max-h-100 px-4 overflow-y-auto w-11/12 block text-justify font-normal leading-6 text-sm mt-4 ${
-                toggleEditDetails &&
-                "outline-none border bg-gray-100 p-2 rounded-lg"
-              }`}
+              className={`overflow-y-auto text-right ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } justify-end pt-2 ${toggleEditDetails && "outline-none"}`}
             >
               {companyDetails?.description
                 ? companyDetails?.description
                 : "No details added"}
             </p>
           </div>
-
-          {/* Company Details */}
-          <div className="relative w-1/2 pb-8">
-            <div className=" ml-2">
-              <div>
-                <div className="flex mb-4">
-                  <h1 className="text-lg font-semibold">Company Details</h1>
-                  {!toggleEditDetails ? (
-                    <Icons.Edit
-                      className="mt-1 cursor-pointer ml-6"
-                      onClick={() => setToggleEditDetails(true)}
-                    />
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <div className="mb-8">
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
-                      <span>Trading Name :&nbsp;</span>
-                      {toggleEditDetails ? (
-                        <input
-                          id="trading_name"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.trading_name}
-                        />
-                      ) : (
-                        <span>{companyDetails?.trading_name}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins mb-2">
-                      <span>Contact:&nbsp;</span>
-                      {toggleEditDetails ? (
-                        <input
-                          id="contact"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.contact}
-                        />
-                      ) : (
-                        <span>{companyDetails?.contact}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Email:&nbsp;</span>
-                      {toggleEditDetails ? (
-                        <input
-                          id="business_email"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.business_email}
-                        />
-                      ) : (
-                        <span>{companyDetails?.business_email}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Address:&nbsp;</span>
-
-                      {toggleEditDetails ? (
-                        <input
-                          id="address"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.address}
-                        />
-                      ) : (
-                        <span>{companyDetails?.address}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>ABN:&nbsp;</span>
-                      {toggleEditDetails ? (
-                        <input
-                          id="abn"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.abn}
-                        />
-                      ) : (
-                        <span>{companyDetails?.abn}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>RTO Code:&nbsp;</span>
-                      {toggleEditDetails ? (
-                        <input
-                          id="rto_code"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.rto_code}
-                        />
-                      ) : (
-                        <span>{companyDetails?.rto_code}</span>
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Website:&nbsp;</span>
-
-                      {toggleEditDetails ? (
-                        <input
-                          id="website"
-                          className={`w-72 outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.website}
-                        />
-                      ) : (
-                        <a
-                          href={companyDetails?.website}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {companyDetails?.website}
-                        </a>
-
-                      )}
-                    </div>
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>Country:&nbsp;</span>
-
-                      {toggleEditDetails ? (
-                        <input
-                          id="country_name"
-                          className={`w-auto outline-none border bg-gray-100 px-2 rounded-lg`}
-                          type="text"
-                          disabled={!toggleEditDetails ? "disabled" : ""}
-                          onChange={handleLoadCompanyDetails}
-                          defaultValue={companyDetails?.country_name}
-                        />
-                      ) : (
-                        <span>{companyDetails?.country_name}</span>
-                      )}
-                    </div>
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span className="whitespace-nowrap">
-                        FB Credential :&nbsp;
-                      </span>
-
-                      <input
-                        id="fb_ac_credential"
-                        className={`w-36 ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="password"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.fb_ac_credential}
-                      />
-
-                      {!toggleFacebookCredential ? (
-                        <Icons.Eye
-                          onClick={showFacebookCredential}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      ) : (
-                        <Icons.CloseEye
-                          onClick={showFacebookCredential}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      )}
-                    </div>
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>FB Secret :&nbsp;</span>
-
-                      <input
-                        id="secret_key"
-                        className={`w-36 ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="password"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.secret_key}
-                      />
-
-                      {!toggleFacebookSecret ? (
-                        <Icons.Eye
-                          onClick={showFacebookSecret}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      ) : (
-                        <Icons.CloseEye
-                          onClick={showFacebookSecret}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      )}
-                    </div>
-
-                    <div className="font-normal text-sm 2xl:text-base leading-6 font-poppins flex items-center mt-2">
-                      <span>FB AppID :&nbsp;</span>
-
-                      <input
-                        id="app_id"
-                        className={`w-36 ${
-                          toggleEditDetails
-                            ? "outline-none border bg-gray-100 px-2 rounded-lg"
-                            : "bg-transparent"
-                        }`}
-                        type="password"
-                        disabled={!toggleEditDetails ? "disabled" : ""}
-                        onChange={handleLoadCompanyDetails}
-                        defaultValue={companyDetails?.app_id}
-                      />
-
-                      {!toggleFacebookAppId ? (
-                        <Icons.Eye
-                          onClick={showFacebookAppId}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      ) : (
-                        <Icons.CloseEye
-                          onClick={showFacebookAppId}
-                          className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
-                        />
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex">
-                    <h1 className="font-normal text-sm 2xl:text-base leading-6 font-poppins mr-6">
-                      Active Package:
-                    </h1>
-                    {companyDetails?.pid ? (
-                      <div
-                        className={`w-48 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
-                      >
-                        <h3 className="font-bold py-2 text-xs">
-                          {companyDetails?.package_name}
-                        </h3>
-                        <h1 className="text-xs text-brand-color mb-0">
-                          ${companyDetails?.price}
-                          <br />
-                        </h1>
-                        <span className="text-brand-color text-xs">
-                          /Monthly
-                        </span>
-                        <div className="flex-1 text-slate-500 text-xs py-2">
-                          {companyDetails?.package_details}
-                        </div>
-                        <div className="flex-1 text-black text-xs py-1 font-semibold italic">
-                          <span>
-                            {new Date(companyDetails?.package_date)
-                              .toString()
-                              .slice(4, 15)}
-                          </span>
-                          <span> - </span>
-                          <span>{packageEndTime}</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex">
-                        <h1>No Package Yet</h1>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute bottom-0 right-0">
+        </div>
+        {/* Company Details */}
+        <div className="h-5/6 w-full rounded-xl pt-5 px-5">
+          <div className="flex justify-between">
+            <h1
+              className={`text-lg font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              Company Details
+            </h1>
+            {!toggleEditDetails ? (
+              <button
+                className="flex items-center justify-center gap-2 px-2 bg-slate-300 rounded-md"
+                onClick={() => setToggleEditDetails(true)}
+              >
+                <span className="text-brand-color">Edit</span>
+                <Icons.Edit className="cursor-pointer text-brand-color" />
+              </button>
+            ) : null}
+          </div>
+          <div className="flex flex-col justify-evenly">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Trading Name :&nbsp;
+              </span>
               {toggleEditDetails ? (
-                <div>
-                  <button
-                    className="px-4 py-1 rounded-md bg-black text-white"
-                    onClick={() => setToggleEditDetails(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="px-4 py-1 ml-2 rounded-md bg-brand-color text-white"
-                    onClick={handleUpdateCompanyDetailsReq}
-                  >
-                    Save
-                  </button>
+                <input
+                  id="trading_name"
+                  className={`w-full outline-none border-0  ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.trading_name}
+                />
+              ) : (
+                <span
+                  className={`w-full px-3 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  {companyDetails?.trading_name}
+                </span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Contact:&nbsp;
+              </span>
+              {toggleEditDetails ? (
+                <input
+                  id="contact"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.contact}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.contact}</span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Email:&nbsp;
+              </span>
+              {toggleEditDetails ? (
+                <input
+                  id="business_email"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.business_email}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>
+                  {companyDetails?.business_email}
+                </span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Address:&nbsp;
+              </span>
+
+              {toggleEditDetails ? (
+                <input
+                  id="address"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.address}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.address}</span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                ABN:&nbsp;
+              </span>
+              {toggleEditDetails ? (
+                <input
+                  id="abn"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.abn}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.abn}</span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                RTO Code:&nbsp;
+              </span>
+              {toggleEditDetails ? (
+                <input
+                  id="rto_code"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.rto_code}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>{companyDetails?.rto_code}</span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Website:&nbsp;
+              </span>
+
+              {toggleEditDetails ? (
+                <input
+                  id="website"
+                  className={`w-full outline-none border-0 ${
+                    colorMode
+                      ? "text-slate-300 bg-[#ffffff11]"
+                      : "text-gray-800 bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.website}
+                />
+              ) : (
+                <a
+                  href={companyDetails?.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full px-3"
+                >
+                  {companyDetails?.website}
+                </a>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Country:&nbsp;
+              </span>
+
+              {toggleEditDetails ? (
+                <input
+                  id="country_name"
+                  className={`w-full outline-none border-0 ${colorMode ? "text-slate-300" : "text-gray-800"} ${
+                    colorMode
+                      ? " bg-[#ffffff11]"
+                      : "bg-[#33333322]"
+                  } py-0`}
+                  type="text"
+                  disabled={!toggleEditDetails ? "disabled" : ""}
+                  onChange={handleLoadCompanyDetails}
+                  defaultValue={companyDetails?.country_name}
+                />
+              ) : (
+                <span className={`${colorMode ? "text-slate-300" : "text-gray-800"} w-full px-3`}>
+                  {companyDetails?.country_name}
+                </span>
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                FB Credential :&nbsp;
+              </span>
+
+              <input
+                id="fb_ac_credential"
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
+                  toggleEditDetails
+                    ? `outline-none border-0 ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
+                    : "bg-transparent border-transparent"
+                }`}
+                type="password"
+                disabled={!toggleEditDetails ? "disabled" : ""}
+                onChange={handleLoadCompanyDetails}
+                defaultValue={companyDetails?.fb_ac_credential}
+              />
+
+              {!toggleFacebookCredential ? (
+                <Icons.Eye
+                  onClick={showFacebookCredential}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              ) : (
+                <Icons.CloseEye
+                  onClick={showFacebookCredential}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                FB Secret :&nbsp;
+              </span>
+              <input
+                id="secret_key"
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
+                  toggleEditDetails
+                    ? `outline-none border-0  ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
+                    : "bg-transparent border-transparent"
+                }`}
+                type="password"
+                disabled={!toggleEditDetails ? "disabled" : ""}
+                onChange={handleLoadCompanyDetails}
+                defaultValue={companyDetails?.secret_key}
+              />
+
+              {!toggleFacebookSecret ? (
+                <Icons.Eye
+                  onClick={showFacebookSecret}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              ) : (
+                <Icons.CloseEye
+                  onClick={showFacebookSecret}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10 w-full">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                FB AppID :&nbsp;
+              </span>
+
+              <input
+                id="app_id"
+                className={`w-full  ${colorMode ? "text-slate-300" : "text-gray-800"} ${
+                  toggleEditDetails
+                    ? `outline-none border-0 ${
+                        colorMode
+                          ? "bg-[#ffffff11]"
+                          : "bg-[#33333322]"
+                      } py-0`
+                    : "bg-transparent border-transparent"
+                }`}
+                type="password"
+                disabled={!toggleEditDetails ? "disabled" : ""}
+                onChange={handleLoadCompanyDetails}
+                defaultValue={companyDetails?.app_id}
+              />
+
+              {!toggleFacebookAppId ? (
+                <Icons.Eye
+                  onClick={showFacebookAppId}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              ) : (
+                <Icons.CloseEye
+                  onClick={showFacebookAppId}
+                  className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
+                />
+              )}
+            </div>
+            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 font-poppins h-10 w-full">
+              <span
+                className={`w-48 ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+              >
+                Active Package:&nbsp;
+              </span>
+              {companyDetails?.pid ? (
+                <div
+                  className={`w-full cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-slate-300 p-6 rounded-xl text-center`}
+                >
+                  <h3 className="font-bold py-2 text-xs text-slate-300">
+                    {companyDetails?.package_name}
+                  </h3>
+                  <h1 className="text-xs text-brand-color mb-0">
+                    ${companyDetails?.price}
+                    <br />
+                  </h1>
+                  <span className="text-brand-color text-xs">/Monthly</span>
+                  <div className="flex-1 text-slate-500 text-xs py-2">
+                    {companyDetails?.package_details}
+                  </div>
+                  <div className="flex-1 text-black text-xs py-1 font-semibold italic">
+                    <span>
+                      {new Date(companyDetails?.package_date)
+                        .toString()
+                        .slice(4, 15)}
+                    </span>
+                    <span> - </span>
+                    <span>{packageEndTime}</span>
+                  </div>
                 </div>
-              ) : null}
+              ) : (
+                <h1
+                  className={`pl-1 w-full  ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  No Package Yet
+                </h1>
+              )}
             </div>
           </div>
+          {toggleEditDetails ? (
+            <div className="flex items-center justify-end w-full mt-4">
+              <button
+                className="px-4 py-1 rounded-md bg-black text-slate-300"
+                onClick={() => setToggleEditDetails(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-1 ml-2 rounded-md bg-brand-color text-slate-300"
+                onClick={handleUpdateCompanyDetailsReq}
+              >
+                Save
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
-
-      <SalesAdmins
-        clientId={userDetails?.userInfo?.client_id}
-        syncEmployees={syncEmployees}
-        setSyncEmployees={setSyncEmployees}
-      />
+      <div className="h-[85vh]">
+        <SalesAdmins
+          clientId={userDetails?.userInfo?.client_id}
+          syncEmployees={syncEmployees}
+          setSyncEmployees={setSyncEmployees}
+        />
+      </div>
     </div>
   );
 };

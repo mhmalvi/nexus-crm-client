@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
+import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
 const CourseList = ({
   courses,
@@ -21,9 +23,14 @@ const CourseList = ({
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
   const [addCourseOpen, setAddCourseOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState();
   const showModal = () => {
     setOpen(true);
   };
+  
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const tableSearchInput = useRef(null);
 
@@ -198,12 +205,12 @@ const CourseList = ({
 
   return (
     <div>
-      <div className="w-full flex items-center justify-between mb-12">
-        <div className="text-xl font-semibold">All Courses</div>
+      <div className="w-full flex items-center justify-between mb-5 ">
+        <div className={`text-xl ${colorMode? "text-white" : "text-gray-800"} font-semibold`}>All Courses</div>
         <Button
           type="primary"
           onClick={() => setAddCourseOpen(true)}
-          className=" !rounded"
+          className=" !rounded text-white"
         >
           Add Course
         </Button>
@@ -211,18 +218,26 @@ const CourseList = ({
       {/* Courses */}
       <div>
         <Table
-          className=" border rounded-2xl"
+          className={`${
+            colorMode ? "updatedTableDark" : "updatedTableLight"
+          }`}
           loading={courseListLoading}
-          style={{
-            textTransform: "uppercase",
-          }}
+          
           columns={courseLinstTableHeaders}
           dataSource={courses}
-          pagination={true}
+          pagination={{
+            defaultPageSize: 20,
+            onChange: (pageNum) => {
+              setCurrentPage(pageNum);
+            },
+            current: currentPage,
+          }}
           showSorterTooltip={true}
           scroll={{
-            x: 600,
-            y: 600,
+            
+            y: isBigScreen
+              ? 600
+              : 400,
           }}
           // Do not need to use on row view course detais by onClick in onRow it is used in Clicked by view button on colum list
         />

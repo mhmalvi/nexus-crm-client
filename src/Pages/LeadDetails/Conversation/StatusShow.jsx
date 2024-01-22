@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { handleShowStatusLogs } from "../../../Components/services/utils";
 import { Button } from "antd";
+import { useSelector } from "react-redux";
 
 const StatusShow = ({ leadDetails }) => {
-  console.log("leadlist: ", leadDetails?.leadDetails?.lead_id);
   const [statusLogs, setStatusLogs] = useState([]);
   const [statusLogLoading, setStatusLogloading] = useState(false);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
+
   const getStatusLogs = async () => {
     const data = {
       lid: leadDetails?.leadDetails?.lead_id,
@@ -35,61 +37,51 @@ const StatusShow = ({ leadDetails }) => {
     })();
   }, [leadDetails?.leadDetails?.lead_id]);
   return (
-    <div>
-      <div>
-        <div className="">
-          <div className="font-poppins text-base font-semibold mb-2 sticky top-0 bg-gray-300 flex justify-between items-center p-2">
-            <h1 className="m-0 p-0 font-bold">Status Logs</h1>
-            <Button
-              size="small"
-              className="!rounded-xl"
-              onClick={() => {
-                getStatusLogs();
-              }}
-            >
-              Sync
-            </Button>
-          </div>
+    <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 p-5 rounded-t-xl overflow-hidden">
+        <h1 className={`text-lg m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"} `}>Status Logs</h1>
+        <Button
+          size="small"
+          className="!rounded-xl"
+          onClick={() => {
+            getStatusLogs();
+          }}
+        >
+          Sync
+        </Button>
+      </div>
 
-          <div className="flex items-end mb-4">
-            <div className="w-full">
-              {statusLogs?.length
-                ? statusLogs?.map((log) => (
-                    <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">
-                      <div>
-                        <div className="text-base flex items-center gap-2">
-                          <h1 className="m-0 p-0 font-bold">Status: </h1>
-                          <p className="m-0 p-0">
-                            {(log?.lead_status === 1 && "New Lead") ||
-                              (log?.lead_status === 2 && "Skilled") ||
-                              (log?.lead_status === 3 && "Called") ||
-                              (log?.lead_status === 4 && "Paid") ||
-                              (log?.lead_status === 5 && "Verified") ||
-                              (log?.lead_status === 6 && "Completed") ||
-                              (log?.lead_status === 7 && "Canceled")}
-                          </p>
-                        </div>
-                        {log?.selected_by && (
-                          <div className="text-base flex items-center gap-2">
-                            <h1 className="m-0 p-0 font-bold">Selected by: </h1>
-                            <p className="m-0 p-0">{log?.selected_by}</p>
-                          </div>
-                        )}
-
-                        <div className="text-base flex items-center gap-2">
-                          <h1 className="m-0 p-0 font-bold">Created at: </h1>
-                          <p className="m-0 p-0 text-sm">
-                            {new Date(log.created_at).toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mr-2"></div>
-                    </div>
-                  ))
-                : "No Status Log"}
-            </div>
-          </div>
-        </div>
+      <div className={`flex flex-col  ${colorMode?"text-slate-300":"text-gray-800"} w-full p-5 gap-4 overflow-y-scroll overflow-x-hidden`}>
+        {statusLogs?.length
+          ? statusLogs?.map((log) => (
+              <div className="flex flex-col w-full border-b shadow justify-between items-start pb-2 ">
+                <div className="text-xs flex items-center gap-2">
+                  <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Status: </h1>
+                  <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>
+                    {(log?.lead_status === 1 && "New Lead") ||
+                      (log?.lead_status === 2 && "Skilled") ||
+                      (log?.lead_status === 3 && "Called") ||
+                      (log?.lead_status === 4 && "Paid") ||
+                      (log?.lead_status === 5 && "Verified") ||
+                      (log?.lead_status === 6 && "Completed") ||
+                      (log?.lead_status === 7 && "Canceled")}
+                  </p>
+                </div>
+                {log?.selected_by && (
+                  <div className="text-xs flex items-center gap-2">
+                    <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Selected by: </h1>
+                    <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>{log?.selected_by}</p>
+                  </div>
+                )}
+                <div className="text-xs flex items-center gap-2">
+                  <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Created at: </h1>
+                  <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>
+                    {new Date(log.created_at).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            ))
+          : "No Status Log"}
       </div>
     </div>
   );

@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
-  handleCoursewiseSalesAssign,
+  // handleCoursewiseSalesAssign,
   handleCreateChecklist,
   handleDeleteChecklist,
-  handleDeleteCoursewiseSalesAssign,
+  // handleDeleteCoursewiseSalesAssign,
   handleFetchCourseCheckList,
   handleFetchCoursewiseAssignedEmployees,
 } from "../../Components/services/leads";

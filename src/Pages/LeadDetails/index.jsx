@@ -9,16 +9,16 @@ import {
 import { handlePaymentDetails } from "../../Components/services/payment";
 import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
-import Conversation from "./Conversation";
 import LeadStatus from "./LeadStatus";
 import UserDetails from "./UserDetails";
+import { Link } from "react-router-dom";
 
 const LeadDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const userDetails = useSelector((state) => state?.user)?.userInfo;
-
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [leadDetails, setleadDetails] = useState();
   const [syncDetails, setSyncDetails] = useState(false);
@@ -113,16 +113,13 @@ const LeadDetails = () => {
   }, [id, syncTotalPaid]);
 
   const confirm = async (e) => {
-    const statusUpdateResponse = await handleLeadStatusUpdate(
-      {
-        lead_id: leadDetails?.leadDetails?.lead_id,
-        lead_status: 0,
-        sales_user_id: userDetails?.user_id,
-        client_id: userDetails?.client_id,
-        response: null,
-      }
-
-    );
+    const statusUpdateResponse = await handleLeadStatusUpdate({
+      lead_id: leadDetails?.leadDetails?.lead_id,
+      lead_status: 0,
+      sales_user_id: userDetails?.user_id,
+      client_id: userDetails?.client_id,
+      response: null,
+    });
 
     if (statusUpdateResponse?.status) {
       message.success("Lead Has Been Released Successfully");
@@ -134,19 +131,26 @@ const LeadDetails = () => {
   };
 
   return (
-    <div>
-      {loadingDetails && (
-        <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
-          <Loading />
-        </div>
-      )}
-      <div className="lg:mx-4 2xl:mx-6 mt-25 pt-1 pb-10">
-        <div
-          className={`relative grid grid-cols-1 gap-6 ${
-            userDetails?.role_id === 6 ? "lg:grid-cols-2" : "lg:grid-cols-3"
-          }`}
-        >
-          <div className="px-2 xl:px-3">
+    <div className="h-screen flex flex-col mx-5 justify-center items-center">
+      <div className="w-full">
+        <Link to={"/dashboard"}>
+          <button
+            className={`px-2 py-1 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            {"< "} Back
+          </button>
+        </Link>
+      </div>
+      <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
+        {loadingDetails && (
+          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-slate-300 bg-opacity-70">
+            <Loading />
+          </div>
+        )}
+        <div className={`flex flex-col `}>
+          <div className="">
             <LeadStatus
               leadStatus={leadStatusDetails}
               leadDetails={leadDetails}
@@ -159,11 +163,6 @@ const LeadDetails = () => {
               setSyncTotalPaid={setSyncTotalPaid}
             />
           </div>
-          {userDetails?.role_id !== 6 && (
-            <div>
-              <Conversation leadDetails={leadDetails} id={id} />
-            </div>
-          )}
           <div>
             <UserDetails
               leadDetails={leadDetails}
@@ -174,7 +173,7 @@ const LeadDetails = () => {
             />
           </div>
           {leadDetails?.leadDetails?.lead_details_status === 0 && (
-            <div className="w-full h-full bg-white bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
+            <div className="w-full h-full bg-slate-300 bg-opacity-50 absolute flex flex-col justify-center items-center font-poppins text-2xl text-red-600 font-semibold italic">
               <div>Lead has been suspended</div>
               <div className="xl:ml-4 mt-8">
                 <Popconfirm

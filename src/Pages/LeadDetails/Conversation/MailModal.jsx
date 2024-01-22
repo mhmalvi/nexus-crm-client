@@ -47,7 +47,9 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         : ""
     );
     formData.append("mail_subject", mailSubject);
+    
     formData.append("student_email", leadDetails?.leadDetails?.student_email);
+    
     formData.append("sender", userDetails?.email);
 
     if (!tData || !mailSubject || selectedData.length <= 0) {
@@ -69,7 +71,7 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         .then((res) => res.json())
         .then((result) => {
           if (result?.status === 200) {
-            message.success("Mail send successfully!");
+            message.success("Mail sent successfully!");
             setOpenMailModal(false);
             setConfirmLoading(false);
             window.location.reload();

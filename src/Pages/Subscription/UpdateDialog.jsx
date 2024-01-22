@@ -47,11 +47,11 @@ function UpdateDialog({ user_id, onDialog }) {
         onClick={(e) => e.stopPropagation()}
       >
         {msg && (
-          <div className="w-[30%] p-4 m-auto shadow-lg text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
+          <div className="w-[30%] p-4 m-auto shadow-md text-lg text-[#7E4BFF] text-center shadow-indigo-100 border-2 border-slate-200 rounded-lg">
             {msg}
           </div>
         )}
-        <div className="w-[30%] px-6 m-auto border shadow-lg bg-white opacity-100 rounded-sm">
+        <div className="w-[30%] px-6 m-auto border shadow-md bg-white opacity-100 rounded-sm">
           <div className="flex justify-end my-4">
             <button
               className="bg-slate-200 text-lg text-black font-bold rounded-full px-4 py-2 hover:bg-slate-300"

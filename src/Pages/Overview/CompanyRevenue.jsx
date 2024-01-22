@@ -8,6 +8,7 @@ import * as chartUtils from "./utils";
 const CompanyRevenue = ({ activeCompany }) => {
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
@@ -34,7 +35,7 @@ const CompanyRevenue = ({ activeCompany }) => {
       <div className="mt-4">
         <div className="relative">
           <div className="relative">
-            <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+            <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} mb-6 leading-8 font-poppins`}>
               Company Monthly Revenue Details
             </h1>
           </div>

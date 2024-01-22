@@ -30,6 +30,7 @@ export const handleLogin = async (loginDetails) => {
     return error;
   }
 };
+
 export const handleLoginSecond = async (loginDetails) => {
   try {
     const result = await axios.post(
@@ -44,6 +45,22 @@ export const handleLoginSecond = async (loginDetails) => {
     return error;
   }
 };
+
+export const handleLogout = async () => {
+  try {
+    const result = await axios.post(
+      `https://crmuser.queleadscrm.com/api/logout`,
+      authToken
+    );
+
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const handleRegister = async (RegisterDetails) => {
   const config = {
     headers: {

@@ -1,5 +1,10 @@
-import { Input, Modal, Select, Tooltip, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Input, Modal, Tooltip, message } from "antd";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +22,9 @@ import {
   updateFbToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
-import sidecoverphoto from "../../../assets/newimages/review-evaluation-satisfaction-customer-service-feedback-sign-icon (1).jpg";
-const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
+import "../Login.css";
+const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
+
 const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();
@@ -30,9 +36,7 @@ const Login = () => {
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
   const [role, setRole] = useState(0);
-  const handleChange = (value) => {
-    setRole(value);
-  };
+  
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -63,6 +67,21 @@ const Login = () => {
     setData(userdata);
   };
 
+  const makeid = useMemo(() => {
+    return function (length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    };
+  }, []);
+
   const handleLoginReq = async (e) => {
     e.preventDefault();
     dispatch(setLoader(true));
@@ -84,7 +103,6 @@ const Login = () => {
     console.log("loginResponse", loginResponse);
 
     if (loginResponse?.status === 200 && loginResponse?.data) {
-
       console.log("loginResponse?.data?.data", loginResponse?.data?.data);
 
       Storage.setItem("user_info", loginResponse?.data?.data);
@@ -114,7 +132,6 @@ const Login = () => {
             makeid(3)
         );
       }
-
       message.success("Successfully Logged In");
 
       if (
@@ -126,7 +143,7 @@ const Login = () => {
         setTimeout(() => {
           navigate("/dashboard");
           window.location.reload();
-        }, 1500);
+        }, 500);
       }
     } else if (
       loginResponseSecond?.status === 200 &&
@@ -141,37 +158,63 @@ const Login = () => {
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponseSecond?.data?.data));
       message.success("Successfully Logged In");
-      setTimeout(() => {
-        navigate("/dashboard");
-        window.location.reload();
-      }, 1500);
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
       }, 2000);
-      message.warning("Oopps Wrong! Check You Email or Password/ABN Number");
+      message.warning("Oops Wrong! Check You Email or Password/ABN Number");
     }
   };
 
-  const handleOneClickLogin = async (credentials) => {
-    dispatch(setLoader(true));
+  const handleOneClickLogin = useCallback(
+    async (credentials) => {
+      dispatch(setLoader(true));
+      const loginFormData = new FormData();
+      loginFormData.append("email", credentials?._ue_);
+      loginFormData.append("password", credentials?._up_?.split("_")[0]);
+      const loginResponse = await handleLogin(loginFormData);
+      console.log("loginResponse", loginResponse);
 
-    const loginFormData = new FormData();
-    loginFormData.append("email", credentials?._ue_);
-    loginFormData.append("password", credentials?._up_?.split("_")[0]);
+      if (loginResponse?.status === 200) {
+        Storage.setItem("user_info", loginResponse?.data?.data);
+        Storage.setItem("auth_tok", loginResponse?.data?.token);
 
-    const loginResponse = await handleLogin(loginFormData);
+        dispatch(setLoader(false));
+        dispatch(addUserDetails(loginResponse?.data?.data));
 
-    console.log("loginResponse", loginResponse);
-
-    if (loginResponse?.status === 200) {
-      Storage.setItem("user_info", loginResponse?.data?.data);
-      Storage.setItem("auth_tok", loginResponse?.data?.token);
-
-      dispatch(setLoader(false));
-      dispatch(addUserDetails(loginResponse?.data?.data));
-
-      if (loginResponse?.data?.data?.flag === 1) {
+        if (loginResponse?.data?.data?.flag === 1) {
+          Storage.setItem("__ce__", data.email);
+          Storage.setItem(
+            "__cp__",
+            data.password +
+              "_" +
+              makeid(3) +
+              "_" +
+              makeid(3) +
+              "_" +
+              makeid(3) +
+              "_" +
+              makeid(3)
+          );
+        }
+        dispatch(setLoader(false));
+        message.success("Successfully Logged In");
+        setTimeout(() => {
+          navigate("/dashboard");
+          window.location.reload();
+        }, 500);
+      } else {
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 2000);
+        message.warning("Oopps Wrong! Check You Email or Password");
+      }
+    },
+    [dispatch, data.email, data.password, makeid, navigate]
+  );
+  const handleRememberMe = useCallback(
+    (e) => {
+      if (e.target.checked) {
         Storage.setItem("__ce__", data.email);
         Storage.setItem(
           "__cp__",
@@ -186,50 +229,9 @@ const Login = () => {
             makeid(3)
         );
       }
-
-      dispatch(setLoader(false));
-
-      message.success("Successfully Logged In");
-      setTimeout(() => {
-        navigate("/dashboard");
-        window.location.reload();
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        dispatch(setLoader(false));
-      }, 2000);
-      message.warning("Oopps Wrong! Check You Email or Password");
-    }
-  };
-
-  function makeid(length) {
-    var result = "";
-    var characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
-  const handleRememberMe = (e) => {
-    if (e.target.checked) {
-      Storage.setItem("__ce__", data.email);
-      Storage.setItem(
-        "__cp__",
-        data.password +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3) +
-          "_" +
-          makeid(3)
-      );
-    }
-  };
+    },
+    [data.email, data.password, makeid]
+  );
 
   const handleAddToBookMark = () => {
     setBookMarkedAccounts([
@@ -268,60 +270,42 @@ const Login = () => {
       ])
     );
     setAddBookMarkOpen(false);
-
     message.success("Added to the Bookmark");
-
     setTimeout(() => {
       navigate("/dashboard");
       window.location.reload();
-    }, 1500);
+    }, 500);
   };
 
   const ForgotPasswordModal = () => {
-    console.log(data);
-    const regex = /^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i;
-    if (data.email !== "") {
-      if (regex.test(data.email) === true) {
-        setTooglePasswordForget(true);
-      } else {
-        message.warning("Please enter a valid email address.");
-      }
-    } else {
-      message.warning("Enter your email first.");
-    }
+    setTooglePasswordForget(true);
   };
 
   const handleRemoverBookmarkedAccount = (acoountDetials) => {
     console.log(acoountDetials?._ue_);
-
     setBookMarkedAccounts(
       bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
     );
-
     Storage.setItem(
       "__b__",
       JSON.stringify(
         bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
       )
     );
-
     setSyncBookMarked(!syncBookMarked);
   };
 
   return (
-    <div className="flex justify-center items-center md:h-screen bg-gray-100 ">
+    <div className="flex justify-center items-center min-h-[100vh] dark-background">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       )}
 
-      <div className=" !grid !grid-cols-12 gap-2 mx-auto h-full py-[10px]">
-        <div className="w-[100%] lg:block hidden h-full !col-span-12 md:!col-span-7 md:!relative md:!left-[40px]">
-          <img className="w-full h-full" src={sidecoverphoto} alt="" />
-        </div>
+      <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
         <div
-          className="!col-span-12 md:!col-span-5 w-[100%]  !mx-auto container relative max-w-md border border-gray-200 rounded-md p-3 bg-white overflow-x-hidden overflow-y-auto crm-scroll-none"
+          className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
           style={{}}
         >
           <Modal
@@ -346,6 +330,7 @@ const Login = () => {
                   onClick={() => {
                     setAddBookMarkOpen(false);
                     navigate("/dashboard");
+                    window.location.reload();
                   }}
                 >
                   No
@@ -353,123 +338,111 @@ const Login = () => {
               </div>
             </div>
           </Modal>
-          <div>
-            <div className="pb-3 pt-8">
-              <div className="flex flex-col items-center ">
-                <img
-                  src={companyLogo}
-                  alt="companyLogo"
-                  srcset=""
-                  className="w-60 cursor-pointer"
-                  onClick={() => {
-                    navigate("/");
+          <div className="m-6 min-h-[60vh] flex flex-col justify-between">
+            <div className="flex flex-col items-center ">
+              <img
+                src={companyLogo}
+                alt="companyLogo"
+                srcset=""
+                className="w-60 cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
+            </div>
+            <form className="mb-4" onSubmit={handleLoginReq}>
+              <div className="mb-6 font-poppins ">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm text-white"
+                >
+                  {role === 1 ? "ABN Number" : "Email"}
+                </label>
+                <Input
+                  size="large"
+                  name="email"
+                  id="email"
+                  value={data.email}
+                  placeholder="Enter your username"
+                  className="rounded-3xl w-full px-6 py-2 placeholder-gray-600 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color "
+                  onChange={userData}
+                  required
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "#ffffff",
+                    borderRadius: "10px",
                   }}
                 />
               </div>
-            </div>
-            <div className="text-center my-6">
-              <h1 className="text-2xl font-semibold text-gray-700 font-poppins">
-                Login
-              </h1>
-              <p className="text-gray-500 pt-2 pb-4 font-poppins">
-                Login to access your account
-              </p>
-            </div>
-
-            <div className="m-6">
-              <form className="mb-4" onSubmit={handleLoginReq}>
-                <div className="mb-6 font-poppins">
-                </div>
-                <div className="mb-6 font-poppins">
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm text-gray-600"
-                  >
-                    {role === 1 ? "ABN Number" : "Email"}
+              <div className="mb-4 font-poppins w-full">
+                {/* Forgot password */}
+                <div className="flex justify-between mb-2">
+                  <label htmlFor="password" className="text-sm text-white">
+                    Password
                   </label>
-                  <Input
-                    // type="password"
-                    size="large"
-                    name="email"
-                    id="email"
-                    value={data.email}
-                    placeholder="Enter your username"
-                    className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                    onChange={userData}
-                    required
+
+                  <ForgotPassword
+                    visibility={tooglePasswordForget}
+                    oncancel={(cancel) => setTooglePasswordForget(cancel)}
                   />
                 </div>
-                <div className="mb-4 font-poppins">
-                  {/* Forgot password */}
-                  {/* <div className="flex justify-between mb-2">
-                    <label htmlFor="password" className="text-sm text-gray-600">
-                      Password
-                    </label>
-                    <label
-                      className="text-xs text-gray-400 focus:outline-none hover:text-indigo-500"
-                      onClick={ForgotPasswordModal}
-                    >
-                      Forgot password?
-                    </label>
-
-                    <ForgotPassword
-                      visibility={tooglePasswordForget}
-                      oncancel={(cancel) => setTooglePasswordForget(cancel)}
-                      emaildata={data.email}
-                    />
-                  </div> */}
-                  <Input.Password
-                    size="large"
-                    name="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    value={data.password}
-                    className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                    onChange={userData}
-                    required
+                <Input.Password
+                  size="large"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={data.password}
+                  className="w-full px-6 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color text-white"
+                  onChange={userData}
+                  required
+                  style={{
+                    backgroundColor: "transparent",
+                    borderRadius: "10px",
+                    color: "#ffffff",
+                  }}
+                />
+              </div>
+              <div className="mb-6 font-poppins flex items-center justify-between">
+                <div className="w-full">
+                  <input
+                    className="cursor-pointer mr-2"
+                    type="checkbox"
+                    name="remember me"
+                    id="remember_me"
+                    defaultValue="off"
+                    onChange={handleRememberMe}
                   />
-                </div>
-
-                <div className="mb-6 font-poppins flex items-center justify-between">
-                  <div className="">
-                    <input
-                      className="cursor-pointer mr-2"
-                      type="checkbox"
-                      name="remember me"
-                      id="remember_me"
-                      defaultValue="off"
-                      onChange={handleRememberMe}
-                    />
-                    <label className="cursor-pointer" htmlFor="remember_me">
-                      Remember Me
-                    </label>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <button
-                    type="submit"
-                    className="w-full p-3 text-white font-medium bg-brand-color bg-opacity-80 hover:bg-primary-800 rounded-md focus:outline-none font-poppins"
+                  <label
+                    className="cursor-pointer text-white"
+                    htmlFor="remember_me"
                   >
-                    Log in
-                  </button>
+                    Remember Me
+                  </label>
                 </div>
-                <div
-                  className="text-center font-semibold cursor-pointer"
-                  onClick={() => navigate("/register")}
+                <label
+                  className="text-xs text-white focus:outline-none hover:text-indigo-500 w-full text-end cursor-pointer"
+                  onClick={ForgotPasswordModal}
                 >
-                  I don't have account
-                </div>
-                <div className="text-center">
-                  <a
-                    className="font-semibold"
-                    href="/requisition"
-                    target="_blank"
-                  >
-                    Click Here To Explore Packages and Send Requisition
-                  </a>
-                </div>
-              </form>
+                  Forgot password?
+                </label>
+              </div>
+              <div className="mb-6">
+                <button
+                  type="submit"
+                  className="ease-in duration-200 lg:h-full w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                >
+                  Log in
+                </button>
+              </div>
+            </form>
+            <div className="text-center ">
+              <a
+                className="font-semibold text-white"
+                href="/requisition"
+                target="_blank"
+              >
+                Click Here To Explore Packages and Send Requisition
+              </a>
             </div>
           </div>
 
@@ -526,13 +499,18 @@ const Login = () => {
               )}
             </div>
           </div>
-
           {/* Saved Accounts */}
+          {/* <div
+                  className="text-center font-semibold cursor-pointer"
+                  onClick={() => navigate("/register")}
+                >
+                  I don't have account
+                </div> */}
           <div className="absolute right-6 top-6">
             {!bookMarkOpen ? (
               <Tooltip title="Book marked accounts" placement="right">
                 <Icons.Bookmark
-                  className="w-6 cursor-pointer hover:text-brand-color"
+                  className="w-6 cursor-pointer text-white hover:text-brand-color"
                   onClick={() => setBookMarkOpen(true)}
                 />
               </Tooltip>

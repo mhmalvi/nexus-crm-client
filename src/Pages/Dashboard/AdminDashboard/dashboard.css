@@ -1,0 +1,301 @@
+/* DARK MODE */
+.updatedTableDark .ant-table {
+  border-radius: 10px !important;
+  overflow: hidden;
+  backdrop-filter: blur(40px);
+  background-color: #0000007f;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+.updatedTableDark .ant-table-body::-webkit-scrollbar {
+  height: 5px !important;
+}
+.updatedTableDark .ant-table-body::-webkit-scrollbar-corner {
+  background-color: #1b0538;
+}
+.updatedTableDark .ant-table-body::-webkit-scrollbar-track {
+  background-color: #1b0538;
+}
+.updatedTableDark .ant-table-body::-webkit-scrollbar-thumb {
+  background-color: #7037ff !important;
+}
+.updatedTableDark .ant-table-body .ant-table-cell,
+.updatedTableDark .ant-table-body .ant-table-cell h4 {
+  color: #cbd5e1;
+  margin: 0;
+  text-align: center;
+}
+.updatedTableDark th {
+  padding: 18px 18px 18px 0;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  color: #cbd5e1 !important;
+  border-bottom:1px solid #c0c0c02f !important;
+  background-color: #7037ff !important;
+}
+.updatedTableDark .ant-table-body tr td {
+  padding: 8px;
+}
+.updatedTableDark .ant-table-body tr td {
+  border-bottom:1px solid #c0c0c02f !important;
+  border-right:1px solid #c0c0c02f !important;
+}
+.updatedTableDark .ant-table-thead tr th{
+  border-right:1px solid #c0c0c02f !important;
+  text-align: center;
+}
+.updatedTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+}
+.updatedTableDark .ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.updatedTableDark .ant-pagination li {
+  border: 0.5px solid #cbd5e1;
+  background-color: transparent;
+  border-radius: 10px;
+}
+.updatedTableDark .ant-pagination li a {
+  color: #cbd5e1;
+}
+.updatedTableDark .ant-pagination .ant-pagination-item-active {
+  background-color: #7037ff;
+}
+.updatedTableDark .ant-pagination .ant-pagination-item-ellipsis {
+  color: #cbd5e1;
+}
+.updatedTableDark .ant-pagination .ant-pagination-disabled,
+.updatedTableDark .ant-pagination .ant-pagination-prev,
+.updatedTableDark .ant-pagination .ant-pagination-next {
+  overflow: hidden;
+}
+.updatedTableDark .ant-pagination .ant-pagination-prev > button,
+.updatedTableDark .ant-pagination .ant-pagination-next > button {
+  background-color: #7037ff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+}
+.updatedTableDark .ant-pagination .ant-pagination-disabled > button {
+  background-color: #cbd5e1;
+  color: #1f293797;
+}
+.updatedTableDark .ant-pagination .ant-pagination-disabled > button:hover,
+.updatedTableDark .ant-pagination .ant-pagination-prev > button:hover,
+.updatedTableDark .ant-pagination .ant-pagination-next > button:hover {
+  border: 1px solid #cbd5e1;
+  color: #7037ff;
+}
+.updatedTableDark .ant-pagination .ant-pagination-item-link-icon {
+  color: #cbd5e1;
+}
+.updatedTableDark .ant-pagination .ant-pagination-item-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.updatedTableDark .ant-pagination .ant-pagination-options .ant-select-selector {
+  border-radius: 10px;
+}
+.updatedTableDark
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector:hover {
+  border: 1px solid #4f8dea;
+}
+
+/* | */
+/* | */
+/* | */
+/* LIGHT MODE */
+/* | */
+/* | */
+/* | */
+
+.updatedTableLight .ant-table {
+  border-radius: 10px !important;
+  overflow: hidden;
+  backdrop-filter: blur(40px);
+  background-color: #cbd5e17f;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+.updatedTableLight .ant-table-body::-webkit-scrollbar {
+  height: 5px !important;
+}
+.updatedTableLight .ant-table-body::-webkit-scrollbar-corner {
+  background-color: #1b0538;
+}
+.updatedTableLight .ant-table-body::-webkit-scrollbar-track {
+  background-color: #1b0538;
+}
+.updatedTableLight .ant-table-body::-webkit-scrollbar-thumb {
+  background-color: #7037ff;
+}
+.updatedTableLight .ant-table-body .ant-table-cell,
+.updatedTableLight .ant-table-body .ant-table-cell h4 {
+  color: #1f2937;
+  margin: 0;
+  text-align: center;
+}
+.updatedTableLight th {
+  padding: 18px 18px 18px 0;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  color: #cbd5e1 !important;
+  background-color: #7037ff !important;
+  border-bottom:1px solid #1f293729 !important;
+}
+.updatedTableLight .ant-table-body tr td {
+  padding: 8px;
+}
+.updatedTableLight .ant-table-body tr td {
+  border-bottom:1px solid #1f293729 !important;
+  border-right:1px solid #1f293729 !important;
+}
+.updatedTableLight .ant-table-thead tr th{
+  border-right:1px solid #1f293729 !important;
+  text-align: center;
+}
+.updatedTableLight thead .ant-table-cell-fix-left-last:first-child {
+  background-color: #7037ff !important;
+  color: #1f2937;
+}
+.updatedTableLight .ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.updatedTableLight .ant-pagination li {
+  border: 0.5px solid #1f2937;
+  background-color: transparent;
+  border-radius: 10px;
+}
+.updatedTableLight .ant-pagination li a {
+  color: #1f2937;
+}
+.updatedTableLight .ant-pagination .ant-pagination-item-active {
+  background-color: #7037ff;
+}
+.updatedTableLight .ant-pagination .ant-pagination-item-active a {
+  color: #cbd5e1 !important;
+}
+.updatedTableLight .ant-pagination .ant-pagination-item-ellipsis {
+  color: #1f2937;
+}
+.updatedTableLight .ant-pagination .ant-pagination-disabled,
+.updatedTableLight .ant-pagination .ant-pagination-prev,
+.updatedTableLight .ant-pagination .ant-pagination-next {
+  overflow: hidden;
+}
+.updatedTableLight .ant-pagination .ant-pagination-prev > button,
+.updatedTableLight .ant-pagination .ant-pagination-next > button {
+  background-color: #7037ff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+}
+.updatedTableLight .ant-pagination .ant-pagination-disabled > button {
+  background-color: #cbd5e1;
+  color: #1f293797;
+}
+.updatedTableLight .ant-pagination .ant-pagination-disabled > button:hover,
+.updatedTableLight .ant-pagination .ant-pagination-prev > button:hover,
+.updatedTableLight .ant-pagination .ant-pagination-next > button:hover {
+  border: 1px solid #cbd5e1;
+  color: #7037ff;
+}
+.updatedTableLight .ant-pagination .ant-pagination-item-link-icon {
+  color: #cbd5e1;
+}
+.updatedTableLight .ant-pagination .ant-pagination-item-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.updatedTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+}
+.updatedTableLight
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector {
+  border-radius: 10px;
+}
+.updatedTableLight
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector:hover {
+  border: 1px solid #4f8dea;
+}
+.ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: #00000022;
+}
+
+
+/* Profile Settings */
+.profileSettingsModal{
+  position: absolute;
+  right: 0;
+  bottom:0;
+  border-radius: 10px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width:21vw !important;
+  vertical-align: middle;
+}
+.profileSettingsModal .ant-modal-body{
+  background-color: transparent;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.profileSettingsModal .ant-modal-content{
+  /* background-color: #4f8dea; */
+  background-color: transparent;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Location Filter Modal */
+.locationfilterModal{
+  overflow: hidden;
+}
+.locationfilterModal .ant-modal-body{
+  background-color: transparent;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.locationfilterModal .ant-modal-content{
+  background-color: transparent;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.colorPicker .react-colorful{
+  height:100px;
+  width:300px !important;
+}

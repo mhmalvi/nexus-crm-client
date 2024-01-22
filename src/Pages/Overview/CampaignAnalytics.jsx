@@ -23,6 +23,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const loadingDetails = useSelector((state) => state.user)?.loading;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const COLORS = [
     "#34C759",
@@ -461,8 +462,8 @@ const CampaignAnalytics = ({ activeCompany }) => {
       )}
       <div>
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
-            Campaigns Details
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
+            Campaign Details
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
             This Year
@@ -495,7 +496,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
               <rcElement.Bar
                 dataKey="completed"
                 stackId="lead"
-                fill="#ff1c24"
+                fill="#ffa500"
               />
             </rcElement.BarChart>
           </rcElement.ResponsiveContainer>
@@ -504,7 +505,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
       <div className="mt-4">
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Campaigns Revenue
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -533,8 +534,8 @@ const CampaignAnalytics = ({ activeCompany }) => {
                 connectNulls
                 type="monotone"
                 dataKey="revenue"
-                stroke="#8884d8"
-                fill="#8884d8"
+                stroke="#ffa500"
+                fill="#ffa500"
                 label={<chartUtils.CampaignRevenueCustomizedLabel />}
               />
             </rcElement.LineChart>
@@ -544,7 +545,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
       <div className="mt-12">
         <div className="relative">
-          <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+          <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Lead Quality Ratio
           </h1>
           <p className="absolute top-6 right-7 float-right font-light">
@@ -573,25 +574,25 @@ const CampaignAnalytics = ({ activeCompany }) => {
                 connectNulls
                 type="monotone"
                 dataKey="rate"
-                stroke="#8884d8"
+                stroke="#ffa500"
                 dot={true}
                 activeDot={"dot"}
-                fill="#8884d8"
+                fill="#ffa500"
               />
             </rcElement.LineChart>
           </rcElement.ResponsiveContainer>
         </div>
       </div>
 
-      <div className="flex mt-12">
+      <div className="flex mt-12 justify-between gap-5">
         {/* Areawise Lead */}
 
-        <div className="w-1/2 mr-12 border rounded-md p-6">
-          <div className="relative">
-            <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+        <div className="w-1/2 p-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="relative flex justify-between items-center">
+            <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} font-poppins m-0 p-0`}>
               Areawise Lead Details
             </h1>
-            <div className="absolute top-6 right-7 float-right font-light">
+            <div className="font-light">
               <Select
                 defaultValue={currentYearCampaign?.[0]?.campaign_name}
                 placeholder={currentYearCampaign?.[0]?.campaign_name}
@@ -635,12 +636,12 @@ const CampaignAnalytics = ({ activeCompany }) => {
         </div>
 
         {/* Lead Status Summary */}
-        <div className="w-1/2 border rounded-md p-6">
-          <div className="relative">
-            <h1 className="text-xl font-semibold mb-6 leading-8 font-poppins">
+        <div className="w-1/2 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="relative flex justify-between items-center">
+            <h1 className={`text-xl font-semibold ${colorMode ? "text-white":"text-gray-800"} m-0 p-0 font-poppins`}>
               Lead Status Summary
             </h1>
-            <div className="absolute top-6 right-7 float-right font-light">
+            <div className="font-light">
               <Select
                 defaultValue={currentYearCampaign?.[0]?.campaign_name}
                 placeholder={currentYearCampaign?.[0]?.campaign_name}

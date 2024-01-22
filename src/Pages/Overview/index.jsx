@@ -27,6 +27,7 @@ const Overview = () => {
   const pdfRef = useRef(null);
   const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
+  
   const userDetails = useSelector((state) => state.user);
   const [comapnyEmployees, setComapnyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();
@@ -34,7 +35,6 @@ const Overview = () => {
   const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
 
   useEffect(() => {
-    console.log("HWERRREEE");
     (async () => {
       const companiesResponse = await handleFetchCompanies();
       if (companiesResponse?.status) {
@@ -43,13 +43,10 @@ const Overview = () => {
         setActiveCompanies(companiesResponse?.data?.[0]?.id);
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
-
-      console.log("companiesResponse", companiesResponse);
     })();
   }, []);
 
   useEffect(() => {
-    console.log("activeCompany activeCompany", activeCompany);
     dispatch(setLoader(true));
 
     (async () => {
@@ -132,47 +129,52 @@ const Overview = () => {
   };
 
   return (
-    <div className="py-16 px-6 font-poppins">
-      <div className="float-right text-black bg-white px-2 py-1 rounded-full cursor-pointer font-semibold font-poppins border border-black text-xs">
-        <span onClick={getImage}>Export Report</span>
-      </div>
+    <div className="py-5 font-poppins px-5 h-screen flex flex-col items-center justify-center">
+      <button
+        className="text-black bg-white px-2 py-1 mb-5 rounded-full cursor-pointer font-semibold font-[Poppins] border border-black text-xs"
+        onClick={getImage}
+      >
+        Capture Report
+      </button>
+      <div className="font-poppins rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[90vh] w-full mx-5 overflow-y-scroll overflow-x-hidden">
+        <div>
+          {userDetails?.userInfo?.role_id === 1 ? (
+            <div className="font-light">
+              <Select
+                id="companies"
+                defaultValue={defaultCompany}
+                placeholder={defaultCompany}
+                style={{
+                  width: 50,
+                }}
+                onChange={handleChange}
+              >
+                {companies?.map((company) => (
+                  <Option value={company?.id}>{company?.name}</Option>
+                ))}
+              </Select>
+            </div>
+          ) : null}
 
-      {userDetails?.userInfo?.role_id === 1 ? (
-        <div className="font-light">
-          <Select
-            id="companies"
-            defaultValue={defaultCompany}
-            placeholder={defaultCompany}
-            style={{
-              width: 250,
-            }}
-            onChange={handleChange}
-          >
-            {companies?.map((company) => (
-              <Option value={company?.id}>{company?.name}</Option>
-            ))}
-          </Select>
+          <div ref={pdfRef}>
+            {/* Comapny Analytics */}
+            {userDetails?.userInfo?.role_id === 1 && (
+              <CompanyRevenue activeCompany={activeCompany} />
+            )}
+
+            {/* Management Analitics */}
+            <ManagementAnalytics
+              comapnyEmployees={comapnyEmployees}
+              activeCompany={activeCompany}
+            />
+
+            {/* Campaign Analitics */}
+            <CampaignAnalytics activeCompany={activeCompany} />
+
+            {/* Sales Analitics */}
+            <SalesAnalytics activeCompany={activeCompany} />
+          </div>
         </div>
-      ) : null}
-
-      <div ref={pdfRef}>
-        {/* Comapny Analytics */}
-        {userDetails?.userInfo?.role_id === 1 && (
-          <CompanyRevenue activeCompany={activeCompany} />
-        )}
-
-        {/* Management Analitics */}
-        <ManagementAnalytics
-          comapnyEmployees={comapnyEmployees}
-          activeCompany={activeCompany}
-        />
-
-        {/* Campaign Analitics */}
-
-        <CampaignAnalytics activeCompany={activeCompany} />
-
-        {/* Sales Analitics */}
-        <SalesAnalytics activeCompany={activeCompany} />
       </div>
     </div>
   );

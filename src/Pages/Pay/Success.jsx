@@ -22,7 +22,7 @@ const Success = () => {
       <div className="lg:px-4 2xl:px-6 pt-25 pt-1 pb-10 flex justify-center items-center bg-gray-100 h-screen">
         {!loader ? (
           <div
-            className="bg-gray-100 shadow-lg"
+            className="bg-gray-100 shadow-md"
             style={{
               width: "45%",
             }}
@@ -55,7 +55,7 @@ const Success = () => {
           </div>
         ) : (
           <div
-            className="bg-gray-100 shadow-lg py-40 text-5xl font-semibold text-center"
+            className="bg-gray-100 shadow-md py-40 text-5xl font-semibold text-center"
             style={{
               width: "45%",
             }}

@@ -7,26 +7,25 @@ import {
 } from "../../Components/services/notification";
 import {
   addNotifications,
-  setNotifications,
 } from "../../features/user/notificationSlice";
 import { Spin, message } from "antd";
 
 const Notification = ({
   handleNotificationNavigation,
-  toggleNotification,
   notificationLoading,
   setNotificationLoading,
   setNotificationData,
   setIsNotifyOpen,
 }) => {
-  const [notifications, setNotificationss] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   const dispatch = useDispatch();
   const notify = useSelector((state) => state?.notifications).notifications;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   useEffect(() => {
     setInterval(() => {
-      setNotificationss(notify);
+      setNotifications(notify);
     }, 2000);
   }, [notify]);
 
@@ -51,7 +50,7 @@ const Notification = ({
             dispatch(addNotifications(notification));
           }
         });
-        setNotificationss(notify);
+        setNotifications(notify);
       }
 
       const updatedNotifications = allNotifications?.map((notification) => {
@@ -77,12 +76,7 @@ const Notification = ({
 
   return (
     <div>
-      <div
-        className="mt-7.5 overflow-y-auto "
-        style={{
-          maxHeight: "65vh",
-        }}
-      >
+      <div className="overflow-y-auto">
         {notificationLoading ? (
           <div className=" mt-6 h-8">
             <Spin tip="Loading">
@@ -91,9 +85,9 @@ const Notification = ({
           </div>
         ) : (
           !notifications?.length && (
-              <div className="text-lg font-poppins text-center my-6">
-                No Notification Yet
-              </div>
+            <div className="text-lg font-poppins text-center my-6">
+              No Notification Yet
+            </div>
           )
         )}
         {notifications?.map((notification, i) => (
@@ -107,12 +101,13 @@ const Notification = ({
               handleReadMessageReq(notification.id);
               setNotificationData(notification || {});
               setIsNotifyOpen(true);
+              console.log("NotifyCLicked");
             }}
             key={i}
-            className="pt-3 px-3 cursor-pointer hover:bg-gray-50 hover:delay-200"
+            className="ease-in duration-200 py-3 px-3 cursor-pointer hover:bg-white"
           >
-            <div className="flex justify-between items-start ">
-              <div className="text-lg leading-7 font-poppins font-semibold flex items-center">
+            <div className="flex justify-between items-start">
+              <div className="text-base font-poppins font-semibold flex items-center">
                 <span>
                   {notification?.priority ? (
                     <Icons.Bell
@@ -122,38 +117,39 @@ const Notification = ({
                     />
                   ) : null}
                 </span>
-                <span>{notification?.title}</span>
+                <span
+                  className={`${colorMode ? "text-white" : "text-gray-800"}`}
+                >
+                  {notification?.title}
+                </span>
               </div>
-
               {/* Date & Time */}
               <div>
                 <span
-                  className="font-medium text-opacity-50 leading-4 mr-1.5"
-                  style={{
-                    fontSize: "10px",
-                  }}
+                  className={`font-medium text-xs mr-1.5 ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  }`}
                 >
                   {notification.notification_time?.slice(0, 16)}
                 </span>
               </div>
             </div>
-            <div className="flex justify-between items-start mb-5 mt-2">
+            <div className="flex justify-between items-start py-2 border-b-[0.5px] border-gray-500">
               <div>
-                <p className="text-sm leading-6 font-medium font-poppins mb-0">
+                <p className={`text-sm ${
+                    colorMode ? "text-white" : "text-gray-800"
+                  } font-medium font-poppins mb-0`}>
                   {notification?.description}
                 </p>
               </div>
               <div>
                 <Icons.Read
                   className={` ${
-                    !notification.status
-                      ? "text-brand-color"
-                      : "text-black text-opacity-25"
+                    !notification.status ? "text-[#00ff00]" : "text-gray-500"
                   }`}
                 />
               </div>
             </div>
-            <hr onClick={(e) => e.stopPropagation()} />
           </div>
         ))}
       </div>

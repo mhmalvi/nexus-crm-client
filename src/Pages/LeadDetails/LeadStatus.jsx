@@ -58,6 +58,7 @@ const LeadStatus = (props) => {
 
   const userDetails = useSelector((state) => state?.user);
   const companyDetails = useSelector((state) => state?.company.companyDetails);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
@@ -402,838 +403,1056 @@ const LeadStatus = (props) => {
   };
 
   return (
-    <div className="min-h-full pr-6 border-r">
-      <div>
-        <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50">
+    <div className="min-h-full flex flex-col justify-center items-start rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+      <div className="flex justify-center items-center gap-4">
+        <h1
+          className={`text-xl font-semibold font-poppins ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          } m-0 p-0`}
+        >
           User Activity Timeline
         </h1>
-      </div>
-      <div className="lead_status flex flex-wrap items-center gap-y-3 mt-5">
-        <Dropdown
-          disabled={
-            userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2 ||
-            userDetails?.userInfo?.role_id === 6
-              ? true
-              : false
-          }
-          className={`cursor-pointer ${leadStatusColor}`}
-          overlay={menu}
-          trigger="click"
-        >
-          <div onClick={(e) => e.preventDefault()}>
-            <Space>{activeStatusTitle}</Space>
-          </div>
-        </Dropdown>
-        <div className="flex items-center">
-          {/* For Counting Calls */}
-          {activeStatusTitle === "Called" &&
-            (userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip
-                placement="top"
-                title={"No. of phone calls you have made"}
-              >
-                <div className="lead_status ml-3 p-1.5 bg-gray-100 rounded-md flex items-center border">
-                  <div>
-                    <h1 className="w-6 text-center mb-0 text-sm leading-6 font-medium font-poppins">
-                      {leadDetails?.leadCallHistory?.length}
-                    </h1>
+        <div className="lead_status flex items-center">
+          <Dropdown
+            disabled={
+              userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 6
+                ? true
+                : false
+            }
+            className={`cursor-pointer ${leadStatusColor}`}
+            overlay={menu}
+            trigger="click"
+          >
+            <div onClick={(e) => e.preventDefault()}>
+              <Space>{activeStatusTitle}</Space>
+            </div>
+          </Dropdown>
+          <div className="flex items-center">
+            {/* For Counting Calls */}
+            {activeStatusTitle === "Called" &&
+              (userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip
+                  placement="top"
+                  title={"No. of phone calls you have made"}
+                >
+                  <div
+                    className={`${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    } shadow-md backdrop-blur-2xl bg-[#ffffff11] ml-3 p-1.5 rounded-md flex items-center `}
+                  >
+                    <div>
+                      <h1 className={`w-6 text-center mb-0 text-sm font-medium font-poppins ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } `}>
+                        {leadDetails?.leadCallHistory?.length}
+                      </h1>
+                    </div>
+                    <div className="ml-3 mb-0 flex justify-center items-center ">
+                      <button
+                        className="px-1.5 py-0.5 rounded-md bg-black text-slate-300"
+                        onClick={showCallDetailsModal}
+                      >
+                        <Icons.PhoneVolume className="w-3 text-slate-300 py-1" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="ml-3 mb-0 flex justify-center items-center">
-                    <button
-                      className="px-1.5 py-0.5 rounded-md bg-black text-white"
-                      onClick={showCallDetailsModal}
+                </Tooltip>
+              ) : null)}
+
+            {/* For Call History */}
+            {activeStatusTitle === "Called" || activeStatusTitle === "Paid" ? (
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip placement="top" title={"All Call Histories"}>
+                  <div>
+                    <Icons.CallHistory
+                      className={`w-6 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }  mx-2 cursor-pointer`}
+                      onClick={() => setIsCallHistoryOpen(true)}
+                    />
+                  </div>
+                </Tooltip>
+              ) : null
+            ) : null}
+          </div>
+
+          {/* Call Details Form */}
+          <Modal
+            visible={isCallDetailsOpen}
+            onOk={handleCallDetails}
+            onCancel={handleCancel}
+            okText="Save"
+          >
+            <div>
+              <div className="">
+                <div className="font-poppins text-base font-semibold mb-6">
+                  Call Details
+                </div>
+
+                <div className="flex items-end mb-4">
+                  <div className="mr-4">
+                    <h1 className="text-sm font-poppins">Duration:</h1>
+                  </div>
+                  <div className="flex items-start">
+                    <Space
+                      className=" border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
+                      direction="vertical"
+                      // size={12}
+                      style={{
+                        width: "10rem",
+                      }}
                     >
-                      <Icons.PhoneVolume className="w-3 text-white py-1" />
-                    </button>
+                      <DatePicker
+                        className="date-time-picker"
+                        suffixIcon={callStart}
+                        bordered={false}
+                        showTime
+                        onOk={onCallStart}
+                        onChange={onCallStartChange}
+                      />
+                    </Space>
+
+                    <div>
+                      <span className="text-3xl font-semibold px-1 text-center">
+                        -
+                      </span>
+                    </div>
+
+                    <Space
+                      className="border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
+                      direction="vertical"
+                      size={12}
+                      style={{
+                        width: "10rem",
+                      }}
+                    >
+                      <DatePicker
+                        className="date-time-picker"
+                        suffixIcon={callEnd}
+                        bordered={false}
+                        showTime
+                        onOk={onCallEnd}
+                        onChange={onCallEndChange}
+                      />
+                    </Space>
                   </div>
                 </div>
-              </Tooltip>
-            ) : null)}
 
-          {/* For Call History */}
-          {activeStatusTitle === "Called" || activeStatusTitle === "Paid" ? (
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip placement="top" title={"All Call Histories"}>
-                <div>
-                  <Icons.CallHistory
-                    className="w-6 text-gray-700 mx-2 cursor-pointer"
-                    onClick={() => setIsCallHistoryOpen(true)}
+                <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+                  <input
+                    className="w-full font-poppins outline-none"
+                    type="text"
+                    placeholder="Write Remark"
+                    name="remark"
+                    id="remark"
+                    value={callRemark}
+                    onChange={(e) => setCallRemark(e.target.value)}
                   />
                 </div>
-              </Tooltip>
-            ) : null
-          ) : null}
-        </div>
+              </div>
+            </div>
+          </Modal>
 
-        {/* Call Details Form */}
-        <Modal
-          visible={isCallDetailsOpen}
-          onOk={handleCallDetails}
-          onCancel={handleCancel}
-          okText="Save"
-        >
-          <div>
+          {/* Call History Details */}
+          <Modal
+            visible={isCallHistoryOpen}
+            onCancel={() => setIsCallHistoryOpen(false)}
+            footer={false}
+            width={800}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Call History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Remark</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
             <div className="">
-              <div className="font-poppins text-base font-semibold mb-6">
-                Call Details
-              </div>
-
-              <div className="flex items-end mb-4">
-                <div className="mr-4">
-                  <h1 className="text-sm font-poppins">Duration:</h1>
+              {leadDetails?.leadCallHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {leadDetails?.leadCallHistory?.map((history, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>
+                          {new Date(history.call_start_time).toLocaleString()}
+                        </td>
+                        <td>
+                          {new Date(history.call_end_time).toLocaleString()}
+                        </td>
+                        <td>{history.call_remark}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">No Call History</h1>
                 </div>
-                <div className="flex items-start">
-                  <Space
-                    className=" border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-                    direction="vertical"
-                    // size={12}
-                    style={{
-                      width: "10rem",
-                    }}
-                  >
-                    <DatePicker
-                      className="date-time-picker"
-                      suffixIcon={callStart}
-                      bordered={false}
-                      showTime
-                      onOk={onCallStart}
-                      onChange={onCallStartChange}
-                    />
-                  </Space>
+              )}
+            </div>
+          </Modal>
 
-                  <div>
-                    <span className="text-3xl font-semibold px-1 text-center">
-                      -
+          {/* Amount History Details */}
+          <Modal
+            visible={isAmountHistoryOpen}
+            onCancel={() => setIsAmountHistoryOpen(false)}
+            footer={false}
+            width={500}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Amount History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Date</th>
+                    <th className="w-32">Amount</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div className="">
+              {leadDetails?.leadAmountHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {leadDetails?.leadAmountHistory?.map((history, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>
+                          {new Date(history.created_at)?.toLocaleString()}
+                        </td>
+                        <td className="w-32">
+                          <span>${history.amount}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">No Amount History</h1>
+                </div>
+              )}
+            </div>
+          </Modal>
+
+          {/* Payment History Details */}
+          <Modal
+            visible={isPaymentHistoryOpen}
+            onCancel={() => setIsPaymentHistoryOpen(false)}
+            footer={false}
+            width={900}
+          >
+            <div>
+              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+                Payment History
+              </h1>
+            </div>
+            <div className="tbl-header">
+              <table cellPadding="0" cellSpacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th className="w-16">No.</th>
+                    <th>Date Time</th>
+                    <th className="w-24">Amount</th>
+                    <th>Transaction ID</th>
+                    <th>Invoice ID</th>
+                    <th className="w-20">Action</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div className="">
+              {paymentHistory?.length > 0 ? (
+                <table
+                  className="custom-table"
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border="0"
+                >
+                  <tbody>
+                    {paymentHistory?.map((payment, i) => (
+                      <tr key={i}>
+                        <td className="w-16">{i + 1}</td>
+                        <td>{new Date(payment.created_at).toLocaleString()}</td>
+                        <td className="w-24">{payment.payment_amount}</td>
+                        <td>{payment.transaction_id}</td>
+                        <td>{payment.invoice_number}</td>
+                        <td className="w-20">
+                          <Icons.Cross
+                            className="w-2.5 text-red-600"
+                            onClick={() =>
+                              handleDeletePaymentHistoryReq(payment?.id)
+                            }
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="py-20 flex justify-center items-center">
+                  <h1 className="text-xl font-light">Not Paid Yet</h1>
+                </div>
+              )}
+            </div>
+          </Modal>
+
+          {/* Add Payment History */}
+          <Modal
+            visible={isAddPaymentHistoryOpen}
+            onCancel={() => setIsAddPaymentHistoryOpen(false)}
+            footer={false}
+            width={900}
+          >
+            <AddPaymentHistory
+              leadDetails={leadDetails}
+              setIsAddPaymentHistoryOpen={setIsAddPaymentHistoryOpen}
+              syncDetails={syncDetails}
+              setSyncDetails={setSyncDetails}
+              syncTotalPaid={syncTotalPaid}
+              setSyncTotalPaid={setSyncTotalPaid}
+            />
+          </Modal>
+
+          {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
+            <div className="flex justify-center items-center ">
+              {userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip placement="top" title={"Add amount add press enter"}>
+                  <form
+                    onSubmit={(e) => handleAddLeadAmount(e)}
+                    className="ml-3 px-2 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md flex items-center"
+                  >
+                    <span
+                      className={`mr-0.5 font-poppins font-medium ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
+                      $
                     </span>
-                  </div>
-
-                  <Space
-                    className="border rounded-full text-base text-center py-1.5 bg-black text-white cursor-pointer font-poppins"
-                    direction="vertical"
-                    size={12}
-                    style={{
-                      width: "10rem",
-                    }}
-                  >
-                    <DatePicker
-                      className="date-time-picker"
-                      suffixIcon={callEnd}
-                      bordered={false}
-                      showTime
-                      onOk={onCallEnd}
-                      onChange={onCallEndChange}
+                    <input
+                      className={`w-14 text-sm font-medium font-poppins outline-none border-[0px] bg-transparent ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                      type="text"
+                      name=""
+                      defaultValue={
+                        leadDetails?.leadAmountHistory.length
+                          ? leadDetails?.leadAmountHistory[0]?.amount
+                          : 0
+                      }
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="Amount"
+                      id=""
                     />
-                  </Space>
+                  </form>
+                </Tooltip>
+              ) : null}
+
+              {/* For Amount History */}
+              {userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5 ? (
+                <Tooltip placement="top" title={"All Amount Histories"}>
+                  <div>
+                    <Icons.AmountHistory
+                      className={`w-6 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }  mx-2 cursor-pointer`}
+                      onClick={() => setIsAmountHistoryOpen(true)}
+                    />
+                  </div>
+                </Tooltip>
+              ) : null}
+            </div>
+          )}
+
+          {activeStatusTitle === "Suspended" && (
+            <div>
+              <div className="ml-3">
+                {new Date(statusDateTime["Suspended"]).toString().slice(0, 31)}
+              </div>
+            </div>
+          )}
+
+          {(activeStatusTitle !== "New Lead" ||
+            activeStatusTitle !== "Skilled") &&
+            (userDetails?.userInfo?.role_id === 6 ? (
+              <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
+                <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
+                  Payable :
+                </span>
+                <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
+                  $
+                  {leadDetails?.leadAmountHistory?.length
+                    ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid > 0
+                      ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid
+                      : 0
+                    : "Not Set Yet"}
+                </span>
+              </div>
+            ) : null)}
+        </div>
+      </div>
+
+      <div className="flex items-start justify-center mt-8 w-full">
+        <div className="w-full flex justify-between">
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className=" w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
+              </div>
+              <div className="">
+                <div
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus.New_Lead ? "bg-green-500" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["New Lead"]
+                        ? "bg-green-500"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
                 </div>
               </div>
-
-              <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
-                <input
-                  className="w-full font-poppins outline-none"
-                  type="text"
-                  placeholder="Write Remark"
-                  name="remark"
-                  id="remark"
-                  value={callRemark}
-                  onChange={(e) => setCallRemark(e.target.value)}
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
                 />
               </div>
             </div>
-          </div>
-        </Modal>
-
-        {/* Call History Details */}
-        <Modal
-          visible={isCallHistoryOpen}
-          onCancel={() => setIsCallHistoryOpen(false)}
-          footer={false}
-          width={800}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Call History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Remark</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {leadDetails?.leadCallHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {leadDetails?.leadCallHistory?.map((history, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>
-                        {new Date(history.call_start_time).toLocaleString()}
-                      </td>
-                      <td>
-                        {new Date(history.call_end_time).toLocaleString()}
-                      </td>
-                      <td>{history.call_remark}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Call History</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
-
-        {/* Amount History Details */}
-        <Modal
-          visible={isAmountHistoryOpen}
-          onCancel={() => setIsAmountHistoryOpen(false)}
-          footer={false}
-          width={500}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Amount History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Date</th>
-                  <th className="w-32">Amount</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {leadDetails?.leadAmountHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {leadDetails?.leadAmountHistory?.map((history, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>{new Date(history.created_at)?.toLocaleString()}</td>
-                      <td className="w-32">
-                        <span>${history.amount}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">No Amount History</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
-
-        {/* Payment History Details */}
-        <Modal
-          visible={isPaymentHistoryOpen}
-          onCancel={() => setIsPaymentHistoryOpen(false)}
-          footer={false}
-          width={900}
-        >
-          <div>
-            <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-              Payment History
-            </h1>
-          </div>
-          <div className="tbl-header">
-            <table cellPadding="0" cellSpacing="0" border="0">
-              <thead>
-                <tr>
-                  <th className="w-16">No.</th>
-                  <th>Date Time</th>
-                  <th className="w-24">Amount</th>
-                  <th>Transaction ID</th>
-                  {/* <th className="w-24">Method</th> */}
-                  <th>Invoice ID</th>
-                  <th className="w-20">Action</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="">
-            {paymentHistory?.length > 0 ? (
-              <table
-                className="custom-table"
-                cellPadding="0"
-                cellSpacing="0"
-                border="0"
-              >
-                <tbody>
-                  {paymentHistory?.map((payment, i) => (
-                    <tr key={i}>
-                      <td className="w-16">{i + 1}</td>
-                      <td>{new Date(payment.created_at).toLocaleString()}</td>
-                      <td className="w-24">{payment.payment_amount}</td>
-                      <td>{payment.transaction_id}</td>
-                      {/* <td className="w-24">{payment.payment_method}</td> */}
-                      <td>{payment.invoice_number}</td>
-                      <td className="w-20">
-                        <Icons.Cross
-                          className="w-2.5 text-red-600"
-                          onClick={() =>
-                            handleDeletePaymentHistoryReq(payment?.id)
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="py-20 flex justify-center items-center">
-                <h1 className="text-xl font-light">Not Paid Yet</h1>
-              </div>
-            )}
-          </div>
-        </Modal>
-
-        {/* Add Payment History */}
-        <Modal
-          visible={isAddPaymentHistoryOpen}
-          onCancel={() => setIsAddPaymentHistoryOpen(false)}
-          footer={false}
-          width={900}
-        >
-          <AddPaymentHistory
-            leadDetails={leadDetails}
-            setIsAddPaymentHistoryOpen={setIsAddPaymentHistoryOpen}
-            syncDetails={syncDetails}
-            setSyncDetails={setSyncDetails}
-            syncTotalPaid={syncTotalPaid}
-            setSyncTotalPaid={setSyncTotalPaid}
-          />
-        </Modal>
-
-        {(activeStatusTitle === "Called" || activeStatusTitle === "Paid") && (
-          <div className="flex items-center">
-            {userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip placement="top" title={"Add amount add press enter"}>
-                <form
-                  onSubmit={(e) => handleAddLeadAmount(e)}
-                  className="ml-3 px-2 py-0.5 bg-gray-100 rounded-md flex items-center border"
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
                 >
-                  <span className="mr-0.5 font-poppins font-medium text-black text-opacity-50">
-                    $
-                  </span>
-                  <input
-                    className="w-14 text-sm leading-8 font-medium font-poppins outline-none bg-transparent"
-                    type="text"
-                    name=""
-                    defaultValue={
-                      leadDetails?.leadAmountHistory.length
-                        ? leadDetails?.leadAmountHistory[0]?.amount
-                        : 0
-                    }
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Amount"
-                    id=""
-                  />
-                </form>
+                  New Lead
+                </h6>
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  # {leadDetails?.leadDetails?.course_code}
+                </h6>
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
+                      ? new Date(
+                          leadDetails?.leadDetails?.lead_apply_date?.toString()
+                        )
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
+                </Tooltip>
+              </div>
+              <Tooltip placement="top" title={"Its a new arrival lead."}>
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
               </Tooltip>
-            ) : null}
-
-            {/* For Amount History */}
-            {userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5 ? (
-              <Tooltip placement="top" title={"All Amount Histories"}>
-                <div>
-                  <Icons.AmountHistory
-                    className="w-6 text-gray-700 mx-2 cursor-pointer"
-                    onClick={() => setIsAmountHistoryOpen(true)}
-                  />
-                </div>
-              </Tooltip>
-            ) : null}
-          </div>
-        )}
-
-        {activeStatusTitle === "Suspended" && (
-          <div>
-            <div className="ml-3">
-              {new Date(statusDateTime["Suspended"]).toString().slice(0, 31)}
             </div>
           </div>
-        )}
-
-        {(activeStatusTitle !== "New Lead" ||
-          activeStatusTitle !== "Skilled") &&
-          (userDetails?.userInfo?.role_id === 6 ? (
-            <div className="ml-3 px-2 py-1.5 rounded-md flex items-center border border-black border-opacity-40">
-              <span className="mr-0.5 font-poppins font-medium text-black text-opacity-90">
-                Payable :
-              </span>
-              <span className="mr-0.5 font-poppins font-medium text-red-600 text-opacity-90">
-                $
-                {leadDetails?.leadAmountHistory?.length
-                  ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid > 0
-                    ? leadDetails?.leadAmountHistory[0]?.amount - totalPaid
-                    : 0
-                  : "Not Set Yet"}
-              </span>
-            </div>
-          ) : null)}
-      </div>
-
-      <div className="flex flex-col items-start justify-center mt-8 ">
+        </div>
         <div className="w-full flex justify-between">
-          <div className="flex">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus.New_Lead ? "bg-green-500" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["New Lead"]
-                      ? "bg-green-500"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
-                <hr className="rotate-90 w-11 mt-7" />
+                <div
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus["Skilled"] ? "bg-orange-400" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["Skilled"]
+                        ? "bg-orange-400"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
+                </div>
+              </div>
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
-            <div className="ml-3">
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>New Lead</span>
-                <Tooltip placement="top" title={"Its an new arrival lead."}>
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Skilled
+                </h6>
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  {leadStatus["Skilled"] ? (
+                    <span>Eligible</span>
+                  ) : (
+                    <span>Non-eligible</span>
+                  )}
+                </h6>
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {statusDateTime["Skilled"] !== "Not Yet"
+                      ? new Date(statusDateTime["Skilled"]?.toString())
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
                 </Tooltip>
-              </h6>
-              <h6 className="mb-0 text-sm font-semibold font-poppins leading-6 mt-4">
-                # {leadDetails?.leadDetails?.course_code}
-              </h6>
+              </div>
+              <Tooltip
+                placement="top"
+                title={"If the student is skilled enough"}
+              >
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
+              </Tooltip>
             </div>
           </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {leadDetails?.leadDetails?.lead_apply_date !== "Not Yet"
-                ? new Date(
-                    leadDetails?.leadDetails?.lead_apply_date?.toString()
-                  )
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
         </div>
-
-        <div className="w-full flex justify-between mt-7">
-          <div className="flex">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus["Skilled"] ? "bg-orange-400" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["Skilled"]
-                      ? "bg-orange-400"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
+        <div className="w-full flex justify-between">
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div className="">
-                <hr className="rotate-90 w-11 mt-7" />
-              </div>
-            </div>
-            <div className="ml-3">
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>Skilled</span>
-                <Tooltip
-                  placement="top"
-                  title={"If the student is skilled enough"}
-                >
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
-                </Tooltip>
-              </h6>
-              <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                {leadStatus["Skilled"] ? (
-                  <span>Eligible</span>
-                ) : (
-                  <span>Non-eligible</span>
-                )}
-              </h6>
-            </div>
-          </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {statusDateTime["Skilled"] !== "Not Yet"
-                ? new Date(statusDateTime["Skilled"]?.toString())
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
-        </div>
-
-        <div className="w-full flex justify-between mt-7">
-          <div className="flex -ml-4">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus["Called"] ? "bg-blue-400" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
                 <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["Called"]
-                      ? "bg-blue-400"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus["Called"] ? "bg-blue-400" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["Called"]
+                        ? "bg-blue-400"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
+                </div>
               </div>
-              <div className="">
-                <hr className="rotate-90 w-19 mt-12" />
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
-            <div>
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>Called</span>
-                <Tooltip
-                  placement="top"
-                  title={"If you have communicated with the student"}
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
                 >
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
-                </Tooltip>
-              </h6>
-              <div>
-                <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
+                  <span>Called</span>
+                </h6>
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
                   No. of Calls: {leadDetails?.leadCallHistory?.length}
                 </h6>
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {statusDateTime["Called"] !== "Not Yet"
+                      ? new Date(statusDateTime["Called"]?.toString())
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
+                </Tooltip>
                 {activeStatusTitle === "Called" &&
                 (userDetails?.userInfo?.role_id === 3 ||
                   userDetails?.userInfo?.role_id === 4 ||
                   userDetails?.userInfo?.role_id === 5) ? (
-                  <div className="my-2">
+                  <div className="">
                     <Radio.Group
                       onChange={onCallResponseChange}
                       value={callResponse}
-                      className="flex items-center"
+                      className="!flex items-center justify-center"
                     >
                       <span>
-                        <Radio value={1}>Responded</Radio>
+                        <Radio
+                          className={` !text-xs
+                            ${colorMode ? "!text-slate-300" : "!text-gray-800"}
+                          `}
+                          value={1}
+                        >
+                          Responded
+                        </Radio>
                       </span>
                       <span>
-                        <Radio value={0}>Not Responded</Radio>
+                        <Radio
+                          className={` !text-xs
+                          ${colorMode ? "!text-slate-300" : "!text-gray-800"}
+                        `}
+                          value={0}
+                        >
+                          Not Responded
+                        </Radio>
                       </span>
                     </Radio.Group>
-                    <div className="text-xs text-red-500 m-2 rounded-md">
+                    <div className="text-xs text-red-500 mx-2 rounded-md">
                       Note: Selecting either option triggers sending email to
                       the student instantly. Choose option carefully.{" "}
                     </div>
                   </div>
-                ) : (
-                  <div>&nbsp;</div>
-                )}
+                ) : // <div>&nbsp;</div>
+                null}
               </div>
+              <Tooltip
+                placement="top"
+                title={"If you have communicated with the student"}
+              >
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
+              </Tooltip>
             </div>
           </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {statusDateTime["Called"] !== "Not Yet"
-                ? new Date(statusDateTime["Called"]?.toString())
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
         </div>
-
-        <div className="w-full flex justify-between mt-7 ">
-          <div className="flex -ml-3">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus["Paid"] ? "bg-teal-400" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
+        <div className="w-full flex justify-between ">
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
+              </div>
+              <div className="">
                 <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["Paid"]
-                      ? "bg-teal-400"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
-              </div>
-              <div>
-                <hr className="rotate-90 w-17 mt-10" />
-              </div>
-            </div>
-            <div>
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>Paid</span>
-                <Tooltip
-                  placement="top"
-                  title={"If the student have paid any fees"}
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus["Paid"] ? "bg-teal-400" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
                 >
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
-                </Tooltip>
-              </h6>
-
-              {userDetails?.userinfo?.role_id !== 1 ||
-              userDetails?.userinfo?.role_id !== 2 ? (
-                activeStatusTitle !== "New Lead" &&
-                activeStatusTitle !== "Skilled" ? (
-                  <Tooltip title="All Payment Histories">
-                    <div
-                      className="flex items-center my-2 cursor-pointer"
-                      onClick={() => setIsPaymentHistoryOpen(true)}
-                    >
-                      <Icons.AmountHistory
-                        className="w-5 text-gray-700 mr-2 cursor-pointer"
-                        onClick={() => setIsAmountHistoryOpen(true)}
-                      />
-                      <h6 className="mb-0 text-sm font-semibold font-poppins leading-6">
-                        Payment History
-                      </h6>
-                    </div>
-                  </Tooltip>
-                ) : (
-                  <div className="text-sm font-poppins leading-6 my-4">
-                    Amount Not Set Yet/ Not Paid Yet
-                  </div>
-                )
-              ) : null}
-
-              {leadDetails?.leadAmountHistory?.length ? (
-                <>
-                  <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                    Paid ${totalPaid} of $
-                    {leadDetails?.leadAmountHistory[0]?.amount}(
-                    {(
-                      (totalPaid / leadDetails?.leadAmountHistory[0]?.amount) *
-                      100
-                    ).toFixed(2)}
-                    %)
-                  </h6>
-                  <h6 className="text-sm font-normal font-poppins leading-6 my-1">
-                    Due: $
-                    {leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
-                  </h6>
-                </>
-              ) : null}
-
-              {activeStatusTitle !== "New Lead" &&
-              activeStatusTitle !== "Skilled" ? (
-                <div>
-                  <button
-                    className="text-sm mt-2 font-medium bg-gray-100 px-2 py-1 rounded-sm border border-gray-200"
-                    onClick={() => setIsAddPaymentHistoryOpen(true)}
-                  >
-                    Add Payment History
-                  </button>
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["Paid"]
+                        ? "bg-teal-400"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
                 </div>
-              ) : null}
+              </div>
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
+              </div>
+            </div>
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Paid
+                </h6>
+
+                {userDetails?.userinfo?.role_id !== 1 ||
+                userDetails?.userinfo?.role_id !== 2 ? (
+                  activeStatusTitle !== "New Lead" &&
+                  activeStatusTitle !== "Skilled" ? (
+                    <Tooltip title="All Payment Histories">
+                      <div
+                        className="flex items-center cursor-pointer"
+                        onClick={() => setIsPaymentHistoryOpen(true)}
+                      >
+                        <Icons.AmountHistory
+                          className={`w-5 ${colorMode?"text-slate-300":"text-gray-800"} mr-2 cursor-pointer`}
+                          onClick={() => setIsAmountHistoryOpen(true)}
+                        />
+                        <h6
+                          className={`mb-0 text-base font-normal font-poppins ${
+                            colorMode ? "text-slate-300" : "text-gray-800"
+                          }`}
+                        >
+                          Payment History
+                        </h6>
+                      </div>
+                    </Tooltip>
+                  ) : (
+                    <div
+                      className={`mb-0 text-sm font-thin font-poppins ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
+                      No transaction
+                    </div>
+                  )
+                ) : null}
+
+                {leadDetails?.leadAmountHistory?.length ? (
+                  <>
+                    <h6
+                      className={` ${
+                        colorMode ? "!text-slate-300" : "!text-gray-800"
+                      } mb-0 text-xs font-normal font-poppins`}
+                    >
+                      Paid ${totalPaid} of $
+                      {leadDetails?.leadAmountHistory[0]?.amount}(
+                      {(
+                        (totalPaid /
+                          leadDetails?.leadAmountHistory[0]?.amount) *
+                        100
+                      ).toFixed(2)}
+                      %)
+                    </h6>
+                    <h6
+                      className={` ${
+                        colorMode ? "!text-white" : "!text-gray-800"
+                      } text-xs font-thin font-poppins`}
+                    >
+                      Due: $
+                      {leadDetails?.leadAmountHistory[0]?.amount - totalPaid}
+                    </h6>
+                  </>
+                ) : null}
+
+                {activeStatusTitle !== "New Lead" &&
+                activeStatusTitle !== "Skilled" ? (
+                  <div>
+                    <button
+                      className={`text-sm font-medium bg-slate-300 px-2 rounded-md border border-gray-200`}
+                      onClick={() => setIsAddPaymentHistoryOpen(true)}
+                    >
+                      Add Payment History
+                    </button>
+                  </div>
+                ) : null}
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {statusDateTime["Paid"] !== "Not Yet"
+                      ? new Date(statusDateTime["Paid"]?.toString())
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
+                </Tooltip>
+              </div>
+              <Tooltip
+                placement="top"
+                title={"If the student have paid any fees"}
+              >
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
+              </Tooltip>
             </div>
           </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {statusDateTime["Paid"] !== "Not Yet"
-                ? new Date(statusDateTime["Paid"]?.toString())
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
         </div>
-        <div className="w-full flex justify-between mt-7 ">
-          <div className="flex -ml-3">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus["Verified"] ? "bg-violet-500" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["Verified"]
-                      ? "bg-violet-500"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
+        <div className="w-full flex justify-between ">
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
-              <div>
-                <hr className="rotate-90 w-17 mt-10" />
+              <div className="">
+                <div
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus["Verified"] ? "bg-violet-500" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["Verified"]
+                        ? "bg-violet-500"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
+                </div>
+              </div>
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
-            <div>
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>Verified</span>
-                <Tooltip
-                  placement="top"
-                  title={"If the student's documents are verified"}
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
                 >
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
-                </Tooltip>
-              </h6>
-              <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                {leadStatus["Verified"] ? (
-                  <span>Verified</span>
-                ) : (
-                  <span>Un-verified</span>
-                )}
-              </h6>
-              <div className="flex mt-1">
-                <h6 className="mb-0 italic text-xs whitespace-nowrap font-medium font-poppins leading-5">
+                  Verified
+                </h6>
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  {leadStatus["Verified"] ? (
+                    <span>Verified</span>
+                  ) : (
+                    <span>Un-verified</span>
+                  )}
+                </h6>
+
+                <h6
+                  className={`mb-0 text-xs font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
                   <span className="text-red-500">*</span> Please Check The
                   Checklist Section
                 </h6>
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {statusDateTime["Verified"] !== "Not Yet"
+                      ? new Date(statusDateTime["Verified"]?.toString())
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
+                </Tooltip>
               </div>
+              <Tooltip
+                placement="top"
+                title={"If the student's documents are verified"}
+              >
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
+              </Tooltip>
             </div>
           </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {statusDateTime["Verified"] !== "Not Yet"
-                ? new Date(statusDateTime["Verified"]?.toString())
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
         </div>
-        <div className="w-full flex justify-between mt-7">
-          <div className="flex -ml-3">
-            <div className="flex flex-col items-center">
-              <div
-                className={`cursor-pointer w-5 h-5 rounded-full ${
-                  leadStatus["Completed"] ? "bg-red-500" : "bg-gray-300"
-                } bg-opacity-20 flex justify-center items-center`}
-              >
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    leadStatus["Completed"]
-                      ? "bg-red-500"
-                      : "bg-gray-300 animate-custom-ping"
-                  }`}
-                ></div>
+        <div className="w-full flex justify-between">
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
               <div>
-                <hr className="rotate-90 w-17 mt-10" />
+                <div
+                  className={`cursor-pointer w-5 h-5 rounded-full ${
+                    leadStatus["Completed"] ? "bg-red-500" : "bg-gray-300"
+                  } bg-opacity-20 flex justify-center items-center`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      leadStatus["Completed"]
+                        ? "bg-red-500"
+                        : `${
+                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          } animate-custom-ping`
+                    }`}
+                  ></div>
+                </div>
+              </div>
+              <div className="w-full">
+                <hr
+                  className={`${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  } w-full`}
+                />
               </div>
             </div>
-            <div>
-              <h6 className="mb-0 text-base font-semibold font-poppins leading-6">
-                <span>Completed</span>
-                <Tooltip
-                  placement="top"
-                  title={
-                    "If the user has completed the course and certificate issued"
-                  }
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <h6
+                  className={`mb-0 text-base font-semibold font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
                 >
-                  <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
-                    ?
-                  </span>
-                </Tooltip>
-              </h6>
-              <h6 className="mb-0 text-sm font-normal font-poppins leading-6 mt-4">
-                {leadDetails?.leadDetails?.document_certificate_id > 0
-                  ? "Certificate Provided"
-                  : "Certificate Not Provided Yet"}
-              </h6>
-              {leadStatus["Completed"] && (
-                <div className="flex mt-1">
-                  {leadDetails?.leadDetails?.document_certificate_id === 0 ? (
-                    userDetails?.userInfo?.role_id === 3 ||
-                    userDetails?.userInfo?.role_id === 4 ||
-                    userDetails?.userInfo?.role_id === 5 ? (
-                      <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
-                        <Upload
-                          onChange={handleCertificateFileChange}
-                          fileList={fileList}
-                        >
-                          <div className="flex items-center">
-                            <Icons.PDF />
-                            <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                              Upload Certificate
-                            </h6>
-                          </div>
-                        </Upload>
-                      </div>
+                  Completed
+                </h6>
+                <h6
+                  className={`mb-0 text-sm font-thin font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  {leadDetails?.leadDetails?.document_certificate_id > 0
+                    ? "Certificate Provided"
+                    : "Certificate Not Provided Yet"}
+                </h6>
+                {leadStatus["Completed"] && (
+                  <div className="flex mt-1">
+                    {leadDetails?.leadDetails?.document_certificate_id === 0 ? (
+                      userDetails?.userInfo?.role_id === 3 ||
+                      userDetails?.userInfo?.role_id === 4 ||
+                      userDetails?.userInfo?.role_id === 5 ? (
+                        <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
+                          <Upload
+                            onChange={handleCertificateFileChange}
+                            fileList={fileList}
+                          >
+                            <div className="flex items-center">
+                              <Icons.PDF />
+                              <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                                Upload Certificate
+                              </h6>
+                            </div>
+                          </Upload>
+                        </div>
+                      ) : (
+                        <div className="flex items-center">
+                          <Icons.PDF />
+                          <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                            Not Provided Yet
+                          </h6>
+                        </div>
+                      )
                     ) : (
-                      <div className="flex items-center">
-                        <Icons.PDF />
-                        <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                          Not Provided Yet
-                        </h6>
+                      <div>
+                        <a
+                          id="certificate"
+                          className="flex items-center"
+                          href={certificate}
+                          download
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          <Icons.PDF />
+                          <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
+                            Download Certificate
+                          </h6>
+                        </a>
                       </div>
-                    )
-                  ) : (
-                    <div>
-                      <a
-                        id="certificate"
-                        className="flex items-center"
-                        href={certificate}
-                        download
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <Icons.PDF />
-                        <h6 className="mb-0 ml-1.5 text-sm font-semibold font-poppins leading-5">
-                          Download Certificate
-                        </h6>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                )}
+                <Tooltip placement="top" title={"Activity Time"}>
+                  <div
+                    className={`mb-0 text-xs font-thin font-poppins ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {statusDateTime["Completed"] !== "Not Yet"
+                      ? new Date(statusDateTime["Completed"]?.toString())
+                          ?.toGMTString()
+                          ?.replace("GMT", "")
+                      : "Not Yet"}
+                  </div>
+                </Tooltip>
+              </div>
+              <Tooltip
+                placement="top"
+                title={
+                  "If the user has completed the course and certificate issued"
+                }
+              >
+                <span className="ml-2 px-[5.5px] rounded-full border border-gray-400 cursor-help text-xs bg-gray-100">
+                  ?
+                </span>
+              </Tooltip>
             </div>
           </div>
-          <Tooltip placement="top" title={"Activity Time"}>
-            <div className="text-[10px]">
-              {statusDateTime["Completed"] !== "Not Yet"
-                ? new Date(statusDateTime["Completed"]?.toString())
-                    ?.toGMTString()
-                    ?.replace("GMT", "")
-                : "Not Yet"}
-            </div>
-          </Tooltip>
         </div>
       </div>
     </div>

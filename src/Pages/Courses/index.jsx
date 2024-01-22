@@ -30,26 +30,26 @@ const Courses = () => {
   }, [userDetails]);
 
   return (
-    <div className="w-full flex justify-center items-center pt-16 pb-6">
-      <Modal
-        visible={courseDetailsOpen}
-        footer={null}
-        onCancel={() => setCourseDetailsOpen(false)}
-        width={900}
-      >
-        <CourseDetails selectedCourse={selectedCourse} />
-      </Modal>
+    <div className="h-screen flex justify-center items-center">
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <Modal
+          visible={courseDetailsOpen}
+          footer={null}
+          onCancel={() => setCourseDetailsOpen(false)}
+          width={900}
+        >
+          <CourseDetails selectedCourse={selectedCourse} />
+        </Modal>
 
-      <div className="w-10/12 mx-auto pb-10 pt-6 ">
-        <div>
-          <CourseList
-            courses={courses}
-            setCourses={setCourses}
-            setCourseDetailsOpen={setCourseDetailsOpen}
-            setSelectedCourse={setSelectedCourse}
-            courseListLoading={courseListLoading}
-            setCourseListLoading={setCourseListLoading}
-          />
+        <div className="">
+            <CourseList
+              courses={courses}
+              setCourses={setCourses}
+              setCourseDetailsOpen={setCourseDetailsOpen}
+              setSelectedCourse={setSelectedCourse}
+              courseListLoading={courseListLoading}
+              setCourseListLoading={setCourseListLoading}
+            />
         </div>
       </div>
     </div>

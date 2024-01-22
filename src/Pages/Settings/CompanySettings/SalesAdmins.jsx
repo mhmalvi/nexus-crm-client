@@ -4,21 +4,18 @@ import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFetchB2BUser,
-  handleSuspandB2BUser,
   handleUpdateUserStatus,
   handleUserSuspendStatus,
 } from "../../../Components/services/auth";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
-import {
-  handleGetSalesAdmin,
-  handleRemoveSalesAdmin,
-} from "../../../Components/services/utils";
+import { handleGetSalesAdmin } from "../../../Components/services/utils";
 
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [activeAddSupervisor, setActiveAddSupervisor] = useState(false);
   const [activeAddSeals, setActiveAddSeals] = useState(false);
@@ -131,7 +128,6 @@ const SalesAdmins = ({ clientId }) => {
     })();
   }, [clientId, dispatch, syncEmployees]);
 
-
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
     console.log(statusUpdateResponse);
@@ -203,13 +199,10 @@ const SalesAdmins = ({ clientId }) => {
     }
   };
 
-
   return (
-    <div className="flex flex-wrap justify-between 2xl:justify-evenly mt-12 pt-0.5 w-full !grid !grid-cols-12 gap-2">
-      <div className="2xl:mr-32 !h-[300px] relative crm-scroll-none overflow-y-auto w-[100%] w-full !col-span-12  lg:!col-span-6">
+    <div className="relative flex flex-col justify-between gap-5 w-full h-full">
+      <div className="h-2/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
         <div>
-          <hr />
-
           <Modal
             title="Add Admin Employee"
             visible={activeAddSupervisor}
@@ -285,8 +278,12 @@ const SalesAdmins = ({ clientId }) => {
             />
           </Modal>
 
-          <div className="flex items-center sticky top-0 w-full bg-slate-100">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-3 my-0">
+          <div className="flex items-center w-full pb-2">
+            <h1
+              className={`font-semibold text-xl ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } m-0 p-0`}
+            >
               Admins
             </h1>
             {(parseInt(userDetails?.userInfo?.client_id) ===
@@ -294,44 +291,26 @@ const SalesAdmins = ({ clientId }) => {
               userDetails?.userInfo?.role_id === 1) ||
             userDetails?.userInfo?.role_id === 3 ? (
               <div>
-                <div>
-                  <button
-                    className="py-1 whitespace-nowrap px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color 2xl:ml-29"
-                    onClick={() => setActiveAddSupervisor(true)}
-                  >
-                    Add Supervisor
-                  </button>
-                </div>
+                <button
+                  className={`py-1 slate-300space-nowrap px-2 text-xs font-medium border ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  } rounded-lg 2xl:ml-29`}
+                  onClick={() => setActiveAddSupervisor(true)}
+                >
+                  Add Supervisor
+                </button>
               </div>
             ) : null}
           </div>
-          <hr />
+          <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
         </div>
 
-        <div className="ml-8 px-4 mt-5">
-          {/* Admin of Company */}
-          {companyAdminEmployee ? (
-            <div className="flex mb-6">
-              <Avatar
-                className="rounded-full cursor-pointer mt-2"
-                size="38"
-                color={Avatar.getRandomColor("sitebase", [
-                  "red",
-                  "green",
-                  "#728FCE",
-                  "violet",
-                  "#2B547E",
-                  "black",
-                  "#87AFC7",
-                  "Lime",
-                  "#D5D6EA",
-                  "#77BFC7",
-                  "orange",
-                  "#FDD017",
-                  "#665D1E",
-                ])}
-                name={companyAdminEmployee?.full_name}
-              />
+        <div className="mt-5 h-48 overflow-y-scroll">
+          <div className="grid grid-cols-2 gap-8 ">
+            {/* Admin of Company */}
+            {companyAdminEmployee ? (
               <Badge.Ribbon
                 style={{
                   fontSize: "16px",
@@ -340,236 +319,290 @@ const SalesAdmins = ({ clientId }) => {
                 color="volcano"
                 size="small"
               >
-                <div className="ml-4 mt-4 w-52">
-                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
-                    {companyAdminEmployee?.full_name}
-                  </h1>
-                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
-                    {companyAdminEmployee?.email}
-                  </p>
+                <div className={`flex justify-start items-center p-2 shadow-md shadow-inner ${colorMode ? "shadow-[#ffffff22]":"shadow-[#33333322]"} rounded-md`}>
+                  <Avatar
+                    className="rounded-full cursor-pointer "
+                    size="38"
+                    color={"#804DFF"}
+                    name={companyAdminEmployee?.full_name}
+                  />
+                  <div className="ml-4 w-52 py-2">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } m-0`}
+                    >
+                      {companyAdminEmployee?.full_name}
+                    </h1>
+                    <p
+                      className={`font-medium text-xs m-0 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
+                      {companyAdminEmployee?.email}
+                    </p>
+                  </div>
                 </div>
               </Badge.Ribbon>
-            </div>
-          ) : null}
+            ) : null}
 
-          {companyAdvisorEmployees.length ? (
-            companyAdvisorEmployees.map((employee, i) => (
-              <div key={i} className="flex mb-6">
-                <Avatar
-                  className="rounded-full cursor-pointer"
-                  size="38"
-                  color={Avatar.getRandomColor("sitebase", [
-                    "red",
-                    "green",
-                    "#728FCE",
-                    "violet",
-                    "#2B547E",
-                    "black",
-                    "#87AFC7",
-                    "Lime",
-                    "#D5D6EA",
-                    "#77BFC7",
-                    "orange",
-                    "#FDD017",
-                    "#665D1E",
-                  ])}
-                  name={employee?.full_name}
-                />
-                <div className="ml-4">
-                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
-                    {employee?.full_name}
-                  </h1>
-                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
-                    {employee?.email}
-                  </p>
-                  {userDetails?.userInfo?.role_id === 1 ||
-                  userDetails?.userInfo?.role_id === 2 ||
-                  userDetails?.userInfo?.role_id === 3 ||
-                  userDetails?.userInfo?.role_id === 4 ? (
-                    <div>
-                      {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2 ||
-                        userDetails?.userInfo?.role_id === 3) && (
-                        // userDetails?.userInfo?.role_id === 3
-                        <Popconfirm
-                          title="Are you sure to remove this Admin"
-                          okText="Yes"
-                          onConfirm={() => handleRemoveUser(employee?.user_id)}
-                        >
-                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
-                            Remove
-                          </button>
-                        </Popconfirm>
-                      )}
-                      <button
-                        className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                        onClick={() => handleSuspendEmployee(employee?.user_id)}
-                      >
-                        Suspend
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            ))
-          ) : (
-            <h1 className="font-semibold text-base">No Employee Added Yet</h1>
-          )}
-        </div>
-
-        {inactiveAdminEmployees.length ? (
-          <div className="mt-10">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
-              Inactive Admins
-            </h1>
-            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
-              {inactiveAdminEmployees.map((employee, i) => (
-                <div key={i} className="flex ">
+            {companyAdvisorEmployees.length ? (
+              companyAdvisorEmployees.map((employee, i) => (
+                <div key={i} className="flex justify-start items-center">
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
+                    color={"#804DFF"}
                     name={employee?.full_name}
                   />
-                  <div className="ml-4">
-                    <h1 className="text-red-500 font-semibold text-lg leading-5">
+                  <div className="ml-4 w-52 flex flex-col justify-around">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } m-0`}
+                    >
                       {employee?.full_name}
                     </h1>
-                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                    <p
+                      className={`font-medium text-xs mb-0 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
                       {employee?.email}
                     </p>
-                    <button
-                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() =>
-                        handleAddSuspendedEmployee(employee?.user_id)
-                      }
-                    >
-                      Reassign
-                    </button>
+                    {userDetails?.userInfo?.role_id === 1 ||
+                    userDetails?.userInfo?.role_id === 2 ||
+                    userDetails?.userInfo?.role_id === 3 ||
+                    userDetails?.userInfo?.role_id === 4 ? (
+                      <div>
+                        {(userDetails?.userInfo?.role_id === 1 ||
+                          userDetails?.userInfo?.role_id === 2 ||
+                          userDetails?.userInfo?.role_id === 3) && (
+                          // userDetails?.userInfo?.role_id === 3
+                          <Popconfirm
+                            title="Are you sure to remove this Admin"
+                            okText="Yes"
+                            onConfirm={() =>
+                              handleRemoveUser(employee?.user_id)
+                            }
+                          >
+                            <button
+                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                colorMode
+                                  ? "text-slate-300 border-slate-300"
+                                  : "text-gray-800 border-gray-800"
+                              } mt-3 mr-2`}
+                            >
+                              Remove
+                            </button>
+                          </Popconfirm>
+                        )}
+                        <button
+                          className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                          onClick={() =>
+                            handleSuspendEmployee(employee?.user_id)
+                          }
+                        >
+                          Suspend
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
-              ))}
-            </div>
+              ))
+            ) : (
+              <h1 className="font-semibold text-base">No Employee Added Yet</h1>
+            )}
           </div>
-        ) : null}
+          {inactiveAdminEmployees.length ? (
+            <div className="mt-2 shadow-md">
+              <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-slate-300">
+                Inactive Admins
+              </h1>
+              <hr />
+              <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+                {inactiveAdminEmployees.map((employee, i) => (
+                  <div key={i} className="flex ">
+                    <Avatar
+                      className="rounded-full cursor-pointer"
+                      size="38"
+                      name={employee?.full_name}
+                    />
+                    <div className="ml-4">
+                      <h1 className="text-red-500 font-semibold text-lg leading-5">
+                        {employee?.full_name}
+                      </h1>
+                      <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                        {employee?.email}
+                      </p>
+                      <button
+                        className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                        onClick={() =>
+                          handleAddSuspendedEmployee(employee?.user_id)
+                        }
+                      >
+                        Reassign
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
 
       {/* Sales admins box */}
-      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
-        <div className=" sticky top-0 w-full bg-slate-100">
-          <hr />
-          <div className="flex items-center">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0">
-              Sales Admins
-            </h1>
+      <div className="h-3/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="flex items-center w-full pb-2">
+          <h1
+            className={`font-semibold text-xl ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } m-0 p-0`}
+          >
+            Sales Admins
+          </h1>
 
-            {(parseInt(userDetails?.userInfo?.client_id) ===
-              parseInt(clientId) &&
-              userDetails?.userInfo?.role_id === 1) ||
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ? (
-              <div>
-                <button
-                  className="py-1 px-2 text-xs leading-6 font-medium border border-brand-color rounded-md text-brand-color ml-29"
-                  onClick={() => setActiveAddSeals(true)}
-                >
-                  Add Sales
-                </button>
-              </div>
-            ) : null}
-          </div>
-          <hr />
+          {(parseInt(userDetails?.userInfo?.client_id) === parseInt(clientId) &&
+            userDetails?.userInfo?.role_id === 1) ||
+          userDetails?.userInfo?.role_id === 3 ||
+          userDetails?.userInfo?.role_id === 4 ? (
+            <div>
+              <button
+                className={`py-1 px-2 text-xs font-medium border rounded-md  ${
+                  colorMode
+                    ? "text-slate-300 border-slate-300 "
+                    : "text-gray-800 border-gray-800"
+                } ml-29`}
+                onClick={() => setActiveAddSeals(true)}
+              >
+                Add Sales
+              </button>
+            </div>
+          ) : null}
         </div>
-        <div className="mt-5 grid grid-cols-2 gap-6 px-4">
-          {companySalesEmployees.length ? (
-            companySalesEmployees.map((employee, i) => (
-              <div key={i} className="flex ">
-                <Avatar
-                  className="rounded-full cursor-pointer"
-                  size="38"
-                  name={employee?.full_name}
-                />
-                <div className="ml-4">
-                  <h1 className="font-semibold text-lg leading-5 text-gray-600">
-                    {employee?.full_name}
-                  </h1>
-                  <p className="font-medium text-xs leading-5 mb-0 text-gray-600 text-opacity-75">
-                    {employee?.email}
-                  </p>
+        <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
 
-                  {userDetails?.userInfo?.role_id === 1 ||
-                  userDetails?.userInfo?.role_id === 2 ||
-                  userDetails?.userInfo?.role_id === 3 ||
-                  userDetails?.userInfo?.role_id === 4 ? (
-                    <div>
-                      {(userDetails?.userInfo?.role_id === 1 ||
-                        userDetails?.userInfo?.role_id === 2 ||
-                        userDetails?.userInfo?.role_id === 3 ||
-                        userDetails?.userInfo?.role_id === 4 ||
-                        userDetails?.userInfo?.role_id === 5) && (
-                        <Popconfirm
-                          title="Are you sure to remove this Sales Admin"
-                          onConfirm={() => handleRemoveUser(employee?.user_id)}
-                          okText="Yes"
-                        >
-                          <button className="border border-black px-1 py-0.5 text-xs rounded-md font-semibold text-black mt-3 mr-2">
-                            Remove
-                          </button>
-                        </Popconfirm>
-                      )}
-
-                      <button
-                        className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                        onClick={() => handleSuspendEmployee(employee?.id)}
-                      >
-                        Suspend
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            ))
-          ) : (
-            <h1 className="font-semibold text-base text-">
-              No Employee Added Yet
-            </h1>
-          )}
-        </div>
-
-        {inactiveSalesEmployees.length ? (
-          <div className="mt-10">
-            <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-red-500">
-              Inactive Sales Admins
-            </h1>
-            <div className="mt-3 grid grid-cols-2 gap-6 px-4">
-              {inactiveSalesEmployees.map((employee, i) => (
-                <div key={i} className="flex ">
+        <div className="mt-5 h-80 overflow-y-scroll">
+          <div className="grid grid-cols-2 gap-8 ">
+            {companySalesEmployees.length ? (
+              companySalesEmployees.map((employee, i) => (
+                <div key={i} className="flex justify-start items-center">
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
+                    color={"#804DFF"}
                     name={employee?.full_name}
                   />
-                  <div className="ml-4">
-                    <h1 className="text-red-500 font-semibold text-lg leading-5">
+                  <div className="ml-4 w-52 flex flex-col justify-around">
+                    <h1
+                      className={`font-semibold text-lg ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } m-0`}
+                    >
                       {employee?.full_name}
                     </h1>
-                    <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                    <p
+                      className={`font-medium text-xs mb-0 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
                       {employee?.email}
                     </p>
-                    <button
-                      className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                      onClick={() => handleAddSuspendedEmployee(employee?.id)}
-                    >
-                      Reassign
-                    </button>
+
+                    {userDetails?.userInfo?.role_id === 1 ||
+                    userDetails?.userInfo?.role_id === 2 ||
+                    userDetails?.userInfo?.role_id === 3 ||
+                    userDetails?.userInfo?.role_id === 4 ? (
+                      <div>
+                        {(userDetails?.userInfo?.role_id === 1 ||
+                          userDetails?.userInfo?.role_id === 2 ||
+                          userDetails?.userInfo?.role_id === 3 ||
+                          userDetails?.userInfo?.role_id === 4 ||
+                          userDetails?.userInfo?.role_id === 5) && (
+                          <Popconfirm
+                            title="Are you sure to remove this Sales Admin"
+                            onConfirm={() =>
+                              handleRemoveUser(employee?.user_id)
+                            }
+                            okText="Yes"
+                          >
+                            <button
+                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                colorMode
+                                  ? "text-slate-300 border-slate-300"
+                                  : "text-gray-800 border-gray-800"
+                              } mt-3 mr-2`}
+                            >
+                              Remove
+                            </button>
+                          </Popconfirm>
+                        )}
+
+                        <button
+                          className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                          onClick={() => handleSuspendEmployee(employee?.id)}
+                        >
+                          Suspend
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
-              ))}
-            </div>
+              ))
+            ) : (
+              <h1
+                className={`font-semibold text-base ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                No Employee Added Yet
+              </h1>
+            )}
           </div>
-        ) : null}
+
+          {inactiveSalesEmployees.length ? (
+            <div className="mt-2">
+              <h1
+                className={`font-semibold text-xl py-5 px-4 my-0 ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                Inactive Sales Admins
+              </h1>
+              <hr />
+              <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+                {inactiveSalesEmployees.map((employee, i) => (
+                  <div key={i} className="flex ">
+                    <Avatar
+                      className="rounded-full cursor-pointer"
+                      size="38"
+                      name={employee?.full_name}
+                    />
+                    <div className="ml-4">
+                      <h1 className="text-red-500 font-semibold text-lg leading-5">
+                        {employee?.full_name}
+                      </h1>
+                      <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                        {employee?.email}
+                      </p>
+                      <button
+                        className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                        onClick={() => handleAddSuspendedEmployee(employee?.id)}
+                      >
+                        Reassign
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
+
       {/* Studnet Admin box */}
-      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+      {/* <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6 bg-[#c5c5c5]">
         <div className=" sticky top-0 w-full bg-slate-100">
           <hr />
           <div className="flex items-center">
@@ -658,10 +691,10 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-      </div>
-      {/* Accountant box */}
+      </div> */}
 
-      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+      {/* Accountant box */}
+      {/* <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
         <div className=" sticky top-0 w-full bg-slate-100">
           <hr />
           <div className="flex items-center">
@@ -752,11 +785,10 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Agency Box */}
-
-      <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
+      {/* <div className="!relative ml-2.5 h-[300px] overflow-y-auto  crm-scroll-none w-[100%] w-full !col-span-12  lg:!col-span-6">
         <div className=" sticky top-0 w-full bg-slate-100">
           <hr />
           <div className="flex items-center">
@@ -845,7 +877,7 @@ const SalesAdmins = ({ clientId }) => {
             </h1>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
