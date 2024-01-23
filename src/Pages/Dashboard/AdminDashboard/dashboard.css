@@ -32,7 +32,7 @@
   line-height: 100%;
   color: #cbd5e1 !important;
   border-bottom:1px solid #c0c0c02f !important;
-  background-color: #7037ff !important;
+  background: linear-gradient( #7a51e3,#6e48cb,#55389f)  !important; 
 }
 .updatedTableDark .ant-table-body tr td {
   padding: 8px;
@@ -154,7 +154,8 @@
   font-size: 12px;
   line-height: 100%;
   color: #cbd5e1 !important;
-  background-color: #7037ff !important;
+  /* background: linear-gradient( #946bfc,#351a77,#1f0f47)  !important;  */
+  background: linear-gradient( #7a51e3,#6e48cb,#55389f)  !important; 
   border-bottom:1px solid #1f293729 !important;
 }
 .updatedTableLight .ant-table-body tr td {
