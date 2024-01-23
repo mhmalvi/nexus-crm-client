@@ -560,20 +560,20 @@ const CompanySettings = () => {
               </span>
               {companyDetails?.pid ? (
                 <div
-                  className={`w-full cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-slate-300 p-6 rounded-xl text-center`}
+                  className={`w-full cursor-pointer flex items-center justify-center border-2 border-[#966dff] shadow text-slate-300 p-2 rounded-md text-center`}
                 >
-                  <h3 className="font-bold py-2 text-xs text-slate-300">
+                  <h3 className={`m-0 pr-2 font-bold text-xs ${colorMode ? "text-slate-300" : "text-gray-800"}`}>
                     {companyDetails?.package_name}
                   </h3>
-                  <h1 className="text-xs text-brand-color mb-0">
+                  <h1 className="text-xs text-brand-color m-0 p-0 ">
                     ${companyDetails?.price}
                     <br />
                   </h1>
                   <span className="text-brand-color text-xs">/Monthly</span>
-                  <div className="flex-1 text-slate-500 text-xs py-2">
+                  <div className={`flex-1 ${colorMode ? "text-slate-300" : "text-gray-800"} text-xs`}>
                     {companyDetails?.package_details}
                   </div>
-                  <div className="flex-1 text-black text-xs py-1 font-semibold italic">
+                  <div className={`flex-1 ${colorMode ? "text-slate-300" : "text-gray-800"} text-xs  font-semibold italic`}>
                     <span>
                       {new Date(companyDetails?.package_date)
                         .toString()
