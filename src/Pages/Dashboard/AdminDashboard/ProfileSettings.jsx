@@ -11,6 +11,7 @@ import Icons from "../../../Components/Shared/Icons";
 
 const ProfileSettings = () => {
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const initialState = {
     full_name: "",
@@ -138,7 +139,11 @@ const ProfileSettings = () => {
         <div className="flex justify-end h-[5vh]">
           {!toggleEditDetails && (
             <button
-              className="bg-brand-color text-white font-poppins text-sm rounded-md px-6 py-2 flex items-center"
+              className={`bg-gradient-to-b ${
+                colorMode
+                  ? "from-[#100b1e] via-[#0b0815] to-[#000000] hover:from-[#7a51e3] hover:via-[#6e48cb] hover:to-[#55389f] "
+                  : "from-[#7a51e3] hover:from-[#100b1e] via-[#6e48cb] hover:via-[#0b0815] to-[#55389f] hover:to-[#000000]"
+              } text-white font-poppins text-sm rounded-md px-6 py-2 flex items-center`}
               onClick={() => {
                 setToggleEditDetails(true);
               }}
