@@ -6,9 +6,10 @@ import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./App.css";
+
 import Login from "./Pages/Authentication/Login/Login";
 import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
-import Calender from "./Pages/Calender";
+import Reminder from "./Pages/Reminder";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashboard";
@@ -17,7 +18,7 @@ import CampaignInfo from "./Pages/Dashboard/SuperAdminDashboard/CompanyInfo/Camp
 import GmailModule from "./Pages/Gmail";
 import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
-import Overview from "./Pages/Overview";
+import Analytics from "./Pages/Analytics";
 import RenewPackage from "./Pages/Package/RenewPackage";
 import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
@@ -34,8 +35,11 @@ import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
+import QueMailer from "./Pages/QueMailer";
+
 import { useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
+
 function App() {
   const [state, setState] = useState("Active");
   const [count, setCount] = useState(0);
@@ -91,14 +95,15 @@ function App() {
           <Route path={"campaigns/:id"} element={<CampaignDetails />} />
           <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
           <Route path={"success/:id"} element={<Success />} />
-          <Route path="overview" element={<Overview />} />
+          <Route path="analytics" element={<Analytics />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="courses" element={<Campaigns />} />
+          <Route path="que-mailer" element={<QueMailer />} />
           <Route path="salesEmployee" element={<Sales />} />
           <Route path="studentManagement" element={<MangeStudent />} />
           <Route path="courseManagement" element={<CourseMangemnet />} />
           <Route path="paymentSlip" element={<PaySlip />} />
-          <Route path="calender" element={<Calender />} />
+          <Route path="reminder" element={<Reminder />} />
           <Route path="requisitions" element={<RequisitionTable />} />
           <Route path="settings" element={<Settings />} />
           <Route path="user-profile" element={<UserProfile />} />

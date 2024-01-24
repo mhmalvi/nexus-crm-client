@@ -86,11 +86,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
     <div
       className={` bg-[#ffffff11] duration-300 ${
         openSideBar ? "w-[80px] h-full" : "w-[277px] h-full"
-      }`}
-      style={{
-        overflowX: "hidden",
-        overflowY: "scroll",
-      }}
+      } overflow-x-hidden overflow-y-scroll`}
+      // style={{
+      //   overflowX: "hidden",
+      //   overflowY: "scroll",
+      // }}
     >
       <div
         onClick={() => ToogleSideBar(!openSideBar)}
@@ -130,7 +130,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
           </div>
         </div>
         <div className="w-full h-full">
-          <div>
+          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
             <Link
               to={"/dashboard"}
               className={`${
@@ -141,7 +141,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   : colorMode
                   ? "text-[#B3B3B3]"
                   : "text-gray-800"
-              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
                 colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
               }`}
               onClick={() => setActive("dashboard")}
@@ -158,35 +158,35 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               </div>
               {active === "dashboard" && (
                 <div
-                  className={`active-option text-[${
-                    colorMode ? "#FFFFFF" : "#7037FF"
-                  }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                  className={`active-option ${
+                    colorMode
+                      ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                      : "text-[#7037FF] bg-[#7037FF]"
+                  }`}
                 >
                   |
                 </div>
               )}
             </Link>
-          </div>
 
-          {(userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2 ||
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
-            <div>
+            {(userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
               <Link
-                to={"/overview"}
+                to={"/analytics"}
                 className={`${
-                  active === "overview"
+                  active === "analytics"
                     ? colorMode
                       ? "text-[#FFFFFF]"
                       : "text-[#7037FF]"
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
                   colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
                 }`}
-                onClick={() => setActive("overview")}
+                onClick={() => setActive("analytics")}
               >
                 <div className="flex w-full items-center justify-around">
                   <Icons.Chart />
@@ -194,61 +194,100 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     ""
                   ) : (
                     <span className="w-3/4 font-medium font-poppins">
-                      Overview
+                      Analytics
                     </span>
                   )}
                 </div>
-                {active === "overview" && (
+                {active === "analytics" && (
                   <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
                   >
                     |
                   </div>
                 )}
               </Link>
-            </div>
-          )}
+            )}
 
-          {userDetails?.userInfo?.role_id !== 10 &&
-            userDetails?.userInfo?.role_id !== 9 &&
-            userDetails?.userInfo?.role_id !== 8 &&
-            userDetails?.userInfo?.role_id !== 7 &&
-            userDetails?.userInfo?.role_id !== 6 &&
-            userDetails?.userInfo?.role !== 1 &&
-            userDetails?.userInfo?.role !== 2 && (
+            <Link
+              to={"/que-mailer"}
+              className={`${
+                active === "que-mailer"
+                  ? colorMode
+                    ? "text-[#FFFFFF]"
+                    : "text-[#7037FF]"
+                  : colorMode
+                  ? "text-[#B3B3B3]"
+                  : "text-gray-800"
+              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+              }`}
+              onClick={() => setActive("que-mailer")}
+            >
+              <div className="flex w-full items-center justify-around ">
+                <Icons.Dashboard />
+                {openSideBar ? (
+                  ""
+                ) : (
+                  <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
+                    Que Mailer
+                  </span>
+                )}
+              </div>
+              {active === "que-mailer" && (
+                <div
+                  className={`active-option ${
+                    colorMode
+                      ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                      : "text-[#7037FF] bg-[#7037FF]"
+                  }`}
+                >
+                  |
+                </div>
+              )}
+            </Link>
+          </div>
+
+          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
+            {/* Lead Courses */}
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
               <div>
                 <Link
-                  to={"/payments"}
+                  to={"/courses"}
                   className={`${
-                    active === "payments"
+                    active === "courses"
                       ? colorMode
                         ? "text-[#FFFFFF]"
                         : "text-[#7037FF]"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
                   }`}
-                  onClick={() => setActive("payments")}
+                  onClick={() => setActive("courses")}
                 >
                   <div className="flex w-full items-center justify-around">
-                    <Icons.Payment />
+                    <Icons.Courses className="w-5" />
                     {openSideBar ? (
                       ""
                     ) : (
                       <span className="w-3/4 font-medium font-poppins">
-                        Payments
+                        Courses
                       </span>
                     )}
                   </div>
-                  {active === "payments" && (
+                  {active === "courses" && (
                     <div
-                      className={`active-option text-[${
-                        colorMode ? "#FFFFFF" : "#7037FF"
-                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#7037FF] bg-[#7037FF]"
+                      }`}
                     >
                       |
                     </div>
@@ -257,91 +296,166 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               </div>
             )}
 
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
-            <div>
-              <Link
-                to={"/campaigns"}
-                className={`${
-                  active === "campaigns"
-                    ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#7037FF]"
-                    : colorMode
-                    ? "text-[#B3B3B3]"
-                    : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
-                }`}
-                onClick={() => setActive("campaigns")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Campaigns />
-                  {openSideBar ? (
-                    ""
-                  ) : (
-                    <span className="w-3/4 font-medium font-poppins">
-                      Campaigns
-                    </span>
-                  )}
-                </div>
-                {active === "campaigns" && (
-                  <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
-                  >
-                    |
+            {/* Lead Campaigns */}
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
+              <div>
+                <Link
+                  to={"/campaigns"}
+                  className={`${
+                    active === "campaigns"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
+                  onClick={() => setActive("campaigns")}
+                >
+                  <div className="flex w-full items-center justify-around">
+                    <Icons.Campaigns />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins">
+                        Campaigns
+                      </span>
+                    )}
                   </div>
-                )}
-              </Link>
-            </div>
-          )}
-
-          {(userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4) && (
-            <div>
-              <Link
-                to={"/courses"}
-                className={`${
-                  active === "courses"
-                    ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#7037FF]"
-                    : colorMode
-                    ? "text-[#B3B3B3]"
-                    : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
-                }`}
-                onClick={() => setActive("courses")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Courses className="w-5" />
-                  {openSideBar ? (
-                    ""
-                  ) : (
-                    <span className="w-3/4 font-medium font-poppins">
-                      Courses
-                    </span>
+                  {active === "campaigns" && (
+                    <div
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#7037FF] bg-[#7037FF]"
+                      }`}
+                    >
+                      |
+                    </div>
                   )}
-                </div>
-                {active === "courses" && (
-                  <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
-                  >
-                    |
-                  </div>
-                )}
-              </Link>
-            </div>
-          )}
+                </Link>
+              </div>
+            )}
 
-          {user?.client_id === 0 ? (
-            companyId ? (
-              (userDetails?.userInfo?.role_id === 2 ||
+            {/* Lead Payments */}
+            {userDetails?.userInfo?.role_id !== 10 &&
+              userDetails?.userInfo?.role_id !== 9 &&
+              userDetails?.userInfo?.role_id !== 8 &&
+              userDetails?.userInfo?.role_id !== 7 &&
+              userDetails?.userInfo?.role_id !== 6 &&
+              userDetails?.userInfo?.role !== 1 &&
+              userDetails?.userInfo?.role !== 2 && (
+                <div>
+                  <Link
+                    to={"/payments"}
+                    className={`${
+                      active === "payments"
+                        ? colorMode
+                          ? "text-[#FFFFFF]"
+                          : "text-[#7037FF]"
+                        : colorMode
+                        ? "text-[#B3B3B3]"
+                        : "text-gray-800"
+                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                      colorMode
+                        ? "hover:text-[#ffffff]"
+                        : "hover:text-[#7037FF]"
+                    }`}
+                    onClick={() => setActive("payments")}
+                  >
+                    <div className="flex w-full items-center justify-around">
+                      <Icons.Payment />
+                      {openSideBar ? (
+                        ""
+                      ) : (
+                        <span className="w-3/4 font-medium font-poppins">
+                          Payments
+                        </span>
+                      )}
+                    </div>
+                    {active === "payments" && (
+                      <div
+                        className={`active-option ${
+                          colorMode
+                            ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                            : "text-[#7037FF] bg-[#7037FF]"
+                        }`}
+                      >
+                        |
+                      </div>
+                    )}
+                  </Link>
+                </div>
+              )}
+          </div>
+
+          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
+            {/* Sales Employee */}
+            {user?.client_id === 0 ? (
+              companyId ? (
+                (userDetails?.userInfo?.role_id === 2 ||
+                  userDetails?.userInfo?.role_id === 3 ||
+                  userDetails?.userInfo?.role_id === 4) && (
+                  <div>
+                    <Link
+                      to={"/salesEmployee"}
+                      className={`${
+                        active === "salesEmployee"
+                          ? colorMode
+                            ? "text-[#FFFFFF]"
+                            : "text-[#7037FF]"
+                          : colorMode
+                          ? "text-[#B3B3B3]"
+                          : "text-gray-800"
+                      } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                        colorMode
+                          ? "hover:text-[#ffffff]"
+                          : "hover:text-[#7037FF]"
+                      }`}
+                      onClick={() => setActive("salesEmployee")}
+                    >
+                      <div className="flex w-full items-center justify-around">
+                        <Icons.MoneyCheck
+                          className={` ${
+                            colorMode
+                              ? "hover:text-[#ffffff]"
+                              : "hover:text-[#7037FF]"
+                          } w-5`}
+                        />
+
+                        <span
+                          className={`w-3/4 text-[${
+                            openSideBar ? "16px" : "0px"
+                          }] ease-in duration-100 font-medium font-poppins bg-[#fc00ff]`}
+                        >
+                          Sales Employee
+                        </span>
+                      </div>
+                      {active === "salesEmployee" && (
+                        <div
+                          className={`active-option ${
+                            colorMode
+                              ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                              : "text-[#7037FF] bg-[#7037FF]"
+                          }`}
+                        >
+                          |
+                        </div>
+                      )}
+                    </Link>
+                  </div>
+                )
+              ) : (
+                <>
+                  <div style={{ display: "none" }}></div>
+                </>
+              )
+            ) : (
+              (userDetails?.userInfo?.role_id === 1 ||
+                userDetails?.userInfo?.role_id === 2 ||
                 userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4) && (
                 <div>
@@ -355,7 +469,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                         : colorMode
                         ? "text-[#B3B3B3]"
                         : "text-gray-800"
-                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
                       colorMode
                         ? "hover:text-[#ffffff]"
                         : "hover:text-[#7037FF]"
@@ -364,20 +478,21 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   >
                     <div className="flex w-full items-center justify-around">
                       <Icons.MoneyCheck className="w-5" />
-
-                      <span
-                        className={`w-3/4 text-[${
-                          openSideBar ? "16px" : "0px"
-                        }] ease-in duration-100 font-medium font-poppins bg-[#fc00ff]`}
-                      >
-                        Sales Employee
-                      </span>
+                      {openSideBar ? (
+                        ""
+                      ) : (
+                        <span className="w-3/4 font-medium font-poppins">
+                          Sales Employee
+                        </span>
+                      )}
                     </div>
                     {active === "salesEmployee" && (
                       <div
-                        className={`active-option text-[${
-                          colorMode ? "#FFFFFF" : "#7037FF"
-                        }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                        className={`active-option ${
+                          colorMode
+                            ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                            : "text-[#7037FF] bg-[#7037FF]"
+                        }`}
                       >
                         |
                       </div>
@@ -385,110 +500,118 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   </Link>
                 </div>
               )
-            ) : (
-              <>
-                <div style={{ display: "none" }}></div>
-              </>
-            )
-          ) : (
-            (userDetails?.userInfo?.role_id === 1 ||
+            )}
+
+            {/* Reminder */}
+            {(userDetails?.userInfo?.role_id === 1 ||
               userDetails?.userInfo?.role_id === 2 ||
               userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4) && (
+              userDetails?.userInfo?.role_id === 4 ||
+              userDetails?.userInfo?.role_id === 5) && (
               <div>
                 <Link
-                  to={"/salesEmployee"}
+                  to={"/reminder"}
                   className={`${
-                    active === "salesEmployee"
+                    active === "reminder"
                       ? colorMode
                         ? "text-[#FFFFFF]"
                         : "text-[#7037FF]"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
                   }`}
-                  onClick={() => setActive("salesEmployee")}
+                  onClick={() => setActive("reminder")}
                 >
                   <div className="flex w-full items-center justify-around">
-                    <Icons.MoneyCheck className="w-5" />
+                    <Icons.Calender
+                      className={`${
+                        active === "reminder"
+                          ? colorMode
+                            ? "text-[#FFFFFF]"
+                            : "text-[#7037FF]"
+                          : colorMode
+                          ? "text-[#B3B3B3]"
+                          : "text-gray-800"
+                      } w-5`}
+                    />
                     {openSideBar ? (
                       ""
                     ) : (
                       <span className="w-3/4 font-medium font-poppins">
-                        Sales Employee
+                        Reminder
                       </span>
                     )}
                   </div>
-                  {active === "salesEmployee" && (
+                  {active === "reminder" && (
                     <div
-                      className={`active-option text-[${
-                        colorMode ? "#FFFFFF" : "#7037FF"
-                      }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#7037FF] bg-[#7037FF]"
+                      }`}
                     >
                       |
                     </div>
                   )}
                 </Link>
               </div>
-            )
-          )}
+            )}
 
-          {(userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2 ||
-            userDetails?.userInfo?.role_id === 3 ||
-            userDetails?.userInfo?.role_id === 4 ||
-            userDetails?.userInfo?.role_id === 5) && (
-            <div>
-              <Link
-                to={"/calender"}
-                className={`${
-                  active === "calender"
-                    ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#7037FF]"
-                    : colorMode
-                    ? "text-[#B3B3B3]"
-                    : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
-                }`}
-                onClick={() => setActive("calender")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Calender
-                    className={`${
-                      active === "calender"
-                        ? colorMode
-                          ? "text-[#FFFFFF]"
-                          : "text-[#7037FF]"
-                        : colorMode
-                        ? "text-[#B3B3B3]"
-                        : "text-gray-800"
-                    } w-5`}
-                  />
-                  {openSideBar ? (
-                    ""
-                  ) : (
-                    <span className="w-3/4 font-medium font-poppins">
-                      Calender
-                    </span>
-                  )}
-                </div>
-                {active === "calender" && (
-                  <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
-                  >
-                    |
+            {/* Company Settings */}
+            {userDetails?.userInfo?.role_id !== 10 && (
+              <div>
+                <Link
+                  to={"/settings"}
+                  className={`${
+                    active === "settings"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#7037FF]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                  }`}
+                  onClick={() => setActive("settings")}
+                >
+                  <div className="flex w-full items-center justify-around">
+                    <Icons.Settings
+                      className={`${
+                        active === "settings"
+                          ? colorMode
+                            ? "text-[#FFFFFF]"
+                            : "text-[#7037FF]"
+                          : colorMode
+                          ? "text-[#B3B3B3]"
+                          : "text-gray-800"
+                      } w-5`}
+                    />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins">
+                        Company Settings
+                      </span>
+                    )}
                   </div>
-                )}
-              </Link>
-            </div>
-          )}
-
+                  {active === "settings" && (
+                    <div
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#7037FF] bg-[#7037FF]"
+                      }`}
+                    >
+                      |
+                    </div>
+                  )}
+                </Link>
+              </div>
+            )}
+          </div>
           {/* Requisitions section */}
           {(userDetails?.userInfo?.role_id === 1 ||
             userDetails?.userInfo?.role_id === 2) && (
@@ -510,9 +633,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 </div>
                 {active === "requisitions" && (
                   <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
                   >
                     |
                   </div>
@@ -544,9 +669,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 </div>
                 {active === "studentManagement" && (
                   <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
                   >
                     |
                   </div>
@@ -554,6 +681,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               </Link>
             </div>
           )}
+
           {/* Agency menu items end */}
           {/* // Accountant menu items */}
           {userDetails?.userInfo?.role_id === 8 && (
@@ -574,9 +702,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 </span>
                 {active === "courseManagement" && (
                   <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
                   >
                     |
                   </div>
@@ -588,7 +718,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/paymentSlip"}
-                className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
+                className="ease-in duration-200 flex items-center text-base cursor-pointer py-1 hover:text-[#ffffff]"
                 style={{
                   color: `${active === "paymentSlip" ? "#7037FF" : "#FFFFFF"}`,
                 }}
@@ -600,9 +730,11 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 </span>
                 {active === "paymentSlip" && (
                   <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
                   >
                     |
                   </div>
@@ -610,99 +742,8 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               </Link>
             </div>
           )}
-          {/* // Accountant menu end */}
 
-          {userDetails?.userInfo?.role_id !== 10 && (
-            <div>
-              <Link
-                to={"/settings"}
-                className={`${
-                  active === "settings"
-                    ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#7037FF]"
-                    : colorMode
-                    ? "text-[#B3B3B3]"
-                    : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
-                }`}
-                onClick={() => setActive("calender")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Settings
-                    className={`${
-                      active === "settings"
-                        ? colorMode
-                          ? "text-[#FFFFFF]"
-                          : "text-[#7037FF]"
-                        : colorMode
-                        ? "text-[#B3B3B3]"
-                        : "text-gray-800"
-                    } w-5`}
-                  />
-                  {openSideBar ? (
-                    ""
-                  ) : (
-                    <span className="w-3/4 font-medium font-poppins">
-                      Company Settings
-                    </span>
-                  )}
-                </div>
-                {active === "settings" && (
-                  <div
-                    className={`active-option text-[${
-                      colorMode ? "#FFFFFF" : "#7037FF"
-                    }] bg-[${colorMode ? "#FFFFFF" : "#7037FF"}]`}
-                  >
-                    |
-                  </div>
-                )}
-              </Link>
-            </div>
-            // <Menu
-            //   className={`${
-            //     active === "settings" ? "text-[#FFFFFF]" : "text-[#B3B3B3]"
-            //   } !bg-transparent settingsSidebar hover:text-[#ffffff] `}
-            //   onClick={ToggleProfile}
-            //   items={[
-            //     {
-            //       label: (
-            //         <>
-            //           {openSideBar ? (
-            //             ""
-            //           ) : (
-            //             <span
-            //               className={`${
-            //                 active === "settings"
-            //                   ? "text-[#FFFFFF]"
-            //                   : "text-[#B3B3B3]"
-            //               } pl-4 `}
-            //             >
-            //               Settings
-            //             </span>
-            //           )}
-            //         </>
-            //       ),
-            //       key: "menu",
-            //       icon: (
-            //         <Icons.Settings className="inline text-[#b3b3b3] hover:text-[#ffffff]" />
-            //       ),
-            //       children: [
-            //         { label: "Profile Settings", key: "profile" },
-
-            //         userDetails?.userInfo?.role_id === 1 ||
-            //         userDetails?.userInfo?.role_id === 2 ||
-            //         userDetails?.userInfo?.role_id === 3 ||
-            //         userDetails?.userInfo?.role_id === 4
-            //           ? { label: "Company Settings", key: "company" }
-            //           : null,
-            //       ],
-            //     },
-            //   ]}
-            // />
-          )}
-
+          {/* Logout */}
           <div
             className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4 py-1.5"
             onClick={logoutHandler}
@@ -718,6 +759,8 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               )}
             </button>
           </div>
+
+          {/* Color Switcher */}
           <div className="flex justify-center items-center">
             <Switch
               onClick={() => {
@@ -730,6 +773,8 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             />
           </div>
         </div>
+
+        {/* Logo Bottom */}
         <div className="ease-in duration-200 flex flex-col justify-center items-center h-[200px]">
           {openSideBar ? (
             ""
