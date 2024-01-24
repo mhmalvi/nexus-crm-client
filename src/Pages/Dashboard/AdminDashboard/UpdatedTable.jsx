@@ -198,11 +198,9 @@ const UpdatedTable = ({
                 >
                   <div
                     htmlFor="upload_lead_file"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                      colorMode ? "slate-300" : "gray-800"
-                    } text-${
-                      colorMode ? "slate-300" : "gray-800"
-                    } ease-in duration-200 hover:bg-black`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                      colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                    } ease-in duration-200 `}
                   >
                     Upload File
                   </div>
@@ -228,11 +226,9 @@ const UpdatedTable = ({
                   <div className="mr-4">
                     <button
                       id="add_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                        colorMode ? "slate-300" : "gray-800"
-                      } text-${
-                        colorMode ? "slate-300" : "gray-800"
-                      } ease-in duration-200 hover:bg-black`}
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                        colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                      } ease-in duration-200 `}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
                       Add Lead
@@ -263,11 +259,9 @@ const UpdatedTable = ({
                     <div className="mr-12">
                       <button
                         id="sync_leads"
-                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border border-${
-                          colorMode ? "slate-300" : "gray-800"
-                        } text-${
-                          colorMode ? "slate-300" : "gray-800"
-                        } ease-in duration-200 hover:bg-black`}
+                        className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                          colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                        } ease-in duration-200 `}
                         onClick={() => handleSyncLeadsReq()}
                       >
                         Sync Leads
@@ -306,7 +300,7 @@ const UpdatedTable = ({
               }
             >
               <div
-                className="bg-[#2596FB] text-slate-300 px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#2596FB]"
+                className="bg-gradient-to-b from-[#7a51e3] via-[#6e48cb] to-[#55389f] text-slate-300 px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#1f2937]"
                 style={{
                   fontSize: "10px",
                 }}
@@ -361,14 +355,14 @@ const UpdatedTable = ({
                     JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
                     JSON.parse(record.form_data)[2].values[0] !== "philippines"
                   ) {
-                    let color = "bg-[#26D4AB7f]";
+                    let color = `${colorMode ? "bg-[#26D4AB7f]":"bg-[#26D4AB]"}`;
                     return color;
                   } else if (
                     record.form_data &&
                     JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = "bg-[#F3E45B7f]";
+                    let color = `${colorMode ? "bg-[#F3E45B7f]":"bg-[#F3E45B]"}`;
                     return color;
                   } else if (
                     record.form_data &&
@@ -376,10 +370,10 @@ const UpdatedTable = ({
                       "philippines" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = "bg-[#FF8A8A7f]";
+                    let color = `${colorMode ? "bg-[#FF8A8A7f]":"bg-[#FF8A8A]"}`;
                     return color;
                   } else {
-                    let color = "bg-[#9ed8ff7f]";
+                    let color = `bg-transparent`;
                     return color;
                   }
                   

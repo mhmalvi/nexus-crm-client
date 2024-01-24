@@ -54,8 +54,9 @@ table {
   overflow: hidden;
 }
 .selectSales .ant-select .ant-select-selector {
-  background-color: #7037ff;
+  background: linear-gradient( #100b1e,#0b0815,#000000)  !important; 
   color: #cbd5e1;
+  border: 0.5px solid #7037ff;
   border-radius: 8px !important;
 }
 

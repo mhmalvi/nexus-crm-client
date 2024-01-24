@@ -85,8 +85,6 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
 
-  
-
   const memoizedFetchLeads = useMemo(
     () => async () => {
       const response = await handleFetchLeads({
@@ -258,9 +256,9 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className="rounded-md px-2 py-1 ease-in duration-100 hover:bg-gray-800 bg-[#7037ff] border-none flex items-center justify-center w-full"
+              className={`rounded-md px-2 py-1 ease-in duration-100 bg-gradient-to-b from-[#7a51e3] via-[#6e48cb] to-[#55389f] border-none flex items-center justify-center w-full`}
             >
-              <p className="p-0 m-0 text-xs text-white">Assign</p>
+              <p className="p-0 m-0 text-xs text-slate-300">Assign</p>
             </button>
           </>
         );
@@ -363,13 +361,13 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className="btn btn-block w-[100px] h-[28px]  text-white rounded-md ease-in duration-100 hover:bg-gray-800 bg-[#7037ff] flex flex-row m-auto "
+              className={`rounded-md px-2 py-1 ease-in duration-100 bg-gradient-to-b from-[#100b1e] via-[#0b0815] to-[#000000] border-none flex items-center justify-center w-full`}
             >
-              <div className="flex flex-row m-auto justify-between">
+              <div className="flex flex-row m-auto justify-between text-slate-300">
                 <p className="text-xs m-0 p-1">
                   {record.call_count != null ? record.call_count : 0}
                 </p>
-                <p className="text-xs  m-0 p-1">Call Details</p>
+                <p className="text-xs m-0 p-1">Call Details</p>
               </div>
             </button>
           </h4>
@@ -725,9 +723,7 @@ const AdminDashboard = () => {
               />
             </div>
             <div className="col-span-2">
-              <CountryList
-                table_title="Lead List"
-              />
+              <CountryList table_title="Lead List" />
             </div>
           </div>
           <UpdatedTable
