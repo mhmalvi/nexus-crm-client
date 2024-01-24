@@ -107,7 +107,7 @@ const NoticeForm = () => {
                   onClick={() => {
                     setShowNotices(true);
                   }}
-                  className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-slate-300 rounded-md "
+                  className="ease-in duration-200 bg-gradient-to-b from-[#100b1e] via-[#0b0815] to-[#000000] px-2 py-1 text-slate-300 rounded-md "
                 >
                   Preview Notices
                 </button>
@@ -143,7 +143,7 @@ const NoticeForm = () => {
                     placeholder="Details"
                   ></textarea>
                   <button
-                    className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-[#2596FB] hover:bg-black rounded-md"
+                    className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-gradient-to-b from-[#7a51e3] via-[#6e48cb] to-[#55389f] rounded-md"
                     type="submit"
                     value="Post"
                   >
@@ -169,7 +169,7 @@ const NoticeForm = () => {
                     onClick={() => {
                       setShowNotices(true);
                     }}
-                    className="ease-in duration-200 bg-[#7037FF] hover:bg-black px-2 py-1 text-slate-300 rounded-md "
+                    className="ease-in duration-200 bg-gradient-to-b from-[#100b1e] via-[#0b0815] to-[#000000] px-2 py-1 text-slate-300 rounded-md "
                   >
                     Preview Notices
                   </button>

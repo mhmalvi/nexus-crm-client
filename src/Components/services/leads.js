@@ -1,11 +1,11 @@
 import axios from "axios";
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+const config = {
+  headers: {
+    Authorization: "Bearer " + authToken,
+  },
+};
 export const handleAddLead = async (leadData) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/create-lead`,
@@ -22,7 +22,8 @@ export const handleFetchLeads = async (details) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
-      details
+      details,
+      config
     );
     return result.data;
   } catch (error) {
@@ -30,11 +31,6 @@ export const handleFetchLeads = async (details) => {
   }
 };
 export const handleAddCourse = async (details) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/add-course`,
@@ -48,11 +44,6 @@ export const handleAddCourse = async (details) => {
 };
 
 export const handleUploadLeadFile = async (fileDetails) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/excel-read`,
