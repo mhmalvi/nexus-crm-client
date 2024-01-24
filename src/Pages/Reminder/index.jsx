@@ -1,7 +1,7 @@
 import React from "react";
 import BigCalendar from "./BigCalender";
 import { useSelector } from "react-redux";
-const Calender = () => {
+const Reminder = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   return (
@@ -28,4 +28,4 @@ const Calender = () => {
   );
 };
 
-export default Calender;
+export default Reminder;

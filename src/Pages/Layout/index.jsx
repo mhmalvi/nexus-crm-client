@@ -6,7 +6,7 @@ import Sidebar from "../../Components/Shared/Sidebar";
 import { Storage } from "../../Components/Shared/utils/store";
 import { handleFetchNotificationList } from "../../Components/services/notification";
 import { setNotifications } from "../../features/user/notificationSlice";
-import Calender from "../Calender";
+import Reminder from "../Reminder";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
 import Courses from "../Courses";
@@ -16,7 +16,7 @@ import CampaignInfo from "../Dashboard/SuperAdminDashboard/CompanyInfo/CampaignI
 import GmailModule from "../Gmail";
 import LeadDetails from "../LeadDetails";
 import Messages from "../Messages";
-import Overview from "../Overview";
+import Analytics from "../Analytics";
 import RenewPackage from "../Package/RenewPackage";
 import Pay from "../Pay";
 import Success from "../Pay/Success";
@@ -32,6 +32,7 @@ import ManageStudnet from "../StudentManagement/index";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
+import QueMailer from "../QueMailer"
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Layout = () => {
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  const [openSideBar, setOpenSideBar] = useState(false);
+  const [openSideBar, setOpenSideBar] = useState(true);
 
 
   const fetchFollowUpNotification = async () => {
@@ -149,10 +150,10 @@ const Items = [
     count: 0,
   },
   {
-    key: "overview",
-    name: "overview",
-    label: "Overview",
-    component: <Overview />,
+    key: "analytics",
+    name: "analytics",
+    label: "Analytics",
+    component: <Analytics />,
     count: 0,
   },
   {
@@ -185,10 +186,10 @@ const Items = [
     count: 0,
   },
   {
-    key: "calender",
-    name: "calender",
-    label: "Calender",
-    component: <Calender />,
+    key: "reminder",
+    name: "reminder",
+    label: "Reminder",
+    component: <Reminder />,
     count: 0,
   },
   {
@@ -238,6 +239,13 @@ const Items = [
     name: "email-setting",
     label: "Email Setting",
     component: <EmailSetting />,
+    count: 0,
+  },
+  {
+    key: "que-mailer",
+    name: "que-mailer",
+    label: "Que Mailer",
+    component: <QueMailer />,
     count: 0,
   },
 ];
