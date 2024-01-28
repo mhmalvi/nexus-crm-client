@@ -1,11 +1,271 @@
-.templateSelect .ant-select-selector{
-    border-radius: 8px !important;
+.templateSelect .ant-select-selector {
+  border-radius: 8px !important;
 }
-.templateSelect .ant-select-selection-search input{
-    display:flex !important;
-    background-color: aqua !important;
+.templateSelect .ant-select-selection-search input {
+  display: flex !important;
+  background-color: aqua !important;
 }
 /* .csvFile input[type="file"]{
     background-color: aqua !important;
     color: #fff !important;
 } */
+
+/* HISTORY TABLE  */
+.emailTableLight .ant-table {
+  border-radius: 10px !important;
+  overflow: hidden;
+  backdrop-filter: blur(40px);
+  background-color: #ffffff11;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+.emailTableLight .ant-table-thead th {
+  backdrop-filter: blur(40px);
+  background-color: transparent;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.emailTableLight .ant-table-tbody::-webkit-scrollbar {
+  height: 5px !important;
+}
+.emailTableLight .ant-table-tbody::-webkit-scrollbar-corner {
+  background-color: #1b0538;
+}
+.emailTableLight .ant-table-tbody::-webkit-scrollbar-track {
+  background-color: #1b0538;
+}
+.emailTableLight .ant-table-tbody::-webkit-scrollbar-thumb {
+  background-color: #7037ff;
+}
+.emailTableLight .ant-table-tbody .ant-table-cell,
+.emailTableLight .ant-table-tbody .ant-table-cell h4 {
+  color: #1f2937;
+  margin: 0;
+  text-align: center;
+}
+.emailTableLight th {
+  padding: 18px 18px 18px 0;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  color: #1f2937 !important;
+  /* background: linear-gradient( #946bfc,#351a77,#1f0f47)  !important;  */
+  /* background: linear-gradient( #7a51e3,#6e48cb,#55389f)  !important; 
+     */
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border: 1px solid #1f293729 !important;
+}
+.emailTableLight .ant-table-tbody tr td {
+  padding: 8px;
+}
+.emailTableLight .ant-table-tbody tr td {
+  border-bottom: 1px solid #1f293729 !important;
+  border-right: 1px solid #1f293729 !important;
+}
+.emailTableLight .ant-table-thead tr th {
+  border-right: 1px solid #1f293729 !important;
+  text-align: center;
+}
+.emailTableLight thead .ant-table-cell-fix-left-last:first-child {
+  background-color: #7037ff !important;
+  color: #1f2937;
+}
+.emailTableLight .ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emailTableLight .ant-pagination li {
+  border: 0.5px solid #1f2937;
+  background-color: transparent;
+  border-radius: 10px;
+}
+.emailTableLight .ant-pagination li a {
+  color: #1f2937;
+}
+.emailTableLight .ant-pagination .ant-pagination-item-active {
+  background-color: #7037ff;
+}
+.emailTableLight .ant-pagination .ant-pagination-item-active a {
+  color: #cbd5e1 !important;
+}
+.emailTableLight .ant-pagination .ant-pagination-item-ellipsis {
+  color: #1f2937;
+}
+.emailTableLight .ant-pagination .ant-pagination-disabled,
+.emailTableLight .ant-pagination .ant-pagination-prev,
+.emailTableLight .ant-pagination .ant-pagination-next {
+  overflow: hidden;
+}
+.emailTableLight .ant-pagination .ant-pagination-prev > button,
+.emailTableLight .ant-pagination .ant-pagination-next > button {
+  background-color: #7037ff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+}
+.emailTableLight .ant-pagination .ant-pagination-disabled > button {
+  background-color: #cbd5e1;
+  color: #1f293797;
+}
+.emailTableLight .ant-pagination .ant-pagination-disabled > button:hover,
+.emailTableLight .ant-pagination .ant-pagination-prev > button:hover,
+.emailTableLight .ant-pagination .ant-pagination-next > button:hover {
+  border: 1px solid #cbd5e1;
+  color: #7037ff;
+}
+.emailTableLight .ant-pagination .ant-pagination-item-link-icon {
+  color: #cbd5e1;
+}
+.emailTableLight .ant-pagination .ant-pagination-item-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emailTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+}
+.emailTableLight .ant-pagination .ant-pagination-options .ant-select-selector {
+  border-radius: 10px;
+}
+.emailTableLight
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector:hover {
+  border: 1px solid #4f8dea;
+}
+
+/*  */
+/*  */
+/* Dark Mail */
+/*  */
+/*  */
+.emailTableDark .ant-table {
+  border-radius: 10px !important;
+  overflow: hidden;
+  backdrop-filter: blur(40px);
+  background-color: #0000007f;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+.emailTableDark .ant-table-tbody::-webkit-scrollbar {
+  height: 5px !important;
+}
+.emailTableDark .ant-table-tbody::-webkit-scrollbar-corner {
+  background-color: #1b0538;
+}
+.emailTableDark .ant-table-tbody::-webkit-scrollbar-track {
+  background-color: #1b0538;
+}
+.emailTableDark .ant-table-tbody::-webkit-scrollbar-thumb {
+  background-color: #7037ff !important;
+}
+.emailTableDark .ant-table-tbody .ant-table-cell,
+.emailTableDark .ant-table-tbody .ant-table-cell h4 {
+  color: #cbd5e1;
+  margin: 0;
+  text-align: center;
+}
+.emailTableDark th {
+  padding: 18px 18px 18px 0;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  color: #cbd5e1 !important;
+  border-bottom: 1px solid #c0c0c02f !important;
+  /* background: linear-gradient(#100b1e, #0b0815, #000000) !important; */
+}
+.emailTableDark .ant-table-thead th {
+  backdrop-filter: blur(40px);
+  background-color: transparent;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.emailTableDark .ant-table-tbody tr td {
+  padding: 8px;
+}
+.emailTableDark .ant-table-tbody tr td {
+  border-bottom: 1px solid #c0c0c02f !important;
+  border-right: 1px solid #c0c0c02f !important;
+}
+.emailTableDark .ant-table-thead tr th {
+  border-right: 1px solid #c0c0c02f !important;
+  text-align: center;
+}
+.emailTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+}
+.emailTableDark .ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emailTableDark .ant-pagination li {
+  border: 0.5px solid #cbd5e1;
+  background-color: transparent;
+  border-radius: 10px;
+}
+.emailTableDark .ant-pagination li a {
+  color: #cbd5e1;
+}
+.emailTableDark .ant-pagination .ant-pagination-item-active {
+  background-color: #7037ff;
+}
+.emailTableDark .ant-pagination .ant-pagination-item-ellipsis {
+  color: #cbd5e1;
+}
+.emailTableDark .ant-pagination .ant-pagination-disabled,
+.emailTableDark .ant-pagination .ant-pagination-prev,
+.emailTableDark .ant-pagination .ant-pagination-next {
+  overflow: hidden;
+}
+.emailTableDark .ant-pagination .ant-pagination-prev > button,
+.emailTableDark .ant-pagination .ant-pagination-next > button {
+  background-color: #7037ff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+}
+.emailTableDark .ant-pagination .ant-pagination-disabled > button {
+  background-color: #cbd5e1;
+  color: #1f293797;
+}
+.emailTableDark .ant-pagination .ant-pagination-disabled > button:hover,
+.emailTableDark .ant-pagination .ant-pagination-prev > button:hover,
+.emailTableDark .ant-pagination .ant-pagination-next > button:hover {
+  border: 1px solid #cbd5e1;
+  color: #7037ff;
+}
+.emailTableDark .ant-pagination .ant-pagination-item-link-icon {
+  color: #cbd5e1;
+}
+.emailTableDark .ant-pagination .ant-pagination-item-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emailTableDark .ant-pagination .ant-pagination-options .ant-select-selector {
+  border-radius: 10px;
+}
+.emailTableDark
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector:hover {
+  border: 1px solid #4f8dea;
+}

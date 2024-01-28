@@ -25,7 +25,7 @@ const Filters = ({
             <span className="text-base">Filter by</span> Status
           </h1>
           <div
-            className={`grid grid-cols-${isBigScreen ? "7" : "6"} gap-2 w-full`}
+            className={`grid grid-cols-${isBigScreen ? "6" : "6"} gap-2 w-full`}
           >
             {/* Status Filters */}
             {filterOptions.map((option) => (

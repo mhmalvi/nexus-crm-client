@@ -212,43 +212,47 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               </Link>
             )}
 
-            <Link
-              to={"/que-mailer"}
-              className={`${
-                active === "que-mailer"
-                  ? colorMode
-                    ? "text-[#FFFFFF]"
-                    : "text-[#7037FF]"
-                  : colorMode
-                  ? "text-[#B3B3B3]"
-                  : "text-gray-800"
-              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
-                colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
-              }`}
-              onClick={() => setActive("que-mailer")}
-            >
-              <div className="flex w-full items-center justify-around ">
-                <Icons.SidebarMail />
-                {openSideBar ? (
-                  ""
-                ) : (
-                  <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
-                    Que Mailer
-                  </span>
-                )}
-              </div>
-              {active === "que-mailer" && (
-                <div
-                  className={`active-option ${
-                    colorMode
-                      ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                      : "text-[#7037FF] bg-[#7037FF]"
-                  }`}
-                >
-                  |
+            {(userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 3) && (
+              <Link
+                to={"/que-mailer"}
+                className={`${
+                  active === "que-mailer"
+                    ? colorMode
+                      ? "text-[#FFFFFF]"
+                      : "text-[#7037FF]"
+                    : colorMode
+                    ? "text-[#B3B3B3]"
+                    : "text-gray-800"
+                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#7037FF]"
+                }`}
+                onClick={() => setActive("que-mailer")}
+              >
+                <div className="flex w-full items-center justify-around ">
+                  <Icons.SidebarMail />
+                  {openSideBar ? (
+                    ""
+                  ) : (
+                    <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
+                      Que Mailer
+                    </span>
+                  )}
                 </div>
-              )}
-            </Link>
+                {active === "que-mailer" && (
+                  <div
+                    className={`active-option ${
+                      colorMode
+                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                        : "text-[#7037FF] bg-[#7037FF]"
+                    }`}
+                  >
+                    |
+                  </div>
+                )}
+              </Link>
+            )}
           </div>
 
           <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>

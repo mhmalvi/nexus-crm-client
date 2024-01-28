@@ -18,6 +18,43 @@ export const fetchEmailTemplateList = async () => {
     return error.response;
   }
 };
+export const getEmailHistory = async () => {
+  try {
+    const result = await axios.get(
+      `https://emailmarketing.queleadscrm.com/api/email-history`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleCurrentEmail = async (id) => {
+  try {
+    const result = await axios.get(
+      `https://emailmarketing.queleadscrm.com/api/get-mail/${id}`,
+      config
+    );
+    console.log(result)
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleAddSenderEmail = async (data) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/save-mail`,
+      data,
+      config
+    );
+    console.log(data)
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 export const AddNewTemplateList = async (data) => {
   try {
     const result = await axios.post(
