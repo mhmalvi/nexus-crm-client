@@ -298,7 +298,7 @@ const Login = () => {
         </div>
       )}
 
-      <div className="relative flex items-center justify-center mx-auto h-full p-[10px]">
+      <div className="relative flex items-center justify-center mx-auto w-full h-full p-[10px]">
         <div
           className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
           style={{}}
@@ -432,15 +432,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <div className="text-center ">
-              <a
-                className="font-semibold text-white"
-                href="/requisition"
-                target="_blank"
-              >
-                Click Here To Explore Packages and Send Requisition
-              </a>
-            </div>
+          
           </div>
 
           <div

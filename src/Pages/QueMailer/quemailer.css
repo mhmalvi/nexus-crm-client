@@ -1,0 +1,11 @@
+.templateSelect .ant-select-selector{
+    border-radius: 8px !important;
+}
+.templateSelect .ant-select-selection-search input{
+    display:flex !important;
+    background-color: aqua !important;
+}
+/* .csvFile input[type="file"]{
+    background-color: aqua !important;
+    color: #fff !important;
+} */

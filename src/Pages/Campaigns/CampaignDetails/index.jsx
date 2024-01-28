@@ -10,11 +10,11 @@ import {
   handleFetchLeads,
 } from "../../../Components/services/leads";
 import activeImg from "../../../assets/Images/active.png";
-import campaignBg from "../../../assets/Images/campaign_bg.jpg";
+// import campaignBg from "../../../assets/Images/campaign_bg.jpg";
 import inactiveImg from "../../../assets/Images/inactive.png";
 import { addCampaigns } from "../../../features/Leads/campaignSlice";
 import { addLeads } from "../../../features/Leads/leadsSlice";
-import Calendar from "../../Dashboard/AdminDashboard/Calendar";
+import CalendarSmall from "../../Dashboard/AdminDashboard/CalendarSmall";
 import Filters from "../../Dashboard/AdminDashboard/Filters";
 import UpdatedTable from "../../Dashboard/AdminDashboard/UpdatedTable";
 import data from "../../Dashboard/AdminDashboard/leadData.json";
@@ -25,6 +25,7 @@ const CampaignDetails = () => {
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
   const campaignList = useSelector((state) => state.campaigns)?.campaigns;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   // const [campaignList, setCampaignDetails] = useState();
 
@@ -91,7 +92,6 @@ const CampaignDetails = () => {
     }
   }, [id, leadList, selectedDay, selectedMonth, selectedYear]);
 
-
   useEffect(() => {
     setCampaignDetails(
       campaignList?.find(
@@ -128,8 +128,6 @@ const CampaignDetails = () => {
       );
     }
   }, [campaignList, filterDate, id, leadList]);
-
-  console.log("campaignCourses", campaignCourses);
 
   useEffect(() => {
     (async () => {
@@ -207,7 +205,7 @@ const CampaignDetails = () => {
         dataIndex: "lead_from",
         key: "work_location",
         ...getColumnSearchProps("work_location"),
-        render: (_,record,idx) => (
+        render: (_, record, idx) => (
           <h4 className="cursor-pointer uppercase">{record.lead_from}</h4>
         ),
         width: 100,
@@ -289,7 +287,6 @@ const CampaignDetails = () => {
   }, [companyEmployeeList, userDetails?.userInfo]);
 
   const handleFilterLeadList = (filterId) => {
-    
     console.log("filterId....", filterId);
 
     setActiveFilter(filterId);
@@ -458,51 +455,31 @@ const CampaignDetails = () => {
         text
       ),
   });
-
+  console.log(leadList);
   return (
-    <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">
-      {/* Campaign Details */}
-      <div
-        className="rounded-xl mb-16"
-        style={{
-          backgroundImage: `url(${campaignBg})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl">
-          <div className="border rounded-2xl p-6 bg-white bg-opacity-75 mr-4">
-            <div>
-              <h1 className="text-xl leading-8 font-poppins font-semibold">
-                {campaignDetails?.campaign_name}
-              </h1>
-              <h1 className="text-base leading-8 font-poppins font-medium">
-                Campaign ID: {campaignDetails?.campaign_id}
-              </h1>
-              <div className="mt-8">
-                <h1 className="text-base leading-8 font-poppins font-medium">
-                  Started Time: {campaignDetails?.start_time}
+    <div className="flex items-center justify-center w-full h-screen gap-4">
+      <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 overflow-y-scroll">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="col-span-1 h-full w-full flex flex-col justify-between items-start gap-4">
+            <div className="shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md w-full h-full flex flex-col justify-between">
+              <div
+                className={`flex shadow-md backdrop-blur-2xl bg-[#ffffff11] px-4 py-2 rounded-t-md`}
+              >
+                <h1
+                  className={`text-base font-poppins font-semibold border-r pr-4 m-0 py-0 ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  }`}
+                >
+                  {campaignDetails?.campaign_name}
                 </h1>
-                <h1 className="text-base leading-8 font-poppins font-medium">
-                  End Time: {campaignDetails?.stop_time}
-                </h1>
-
-                <div className="flex items-center">
-                  <span className="text-base leading-8 font-poppins font-medium mr-2">
-                    Status:
-                  </span>
-                  {campaignDetails?.campaign_status === "ACTIVE" ? (
-                    <img className="w-6" src={activeImg} alt="" />
-                  ) : (
-                    <img className="w-6" src={inactiveImg} alt="" />
-                  )}
-                  <h1 className="block text-base leading-8 font-poppins font-medium ml-1 mb-0">
-                    {campaignDetails?.campaign_status}
-                  </h1>
-                </div>
-
-                <h1 className="block text-lg text-brand-color leading-8 font-poppins font-semibold pt-6">
-                  Total Leads:{" "}
+                <h1
+                  className={`${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } text-base font-poppins font-semibold pl-4 m-0 py-0`}
+                >
+                  <span className="text-xs">Total Leads:</span>{" "}
                   {
                     leadList?.filter(
                       (lead) => parseInt(lead.campaign_id) === parseInt(id)
@@ -510,34 +487,156 @@ const CampaignDetails = () => {
                   }
                 </h1>
               </div>
-            </div>
-          </div>
-          {campaignCourses?.length > 0 ? (
-            <div className="border rounded-2xl p-6 bg-white bg-opacity-75 ml-4">
-              {campaignCourses?.map((course) => (
-                <div onClick={() => handleCourseWiseLeads(course)}>
-                  <li className="list-disc rounded-lg font-poppins uppercase text-base font-semibold px-2 py-1 my-1 hover:bg-gray-50 hover:bg-opacity-50 transition-all delay-150 cursor-pointer">
-                    <span>{course}</span>
-                    <span className="text-brand-color ml-12 float-right italic">
-                      {
-                        leadList
-                          ?.filter(
-                            (lead) =>
-                              parseInt(lead.campaign_id) === parseInt(id)
-                          )
-                          ?.filter((lead) => lead.course_description === course)
-                          ?.length
-                      }
-                    </span>
-                  </li>
+              <div className="px-4 py-4">
+                <h1
+                  className={`text-base font-poppins font-medium m-0 pb-2 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  <span className="mr-3">Campaign ID:</span>{" "}
+                  {campaignDetails?.campaign_id}
+                </h1>
+                <h1
+                  className={`${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } text-base font-poppins font-medium pb-2 m-0`}
+                >
+                  <span className="mr-4">Started Time:</span>{" "}
+                  {campaignDetails?.start_time}
+                </h1>
+                <h1
+                  className={`${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } text-base font-poppins font-medium pb-2 m-0`}
+                >
+                  <span className="mr-11">End Time:</span>{" "}
+                  {campaignDetails?.stop_time}
+                </h1>
+
+                <div className="flex items-center">
+                  <span
+                    className={` ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    } text-base font-poppins font-medium mr-16`}
+                  >
+                    Status:
+                  </span>
+                  {campaignDetails?.campaign_status === "ACTIVE" ? (
+                    <img className="w-6" src={activeImg} alt="" />
+                  ) : (
+                    <img className="w-6" src={inactiveImg} alt="" />
+                  )}
+                  <h1
+                    className={`text-base font-poppins font-medium m-0 p-0 ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    {campaignDetails?.campaign_status}
+                  </h1>
                 </div>
-              ))}
+              </div>
             </div>
-          ) : null}
+            <Filters
+              layout="Campaign"
+              handleFilterLeadList={handleFilterLeadList}
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+              activeStars={activeStars}
+              filterOptions={filterOptions}
+              ratings={ratings}
+              handleStaredLeadsFilter={handleStaredLeadsFilter}
+              setActiveStars={setActiveStars}
+              setSearchInput={setSearchInput}
+            />
+          </div>
+          <div className="col-span-1">
+            {campaignCourses?.length > 0 ? (
+              <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+                <h1
+                  className={`px-4 py-2 m-0 text-base hadow-md backdrop-blur-2xl bg-[#ffffff11] ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Leads Per Course
+                </h1>
+                <div className="max-h-[35vh] overflow-y-scroll">
+                  {campaignCourses?.map((course) => (
+                    <div onClick={() => handleCourseWiseLeads(course)}>
+                      <li
+                        className={`border-b ${
+                          colorMode
+                            ? "text-slate-300 border-slate-300"
+                            : "text-gray-800 border-gray-800"
+                        } font-poppins uppercase flex justify-between items-center font-normal p-4 `}
+                      >
+                        <span
+                          className={`text-sm ${
+                            colorMode
+                              ? "text-slate-300 border-slate-300"
+                              : "text-gray-800 border-gray-800"
+                          }`}
+                        >
+                          {course}
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            colorMode ? "text-slate-300" : "text-gray-800"
+                          }`}
+                        >
+                          {
+                            leadList
+                              ?.filter(
+                                (lead) =>
+                                  parseInt(lead.campaign_id) === parseInt(id)
+                              )
+                              ?.filter(
+                                (lead) => lead.course_description === course
+                              )?.length
+                          }
+                        </span>
+                      </li>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+          <div className="col-span-1">
+            <CalendarSmall
+              filterDate={filterDate}
+              setFilterDate={setFilterDate}
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+          </div>
+        </div>
+        <div className="">
+          <UpdatedTable
+            table_title="Leads"
+            tableHeaders={tableHeaders}
+            data={leadData}
+            companyEmployeeList={companyEmployeeList}
+            filterOptions={
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4
+                ? adminFilterOptions
+                : salesEmployeesFilterOptions
+            }
+            ratings={ratings}
+            activeFilter={activeFilter}
+            searchInput={searchInput}
+            handleSyncLeadsReq={null}
+            setIsAddLeadFormOpen={null}
+            setSyncLeads={null}
+            syncLeads={null}
+          />{" "}
         </div>
       </div>
-
-      <Calendar
+      {/* <Calendar
         filterDate={filterDate}
         setFilterDate={setFilterDate}
         selectedDay={selectedDay}
@@ -548,39 +647,9 @@ const CampaignDetails = () => {
         setSelectedYear={setSelectedYear}
       />
 
-      <Filters
-        layout="Campaign"
-        handleFilterLeadList={handleFilterLeadList}
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-        activeStars={activeStars}
-        filterOptions={filterOptions}
-        ratings={ratings}
-        handleStaredLeadsFilter={handleStaredLeadsFilter}
-        setActiveStars={setActiveStars}
-        setSearchInput={setSearchInput}
-      />
+      
 
-      <UpdatedTable
-        table_title="Leads"
-        tableHeaders={tableHeaders}
-        data={leadData}
-        companyEmployeeList={companyEmployeeList}
-        filterOptions={
-          userDetails?.userInfo?.role_id === 3 ||
-          userDetails?.userInfo?.role_id === 4
-            ? adminFilterOptions
-            : salesEmployeesFilterOptions
-        }
-        ratings={ratings}
-        activeFilter={activeFilter}
-        searchInput={searchInput}
-        handleSyncLeadsReq={null}
-        setIsAddLeadFormOpen={null}
-        setSyncLeads={null}
-        syncLeads={null}
-      />
-
+     */}
     </div>
   );
 };
