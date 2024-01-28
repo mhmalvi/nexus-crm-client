@@ -146,7 +146,9 @@ const UpdatedTable = ({
   }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
 
   return (
-    <div className="!rounded-xl mt-12">
+    <div
+      className={`!rounded-xl ${(table_title === "Leads") ? "mt-0":"mt-12"}`}
+    >
       <div>
         <div className="flex justify-between items-center">
           <h1
@@ -199,7 +201,9 @@ const UpdatedTable = ({
                   <div
                     htmlFor="upload_lead_file"
                     className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
-                      colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                      colorMode
+                        ? "text-slate-300 border-slate-300 hover:bg-black"
+                        : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
                     } ease-in duration-200 `}
                   >
                     Upload File
@@ -227,7 +231,9 @@ const UpdatedTable = ({
                     <button
                       id="add_leads"
                       className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
-                        colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                        colorMode
+                          ? "text-slate-300 border-slate-300 hover:bg-black"
+                          : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
                       } ease-in duration-200 `}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
@@ -260,7 +266,9 @@ const UpdatedTable = ({
                       <button
                         id="sync_leads"
                         className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
-                          colorMode ? "text-slate-300 border-slate-300 hover:bg-black" : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                          colorMode
+                            ? "text-slate-300 border-slate-300 hover:bg-black"
+                            : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
                         } ease-in duration-200 `}
                         onClick={() => handleSyncLeadsReq()}
                       >
@@ -344,9 +352,9 @@ const UpdatedTable = ({
                   ? 270
                   : 400,
               }}
-              rowClassName={(record) => {
-                
-                // console.log(JSON.parse(record.form_data))
+              rowClassName={
+                (record) => {
+                  // console.log(JSON.parse(record.form_data))
                   if (
                     (record.work_location === "wa" ||
                       record.work_location === "WA") &&
@@ -355,14 +363,18 @@ const UpdatedTable = ({
                     JSON.parse(record.form_data)[2].values[0] !== "vietnam" &&
                     JSON.parse(record.form_data)[2].values[0] !== "philippines"
                   ) {
-                    let color = `${colorMode ? "bg-[#26D4AB7f]":"bg-[#26D4AB]"}`;
+                    let color = `${
+                      colorMode ? "bg-[#26D4AB7f]" : "bg-[#26D4AB]"
+                    }`;
                     return color;
                   } else if (
                     record.form_data &&
                     JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = `${colorMode ? "bg-[#F3E45B7f]":"bg-[#F3E45B]"}`;
+                    let color = `${
+                      colorMode ? "bg-[#F3E45B7f]" : "bg-[#F3E45B]"
+                    }`;
                     return color;
                   } else if (
                     record.form_data &&
@@ -370,17 +382,17 @@ const UpdatedTable = ({
                       "philippines" &&
                     record.campaign_id >= 0
                   ) {
-                    let color = `${colorMode ? "bg-[#FF8A8A7f]":"bg-[#FF8A8A]"}`;
+                    let color = `${
+                      colorMode ? "bg-[#FF8A8A7f]" : "bg-[#FF8A8A]"
+                    }`;
                     return color;
                   } else {
                     let color = `bg-transparent`;
                     return color;
                   }
-                  
                 }
 
-
-                // 
+                //
                 // CURRENT ONE
                 //
 
@@ -414,9 +426,7 @@ const UpdatedTable = ({
                 //   return color;
                 // }
 
-
                 // CHANGE THIS LATER
-
 
                 // if (table_title === "Lead List") {
                 //   // Philipines-1

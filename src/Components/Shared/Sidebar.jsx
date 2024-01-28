@@ -228,7 +228,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
               onClick={() => setActive("que-mailer")}
             >
               <div className="flex w-full items-center justify-around ">
-                <Icons.Dashboard />
+                <Icons.SidebarMail />
                 {openSideBar ? (
                   ""
                 ) : (
