@@ -60,8 +60,6 @@ const ProfileSettings = () => {
       ...profileData,
     });
 
-    console.log("UpdateResponse", updateResponse);
-
     if (updateResponse?.data?.status === true) {
       setToggleEditDetails(false);
       message.success("Profile Update Success");

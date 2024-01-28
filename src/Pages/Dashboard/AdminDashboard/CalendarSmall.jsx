@@ -68,7 +68,7 @@ const CalendarSmall = ({
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
-    <>
+    <div>
       <Calendar
         className={colorMode ? "calendarBodyDark" : "calendarBodyWhite"}
         fullscreen={false}
@@ -182,7 +182,7 @@ const CalendarSmall = ({
           setSelectedDay(date < 10 ? `0${date}` : `${date}`);
         }}
       />
-    </>
+    </div>
   );
 };
 export default CalendarSmall;

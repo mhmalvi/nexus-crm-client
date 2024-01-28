@@ -16,12 +16,11 @@ import "./quemailer.css";
 import { useMediaQuery } from "react-responsive";
 
 const MailDashboard = ({
-  leadDetails,
+  currentEmail,
   setSuccessMail,
   setOpenMailModal,
   data,
 }) => {
-  
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -65,36 +64,48 @@ const MailDashboard = ({
       }
     } else {
       setConfirmLoading(true);
-  
+
       try {
+        let commonId = null;
+
         for (const [index, email] of data.entries()) {
           const formData = new FormData();
           formData.append("template", editorRef?.current?.getContent() || "");
           formData.append("subject", mailSubject);
           formData.append("email", email);
-  
-          const response = await fetch("https://emailmarketing.queleadscrm.com/api/send-mail", {
-            method: "POST",
-            body: formData,
-            headers: {
-              Accept: "application/json",
-            },
-          });
-  
+          formData.append("user_id", 32)
+
+          if (index === 0 && commonId === null) {
+            formData.append("id", 0);
+          } else if (commonId !== null) {
+            formData.append("id", commonId);
+          }
+
+          const response = await fetch(
+            "https://emailmarketing.queleadscrm.com/api/send-mail",
+            {
+              method: "POST",
+              body: formData,
+              headers: {
+                Accept: "application/json",
+              },
+            }
+          );
+
           const result = await response.json();
-  
-          console.log(result);
-  
+
           if (result?.status === 200) {
-            // Use a unique identifier for each email (assuming email is unique)
+            if (index === 0) {
+              commonId = result.id;
+            }
+
             const successMailId = email;
-  
-            // Use the retrieved 'id' in your state
+
             setSuccessMail((prevSuccessMail) => ({
               ...prevSuccessMail,
               [successMailId]: true,
             }));
-  
+
             message.success(`Mail sent successfully to ${email}`);
           } else {
             message.error(result?.message || `Failed to send mail to ${email}`);
@@ -102,17 +113,14 @@ const MailDashboard = ({
         }
         setConfirmLoading(false);
         setOpenMailModal(false);
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         message.error("Something went wrong while sending mails");
         setConfirmLoading(false);
       }
-      
     }
   };
-  
-  
-  
+
   // set mail with pdf end
 
   // const handleMailCancel = () => {
@@ -172,7 +180,7 @@ const MailDashboard = ({
       setGalleryList(galleryList);
     }
     onSelectTemp();
-  }, []);
+  }, [staticGalleryListData, staticTempListData]);
 
   const showAddNewTemplateModal = () => {
     setTempOpen(true);
@@ -186,29 +194,46 @@ const MailDashboard = ({
       itm?.label | (itm?.value === tData) && setTempInitValue(itm?.template);
     });
   }, [tData, templateList]);
+  console.log(currentEmail);
   return (
     <div className="flex flex-col gap-4">
-      <div className="w-full flex justify-end gap-8">
-        <button
-          className={`px-4 py-2 border rounded-md ${
-            colorMode
-              ? "text-slate-300 border-slate-300"
-              : "text-gray-800 border-gray-800"
-          }`}
-          onClick={showGalleryModal}
-        >
-          Open Gallery
-        </button>
-        <button
-          className={`px-4 py-2 border rounded-md ${
-            colorMode
-              ? "text-slate-300 border-slate-300"
-              : "text-gray-800 border-gray-800"
-          }`}
-          onClick={showAddNewTemplateModal}
-        >
-          Add new Template
-        </button>
+      <div className="w-full flex justify-between gap-8">
+        <div>
+          <h1
+            className={`m-0 p-0 ${
+              colorMode
+                ? "text-slate-300 border-slate-300"
+                : "text-gray-800 border-gray-800"
+            }`}
+          >
+            Current Sender Email:{" "}
+            <span className="font-bold">
+              {currentEmail && currentEmail.from_mail_address}
+            </span>
+          </h1>
+        </div>
+        <div className="flex gap-8">
+          <button
+            className={`px-4 py-2 border rounded-md ${
+              colorMode
+                ? "text-slate-300 border-slate-300"
+                : "text-gray-800 border-gray-800"
+            }`}
+            onClick={showGalleryModal}
+          >
+            Open Gallery
+          </button>
+          <button
+            className={`px-4 py-2 border rounded-md ${
+              colorMode
+                ? "text-slate-300 border-slate-300"
+                : "text-gray-800 border-gray-800"
+            }`}
+            onClick={showAddNewTemplateModal}
+          >
+            Add new Template
+          </button>
+        </div>
       </div>
       <div className="flex gap-8 min-h-[50vh]">
         <Form
@@ -292,10 +317,10 @@ const MailDashboard = ({
                     "<p>This is the initial content of the editor.</p>"
                   }
                   init={{
-                    height:isBigScreen ? 450 : 300,
+                    height: isBigScreen ? 450 : 300,
                     menubar: false,
-                    resize:false,
-                    
+                    resize: false,
+
                     plugins: [
                       "advlist",
                       "autolink",

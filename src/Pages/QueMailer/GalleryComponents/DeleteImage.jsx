@@ -9,7 +9,6 @@ const DeleteImage = ({
   totalSelected,
   itemSelected,
 }) => {
-  console.log(itemSelected);
 
   const handleDeleteSelected = async () => {
     const resRmTemp = await handleDeleteImage(itemSelected);

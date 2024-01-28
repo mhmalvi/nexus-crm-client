@@ -459,9 +459,9 @@ const CampaignDetails = () => {
   return (
     <div className="flex items-center justify-center w-full h-screen gap-4">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 overflow-y-scroll">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 h-96 mb-8">
           <div className="col-span-1 h-full w-full flex flex-col justify-between items-start gap-4">
-            <div className="shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md w-full h-full flex flex-col justify-between">
+            <div className="shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md w-full flex flex-col justify-between">
               <div
                 className={`flex shadow-md backdrop-blur-2xl bg-[#ffffff11] px-4 py-2 rounded-t-md`}
               >
@@ -536,30 +536,32 @@ const CampaignDetails = () => {
                 </div>
               </div>
             </div>
-            <Filters
-              layout="Campaign"
-              handleFilterLeadList={handleFilterLeadList}
-              activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
-              activeStars={activeStars}
-              filterOptions={filterOptions}
-              ratings={ratings}
-              handleStaredLeadsFilter={handleStaredLeadsFilter}
-              setActiveStars={setActiveStars}
-              setSearchInput={setSearchInput}
-            />
+            <div className="w-full">
+              <Filters
+                layout="Campaign"
+                handleFilterLeadList={handleFilterLeadList}
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+                activeStars={activeStars}
+                filterOptions={filterOptions}
+                ratings={ratings}
+                handleStaredLeadsFilter={handleStaredLeadsFilter}
+                setActiveStars={setActiveStars}
+                setSearchInput={setSearchInput}
+              />
+            </div>
           </div>
           <div className="col-span-1">
             {campaignCourses?.length > 0 ? (
               <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
                 <h1
-                  className={`px-4 py-2 m-0 text-base hadow-md backdrop-blur-2xl bg-[#ffffff11] ${
+                  className={`px-4 py-2 m-0 text-base font-semibold shadow-md backdrop-blur-2xl bg-[#ffffff11] ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
                   Leads Per Course
                 </h1>
-                <div className="max-h-[35vh] overflow-y-scroll">
+                <div className="h-96 overflow-y-scroll">
                   {campaignCourses?.map((course) => (
                     <div onClick={() => handleCourseWiseLeads(course)}>
                       <li
@@ -601,7 +603,7 @@ const CampaignDetails = () => {
               </div>
             ) : null}
           </div>
-          <div className="col-span-1">
+          <div className="col-span-1 flex items-center justify-center">
             <CalendarSmall
               filterDate={filterDate}
               setFilterDate={setFilterDate}

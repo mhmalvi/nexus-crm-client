@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CsvParser from "./CsvParser";
 import MailDashboard from "./MailDashboard";
+import EmailHistory from "./EmailHistory";
 import { useSelector } from "react-redux";
+import EmailSettings from "./EmailSettings";
+import { handleCurrentEmail } from "../../Components/services/que-mail";
 
 function App() {
   const [data, setData] = useState([]);
@@ -11,7 +14,19 @@ function App() {
   const [openMailModal, setOpenMailModal] = useState(false);
   const [successMail, setSuccessMail] = useState({ id: 1, success: false });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const userDetails = useSelector((state) => state.user);
+  const [currentEmail, setCurrentEmail] = useState(null);
 
+  useEffect(() => {
+    async function fetchCurrentEmail() {
+      const res = await handleCurrentEmail(+userDetails.userInfo.id);
+      setCurrentEmail(res?.data);
+    }
+    if (currentEmail === null) {
+      fetchCurrentEmail();
+    }
+  }, [currentEmail, userDetails.userInfo.id]);
+  
   return (
     <div className="flex items-center justify-center w-full h-screen gap-8">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh]">
@@ -76,29 +91,76 @@ function App() {
           >
             Statistics
           </button>
+          <button
+            className={`${
+              colorMode
+                ? `hover:text-white ${
+                    activeItem === "Email Settings"
+                      ? "text-white"
+                      : "text-slate-300"
+                  }`
+                : `hover:text-gray-800 ${
+                    activeItem === "Email Settings"
+                      ? "text-gray-800"
+                      : "text-gray-500"
+                  }`
+            } px-4 text-base`}
+            onClick={() => {
+              setActiveItem("Email Settings");
+            }}
+          >
+            Email Settings
+          </button>
         </div>
-
-        {/* EMAIL EDITING SECTION */}
-        {activeItem === "Email" && (
+        {currentEmail?.status !== 404 ? (
+          <>
+            {/* EMAIL EDITING SECTION */}
+            {activeItem === "Email" && (
+              <div className="flex h-full justify-between gap-8 ">
+                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] max-h-[77vh] p-8 !z-4">
+                  <MailDashboard
+                    openMailModal={openMailModal}
+                    setOpenMailModal={setOpenMailModal}
+                    data={data}
+                    setSuccessMail={setSuccessMail}
+                    currentEmail={currentEmail}
+                  />
+                </div>
+                <div className="w-1/3 ">
+                  <CsvParser
+                    data={data}
+                    setData={setData}
+                    error={error}
+                    setError={setError}
+                    file={file}
+                    setFile={setFile}
+                    successMail={successMail}
+                  />
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {activeItem === "Email" && (
+              <div className="flex items-center justify-center h-full">
+                <h1>You need to set an email first</h1>
+              </div>
+            )}
+          </>
+        )}
+        {activeItem === "Email History" && (
           <div className="flex h-full justify-between gap-8 ">
             <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] max-h-[77vh] p-8 !z-4">
-              <MailDashboard
-                openMailModal={openMailModal}
-                setOpenMailModal={setOpenMailModal}
-                data={data}
-                setSuccessMail={setSuccessMail}
-              />
+              <EmailHistory />
             </div>
-            <div className="w-1/3 ">
-              <CsvParser
-                data={data}
-                setData={setData}
-                error={error}
-                setError={setError}
-                file={file}
-                setFile={setFile}
-                successMail={successMail}
-              />
+          </div>
+        )}
+
+        {activeItem === "Email Settings" && (
+          <div className="flex h-full justify-between gap-8 ">
+            <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 overflow-hidden">
+              <EmailSettings currentEmail={currentEmail}/>
             </div>
           </div>
         )}
