@@ -16,7 +16,7 @@ const Filters = ({
   return (
     <div className="h-full w-full rounded-md overflow-hidden shadow-md">
       {layout !== "Payment" && (
-        <div className="h-full p-3 rounded-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
+        <div className="h-full px-8 py-4 rounded-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
             className={`text-xl text-${
               colorMode ? "slate-300" : "gray-800"
@@ -34,10 +34,10 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`w-full text-xs text-center font-normal font-poppins p-1 cursor-pointer ${
+                  className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins p-1 cursor-pointer ${
                     activeFilter === option.id
                       // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
-                      ? "text-slate-300 bg-gradient-to-b from-[#100b1e] via-[#0b0815] to-[#000000] border-[0.5px] border-brand-color"
+                      ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
                       : colorMode
                       ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
                       : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
@@ -58,11 +58,11 @@ const Filters = ({
                     onClick={() => handleStaredLeadsFilter(rate?.id)}
                   >
                     <h1
-                      className={`text-xs text-center border-[1px] border-${
+                      className={`ease-in duration-100 text-xs text-center border-[1px] border-${
                         colorMode ? "slate-200" : "gray-800"
                       } font-normal font-poppins p-1 cursor-pointer ${
                         activeFilter === rate?.id
-                          ? "text-slate-300 bg-[#7037ff] "
+                          ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
                           : colorMode
                           ? "text-slate-300 bg-transparent"
                           : "text-gray-800 bg-transparent"

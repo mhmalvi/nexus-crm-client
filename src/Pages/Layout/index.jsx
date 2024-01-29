@@ -32,7 +32,7 @@ import ManageStudnet from "../StudentManagement/index";
 import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
-import QueMailer from "../QueMailer"
+import QueMailer from "../QueMailer";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -43,25 +43,28 @@ const Layout = () => {
   const [toggleMessage, setToggleMessage] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(true);
 
+  // const fetchFollowUpNotification = async () => {
+  //   const notificationRes = await handleFetchNotificationList(
+  //     userDetails?.userInfo?.user_id
+  //   );
 
-  const fetchFollowUpNotification = async () => {
-    const notificationRes = await handleFetchNotificationList(
-      userDetails?.userInfo?.user_id
-    );
+  //   if (
+  //     notificationRes?.message === "success" ||
+  //     notificationRes?.status === 200
+  //   ) {
+  //     dispatch(setNotifications(notificationRes?.data));
+  //   }
+  // };
 
-    if (
-      notificationRes?.message === "success" ||
-      notificationRes?.status === 200
-    ) {
-      dispatch(setNotifications(notificationRes?.data));
-    }
-  };
+  // useEffect(() => {
+  //   fetchFollowUpNotification();
+  // },[fetchFollowUpNotification]);
 
-  useEffect(() => {
-    setInterval(() => {
-      fetchFollowUpNotification();
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     fetchFollowUpNotification();
+  //   }, 1000);
+  // }, []);
 
   useEffect(() => {
     if (window.location.pathname === "/") {

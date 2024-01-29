@@ -10,7 +10,6 @@ import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 
 import * as chartUtils from "./utils";
-import Summary from "./Summary";
 
 const ManagementAnalytics = ({ activeCompany }) => {
   const dispatch = useDispatch();
@@ -102,7 +101,6 @@ const ManagementAnalytics = ({ activeCompany }) => {
   return (
     <div>
       <div className="flex items-start">
-        {/* Overall Summary */}
 
         {loadingDetails && (
           <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-transparent">
@@ -191,7 +189,7 @@ const ManagementAnalytics = ({ activeCompany }) => {
         </div>
       )}
 
-      {/* Lead Convertion Ratio */}
+      {/* Lead Conversion Ratio */}
       <div className="mt-10">
         <div>
           <h1 className={`text-xl font-semibold -mb-8 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>

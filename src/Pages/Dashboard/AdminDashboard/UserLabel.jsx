@@ -6,11 +6,7 @@ const UserLabel = ({ setOpenProfile, openProfile }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
     <div
-      className={`ease-in duration-100 absolute group right-0 bg-gradient-to-b ${
-        colorMode
-          ? "from-[#100b1e] via-[#0b0815] to-[#000000] hover:from-[#7a51e3] hover:via-[#6e48cb] hover:to-[#55389f] "
-          : "from-[#7a51e3] hover:from-[#100b1e] via-[#6e48cb] hover:via-[#0b0815] to-[#55389f] hover:to-[#000000]"
-      } m-1 p-1 rounded-lg shadow-md cursor-pointer hover:bg-black`}
+      className={`ease-in duration-100 absolute group right-0 m-1 p-1 rounded-lg shadow-md cursor-pointer hover:scale-95 shadow-md backdrop-blur-2xl bg-[#ffffff7f]`}
       onClick={() => setOpenProfile(!openProfile)}
     >
       <Avatar
@@ -22,7 +18,11 @@ const UserLabel = ({ setOpenProfile, openProfile }) => {
           userDetails?.userInfo?.full_name || userDetails?.userInfo?.name || ""
         }
       />
-      <span className="px-2 text-white py-0 m-0">
+      <span
+        className={`px-2 ${
+          colorMode ? "text-white" : "text-gray-800"
+        } py-0 m-0`}
+      >
         {userDetails?.userInfo?.full_name || userDetails?.userInfo?.name || ""}
       </span>
     </div>

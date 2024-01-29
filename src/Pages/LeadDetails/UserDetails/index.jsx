@@ -317,14 +317,14 @@ const UserDetails = ({
                   </span>
                 </div>
               </div>
-              <div
+              {/* <div
                 className={`absolute ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } top-2 right-5 hover:text-brand-color cursor-pointer`}
                 onClick={() => setToggleEditDetials(true)}
               >
                 <Icons.Edit />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">

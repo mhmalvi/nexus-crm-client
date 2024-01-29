@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { message } from "antd";
-import { handleAddSenderEmail } from "../../Components/services/que-mail";
+import {
+  handleAddSenderEmail,
+  handleUpdateSenderEmail,
+} from "../../Components/services/que-mail";
 import { useSelector } from "react-redux";
 
 const EmailSettings = ({ currentEmail }) => {
   const userDetails = useSelector((state) => state.user);
-  const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const colorMode = useSelector((state) => state?.user?.colorMode);
   const [senderEmailData, setSenderEmailData] = useState({
-    email: null,
-    password: null,
-    from_name: null,
+    email: currentEmail.username || null,
+    password: currentEmail.password || null,
+    from_name: currentEmail.from_name || null,
   });
   const [editEmailData, setEditEmailData] = useState(false);
 
@@ -25,95 +28,119 @@ const EmailSettings = ({ currentEmail }) => {
       from_name: senderEmailData.from_name,
       user_id: +userDetails.userInfo.id,
     };
+
     try {
-      const response = await handleAddSenderEmail(currentEmailData);
+      let response;
+      if (currentEmail?.status !== 404) {
+        response = await handleUpdateSenderEmail(
+          currentEmailData,
+          currentEmail.id
+        );
+      } else {
+        response = await handleAddSenderEmail(currentEmailData);
+      }
 
-      const result = await response.json();
-
-      if (result?.status === 200) {
+      const result = await response;
+      if (result?.status === 201) {
         message.success(`Mail saved successfully to ${senderEmailData.email}`);
       } else {
         message.error(result?.message);
       }
+
+      window.location.reload();
     } catch (error) {
+      console.error("Error while saving mail:", error);
       message.error("Something went wrong while sending mails");
     }
   };
+
   const handleInputChange = (fieldName, value) => {
     setSenderEmailData((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
   };
+
   return (
     <div className="flex items-center justify-center h-full w-full">
       <div className="h-full w-full rounded-md">
-        <form
-          className="flex flex-col gap-8"
-          onSubmit={() => handleSaveCurrentMail()}
-        >
-          <div className="flex gap-4 items-center justify-between w-1/3 ">
+        <form className="flex flex-col gap-8">
+          <div className="flex gap-4 items-center justify-between w-1/4">
             <h1
-              className={`text-xl m-0 p-0 ${
+              className={`text-base m-0 p-0 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               Email:
             </h1>
-            <input
-              type="text"
-              defaultValue={
-                currentEmail?.status !== 404
-                  ? currentEmail.from_mail_address
-                  : ""
-              }
-              className="w-2/3 ml-4"
-              required
-              onChange={(e) => handleInputChange("email", e.target.value)}
-            />
+            {editEmailData ? (
+              <input
+                type="text"
+                defaultValue={
+                  currentEmail?.status !== 404
+                    ? currentEmail.from_mail_address
+                    : ""
+                }
+                className={`w-3/5 m-0 px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
+                required
+                onChange={(e) => handleInputChange("email", e.target.value)}
+              />
+            ) : (
+              <h1 className="flex items-center justify-center m-0  px-2 py-0 h-[4vh] text-base">{currentEmail.from_mail_address}</h1>
+            )}
           </div>
-          <div className="flex gap-4 items-center justify-between w-1/3 ">
+          <div className="flex gap-4 items-center justify-between w-1/4 ">
             <h1
-              className={`text-xl m-0 p-0 ${
+              className={`text-base m-0 p-0 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               APP Password:
             </h1>
-            <input
-              type="password"
-              defaultValue={
-                currentEmail?.status !== 404 ? currentEmail.password : ""
-              }
-              className="w-2/3 ml-4"
-              required
-              onChange={(e) => handleInputChange("password", e.target.value)}
-            />
+            {editEmailData ? (
+              <input
+                type="text"
+                defaultValue={
+                  currentEmail?.status !== 404 ? currentEmail.password : ""
+                }
+                className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
+                required
+                onChange={(e) => handleInputChange("password", e.target.value)}
+              />
+            ) : (
+              <h1 className="m-0  px-2 py-0 h-[4vh] text-base">{currentEmail.password}</h1>
+            )}
           </div>
-          <div className="flex gap-4 items-center justify-between w-1/3 ">
+          <div className="flex gap-4 items-center justify-between w-1/4 ">
             <h1
-              className={`text-xl m-0 p-0 ${
+              className={`text-base m-0 p-0 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               From Name:
             </h1>
-            <input
-              type="text"
-              defaultValue={
-                currentEmail?.status !== 404 ? currentEmail.from_name : ""
-              }
-              className={`w-2/3 ml-4 `}
-              required
-              onChange={(e) => handleInputChange("from_name", e.target.value)}
-            />
+            {editEmailData ? (
+              <input
+                type="text"
+                defaultValue={
+                  currentEmail?.status !== 404 ? currentEmail.from_name : ""
+                }
+                className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
+                required
+                onChange={(e) => handleInputChange("from_name", e.target.value)}
+              />
+            ) : (
+              <h1 className="m-0 px-2 py-0 h-[4vh] text-base">{currentEmail.from_name}</h1>
+            )}
           </div>
-
-          <div className="w-1/3 flex justify-end items-center">
+          <div className="w-1/4 flex justify-end items-center">
             {editEmailData ? (
               <div className="flex gap-4">
                 <button
-                  type="submit"
+                  onClick={() => {
+                    handleSaveCurrentMail();
+                  }}
+                  type="button"
                   className={`px-4 py-2 ${
                     colorMode
                       ? "bg-slate-300 text-gray-800"

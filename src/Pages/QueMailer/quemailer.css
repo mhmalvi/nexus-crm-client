@@ -49,9 +49,6 @@
   font-size: 12px;
   line-height: 100%;
   color: #1f2937 !important;
-  /* background: linear-gradient( #946bfc,#351a77,#1f0f47)  !important;  */
-  /* background: linear-gradient( #7a51e3,#6e48cb,#55389f)  !important; 
-     */
   backdrop-filter: blur(8px);
   background-color: #1f2937;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
