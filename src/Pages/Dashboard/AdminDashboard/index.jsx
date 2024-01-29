@@ -256,13 +256,17 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className={`rounded-md px-2 py-1 ease-in duration-100 bg-gradient-to-b ${
-                colorMode
-                  ? "from-[#100b1e] via-[#0b0815] to-[#000000] hover:from-[#7a51e3] hover:via-[#6e48cb] hover:to-[#55389f] "
-                  : "from-[#7a51e3] hover:from-[#100b1e] via-[#6e48cb] hover:via-[#0b0815] to-[#55389f] hover:to-[#000000]"
-              } border-none flex items-center justify-center w-full`}
+              className={`rounded-md px-2 py-1 ease-in duration-100 border ${
+                colorMode ? "border-slate-300" : "border-gray-800"
+              } flex items-center justify-center w-full hover:scale-95`}
             >
-              <p className="p-0 m-0 text-xs text-slate-300">Assign</p>
+              <p
+                className={`p-0 m-0 text-xs ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                Assign
+              </p>
             </button>
           </>
         );
@@ -365,17 +369,25 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className={`rounded-md px-2 py-1 ease-in duration-100 bg-gradient-to-b ${
-                colorMode
-                  ? "hover:from-[#7a51e3] from-[#100b1e] hover:via-[#6e48cb] via-[#0b0815] hover:to-[#55389f] to-[#000000]"
-                  : "from-[#7a51e3] hover:from-[#100b1e] via-[#6e48cb] hover:via-[#0b0815] to-[#55389f] hover:to-[#000000]"
-              } border-none flex items-center justify-center w-full`}
+              className={`rounded-md px-2 py-1 ease-in duration-100 border ${
+                colorMode ? "border-slate-300" : "border-gray-800"
+              } flex items-center justify-center w-full hover:scale-95`}
             >
               <div className="flex flex-row m-auto justify-between text-slate-300">
-                <p className="text-xs m-0 p-1">
+                <p
+                  className={`text-xs m-0 p-1 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
                   {record.call_count != null ? record.call_count : 0}
                 </p>
-                <p className="text-xs m-0 p-1">Call Details</p>
+                <p
+                  className={`text-xs m-0 p-1 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Call Details
+                </p>
               </div>
             </button>
           </h4>
@@ -486,7 +498,7 @@ const AdminDashboard = () => {
     onAssignLead,
     onRemoveSales,
     navigate,
-    colorMode
+    colorMode,
   ]);
 
   const handleFilterLeadList = useMemo(
@@ -689,7 +701,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
-      <div className="col-span-9 border-black rounded-xl p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+      <div className="col-span-9 border-black rounded-md p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -798,7 +810,7 @@ const AdminDashboard = () => {
             openProfile={openProfile}
           />
         </div>
-        {toggleNotification && 
+        {toggleNotification && (
           <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-md backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
             <Notifications
               toggleNotification={toggleNotification}
@@ -809,7 +821,7 @@ const AdminDashboard = () => {
               setNotificationData={setNotificationData}
             />
           </div>
-        }
+        )}
         <NotifyModal
           notificationData={notificationData}
           isNotifyOpen={isNotifyOpen}

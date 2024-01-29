@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const CountryList = ({ table_title }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div className="h-full p-3 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+    <div className="h-full px-8 py-4 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
       <h1
         className={`text-xl text-${
           colorMode ? "slate-300" : "gray-800"

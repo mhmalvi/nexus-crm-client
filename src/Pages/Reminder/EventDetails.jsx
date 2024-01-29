@@ -28,36 +28,33 @@ const EventDetails = ({
   const [updateEventData, setUpdateEventData] = useState({});
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
-  console.log("eventDetails", eventDetails);
-  console.log("updateEventData", updateEventData);
+  // useEffect(() => {
+  //   setSelectedPriority(
+  //     priorityList.find((priority) => priority?.key === eventDetails?.priority)
+  //   );
+  //   console.log("eventDetails", eventDetails);
 
-  useEffect(() => {
-    setSelectedPriority(
-      priorityList.find((priority) => priority?.key === eventDetails?.priority)
-    );
-    console.log("eventDetails", eventDetails);
+  //   const eventDetailsData = { ...eventDetails };
 
-    const eventDetailsData = { ...eventDetails };
+  //   eventDetailsData.start =
+  //     typeof eventDetails?.start === "string"
+  //       ? new Date(`${eventDetails?.start}`)
+  //           ?.toISOString()
+  //           .replace("T", " ")
+  //           .slice(0, 16)
+  //       : eventDetails.start?.toISOString().replace("T", " ").slice(0, 16);
 
-    eventDetailsData.start =
-      typeof eventDetails?.start === "string"
-        ? new Date(`${eventDetails?.start}`)
-            ?.toISOString()
-            .replace("T", " ")
-            .slice(0, 16)
-        : eventDetails.start?.toISOString().replace("T", " ").slice(0, 16);
-
-    eventDetailsData.end =
-      typeof eventDetails?.end === "string"
-        ? new Date(`${eventDetails?.end}`)
-            ?.toISOString()
-            .replace("T", " ")
-            .slice(0, 16)
-        : eventDetails.end?.toISOString().replace("T", " ").slice(0, 16);
+  //   eventDetailsData.end =
+  //     typeof eventDetails?.end === "string"
+  //       ? new Date(`${eventDetails?.end}`)
+  //           ?.toISOString()
+  //           .replace("T", " ")
+  //           .slice(0, 16)
+  //       : eventDetails.end?.toISOString().replace("T", " ").slice(0, 16);
 
 
-    setUpdateEventData(eventDetailsData);
-  }, [eventDetails]);
+  //   setUpdateEventData(eventDetailsData);
+  // }, [eventDetails]);
 
   const handlePriorityChange = (selected) => {
     const data = { ...updateEventData };
@@ -76,9 +73,6 @@ const EventDetails = ({
     setStartDateTime(eventData?.start);
     setEndDateTime(eventData?.end);
   };
-  console.log("zeor data", startDateTime);
-  console.log("same data:", updateEventData.start);
-  console.log("but data: ", eventDetails.start);
 
   const handleReminderDateTimeChange = (_, dateTimeString) => {
     console.log("notify update: ", dateTimeString);
@@ -155,9 +149,6 @@ const EventDetails = ({
       setIsSaveDisable(false);
     }
   };
-
-  console.log("eventDetails", eventDetails);
-
 
   const handleDeleteFollowUpReq = async (id) => {
     console.log("id", id);

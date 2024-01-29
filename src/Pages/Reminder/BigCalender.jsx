@@ -26,34 +26,34 @@ const BigCalendar = () => {
   const [time, setTime] = useState("Select Time");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    dispatch(setLoader(true));
-    setInterval(() => {
-      (async () => {
-        const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
+  // useEffect(() => {
+  //   dispatch(setLoader(true));
+  //   setInterval(() => {
+  //     (async () => {
+  //       const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
 
-        if (featFollowUp.status === 200) {
-          featFollowUp?.data?.forEach((event) => {
-            event.start = new Date(event.start);
-            event.end = new Date(event.end);
-          });
-          setEventsData(featFollowUp?.data);
+  //       if (featFollowUp.status === 200) {
+  //         featFollowUp?.data?.forEach((event) => {
+  //           event.start = new Date(event.start);
+  //           event.end = new Date(event.end);
+  //         });
+  //         setEventsData(featFollowUp?.data);
 
-          dispatch(setLoader(false));
-        } else {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 2000);
-        }
-      })();
-    }, 1500);
-  }, [dispatch, selectedEventTime, userDetails, synEvents]);
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-  }, []);
+  //         dispatch(setLoader(false));
+  //       } else {
+  //         setTimeout(() => {
+  //           dispatch(setLoader(false));
+  //         }, 2000);
+  //       }
+  //     })();
+  //   }, 1500);
+  // }, [dispatch, selectedEventTime, userDetails, synEvents]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2500);
+  // }, []);
 
   const handleSelect = ({ start, end }) => {
     setSelectedEventTime({});

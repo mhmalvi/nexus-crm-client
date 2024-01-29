@@ -33,17 +33,17 @@ const DayDetails = ({
   const [endError, setEndError] = useState("");
   const [startError, setStartError] = useState("");
   const [notifyError, setNotifyError] = useState("");
-  useEffect(() => {
-    setCurrentDayEvents(
-      eventsData?.filter(
-        (event) =>
-          event?.start?.toLocaleDateString() ===
-            selectedEventTime?.start?.toLocaleDateString() ||
-          event?.end?.toLocaleDateString() ===
-            selectedEventTime?.end?.toLocaleDateString()
-      )
-    );
-  }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
+  // useEffect(() => {
+  //   setCurrentDayEvents(
+  //     eventsData?.filter(
+  //       (event) =>
+  //         event?.start?.toLocaleDateString() ===
+  //           selectedEventTime?.start?.toLocaleDateString() ||
+  //         event?.end?.toLocaleDateString() ===
+  //           selectedEventTime?.end?.toLocaleDateString()
+  //     )
+  //   );
+  // }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
   const onStartTimeChange = (time, timeString) => {
     setTime(timeString);

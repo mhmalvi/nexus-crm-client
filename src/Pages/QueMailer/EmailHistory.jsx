@@ -34,23 +34,41 @@ const columns = [
 
 const EmailHistory = () => {
   const [emailSessionRow, setEmailSessionRow] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState(20);
+  const [clicked, setClicked] = useState(false);
+
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   useEffect(() => {
     async function fetchEmailHistory() {
-      const res = await getEmailHistory();
+      const data = {
+        per_page: pagination,
+      };
+      const res = await getEmailHistory(data, currentPage);
       setEmailSessionRow(res?.data);
+      console.log(emailSessionRow.data);
     }
-    if (emailSessionRow === null) {
+    if (emailSessionRow === null || clicked) {
       fetchEmailHistory();
+      setClicked(false);
     }
-  }, [emailSessionRow]);
+  }, [clicked, currentPage, emailSessionRow, pagination]);
 
   return (
     <Table
       className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
       columns={columns}
-      dataSource={emailSessionRow}
+      dataSource={emailSessionRow?.data}
+      pagination={{
+        onChange: (pageNum) => {
+          setCurrentPage(pageNum);
+          setClicked(true);
+        },
+        current: currentPage,
+        total: emailSessionRow?.total,
+        
+      }}
     />
   );
 };

@@ -74,6 +74,7 @@ import { ReactComponent as Download } from "../../assets/Icons/down-arrow-downlo
 import { ReactComponent as Volume } from "../../assets/Icons/volume.svg";
 import { ReactComponent as Correct } from "../../assets/Icons/correct.svg";
 import { ReactComponent as SidebarMail } from "../../assets/Icons/mail-sidebar.svg";
+import { ReactComponent as LeftArrow } from "../../assets/Icons/leftArrow.svg";
 
 const Icons = {
   CompanyLogo,
@@ -152,6 +153,7 @@ const Icons = {
   Volume,
   Correct,
   SidebarMail,
+  LeftArrow
 };
 
 export default Icons;

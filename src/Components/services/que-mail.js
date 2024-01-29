@@ -18,10 +18,12 @@ export const fetchEmailTemplateList = async () => {
     return error.response;
   }
 };
-export const getEmailHistory = async () => {
+export const getEmailHistory = async (data, pageNumber) => {
+  console.log(data);
   try {
-    const result = await axios.get(
-      `https://emailmarketing.queleadscrm.com/api/email-history`,
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/email-history?page=${pageNumber}`,
+      data,
       config
     );
     return result.data;
@@ -35,7 +37,6 @@ export const handleCurrentEmail = async (id) => {
       `https://emailmarketing.queleadscrm.com/api/get-mail/${id}`,
       config
     );
-    console.log(result)
     return result.data;
   } catch (error) {
     return error.response;
@@ -48,12 +49,25 @@ export const handleAddSenderEmail = async (data) => {
       data,
       config
     );
-    console.log(data)
+    console.log(data);
     return result.data;
   } catch (error) {
     return error.response;
   }
-}
+};
+export const handleUpdateSenderEmail = async (data, id) => {
+  console.log(data);
+  try {
+    const result = await axios.put(
+      `https://emailmarketing.queleadscrm.com/api/update-mail/${id}`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const AddNewTemplateList = async (data) => {
   try {

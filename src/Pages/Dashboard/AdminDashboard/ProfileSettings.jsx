@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Dropdown, Menu, message } from "antd";
+import { DatePicker, Space, Dropdown, Menu, message } from "antd";
 import Avatar from "react-avatar";
 import {
   handleProfileDetails,
@@ -135,250 +135,339 @@ const ProfileSettings = () => {
           </div>
         </div>
         <div className="flex justify-end h-[5vh]">
-          {!toggleEditDetails && (
+          {toggleEditDetails ? (
+            <div className="flex justify-center my-2 gap-1">
+              <div>
+                <button
+                  className="py-2 px-4 w-full hover:text-black bg-white border-2 hover:border-black rounded-lg transition-colors duration-150 focus:shadow-outline border-none"
+                  onClick={cancelEdit}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  onClick={UpdateUserDetailsReq}
+                  className="py-2 px-4 w-full text-white hover:bg-black rounded-lg transition-colors duration-150 focus:shadow-outline bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] tracking-wide"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : (
             <button
-              className={`bg-gradient-to-b ${
-                colorMode
-                  ? "from-[#100b1e] via-[#0b0815] to-[#000000] hover:from-[#7a51e3] hover:via-[#6e48cb] hover:to-[#55389f] "
-                  : "from-[#7a51e3] hover:from-[#100b1e] via-[#6e48cb] hover:via-[#0b0815] to-[#55389f] hover:to-[#000000]"
-              } text-white font-poppins text-sm rounded-md px-6 py-2 flex items-center`}
+              className={`bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] font-poppins text-sm rounded-md py-2 px-4 flex items-center`}
               onClick={() => {
                 setToggleEditDetails(true);
               }}
             >
               <Icons.Edit className="text-white" />
-              <span className="ml-2">Edit</span>
+              <h1 className="m-0 p-0 text-white">Edit</h1>
             </button>
           )}
         </div>
       </div>
-      <div className="flex flex-col mt-4">
-        <div className="text-base text-white mb-2 border-b">
-          <span>Full Name &nbsp;</span>
-          <br />
+      <div className="mt-4 w-full">
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Full Name
+          </h1>
           {toggleEditDetails ? (
             <input
               id="full_name"
               name="full_name"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.full_name}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.full_name ? profileData?.full_name : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Date of Birth &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Date of Birth
+          </h1>
+
           {toggleEditDetails ? (
-            <div className="m-0 p-0 w-full bg-transparent flex items-center justify-between text-[#808080] text-sm">
-              <div>{profileData?.date_of_birth}</div>
+            <div className="m-0 p-0 w-full bg-transparent flex items-center justify-between text-white text-base">
               <DatePicker
-                bordered={false}
                 onChange={onChange}
                 onOk={onOk}
                 format={"DD/MM/YYYY"}
+                className="w-full bg-[#fc00ff]"
+                placeholder={profileData?.date_of_birth}
               />
             </div>
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.date_of_birth
                 ? profileData?.date_of_birth
                 : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Contact No &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Contact Number
+          </h1>
+
           {toggleEditDetails ? (
             <input
               id="secondary_contact"
               name="secondary_contact"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.secondary_contact}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.secondary_contact
                 ? profileData?.secondary_contact
                 : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Location &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Location
+          </h1>
           {toggleEditDetails ? (
             <input
               id="location"
               name="location"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.location}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.location ? profileData?.location : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Address &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Address
+          </h1>
+
           {toggleEditDetails ? (
             <input
               id="address"
               name="address"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.address}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.address ? profileData?.address : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Region &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Region
+          </h1>
           {toggleEditDetails ? (
             <input
               id="region"
               name="region"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.region}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.region ? profileData?.region : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Post Code &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Post Code
+          </h1>
           {toggleEditDetails ? (
             <input
               id="postcode"
               name="postcode"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.postcode}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.postcode ? profileData?.postcode : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Profession &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Profession
+          </h1>
           {toggleEditDetails ? (
             <input
               id="profession"
               name="profession"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.profession}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.profession ? profileData?.profession : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2 border-b">
-          <span>Work Experience &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Work Experience
+          </h1>
           {toggleEditDetails ? (
             <Dropdown
               overlay={workExperience}
               trigger={["click"]}
               defaultValue={profileData?.work_experiences}
-              className="text-black"
+              className="cursor-pointer border-slate-300"
             >
-              <div className="cursor-pointer text-base text-[#808080] bg-transparent text-sm">
+              <div
+                className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              >
                 {profileData?.work_experiences
                   ? profileData?.work_experiences
                   : "Select Location"}
               </div>
             </Dropdown>
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.work_experiences
                 ? profileData?.work_experiences
                 : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
-        <div className="text-base text-white mb-2">
-          <span>Qualification &nbsp;</span>
-          <br />
+        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
+          <h1
+            className={`text-sm m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }  w-full text-center`}
+          >
+            Qualification
+          </h1>
           {toggleEditDetails ? (
             <input
               id="qualification"
               name="qualification"
-              className={`w-full p-0 m-0 bg-transparent text-[#808080] text-sm `}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
               defaultValue={profileData?.qualification}
             />
           ) : (
-            <span className="text-sm text-black">
+            <h1
+              className={`w-full m-0 p-0 text-base text-white text-center font-bold ${
+                colorMode ? "text-slate-300" : "text-black"
+              } `}
+            >
               {profileData?.qualification
                 ? profileData?.qualification
                 : profileData?.qualification
                 ? profileData?.qualification
                 : "Not Added"}
-            </span>
+            </h1>
           )}
         </div>
       </div>
-
-      {toggleEditDetails ? (
-        <div className="flex justify-center my-2 gap-1">
-          <div>
-            <button
-              className="h-10 px-5 w-full hover:text-black bg-white border-2 hover:border-black rounded-lg transition-colors duration-150 focus:shadow-outline border-brand-color text-brand-color tracking-wide"
-              onClick={cancelEdit}
-            >
-              Cancel
-            </button>
-          </div>
-          <div>
-            <button
-              type="submit"
-              onClick={UpdateUserDetailsReq}
-              className="h-10 px-5 w-full text-white hover:bg-black rounded-lg transition-colors duration-150 focus:shadow-outline bg-brand-color tracking-wide"
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 };

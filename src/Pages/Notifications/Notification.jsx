@@ -26,7 +26,7 @@ const Notification = ({
   useEffect(() => {
     setInterval(() => {
       setNotifications(notify);
-    }, 2000);
+    });
   }, [notify]);
 
   const userDetails = useSelector((state) => state?.user);
@@ -71,7 +71,7 @@ const Notification = ({
   useEffect(() => {
     setTimeout(() => {
       setNotificationLoading(false);
-    }, 2000);
+    });
   }, [setNotificationLoading]);
 
   return (

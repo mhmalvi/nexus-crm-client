@@ -147,7 +147,7 @@ const UpdatedTable = ({
 
   return (
     <div
-      className={`!rounded-xl ${(table_title === "Leads") ? "mt-0":"mt-12"}`}
+      className={`!rounded-xl ${table_title === "Leads" ? "mt-0" : "mt-12"}`}
     >
       <div>
         <div className="flex justify-between items-center">
@@ -165,7 +165,11 @@ const UpdatedTable = ({
                 window.location.pathname.includes("payments") ? (
                   ""
                 ) : (
-                  <div className="mr-4 selectSales">
+                  <div
+                    className={`mr-4 ${
+                      colorMode ? "selectSalesDark" : "selectSalesLight"
+                    }`}
+                  >
                     <Select
                       defaultValue={""}
                       className="min-w-[150px] "
@@ -307,13 +311,8 @@ const UpdatedTable = ({
                   : table_title
               }
             >
-              <div
-                className="bg-gradient-to-b from-[#7a51e3] via-[#6e48cb] to-[#55389f] text-slate-300 px-2 py-1 rounded-lg cursor-pointer font-semibold font-poppins border border-[#1f2937]"
-                style={{
-                  fontSize: "10px",
-                }}
-              >
-                Export CSV
+              <div className="bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] px-4 py-2 rounded-md cursor-pointer font-semibold font-poppins">
+                <h1 className="m-0 p-0 text-white text-xs">Export CSV</h1>
               </div>
             </CSVLink>
           </div>
@@ -343,7 +342,7 @@ const UpdatedTable = ({
               showSorterTooltip={true}
               sortDirections={["ascend", "descend"]}
               scroll={{
-                x: 2000,
+                x: 2200,
                 y: isBigScreen
                   ? table_title === "Lead List"
                     ? 390

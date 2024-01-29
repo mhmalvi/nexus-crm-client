@@ -50,7 +50,7 @@ const MailDashboard = ({
   //   setSelectedData([]);
   //   setAttachOpen(true);
   // };
-  // set mail with pdf
+  
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -113,7 +113,7 @@ const MailDashboard = ({
         }
         setConfirmLoading(false);
         setOpenMailModal(false);
-        // window.location.reload();
+        window.location.reload();
       } catch (error) {
         message.error("Something went wrong while sending mails");
         setConfirmLoading(false);
@@ -121,12 +121,6 @@ const MailDashboard = ({
     }
   };
 
-  // set mail with pdf end
-
-  // const handleMailCancel = () => {
-  //   setOpenMailModal(false);
-  //   setConfirmLoading(false);
-  // };
   useEffect(() => {
     async function onSelectTemp() {
       let res = await fetchEmailTemplateList();
@@ -194,7 +188,6 @@ const MailDashboard = ({
       itm?.label | (itm?.value === tData) && setTempInitValue(itm?.template);
     });
   }, [tData, templateList]);
-  console.log(currentEmail);
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full flex justify-between gap-8">
