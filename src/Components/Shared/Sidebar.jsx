@@ -84,7 +84,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
 
   return (
     <div
-      className={` bg-[#ffffff11] duration-300 ${
+      className={` bg-[#ffffff11] duration-100 ${
         openSideBar ? "w-[80px] h-full" : "w-[277px] h-full"
       } overflow-x-hidden overflow-y-scroll`}
     >
@@ -863,15 +863,15 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
 
           {/* Logout */}
           <div
-            className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4"
+            className=" flex items-center justify-center text-base cursor-pointer my-4"
             onClick={logoutHandler}
           >
             <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md overflow-hidden">
               {openSideBar ? (
-                <Icons.LogOut className="m-0 p-0 text-white w-[10vw]" />
+                <Icons.LogOut className="m-0 p-0 text-white" />
               ) : (
                 <span className="flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2">
-                  <h1 className="m-0 p-0 text-white w-[10vw] text-base">
+                  <h1 className="m-0 p-0 text-white w-[10vw] text-sx">
                     Log out
                   </h1>
                 </span>
