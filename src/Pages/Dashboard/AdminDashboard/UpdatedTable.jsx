@@ -344,9 +344,9 @@ const UpdatedTable = ({
               scroll={{
                 x: 2200,
                 y: isBigScreen
-                  ? table_title === "Lead List"
+                  ? table_title === "Payments"
                     ? 390
-                    : 580
+                    : 890
                   : table_title === "Lead List"
                   ? 270
                   : 400,
