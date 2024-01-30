@@ -51,75 +51,127 @@ const MailDashboard = ({
   //   setAttachOpen(true);
   // };
   
-  const handleSendMail = async () => {
+  // const handleSendMail = async () => {
+  //   if (!data || !tData || !mailSubject) {
+  //     if (!data) {
+  //       message.warning("Please upload a csv");
+  //     }
+  //     if (!tData) {
+  //       message.warning("Please select a template");
+  //     }
+  //     if (!mailSubject) {
+  //       message.warning("Please enter the mail subject");
+  //     }
+  //   } else {
+  //     setConfirmLoading(true);
+
+  //     try {
+  //       let commonId = null;
+
+  //       for (const [index, email] of data.entries()) {
+  //         const formData = new FormData();
+  //         formData.append("template", editorRef?.current?.getContent() || "");
+  //         formData.append("subject", mailSubject);
+  //         formData.append("email", email);
+  //         formData.append("user_id", 32)
+
+  //         if (index === 0 && commonId === null) {
+  //           formData.append("id", 0);
+  //         } else if (commonId !== null) {
+  //           formData.append("id", commonId);
+  //         }
+
+  //         const response = await fetch(
+  //           "https://emailmarketing.queleadscrm.com/api/send-mail",
+  //           {
+  //             method: "POST",
+  //             body: formData,
+  //             headers: {
+  //               Accept: "application/json",
+  //             },
+  //           }
+  //         );
+
+  //         const result = await response.json();
+
+  //         if (result?.status === 200) {
+  //           if (index === 0) {
+  //             commonId = result.id;
+  //           }
+
+  //           const successMailId = email;
+  //           setSuccessMail((prevSuccessMail) => ({
+  //             ...prevSuccessMail,
+  //             [successMailId]: true,
+  //           }));
+
+  //           message.success(`Mail sent successfully to ${email}`);
+  //         } else {
+  //           message.error(result?.message || `Failed to send mail to ${email}`);
+  //         }
+  //       }
+  //       setConfirmLoading(false);
+  //       setOpenMailModal(false);
+  //       window.location.reload();
+  //     } catch (error) {
+  //       message.error("Something went wrong while sending mails");
+  //       setConfirmLoading(false);
+  //     }
+  //   }
+  // };
+  const handleSendMail = () => {
+    const formData = new FormData();
+    formData.append(
+      "template",
+      editorRef?.current
+        ? editorRef?.current?.getContent()
+          ? editorRef?.current?.getContent()
+          : ""
+        : ""
+    );
+    formData.append("subject", mailSubject);
+
+    data.forEach((email) => {
+      formData.append("email[]", email);
+    });
     if (!data || !tData || !mailSubject) {
       if (!data) {
         message.warning("Please upload a csv");
       }
       if (!tData) {
-        message.warning("Please select a template");
+        message.warning("Please select template");
       }
       if (!mailSubject) {
-        message.warning("Please enter the mail subject");
+        message.warning("Please enter mail subject");
       }
     } else {
       setConfirmLoading(true);
-
-      try {
-        let commonId = null;
-
-        for (const [index, email] of data.entries()) {
-          const formData = new FormData();
-          formData.append("template", editorRef?.current?.getContent() || "");
-          formData.append("subject", mailSubject);
-          formData.append("email", email);
-          formData.append("user_id", 32)
-
-          if (index === 0 && commonId === null) {
-            formData.append("id", 0);
-          } else if (commonId !== null) {
-            formData.append("id", commonId);
-          }
-
-          const response = await fetch(
-            "https://emailmarketing.queleadscrm.com/api/send-mail",
-            {
-              method: "POST",
-              body: formData,
-              headers: {
-                Accept: "application/json",
-              },
-            }
-          );
-
-          const result = await response.json();
-
+      fetch("https://emailmarketing.queleadscrm.com/api/send-mail", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          console.log(result);
           if (result?.status === 200) {
-            if (index === 0) {
-              commonId = result.id;
-            }
-
-            const successMailId = email;
-            setSuccessMail((prevSuccessMail) => ({
-              ...prevSuccessMail,
-              [successMailId]: true,
-            }));
-
-            message.success(`Mail sent successfully to ${email}`);
+            message.success("Mail sent successfully!");
+            setOpenMailModal(false);
+            setConfirmLoading(false);
+            window.location.reload();
           } else {
-            message.error(result?.message || `Failed to send mail to ${email}`);
+            message.error(result?.message || "Something went wrong");
+            setConfirmLoading(false);
           }
-        }
-        setConfirmLoading(false);
-        setOpenMailModal(false);
-        window.location.reload();
-      } catch (error) {
-        message.error("Something went wrong while sending mails");
-        setConfirmLoading(false);
-      }
+        })
+        .catch((error) => {
+          message.error("Something went wrong");
+          setConfirmLoading(false);
+        });
     }
   };
-
   useEffect(() => {
     async function onSelectTemp() {
       let res = await fetchEmailTemplateList();

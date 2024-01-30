@@ -79,7 +79,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
     navigate("/login");
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

@@ -300,28 +300,28 @@ const Login = () => {
 
       <div className="relative flex items-center justify-center mx-auto w-full h-full p-[10px]">
         <div
-          className=" z-10 !col-span-12 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-3xl p-3 overflow-x-hidden overflow-y-auto crm-scroll-none min-h-[70vh]"
-          style={{}}
+          className={` z-10 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-md px-4 py-8 overflow-hidden crm-scroll-none`}
         >
           <Modal
             visible={addBookMarkOpen}
             footer={false}
             closable={false}
             centered
+            className="bookmarkModal"
           >
-            <div className="py-10 px-4 flex items-center justify-between">
-              <div className="text-lg font-poppins font-semibold mb-6?">
+            <div className="py-8 px-8 flex flex-col gap-8 items-center justify-between shadow-md backdrop-blur-2xl bg-[#ffffff11] !rounded-md">
+              <h1 className="m-0 p-0 text-lg font-poppins font-semibold text-slate-300">
                 Add to Bookmark?
-              </div>
-              <div className="flex items-center">
+              </h1>
+              <div className="flex gap-4 items-center">
                 <div
-                  className="px-6 py-1 rounded-full shadow text-sm font-poppins font-light border border-brand-color text-brand-color cursor-pointer"
+                  className="px-8 py-2 rounded-md shadow text-sm font-poppins font-light text-slate-300 bg-brand-color cursor-pointer hover:scale-105 ease-in duration-100"
                   onClick={handleAddToBookMark}
                 >
                   Yes
                 </div>
                 <div
-                  className="px-6 py-1 ml-2 rounded-full shadow text-sm font-poppins font-light border border-red-600 text-red-600 cursor-pointer"
+                  className="px-8 py-2 rounded-md shadow text-sm font-poppins font-light text-slate-300 red-600 bg-red-600 cursor-pointer hover:scale-105 ease-in duration-100"
                   onClick={() => {
                     setAddBookMarkOpen(false);
                     navigate("/dashboard");
@@ -333,161 +333,160 @@ const Login = () => {
               </div>
             </div>
           </Modal>
-          <div className="m-6 min-h-[60vh] flex flex-col justify-between">
-            <div className="flex flex-col items-center ">
-              <a href="https://queleadscrm.com">
-                <img
-                  src={companyLogo}
-                  alt="companyLogo"
-                  srcset=""
-                  className="w-60 cursor-pointer"
-                  // onClick={() => {
-                  //   navigate("https://www.queleadscrm.com");
-                  // }}
-                />
-              </a>
-            </div>
-            <form className="mb-4" onSubmit={handleLoginReq}>
-              <div className="mb-6 font-poppins ">
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm text-white"
-                >
-                  {role === 1 ? "ABN Number" : "Email"}
-                </label>
-                <Input
-                  size="large"
-                  name="email"
-                  id="email"
-                  value={data.email}
-                  placeholder="Enter your username"
-                  className="rounded-3xl w-full px-6 py-2 placeholder-gray-600 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color "
-                  onChange={userData}
-                  required
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "#ffffff",
-                    borderRadius: "10px",
-                  }}
-                />
-              </div>
-              <div className="mb-4 font-poppins w-full">
-                {/* Forgot password */}
-                <div className="flex justify-between mb-2">
-                  <label htmlFor="password" className="text-sm text-white">
-                    Password
-                  </label>
-
-                  <ForgotPassword
-                    visibility={tooglePasswordForget}
-                    oncancel={(cancel) => setTooglePasswordForget(cancel)}
-                  />
-                </div>
-                <Input.Password
-                  size="large"
-                  name="password"
-                  id="password"
-                  placeholder="Enter your password"
-                  value={data.password}
-                  className="w-full px-6 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-brand-color text-white"
-                  onChange={userData}
-                  required
-                  style={{
-                    backgroundColor: "transparent",
-                    borderRadius: "10px",
-                    color: "#ffffff",
-                  }}
-                />
-              </div>
-              <div className="mb-6 font-poppins flex items-center justify-between">
-                <div className="w-full">
-                  <input
-                    className="cursor-pointer mr-2"
-                    type="checkbox"
-                    name="remember me"
-                    id="remember_me"
-                    defaultValue="off"
-                    onChange={handleRememberMe}
-                  />
-                  <label
-                    className="cursor-pointer text-white"
-                    htmlFor="remember_me"
-                  >
-                    Remember Me
-                  </label>
-                </div>
-                <label
-                  className="text-xs text-white focus:outline-none hover:text-indigo-500 w-full text-end cursor-pointer"
-                  onClick={ForgotPasswordModal}
-                >
-                  Forgot password?
-                </label>
-              </div>
-              <div className="mb-6">
-                <button
-                  type="submit"
-                  className="ease-in duration-200 lg:h-full w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
-                >
-                  Log in
-                </button>
-              </div>
-            </form>
-          
-          </div>
 
           <div
-            className={`${
-              !bookMarkOpen ? "w-0 h-0" : "w-full h-[670px] py-12 px-6"
-            } absolute top-0 right-0 bottom-0 bg-white transition-all delay-200 duration-500 border`}
+            className={` flex flex-col  ${
+              bookMarkOpen
+                ? "gap-16 justify-start items-start h-[70vh]"
+                : "gap-16 justify-center items-center h-[70vh]"
+            } `}
           >
-            <div
-              style={{ overflow: "scroll" }}
-              className={`${
-                !bookMarkOpen
-                  ? "delay-100 duration-100 opacity-0 h-[670px]"
-                  : "delay-1000 duration-200 opacity-100"
-              } transition-all mt-2 ml-2 flex flex-col justify-start items-start h-[670px]`}
-            >
-              <div className="text-xl font-semibold mb-4">
-                Bookmarked Accounts
-              </div>
-
-              {bookMarkedAccounts?.length ? (
-                bookMarkedAccounts?.map((account, i) => (
-                  <div
-                    key={i}
-                    className="relative mt-4 mr-4 p-1 rounded-full shadow-md cursor-pointer flex items-center justify-between"
-                    onClick={() => handleOneClickLogin(account)}
-                  >
-                    <div>
-                      <Avatar
-                        className="rounded-full cursor-pointer mr-1"
-                        size={38}
-                        name={account?._ue_}
-                      />
-                      <span className="pl-2 pr-4">{account?._ue_}</span>
-                    </div>
-
-                    <div
-                      className="absolute top-0 -right-2"
-                      onClick={(e) => e.stopPropagation()}
+            {!bookMarkOpen ? (
+              <>
+                <div className="flex flex-col items-center ">
+                  <a href="https://queleadscrm.com">
+                    <img
+                      src={companyLogo}
+                      alt="companyLogo"
+                      srcset=""
+                      className="w-60 cursor-pointer"
+                      // onClick={() => {
+                      //   navigate("https://www.queleadscrm.com");
+                      // }}
+                    />
+                  </a>
+                </div>
+                <form className="px-8 w-full" onSubmit={handleLoginReq}>
+                  <div className="mb-6 font-poppins ">
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm text-white"
                     >
-                      <Icons.Cross
-                        className="w-3.5 bg-red-500 py-0.5 px-1 rounded-full text-white"
-                        onClick={() => handleRemoverBookmarkedAccount(account)}
+                      {role === 1 ? "ABN Number" : "Email"}
+                    </label>
+                    <Input
+                      size="large"
+                      name="email"
+                      id="email"
+                      value={data.email}
+                      placeholder="Enter your username"
+                      className="w-full px-6 py-2 !bg-transparent !active:bg-transparent placeholder-gray-600 border border-gray-300 !rounded-md !focus:outline-none !focus:border-brand-color !text-slate-300"
+                      onChange={userData}
+                      required
+                    />
+                  </div>
+                  <div className="mb-4 font-poppins w-full">
+                    {/* Forgot password */}
+                    <div className="flex flex-col justify-between">
+                      <label
+                        htmlFor="password"
+                        className="text-sm text-white mb-2"
+                      >
+                        Password
+                      </label>
+                      <Input.Password
+                        size="large"
+                        name="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        value={data.password}
+                        className="w-full px-6 py-2 border border-gray-300 !rounded-md !bg-transparent !active:bg-transparent !focus:ring-none !focus:none !active:ring-none !text-slate-300"
+                        onChange={userData}
+                        required
+                      />
+                      <ForgotPassword
+                        visibility={tooglePasswordForget}
+                        oncancel={(cancel) => setTooglePasswordForget(cancel)}
                       />
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <h1 className="mt-28 text-base">
-                    No Accounts Bookmarked Yet
+                  <div className="mb-6 font-poppins flex items-center justify-between">
+                    <div className="w-full">
+                      <input
+                        className="cursor-pointer mr-2"
+                        type="checkbox"
+                        name="remember me"
+                        id="remember_me"
+                        defaultValue="off"
+                        onChange={handleRememberMe}
+                      />
+                      <label
+                        className="cursor-pointer text-white"
+                        htmlFor="remember_me"
+                      >
+                        Remember Me
+                      </label>
+                    </div>
+                    <label
+                      className="text-xs text-white focus:outline-none hover:text-indigo-500 w-full text-end cursor-pointer"
+                      onClick={ForgotPasswordModal}
+                    >
+                      Forgot password?
+                    </label>
+                  </div>
+                  <div className="mb-6">
+                    <button
+                      type="submit"
+                      className="ease-in duration-200 lg:h-full w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                    >
+                      Log in
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <>
+                <div
+                  className={`flex flex-col gap-8 justify-center items-center w-full h-full bookmarkModal ease-in duration-200`}
+                >
+                  <h1 className="text-xl m-0 p-0 text-slate-300 border-b font-semibold text-center">
+                    Bookmarked Accounts
                   </h1>
+                  <div
+                    className={`flex flex-col gap-4 justify-start items-center h-full w-full overfow-y-scroll`}
+                  >
+                    {bookMarkedAccounts?.length ? (
+                      bookMarkedAccounts?.map((account, i) => (
+                        <div
+                          key={i}
+                          className="w-full flex items-center justify-between relative p-1 rounded-md shadow-md cursor-pointer "
+                          onClick={() => handleOneClickLogin(account)}
+                        >
+                          <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md overflow-hidden">
+                            <Avatar
+                              className="rounded-md cursor-pointer mr-1"
+                              size={38}
+                              name={account?._ue_}
+                            />
+                            <span className="px-4 text-slate-300 ">{account?._ue_}</span>
+                          </div>
+
+                          <div
+                            className="flex bg-[#fc00ff] h-[20px] w-[20px] absolute right-0 rounded-full"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Icons.Cross
+                              className="h-full w-full bg-red-500 p-1 rounded-md text-white"
+                              onClick={() =>
+                                handleRemoverBookmarkedAccount(account)
+                              }
+                            />
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="w-full flex justify-center items-center">
+                        <h1 className="mt-28 text-base">
+                          No Accounts Bookmarked Yet
+                        </h1>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
+              </>
+            )}
           </div>
+
           {/* Saved Accounts */}
           {/* <div
                   className="text-center font-semibold cursor-pointer"
@@ -499,14 +498,14 @@ const Login = () => {
             {!bookMarkOpen ? (
               <Tooltip title="Book marked accounts" placement="right">
                 <Icons.Bookmark
-                  className="w-6 cursor-pointer text-white hover:text-brand-color"
+                  className="w-6 cursor-pointer text-white hover:text-brand-color ease-in duration-200"
                   onClick={() => setBookMarkOpen(true)}
                 />
               </Tooltip>
             ) : (
               <div>
                 <Icons.Cross
-                  className="w-3 mr-1 font-bold text-red-600 cursor-pointer"
+                  className="w-3 mr-1 font-bold text-red-600 cursor-pointer hover:scale-95 ease-in duration-200"
                   onClick={() => setBookMarkOpen(false)}
                 />
               </div>
