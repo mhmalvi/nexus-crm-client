@@ -207,7 +207,7 @@ const UpdatedTable = ({
                     className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
                       colorMode
                         ? "text-slate-300 border-slate-300 hover:bg-black"
-                        : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                        : "text-gray-800 border-gray-800 hover:bg-white"
                     } ease-in duration-200 `}
                   >
                     Upload File
@@ -237,7 +237,7 @@ const UpdatedTable = ({
                       className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
                         colorMode
                           ? "text-slate-300 border-slate-300 hover:bg-black"
-                          : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                          : "text-gray-800 border-gray-800 hover:bg-white"
                       } ease-in duration-200 `}
                       onClick={() => setIsAddLeadFormOpen(true)}
                     >
@@ -272,7 +272,7 @@ const UpdatedTable = ({
                         className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
                           colorMode
                             ? "text-slate-300 border-slate-300 hover:bg-black"
-                            : "text-gray-800 border-gray-800 hover:bg-black hover:text-slate-300"
+                            : "text-gray-800 border-gray-800 hover:bg-white"
                         } ease-in duration-200 `}
                         onClick={() => handleSyncLeadsReq()}
                       >
