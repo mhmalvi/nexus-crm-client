@@ -40,7 +40,7 @@ const CountryList = ({ table_title }) => {
           </div>
           <div className={`flex text-${colorMode ? "slate-300" : "gray-800"} `}>
             <div
-              className={`bg-[#2FA3F67f] w-[25px] h-[25px] rounded-full mr-2 border-4 ${
+              className={`bg-transparent w-[25px] h-[25px] rounded-full mr-2 border-4 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>

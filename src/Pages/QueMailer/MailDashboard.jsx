@@ -100,7 +100,6 @@ const MailDashboard = ({
             }
 
             const successMailId = email;
-
             setSuccessMail((prevSuccessMail) => ({
               ...prevSuccessMail,
               [successMailId]: true,

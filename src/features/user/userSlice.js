@@ -9,19 +9,18 @@ const initialState = {
   error: null,
   success: false,
   companyId: 0,
-  colorMode: false
+  colorMode: false,
+  openSideBar: true,
 };
-
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     addUserDetails: (state, actions) => {
-      console.log(actions.payload);
       state.userInfo = actions.payload;
     },
-    setCompanyId: (state, actions)=>{
+    setCompanyId: (state, actions) => {
       state.companyId = actions.payload;
     },
     updateUserDetails: (state) => {
@@ -33,14 +32,24 @@ export const userSlice = createSlice({
     setLoader: (state, actions) => {
       state.loading = actions.payload;
     },
-    setColorMode: (state,actions)=>{
-      state.colorMode = actions.payload
-    }
+    setColorMode: (state, actions) => {
+      state.colorMode = actions.payload;
+    },
+    setOpenSidebar: (state, actions) => {
+      state.openSideBar = actions.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUserDetails, updateUserDetails, updateFbToken, setLoader, setCompanyId, setColorMode } =
-  userSlice.actions;
+export const {
+  addUserDetails,
+  updateUserDetails,
+  updateFbToken,
+  setLoader,
+  setCompanyId,
+  setColorMode,
+  setOpenSidebar,
+} = userSlice.actions;
 
 export default userSlice.reducer;

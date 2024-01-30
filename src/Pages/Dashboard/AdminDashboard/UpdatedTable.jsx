@@ -363,7 +363,7 @@ const UpdatedTable = ({
                     JSON.parse(record.form_data)[2].values[0] !== "philippines"
                   ) {
                     let color = `${
-                      colorMode ? "bg-[#26D4AB7f]" : "bg-[#26D4AB]"
+                      colorMode ? "bg-[#26D4AB7f]" : "bg-[#26D4AB7f]"
                     }`;
                     return color;
                   } else if (
@@ -372,7 +372,7 @@ const UpdatedTable = ({
                     record.campaign_id >= 0
                   ) {
                     let color = `${
-                      colorMode ? "bg-[#F3E45B7f]" : "bg-[#F3E45B]"
+                      colorMode ? "bg-[#F3E45B7f]" : "bg-[#F3E45B7f]"
                     }`;
                     return color;
                   } else if (
@@ -382,7 +382,7 @@ const UpdatedTable = ({
                     record.campaign_id >= 0
                   ) {
                     let color = `${
-                      colorMode ? "bg-[#FF8A8A7f]" : "bg-[#FF8A8A]"
+                      colorMode ? "bg-[#FF8A8A7f]" : "bg-[#FF8A8A7f]"
                     }`;
                     return color;
                   } else {
