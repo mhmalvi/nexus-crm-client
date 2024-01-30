@@ -38,10 +38,11 @@ const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
+  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  const [openSideBar, setOpenSideBar] = useState(true);
+  // const [openSideBar, setOpenSideBar] = useState(true);
 
   // const fetchFollowUpNotification = async () => {
   //   const notificationRes = await handleFetchNotificationList(
@@ -89,8 +90,8 @@ const Layout = () => {
         <Sidebar
           Items={Items}
           active={active}
-          openSideBar={openSideBar}
-          setOpenSideBar={setOpenSideBar}
+          // openSideBar={openSideBar}
+          // setOpenSideBar={setOpenSideBar}
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}
@@ -127,6 +128,7 @@ const Layout = () => {
                 key={navItem.key}
                 path={`${navItem.key}`}
                 element={navItem.component}
+                
               />
             </Route>
           </Routes>

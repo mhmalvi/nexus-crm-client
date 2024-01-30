@@ -12,7 +12,8 @@ import Icons from "../../../Components/Shared/Icons";
 const ProfileSettings = () => {
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
+  
   const initialState = {
     full_name: "",
     date_of_birth: "Select Date",
@@ -107,7 +108,7 @@ const ProfileSettings = () => {
   );
 
   return (
-    <div className="h-[83vh] max-h-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff55] overflow-y-scroll">
+    <div className={`h-[83vh] ${openSideBar ? "w-[23vw] !ml-16" : "w-[20vw] !ml-28"}  px-3 py-3 rounded-xl backdrop-blur-2xl bg-[#ffffff7f] overflow-hidden`}>
       <div className="flex justify-between items-center ">
         <div className="flex">
           <div className="rounded-full mr-4">

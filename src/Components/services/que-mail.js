@@ -95,6 +95,10 @@ export const handleRemoveTemplate = async (id) => {
 };
 export const handleImageUpload = (blobInfo, progress, failure) => {
   return new Promise((resolve, reject) => {
+    if (blobInfo.blob().size > 200 * 1024) { 
+      reject("Image size exceeds 200kb");
+      return;
+    }
     const xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
@@ -104,7 +108,6 @@ export const handleImageUpload = (blobInfo, progress, failure) => {
 
     const formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
-    console.log(blobInfo);
     xhr.upload.onprogress = (e) => {
       progress((e.loaded / e.total) * 100);
       if (progress && typeof progress === "function") {

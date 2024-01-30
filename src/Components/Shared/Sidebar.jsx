@@ -12,17 +12,18 @@ import HamW from "../../assets/Images/hamburgerW.png";
 
 import HamD from "../../assets/Images/hamburgerB.png";
 import { setColorMode } from "../../features/user/userSlice";
+import { setOpenSidebar } from "../../features/user/userSlice";
 import { ReactComponent as SunIcon } from "../../../src/assets/PNGS/sun.svg";
 import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
-import { useMediaQuery } from "react-responsive";
 
 const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
 
-const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
+const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
 
   const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
   const companyId = useSelector(
@@ -34,9 +35,9 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
     company_name: null,
     company_logo: null,
   });
-  const ToogleSideBar = (index) => {
-    setOpenSideBar(index);
-  };
+  // const ToogleSideBar = (index) => {
+  //   setOpenSideBar(index);
+  // };
 
   useEffect(() => {
     (async () => {
@@ -88,10 +89,12 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
       } overflow-x-hidden overflow-y-scroll`}
     >
       <div
-        onClick={() => ToogleSideBar(!openSideBar)}
-        className={`w-${
-          openSideBar ? "full" : "16"
-        } ease-in  absolute top-3 right-0 z-[999999]`}
+        onClick={() => {
+          dispatch(setOpenSidebar(!openSideBar));
+        }}
+        className={`${
+          openSideBar ? "w-full" : "w-16"
+        } ease-in duration-200 absolute top-3 right-0 z-[30]`}
       >
         {openSideBar ? (
           <img
@@ -103,7 +106,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
         ) : (
           <div
             className={`cursor-pointer flex items-center justify-center ${
-              colorMode ? "text-[#B3B3B3]" : "text-gray-800"
+              colorMode ? "text-slate-300" : "text-gray-800"
             }`}
           >
             <Icons.LeftArrow />
@@ -111,7 +114,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
         )}
       </div>
       <div className="flex flex-col items-center justify-around h-screen">
-        <div className=" flex items-center justify-center min-h-[200px] origin-center ">
+        <div className="w-[15vw] flex items-center justify-center min-h-[200px] origin-center overflow-hidden">
           <div
             className={`h-[100px] w-[100px]
             }]  ${
@@ -147,8 +150,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 {openSideBar ? (
                   ""
                 ) : (
-                  <span className="ease-in  w-3/4 font-medium font-poppins m-0 p-0">
-                    Dashboard
+                  <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                    <h1
+                      className={`m-0 p-0 w-[10vw] ${
+                        active === "dashboard"
+                          ? colorMode
+                            ? "text-[#FFFFFF]"
+                            : "text-[#000000]"
+                          : colorMode
+                          ? "text-[#B3B3B3]"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      Dashboard
+                    </h1>
                   </span>
                 )}
               </div>
@@ -189,8 +204,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                   {openSideBar ? (
                     ""
                   ) : (
-                    <span className="w-3/4 font-medium font-poppins">
-                      Analytics
+                    <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                      <h1
+                        className={`m-0 p-0 w-[10vw] ${
+                          active === "analytics"
+                            ? colorMode
+                              ? "text-[#FFFFFF]"
+                              : "text-[#000000]"
+                            : colorMode
+                            ? "text-[#B3B3B3]"
+                            : "text-gray-800"
+                        }`}
+                      >
+                        Analytics
+                      </h1>
                     </span>
                   )}
                 </div>
@@ -288,8 +315,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     {openSideBar ? (
                       ""
                     ) : (
-                      <span className="w-3/4 font-medium font-poppins">
-                        Courses
+                      <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                        <h1
+                          className={`m-0 p-0 w-[10vw] ${
+                            active === "courses"
+                              ? colorMode
+                                ? "text-[#FFFFFF]"
+                                : "text-[#000000]"
+                              : colorMode
+                              ? "text-[#B3B3B3]"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          Courses
+                        </h1>
                       </span>
                     )}
                   </div>
@@ -332,8 +371,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                     {openSideBar ? (
                       ""
                     ) : (
-                      <span className="w-3/4 font-medium font-poppins">
-                        Campaigns
+                      <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                        <h1
+                          className={`m-0 p-0 w-[10vw] ${
+                            active === "campaigns"
+                              ? colorMode
+                                ? "text-[#FFFFFF]"
+                                : "text-[#000000]"
+                              : colorMode
+                              ? "text-[#B3B3B3]"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          Campaigns
+                        </h1>
                       </span>
                     )}
                   </div>
@@ -383,8 +434,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                       {openSideBar ? (
                         ""
                       ) : (
-                        <span className="w-3/4 font-medium font-poppins">
-                          Payments
+                        <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                          <h1
+                            className={`m-0 p-0 w-[10vw] ${
+                              active === "payments"
+                                ? colorMode
+                                  ? "text-[#FFFFFF]"
+                                  : "text-[#000000]"
+                                : colorMode
+                                ? "text-[#B3B3B3]"
+                                : "text-gray-800"
+                            }`}
+                          >
+                            Payments
+                          </h1>
                         </span>
                       )}
                     </div>
@@ -422,7 +485,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                           : colorMode
                           ? "text-[#B3B3B3]"
                           : "text-gray-800"
-                      } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-0.5 ${
+                      } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-1 ${
                         colorMode
                           ? "hover:text-[#ffffff]"
                           : "hover:text-[#000000]"
@@ -438,12 +501,20 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                           } w-5`}
                         />
 
-                        <span
-                          className={`w-3/4 text-[${
-                            openSideBar ? "16px" : "0px"
-                          }] ease-in duration-100 font-medium font-poppins bg-[#fc00ff]`}
-                        >
-                          Sales Employee
+                        <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                          <h1
+                            className={`m-0 p-0 w-[10vw] ${
+                              active === "que-mailer"
+                                ? colorMode
+                                  ? "text-[#FFFFFF]"
+                                  : "text-[#000000]"
+                                : colorMode
+                                ? "text-[#B3B3B3]"
+                                : "text-gray-800"
+                            }`}
+                          >
+                            Sales Employee
+                          </h1>
                         </span>
                       </div>
                       {active === "salesEmployee" && (
@@ -503,7 +574,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                                 : colorMode
                                 ? "text-[#B3B3B3]"
                                 : "text-gray-800"
-                            } w-5`}
+                            }`}
                           >
                             Sales Employee
                           </h1>
@@ -623,7 +694,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                           : colorMode
                           ? "text-[#B3B3B3]"
                           : "text-gray-800"
-                      } w-5`}
+                      }`}
                     />
                     {openSideBar ? (
                       ""
@@ -638,7 +709,7 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
-                          } w-5`}
+                          }`}
                         >
                           Company Settings
                         </h1>
@@ -672,7 +743,6 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
                 }}
                 onClick={() => setActive("requisitions")}
               >
-                {" "}
                 <div className="flex w-full items-center justify-around">
                   <Icons.Pricing />
                   <span className="ml-4 leading-6 font-medium font-poppins">
@@ -793,16 +863,17 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
 
           {/* Logout */}
           <div
-            className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4 py-1.5"
+            className="ease-in duration-200 flex items-center justify-center text-base cursor-pointer my-4"
             onClick={logoutHandler}
           >
-            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md">
-              <Icons.LogOut className="text-white" />
+            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md overflow-hidden">
               {openSideBar ? (
-                ""
+                <Icons.LogOut className="m-0 p-0 text-white w-[10vw]" />
               ) : (
-                <span className=" font-medium font-poppins text-[#FFFFFF] px-2">
-                  Log out
+                <span className="flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2">
+                  <h1 className="m-0 p-0 text-white w-[10vw] text-base">
+                    Log out
+                  </h1>
                 </span>
               )}
             </button>
@@ -828,21 +899,21 @@ const Sidebar = ({ active, setActive, openSideBar, setOpenSideBar }) => {
             ""
           ) : (
             <div className="ease-in duration-200 flex flex-col justify-center items-center">
-              <div className="w-5/6 flex flex-col justify-center items-center">
+              <div className="w-5/6 flex flex-col justify-center items-center overflow-hidden">
                 <img
-                  className="w-full h-full"
+                  className="w-[10vw] h-full"
                   src={qq_Logo}
                   alt="QuadQue Leads"
                 />
                 <p
-                  className={`m-0 p-0 text-center text-xs ${
+                  className={`w-[10vw] m-0 p-0 text-center text-xs ${
                     colorMode ? "text-slate-500" : "text-gray-800"
                   }`}
                 >
                   A product of
                 </p>
                 <p
-                  className={`m-0 p-0 text-center text-xs ${
+                  className={`w-[15vw] m-0 p-0 text-center text-xs ${
                     colorMode ? "text-slate-500" : "text-gray-800"
                   }`}
                 >

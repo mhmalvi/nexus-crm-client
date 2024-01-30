@@ -266,3 +266,33 @@
   .ant-select-selector:hover {
   border: 1px solid #4f8dea;
 }
+
+
+/*  */
+/*  */
+label.label input[type="file"] {
+  position: absolute;
+  top: -1000px;
+}
+.labelDark {
+  cursor: pointer;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+  background: transparent;
+  /* display: inline-block; */
+  color: #cbd5e1;
+  transition: 0.1s linear all;
+}
+.labelLight {
+  cursor: pointer;
+  border: 1px solid #1f2937;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+  background: transparent;
+  /* display: inline-block; */
+  color: #1f2937;
+  transition: 0.1s linear all;
+}

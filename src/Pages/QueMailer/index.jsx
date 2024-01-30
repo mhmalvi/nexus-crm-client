@@ -12,7 +12,7 @@ function App() {
   const [file, setFile] = useState("");
   const [activeItem, setActiveItem] = useState("Email");
   const [openMailModal, setOpenMailModal] = useState(false);
-  const [successMail, setSuccessMail] = useState({ id: 1, success: false });
+  const [successMail, setSuccessMail] = useState({});
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const [currentEmail, setCurrentEmail] = useState(null);
