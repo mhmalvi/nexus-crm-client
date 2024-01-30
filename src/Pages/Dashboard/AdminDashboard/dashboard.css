@@ -260,7 +260,11 @@
 }
 .updatedTableLight thead .ant-table-cell-fix-left-last:first-child {
   background-color: #7037ff !important;
-  color: #1f2937;
+  color: #cbd5e1 !important;
+}
+.updatedTableDark thead .ant-table-cell-fix-left-last:first-child {
+  background-color: #7037ff !important;
+  color: #cbd5e1 !important;
 }
 .updatedTableLight .ant-pagination {
   display: flex;
