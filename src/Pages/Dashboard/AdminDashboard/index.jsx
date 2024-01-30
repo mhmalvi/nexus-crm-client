@@ -701,7 +701,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
-      <div className="col-span-9 border-black rounded-md p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+      <div className="col-span-9 border-black rounded-md p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -747,29 +747,31 @@ const AdminDashboard = () => {
               <CountryList table_title="Lead List" />
             </div>
           </div>
-          <UpdatedTable
-            table_title="Lead List"
-            tableHeaders={tableHeaders}
-            data={leadData}
-            companyEmployeeList={companyEmployeeList}
-            filterOptions={
-              userDetails?.userInfo?.role_id === 3 ||
-              userDetails?.userInfo?.role_id === 4
-                ? adminFilterOptions
-                : salesEmployeesFilterOptions
-            }
-            ratings={ratings}
-            activeFilter={activeFilter}
-            searchInput={searchInput}
-            handleSyncLeadsReq={handleSyncLeadsReq}
-            setIsAddLeadFormOpen={setIsAddLeadFormOpen}
-            setSyncLeads={setSyncLeads}
-            syncLeads={syncLeads}
-            selectedSales={selectedSales}
-            setSelectedSales={setSelectedSales}
-            salesOptions={salesOptions}
-            setSalesOptions={setSalesOptions}
-          />
+          <div>
+            <UpdatedTable
+              table_title="Lead List"
+              tableHeaders={tableHeaders}
+              data={leadData}
+              companyEmployeeList={companyEmployeeList}
+              filterOptions={
+                userDetails?.userInfo?.role_id === 3 ||
+                userDetails?.userInfo?.role_id === 4
+                  ? adminFilterOptions
+                  : salesEmployeesFilterOptions
+              }
+              ratings={ratings}
+              activeFilter={activeFilter}
+              searchInput={searchInput}
+              handleSyncLeadsReq={handleSyncLeadsReq}
+              setIsAddLeadFormOpen={setIsAddLeadFormOpen}
+              setSyncLeads={setSyncLeads}
+              syncLeads={syncLeads}
+              selectedSales={selectedSales}
+              setSelectedSales={setSelectedSales}
+              salesOptions={salesOptions}
+              setSalesOptions={setSalesOptions}
+            />
+          </div>
         </div>
       </div>
       <div
