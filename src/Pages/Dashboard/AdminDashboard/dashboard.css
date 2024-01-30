@@ -324,12 +324,7 @@
   justify-content: center;
   align-items: center;
 }
-.updatedTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  color: #cbd5e1;
-}
+
 .updatedTableLight
   .ant-pagination
   .ant-pagination-options
@@ -346,11 +341,17 @@
   .ant-select-selector:hover {
   border: 0px;
 }
+
+.updatedTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+}
 .ant-table-tbody > tr.ant-table-row:hover > td,
 .ant-table-tbody > tr > td.ant-table-cell-row-hover {
   background: #00000022;
 }
-
 /* Profile Settings */
 .profileSettingsModal {
   position: absolute;
@@ -361,7 +362,7 @@
   margin: 0;
   overflow: hidden;
   vertical-align: middle;
-  box-shadow: 0 0 ;
+  box-shadow: 0 0;
 }
 .profileSettingsModal .ant-modal-body {
   width: 100%;

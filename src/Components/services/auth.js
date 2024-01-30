@@ -47,13 +47,16 @@ export const handleLoginSecond = async (loginDetails) => {
 };
 
 export const handleLogout = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `https://crmuser.queleadscrm.com/api/logout`,
-      authToken
+      config
     );
-
-    console.log(result);
     return result;
   } catch (error) {
     console.log(error);

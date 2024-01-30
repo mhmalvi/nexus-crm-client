@@ -11,3 +11,10 @@
   border-radius: 10px;
   color:white;
 }
+.bookmarkModal .ant-modal-content{
+  background-color: transparent !important;
+  box-shadow: 0 0 0 0;
+}
+/* .ant-modal-mask{
+  background-color: #ffffff7f;
+} */
