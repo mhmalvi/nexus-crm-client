@@ -135,8 +135,8 @@ const MailDashboard = ({
         message.success("Mail sent successfully!");
         setSuccessMail("success");
       } else {
-        message.success("Mail sent successfully!");
-        setSuccessMail("success");
+        message.warning(res?.message || "Something went wrong");
+        setSuccessMail("failed");
       }
     }
   };

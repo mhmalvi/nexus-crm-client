@@ -332,6 +332,12 @@ label.label input[type="file"] {
   transition: all 1s;
 }
 
+#cross {
+  stroke: #7037ff;
+  stroke-width: 6;
+  transition: all 1s;
+} 
+
 #circle {
   stroke: #7037ff;
   stroke-width: 6;
@@ -342,8 +348,16 @@ label.label input[type="file"] {
 .progress #tick {
   opacity: 0;
 }
+.progress #cross {
+  opacity: 0;
+}
 
 .ready #tick {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 8s ease-out forwards;
+}
+.failed #cross {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
   animation: draw 8s ease-out forwards;
@@ -358,7 +372,7 @@ label.label input[type="file"] {
 
 .ready #circle {
   stroke-dashoffset: 66;
-  stroke: #63bc01;
+  stroke: #7037ff;
 }
 
 #circle {

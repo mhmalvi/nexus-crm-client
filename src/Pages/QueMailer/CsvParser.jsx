@@ -47,21 +47,23 @@ const CSVParser = ({
   };
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
-  
+
     const reader = new FileReader();
-  
+
     reader.onload = async ({ target }) => {
       const csv = Papa.parse(target.result, {
         header: false,
       });
-  
+
       const parsedData = csv?.data || [];
-  
-      const filteredData = parsedData.filter(row => row.some(cell => cell.trim() !== ''));
-  
+
+      const filteredData = parsedData.filter((row) =>
+        row.some((cell) => cell.trim() !== "")
+      );
+
       setData(filteredData);
     };
-  
+
     reader.readAsText(file);
   };
 
@@ -89,7 +91,11 @@ const CSVParser = ({
                   viewBox="0 0 100 100"
                   id="check"
                   className={`${
-                    successMail === "success" ? "ready" : "progress"
+                    successMail === "success"
+                      ? "ready"
+                      : successMail === "failed"
+                      ? "failed"
+                      : "progress"
                   }`}
                 >
                   <circle
@@ -99,6 +105,15 @@ const CSVParser = ({
                     r="46"
                     fill="transparent"
                   />
+                  <polyline
+                    id="tick"
+                    points="25,55 45,70 75,33"
+                    fill="transparent"
+                  />
+                  <g id="cross" fill="red">
+                    <polyline points="M-.003 70.716 70.707.005 84.85 14.147l-70.711 70.71z" />
+                    <polyline points="m14.139.005 70.71 70.71-14.141 14.143L-.003 14.147z" />
+                  </g>
                   <polyline
                     id="tick"
                     points="25,55 45,70 75,33"
