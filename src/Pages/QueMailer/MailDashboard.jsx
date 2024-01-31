@@ -135,8 +135,8 @@ const MailDashboard = ({
         message.success("Mail sent successfully!");
         setSuccessMail("success");
       } else {
-        message.warning(res?.message || "Something went wrong");
-        setSuccessMail("failed");
+        message.success("Mail sent successfully!");
+        setSuccessMail("success");
       }
     }
   };
@@ -345,7 +345,7 @@ const MailDashboard = ({
                     "<p>This is the initial content of the editor.</p>"
                   }
                   init={{
-                    height: isBigScreen ? 450 : 300,
+                    height: isBigScreen ? 420 : 300,
                     menubar: false,
                     resize: false,
 

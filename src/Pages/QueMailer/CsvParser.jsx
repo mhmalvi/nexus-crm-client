@@ -47,18 +47,21 @@ const CSVParser = ({
   };
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
-
+  
     const reader = new FileReader();
-
+  
     reader.onload = async ({ target }) => {
       const csv = Papa.parse(target.result, {
         header: false,
       });
-
-      const parsedData = csv?.data;
-      setData(parsedData || []);
+  
+      const parsedData = csv?.data || [];
+  
+      const filteredData = parsedData.filter(row => row.some(cell => cell.trim() !== ''));
+  
+      setData(filteredData);
     };
-
+  
     reader.readAsText(file);
   };
 
