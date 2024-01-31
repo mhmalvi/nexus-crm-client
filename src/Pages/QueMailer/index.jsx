@@ -12,10 +12,12 @@ function App() {
   const [file, setFile] = useState("");
   const [activeItem, setActiveItem] = useState("Email");
   const [openMailModal, setOpenMailModal] = useState(false);
-  const [successMail, setSuccessMail] = useState({});
+  const [successMail, setSuccessMail] = useState("");
+  const [mailProgress, setMailProgress] = useState("");
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const [currentEmail, setCurrentEmail] = useState(null);
+  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     async function fetchCurrentEmail() {
@@ -26,7 +28,7 @@ function App() {
       fetchCurrentEmail();
     }
   }, [currentEmail, userDetails.userInfo.id]);
-  
+
   return (
     <div className="flex items-center justify-center w-full h-screen gap-8">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh]">
@@ -122,8 +124,14 @@ function App() {
                     openMailModal={openMailModal}
                     setOpenMailModal={setOpenMailModal}
                     data={data}
+                    setData={setData}
                     setSuccessMail={setSuccessMail}
                     currentEmail={currentEmail}
+                    setMailProgress={setMailProgress}
+                    mailProgress={mailProgress}
+                    successMail={successMail}
+                    setFileName={setFileName}
+                    setFile={setFile}
                   />
                 </div>
                 <div className="w-1/3 ">
@@ -134,7 +142,10 @@ function App() {
                     setError={setError}
                     file={file}
                     setFile={setFile}
+                    mailProgress={mailProgress}
                     successMail={successMail}
+                    fileName={fileName}
+                    setFileName={setFileName}
                   />
                 </div>
               </div>
@@ -160,7 +171,7 @@ function App() {
         {activeItem === "Email Settings" && (
           <div className="flex h-full justify-between gap-8 ">
             <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 overflow-hidden">
-              <EmailSettings currentEmail={currentEmail}/>
+              <EmailSettings currentEmail={currentEmail} />
             </div>
           </div>
         )}

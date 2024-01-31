@@ -69,6 +69,18 @@ export const handleUpdateSenderEmail = async (data, id) => {
   }
 };
 
+export const sendEmail = async (data) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/send-mail`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 export const AddNewTemplateList = async (data) => {
   try {
     const result = await axios.post(
