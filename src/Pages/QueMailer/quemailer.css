@@ -325,50 +325,15 @@ label.label input[type="file"] {
   transition: 0.1s linear all;
 }
 
-/*  */
-/*  */
-/*  */
-/* CUSTOM EMAIL EDITOR */
-/*  */
-/*  */
-/*  */
-
-.emailEditorCustom .tox-editor-header,
-.emailEditorCustom .tox-toolbar-overlord,
-.emailEditorCustom .tox,
-.emailEditorCustom .tox .tox-toolbar__primary {
-  /* background-color: #1f2937 !important; */
-  color: #cbd5e1 !important;
-}
-
-.emailEditorCustom .tox .tox-toolbar .tox-tbtn--enabled{
-  background-color: #7037ff !important;
-  /* : #7037ff !important; */
-}
-.emailEditorCustom .tox .tox-toolbar .tox-tbtn:hover{
-  background-color: #ad8dff !important;
-}
-.emailEditorCustom .tox .tox-toolbar .tox-tbtn:hover path{
-  fill: #1f2937 !important;
-}
-.emailEditorCustom .tox .tox-toolbar .tox-tbtn--enabled path{
-  fill: #cbd5e1 !important;
-  /* : #7037ff !important; */
-}
-.tox .tox-collection--list .tox-collection__item--active{
-  background-color: #ad8dff !important;
-}
-
-
 /* SVG */
 #tick {
-  stroke: #63bc01;
+  stroke: #7037ff;
   stroke-width: 6;
   transition: all 1s;
 }
 
 #circle {
-  stroke: #63bc01;
+  stroke: #7037ff;
   stroke-width: 6;
   transform-origin: 50px 50px 0;
   transition: all 1s;
@@ -424,4 +389,31 @@ label.label input[type="file"] {
 #check {
   width: 300px;
   height: 300px;
+}
+
+/*  */
+/*  */
+/* Gallery Modal */
+/*  */
+/*  */
+.emailModals{
+  /* background-color: #1f2937; */
+}
+.emailModals .ant-modal-content{
+  background-color: #ffffff;
+  border-radius:8px;
+}
+.emailModals .ant-modal-content span{
+  display: hidden !important;
+}
+.emailModals .ant-modal-content .ant-modal-footer .ant-btn-primary{
+  background-color: #1f2937;
+  border:0px solid #000000;
+  border-radius: 8px;
+}
+.emailModals .ant-modal-content .ant-modal-footer .ant-btn-default{
+  background-color: transparent;
+  border:1px solid #1f2937;
+  border-radius: 8px;
+  color: #1f2937;
 }

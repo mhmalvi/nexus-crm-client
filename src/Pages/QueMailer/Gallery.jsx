@@ -24,18 +24,23 @@ const Gallery = ({ galleryList, showGallery, setShowGallery }) => {
   };
   return (
     <Modal
-      title="Gallery"
-      width="80%"
+      width="40%"
       visible={showGallery}
       open={showGallery}
       confirmLoading={confirmLoading}
       onOk={handleCancel}
       onCancel={handleCancel}
-      cancelButtonProps={{ style: { display: 'none' } }}
+      className="emailModals"
+      okButtonProps={{
+        className: "!hidden",
+      }}
+      cancelButtonProps={{
+        className: "!hidden",
+      }}
       okText="Close"
     >
       <div className="flex flex-col gap-8">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-start gap-4 w-full">
           <DeleteImage
             setImageData={setImageData}
             setCheckedItems={setCheckedItems}

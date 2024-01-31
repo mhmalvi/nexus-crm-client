@@ -31,7 +31,7 @@ const DeleteImage = ({
     <>
       {totalSelected > 0 ? (
         <>
-          <h3 className="m-0 p-0 text-xl ">
+          <h3 className="m-0 p-0 text-base ">
             {totalSelected}{" "}
             {totalSelected === 1 ? "item selected" : "items selected"}
           </h3>

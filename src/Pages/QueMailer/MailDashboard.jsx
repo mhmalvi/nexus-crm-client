@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Popconfirm, Select } from "antd";
+import { Button, Form, Input, message, Popconfirm, Select, Modal } from "antd";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -10,11 +10,12 @@ import {
 } from "../../Components/services/que-mail";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
-// import AttachModal from "./AttachModal";
 import { CloseOutlined } from "@ant-design/icons";
 import Gallery from "./Gallery";
 import "./quemailer.css";
 import { useMediaQuery } from "react-responsive";
+
+const allowedExtensions = ["jpg", "jpeg", "png", "pdf"];
 
 const MailDashboard = ({
   currentEmail,
@@ -22,6 +23,8 @@ const MailDashboard = ({
   successMail,
   setMailProgress,
   mailProgress,
+  setAttachment,
+  attachment,
   setData,
   data,
   setFileName,
@@ -33,7 +36,7 @@ const MailDashboard = ({
 
   const [tempInitValue, setTempInitValue] = useState("");
   const [tData, setTData] = useState("");
-
+  const [attachModal, setAttachModal] = useState(false);
   const [tempOpen, setTempOpen] = useState(false);
   const [templateList, setTemplateList] = useState([]);
   const [staticTempListData, setStaticTempListData] = useState("");
@@ -43,7 +46,6 @@ const MailDashboard = ({
   const [staticGalleryListData, setStaticGalleryListData] = useState("");
 
   const [mailSubject, setMailSubject] = useState("");
-  const [attachOpen, setAttachOpen] = useState(false);
   const [selectedData, setSelectedData] = useState([]);
   const editorRef = useRef(null);
   const userDetails = useSelector((state) => state.user.userInfo);
@@ -56,6 +58,41 @@ const MailDashboard = ({
   };
   const showGalleryModal = () => {
     setShowGallery(true);
+  };
+  const handleAttachment = (e) => {
+    const files = Array.from(e.target.files);
+    let totalSize = 0;
+    let isValid = true;
+
+    files.forEach((file) => {
+      const fileExtension = file?.type.split("/")[1];
+      if (!allowedExtensions.includes(fileExtension)) {
+        message.warning("Please input jpg, jpeg, png or pdf files");
+        isValid = false;
+      } else {
+        const fileSizeInKB = file.size / 1024;
+        if (fileSizeInKB > 500) {
+          message.warning(`${file.name} exceeds the 500KB size limit.`);
+          isValid = false;
+        } else {
+          totalSize += file.size;
+        }
+      }
+    });
+
+    if (!isValid) {
+      setAttachment([]);
+      return;
+    }
+
+    const totalSizeInMB = totalSize / (1024 * 1024);
+    if (totalSizeInMB > 20) {
+      message.warning("Total selected files exceed the 20MB limit.");
+      setAttachment([]);
+      return;
+    }
+
+    setAttachment(files);
   };
 
   const handleSendMail = async () => {
@@ -86,10 +123,15 @@ const MailDashboard = ({
 
       formData.append("user_id", userDetails?.id);
 
+      if (attachment.length) {
+        attachment.forEach((file) => {
+          formData.append("files[]", file);
+        });
+      }
+
       const res = await sendEmail(formData);
 
       if (res?.status === 200) {
-        
         message.success("Mail sent successfully!");
         setSuccessMail("success");
       } else {
@@ -162,6 +204,7 @@ const MailDashboard = ({
         setTData("");
         setSuccessMail("");
       }, 2000);
+      setAttachment([]);
       setFileName("");
       setData([]);
       setFile("");
@@ -173,6 +216,7 @@ const MailDashboard = ({
     setFileName,
     setSuccessMail,
     setFile,
+    setAttachment,
   ]);
 
   useEffect(() => {
@@ -192,7 +236,7 @@ const MailDashboard = ({
             }`}
           >
             Current Sender Email:{" "}
-            <span className="font-bold">
+            <span className="font-bold text-green-500">
               {currentEmail && currentEmail.from_mail_address}
             </span>
           </h1>
@@ -275,16 +319,7 @@ const MailDashboard = ({
                 />
               </Form.Item>
             </div>
-            {/* <div className="bodyHeaderRight">
-                <label
-                  className=""
-                  onClick={(e) => {
-                    handleCheckListOpen(e);
-                  }}
-                >
-                  Attach CheckList
-                </label>
-              </div> */}
+
             {selectedData.length > 0 ? (
               <ul className="flex">
                 {selectedData?.map((item, idx) => {
@@ -299,9 +334,9 @@ const MailDashboard = ({
               ""
             )}
           </div>
-          <div className="h-full flex flex-col items-center justify-center w-full mt-4 !z-4">
+          <div className="h-full w-full flex flex-col items-center justify-center w-full mt-4 !z-4 ">
             {tData ? (
-              <div className="flex flex-col w-full gap-8 z-4 emailEditorCustom">
+              <div className="w-full flex flex-col gap-8 z-4 emailEditorCustom">
                 <Editor
                   apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -334,7 +369,7 @@ const MailDashboard = ({
                       "wordcount",
                     ],
                     toolbar:
-                      "undo redo | casechange blocks | fontfamily | fontsize | fontsizeinput | forecolor | bold italic backcolor | link image |" +
+                      "undo redo | casechange blocks | fontfamily | fontsize | fontsizeinput | forecolor | bold italic backcolor | image link |" +
                       "alignleft aligncenter alignright alignjustify |" +
                       "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help ",
                     content_style:
@@ -346,20 +381,78 @@ const MailDashboard = ({
                     images_upload_handler: handleImageUpload,
                   }}
                 />
-                <Form.Item className="w-full flex items-center justify-center">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    onClick={() => {
-                      setMailProgress(true);
-                    }}
-                    disabled={
-                      !data.length || !mailSubject.length ? true : false
-                    }
-                  >
-                    Send Mail
-                  </Button>
-                </Form.Item>
+                <div className=" flex items-center justify-center relative">
+                  <div className="flex flex-col items-end justify-center absolute right-0 mt-4 gap-2">
+                    <div className="flex gap-2 items-center">
+                      {attachment.length <= 0 ? (
+                        ""
+                      ) : (
+                        <h1
+                          className={`${
+                            colorMode ? "text-slate-300" : "text-gray-800"
+                          } m-0 p-0 hover:text-brand-color cursor-pointer ease-in duration-100`}
+                          onClick={() => {
+                            setAttachModal(true);
+                          }}
+                        >
+                          Files Selected: {attachment.length}
+                        </h1>
+                      )}
+                      <label
+                        htmlFor="file-input"
+                        className={`flex items-center gap-8 label `}
+                      >
+                        <input
+                          type="file"
+                          multiple
+                          onChange={handleAttachment}
+                          className="hidden"
+                          id="file-input"
+                        />
+
+                        <span
+                          className={`${
+                            colorMode
+                              ? "bg-transparent border border-slate-300 text-slate-300"
+                              : "text-gray-800 bg-transparent border border-gray-800"
+                          }   rounded-md m-0 px-4 py-2 cursor-pointer`}
+                        >
+                          Attach File
+                        </span>
+                      </label>
+                    </div>
+                    <h1
+                      className={`${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } text-xs m-0 p-0`}
+                    >
+                      Allowed files: JPG, JPEG, PNG & PDF
+                    </h1>
+                    <h1
+                      className={`${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      } text-xs m-0 p-0`}
+                    >
+                      Max file size: 500kb, Total file size: 20mb
+                    </h1>
+                  </div>
+                  <Form.Item className="!m-0 flex items-center justify-center">
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      onClick={() => {
+                        setMailProgress(true);
+                      }}
+                      className={` !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
+                         `}
+                      disabled={
+                        !data.length || !mailSubject.length ? true : false
+                      }
+                    >
+                      Send Mail
+                    </Button>
+                  </Form.Item>{" "}
+                </div>
               </div>
             ) : (
               <h1
@@ -384,12 +477,29 @@ const MailDashboard = ({
         showGallery={showGallery}
         setShowGallery={setShowGallery}
       />
-      {/* <AttachModal
-        attachOpen={attachOpen}
-        setAttachOpen={setAttachOpen}
-        selectedData={selectedData}
-        setSelectedData={setSelectedData}
-      /> */}
+      <Modal
+        width="20%"
+        visible={attachModal}
+        className="emailModals"
+        onOk={() => {
+          setAttachModal(false);
+        }}
+        cancelButtonProps={{
+          className: "!hidden",
+        }}
+      >
+        <div className="flex flex-col gap-8">
+          <h1 className="m-0 p-0 text-base">Files Selected:</h1>
+          {attachment.map((item, index) => {
+            return (
+              <div className={`flex items-center gap-8 border-b`}>
+                <h1>{index + 1}</h1>
+                <h1>{item.name}</h1>
+              </div>
+            );
+          })}
+        </div>
+      </Modal>
     </div>
   );
 };
