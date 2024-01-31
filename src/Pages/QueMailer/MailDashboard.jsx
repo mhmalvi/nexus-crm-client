@@ -6,6 +6,7 @@ import {
   fetchEmailTemplateList,
   handleImageUpload,
   handleGetAllImage,
+  sendEmail,
 } from "../../Components/services/que-mail";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
@@ -18,12 +19,16 @@ import { useMediaQuery } from "react-responsive";
 const MailDashboard = ({
   currentEmail,
   setSuccessMail,
-  setOpenMailModal,
+  successMail,
+  setMailProgress,
+  mailProgress,
+  setData,
   data,
+  setFileName,
+  setFile,
 }) => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [tempInitValue, setTempInitValue] = useState("");
@@ -42,98 +47,18 @@ const MailDashboard = ({
   const [selectedData, setSelectedData] = useState([]);
   const editorRef = useRef(null);
   const userDetails = useSelector((state) => state.user.userInfo);
+
   const handleTdata = (value) => {
     setTData(value);
   };
+  const showAddNewTemplateModal = () => {
+    setTempOpen(true);
+  };
+  const showGalleryModal = () => {
+    setShowGallery(true);
+  };
 
-  // const handleCheckListOpen = (e) => {
-  //   setSelectedData([]);
-  //   setAttachOpen(true);
-  // };
-  
-  // const handleSendMail = async () => {
-  //   if (!data || !tData || !mailSubject) {
-  //     if (!data) {
-  //       message.warning("Please upload a csv");
-  //     }
-  //     if (!tData) {
-  //       message.warning("Please select a template");
-  //     }
-  //     if (!mailSubject) {
-  //       message.warning("Please enter the mail subject");
-  //     }
-  //   } else {
-  //     setConfirmLoading(true);
-
-  //     try {
-  //       let commonId = null;
-
-  //       for (const [index, email] of data.entries()) {
-  //         const formData = new FormData();
-  //         formData.append("template", editorRef?.current?.getContent() || "");
-  //         formData.append("subject", mailSubject);
-  //         formData.append("email", email);
-  //         formData.append("user_id", 32)
-
-  //         if (index === 0 && commonId === null) {
-  //           formData.append("id", 0);
-  //         } else if (commonId !== null) {
-  //           formData.append("id", commonId);
-  //         }
-
-  //         const response = await fetch(
-  //           "https://emailmarketing.queleadscrm.com/api/send-mail",
-  //           {
-  //             method: "POST",
-  //             body: formData,
-  //             headers: {
-  //               Accept: "application/json",
-  //             },
-  //           }
-  //         );
-
-  //         const result = await response.json();
-
-  //         if (result?.status === 200) {
-  //           if (index === 0) {
-  //             commonId = result.id;
-  //           }
-
-  //           const successMailId = email;
-  //           setSuccessMail((prevSuccessMail) => ({
-  //             ...prevSuccessMail,
-  //             [successMailId]: true,
-  //           }));
-
-  //           message.success(`Mail sent successfully to ${email}`);
-  //         } else {
-  //           message.error(result?.message || `Failed to send mail to ${email}`);
-  //         }
-  //       }
-  //       setConfirmLoading(false);
-  //       setOpenMailModal(false);
-  //       window.location.reload();
-  //     } catch (error) {
-  //       message.error("Something went wrong while sending mails");
-  //       setConfirmLoading(false);
-  //     }
-  //   }
-  // };
-  const handleSendMail = () => {
-    const formData = new FormData();
-    formData.append(
-      "template",
-      editorRef?.current
-        ? editorRef?.current?.getContent()
-          ? editorRef?.current?.getContent()
-          : ""
-        : ""
-    );
-    formData.append("subject", mailSubject);
-
-    data.forEach((email) => {
-      formData.append("email[]", email);
-    });
+  const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
         message.warning("Please upload a csv");
@@ -145,33 +70,35 @@ const MailDashboard = ({
         message.warning("Please enter mail subject");
       }
     } else {
-      setConfirmLoading(true);
-      fetch("https://emailmarketing.queleadscrm.com/api/send-mail", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          console.log(result);
-          if (result?.status === 200) {
-            message.success("Mail sent successfully!");
-            setOpenMailModal(false);
-            setConfirmLoading(false);
-            window.location.reload();
-          } else {
-            message.error(result?.message || "Something went wrong");
-            setConfirmLoading(false);
-          }
-        })
-        .catch((error) => {
-          message.error("Something went wrong");
-          setConfirmLoading(false);
-        });
+      const formData = new FormData();
+      formData.append("subject", mailSubject);
+      formData.append(
+        "template",
+        editorRef?.current
+          ? editorRef?.current?.getContent()
+            ? editorRef?.current?.getContent()
+            : ""
+          : ""
+      );
+      data.forEach((email) => {
+        formData.append("email[]", email);
+      });
+
+      formData.append("user_id", userDetails?.id);
+
+      const res = await sendEmail(formData);
+
+      if (res?.status === 200) {
+        
+        message.success("Mail sent successfully!");
+        setSuccessMail("success");
+      } else {
+        message.warning(res?.message || "Something went wrong");
+        setSuccessMail("failed");
+      }
     }
   };
+
   useEffect(() => {
     async function onSelectTemp() {
       let res = await fetchEmailTemplateList();
@@ -227,12 +154,26 @@ const MailDashboard = ({
     onSelectTemp();
   }, [staticGalleryListData, staticTempListData]);
 
-  const showAddNewTemplateModal = () => {
-    setTempOpen(true);
-  };
-  const showGalleryModal = () => {
-    setShowGallery(true);
-  };
+  useEffect(() => {
+    if (successMail === "success") {
+      setTimeout(() => {
+        setMailProgress(false);
+        setMailSubject("");
+        setTData("");
+        setSuccessMail("");
+      }, 2000);
+      setFileName("");
+      setData([]);
+      setFile("");
+    }
+  }, [
+    successMail,
+    setMailProgress,
+    setData,
+    setFileName,
+    setSuccessMail,
+    setFile,
+  ]);
 
   useEffect(() => {
     templateList?.forEach((itm, idx) => {
@@ -299,6 +240,13 @@ const MailDashboard = ({
                 Mail Subject:
               </h2>
               <Input
+                disabled={
+                  mailProgress
+                    ? true
+                    : successMail === "success"
+                    ? false
+                    : false
+                }
                 className="!rounded-lg placeholder:!text-slate-400 "
                 value={mailSubject}
                 onChange={(e) => setMailSubject(e?.target?.value)}
@@ -317,10 +265,11 @@ const MailDashboard = ({
               </h2>
               <Form.Item className=" !text-black !rounded-lg !w-full !p-0 !m-0">
                 <Select
+                  disabled={mailProgress ? true : successMail ? false : false}
                   defaultValue={!tData && ""}
                   value={tData || "Select Email template"}
                   placeholder="Select Email template"
-                  className="templateSelect flex !rounded-lg !m-0 !p-0 !text-slate-400"
+                  className="templateSelect !rounded-lg !m-0 !p-0 !text-slate-400"
                   onChange={handleTdata}
                   options={templateList || []}
                 />
@@ -352,7 +301,7 @@ const MailDashboard = ({
           </div>
           <div className="h-full flex flex-col items-center justify-center w-full mt-4 !z-4">
             {tData ? (
-              <div className="flex flex-col w-full gap-8 z-4">
+              <div className="flex flex-col w-full gap-8 z-4 emailEditorCustom">
                 <Editor
                   apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -398,7 +347,16 @@ const MailDashboard = ({
                   }}
                 />
                 <Form.Item className="w-full flex items-center justify-center">
-                  <Button type="primary" htmlType="submit">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    onClick={() => {
+                      setMailProgress(true);
+                    }}
+                    disabled={
+                      !data.length || !mailSubject.length ? true : false
+                    }
+                  >
                     Send Mail
                   </Button>
                 </Form.Item>

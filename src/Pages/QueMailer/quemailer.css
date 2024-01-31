@@ -275,10 +275,7 @@
   align-items: center;
 }
 
-.emailTableLight
-  .ant-pagination
-  .ant-pagination-options
-  .ant-select-selector {
+.emailTableLight .ant-pagination .ant-pagination-options .ant-select-selector {
   border: 0px solid #1f2937;
   border-radius: 8px;
 }
@@ -298,7 +295,6 @@
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   color: #cbd5e1;
 }
-
 
 /*  */
 /*  */
@@ -327,4 +323,105 @@ label.label input[type="file"] {
   /* display: inline-block; */
   color: #1f2937;
   transition: 0.1s linear all;
+}
+
+/*  */
+/*  */
+/*  */
+/* CUSTOM EMAIL EDITOR */
+/*  */
+/*  */
+/*  */
+
+.emailEditorCustom .tox-editor-header,
+.emailEditorCustom .tox-toolbar-overlord,
+.emailEditorCustom .tox,
+.emailEditorCustom .tox .tox-toolbar__primary {
+  /* background-color: #1f2937 !important; */
+  color: #cbd5e1 !important;
+}
+
+.emailEditorCustom .tox .tox-toolbar .tox-tbtn--enabled{
+  background-color: #7037ff !important;
+  /* : #7037ff !important; */
+}
+.emailEditorCustom .tox .tox-toolbar .tox-tbtn:hover{
+  background-color: #ad8dff !important;
+}
+.emailEditorCustom .tox .tox-toolbar .tox-tbtn:hover path{
+  fill: #1f2937 !important;
+}
+.emailEditorCustom .tox .tox-toolbar .tox-tbtn--enabled path{
+  fill: #cbd5e1 !important;
+  /* : #7037ff !important; */
+}
+.tox .tox-collection--list .tox-collection__item--active{
+  background-color: #ad8dff !important;
+}
+
+
+/* SVG */
+#tick {
+  stroke: #63bc01;
+  stroke-width: 6;
+  transition: all 1s;
+}
+
+#circle {
+  stroke: #63bc01;
+  stroke-width: 6;
+  transform-origin: 50px 50px 0;
+  transition: all 1s;
+}
+
+.progress #tick {
+  opacity: 0;
+}
+
+.ready #tick {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 8s ease-out forwards;
+}
+
+.progress #circle {
+  stroke: #4c4c4c;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 1000;
+  animation: spin 3s linear infinite;
+}
+
+.ready #circle {
+  stroke-dashoffset: 66;
+  stroke: #63bc01;
+}
+
+#circle {
+  stroke-dasharray: 500;
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg);
+    stroke-dashoffset: 66;
+  } 
+  50% {
+    transform: rotate(540deg);
+    stroke-dashoffset: 314;
+  } 
+  100% {
+    transform: rotate(1080deg);
+    stroke-dashoffset: 66;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#check {
+  width: 300px;
+  height: 300px;
 }

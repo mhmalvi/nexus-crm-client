@@ -7,13 +7,10 @@ const columns = [
   {
     title: "ID",
     dataIndex: "id",
-    sortDirections: ["descend"],
   },
   {
     title: "Sent From",
     dataIndex: "sender",
-    defaultSortOrder: "descend",
-    // sorter: (a, b) => a.sender.length - b.sender.length,
   },
   {
     title: "Email Count",
@@ -35,7 +32,7 @@ const columns = [
 const EmailHistory = () => {
   const [emailSessionRow, setEmailSessionRow] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pagination, setPagination] = useState(20);
+  const [pagination, setPagination] = useState(10);
   const [clicked, setClicked] = useState(false);
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
