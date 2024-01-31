@@ -1,9 +1,15 @@
 import { Input, message, Modal } from "antd";
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { AddNewTemplateList, handleImageUpload } from "../../Components/services/que-mail";
+import {
+  AddNewTemplateList,
+  handleImageUpload,
+} from "../../Components/services/que-mail";
+import "./quemailer.css";
+import { useSelector } from "react-redux";
 
 const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [templateTitle, setTemplateTitle] = useState("");
   const editorRef = useRef(null);
@@ -46,7 +52,6 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
   return (
     <div className=" z-[9999999] " style={{ zIndex: 9999999 }}>
       <Modal
-        title="Add New Template"
         width="80%"
         open={tempOpen}
         visible={tempOpen}
@@ -54,15 +59,20 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
         onOk={handleAddNewTemplate}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        className="emailModals"
       >
         <div>
-          <h2>Template Title: </h2>
-          <Input
-            value={templateTitle}
-            onChange={(e) => setTemplateTitle(e?.target?.value)}
-            placeholder="Enter the name of Template"
-            style={{ width: "30%", margin: "5px 0 30px 0" }}
-          ></Input>
+          <div className="flex items-center justify-around mb-6">
+            <div className="flex items-center w-1/3">
+              <h2 className="m-0 p-0 w-1/4">Template Title: </h2>
+              <Input
+                value={templateTitle}
+                onChange={(e) => setTemplateTitle(e?.target?.value)}
+                placeholder="Enter the name of Template"
+              />
+            </div>
+            <h1 className={`bg-gray-800 text-slate-300 rounded-md m-0 px-2 py-2 text-base`}>Press (Shift + CTRL/CMD + F) for fullscreen</h1>
+          </div>
           <Editor
             apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
             onInit={(evt, editor) => (editorRef.current = editor)}

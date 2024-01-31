@@ -106,7 +106,11 @@ const CSVParser = ({
             ) : (
               <ol className="px-8 py-2 h-[55vh] overflow-y-scroll">
                 {fileName === "" ? (
-                  <h1 className="h-1/3 flex items-center justify-center">
+                  <h1
+                    className={`${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    } h-1/3 flex items-center justify-center`}
+                  >
                     Your email list will appear here
                   </h1>
                 ) : (

@@ -86,7 +86,13 @@ const EmailSettings = ({ currentEmail }) => {
                 onChange={(e) => handleInputChange("email", e.target.value)}
               />
             ) : (
-              <h1 className="flex items-center justify-center m-0  px-2 py-0 h-[4vh] text-base">{currentEmail.from_mail_address}</h1>
+              <h1
+                className={` ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } flex items-center justify-center m-0  px-2 py-0 h-[4vh] text-base`}
+              >
+                {currentEmail.from_mail_address}
+              </h1>
             )}
           </div>
           <div className="flex gap-4 items-center justify-between w-1/4 ">
@@ -108,7 +114,11 @@ const EmailSettings = ({ currentEmail }) => {
                 onChange={(e) => handleInputChange("password", e.target.value)}
               />
             ) : (
-              <h1 className="m-0  px-2 py-0 h-[4vh] text-base">{currentEmail.password}</h1>
+              <h1 className={` ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } m-0  px-2 py-0 h-[4vh] text-base`}>
+                {currentEmail.password}
+              </h1>
             )}
           </div>
           <div className="flex gap-4 items-center justify-between w-1/4 ">
@@ -130,7 +140,11 @@ const EmailSettings = ({ currentEmail }) => {
                 onChange={(e) => handleInputChange("from_name", e.target.value)}
               />
             ) : (
-              <h1 className="m-0 px-2 py-0 h-[4vh] text-base">{currentEmail.from_name}</h1>
+              <h1 className={` ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } m-0 px-2 py-0 h-[4vh] text-base`}>
+                {currentEmail.from_name}
+              </h1>
             )}
           </div>
           <div className="w-1/4 flex justify-end items-center">

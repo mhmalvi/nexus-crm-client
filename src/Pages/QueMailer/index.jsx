@@ -8,6 +8,7 @@ import { handleCurrentEmail } from "../../Components/services/que-mail";
 
 function App() {
   const [data, setData] = useState([]);
+  const [attachment, setAttachment] = useState([]);
   const [error, setError] = useState("");
   const [file, setFile] = useState("");
   const [activeItem, setActiveItem] = useState("Email");
@@ -38,10 +39,10 @@ function App() {
             className={`${
               colorMode
                 ? `hover:text-white ${
-                    activeItem === "Email" ? "text-white" : "text-slate-300"
+                    activeItem === "Email" ? "text-white font-semibold" : "text-slate-300"
                   }`
-                : `hover:text-gray-800 ${
-                    activeItem === "Email" ? "text-gray-800" : "text-gray-500"
+                : `hover:text-gray-800  ${
+                    activeItem === "Email" ? "text-gray-800 font-semibold" : "text-gray-500"
                   }`
             } px-4 text-base`}
             onClick={() => {
@@ -55,13 +56,13 @@ function App() {
               colorMode
                 ? `hover:text-white ${
                     activeItem === "Email History"
-                      ? "text-white"
-                      : "text-slate-300"
+                      ? "text-white font-semibold "
+                      : "text-slate-300  "
                   }`
                 : `hover:text-gray-800 ${
                     activeItem === "Email History"
-                      ? "text-gray-800"
-                      : "text-gray-500"
+                      ? "text-gray-800 font-semibold "
+                      : "text-gray-500  "
                   }`
             } px-4 text-base`}
             onClick={() => {
@@ -78,12 +79,12 @@ function App() {
             // ${ colorMode
             //     ? `hover:text-white ${
             //         activeItem === "Statistics"
-            //           ? "text-white"
+            //           ? "text-white font-semibold"
             //           : "text-slate-300"
             //       }`
             //     : `hover:text-gray-800 ${
             //         activeItem === "Statistics"
-            //           ? "text-gray-800"
+            //           ? "text-gray-800 font-semibold"
             //           : "text-gray-500"
             //       }`}
 
@@ -98,12 +99,12 @@ function App() {
               colorMode
                 ? `hover:text-white ${
                     activeItem === "Email Settings"
-                      ? "text-white"
+                      ? "text-white font-semibold"
                       : "text-slate-300"
                   }`
                 : `hover:text-gray-800 ${
                     activeItem === "Email Settings"
-                      ? "text-gray-800"
+                      ? "text-gray-800 font-semibold"
                       : "text-gray-500"
                   }`
             } px-4 text-base`}
@@ -125,13 +126,16 @@ function App() {
                     setOpenMailModal={setOpenMailModal}
                     data={data}
                     setData={setData}
+                    successMail={successMail}
                     setSuccessMail={setSuccessMail}
                     currentEmail={currentEmail}
                     setMailProgress={setMailProgress}
                     mailProgress={mailProgress}
-                    successMail={successMail}
                     setFileName={setFileName}
+                    attachment={attachment}
+                    setAttachment={setAttachment}
                     setFile={setFile}
+                    setError={setError}
                   />
                 </div>
                 <div className="w-1/3 ">
