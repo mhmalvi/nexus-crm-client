@@ -132,11 +132,14 @@ const MailDashboard = ({
       const res = await sendEmail(formData);
 
       if (res?.status === 200) {
-        message.success("Mail sent successfully!");
+        message.success(res?.message);
         setSuccessMail("success");
-      } else {
-        message.warning(res?.message || "Something went wrong");
+      } else if (res?.status === 304) {
+        message.warning(res?.message);
         setSuccessMail("failed");
+      } else {
+        message.warning(`It will take approximately ${data.length*1.5} seconds for all the mail to be sent. Hang on tight !`);
+        setSuccessMail("success");
       }
     }
   };

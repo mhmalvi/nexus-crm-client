@@ -239,6 +239,103 @@ const AdminDashboard = () => {
     [userDetails?.userInfo, setLeadData]
   );
 
+  const getColumnSearchProps = useMemo(() => (dataIndex) => {
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+      confirm();
+      setSearchText(selectedKeys[0]);
+      setSearchedColumn(dataIndex);
+    };
+    const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
+      setSearchText("");
+      clearFilters();
+    }; 
+    return {
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+        close,
+      }) => (
+        <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={tableSearchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters();
+              confirm({ closeDropdown: false });
+              handleReset(clearFilters, selectedKeys, dataIndex);
+            }}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Clear
+          </Button>
+        </Space>
+      </div>
+      ),
+      filterIcon: (filtered) => (
+        <SearchOutlined
+          style={{
+            color: filtered ? "#1890ff" : undefined,
+          }}
+        />
+      ),
+      onFilter: (value, record) =>
+        record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownOpenChange: (visible) => {
+        if (visible) {
+          setTimeout(() => tableSearchInput.current?.select(), 100);
+        }
+      },
+      render: (text) =>
+        searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{
+              backgroundColor: "#8250FF",
+              padding: 0,
+            }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text ? text?.toString() : ""}
+          />
+        ) : (
+          text
+        ),
+    };
+  }, [searchText, searchedColumn]);
+
   useEffect(() => {
     const assignButton = {
       title: "Assign Lead",
@@ -581,20 +678,7 @@ const AdminDashboard = () => {
     syncLeads,
   ]);
 
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
-    // confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-    clearFilters();
-    setSearchText("");
-  };
-
+  
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {
       if (userName !== "All") {
@@ -611,92 +695,6 @@ const AdminDashboard = () => {
     },
     [companyEmployeeList, leadList, setLeadData]
   );
-
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={tableSearchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-            confirm({ closeDropdown: false });
-          }}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-              confirm({ closeDropdown: false });
-              handleReset(clearFilters, selectedKeys, dataIndex);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Clear
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1890ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => tableSearchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#8250FF",
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text?.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   return (

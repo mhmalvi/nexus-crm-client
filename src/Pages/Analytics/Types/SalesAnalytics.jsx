@@ -27,7 +27,7 @@ const SalesAnalytics = ({ activeCompany }) => {
       console.log("salesResponse", salesResponse?.data);
       setCompanySalesEmployees(salesResponse?.data);
     })();
-  }, [activeCompany, userDetails]);
+  }, [activeCompany, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id]);
 
   useEffect(() => {
     (async () => {
@@ -79,7 +79,7 @@ const SalesAnalytics = ({ activeCompany }) => {
         dispatch(setLoader(false));
       }
     })();
-  }, [activeCompany, dispatch, userDetails, companySalesEmployees]);
+  }, [activeCompany, companySalesEmployees, dispatch, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id]);
 
   return (
     <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col ">

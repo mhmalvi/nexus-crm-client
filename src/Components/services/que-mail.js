@@ -26,6 +26,7 @@ export const getEmailHistory = async (data, pageNumber) => {
       data,
       config
     );
+    console.log(result)
     return result.data;
   } catch (error) {
     return error.response;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
-import { fetchCampaignwisePaymentDataOfCompany } from "../../../Components/services/payment";
+// import { fetchCampaignwisePaymentDataOfCompany } from "../../../Components/services/payment";
 
 const LeadQualityRatio = ({ activeCompany }) => {
   const [campaignQualityRatio, setCampaignQualityRatio] = useState([]);
@@ -103,38 +103,38 @@ const LeadQualityRatio = ({ activeCompany }) => {
     setCampaignQualityRatio(campaignQualityRatioArray);
   }, [campaigns, leads]);
 
-  useEffect(() => {
-    const campaignwiseRevenueData = [];
+  // useEffect(() => {
+  //   const campaignwiseRevenueData = [];
 
-    (async () => {
-      const campaignwiseRevenueResp =
-        await fetchCampaignwisePaymentDataOfCompany(
-          userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
-        );
+  //   (async () => {
+  //     const campaignwiseRevenueResp =
+  //       await fetchCampaignwisePaymentDataOfCompany(
+  //         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+  //       );
 
-      if (campaignwiseRevenueResp?.status === 200) {
-        campaigns?.forEach((campaign) => {
-          if (
-            campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-          ) {
-            campaignwiseRevenueData.push({
-              campaign: campaign?.campaign_name,
-              revenue: campaignwiseRevenueResp?.data?.find(
-                (camp) =>
-                  parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
-              )
-                ? campaignwiseRevenueResp?.data?.find(
-                    (camp) =>
-                      parseInt(camp?.campaigns) ===
-                      parseInt(campaign?.campaign_id)
-                  )?.sums
-                : 0,
-            });
-          }
-        });
-      }
-    })();
-  }, [activeCompany, campaigns, userDetails]);
+  //     if (campaignwiseRevenueResp?.status === 200) {
+  //       campaigns?.forEach((campaign) => {
+  //         if (
+  //           campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+  //         ) {
+  //           campaignwiseRevenueData.push({
+  //             campaign: campaign?.campaign_name,
+  //             revenue: campaignwiseRevenueResp?.data?.find(
+  //               (camp) =>
+  //                 parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
+  //             )
+  //               ? campaignwiseRevenueResp?.data?.find(
+  //                   (camp) =>
+  //                     parseInt(camp?.campaigns) ===
+  //                     parseInt(campaign?.campaign_id)
+  //                 )?.sums
+  //               : 0,
+  //           });
+  //         }
+  //       });
+  //     }
+  //   })();
+  // }, [activeCompany, campaigns, userDetails]);
 
   return (
     <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">

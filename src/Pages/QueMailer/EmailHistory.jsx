@@ -6,7 +6,13 @@ import { getEmailHistory } from "../../Components/services/que-mail";
 const columns = [
   {
     title: "ID",
-    dataIndex: "id",
+    render: (_, record, idx) => {
+      return (
+        <>
+         <h1 className="m-0 p-0">{idx+1}</h1>
+        </>
+      );
+    },
   },
   {
     title: "Sent From",
@@ -35,22 +41,23 @@ const EmailHistory = () => {
   const [pagination, setPagination] = useState(10);
   const [clicked, setClicked] = useState(false);
 
+  const userDetails = useSelector((state) => state.user.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  console.log(userDetails.userInfo?.id)
   useEffect(() => {
     async function fetchEmailHistory() {
       const data = {
+        user_id: userDetails.id,
         per_page: pagination,
       };
       const res = await getEmailHistory(data, currentPage);
       setEmailSessionRow(res?.data);
-      console.log(emailSessionRow.data);
     }
     if (emailSessionRow === null || clicked) {
       fetchEmailHistory();
       setClicked(false);
     }
-  }, [clicked, currentPage, emailSessionRow, pagination]);
+  }, [clicked, currentPage, emailSessionRow, pagination, userDetails]);
 
   return (
     <Table
