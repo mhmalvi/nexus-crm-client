@@ -34,15 +34,7 @@ table {
   table-layout: fixed;
   font-family: "Poppins";
 }
-.filterEmployee .ant-select {
-  width: 100%;
-  border-radius: 10px !important;
-}
-.filterEmployee .ant-select .ant-select-selector {
-  background-color: #cbd5e15d;
-  width: 100%;
-  border-radius: 10px !important;
-}
+
 .calendarHeadDark {
   height: 100%;
 }

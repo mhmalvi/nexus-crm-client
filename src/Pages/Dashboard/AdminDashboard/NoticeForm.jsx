@@ -107,21 +107,23 @@ const NoticeForm = () => {
                   onClick={() => {
                     setShowNotices(true);
                   }}
-                  className="ease-in duration-200 bg-gradient-to-b from-[#100b1e] via-[#0b0815] to-[#000000] px-2 py-1 text-slate-300 rounded-md "
+                  className={`ease-in duration-200 border ${
+                    colorMode ? "border-slate-300 text-slate-300" : "border-gray-800 text-gray-800"
+                  } px-2 py-1  rounded-md `}
                 >
-                  Preview Notices
+                  Preview
                 </button>
               </div>
               <div>
                 <form
                   onSubmit={(e) => handleSendNotice(e)}
-                  className="flex items-center flex-col justify-center "
+                  className="flex items-center flex-col justify-center gap-4"
                 >
                   <input
-                    className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border mb-3 ${
+                    className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border ${
                       colorMode
-                        ? "placeholder:text-slate-300"
-                        : "placeholder:text-gray-800"
+                        ? "border-slate-300 placeholder:text-slate-300"
+                        : "border-gray-800 placeholder:text-gray-800"
                     }`}
                     type="text"
                     placeholder="Notice Title"
@@ -131,8 +133,8 @@ const NoticeForm = () => {
                   <textarea
                     className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
                       colorMode
-                        ? "placeholder:text-slate-300"
-                        : "placeholder:text-gray-800"
+                      ? "border-slate-300 placeholder:text-slate-300"
+                      : "border-gray-800 placeholder:text-gray-800"
                     }`}
                     name=""
                     style={{ resize: "none" }}
@@ -143,7 +145,7 @@ const NoticeForm = () => {
                     placeholder="Details"
                   ></textarea>
                   <button
-                    className=" ease-in duration-200 w-1/3 px-3 py-2 mt-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-gradient-to-b from-[#7a51e3] via-[#6e48cb] to-[#55389f] rounded-md"
+                    className=" ease-in duration-200 w-1/3 px-3 py-2 font-poppins font-semibold text-xs cursor-pointer text-slate-300 bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] rounded-md"
                     type="submit"
                     value="Post"
                   >
@@ -174,7 +176,6 @@ const NoticeForm = () => {
                     Preview Notices
                   </button>
                 </div>
-                
               </div>
             </div>
           )}

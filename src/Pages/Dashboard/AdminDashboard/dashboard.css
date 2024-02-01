@@ -25,6 +25,25 @@
 .selectSalesLight .ant-select-arrow {
   color: #000;
 }
+
+.filterEmployeeLight .ant-select {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.filterEmployeeLight .ant-select .ant-select-selector {
+  background: transparent !important;
+  color: black;
+  border: 0.5px solid black;
+  border-radius: 8px !important;
+}
+.filterEmployeeLight .ant-select .ant-select-selector:hover {
+  border: 0.5px solid #7037ff;
+}
+.filterEmployeeLight .ant-select-arrow {
+  color: #000;
+}
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(
     .ant-select-customize-input
   )
@@ -50,6 +69,22 @@
   color: #ffffff;
 }
 .selectSalesDark .ant-select .ant-select-selector {
+  background: transparent !important;
+  color: #cbd5e1;
+  border: 0.5px solid #cbd5e1;
+  border-radius: 8px !important;
+}
+
+.filterEmployeeDark .ant-select {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.filterEmployeeDark .ant-select-arrow {
+  color: #ffffff;
+}
+.filterEmployeeDark .ant-select .ant-select-selector {
   background: transparent !important;
   color: #cbd5e1;
   border: 0.5px solid #cbd5e1;
@@ -136,8 +171,7 @@
   align-items: center;
 }
 .updatedTableDark .ant-pagination li {
-  border: 0px;
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
 }
 .updatedTableDark .ant-pagination li a {
@@ -146,6 +180,7 @@
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-active {
   border: 1px solid #cbd5e1;
+  background-color: #0000007f;
 }
 .updatedTableDark .ant-pagination .ant-pagination-item-ellipsis {
   color: #cbd5e1;
@@ -157,7 +192,7 @@
 }
 .updatedTableDark .ant-pagination .ant-pagination-prev > button,
 .updatedTableDark .ant-pagination .ant-pagination-next > button {
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
   overflow: hidden;
   display: flex;

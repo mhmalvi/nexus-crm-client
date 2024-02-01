@@ -336,7 +336,7 @@ label.label input[type="file"] {
   stroke: #ff4e37;
   stroke-width: 6;
   transition: all 1s;
-} 
+}
 
 #circle {
   stroke: #7037ff;
@@ -354,7 +354,7 @@ label.label input[type="file"] {
 .progress #cross {
   opacity: 0;
 }
-.ready #cross{
+.ready #cross {
   opacity: 0;
 }
 
@@ -390,14 +390,14 @@ label.label input[type="file"] {
 }
 
 @keyframes spin {
-  0% { 
+  0% {
     transform: rotate(0deg);
     stroke-dashoffset: 66;
-  } 
+  }
   50% {
     transform: rotate(540deg);
     stroke-dashoffset: 314;
-  } 
+  }
   100% {
     transform: rotate(1080deg);
     stroke-dashoffset: 66;
@@ -420,24 +420,30 @@ label.label input[type="file"] {
 /* Gallery Modal */
 /*  */
 /*  */
-.emailModals{
+.emailModals {
   /* background-color: #1f2937; */
 }
-.emailModals .ant-modal-content{
+.emailModals .ant-modal-content {
   background-color: #ffffff;
-  border-radius:8px;
+  border-radius: 8px;
 }
-.emailModals .ant-modal-content span{
+.emailModals .ant-modal-content span {
   display: hidden !important;
 }
-.emailModals .ant-modal-content .ant-modal-footer .ant-btn-primary{
+.emailModals .ant-modal-content .ant-modal-footer .ant-btn-primary {
   background-color: #1f2937;
-  border:0px solid #000000;
+  border: 0px solid #000000;
   border-radius: 8px;
 }
-.emailModals .ant-modal-content .ant-modal-footer .ant-btn-default{
+.emailModals .ant-modal-content .ant-modal-footer .ant-btn-default {
   background-color: transparent;
-  border:1px solid #1f2937;
+  border: 1px solid #1f2937;
   border-radius: 8px;
   color: #1f2937;
+}
+
+.emailEditorCustom .tox-fullscreen {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
 }
