@@ -327,13 +327,13 @@ label.label input[type="file"] {
 
 /* SVG */
 #tick {
-  stroke: #7037ff;
+  stroke: #59fd59;
   stroke-width: 6;
   transition: all 1s;
 }
 
 #cross {
-  stroke: #7037ff;
+  stroke: #ff4e37;
   stroke-width: 6;
   transition: all 1s;
 } 
@@ -348,7 +348,13 @@ label.label input[type="file"] {
 .progress #tick {
   opacity: 0;
 }
+.failed #tick {
+  opacity: 0;
+}
 .progress #cross {
+  opacity: 0;
+}
+.ready #cross{
   opacity: 0;
 }
 
@@ -364,7 +370,7 @@ label.label input[type="file"] {
 }
 
 .progress #circle {
-  stroke: #4c4c4c;
+  stroke: #7037ff;
   stroke-dasharray: 314;
   stroke-dashoffset: 1000;
   animation: spin 3s linear infinite;
@@ -372,7 +378,11 @@ label.label input[type="file"] {
 
 .ready #circle {
   stroke-dashoffset: 66;
-  stroke: #7037ff;
+  stroke: #59fd59;
+}
+.failed #circle {
+  stroke-dashoffset: 66;
+  stroke: #ff4e37;
 }
 
 #circle {

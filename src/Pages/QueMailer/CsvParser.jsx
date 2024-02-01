@@ -110,15 +110,18 @@ const CSVParser = ({
                     points="25,55 45,70 75,33"
                     fill="transparent"
                   />
-                  <g id="cross" fill="red">
-                    <polyline points="M-.003 70.716 70.707.005 84.85 14.147l-70.711 70.71z" />
-                    <polyline points="m14.139.005 70.71 70.71-14.141 14.143L-.003 14.147z" />
+                  <g>
+                    <polyline
+                      id="cross"
+                      points="25,30 75,70"
+                      fill="transparent"
+                    />
+                    <polyline
+                      id="cross"
+                      points="25,70 72,30"
+                      fill="transparent"
+                    />
                   </g>
-                  <polyline
-                    id="tick"
-                    points="25,55 45,70 75,33"
-                    fill="transparent"
-                  />
                 </svg>
               </div>
             ) : (
