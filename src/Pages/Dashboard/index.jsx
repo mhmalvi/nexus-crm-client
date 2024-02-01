@@ -1,10 +1,10 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Button, Input, message, Modal, ConfigProvider } from "antd";
-import React, { useEffect, useState } from "react";
+// import { UserOutlined } from "@ant-design/icons";
+// import { Button, Input, message, Modal, ConfigProvider } from "antd";
+import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { handlePasswordReset } from "../../Components/services/auth";
-import { Storage } from "../../Components/Shared/utils/store";
+// import { useNavigate } from "react-router-dom";
+// import { handlePasswordReset } from "../../Components/services/auth";
+// import { Storage } from "../../Components/Shared/utils/store";
 import AdminDashboard from "./AdminDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
 import UserDashboard from "./UserDashboard";
@@ -12,62 +12,62 @@ import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 const Dashboard = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state?.user);
 
-  const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [passwordDetails, setPasswordDetails] = useState("");
+  // const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
+  // const [confirmLoading, setConfirmLoading] = useState(false);
+  // const [passwordDetails, setPasswordDetails] = useState("");
 
-  useEffect(() => {
-    if (Storage.getItem("crm_password")) {
-      setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
-    }
+  // useEffect(() => {
+  //   if (Storage.getItem("crm_password")) {
+  //     setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
+  //   }
 
-    if (userDetails?.userInfo?.flag) {
-      if (userDetails?.userInfo?.flag === 1) {
-        setToggleChanglePassword(true);
-      } else {
-        setToggleChanglePassword(false);
-      }
-    }
-  }, [passwordDetails, userDetails?.userInfo?.flag]);
+  //   if (userDetails?.userInfo?.flag) {
+  //     if (userDetails?.userInfo?.flag === 1) {
+  //       setToggleChanglePassword(true);
+  //     } else {
+  //       setToggleChanglePassword(false);
+  //     }
+  //   }
+  // }, [passwordDetails, userDetails?.userInfo?.flag]);
 
-  const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(async () => {
-      const newPassword = document.getElementById("new_password").value;
-      const rewNewPassword = document.getElementById("re_new_password").value;
+  // const handleOk = () => {
+  //   setConfirmLoading(true);
+  //   setTimeout(async () => {
+  //     const newPassword = document.getElementById("new_password").value;
+  //     const rewNewPassword = document.getElementById("re_new_password").value;
 
-      if (newPassword === rewNewPassword) {
-        const passwordChangeResponse = await handlePasswordReset(
-          userDetails?.userInfo?.user_id,
-          newPassword.toString()
-        );
-        if (passwordChangeResponse?.status === 205) {
-          Storage.setItem("crm_password", newPassword);
-          message.success("Password Changed Successfully");
+  //     if (newPassword === rewNewPassword) {
+  //       const passwordChangeResponse = await handlePasswordReset(
+  //         userDetails?.userInfo?.user_id,
+  //         newPassword.toString()
+  //       );
+  //       if (passwordChangeResponse?.status === 205) {
+  //         Storage.setItem("crm_password", newPassword);
+  //         message.success("Password Changed Successfully");
 
-          Storage.removeItem("auth_tok");
-          Storage.removeItem("user_info");
-          navigate("/login");
-        }
-      }
+  //         Storage.removeItem("auth_tok");
+  //         Storage.removeItem("user_info");
+  //         navigate("/login");
+  //       }
+  //     }
 
-      setToggleChanglePassword(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
+  //     setToggleChanglePassword(false);
+  //     setConfirmLoading(false);
+  //   }, 2000);
+  // };
 
-  const handleChange = (e) => {
-    setPasswordDetails(e?.target?.vaue);
-  };
+  // const handleChange = (e) => {
+  //   setPasswordDetails(e?.target?.vaue);
+  // };
 
   return (
     <div className=" min-h-[100vh] ">
       {/* Password Change Modal */}
-      <Modal
+      {/* <Modal
         title="Change Password"
         centered
         visible={toggleChanglePassword}
@@ -114,7 +114,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
 
       <div className="2xl:px-5 h-[100vh] flex justify-center items-center">
         {userDetails?.userInfo?.role_id && (
