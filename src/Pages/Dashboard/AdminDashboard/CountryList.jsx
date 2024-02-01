@@ -13,14 +13,17 @@ const CountryList = ({ table_title }) => {
         <span className="text-base">Filter by</span> Location
       </h1>
       {table_title === "Lead List" ? (
-        <div className="grid grid-cols-2 items-center justify-center">
-          <div className={`flex text-${colorMode ? "slate-300" : "gray-800"} `}>
+        <div 
+        // className="grid grid-cols-2 items-center justify-center"
+        className="flex flex-wrap items-start gap-4"
+        >
+          <div className={` flex text-${colorMode ? "slate-300" : "gray-800"} `}>
             <div
               className={`bg-[#26D4AB7f] w-[25px] h-[25px] rounded-full mr-2 border-4 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
-            <p className="w-1/2">WA</p>
+            <p className="m-0 p-0">WA</p>
           </div>
           <div className={`flex text-${colorMode ? "slate-300" : "gray-800"} `}>
             <div
@@ -28,7 +31,7 @@ const CountryList = ({ table_title }) => {
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
-            <p className="w-1/2">Vietnam</p>
+            <p className="m-0 p-0">Vietnam</p>
           </div>
           <div className={`flex text-${colorMode ? "slate-300" : "gray-800"} `}>
             <div
@@ -36,7 +39,7 @@ const CountryList = ({ table_title }) => {
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
-            <p className="w-1/2">Philippines</p>
+            <p className="m-0 p-0">Philippines</p>
           </div>
           <div className={`flex text-${colorMode ? "slate-300" : "gray-800"} `}>
             <div
@@ -44,7 +47,7 @@ const CountryList = ({ table_title }) => {
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
-            <p className="w-1/2">Others</p>
+            <p className="p-0 m-0">Others</p>
           </div>
         </div>
       ) : (

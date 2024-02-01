@@ -779,7 +779,7 @@ const AdminDashboard = () => {
           isBigScreen ? "5" : "2"
         } min-h-[85vh]`}
       >
-        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[5vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
+        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
             className={`${
               toggleNotification ? "bg-white rounded-full " : ""

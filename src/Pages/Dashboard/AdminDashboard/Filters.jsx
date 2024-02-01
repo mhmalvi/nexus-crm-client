@@ -18,14 +18,14 @@ const Filters = ({
       {layout !== "Payment" && (
         <div className="h-full px-8 py-4 rounded-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
-            className={`text-xl text-${
+            className={`text-lg text-${
               colorMode ? "slate-300" : "gray-800"
-            } font-normal font-poppins  pt-1`}
+            } font-normal font-poppins`}
           >
             <span className="text-base">Filter by</span> Status
           </h1>
           <div
-            className={`grid grid-cols-${isBigScreen ? "6" : "6"} gap-2 w-full`}
+            className={`flex flex-wrap gap-2`}
           >
             {/* Status Filters */}
             {filterOptions.map((option) => (
@@ -34,7 +34,7 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins p-1 cursor-pointer ${
+                  className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins px-4 py-2 cursor-pointer ${
                     activeFilter === option.id
                       // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
                       ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
@@ -56,17 +56,17 @@ const Filters = ({
                   <div
                     key={rate?.id}
                     onClick={() => handleStaredLeadsFilter(rate?.id)}
+                    className={`flex flex-wrap gap-4`}
                   >
                     <h1
-                      className={`ease-in duration-100 text-xs text-center border-[1px] border-${
-                        colorMode ? "slate-200" : "gray-800"
-                      } font-normal font-poppins p-1 cursor-pointer ${
-                        activeFilter === rate?.id
-                          ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
-                          : colorMode
-                          ? "text-slate-300 bg-transparent"
-                          : "text-gray-800 bg-transparent"
-                      }  rounded-md`}
+                     className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins px-4 py-2 cursor-pointer ${
+                      activeFilter === rate?.id
+                        // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
+                        ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
+                        : colorMode
+                        ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
+                        : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
+                    }  rounded-md`}
                     >
                       {rate?.title}
                     </h1>
