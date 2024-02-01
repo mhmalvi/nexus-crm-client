@@ -108,7 +108,6 @@ const ManagementAnalytics = ({ activeCompany }) => {
           </div>
         )}
         <div className="flex justify-between items-center w-full gap-5">
-
           {/* Income/ Day */}
           <div className=" w-1/2 rounded-xl py-4 flex flex-col h-full ">
             <h1 className={`text-xl font-semibold px-4 font-poppins ${colorMode ? "text-white":"text-gray-800"}`}>

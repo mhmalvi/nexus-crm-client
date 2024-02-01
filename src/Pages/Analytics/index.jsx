@@ -17,6 +17,7 @@ import { addLeads } from "../../features/Leads/leadsSlice";
 import { setLoader } from "../../features/user/userSlice";
 
 import Summary from "./Summary";
+import IncomePerDay from "./IncomePerDay";
 import CampaignAnalytics from "./CampaignAnalytics";
 import CompanyRevenue from "./CompanyRevenue";
 import ManagementAnalytics from "./ManagementAnalytics";
@@ -131,16 +132,15 @@ const Overview = () => {
   };
 
   return (
-    <div className="py-5 font-poppins px-5 h-screen flex flex-col items-center justify-center">
+    <div className="py-4 font-poppins px-8 h-screen flex flex-col items-center justify-center">
       {/* <button
         className="text-black bg-white px-2 py-1 mb-5 rounded-full cursor-pointer font-semibold font-[Poppins] border border-black text-xs"
         onClick={getImage}
       >
         Capture Report
       </button> */}
-      <div className="font-poppins rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[90vh] w-full mx-5 overflow-y-scroll overflow-x-hidden">
-        <div>
-          {/* {userDetails?.userInfo?.role_id === 1 ? (
+      <div className="font-poppins rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full">
+        {/* {userDetails?.userInfo?.role_id === 1 ? (
             <div className="font-light">
               <Select
                 id="companies"
@@ -158,24 +158,29 @@ const Overview = () => {
             </div>
           ) : null} */}
 
-          <div ref={pdfRef}>
+        <div ref={pdfRef} className="flex flex-col gap-4">
+          <div className="">
             <Summary
               activeCompany={activeCompany}
               companyEmployees={companyEmployees}
             />
-            {/* Management Analitics */}
-            <ManagementAnalytics activeCompany={activeCompany} />
-            {/* Comapny Analytics */}
-            {userDetails?.userInfo?.role_id === 1 && (
-              <CompanyRevenue activeCompany={activeCompany} />
-            )}
-
-            {/* Campaign Analitics */}
-            <CampaignAnalytics activeCompany={activeCompany} />
-
-            {/* Sales Analitics */}
-            <SalesAnalytics activeCompany={activeCompany} />
           </div>
+          <div className=" w-full">
+            <IncomePerDay />
+          </div>
+          <div className="bg-[#00dbde] w-full"></div>
+          {/* Management Analitics */}
+          {/* <ManagementAnalytics activeCompany={activeCompany} /> */}
+          {/* Comapny Analytics */}
+          {/* {userDetails?.userInfo?.role_id === 1 && (
+              <CompanyRevenue activeCompany={activeCompany} />
+            )} */}
+
+          {/* Campaign Analitics */}
+          {/* <CampaignAnalytics activeCompany={activeCompany} /> */}
+
+          {/* Sales Analitics */}
+          {/* <SalesAnalytics activeCompany={activeCompany} /> */}
         </div>
       </div>
     </div>

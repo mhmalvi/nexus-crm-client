@@ -197,7 +197,7 @@ const MailDashboard = ({
   }, [staticGalleryListData, staticTempListData]);
 
   useEffect(() => {
-    if (successMail === "success") {
+    if (successMail === "success" || successMail === "failed") {
       setTimeout(() => {
         setMailProgress(false);
         setMailSubject("");
