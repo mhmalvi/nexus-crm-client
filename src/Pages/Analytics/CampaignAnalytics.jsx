@@ -455,7 +455,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
 
   return (
     <div className="mt-7 font-poppins">
-      {loadingDetails && (
+      {/* {loadingDetails && (
         <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
@@ -501,9 +501,9 @@ const CampaignAnalytics = ({ activeCompany }) => {
             </rcElement.BarChart>
           </rcElement.ResponsiveContainer>
         </div>
-      </div>
+      </div> */}
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <div className="relative">
           <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Campaigns Revenue
@@ -541,9 +541,9 @@ const CampaignAnalytics = ({ activeCompany }) => {
             </rcElement.LineChart>
           </rcElement.ResponsiveContainer>
         </div>
-      </div>
+      </div> */}
 
-      <div className="mt-12">
+      {/* <div className="mt-12">
         <div className="relative">
           <h1 className={`text-xl font-semibold mb-6 ${colorMode ? "text-white":"text-gray-800"} font-poppins`}>
             Lead Quality Ratio
@@ -582,7 +582,7 @@ const CampaignAnalytics = ({ activeCompany }) => {
             </rcElement.LineChart>
           </rcElement.ResponsiveContainer>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex mt-12 justify-between gap-5">
         {/* Areawise Lead */}

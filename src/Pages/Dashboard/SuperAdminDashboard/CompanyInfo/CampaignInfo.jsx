@@ -9,7 +9,7 @@ import {
   handleFetchLeads,
 } from "../../../../Components/services/leads";
 import { addLeads } from "../../../../features/Leads/leadsSlice";
-import Calendar from "../../../Dashboard/AdminDashboard/Calendar";
+import CalendarSmall from "../../../Dashboard/AdminDashboard";
 import Filters from "../../../Dashboard/AdminDashboard/Filters";
 import Table from "../../../Dashboard/AdminDashboard/Table";
 import data from "../../../Dashboard/AdminDashboard/leadData.json";
@@ -279,7 +279,7 @@ const CampaignInfo = () => {
         </div>
       </div>
 
-      <Calendar
+      <CalendarSmall
         filterDate={filterDate}
         setFilterDate={setFilterDate}
         selectedDay={selectedDay}

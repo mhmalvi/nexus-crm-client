@@ -17,11 +17,18 @@ import { addLeads } from "../../features/Leads/leadsSlice";
 import { setLoader } from "../../features/user/userSlice";
 
 import Summary from "./Summary";
-import IncomePerDay from "./IncomePerDay";
-import CampaignAnalytics from "./CampaignAnalytics";
-import CompanyRevenue from "./CompanyRevenue";
-import ManagementAnalytics from "./ManagementAnalytics";
-import SalesAnalytics from "./SalesAnalytics";
+import IncomePerDay from "./Types/IncomePerDay";
+// import CampaignAnalytics from "./CampaignAnalytics";
+// import CompanyMonthlyRevenue from "./CompanyMonthlyRevenue";
+// import ManagementAnalytics from "./ManagementAnalytics";
+import SalesAnalytics from "./Types/SalesAnalytics";
+import MonthlyRevenue from "./Types/MonthlyRevenue";
+import LeadConversionRatio from "./Types/LeadConversionRatio";
+import CampaignDetails from "./Types/CampaignDetails";
+import CompanyRevenue from "./Types/CompanyRevenue";
+import LeadQualityRatio from "./Types/LeadQualityRatio";
+import AreaWiseLead from "./Types/AreaWiseLead";
+import LeadStatusSummary from "./Types/LeadStatusSummary";
 
 const Overview = () => {
   document.title = "Overview | Queleads CRM";
@@ -158,17 +165,42 @@ const Overview = () => {
             </div>
           ) : null} */}
 
-        <div ref={pdfRef} className="flex flex-col gap-4">
+        <div ref={pdfRef} className="flex flex-col gap-4 ">
           <div className="">
             <Summary
               activeCompany={activeCompany}
               companyEmployees={companyEmployees}
             />
           </div>
-          <div className=" w-full">
-            <IncomePerDay />
+          <div className=" w-full grid grid-cols-3 gap-4 overflow-y-scroll h-[75vh] rounded-md">
+            <div>
+              <IncomePerDay activeCompany={activeCompany} />
+            </div>
+            <div>
+              <MonthlyRevenue activeCompany={activeCompany} />
+            </div>
+            <div>
+              <LeadConversionRatio activeCompany={activeCompany} />
+            </div>
+            <div>
+              <CampaignDetails activeCompany={activeCompany} />
+            </div>
+            <div>
+              <CompanyRevenue activeCompany={activeCompany} />
+            </div>
+            <div>
+              <LeadQualityRatio activeCompany={activeCompany} />
+            </div>
+            <div>
+              <AreaWiseLead activeCompany={activeCompany} />
+            </div>
+            <div>
+              <LeadStatusSummary activeCompany={activeCompany} />
+            </div>
+            <div>
+              <SalesAnalytics activeCompany={activeCompany} />
+            </div>
           </div>
-          <div className="bg-[#00dbde] w-full"></div>
           {/* Management Analitics */}
           {/* <ManagementAnalytics activeCompany={activeCompany} /> */}
           {/* Comapny Analytics */}
