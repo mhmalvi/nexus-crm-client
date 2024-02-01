@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as rcElement from "recharts";
-import {
-  fetchAverageIncomeOfLastWeek,
-} from "../../Components/services/payment";
-import Loading from "../../Components/Shared/Loader";
-import { setLoader } from "../../features/user/userSlice";
+import { fetchAverageIncomeOfLastWeek } from "../../../Components/services/payment";
+import Loading from "../../../Components/Shared/Loader";
+import { setLoader } from "../../../features/user/userSlice";
 
-import * as chartUtils from "./utils";
+import * as chartUtils from "../utils";
 
-const ManagementAnalytics = ({ activeCompany }) => {
+const IncomePerDay = ({ activeCompany }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
@@ -68,10 +66,10 @@ const ManagementAnalytics = ({ activeCompany }) => {
   });
 
   return (
-    <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col h-full ">
+    <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl flex flex-col ">
       <h1
-        className={`text-xl font-semibold px-4 font-poppins ${
-          colorMode ? "text-white" : "text-gray-800"
+        className={`text-base font-semibold px-4 m-0 font-poppins ${
+          colorMode ? "text-slate-300" : "text-gray-800"
         }`}
       >
         Income/Day
@@ -79,14 +77,19 @@ const ManagementAnalytics = ({ activeCompany }) => {
       <div className="">
         <rcElement.ResponsiveContainer
           width="100%"
-          height={250}
-          className={"ml-[-40px]"}
+          height={220}
+          className="-ml-6"
         >
           <rcElement.LineChart
-            width={400}
-            height={200}
+            width={"100%"}
+            height={220}
             data={lastWeekIncome}
-         
+            margin={{
+              top: 0,
+              right: 20,
+              left: 0,
+              bottom: 0,
+            }}
           >
             <rcElement.CartesianGrid strokeDasharray="5 5" />
             <rcElement.XAxis dataKey="dates" />
@@ -97,9 +100,8 @@ const ManagementAnalytics = ({ activeCompany }) => {
               connectNulls
               type="monotone"
               dataKey="Income"
-              stroke="#ffa500"
-              fill="#ffa500"
-              className="margin"
+              stroke="#cbd5e1"
+              fill="#7037ff"
             />
           </rcElement.LineChart>
         </rcElement.ResponsiveContainer>
@@ -108,4 +110,4 @@ const ManagementAnalytics = ({ activeCompany }) => {
   );
 };
 
-export default ManagementAnalytics;
+export default IncomePerDay;

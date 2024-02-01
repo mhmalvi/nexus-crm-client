@@ -5,7 +5,7 @@ import { fetchMonthPaymentDataOfCompany } from "../../Components/services/paymen
 import Loading from "../../Components/Shared/Loader";
 import * as chartUtils from "./utils";
 
-const CompanyRevenue = ({ activeCompany }) => {
+const CompanyMonthlyRevenue = ({ activeCompany }) => {
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -74,4 +74,4 @@ const CompanyRevenue = ({ activeCompany }) => {
   );
 };
 
-export default CompanyRevenue;
+export default CompanyMonthlyRevenue;
