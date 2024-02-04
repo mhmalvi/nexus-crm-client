@@ -84,6 +84,7 @@ const AdminDashboard = () => {
   let [clickedLeadId, setClickedLeadId] = useState("");
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
+  const [toggleEditDetails, setToggleEditDetails] = useState(false);
 
   const memoizedFetchLeads = useMemo(
     () => async () => {
@@ -476,12 +477,10 @@ const AdminDashboard = () => {
               }}
               className={`rounded-md px-2 py-1 ease-in duration-100 flex items-center justify-center w-full hover:scale-95`}
             >
-              <div className="flex flex-row m-auto justify-between text-slate-300">
-                <p className={`text-xs m-0 p-1 text-brand-color`}>
-                  {record.call_count != null ? record.call_count : 0}
-                </p>
-                <p className={`text-xs m-0 p-1 text-brand-color`}>
-                  Call Details
+              <div className="flex flex-row m-auto justify-between text-blue-500 underline underline-offset-2 cursor-pointer hover:text-blue-700">
+                <p className={`text-xs m-0`}>
+                  {record.call_count != null ? record.call_count : 0} Call
+                  Details
                 </p>
               </div>
             </button>
@@ -663,23 +662,17 @@ const AdminDashboard = () => {
     [leadList]
   );
 
-  const handleSyncLeadsReq = useCallback(async () => {
-    dispatch(setLoader(true));
+  const handleSyncLeadsReq = async () => {
+    message.success("Sync in progress...")
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
       userDetails?.userInfo?.ac_k
     );
     if (syncResponse?.status) {
       setSyncLeads(!syncLeads);
-      dispatch(setLoader(false));
+      window.location.reload();
     }
-  }, [
-    dispatch,
-    setSyncLeads,
-    userDetails?.userInfo?.client_id,
-    userDetails?.userInfo?.ac_k,
-    syncLeads,
-  ]);
+  }
 
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {
@@ -698,6 +691,9 @@ const AdminDashboard = () => {
     [companyEmployeeList, leadList, setLeadData]
   );
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const handleCancelProfile = () => {
+    setOpenProfile(false);
+  };
 
   return (
     <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
@@ -831,12 +827,24 @@ const AdminDashboard = () => {
         />
         <Modal
           visible={openProfile}
-          onCancel={() => setOpenProfile(false)}
+          onCancel={() => {
+            handleCancelProfile();
+            setOpenProfile(false);
+            setToggleEditDetails(false);
+          }}
           footer={null}
-          closable={false}
-          className="profileSettingsModal"
+          closable={handleCancelProfile}
+          className={
+            colorMode ? "profileSettingsModalDark" : "profileSettingsModalLight"
+          }
+          mask={() => setOpenProfile(false)}
+          width="21%"
         >
-          <ProfileSettings />
+          <ProfileSettings
+            openProfile={openProfile}
+            setToggleEditDetails={setToggleEditDetails}
+            toggleEditDetails={toggleEditDetails}
+          />
         </Modal>
 
         <>

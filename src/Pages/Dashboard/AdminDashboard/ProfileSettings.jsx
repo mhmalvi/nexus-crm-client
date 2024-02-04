@@ -9,11 +9,10 @@ import { useSelector } from "react-redux";
 import Icons from "../../../Components/Shared/Icons";
 // import { setLoader } from "../../../features/user/userSlice";
 
-const ProfileSettings = () => {
+const ProfileSettings = ({ openProfile, setToggleEditDetails, toggleEditDetails }) => {
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
-  
+
   const initialState = {
     full_name: "",
     date_of_birth: "Select Date",
@@ -27,7 +26,6 @@ const ProfileSettings = () => {
     qualification: "",
   };
 
-  const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [profileData, setProfileData] = useState(initialState);
   const [originalProfileData, setOriginalProfileData] = useState({});
 
@@ -106,7 +104,7 @@ const ProfileSettings = () => {
       <Menu.Item key="10+ Years">10+ Years</Menu.Item>
     </Menu>
   );
-
+  
   return (
     <div className={`h-full`}>
       <div className="flex justify-between items-center ">
@@ -136,7 +134,7 @@ const ProfileSettings = () => {
           </div>
         </div>
         <div className="flex justify-end h-[5vh]">
-          {toggleEditDetails ? (
+          {openProfile && toggleEditDetails ? (
             <div className="flex justify-center my-2 gap-1">
               <div>
                 <button
@@ -182,7 +180,9 @@ const ProfileSettings = () => {
             <input
               id="full_name"
               name="full_name"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -208,12 +208,16 @@ const ProfileSettings = () => {
           </h1>
 
           {toggleEditDetails ? (
-            <div className="m-0 p-0 w-full bg-transparent flex items-center justify-between text-white text-base">
+            <div
+              className={`m-0 p-0 w-full bg-transparent flex items-center justify-between ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base`}
+            >
               <DatePicker
                 onChange={onChange}
                 onOk={onOk}
                 format={"DD/MM/YYYY"}
-                className="w-full bg-[#fc00ff]"
+                className="w-full"
                 placeholder={profileData?.date_of_birth}
               />
             </div>
@@ -242,7 +246,9 @@ const ProfileSettings = () => {
             <input
               id="secondary_contact"
               name="secondary_contact"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -272,7 +278,9 @@ const ProfileSettings = () => {
             <input
               id="location"
               name="location"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -301,7 +309,9 @@ const ProfileSettings = () => {
             <input
               id="address"
               name="address"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -329,7 +339,9 @@ const ProfileSettings = () => {
             <input
               id="region"
               name="region"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -357,7 +369,9 @@ const ProfileSettings = () => {
             <input
               id="postcode"
               name="postcode"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -385,7 +399,9 @@ const ProfileSettings = () => {
             <input
               id="profession"
               name="profession"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -417,7 +433,9 @@ const ProfileSettings = () => {
               className="cursor-pointer border-slate-300"
             >
               <div
-                className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+                className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                } text-base rounded-md`}
               >
                 {profileData?.work_experiences
                   ? profileData?.work_experiences
@@ -448,7 +466,9 @@ const ProfileSettings = () => {
             <input
               id="qualification"
               name="qualification"
-              className={`text-center w-full p-0 m-0 bg-transparent font-semibold text-gray-800 text-base rounded-md`}
+              className={`text-center w-full p-0 m-0 bg-transparent font-semibold ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } text-base rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}

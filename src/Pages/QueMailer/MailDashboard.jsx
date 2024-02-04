@@ -258,7 +258,7 @@ const MailDashboard = ({
             Open Gallery
           </button> */}
           <button
-            className={`px-4 py-2 border rounded-md ${
+            className={`ease-in duration-100 px-4 py-2 border rounded-md hover:border-brand-color ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
@@ -341,7 +341,7 @@ const MailDashboard = ({
           </div>
           <div className="h-full w-full flex flex-col items-center justify-center w-full mt-4 !z-4 ">
             {tData ? (
-              <div className="w-full flex flex-col gap-8 z-4 emailEditorCustom">
+              <div className="w-full flex flex-col gap-8 z-40000 emailEditorCustom">
                 <Editor
                   apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -353,7 +353,7 @@ const MailDashboard = ({
                     height: "calc(50vh - 5em)",
                     menubar: false,
                     resize: false,
-
+                  
                     plugins: [
                       "advlist",
                       "autolink",

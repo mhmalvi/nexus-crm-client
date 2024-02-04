@@ -144,6 +144,8 @@ const UpdatedTable = ({
       }
     })();
   }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
+
+ 
   let locale = {
     emptyText: (
       <div className="min-h-[50vh] mt-24">
@@ -209,10 +211,10 @@ const UpdatedTable = ({
               >
                 <div
                   htmlFor="upload_lead_file"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                     colorMode
-                      ? "text-slate-300 border-slate-300 hover:bg-black"
-                      : "text-gray-800 border-gray-800 hover:bg-white"
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
                   } ease-in duration-200 `}
                 >
                   Upload File
@@ -239,10 +241,10 @@ const UpdatedTable = ({
                 <div className="mr-4">
                   <button
                     id="add_leads"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                       colorMode
-                        ? "text-slate-300 border-slate-300 hover:bg-black"
-                        : "text-gray-800 border-gray-800 hover:bg-white"
+                        ? "text-slate-300 border-slate-300"
+                        : "text-gray-800 border-gray-800"
                     } ease-in duration-200 `}
                     onClick={() => setIsAddLeadFormOpen(true)}
                   >
@@ -274,10 +276,10 @@ const UpdatedTable = ({
                   <div className="mr-12">
                     <button
                       id="sync_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border ${
+                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                         colorMode
-                          ? "text-slate-300 border-slate-300 hover:bg-black"
-                          : "text-gray-800 border-gray-800 hover:bg-white"
+                          ? "text-slate-300 border-slate-300"
+                          : "text-gray-800 border-gray-800"
                       } ease-in duration-200 `}
                       onClick={() => handleSyncLeadsReq()}
                     >
