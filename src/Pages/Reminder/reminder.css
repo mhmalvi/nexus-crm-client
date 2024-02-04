@@ -1,0 +1,113 @@
+.reminderBodyWhite {
+  height: 80vh;
+  background-color: transparent !important;
+  width: 100%;
+}
+.reminderBodyDark {
+  height: 80vh;
+  background-color: transparent !important;
+  width: 100%;
+}
+.reminderBodyWhite .rbc-active,
+.reminderBodyDark .rbc-active {
+  background-color: #7037ff !important;
+  color: #cbd5e1 !important;
+}
+.reminderBodyWhite .rbc-toolbar button {
+  border: 1px solid #1f2937;
+  color: #1f2937;
+}
+.reminderBodyDark .rbc-toolbar button {
+  border: 1px solid #cbd5e1;
+  color: #cbd5e1;
+}
+.reminderBodyWhite .rbc-toolbar button:focus {
+  background-color: #7037ff !important;
+  color: #cbd5e1;
+}
+.reminderBodyDark .rbc-toolbar button:focus {
+  background-color: #7037ff !important;
+  color: #cbd5e1;
+}
+.reminderBodyWhite .rbc-toolbar-label {
+  color: #1f2937;
+}
+.reminderBodyDark .rbc-toolbar-label {
+  color: #cbd5e1;
+}
+.reminderBodyWhite .rbc-time-view,
+.reminderBodyWhite .rbc-month-view {
+  border: 0.5px solid #1f2937;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reminderBodyDark .rbc-time-view,
+.reminderBodyDark .rbc-month-view {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reminderBodyWhite .rbc-header:first-child,
+.reminderBodyDark .rbc-header:first-child {
+  border-left: none !important;
+}
+.reminderBodyWhite .rbc-header:last-child,
+.reminderBodyDark .rbc-header:last-child {
+  border-right: none !important;
+}
+.reminderBodyWhite .rbc-header {
+  border-right: 0.5px solid #1f2937;
+  border-left: 0.5px solid #1f2937;
+  border-bottom: 0.5px solid #1f2937;
+  color: #1f2937;
+}
+.reminderBodyDark .rbc-header {
+  border-right: 1px solid #cbd5e1;
+  border-left: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+  color: #cbd5e1;
+}
+.reminderBodyWhite .rbc-month-row .rbc-day-bg {
+  border: 0.5px solid #1f2937;
+}
+.reminderBodyWhite .rbc-month-row {
+  border-top: none;
+}
+.reminderBodyDark .rbc-day-bg {
+  border: 0.5px solid #cbd5e1;
+}
+.reminderBodyDark .rbc-month-row {
+  border-top: none;
+}
+.reminderBodyWhite .rbc-off-range-bg {
+  background-color: #a17cff !important;
+}
+.reminderBodyDark .rbc-off-range-bg {
+  background-color: #a17cff !important;
+}
+.reminderBodyWhite .rbc-off-range button,
+.reminderBodyDark .rbc-off-range button {
+  color: #cbd5e1ae !important;
+}
+.reminderBodyWhite .rbc-date-cell button {
+  color: #1f2937 !important;
+}
+.reminderBodyDark .rbc-date-cell button,
+.reminderBodyDark .rbc-label {
+  color: #cbd5e1 !important;
+}
+.reminderBodyDark .rbc-now button {
+  color: #1f2937 !important;
+}
+
+.reminderModal .ant-modal-content {
+    /* background-color: #4f8dea; */
+    backdrop-filter: blur(8px);
+    background-color: #1f2937;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    color: #cbd5e1;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  

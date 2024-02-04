@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
 import {
   // handleCoursewiseSalesAssign,
   handleCreateChecklist,
@@ -12,7 +13,7 @@ import {
 import Icons from "../../Components/Shared/Icons";
 import { useEffect } from "react";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
-import {  message } from "antd";
+import { message } from "antd";
 
 const CourseDetails = ({ selectedCourse }) => {
   const [checklist, setChecklist] = useState([]);
@@ -130,56 +131,46 @@ const CourseDetails = ({ selectedCourse }) => {
     }
   };
 
-
-  console.log("selectedEmployees", selectedEmployees);
-
   return (
-    <div className="w-8/12 mx-auto py-16">
-      <div>
-        <div className="text-lg font-semibold uppercase">
-          {selectedCourse?.course_title}
-        </div>
-      </div>
+    <div className="w-full mx-8 py-4 flex flex-col gap-8">
+      <h1 className="m-0 p-0 text-lg font-semibold uppercase text-gray-800">
+        {selectedCourse?.course_title}
+      </h1>
 
-      <div className="mt-8 flex justify-between">
+      <div className="flex gap-4 flex-col justify-between">
+        <h1 className="m-0 p-0 text-base font-semibold text-gray-800">Check Lists</h1>
         <div>
-          <div className="text-base font-semibold mb-4">Check Lists</div>
-          <div>
-            {checklist.length ? (
-              checklist?.map((list, i) => (
-                <div key={i} className="flex items-center">
-                  <li style={{ listStyleType: "circle" }}>{list?.title}</li>
-                  <Icons.Cross
-                    className="text-red-600 w-2.5 ml-3 cursor-pointer"
-                    onClick={() => handleDeleteChecklistReq(list?.id)}
-                  />
-                </div>
-              ))
-            ) : (
-              <h1>No Checklist Added Yet</h1>
-            )}
-          </div>
-
-          <div className="mt-10">
-            <input
-              id="checklist_title"
-              type="text"
-              value={checklistTitle}
-              onChange={(e) => setChecklistTitle(e?.target?.value)}
-              className="font-poppins px-3 py-1 border border-brand-color outline-none rounded-md mr-2"
-              placeholder="Checklist Title"
-            />
-            <button
-              className="bg-brand-color text-white px-4 py-1.5 shadow rounded-md"
-              onClick={handleAddCheckList}
-            >
-              +Add
-            </button>
-          </div>
+          {checklist.length ? (
+            checklist?.map((list, i) => (
+              <div key={i} className="flex items-center">
+                <li style={{ listStyleType: "circle" }}>{list?.title}</li>
+                <Icons.Cross
+                  className="text-red-600 w-2.5 ml-3 cursor-pointer"
+                  onClick={() => handleDeleteChecklistReq(list?.id)}
+                />
+              </div>
+            ))
+          ) : (
+            <h1 className="m-0 p-0 text-slate-700">No Checklist Added Yet</h1>
+          )}
         </div>
 
-        <div className="min-h-full w-0.5 bg-gray-100">&nbsp;</div>
-
+        <div className="">
+          <input
+            id="checklist_title"
+            type="text"
+            value={checklistTitle}
+            onChange={(e) => setChecklistTitle(e?.target?.value)}
+            className="font-poppins px-3 py-1 border border-brand-color outline-none rounded-md mr-2"
+            placeholder="Checklist Title"
+          />
+          <button
+            className="bg-brand-color text-white px-4 py-1.5 shadow rounded-md"
+            onClick={handleAddCheckList}
+          >
+            +{" "}Add
+          </button>
+        </div>
       </div>
     </div>
   );

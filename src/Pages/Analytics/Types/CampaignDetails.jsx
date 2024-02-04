@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
-import { fetchCampaignwisePaymentDataOfCompany } from "../../../Components/services/payment";
+import Icons from "../../../Components/Shared/Icons";
+import { Modal } from "antd";
 
-const CampaignDetails = ({ activeCompany }) => {
+const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
   const [activeCampaign, setActiveCampaign] = useState();
   const [activeCampaignSummary, setActiveCampaignSummary] = useState();
   const [campaignsDetails, setCampaignsDetails] = useState([]);
@@ -83,66 +84,13 @@ const CampaignDetails = ({ activeCompany }) => {
     });
 
     setCampaignsDetails(campaignsDetailsArray);
-
-    // For Lead Quality Ratio
-    const campaignQualityRatioArray = [];
-    campaigns?.forEach((campaign) => {
-      if (campaign?.start_time?.toString()?.includes(new Date().getFullYear()))
-        campaignQualityRatioArray.push({
-          campaign: campaign?.campaign_name,
-          rate:
-            leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-              ?.length > 0
-              ? (
-                  leads
-                    ?.filter(
-                      (lead) => lead?.campaign_id === campaign?.campaign_id
-                    )
-                    ?.filter(
-                      (filteredCampaign) => filteredCampaign?.star_review > 2
-                    )?.length /
-                  leads?.filter(
-                    (lead) => lead?.campaign_id === campaign?.campaign_id
-                  )?.length
-                ).toFixed(2) * 100
-              : 0,
-        });
-    });
   }, [campaigns, leads]);
-
-  useEffect(() => {
-    const campaignwiseRevenueData = [];
-
-    (async () => {
-      const campaignwiseRevenueResp =
-        await fetchCampaignwisePaymentDataOfCompany(
-          userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
-        );
-
-      if (campaignwiseRevenueResp?.status === 200) {
-        campaigns?.forEach((campaign) => {
-          if (
-            campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-          ) {
-            campaignwiseRevenueData.push({
-              campaign: campaign?.campaign_name,
-              revenue: campaignwiseRevenueResp?.data?.find(
-                (camp) =>
-                  parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
-              )
-                ? campaignwiseRevenueResp?.data?.find(
-                    (camp) =>
-                      parseInt(camp?.campaigns) ===
-                      parseInt(campaign?.campaign_id)
-                  )?.sums
-                : 0,
-            });
-          }
-        });
-      }
-    })();
-  }, [activeCompany, campaigns, userDetails]);
-
+  const handleFullScreen = () => {
+    setFullScreen("CampaignDetails");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
   return (
     <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col ">
       <div className="flex items-center justify-between m-0">
@@ -153,13 +101,23 @@ const CampaignDetails = ({ activeCompany }) => {
         >
           Campaign Details
         </h1>
-        <p
-          className={`text-xs font-semibold px-4 m-0 py-0 font-poppins ${
-            colorMode ? "text-slate-300" : "text-gray-800"
-          }`}
-        >
-          This Year
-        </p>
+        <div className="flex items-center">
+          <p
+            className={`text-xs font-semibold px-4 m-0 py-0 font-poppins ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            This Year
+          </p>
+          <div
+            onClick={handleFullScreen}
+            className={`${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } hover:scale-110 ease-in duration-100 cursor-pointer`}
+          >
+            <Icons.Fullscreen />
+          </div>
+        </div>
       </div>
       <div>
         <rcElement.ResponsiveContainer
@@ -171,27 +129,73 @@ const CampaignDetails = ({ activeCompany }) => {
             width={"100%"}
             height={220}
             data={campaignsDetails}
-            margin={{
-              top: 0,
-              right: 20,
-              left: 0,
-              bottom: 0,
-            }}
+            margin={{ left: 20 }}
           >
             <rcElement.CartesianGrid strokeDasharray="1 10" />
             <rcElement.XAxis dataKey="campaign" tick={false} axisLine={false} />
             <rcElement.YAxis />
             <rcElement.Tooltip />
             <rcElement.Legend />
-            <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#34C759" />
-            <rcElement.Bar dataKey="skilled" stackId="lead" fill="#FF9500" />
-            <rcElement.Bar dataKey="called" stackId="lead" fill="#4F8DEA" />
+            <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#7037FF" />
+            <rcElement.Bar dataKey="skilled" stackId="lead" fill="#2f77d6" />
+            <rcElement.Bar dataKey="called" stackId="lead" fill="#c72d2d" />
             <rcElement.Bar dataKey="paid" stackId="lead" fill="#17CDD9" />
-            <rcElement.Bar dataKey="verified" stackId="lead" fill="#7037FF" />
-            <rcElement.Bar dataKey="completed" stackId="lead" fill="#ffa500" />
+            <rcElement.Bar dataKey="verified" stackId="lead" fill="#ffa500" />
+            <rcElement.Bar dataKey="completed" stackId="lead" fill="#34C759" />
           </rcElement.BarChart>
         </rcElement.ResponsiveContainer>
       </div>
+      <Modal
+        
+        className="analyticModal"
+        title="Campaign Details"
+        footer={false}
+        visible={fullscreen === "CampaignDetails"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
+      >
+        <div className="h-[70vh]">
+          <rcElement.ResponsiveContainer
+            width="100%"
+            height="100%"
+            className="-ml-6"
+          >
+            <rcElement.BarChart
+              width="100%"
+              height="100%"
+              data={campaignsDetails}
+            >
+              <rcElement.CartesianGrid strokeDasharray="1 10" />
+              <rcElement.XAxis
+                dataKey="campaign"
+                tick={false}
+                axisLine={false}
+              />
+              <rcElement.YAxis />
+              <rcElement.Tooltip />
+              <rcElement.Legend />
+
+              <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#7037FF" />
+              <rcElement.Bar dataKey="skilled" stackId="lead" fill="#2f77d6" />
+              <rcElement.Bar dataKey="called" stackId="lead" fill="#c72d2d" />
+              <rcElement.Bar dataKey="paid" stackId="lead" fill="#17CDD9" />
+              <rcElement.Bar dataKey="verified" stackId="lead" fill="#ffa500" />
+              <rcElement.Bar
+                dataKey="completed"
+                stackId="lead"
+                fill="#34C759"
+              />
+            </rcElement.BarChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      </Modal>
     </div>
   );
 };

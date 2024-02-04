@@ -7,8 +7,10 @@ import { handleFetchCompanyEmployees } from "../../../Components/services/compan
 import { fetchSalesEmployeesSale } from "../../../Components/services/leads";
 import { setLoader } from "../../../features/user/userSlice";
 import * as chartUtils from "../utils";
+import Icons from "../../../Components/Shared/Icons";
+import { Modal } from "antd";
 
-const SalesAnalytics = ({ activeCompany }) => {
+const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state?.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -27,7 +29,11 @@ const SalesAnalytics = ({ activeCompany }) => {
       console.log("salesResponse", salesResponse?.data);
       setCompanySalesEmployees(salesResponse?.data);
     })();
-  }, [activeCompany, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id]);
+  }, [
+    activeCompany,
+    userDetails?.userInfo?.client_id,
+    userDetails?.userInfo?.role_id,
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -49,9 +55,6 @@ const SalesAnalytics = ({ activeCompany }) => {
 
           let employees = [];
 
-          console.log("sales>>>>>", sales);
-          console.log("companySalesEmployees", companySalesEmployees);
-
           sales?.forEach((employee) => {
             console.log(
               "FINDDD",
@@ -72,42 +75,61 @@ const SalesAnalytics = ({ activeCompany }) => {
                 : 0,
             });
           });
-
-          console.log("Sales From Overview", employees);
           setEmployeesSales(employees);
         }
         dispatch(setLoader(false));
       }
     })();
-  }, [activeCompany, companySalesEmployees, dispatch, userDetails?.userInfo?.client_id, userDetails?.userInfo?.role_id]);
-
+  }, [
+    activeCompany,
+    companySalesEmployees,
+    dispatch,
+    userDetails?.userInfo?.client_id,
+    userDetails?.userInfo?.role_id,
+  ]);
+  const handleFullScreen = () => {
+    setFullScreen("SalesAnalytics");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
   return (
-    <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col ">
+    <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col mb-2">
       <div className="flex items-center justify-between m-0">
         <h1
           className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
           }`}
         >
-          Sales Team Total Sales Details
+          Sales Team Total Sales
         </h1>
-        <p
-          className={`text-xs font-semibold px-4 m-0 py-0 font-poppins ${
-            colorMode ? "text-slate-300" : "text-gray-800"
-          }`}
-        >
-          This Month
-        </p>
+        <div className="flex items-center">
+          <p
+            className={`text-xs font-semibold px-4 m-0 py-0 font-poppins ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            This Month
+          </p>
+          <div
+            onClick={handleFullScreen}
+            className={`${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } hover:scale-110 ease-in duration-100 cursor-pointer`}
+          >
+            <Icons.Fullscreen />
+          </div>
+        </div>
       </div>
       <div className="pt-4">
         <rcElement.ResponsiveContainer
           width="100%"
-          height={220}
+          height={230}
           className="-ml-6"
         >
           <rcElement.BarChart
             width={"100%"}
-            height={220}
+            height={230}
             data={employeesSales}
             margin={{
               top: 0,
@@ -123,12 +145,59 @@ const SalesAnalytics = ({ activeCompany }) => {
             <rcElement.Tooltip />
             <rcElement.Bar
               dataKey="amount"
-              fill="#ffa500"
+              fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+            
               shape={<chartUtils.TriangleBar />}
             />
           </rcElement.BarChart>
         </rcElement.ResponsiveContainer>
       </div>
+      <Modal
+        className="analyticModal"
+        title="Sales Team Total Sales"
+        footer={false}
+        visible={fullscreen === "SalesAnalytics"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
+      >
+        <div className="h-[70vh]">
+          <rcElement.ResponsiveContainer
+            width="100%"
+            height="100%"
+            className="-ml-6"
+          >
+            <rcElement.BarChart
+              width="100%"
+              height="100%"
+              data={employeesSales}
+              margin={{
+                top: 0,
+                right: 20,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <rcElement.CartesianGrid strokeDasharray="3 3" />
+              <rcElement.XAxis dataKey="name" tick={false} axisLine={false} />
+              <rcElement.YAxis />
+              <rcElement.Legend />
+              <rcElement.Tooltip />
+              <rcElement.Bar
+                dataKey="amount"
+                fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+                shape={<chartUtils.TriangleBar />}
+              />
+            </rcElement.BarChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      </Modal>
     </div>
   );
 };

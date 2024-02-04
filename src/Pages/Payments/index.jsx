@@ -1,6 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -40,74 +40,77 @@ const Payment = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const tableSearchInput = useRef(null);
 
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
+  const getColumnSearchProps = useMemo(
+    () => (dataIndex) => {
+      const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+      };
 
-  const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
-    // confirm();
-    clearFilters();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={tableSearchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-            confirm({ closeDropdown: false });
-          }}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
+      const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
+        // confirm();
+        clearFilters();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+        setSearchText("");
+      };
+      return {
+        filterDropdown: ({
+          setSelectedKeys,
+          selectedKeys,
+          confirm,
+          clearFilters,
+          close,
+        }) => (
+          <div
             style={{
-              width: 90,
+              padding: 8,
             }}
+            onKeyDown={(e) => e.stopPropagation()}
           >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-              confirm({ closeDropdown: false });
-              handleReset(clearFilters, selectedKeys, dataIndex);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Clear
-          </Button>
-          {/* <Button
+            <Input
+              ref={tableSearchInput}
+              placeholder={`Search ${dataIndex}`}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() =>
+                handleSearch(selectedKeys, confirm, dataIndex)
+              }
+              style={{
+                marginBottom: 8,
+                display: "block",
+              }}
+            />
+            <Space>
+              <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm({ closeDropdown: false });
+                  handleReset(clearFilters, selectedKeys, dataIndex);
+                }}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Clear
+              </Button>
+              {/* <Button
             type="link"
             size="small"
             onClick={() => {
@@ -129,38 +132,44 @@ const Payment = () => {
           >
             close
           </Button> */}
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1890ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => tableSearchInput.current?.select(), 100);
-      }
+            </Space>
+          </div>
+        ),
+        filterIcon: (filtered) => (
+          <SearchOutlined
+            style={{
+              color: filtered ? "#1890ff" : undefined,
+            }}
+          />
+        ),
+        onFilter: (value, record) =>
+          record[dataIndex]
+            ?.toString()
+            .toLowerCase()
+            .includes(value.toLowerCase()),
+        onFilterDropdownOpenChange: (visible) => {
+          if (visible) {
+            setTimeout(() => tableSearchInput.current?.select(), 100);
+          }
+        },
+        render: (text) =>
+          searchedColumn === dataIndex ? (
+            <Highlighter
+              highlightStyle={{
+                backgroundColor: "#8250FF",
+                padding: 0,
+              }}
+              searchWords={[searchText]}
+              autoEscape
+              textToHighlight={text ? text?.toString() : ""}
+            />
+          ) : (
+            text
+          ),
+      };
     },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#8250FF",
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text?.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
+    [searchText, searchedColumn]
+  );
 
   useEffect(() => {
     (async () => {
@@ -215,6 +224,15 @@ const Payment = () => {
         }
       } else {
         return;
+      }
+    })();
+
+    (async () => {
+      const fetchEmployees = await handleFetchCompanyEmployees(
+        userDetails?.userInfo?.client_id
+      );
+      if (fetchEmployees?.status === true) {
+        setCompanyEmployeeList(fetchEmployees?.data);
       }
     })();
   }, [dispatch, userDetails]);
@@ -327,40 +345,26 @@ const Payment = () => {
     }
   }, [allPayments, selectedDay, selectedMonth, selectedYear]);
 
-  useEffect(() => {
-    (async () => {
-      const fetchEmployees = await handleFetchCompanyEmployees(
-        userDetails?.userInfo?.client_id
-      );
-      if (fetchEmployees?.status === true) {
-        setCompanyEmployeeList(fetchEmployees?.data);
-      }
-    })();
-  }, [userDetails]);
-
-  console.log("allPayments", allPayments);
-  console.log("paymentData ++++++", paymentData);
-
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden grid grid-cols-12 gap-4">
         <div className="col-span-9 rounded-xl px-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-          {toggleTabs === "payment" ? (
-            <UpdatedTable
-              table_title="Payment History"
-              tableHeaders={tableHeaders}
-              data={paymentData}
-              companyEmployeeList={companyEmployeeList}
-              filterOptions={null}
-              ratings={null}
-              activeFilter={1}
-              searchInput={searchInput}
-              handleSyncLeadsReq={null}
-              setIsAddLeadFormOpen={null}
-              setSyncLeads={null}
-              syncLeads={null}
-            />
-          ) : (
+          {/* {toggleTabs === "payment" ? ( */}
+          <UpdatedTable
+            table_title="Payment History"
+            tableHeaders={tableHeaders}
+            data={paymentData}
+            companyEmployeeList={companyEmployeeList}
+            filterOptions={null}
+            ratings={null}
+            activeFilter={null}
+            searchInput={searchInput}
+            handleSyncLeadsReq={null}
+            setIsAddLeadFormOpen={null}
+            setSyncLeads={null}
+            syncLeads={null}
+          />
+          {/* ) : (
             <Table
               title="Invoice History"
               tableHeaders={invoiceHistoryTableHeaders}
@@ -368,23 +372,24 @@ const Payment = () => {
               searchInput={searchInput}
               setSearchInput={setSearchInput}
             />
-          )}
+          )} */}
         </div>
         <div className="col-span-3 flex flex-col justify-around items-center  gap-8 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
           <div className="w-full max-h-1/2">
-          <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
+            <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
           </div>
           <div className="max-h-1/2">
-          <CalendarSmall
-            filterDate={filterDate}
-            setFilterDate={setFilterDate}
-            selectedDay={selectedDay}
-            setSelectedDay={setSelectedDay}
-            selectedMonth={selectedMonth}
-            setSelectedMonth={setSelectedMonth}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-          /></div>
+            <CalendarSmall
+              filterDate={filterDate}
+              setFilterDate={setFilterDate}
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+          </div>
         </div>
       </div>
     </div>

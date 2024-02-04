@@ -14,6 +14,7 @@ import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 const Dashboard = () => {
   // const navigate = useNavigate();
 
+  
   const userDetails = useSelector((state) => state?.user);
 
   // const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
@@ -123,9 +124,7 @@ const Dashboard = () => {
               userDetails?.userInfo?.role_id === 2) && <SuperAdminDashboard />}
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4 ||
-              userDetails?.userInfo?.role_id === 5) && (
-              <AdminDashboard/>
-            )}
+              userDetails?.userInfo?.role_id === 5) && <AdminDashboard />}
             {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
             {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
             {userDetails?.userInfo?.role_id === 7 && <ManagerDashboard />}

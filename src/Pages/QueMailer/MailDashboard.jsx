@@ -13,7 +13,6 @@ import { Editor } from "@tinymce/tinymce-react";
 import { CloseOutlined } from "@ant-design/icons";
 import Gallery from "./Gallery";
 import "./quemailer.css";
-import { useMediaQuery } from "react-responsive";
 
 const allowedExtensions = ["jpg", "jpeg", "png", "pdf"];
 
@@ -30,7 +29,6 @@ const MailDashboard = ({
   setFileName,
   setFile,
 }) => {
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -138,7 +136,11 @@ const MailDashboard = ({
         message.warning(res?.message);
         setSuccessMail("failed");
       } else {
-        message.warning(`It will take approximately ${data.length*1.5} seconds for all the mail to be sent. Hang on tight !`);
+        message.warning(
+          `It will take approximately ${
+            data.length * 1.5
+          } seconds for all the mail to be sent. Hang on tight !`
+        );
         setSuccessMail("success");
       }
     }
@@ -245,7 +247,7 @@ const MailDashboard = ({
           </h1>
         </div>
         <div className="flex gap-8">
-          <button
+          {/* <button
             className={`px-4 py-2 border rounded-md ${
               colorMode
                 ? "text-slate-300 border-slate-300"
@@ -254,7 +256,7 @@ const MailDashboard = ({
             onClick={showGalleryModal}
           >
             Open Gallery
-          </button>
+          </button> */}
           <button
             className={`px-4 py-2 border rounded-md ${
               colorMode
@@ -348,7 +350,7 @@ const MailDashboard = ({
                     "<p>This is the initial content of the editor.</p>"
                   }
                   init={{
-                    height: isBigScreen ? 420 : 300,
+                    height: "calc(50vh - 5em)",
                     menubar: false,
                     resize: false,
 
@@ -384,8 +386,8 @@ const MailDashboard = ({
                     images_upload_handler: handleImageUpload,
                   }}
                 />
-                <div className=" flex items-center justify-center relative">
-                  <div className="flex flex-col items-end justify-center absolute right-0 mt-4 gap-2">
+                <div className="w-full flex items-center justify-between relative">
+                  <div className="flex flex-col items-start justify-between left-0 gap-2">
                     <div className="flex gap-2 items-center">
                       {attachment.length <= 0 ? (
                         ""
@@ -454,7 +456,7 @@ const MailDashboard = ({
                     >
                       Send Mail
                     </Button>
-                  </Form.Item>{" "}
+                  </Form.Item>
                 </div>
               </div>
             ) : (

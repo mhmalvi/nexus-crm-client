@@ -108,7 +108,7 @@ const ProfileSettings = () => {
   );
 
   return (
-    <div className={`h-[83vh] ${openSideBar ? "w-[23vw] !ml-16" : "w-[20vw] !ml-28"}  px-3 py-3 rounded-xl backdrop-blur-2xl bg-[#ffffff7f] overflow-hidden`}>
+    <div className={`h-full`}>
       <div className="flex justify-between items-center ">
         <div className="flex">
           <div className="rounded-full mr-4">
@@ -169,10 +169,10 @@ const ProfileSettings = () => {
           )}
         </div>
       </div>
-      <div className="mt-4 w-full">
+      <div className="mt-4 w-full h-[60vh] overflow-y-scroll">
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -200,7 +200,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -231,7 +231,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -262,7 +262,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -290,7 +290,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -319,7 +319,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -347,7 +347,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -375,7 +375,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -403,7 +403,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >
@@ -438,7 +438,7 @@ const ProfileSettings = () => {
         </div>
         <div className="w-full flex flex-col items-center text-base text-white py-2 border-b text-center">
           <h1
-            className={`text-sm m-0 p-0 ${
+            className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
             }  w-full text-center`}
           >

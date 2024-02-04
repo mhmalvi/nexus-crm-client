@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
+import { Modal } from "antd";
+import Icons from "../../../Components/Shared/Icons";
 
-import * as chartUtils from "../utils";
-
-const LeadConversionRatio = ({ activeCompany }) => {
+const LeadConversionRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -40,36 +40,95 @@ const LeadConversionRatio = ({ activeCompany }) => {
           : 0,
     });
   });
-
+  const handleFullScreen = () => {
+    setFullScreen("LeadConversionRatio");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
   return (
     <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl flex flex-col ">
       {/* Lead Conversion Ratio */}
       <div className="flex items-center justify-between m-0">
         <h1
-          className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
+          className={`2xl:text-base text-sm font-semibold 3xl:px-4 m-0 py-0 font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
           }`}
         >
           Lead Conversion Ratio
         </h1>
-        <p
-          className={`text-xs font-semibold px-4 m-0 py-0 font-poppins ${
-            colorMode ? "text-slate-300" : "text-gray-800"
-          }`}
-        >
-          This Year
-        </p>
+        <div className="flex items-center">
+          <p
+            className={`text-xs font-semibold 2xl:px-4 m-0 py-0 font-poppins ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            This Year
+          </p>
+
+          <div
+            onClick={handleFullScreen}
+            className={`${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } hover:scale-110 ease-in duration-100 cursor-pointer`}
+          >
+            <Icons.Fullscreen />
+          </div>
+        </div>
       </div>
       <div>
-        <div>
+        <rcElement.ResponsiveContainer
+          width="100%"
+          height={220}
+          className="-ml-6"
+        >
+          <rcElement.BarChart
+            width={"100%"}
+            height={220}
+            data={campaignRatio}
+            margin={{
+              top: 0,
+              right: 20,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <rcElement.CartesianGrid strokeDasharray="1 10" />
+            <rcElement.XAxis
+              dataKey="campaign_name"
+              tick={false}
+              axisLine={false}
+            />
+
+            <rcElement.YAxis domain={[0, 100]} />
+            <rcElement.Tooltip />
+            <rcElement.Legend color={`${colorMode ? "#cbd5e1" : "#7037ff"}`} />
+            <rcElement.Bar dataKey="rate" fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`} minPointSize={1} />
+          </rcElement.BarChart>
+        </rcElement.ResponsiveContainer>
+      </div>
+      <Modal
+        className="analyticModal"
+        title="Lead Conversion Ratio"
+        footer={false}
+        visible={fullscreen === "LeadConversionRatio"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={<div className="flex items-center justify-center h-full w-full hover:scale-110">
+        <Icons.Minimize />
+      </div>}
+      >
+        <div className="h-[70vh]">
           <rcElement.ResponsiveContainer
             width="100%"
-            height={220}
+            height="100%"
             className="-ml-6"
           >
             <rcElement.BarChart
-              width={"100%"}
-              height={220}
+              width="100%"
+              height="100%"
               data={campaignRatio}
               margin={{
                 top: 0,
@@ -87,12 +146,12 @@ const LeadConversionRatio = ({ activeCompany }) => {
 
               <rcElement.YAxis domain={[0, 100]} />
               <rcElement.Tooltip />
-              <rcElement.Legend color="#ffa500" />
-              <rcElement.Bar dataKey="rate" fill="#ffa500" minPointSize={0} />
+              <rcElement.Legend color={`${colorMode ? "#cbd5e1" : "#7037ff"}`}  />
+              <rcElement.Bar dataKey="rate" fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`} minPointSize={1} />
             </rcElement.BarChart>
           </rcElement.ResponsiveContainer>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 };

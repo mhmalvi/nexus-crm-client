@@ -239,102 +239,110 @@ const AdminDashboard = () => {
     [userDetails?.userInfo, setLeadData]
   );
 
-  const getColumnSearchProps = useMemo(() => (dataIndex) => {
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-      confirm();
-      setSearchText(selectedKeys[0]);
-      setSearchedColumn(dataIndex);
-    };
-    const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
-      setSearchText("");
-      clearFilters();
-    }; 
-    return {
-      filterDropdown: ({
-        setSelectedKeys,
-        selectedKeys,
-        confirm,
-        clearFilters,
-        close,
-      }) => (
-        <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={tableSearchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-            confirm({ closeDropdown: false });
-          }}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
+  const getColumnSearchProps = useMemo(
+    () => (dataIndex) => {
+      const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+      };
+      const handleReset = (clearFilters, confirm, selectedKeys, dataIndex) => {
+        setSearchText("");
+        clearFilters();
+      };
+      return {
+        filterDropdown: ({
+          setSelectedKeys,
+          selectedKeys,
+          confirm,
+          clearFilters,
+          close,
+        }) => (
+          <div
             style={{
-              width: 90,
+              padding: 8,
             }}
+            onKeyDown={(e) => e.stopPropagation()}
           >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-              confirm({ closeDropdown: false });
-              handleReset(clearFilters, selectedKeys, dataIndex);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Clear
-          </Button>
-        </Space>
-      </div>
-      ),
-      filterIcon: (filtered) => (
-        <SearchOutlined
-          style={{
-            color: filtered ? "#1890ff" : undefined,
-          }}
-        />
-      ),
-      onFilter: (value, record) =>
-        record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
-      onFilterDropdownOpenChange: (visible) => {
-        if (visible) {
-          setTimeout(() => tableSearchInput.current?.select(), 100);
-        }
-      },
-      render: (text) =>
-        searchedColumn === dataIndex ? (
-          <Highlighter
-            highlightStyle={{
-              backgroundColor: "#8250FF",
-              padding: 0,
-            }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={text ? text?.toString() : ""}
-          />
-        ) : (
-          text
+            <Input
+              ref={tableSearchInput}
+              placeholder={`Search ${dataIndex}`}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() =>
+                handleSearch(selectedKeys, confirm, dataIndex)
+              }
+              style={{
+                marginBottom: 8,
+                display: "block",
+              }}
+            />
+            <Space>
+              <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm({ closeDropdown: false });
+                  handleReset(clearFilters, selectedKeys, dataIndex);
+                }}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Clear
+              </Button>
+            </Space>
+          </div>
         ),
-    };
-  }, [searchText, searchedColumn]);
+        filterIcon: (filtered) => (
+          <SearchOutlined
+            style={{
+              color: filtered ? "#1890ff" : undefined,
+            }}
+          />
+        ),
+        onFilter: (value, record) =>
+          record[dataIndex]
+            ?.toString()
+            .toLowerCase()
+            .includes(value.toLowerCase()),
+        onFilterDropdownOpenChange: (visible) => {
+          if (visible) {
+            setTimeout(() => tableSearchInput.current?.select(), 100);
+          }
+        },
+        render: (text) =>
+          searchedColumn === dataIndex ? (
+            <Highlighter
+              highlightStyle={{
+                backgroundColor: "#8250FF",
+                padding: 0,
+              }}
+              searchWords={[searchText]}
+              autoEscape
+              textToHighlight={text ? text?.toString() : ""}
+            />
+          ) : (
+            text
+          ),
+      };
+    },
+    [searchText, searchedColumn]
+  );
 
   useEffect(() => {
     const assignButton = {
@@ -424,7 +432,7 @@ const AdminDashboard = () => {
             <>
               <Tooltip title="View Lead Details">
                 <EyeOutlined
-                  className="!p-1 text-[25px] bg-gray "
+                  className="!p-1 text-[25px] bg-gray !w-[5vw]"
                   onClick={() => {
                     navigate(`/lead/${record?.lead_id}`);
                   }}
@@ -466,23 +474,13 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className={`rounded-md px-2 py-1 ease-in duration-100 border ${
-                colorMode ? "border-slate-300" : "border-gray-800"
-              } flex items-center justify-center w-full hover:scale-95`}
+              className={`rounded-md px-2 py-1 ease-in duration-100 flex items-center justify-center w-full hover:scale-95`}
             >
               <div className="flex flex-row m-auto justify-between text-slate-300">
-                <p
-                  className={`text-xs m-0 p-1 ${
-                    colorMode ? "text-slate-300" : "text-gray-800"
-                  }`}
-                >
+                <p className={`text-xs m-0 p-1 text-brand-color`}>
                   {record.call_count != null ? record.call_count : 0}
                 </p>
-                <p
-                  className={`text-xs m-0 p-1 ${
-                    colorMode ? "text-slate-300" : "text-gray-800"
-                  }`}
-                >
+                <p className={`text-xs m-0 p-1 text-brand-color`}>
                   Call Details
                 </p>
               </div>
@@ -653,12 +651,17 @@ const AdminDashboard = () => {
     };
   });
 
-  const handleStaredLeadsFilter = (starFilterId) => {
-    setActiveFilter(starFilterId);
-    setLeadData(
-      leadList.filter((lead) => parseInt(lead.star_review) === starFilterId - 9)
-    );
-  };
+  const handleStaredLeadsFilter = useMemo(
+    () => (starFilterId) => {
+      setActiveFilter(starFilterId);
+      setLeadData(
+        leadList.filter(
+          (lead) => parseInt(lead.star_review) === starFilterId - 9
+        )
+      );
+    },
+    [leadList]
+  );
 
   const handleSyncLeadsReq = useCallback(async () => {
     dispatch(setLoader(true));
@@ -678,7 +681,6 @@ const AdminDashboard = () => {
     syncLeads,
   ]);
 
-  
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {
       if (userName !== "All") {
@@ -718,7 +720,7 @@ const AdminDashboard = () => {
             setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
           />
         </Modal>
-        <div className="relative flex flex-col justify-between ">
+        <div className="relative flex flex-col justify-start h-full">
           <div className="grid grid-cols-5 gap-5 z-100">
             <div className="col-span-3">
               <Filters

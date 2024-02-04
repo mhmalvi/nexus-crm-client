@@ -6,7 +6,8 @@ import { handleGetSalesAdmin } from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import "./style.css";
+import "./salesEmployee.css";
+import Loading from "../../Components/Shared/Loader";
 
 const Sales = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,8 +15,8 @@ const Sales = () => {
   const [userData, setUserData] = useState({});
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  
+  // const [isLoading, setIsLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState();
   const [searchName, setSearchName] = useState(
     searchParams.get("salesEmployeeName") || ""
@@ -37,7 +38,6 @@ const Sales = () => {
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
       let response;
       if (companyId !== 0 || user?.client_id !== 0) {
         response = await handleGetSalesAdmin();
@@ -47,10 +47,8 @@ const Sales = () => {
           setSalesData(response?.data);
         }
       }
-
-      setIsLoading(false);
     })();
-  }, []);
+  }, [companyId, user?.client_id]);
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("user_info"));
     if (userDetails) {
@@ -106,7 +104,13 @@ const Sales = () => {
   if (userData?.role_id === 1 || userData?.role_id === 3) {
     salesColumn = salesColumn.concat(addLeads);
   }
-
+  let locale = {
+    emptyText: (
+      <div className="min-h-[50vh] mt-24">
+        <Loading />
+      </div>
+    ),
+  };
   return (
     <>
       <div className="h-screen flex justify-center items-center">
@@ -123,6 +127,7 @@ const Sales = () => {
           {/* Sales Employees */}
           <div className="mb-6">
             <Table
+              locale={locale}
               className={`${
                 colorMode ? "updatedTableDark" : "updatedTableLight"
               }`}
@@ -139,9 +144,8 @@ const Sales = () => {
               showSorterTooltip={true}
               scroll={{
                 x: 600,
-                y: 600,
+                y: "calc(75vh - 5em)",
               }}
-              loading={isLoading}
             />
           </div>
         </div>

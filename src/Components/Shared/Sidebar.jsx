@@ -82,6 +82,24 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     // window.location.reload();
   };
 
+  const getColorModePreference = () => {
+    return localStorage.getItem('colorMode') === 'dark';
+  };
+  const saveColorModePreference = (colorMode) => {
+    localStorage.setItem('colorMode', colorMode ? 'dark' : 'light');
+  };
+  useEffect(() => {
+    const storedColorMode = getColorModePreference();
+    if (storedColorMode !== null) {
+      dispatch(setColorMode(storedColorMode));
+    }
+  }, [dispatch]);
+
+  const toggleColorMode = () => {
+    const newColorMode = !colorMode;
+    dispatch(setColorMode(newColorMode));
+    saveColorModePreference(newColorMode);
+  };
   return (
     <div
       className={` bg-[#ffffff11] duration-100 ${
@@ -882,9 +900,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
           {/* Color Switcher */}
           <div className="flex justify-center items-center">
             <Switch
-              onClick={() => {
-                dispatch(setColorMode(!colorMode));
-              }}
+              onClick={toggleColorMode}
               className="colorModeToggler"
               checkedChildren={<SunIcon />}
               unCheckedChildren={<MoonIcon />}

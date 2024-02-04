@@ -25,7 +25,7 @@ import SalesAnalytics from "./Types/SalesAnalytics";
 import MonthlyRevenue from "./Types/MonthlyRevenue";
 import LeadConversionRatio from "./Types/LeadConversionRatio";
 import CampaignDetails from "./Types/CampaignDetails";
-import CompanyRevenue from "./Types/CompanyRevenue";
+import CampaignsRevenue from "./Types/CampaignsRevenue";
 import LeadQualityRatio from "./Types/LeadQualityRatio";
 import AreaWiseLead from "./Types/AreaWiseLead";
 import LeadStatusSummary from "./Types/LeadStatusSummary";
@@ -43,6 +43,7 @@ const Overview = () => {
   const [activeCompany, setActiveCompanies] = useState();
   const [companies, setCompanies] = useState([]);
   const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
+  const [fullscreen, setFullScreen] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -146,7 +147,7 @@ const Overview = () => {
       >
         Capture Report
       </button> */}
-      <div className="font-poppins rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full">
+      <div className="font-poppins rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full overflow-hidden">
         {/* {userDetails?.userInfo?.role_id === 1 ? (
             <div className="font-light">
               <Select
@@ -172,33 +173,68 @@ const Overview = () => {
               companyEmployees={companyEmployees}
             />
           </div>
-          <div className=" w-full grid grid-cols-3 gap-4 overflow-y-scroll h-[75vh] rounded-md">
-            <div>
-              <IncomePerDay activeCompany={activeCompany} />
+          <div className="flex flex-wrap items-center justify-center gap-2 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
+            <div className="w-2/6">
+              <IncomePerDay
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <MonthlyRevenue activeCompany={activeCompany} />
+            <div className="w-2/6">
+              <MonthlyRevenue
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <LeadConversionRatio activeCompany={activeCompany} />
+            <div className="w-1/4">
+              <LeadConversionRatio
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <CampaignDetails activeCompany={activeCompany} />
+            <div className="w-2/6">
+              <CampaignDetails
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <CompanyRevenue activeCompany={activeCompany} />
+            <div className="w-2/6">
+              <CampaignsRevenue
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <LeadQualityRatio activeCompany={activeCompany} />
+            <div className="w-1/4">
+              <LeadQualityRatio
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <AreaWiseLead activeCompany={activeCompany} />
+            <div className="w-2/6">
+              <AreaWiseLead
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <LeadStatusSummary activeCompany={activeCompany} />
+            <div className=" w-2/6">
+              <LeadStatusSummary
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
-            <div>
-              <SalesAnalytics activeCompany={activeCompany} />
+            <div className="w-1/4">
+              <SalesAnalytics
+                activeCompany={activeCompany}
+                fullscreen={fullscreen}
+                setFullScreen={setFullScreen}
+              />
             </div>
           </div>
           {/* Management Analitics */}

@@ -7,6 +7,7 @@ import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
+import Loading from "../../Components/Shared/Loader";
 
 const CourseList = ({
   courses,
@@ -28,7 +29,7 @@ const CourseList = ({
   const showModal = () => {
     setOpen(true);
   };
-  
+
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -180,11 +181,12 @@ const CourseList = ({
           <div key={i} className="flex gap-2 justify-center">
             <Button
               key={i}
-              icon={<EyeOutlined />}
+              icon={<EyeOutlined style={{}} />}
               onClick={() => {
                 setCourseDetailsOpen(true);
                 setSelectedCourse(record);
               }}
+              className="!rounded-md !bg-[#ffffff7f]"
             ></Button>
             {userData?.role_id === 1 ||
               (userData?.role_id === 3 && (
@@ -195,6 +197,7 @@ const CourseList = ({
                     showModal();
                     setCourseId(record?.id);
                   }}
+                  className="!rounded-md !bg-[#ffffff7f]"
                 ></Button>
               ))}
           </div>
@@ -202,15 +205,31 @@ const CourseList = ({
       },
     },
   ];
-
+  let locale = {
+    emptyText: (
+      <div className="min-h-[50vh] mt-24">
+        <Loading />
+      </div>
+    ),
+  };
   return (
     <div>
       <div className="w-full flex items-center justify-between mb-5 ">
-        <div className={`text-xl ${colorMode? "text-white" : "text-gray-800"} font-semibold`}>All Courses</div>
+        <div
+          className={`text-xl ${
+            colorMode ? "text-white" : "text-gray-800"
+          } font-semibold`}
+        >
+          All Courses
+        </div>
         <Button
           type="primary"
           onClick={() => setAddCourseOpen(true)}
-          className=" !rounded text-white"
+          className={` !rounded  ${
+            colorMode
+              ? "!bg-slate-300 !text-gray-800"
+              : "!bg-gray-800 !text-slate-300"
+          }`}
         >
           Add Course
         </Button>
@@ -218,11 +237,9 @@ const CourseList = ({
       {/* Courses */}
       <div>
         <Table
-          className={`${
-            colorMode ? "updatedTableDark" : "updatedTableLight"
-          }`}
-          loading={courseListLoading}
-          
+          locale={locale}
+          className={`${colorMode ? "updatedTableDark" : "updatedTableLight"}`}
+          // loading={locale}
           columns={courseLinstTableHeaders}
           dataSource={courses}
           pagination={{
@@ -234,10 +251,7 @@ const CourseList = ({
           }}
           showSorterTooltip={true}
           scroll={{
-            
-            y: isBigScreen
-              ? 600
-              : 400,
+            y: "calc(75vh - 5em)",
           }}
           // Do not need to use on row view course detais by onClick in onRow it is used in Clicked by view button on colum list
         />

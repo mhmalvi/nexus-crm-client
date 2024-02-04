@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useSelector } from "react-redux";
 import "./quemailer.css";
+import Loading from "../../Components/Shared/Loader";
 import { getEmailHistory } from "../../Components/services/que-mail";
 const columns = [
   {
@@ -9,7 +10,7 @@ const columns = [
     render: (_, record, idx) => {
       return (
         <>
-         <h1 className="m-0 p-0">{idx+1}</h1>
+          <h1 className="m-0 p-0">{idx + 1}</h1>
         </>
       );
     },
@@ -43,7 +44,7 @@ const EmailHistory = () => {
 
   const userDetails = useSelector((state) => state.user.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  console.log(userDetails.userInfo?.id)
+  console.log(userDetails.userInfo?.id);
   useEffect(() => {
     async function fetchEmailHistory() {
       const data = {
@@ -58,12 +59,22 @@ const EmailHistory = () => {
       setClicked(false);
     }
   }, [clicked, currentPage, emailSessionRow, pagination, userDetails]);
-
+  let locale = {
+    emptyText: (
+      <div className="min-h-[10vh] mt-24">
+        <Loading />
+      </div>
+    ),
+  };
   return (
     <Table
+      locale={locale}
       className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
       columns={columns}
       dataSource={emailSessionRow?.data}
+      scroll={{
+        y: "calc(75vh - 5em)",
+      }}
       pagination={{
         onChange: (pageNum) => {
           setCurrentPage(pageNum);
@@ -71,7 +82,6 @@ const EmailHistory = () => {
         },
         current: currentPage,
         total: emailSessionRow?.total,
-        
       }}
     />
   );

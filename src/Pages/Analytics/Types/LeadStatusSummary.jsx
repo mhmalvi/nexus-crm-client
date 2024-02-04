@@ -3,8 +3,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import * as chartUtils from "../utils";
+import Icons from "../../../Components/Shared/Icons";
+import { Modal } from "antd";
 
-const LeadStatusSummary = ({ activeCompany }) => {
+const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
   const { Option } = Select;
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeCampaign, setActiveCampaign] = useState();
@@ -19,12 +21,12 @@ const LeadStatusSummary = ({ activeCompany }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const COLORS = [
-    "#34C759",
-    "#FF9500",
-    "#4F8DEA",
-    "#17CDD9",
     "#7037FF",
-    "#ff1c24",
+    "#2f77d6",
+    "#c72d2d",
+    "#17CDD9",
+    "#ffa500",
+    "#34C759",
   ];
 
   useEffect(() => {
@@ -51,7 +53,6 @@ const LeadStatusSummary = ({ activeCompany }) => {
     setActiveCampaignSummary(currentYearCampaign?.[0]?.campaign_id);
   }, [currentYearCampaign]);
 
-
   const handleCampaignSummary = (value) => {
     setActiveCampaignSummary(value);
   };
@@ -64,7 +65,6 @@ const LeadStatusSummary = ({ activeCompany }) => {
   );
 
   useEffect(() => {
-  
     if (userDetails?.userInfo?.role_id !== 1) {
       setCampaignSummary([
         {
@@ -192,19 +192,24 @@ const LeadStatusSummary = ({ activeCompany }) => {
     leads,
     userDetails?.userInfo?.role_id,
   ]);
-
+  const handleFullScreen = () => {
+    setFullScreen("LeadStatusSummary");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
 
   return (
     <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">
-    <div className="flex items-center justify-between m-0">
-      <h1
-        className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
-          colorMode ? "text-slate-300" : "text-gray-800"
-        }`}
-      >
+      <div className="flex items-center justify-between m-0">
+        <h1
+          className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
           Lead Status Summary
         </h1>
-        <div className="font-light">
+        <div className="flex items-center">
           <Select
             defaultValue={currentYearCampaign?.[0]?.campaign_name}
             placeholder={currentYearCampaign?.[0]?.campaign_name}
@@ -219,31 +224,86 @@ const LeadStatusSummary = ({ activeCompany }) => {
               </Option>
             ))}
           </Select>
+          <div
+            onClick={handleFullScreen}
+            className={`${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } hover:scale-110 ease-in duration-100 cursor-pointer ml-4`}
+          >
+            <Icons.Fullscreen />
+          </div>
         </div>
       </div>
       <div className="pt-4">
-      <rcElement.ResponsiveContainer
-         width="100%"
-         height={220}
-      >
-        <rcElement.PieChart width="100%" height={220}>
-          <rcElement.Pie
-            activeIndex={activeIndex}
-            activeShape={chartUtils.LeadStatusCustomizedLabel}
-            data={campaignSummary}
-            cx="50%"
-            cy="50%"
-            innerRadius="60%"
-            outerRadius="70%"
-            fill={COLORS[activeIndex]}
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-          >
-            <rcElement.Legend />
-          </rcElement.Pie>
-        </rcElement.PieChart>
-      </rcElement.ResponsiveContainer>
+        <rcElement.ResponsiveContainer width="100%" height={220}>
+          <rcElement.PieChart width="100%" height={220}>
+            <rcElement.Pie
+              activeIndex={activeIndex}
+              activeShape={chartUtils.LeadStatusCustomizedLabel}
+              data={campaignSummary}
+              cx="50%"
+              cy="50%"
+              innerRadius="60%"
+              outerRadius="70%"
+              fill={COLORS[activeIndex]}
+              dataKey="value"
+              onMouseEnter={onPieEnter}
+            >
+              <rcElement.Legend />
+            </rcElement.Pie>
+          </rcElement.PieChart>
+        </rcElement.ResponsiveContainer>
       </div>
+      <Modal
+        className="analyticModal"
+        title="Lead Status Summary"
+        footer={false}
+        visible={fullscreen === "LeadStatusSummary"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
+      >
+        <div className="h-[70vh]">
+          <Select
+            defaultValue={currentYearCampaign?.[0]?.campaign_name}
+            placeholder={currentYearCampaign?.[0]?.campaign_name}
+            style={{
+              width: 240,
+            }}
+            onChange={handleCampaignSummary}
+          >
+            {currentYearCampaign?.map((campaign) => (
+              <Option key={campaign?.id} value={campaign?.campaign_id}>
+                {campaign?.campaign_name}
+              </Option>
+            ))}
+          </Select>
+          <rcElement.ResponsiveContainer width="100%" height="100%">
+            <rcElement.PieChart width="100%" height="100%">
+              <rcElement.Pie
+                activeIndex={activeIndex}
+                activeShape={chartUtils.LeadStatusCustomizedLabel}
+                data={campaignSummary}
+                cx="50%"
+                cy="50%"
+                innerRadius="60%"
+                outerRadius="70%"
+                fill={COLORS[activeIndex]}
+                dataKey="value"
+                onMouseEnter={onPieEnter}
+              >
+                <rcElement.Legend />
+              </rcElement.Pie>
+            </rcElement.PieChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      </Modal>
     </div>
   );
 };
