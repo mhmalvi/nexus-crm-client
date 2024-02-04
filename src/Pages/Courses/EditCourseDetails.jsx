@@ -8,7 +8,7 @@ import {
 } from "../../Components/services/course";
 import { handleClientwiseCourseDetails } from "../../Components/services/leads";
 import { useSelector } from "react-redux";
-
+import Loading from "../../Components/Shared/Loader";
 const EditCourseDetails = ({
   open,
   setOpen,
@@ -20,7 +20,7 @@ const EditCourseDetails = ({
   const [title, setTitle] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [titleShow, setTitleShow] = useState(false);
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   console.log("modal record: ", id);
   const handleUpdate = async () => {
@@ -62,7 +62,6 @@ const EditCourseDetails = ({
         setTitleShow(false);
       }, 500);
     }
-
   };
   const handleCancel = () => {
     setOpen(false);
@@ -92,10 +91,11 @@ const EditCourseDetails = ({
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         okButtonProps
+        className="courseModal"
       >
-        {Loading ? (
+        {loading ? (
           <div className="w-full flex justify-center">
-            <Spin />
+            <Loading />
           </div>
         ) : (
           <div>

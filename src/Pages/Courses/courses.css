@@ -1,0 +1,10 @@
+.courseModal .ant-modal-content {
+  width: 100%;
+  backdrop-filter: blur(8px);
+  /* background-color: #1f2937; */
+  box-shadow: 0 4px 6px -1px #0000001a;
+  color: #1f2937;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}

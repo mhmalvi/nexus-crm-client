@@ -11,6 +11,7 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
+import Loading from "../../Components/Shared/Loader";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [leadsData, setLeadsData] = useState([]);
   const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [searchName, setSearchName] = useState(
     searchParams.get("Search_Lead_Name") || ""
   );
@@ -65,11 +67,11 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setIsLoading(false);
   };
   useEffect(() => {
-    if(salesEmployeeId){
+    if (salesEmployeeId) {
       assignedByLeadsDataId();
     }
   }, [salesEmployeeId]);
-  
+
   useEffect(() => {
     notAssignedLeadsDataId();
   }, [salesEmployeeId]);
@@ -213,7 +215,13 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       },
     },
   ];
-
+  let locale = {
+    emptyText: (
+      <div className="min-h-[50vh] mt-24">
+        <Loading />
+      </div>
+    ),
+  };
   return (
     <div>
       <Modal
@@ -259,6 +267,10 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
           </div>
           {/* Search section */}
           <Table
+            locale={locale}
+            className={`${
+              colorMode ? "updatedTableDark" : "updatedTableLight"
+            }`}
             columns={leadColumn || []}
             dataSource={
               isByMe
@@ -269,7 +281,6 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
                 ? notAssignedLeadsData
                 : []
             }
-            loading={isLoading}
           />
         </div>
       </Modal>

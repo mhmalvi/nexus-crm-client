@@ -30,6 +30,7 @@ import { useParams } from "react-router-dom";
 import { handleSalesManRemove } from "../../../Components/services/utils";
 import { handleLeadDetails } from "../../../Components/services/leads";
 import StatusShow from "../Conversation/StatusShow";
+import "../userDetails.css";
 
 const UserDetails = ({
   leadDetails,
@@ -532,6 +533,8 @@ const UserDetails = ({
               </h1>
 
               <Modal
+                title="Documents"
+                className="applicationFormModal"
                 visible={toggleChcekList}
                 footer={null}
                 onCancel={handleCancel}
@@ -670,33 +673,29 @@ const UserDetails = ({
 
         {/* Application Form Modal */}
         <Modal
+          className="applicationFormModal"
+          title="Answer of all Questions"
           visible={toggleApplication}
           footer={null}
           onCancel={handleCancel}
+          width={"60%"}
         >
-          <div>
-            <h1 className="font-poppins text-xl font-extrabold">
-              Answer of all Questions
-            </h1>
-          </div>
-          <div className="py-6">
-            <div className="my-2">
-              {leadDetails?.leadDetails?.form_data?.map((question, i) => (
-                <div key={i} className="ml-2 font-poppins">
-                  <li className="text-base list-disc font-semibold">
-                    {question?.name?.charAt(0)?.toUpperCase() +
-                      question?.name?.replaceAll("_", " ")?.slice(1)}
-                  </li>
-                  <p className="ml-6 mt-2 font-normal">
-                    -{" "}
-                    {question?.values[0]?.includes("_")
-                      ? question?.values[0]?.charAt(0)?.toUpperCase() +
-                        question?.values[0]?.replaceAll("_", " ")?.slice(1)
-                      : question?.values[0]}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="my-2 py-8">
+            {leadDetails?.leadDetails?.form_data?.map((question, i) => (
+              <div key={i} className="ml-2 font-poppins">
+                <li className="text-base list-disc font-semibold">
+                  {question?.name?.charAt(0)?.toUpperCase() +
+                    question?.name?.replaceAll("_", " ")?.slice(1)}
+                </li>
+                <p className="mx-8 my-2 font-normal">
+                  -{" "}
+                  {question?.values[0]?.includes("_")
+                    ? question?.values[0]?.charAt(0)?.toUpperCase() +
+                      question?.values[0]?.replaceAll("_", " ")?.slice(1)
+                    : question?.values[0]}
+                </p>
+              </div>
+            ))}
           </div>
         </Modal>
 

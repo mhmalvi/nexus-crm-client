@@ -34,7 +34,7 @@ const Filters = ({
                 onClick={() => handleFilterLeadList(option.id)}
               >
                 <h1
-                  className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins px-4 py-2 cursor-pointer ${
+                  className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins 2xl:px-4 2xl:py-2 px-2 py-1 cursor-pointer ${
                     activeFilter === option.id
                       // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
                       ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
@@ -59,7 +59,7 @@ const Filters = ({
                     className={`flex flex-wrap gap-4`}
                   >
                     <h1
-                     className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins px-4 py-2 cursor-pointer ${
+                     className={`ease-in duration-100 w-full text-xs text-center font-normal font-poppins 2xl:px-4 2xl:py-2 px-2 py-1 cursor-pointer ${
                       activeFilter === rate?.id
                         // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
                         ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"

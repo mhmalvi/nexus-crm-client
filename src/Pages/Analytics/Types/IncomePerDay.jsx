@@ -4,10 +4,10 @@ import * as rcElement from "recharts";
 import { fetchAverageIncomeOfLastWeek } from "../../../Components/services/payment";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
+import Icons from "../../../Components/Shared/Icons";
+import { Modal } from "antd";
 
-import * as chartUtils from "../utils";
-
-const IncomePerDay = ({ activeCompany }) => {
+const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
@@ -17,7 +17,6 @@ const IncomePerDay = ({ activeCompany }) => {
 
   const [lastWeekIncome, setLastWeekIncome] = useState([]);
   const [leads, setLeads] = useState([]);
-
   useEffect(() => {
     if (getleads) {
       if (getleads?.length) {
@@ -64,48 +63,118 @@ const IncomePerDay = ({ activeCompany }) => {
           : 0,
     });
   });
-
+  const handleFullScreen = () => {
+    setFullScreen("IncomePerDay");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
   return (
     <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl flex flex-col ">
-      <h1
-        className={`text-base font-semibold px-4 m-0 font-poppins ${
+      <div
+        className={`w-full flex justify-between items-center ${
           colorMode ? "text-slate-300" : "text-gray-800"
         }`}
       >
-        Income/Day
-      </h1>
-      <div className="">
-        <rcElement.ResponsiveContainer
-          width="100%"
-          height={220}
-          className="-ml-6"
+        <h1
+          className={`text-base font-semibold px-4 m-0 font-poppins ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
         >
-          <rcElement.LineChart
-            width={"100%"}
-            height={220}
-            data={lastWeekIncome}
-            margin={{
-              top: 0,
-              right: 20,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <rcElement.CartesianGrid strokeDasharray="5 5" />
-            <rcElement.XAxis dataKey="dates" />
-            <rcElement.YAxis />
-            <rcElement.Tooltip />
-            <rcElement.Legend />
-            <rcElement.Line
-              connectNulls
-              type="monotone"
-              dataKey="Income"
-              stroke="#cbd5e1"
-              fill="#7037ff"
-            />
-          </rcElement.LineChart>
-        </rcElement.ResponsiveContainer>
+          Income/Day
+        </h1>
+
+        <div
+          onClick={handleFullScreen}
+          className={`${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          } hover:scale-110 ease-in duration-100 cursor-pointer`}
+        >
+          <Icons.Fullscreen />
+        </div>
       </div>
+      {!lastWeekIncome ? (
+        <Loading />
+      ) : (
+        <div className="">
+          <rcElement.ResponsiveContainer
+            width="100%"
+            height={fullscreen ? "100%" : 220}
+            className="-ml-6"
+          >
+            <rcElement.LineChart
+              width={"100%"}
+              height={fullscreen ? "100%" : 220}
+              data={lastWeekIncome}
+              margin={{
+                top: 0,
+                right: 20,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <rcElement.CartesianGrid strokeDasharray="5 5" />
+              <rcElement.XAxis dataKey="dates" />
+              <rcElement.YAxis />
+              <rcElement.Tooltip />
+              <rcElement.Legend />
+              <rcElement.Line
+                connectNulls
+                type="monotone"
+                dataKey="Income"
+                stroke="#cbd5e1"
+                fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+              />
+            </rcElement.LineChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      )}
+      <Modal
+        className="analyticModal"
+        title="Income/Day"
+        footer={false}
+        visible={fullscreen === "IncomePerDay"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={<div className="flex items-center justify-center h-full w-full hover:scale-110">
+        <Icons.Minimize />
+      </div>}
+      >
+        <div className="h-[70vh]">
+          <rcElement.ResponsiveContainer
+            width="100%"
+            height="100%"
+            className="-ml-6"
+          >
+            <rcElement.LineChart
+              width="100%"
+              height="100%"
+              data={lastWeekIncome}
+              margin={{
+                top: 0,
+                right: 20,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <rcElement.CartesianGrid strokeDasharray="5 5" />
+              <rcElement.XAxis dataKey="dates" />
+              <rcElement.YAxis />
+              <rcElement.Tooltip />
+              <rcElement.Legend />
+              <rcElement.Line
+                connectNulls
+                type="monotone"
+                dataKey="Income"
+                stroke="#cbd5e1"
+                fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+              />
+            </rcElement.LineChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { setLoader } from "../../features/user/userSlice";
 import DayDetails from "./DayDetails";
 import EventDetails from "./EventDetails";
 import Loader from "../../Components/Shared/Loader.jsx";
+import "./reminder.css";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
@@ -16,6 +17,7 @@ const localizer = momentLocalizer(moment);
 const BigCalendar = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user.userInfo);
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [openDayDetails, setOpenDayDetails] = useState(false);
   const [openEventDetails, setOpenEventDetails] = useState(false);
   const [eventsData, setEventsData] = useState();
@@ -103,13 +105,12 @@ const BigCalendar = () => {
             defaultDate={new Date()}
             defaultView="month"
             events={eventsData}
-            style={{ height: "80vh",backgroundColor: "#ffffff99" }}
             onSelectEvent={(e) => handleUpdateEvent(e)}
             onSelectSlot={handleSelect}
-            className="calendar"
+            className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
           />
           <Modal
-            className="cross_btn"
+            className="cross_btn reminderModal"
             centered
             visible={openDayDetails}
             onOk={() => {

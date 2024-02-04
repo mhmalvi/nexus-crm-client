@@ -2,9 +2,11 @@ import { Select } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
-import { fetchCampaignwisePaymentDataOfCompany } from "../../../Components/services/payment";
+import Icons from "../../../Components/Shared/Icons";
+import { Modal } from "antd";
+import "./analytic.css";
 
-const AreaWiseLead = ({ activeCompany }) => {
+const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   const { Option } = Select;
   const [activeCampaign, setActiveCampaign] = useState();
   const [areawiseLeads, setAreawiseLeads] = useState([]);
@@ -197,108 +199,89 @@ const AreaWiseLead = ({ activeCompany }) => {
     }
   }, [activeCampaign, leads, userDetails?.userInfo?.role_id]);
 
-  useEffect(() => {
-    // Campaigns Details
-    const campaignsDetailsArray = [];
-    campaigns?.forEach((campaign) => {
-      if (
-        campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-      ) {
-        campaignsDetailsArray.push({
-          campaign: campaign?.campaign_name,
-          "New Lead": leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 1
-            )?.length,
-          skilled: leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 2
-            )?.length,
-          called: leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 3
-            )?.length,
-          paid: leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 4
-            )?.length,
-          verified: leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 5
-            )?.length,
-          completed: leads
-            ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-            ?.filter(
-              (filteredCampaign) => filteredCampaign?.lead_details_status === 6
-            )?.length,
-        });
-      }
-    });
+  // useEffect(() => {
+  //   // Campaigns Details
+  //   const campaignsDetailsArray = [];
+  //   campaigns?.forEach((campaign) => {
+  //     if (
+  //       campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+  //     ) {
+  //       campaignsDetailsArray.push({
+  //         campaign: campaign?.campaign_name,
+  //         "New Lead": leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 1
+  //           )?.length,
+  //         skilled: leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 2
+  //           )?.length,
+  //         called: leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 3
+  //           )?.length,
+  //         paid: leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 4
+  //           )?.length,
+  //         verified: leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 5
+  //           )?.length,
+  //         completed: leads
+  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
+  //           ?.filter(
+  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 6
+  //           )?.length,
+  //       });
+  //     }
+  //   });
+  // }, [campaigns, leads]);
 
-    // For Lead Quality Ratio
-    const campaignQualityRatioArray = [];
-    campaigns?.forEach((campaign) => {
-      if (campaign?.start_time?.toString()?.includes(new Date().getFullYear()))
-        campaignQualityRatioArray.push({
-          campaign: campaign?.campaign_name,
-          rate:
-            leads?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-              ?.length > 0
-              ? (
-                  leads
-                    ?.filter(
-                      (lead) => lead?.campaign_id === campaign?.campaign_id
-                    )
-                    ?.filter(
-                      (filteredCampaign) => filteredCampaign?.star_review > 2
-                    )?.length /
-                  leads?.filter(
-                    (lead) => lead?.campaign_id === campaign?.campaign_id
-                  )?.length
-                ).toFixed(2) * 100
-              : 0,
-        });
-    });
-  }, [campaigns, leads]);
+  // useEffect(() => {
+  //   const campaignwiseRevenueData = [];
 
-  useEffect(() => {
-    const campaignwiseRevenueData = [];
+  //   (async () => {
+  //     const campaignwiseRevenueResp =
+  //       await fetchCampaignwisePaymentDataOfCompany(
+  //         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
+  //       );
 
-    (async () => {
-      const campaignwiseRevenueResp =
-        await fetchCampaignwisePaymentDataOfCompany(
-          userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
-        );
+  //     if (campaignwiseRevenueResp?.status === 200) {
+  //       campaigns?.forEach((campaign) => {
+  //         if (
+  //           campaign?.start_time?.toString()?.includes(new Date().getFullYear())
+  //         ) {
+  //           campaignwiseRevenueData.push({
+  //             campaign: campaign?.campaign_name,
+  //             revenue: campaignwiseRevenueResp?.data?.find(
+  //               (camp) =>
+  //                 parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
+  //             )
+  //               ? campaignwiseRevenueResp?.data?.find(
+  //                   (camp) =>
+  //                     parseInt(camp?.campaigns) ===
+  //                     parseInt(campaign?.campaign_id)
+  //                 )?.sums
+  //               : 0,
+  //           });
+  //         }
+  //       });
+  //     }
+  //   })();
+  // }, [activeCompany, campaigns, userDetails]);
 
-      if (campaignwiseRevenueResp?.status === 200) {
-        campaigns?.forEach((campaign) => {
-          if (
-            campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-          ) {
-            campaignwiseRevenueData.push({
-              campaign: campaign?.campaign_name,
-              revenue: campaignwiseRevenueResp?.data?.find(
-                (camp) =>
-                  parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
-              )
-                ? campaignwiseRevenueResp?.data?.find(
-                    (camp) =>
-                      parseInt(camp?.campaigns) ===
-                      parseInt(campaign?.campaign_id)
-                  )?.sums
-                : 0,
-            });
-          }
-        });
-      }
-    })();
-  }, [activeCompany, campaigns, userDetails]);
-
+  const handleFullScreen = () => {
+    setFullScreen("AreaWiseLead");
+  };
+  const handleMinimizeScreen = () => {
+    setFullScreen("");
+  };
   return (
     <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col ">
       <div className="flex items-center justify-between m-0">
@@ -309,7 +292,7 @@ const AreaWiseLead = ({ activeCompany }) => {
         >
           Areawise Lead Details
         </h1>
-        <div className="font-light">
+        <div className="flex items-center">
           <Select
             defaultValue={currentYearCampaign?.[0]?.campaign_name}
             placeholder={currentYearCampaign?.[0]?.campaign_name}
@@ -324,6 +307,14 @@ const AreaWiseLead = ({ activeCompany }) => {
               </Option>
             ))}
           </Select>
+          <div
+            onClick={handleFullScreen}
+            className={`${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } hover:scale-110 ease-in duration-100 cursor-pointer ml-4`}
+          >
+            <Icons.Fullscreen />
+          </div>
         </div>
       </div>
       <div className="pt-4">
@@ -337,12 +328,15 @@ const AreaWiseLead = ({ activeCompany }) => {
           >
             <rcElement.Tooltip />
             <rcElement.PolarGrid />
-            <rcElement.PolarAngleAxis dataKey="city" stroke="#cbd5e1" />
+            <rcElement.PolarAngleAxis
+              dataKey="city"
+              stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+            />
             <rcElement.PolarRadiusAxis />
             <rcElement.Radar
               dataKey="percentage"
               stroke="#8884d8"
-              fill="#ffa500"
+              fill="#7037ff"
               activeDot={"dot"}
               dot={true}
               fillOpacity={0.8}
@@ -350,6 +344,64 @@ const AreaWiseLead = ({ activeCompany }) => {
           </rcElement.RadarChart>
         </rcElement.ResponsiveContainer>
       </div>
+
+      <Modal
+        className="analyticModal"
+        title="Areawise Lead Details"
+        footer={false}
+        visible={fullscreen === "AreaWiseLead"}
+        // onOk={handleOk}
+        onCancel={handleMinimizeScreen}
+        width={"70%"}
+        height={"80%"}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
+      >
+        <div className="h-[70vh]">
+          <Select
+            defaultValue={currentYearCampaign?.[0]?.campaign_name}
+            placeholder={currentYearCampaign?.[0]?.campaign_name}
+            style={{
+              width: 240,
+            }}
+            onChange={handleAreaChange}
+          >
+            {currentYearCampaign?.map((campaign) => (
+              <Option key={campaign?.id} value={campaign?.campaign_id}>
+                {campaign?.campaign_name}
+              </Option>
+            ))}
+          </Select>
+          <rcElement.ResponsiveContainer width="100%" height="100%">
+            <rcElement.RadarChart
+              cx="50%"
+              cy="50%"
+              activeDot={"dot"}
+              outerRadius="70%"
+              data={areawiseLeads}
+            >
+              <rcElement.Tooltip />
+              <rcElement.PolarGrid />
+              <rcElement.PolarAngleAxis
+                dataKey="city"
+                stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+              />
+              <rcElement.PolarRadiusAxis />
+              <rcElement.Radar
+                dataKey="percentage"
+                stroke="#8884d8"
+                fill="#7037ff"
+                activeDot={"dot"}
+                dot={true}
+                fillOpacity={0.8}
+              />
+            </rcElement.RadarChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      </Modal>
     </div>
   );
 };

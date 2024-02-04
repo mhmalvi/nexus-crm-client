@@ -56,7 +56,6 @@ const CheckList = ({ leadDetails }) => {
     fileFormData.append("document_name", e?.file?.originFileObj);
     fileFormData.append("document_details", e?.file?.originFileObj?.name);
 
-
     const uploadFile = await handleUploadFile(fileFormData);
 
     const saveDocumentDetails = await handleChecklistDocumentUpload({
@@ -65,7 +64,6 @@ const CheckList = ({ leadDetails }) => {
       document_id: uploadFile?.data?.id,
       student_id: userDetails?.userInfo?.user_id,
     });
-
 
     if (saveDocumentDetails?.status) {
       message.success("Document Added Successfully");
@@ -91,49 +89,47 @@ const CheckList = ({ leadDetails }) => {
 
   return (
     <div
-      className='font-poppins mx-4 my-6 overflow-y-auto '
+      className="font-poppins mx-4 my-6 overflow-y-auto "
       style={{
         maxHeight: "65vh",
       }}
     >
-      <div>
-        <h1 className='text-xl font-medium mb-6'>Documents :</h1>
-      </div>
+    
 
       {documentList?.length ? (
         <div>
           {documentList?.map((document, i) => (
-            <div key={i} className='flex text-sm mb-4 ml-6'>
+            <div key={i} className="flex text-sm mb-4 ml-6">
               <span>{i + 1}.</span>
-              <span className='mx-2'>{document?.title} : </span>
+              <span className="mx-2">{document?.title} : </span>
               {!document.document_id ? (
-                <div className='bg-gray-100 px-2 py-0.5 shadow rounded-lg'>
+                <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
                   <Upload
                     onChange={(e) => handleChange(e, document?.checklist_id)}
                     id={document?.id}
                     fileList={fileList}
                   >
-                    <div className='flex items-center'>
-                      <Icons.Clip className='w-3 mr-1.5' />
-                      <div className='text-sm font-light'>File</div>
+                    <div className="flex items-center">
+                      <Icons.Clip className="w-3 mr-1.5" />
+                      <div className="text-sm font-light">File</div>
                     </div>
                   </Upload>
                 </div>
               ) : (
-                <div className='flex font-poppins mt-0.5'>
+                <div className="flex font-poppins mt-0.5">
                   <div>
                     <a
-                      href='null'
-                      target='_blank'
+                      href="null"
+                      target="_blank"
                       id={document.document_id}
-                      rel='noreferrer'
+                      rel="noreferrer"
                     >
-                      <Icons.Download className='w-4 text-black hover:text-brand-color' />
+                      <Icons.Download className="w-4 text-black hover:text-brand-color" />
                     </a>
                   </div>
                   <div>
                     <Icons.Cross
-                      className='w-2.5 text-red-500 ml-2 cursor-pointer'
+                      className="w-2.5 text-red-500 ml-2 cursor-pointer"
                       onClick={() =>
                         handleDocumentDeleteReq(
                           document.document_id,
@@ -148,7 +144,7 @@ const CheckList = ({ leadDetails }) => {
           ))}
         </div>
       ) : (
-        <div>No Document List Added Yet</div>
+        <div className="text-slate-300">No Document List Added Yet</div>
       )}
     </div>
   );
