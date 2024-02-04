@@ -18,15 +18,39 @@ export const fetchEmailTemplateList = async () => {
     return error.response;
   }
 };
+export const dailyEmailCount = async (data) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/email-counts-on-today`,
+      data,
+      config
+    );
+    console.log(result)
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 export const getEmailHistory = async (data, pageNumber) => {
-  console.log(data);
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/email-history?page=${pageNumber}`,
       data,
       config
     );
-    console.log(result)
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const getEmailDetailsCount = async (data, pageNumber) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/email-history-details?page=${pageNumber}`,
+      data,
+      config
+    );
+    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -108,7 +132,7 @@ export const handleRemoveTemplate = async (id) => {
 };
 export const handleImageUpload = (blobInfo, progress, failure) => {
   return new Promise((resolve, reject) => {
-    if (blobInfo.blob().size > 200 * 1024) { 
+    if (blobInfo.blob().size > 200 * 1024) {
       reject("Image size exceeds 200kb");
       return;
     }

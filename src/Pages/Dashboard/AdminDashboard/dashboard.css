@@ -388,29 +388,29 @@
   background: #00000022;
 }
 /* Profile Settings */
-.profileSettingsModal {
+.profileSettingsModalDark, .profileSettingsModalLight {
   position: absolute;
   right: 0;
   bottom: 0;
   border-radius: 8px;
   padding: 0;
   margin: 0;
-  height: 75vh;
+  height: 80vh;
   overflow: hidden;
   vertical-align: middle;
   box-shadow: 0 0;
 }
-/* 
-.profileSettingsModal .ant-modal-body {
-  width: 100%;
+
+.profileSettingsModalDark .ant-modal-content {
+  box-shadow: 0 0 0 0 !important;
+  background-color: #1f2937;
   padding: 0;
   border-radius: 8px;
   overflow: hidden;
-}
-*/
-.profileSettingsModal .ant-modal-content {
+} 
+.profileSettingsModalLight .ant-modal-content {
   box-shadow: 0 0 0 0 !important;
-  background-color: #1f2937;
+  background-color: #cbd5e1;
   padding: 0;
   border-radius: 8px;
   overflow: hidden;

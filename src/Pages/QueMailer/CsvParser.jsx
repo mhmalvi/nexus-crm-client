@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
 import { useSelector } from "react-redux";
 import "./quemailer.css";
-
 const allowedExtensions = ["csv"];
 
 const CSVParser = ({
@@ -18,7 +17,7 @@ const CSVParser = ({
   fileName,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  
   const handleFileChange = (e) => {
     setError("");
     if (successMail === "success") {
@@ -66,6 +65,7 @@ const CSVParser = ({
 
     reader.readAsText(file);
   };
+  
 
   return (
     <div className="h-[77vh] flex flex-col gap-8">
@@ -75,14 +75,15 @@ const CSVParser = ({
         ) : (
           <div className="h-full m-0 p-0">
             <h2
-              className={`${
+              className={`flex justify-between items-center ${
                 colorMode
                   ? "text-slate-300 bg-[#ffffff11]"
                   : "text-gray-800 bg-[#ffffff7f]"
-              } m-0 p-0 text-xl px-8 py-2`}
+              } text-xl px-4 py-2`}
             >
               Email To
             </h2>
+
             {mailProgress ? (
               <div className="px-8 py-0 my-0 flex flex-col items-center justify-center h-full">
                 <svg

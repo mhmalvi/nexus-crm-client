@@ -102,7 +102,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   };
   return (
     <div
-      className={` bg-[#ffffff11] duration-100 ${
+      className={` bg-[#ffffff11] duration-200 ${
         openSideBar ? "w-[80px] h-full" : "w-[277px] h-full"
       } overflow-x-hidden overflow-y-scroll`}
     >

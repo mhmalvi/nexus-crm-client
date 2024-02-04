@@ -4,9 +4,13 @@ import MailDashboard from "./MailDashboard";
 import EmailHistory from "./EmailHistory";
 import { useSelector } from "react-redux";
 import EmailSettings from "./EmailSettings";
-import { handleCurrentEmail } from "../../Components/services/que-mail";
-
-function App() {
+import {
+  getEmailHistory,
+  getEmailDetailsCount,
+  handleCurrentEmail,
+  dailyEmailCount,
+} from "../../Components/services/que-mail";
+const QueMailer = () => {
   const [data, setData] = useState([]);
   const [attachment, setAttachment] = useState([]);
   const [error, setError] = useState("");
@@ -20,6 +24,14 @@ function App() {
   const [currentEmail, setCurrentEmail] = useState(null);
   const [fileName, setFileName] = useState("");
 
+  const [pagination, setPagination] = useState(10);
+  const [emailSessionRow, setEmailSessionRow] = useState(null);
+  const [clicked, setClicked] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [emailId, setEmailId] = useState(null);
+  const [countInfo, setCountInfo] = useState("");
+  const [openCountModal, setOpenCountModal] = useState(false);
+  const [dailyCount, setDailyCount] = useState(null);
   useEffect(() => {
     async function fetchCurrentEmail() {
       const res = await handleCurrentEmail(+userDetails.userInfo.id);
@@ -30,90 +42,147 @@ function App() {
     }
   }, [currentEmail, userDetails.userInfo.id]);
 
+  useEffect(() => {
+    const fetchEmailHistory = async () => {
+      try {
+        const data = {
+          page: currentPage,
+          per_page: pagination,
+        };
+        const res = await getEmailHistory(data);
+        setEmailSessionRow(res.data);
+      } catch (error) {
+        console.error("Error fetching email history:", error);
+      }
+    };
+    fetchEmailHistory();
+  }, [currentPage, pagination]);
+  useEffect(() => {
+    async function fetchEmailCount() {
+      const data = {
+        id: emailId,
+        per_page: 10,
+      };
+      const res = await getEmailDetailsCount(data, 1);
+      setCountInfo(res?.data);
+    }
+    if (openCountModal || successMail) {
+      fetchEmailCount();
+    }
+  }, [emailId, openCountModal, successMail]);
+  useEffect(() => {
+    async function fetchDailyEmailCount() {
+      const data = {
+        user_id: userDetails?.userInfo.id,
+      };
+      const res = await dailyEmailCount(data);
+      if (res?.status === 200) {
+        setDailyCount(res?.data);
+      }
+    }
+    if (
+      userDetails?.userInfo.id &&
+      (dailyCount === null ||
+        userDetails.userInfo.id !== dailyCount.user_id ||
+        successMail)
+    ) {
+      fetchDailyEmailCount();
+    }
+  }, [dailyCount, userDetails?.userInfo.id, successMail]);
+
   return (
     <div className="flex items-center justify-center w-full h-screen gap-8">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh]">
         {/* MENU BAR */}
-        <div className="flex gap-8 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
-          <button
-            className={`${
-              colorMode
-                ? `hover:text-white ${
-                    activeItem === "Email" ? "text-white font-semibold" : "text-slate-300"
-                  }`
-                : `hover:text-gray-800  ${
-                    activeItem === "Email" ? "text-gray-800 font-semibold" : "text-gray-500"
-                  }`
-            } px-4 text-base`}
-            onClick={() => {
-              setActiveItem("Email");
-            }}
-          >
-            Email
-          </button>
-          <button
-            className={`${
-              colorMode
-                ? `hover:text-white ${
-                    activeItem === "Email History"
-                      ? "text-white font-semibold "
-                      : "text-slate-300  "
-                  }`
-                : `hover:text-gray-800 ${
-                    activeItem === "Email History"
-                      ? "text-gray-800 font-semibold "
-                      : "text-gray-500  "
-                  }`
-            } px-4 text-base`}
-            onClick={() => {
-              setActiveItem("Email History");
-            }}
-          >
-            Email History
-          </button>
-          <button
-            disabled
-            className={`${
-              colorMode ? "text-slate-600" : "text-gray-300"
-            } px-4 text-base`}
-            // ${ colorMode
-            //     ? `hover:text-white ${
-            //         activeItem === "Statistics"
-            //           ? "text-white font-semibold"
-            //           : "text-slate-300"
-            //       }`
-            //     : `hover:text-gray-800 ${
-            //         activeItem === "Statistics"
-            //           ? "text-gray-800 font-semibold"
-            //           : "text-gray-500"
-            //       }`}
+        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
+          <div className="flex gap-8">
+            <button
+              className={`${
+                colorMode
+                  ? `hover:text-white ${
+                      activeItem === "Email"
+                        ? "text-white font-semibold"
+                        : "text-slate-300"
+                    }`
+                  : `hover:text-gray-800  ${
+                      activeItem === "Email"
+                        ? "text-gray-800 font-semibold"
+                        : "text-gray-500"
+                    }`
+              } px-4 text-base`}
+              onClick={() => {
+                setActiveItem("Email");
+              }}
+            >
+              Email
+            </button>
+            <button
+              className={`${
+                colorMode
+                  ? `hover:text-white ${
+                      activeItem === "Email History"
+                        ? "text-white font-semibold "
+                        : "text-slate-300  "
+                    }`
+                  : `hover:text-gray-800 ${
+                      activeItem === "Email History"
+                        ? "text-gray-800 font-semibold "
+                        : "text-gray-500  "
+                    }`
+              } px-4 text-base`}
+              onClick={() => {
+                setActiveItem("Email History");
+              }}
+            >
+              Email History
+            </button>
+            <button
+              disabled
+              className={`${
+                colorMode ? "text-slate-600" : "text-gray-300"
+              } px-4 text-base`}
+              // ${ colorMode
+              //     ? `hover:text-white ${
+              //         activeItem === "Statistics"
+              //           ? "text-white font-semibold"
+              //           : "text-slate-300"
+              //       }`
+              //     : `hover:text-gray-800 ${
+              //         activeItem === "Statistics"
+              //           ? "text-gray-800 font-semibold"
+              //           : "text-gray-500"
+              //       }`}
 
-            onClick={() => {
-              setActiveItem("Statistics");
-            }}
-          >
-            Statistics
-          </button>
-          <button
-            className={`${
-              colorMode
-                ? `hover:text-white ${
-                    activeItem === "Email Settings"
-                      ? "text-white font-semibold"
-                      : "text-slate-300"
-                  }`
-                : `hover:text-gray-800 ${
-                    activeItem === "Email Settings"
-                      ? "text-gray-800 font-semibold"
-                      : "text-gray-500"
-                  }`
-            } px-4 text-base`}
-            onClick={() => {
-              setActiveItem("Email Settings");
-            }}
-          >
-            Email Settings
-          </button>
+              onClick={() => {
+                setActiveItem("Statistics");
+              }}
+            >
+              Statistics
+            </button>
+            <button
+              className={`${
+                colorMode
+                  ? `hover:text-white ${
+                      activeItem === "Email Settings"
+                        ? "text-white font-semibold"
+                        : "text-slate-300"
+                    }`
+                  : `hover:text-gray-800 ${
+                      activeItem === "Email Settings"
+                        ? "text-gray-800 font-semibold"
+                        : "text-gray-500"
+                    }`
+              } px-4 text-base`}
+              onClick={() => {
+                setActiveItem("Email Settings");
+              }}
+            >
+              Email Settings
+            </button>
+          </div>
+          <div>
+            <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Emails Remaining: {1000 - dailyCount}</h1>
+          </div>
         </div>
         {currentEmail?.status !== 404 ? (
           <>
@@ -167,11 +236,18 @@ function App() {
         {activeItem === "Email History" && (
           <div className="flex h-full justify-between gap-8 ">
             <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] max-h-[77vh] p-8 !z-4">
-              <EmailHistory />
+              <EmailHistory
+                emailSessionRow={emailSessionRow}
+                setCurrentPage={setCurrentPage}
+                setClicked={setClicked}
+                setOpenCountModal={setOpenCountModal}
+                openCountModal={openCountModal}
+                countInfo={countInfo}
+                setEmailId={setEmailId}
+              />
             </div>
           </div>
         )}
-
         {activeItem === "Email Settings" && (
           <div className="flex h-full justify-between gap-8 ">
             <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 overflow-hidden">
@@ -182,6 +258,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default QueMailer;
