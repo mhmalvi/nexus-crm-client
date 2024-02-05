@@ -77,6 +77,7 @@ import { ReactComponent as SidebarMail } from "../../assets/Icons/mail-sidebar.s
 import { ReactComponent as LeftArrow } from "../../assets/Icons/leftArrow.svg";
 import { ReactComponent as Fullscreen } from "../../assets/Icons/Fullscreen.svg";
 import { ReactComponent as Minimize } from "../../assets/Icons/Minimize.svg";
+import { ReactComponent as Buildings } from "../../assets/Icons/buildings.svg";
 
 const Icons = {
   CompanyLogo,
@@ -157,7 +158,8 @@ const Icons = {
   SidebarMail,
   LeftArrow,
   Fullscreen,
-  Minimize
+  Minimize,
+  Buildings
 };
 
 export default Icons;

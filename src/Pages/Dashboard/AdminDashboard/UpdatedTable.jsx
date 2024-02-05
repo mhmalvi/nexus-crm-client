@@ -144,13 +144,33 @@ const UpdatedTable = ({
       }
     })();
   }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
+  const [loadingTime, setLoadingTime] = useState(true);
 
- 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingTime(false);
+    }, [3000]);
+  });
+
   let locale = {
     emptyText: (
-      <div className="min-h-[50vh] mt-24">
-        <Loading />
-      </div>
+      <>
+        {userDetails?.role_id === 1 ||
+        userDetails?.role_id === 2 ||
+        userDetails?.role_id === 3 ? (
+          <div className="min-h-[50vh] mt-24">
+            <Loading />
+          </div>
+        ) : userDetails?.role_id === 5 && loadingTime ? (
+          <div className="min-h-[50vh] mt-24">
+            <Loading />
+          </div>
+        ) : (
+          <div className="min-h-[50vh] mt-24">
+            <h1 className="m-0 p-0">No data</h1>
+          </div>
+        )}
+      </>
     ),
   };
   return (

@@ -4,10 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createFileName, useScreenshot } from "use-react-screenshot";
-import {
-  handleFetchCompanies,
-  handleFetchCompanyEmployees,
-} from "../../Components/services/company";
+import { handleFetchCompanyEmployees } from "../../Components/services/company";
 import {
   handleFetchCampaigns,
   handleFetchLeads,
@@ -32,7 +29,6 @@ import LeadStatusSummary from "./Types/LeadStatusSummary";
 
 const Overview = () => {
   document.title = "Overview | Queleads CRM";
-  const { Option } = Select;
 
   const pdfRef = useRef(null);
   const [, takeScreenShot] = useScreenshot();
@@ -41,21 +37,7 @@ const Overview = () => {
   const userDetails = useSelector((state) => state.user);
   const [companyEmployees, setCompanyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();
-  const [companies, setCompanies] = useState([]);
-  const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
   const [fullscreen, setFullScreen] = useState("");
-
-  useEffect(() => {
-    (async () => {
-      const companiesResponse = await handleFetchCompanies();
-      if (companiesResponse?.status) {
-        setCompanies(companiesResponse?.data);
-
-        setActiveCompanies(companiesResponse?.data?.[0]?.id);
-        setDefaultCompany(companiesResponse?.data?.[0]?.name);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -116,11 +98,6 @@ const Overview = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChange = (value) => {
-    setActiveCompanies(value);
-    console.log(`selected ${value}`);
-  };
-
   // For Generate Rport and Download
   const download = (
     image,
@@ -148,88 +125,71 @@ const Overview = () => {
         Capture Report
       </button> */}
       <div className="font-poppins rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full overflow-hidden">
-        {/* {userDetails?.userInfo?.role_id === 1 ? (
-            <div className="font-light">
-              <Select
-                id="companies"
-                defaultValue={defaultCompany}
-                placeholder={defaultCompany}
-                style={{
-                  width: 50,
-                }}
-                onChange={handleChange}
-              >
-                {companies?.map((company) => (
-                  <Option value={company?.id}>{company?.name}</Option>
-                ))}
-              </Select>
-            </div>
-          ) : null} */}
-
         <div ref={pdfRef} className="flex flex-col gap-4 ">
           <div className="">
             <Summary
               activeCompany={activeCompany}
               companyEmployees={companyEmployees}
+              setActiveCompanies={setActiveCompanies}
             />
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
-            <div className="w-2/6">
+          <div className="grid grid-cols-3 items-center justify-center gap-4 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
+            <div className="w-full">
               <IncomePerDay
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-2/6">
+            <div className="w-full">
               <MonthlyRevenue
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-1/4">
+            <div className="w-full">
               <LeadConversionRatio
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-2/6">
+            <div className="w-full">
               <CampaignDetails
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-2/6">
+            <div className="w-full">
               <CampaignsRevenue
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-1/4">
+            <div className="w-full">
               <LeadQualityRatio
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-2/6">
+            <div className="w-full">
               <AreaWiseLead
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className=" w-2/6">
+            <div className="w-full">
               <LeadStatusSummary
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-1/4">
+            <div className="w-full">
               <SalesAnalytics
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
@@ -240,9 +200,6 @@ const Overview = () => {
           {/* Management Analitics */}
           {/* <ManagementAnalytics activeCompany={activeCompany} /> */}
           {/* Comapny Analytics */}
-          {/* {userDetails?.userInfo?.role_id === 1 && (
-              <CompanyRevenue activeCompany={activeCompany} />
-            )} */}
 
           {/* Campaign Analitics */}
           {/* <CampaignAnalytics activeCompany={activeCompany} /> */}

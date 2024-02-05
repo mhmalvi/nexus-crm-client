@@ -5,6 +5,7 @@ import * as rcElement from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 import "./analytic.css";
+import Loading from "../../../Components/Shared/Loader";
 
 const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   const { Option } = Select;
@@ -18,6 +19,7 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (getleads) {
@@ -196,85 +198,9 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
           fill: "#a4de6c",
         },
       ]);
+      setLoading(false)
     }
   }, [activeCampaign, leads, userDetails?.userInfo?.role_id]);
-
-  // useEffect(() => {
-  //   // Campaigns Details
-  //   const campaignsDetailsArray = [];
-  //   campaigns?.forEach((campaign) => {
-  //     if (
-  //       campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-  //     ) {
-  //       campaignsDetailsArray.push({
-  //         campaign: campaign?.campaign_name,
-  //         "New Lead": leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 1
-  //           )?.length,
-  //         skilled: leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 2
-  //           )?.length,
-  //         called: leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 3
-  //           )?.length,
-  //         paid: leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 4
-  //           )?.length,
-  //         verified: leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 5
-  //           )?.length,
-  //         completed: leads
-  //           ?.filter((lead) => lead?.campaign_id === campaign?.campaign_id)
-  //           ?.filter(
-  //             (filteredCampaign) => filteredCampaign?.lead_details_status === 6
-  //           )?.length,
-  //       });
-  //     }
-  //   });
-  // }, [campaigns, leads]);
-
-  // useEffect(() => {
-  //   const campaignwiseRevenueData = [];
-
-  //   (async () => {
-  //     const campaignwiseRevenueResp =
-  //       await fetchCampaignwisePaymentDataOfCompany(
-  //         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
-  //       );
-
-  //     if (campaignwiseRevenueResp?.status === 200) {
-  //       campaigns?.forEach((campaign) => {
-  //         if (
-  //           campaign?.start_time?.toString()?.includes(new Date().getFullYear())
-  //         ) {
-  //           campaignwiseRevenueData.push({
-  //             campaign: campaign?.campaign_name,
-  //             revenue: campaignwiseRevenueResp?.data?.find(
-  //               (camp) =>
-  //                 parseInt(camp?.campaigns) === parseInt(campaign?.campaign_id)
-  //             )
-  //               ? campaignwiseRevenueResp?.data?.find(
-  //                   (camp) =>
-  //                     parseInt(camp?.campaigns) ===
-  //                     parseInt(campaign?.campaign_id)
-  //                 )?.sums
-  //               : 0,
-  //           });
-  //         }
-  //       });
-  //     }
-  //   })();
-  // }, [activeCompany, campaigns, userDetails]);
 
   const handleFullScreen = () => {
     setFullScreen("AreaWiseLead");
@@ -317,33 +243,38 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
           </div>
         </div>
       </div>
-      <div className="pt-4">
-        <rcElement.ResponsiveContainer width="100%" height={220}>
-          <rcElement.RadarChart
-            cx="50%"
-            cy="50%"
-            activeDot={"dot"}
-            outerRadius="70%"
-            data={areawiseLeads}
-          >
-            <rcElement.Tooltip />
-            <rcElement.PolarGrid />
-            <rcElement.PolarAngleAxis
-              dataKey="city"
-              stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
-            />
-            <rcElement.PolarRadiusAxis />
-            <rcElement.Radar
-              dataKey="percentage"
-              stroke="#8884d8"
-              fill="#7037ff"
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="pt-4 min-h-32">
+          <rcElement.ResponsiveContainer width="100%" height={220}>
+            <rcElement.RadarChart
+              cx="50%"
+              cy="50%"
               activeDot={"dot"}
-              dot={true}
-              fillOpacity={0.8}
-            />
-          </rcElement.RadarChart>
-        </rcElement.ResponsiveContainer>
-      </div>
+              outerRadius="70%"
+              data={areawiseLeads}
+            >
+              <rcElement.Tooltip />
+              <rcElement.PolarGrid />
+              <rcElement.PolarAngleAxis
+                dataKey="city"
+                stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
+              />
+              <rcElement.PolarRadiusAxis />
+              <rcElement.Radar
+                dataKey="percentage"
+                stroke="#8884d8"
+                fill="#7037ff"
+                activeDot={"dot"}
+                dot={true}
+                fillOpacity={0.8}
+              />
+            </rcElement.RadarChart>
+          </rcElement.ResponsiveContainer>
+        </div>
+      )}
 
       <Modal
         className="analyticModal"

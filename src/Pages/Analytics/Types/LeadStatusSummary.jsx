@@ -5,6 +5,7 @@ import * as rcElement from "recharts";
 import * as chartUtils from "../utils";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
+import Loading from "../../../Components/Shared/Loader";
 
 const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
   const { Option } = Select;
@@ -19,7 +20,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  const [loading, setLoading] = useState(true);
   const COLORS = [
     "#7037FF",
     "#2f77d6",
@@ -185,6 +186,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
               : 0,
         },
       ]);
+      setLoading(false)
     }
   }, [
     activeCampaign,
@@ -209,6 +211,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
         >
           Lead Status Summary
         </h1>
+
         <div className="flex items-center">
           <Select
             defaultValue={currentYearCampaign?.[0]?.campaign_name}
@@ -234,6 +237,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
           </div>
         </div>
       </div>
+      {loading ? <Loading/>:
       <div className="pt-4">
         <rcElement.ResponsiveContainer width="100%" height={220}>
           <rcElement.PieChart width="100%" height={220}>
@@ -253,7 +257,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
             </rcElement.Pie>
           </rcElement.PieChart>
         </rcElement.ResponsiveContainer>
-      </div>
+      </div>}
       <Modal
         className="analyticModal"
         title="Lead Status Summary"
