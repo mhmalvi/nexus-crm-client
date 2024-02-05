@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import * as rcElement from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
+import Loading from "../../../Components/Shared/Loader";
 
 const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
   const [activeCampaign, setActiveCampaign] = useState();
@@ -15,7 +16,7 @@ const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (getleads) {
       if (getleads?.length) {
@@ -84,6 +85,7 @@ const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
     });
 
     setCampaignsDetails(campaignsDetailsArray);
+    setLoading(false)
   }, [campaigns, leads]);
   const handleFullScreen = () => {
     setFullScreen("CampaignDetails");
@@ -119,7 +121,8 @@ const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
           </div>
         </div>
       </div>
-      <div>
+
+     {loading ? <Loading/> :<div>
         <rcElement.ResponsiveContainer
           width="100%"
           height={220}
@@ -136,7 +139,7 @@ const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
             <rcElement.YAxis />
             <rcElement.Tooltip />
             <rcElement.Legend />
-            <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#7037FF" />
+            <rcElement.Bar dataKey="New Lead" stackId="lead" fill="#7037FF"/>
             <rcElement.Bar dataKey="skilled" stackId="lead" fill="#2f77d6" />
             <rcElement.Bar dataKey="called" stackId="lead" fill="#c72d2d" />
             <rcElement.Bar dataKey="paid" stackId="lead" fill="#17CDD9" />
@@ -144,7 +147,7 @@ const CampaignDetails = ({ activeCompany, fullscreen, setFullScreen }) => {
             <rcElement.Bar dataKey="completed" stackId="lead" fill="#34C759" />
           </rcElement.BarChart>
         </rcElement.ResponsiveContainer>
-      </div>
+      </div>}
       <Modal
         
         className="analyticModal"

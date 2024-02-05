@@ -6,7 +6,7 @@ import * as chartUtils from "../utils";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 
-const CompanyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
+const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
   const [campaignwiseRevenue, setCampaignwiseRevenue] = useState([]);
   const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
   const [leads, setLeads] = useState([]);
@@ -191,4 +191,4 @@ const CompanyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
   );
 };
 
-export default CompanyRevenue;
+export default CampaignsRevenue;

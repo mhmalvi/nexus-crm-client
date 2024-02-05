@@ -6,13 +6,19 @@ import {
   fetchAverageIncomeOfLastWeek,
   fetchMonthPaymentDataOfCompany,
 } from "../../Components/services/payment";
-
-import * as rcElement from "recharts";
+import { Select } from "antd";
 import { setLoader } from "../../features/user/userSlice";
+import {
+  handleFetchCompanies,
+} from "../../Components/services/company";
 
-const Summary = ({ activeCompany, companyEmployees }) => {
+const Summary = ({
+  activeCompany,
+  companyEmployees,
+  setActiveCompanies,
+}) => {
+  const { Option } = Select;
   const dispatch = useDispatch();
-
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
@@ -20,6 +26,8 @@ const Summary = ({ activeCompany, companyEmployees }) => {
   const [lastWeekIncome, setLastWeekIncome] = useState([]);
   const [totalLastWeekIncome, setTotalLastWeekIncome] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [companies, setCompanies] = useState([]);
+  const [defaultCompany, setDefaultCompany] = useState(companies?.[0]?.name);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -63,15 +71,48 @@ const Summary = ({ activeCompany, companyEmployees }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCompany, userDetails]);
+  const handleChange = (value) => {
+    setActiveCompanies(value);
+  };
+  useEffect(() => {
+    (async () => {
+      const companiesResponse = await handleFetchCompanies();
+      if (companiesResponse?.status) {
+        setCompanies(companiesResponse?.data);
+
+        setActiveCompanies(companiesResponse?.data?.[0]?.id);
+        setDefaultCompany(companiesResponse?.data?.[0]?.name);
+      }
+    })();
+  }, []);
   return (
     <div className="flex flex-col justify-between items-start w-full gap-2">
-      <h1
-        className={`text-xl font-semibold font-poppins ${
-          colorMode ? "text-slate-300" : "text-gray-800"
-        }`}
-      >
-        Summary
-      </h1>
+      <div className="flex w-full items-center justify-between">
+        <h1
+          className={`text-xl font-semibold font-poppins ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          Summary
+        </h1>
+        {userDetails?.role_id === 1 ? (
+            <div className="font">
+              <Select
+                id="companies"
+                defaultValue={defaultCompany}
+                placeholder={defaultCompany}
+                style={{
+                  width: 200,
+                }}
+                onChange={handleChange}
+              >
+                {companies?.map((company) => (
+                  <Option value={company?.id}>{company?.name}</Option>
+                ))}
+              </Select>
+            </div>
+          ) : null}
+      </div>
       <div className="w-full items-center justify-between flex gap-4">
         <div className="flex-grow">
           <div className="flex justify-between rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11]">

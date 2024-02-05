@@ -81,7 +81,7 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
   return (
     <>
       {/* Monthly Revenue */}
-      {userDetails?.role_id !== 1 && (
+      {/* {userDetails?.role_id !== 1 && ( */}
         <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">
           <div className="w-full flex justify-between items-center">
             <h1
@@ -134,7 +134,7 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
             </rcElement.ResponsiveContainer>
           </div>
         </div>
-      )}
+      {/* )} */}
       <Modal
         className="analyticModal"
         title="Monthly Revenue"

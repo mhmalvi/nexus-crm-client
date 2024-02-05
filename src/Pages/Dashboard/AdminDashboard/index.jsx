@@ -697,7 +697,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
-      <div className="col-span-9 border-black rounded-md p-5 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
+      <div className="col-span-9 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
