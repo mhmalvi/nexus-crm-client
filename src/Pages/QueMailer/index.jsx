@@ -47,7 +47,7 @@ const QueMailer = () => {
       try {
         const data = {
           page: currentPage,
-          per_page: pagination,
+          user_id: userDetails?.userInfo.id,
         };
         const res = await getEmailHistory(data);
         setEmailSessionRow(res.data);
@@ -56,7 +56,7 @@ const QueMailer = () => {
       }
     };
     fetchEmailHistory();
-  }, [currentPage, pagination]);
+  }, [currentPage, pagination, userDetails?.userInfo.id]);
   useEffect(() => {
     async function fetchEmailCount() {
       const data = {
