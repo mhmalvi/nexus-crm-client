@@ -51,7 +51,6 @@ const SalesAdmins = ({ clientId }) => {
       }
     })();
   }, [clientId, isSuspandStatusStudentAdmin]);
-
   useEffect(() => {
     (async () => {
       const status = isSuspandStatusAccountant ? 1 : 0;
@@ -152,7 +151,7 @@ const SalesAdmins = ({ clientId }) => {
 
   const handleSuspendEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 1);
-    // console.log(statusUpdateResponse);
+    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       message.success("Employee suspended Successfully");
@@ -160,44 +159,44 @@ const SalesAdmins = ({ clientId }) => {
       setSyncEmployees(!syncEmployees);
     }
   };
-  const handleSuspendB2BEmployee = async (userId) => {
-    const status = isSuspandStatusStudentAdmin ? 0 : 1;
-    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-    // console.log(statusUpdateResponse);
+  // const handleSuspendB2BEmployee = async (userId) => {
+  //   const status = isSuspandStatusStudentAdmin ? 0 : 1;
+  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+  //   // console.log(statusUpdateResponse);
 
-    if (statusUpdateResponse?.data?.status === true) {
-      const status = isSuspandStatusStudentAdmin ? 1 : 0;
-      const resep = await handleFetchB2BUser(7, status);
-      if (resep?.status === 200) {
-        setAllStudentAdmin(resep?.data);
-      }
-    }
-  };
-  const handleSuspendB2BEmployeeAccount = async (userId) => {
-    const status = isSuspandStatusAccountant ? 0 : 1;
-    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-    // console.log(statusUpdateResponse);
+  //   if (statusUpdateResponse?.data?.status === true) {
+  //     const status = isSuspandStatusStudentAdmin ? 1 : 0;
+  //     const resep = await handleFetchB2BUser(7, status);
+  //     if (resep?.status === 200) {
+  //       setAllStudentAdmin(resep?.data);
+  //     }
+  //   }
+  // };
+  // const handleSuspendB2BEmployeeAccount = async (userId) => {
+  //   const status = isSuspandStatusAccountant ? 0 : 1;
+  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+  //   // console.log(statusUpdateResponse);
 
-    if (statusUpdateResponse?.data?.status === true) {
-      const status = isSuspandStatusAccountant ? 1 : 0;
-      const resep = await handleFetchB2BUser(8, status);
-      if (resep?.status === 200) {
-        setAllStudentAccountants(resep?.data);
-      }
-    }
-  };
-  const handleSuspendB2BEmployeeAgency = async (userId) => {
-    const status = isSuspandStatusAgency ? 0 : 1;
-    const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
+  //   if (statusUpdateResponse?.data?.status === true) {
+  //     const status = isSuspandStatusAccountant ? 1 : 0;
+  //     const resep = await handleFetchB2BUser(8, status);
+  //     if (resep?.status === 200) {
+  //       setAllStudentAccountants(resep?.data);
+  //     }
+  //   }
+  // };
+  // const handleSuspendB2BEmployeeAgency = async (userId) => {
+  //   const status = isSuspandStatusAgency ? 0 : 1;
+  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
 
-    if (statusUpdateResponse?.data?.status === true) {
-      const status = isSuspandStatusAgency ? 1 : 0;
-      const resep = await handleFetchB2BUser(9, status);
-      if (resep?.status === 200) {
-        setAllStudentAgencys(resep?.data);
-      }
-    }
-  };
+  //   if (statusUpdateResponse?.data?.status === true) {
+  //     const status = isSuspandStatusAgency ? 1 : 0;
+  //     const resep = await handleFetchB2BUser(9, status);
+  //     if (resep?.status === 200) {
+  //       setAllStudentAgencys(resep?.data);
+  //     }
+  //   }
+  // };
 
   return (
     <div className="relative flex flex-col justify-between gap-5 w-full h-full">
@@ -307,7 +306,7 @@ const SalesAdmins = ({ clientId }) => {
           <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
         </div>
 
-        <div className="mt-5 h-48 overflow-y-scroll">
+        <div className="mt-5 h-[22vh] overflow-y-scroll">
           <div className="grid grid-cols-2 gap-8 ">
             {/* Admin of Company */}
             {companyAdminEmployee ? (
@@ -319,7 +318,11 @@ const SalesAdmins = ({ clientId }) => {
                 color="volcano"
                 size="small"
               >
-                <div className={`flex justify-start items-center p-2 shadow-md shadow-inner ${colorMode ? "shadow-[#ffffff22]":"shadow-[#33333322]"} rounded-md`}>
+                <div
+                  className={`flex justify-start items-center p-2 shadow-md shadow-inner ${
+                    colorMode ? "shadow-[#ffffff22]" : "shadow-[#33333322]"
+                  } rounded-md`}
+                >
                   <Avatar
                     className="rounded-full cursor-pointer "
                     size="38"
@@ -399,9 +402,10 @@ const SalesAdmins = ({ clientId }) => {
                         )}
                         <button
                           className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                          onClick={() =>
-                            handleSuspendEmployee(employee?.user_id)
-                          }
+                          onClick={() => {
+                            handleSuspendEmployee(employee?.user_id);
+                            console.log(employee?.user_id);
+                          }}
                         >
                           Suspend
                         </button>
@@ -483,73 +487,78 @@ const SalesAdmins = ({ clientId }) => {
         </div>
         <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
 
-        <div className="mt-5 h-80 overflow-y-scroll">
+        <div className="mt-5 h-[35vh] overflow-y-scroll pb-2">
           <div className="grid grid-cols-2 gap-8 ">
             {companySalesEmployees.length ? (
-              companySalesEmployees.map((employee, i) => (
-                <div key={i} className="flex justify-start items-center">
-                  <Avatar
-                    className="rounded-full cursor-pointer"
-                    size="38"
-                    color={"#804DFF"}
-                    name={employee?.full_name}
-                  />
-                  <div className="ml-4 w-52 flex flex-col justify-around">
-                    <h1
-                      className={`font-semibold text-lg ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } m-0`}
-                    >
-                      {employee?.full_name}
-                    </h1>
-                    <p
-                      className={`font-medium text-xs mb-0 ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      }`}
-                    >
-                      {employee?.email}
-                    </p>
+              companySalesEmployees
+                .filter((employee) => employee.suspend === 0)
+                .map((employee, i) => (
+                  <div key={i} className="flex justify-start items-center">
+                    <Avatar
+                      className="rounded-full cursor-pointer"
+                      size="38"
+                      color={"#804DFF"}
+                      name={employee?.full_name}
+                    />
+                    {console.log(employee)}
+                    <div className="ml-4 w-52 flex flex-col justify-around">
+                      <h1
+                        className={`font-semibold text-lg ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        } m-0`}
+                      >
+                        {employee?.full_name}
+                      </h1>
+                      <p
+                        className={`font-medium text-xs mb-0 ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        }`}
+                      >
+                        {employee?.email}
+                      </p>
 
-                    {userDetails?.userInfo?.role_id === 1 ||
-                    userDetails?.userInfo?.role_id === 2 ||
-                    userDetails?.userInfo?.role_id === 3 ||
-                    userDetails?.userInfo?.role_id === 4 ? (
-                      <div>
-                        {(userDetails?.userInfo?.role_id === 1 ||
-                          userDetails?.userInfo?.role_id === 2 ||
-                          userDetails?.userInfo?.role_id === 3 ||
-                          userDetails?.userInfo?.role_id === 4 ||
-                          userDetails?.userInfo?.role_id === 5) && (
-                          <Popconfirm
-                            title="Are you sure to remove this Sales Admin"
-                            onConfirm={() =>
-                              handleRemoveUser(employee?.user_id)
-                            }
-                            okText="Yes"
-                          >
-                            <button
-                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
-                                colorMode
-                                  ? "text-slate-300 border-slate-300"
-                                  : "text-gray-800 border-gray-800"
-                              } mt-3 mr-2`}
+                      {userDetails?.userInfo?.role_id === 1 ||
+                      userDetails?.userInfo?.role_id === 2 ||
+                      userDetails?.userInfo?.role_id === 3 ||
+                      userDetails?.userInfo?.role_id === 4 ? (
+                        <div>
+                          {(userDetails?.userInfo?.role_id === 1 ||
+                            userDetails?.userInfo?.role_id === 2 ||
+                            userDetails?.userInfo?.role_id === 3 ||
+                            userDetails?.userInfo?.role_id === 4 ||
+                            userDetails?.userInfo?.role_id === 5) && (
+                            <Popconfirm
+                              title="Are you sure to remove this Sales Admin"
+                              onConfirm={() =>
+                                handleRemoveUser(employee?.user_id)
+                              }
+                              okText="Yes"
                             >
-                              Remove
-                            </button>
-                          </Popconfirm>
-                        )}
+                              <button
+                                className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                  colorMode
+                                    ? "text-slate-300 border-slate-300"
+                                    : "text-gray-800 border-gray-800"
+                                } mt-3 mr-2`}
+                              >
+                                Remove
+                              </button>
+                            </Popconfirm>
+                          )}
 
-                        <button
-                          className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
-                          onClick={() => handleSuspendEmployee(employee?.id)}
-                        >
-                          Suspend
-                        </button>
-                      </div>
-                    ) : null}
+                          <button
+                            className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                            onClick={() =>
+                              handleSuspendEmployee(employee?.user_id)
+                            }
+                          >
+                            Suspend
+                          </button>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
             ) : (
               <h1
                 className={`font-semibold text-base ${
@@ -588,7 +597,9 @@ const SalesAdmins = ({ clientId }) => {
                       </p>
                       <button
                         className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
-                        onClick={() => handleAddSuspendedEmployee(employee?.id)}
+                        onClick={() =>
+                          handleAddSuspendedEmployee(employee?.user_id)
+                        }
                       >
                         Reassign
                       </button>
