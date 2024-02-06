@@ -4,7 +4,8 @@
   background-size: cover;
 }
 .register-right-background {
-  background-image: url("../../../assets/BackgroundPhotos/lightBG.svg");
+  /* background-image: url("../../../assets/BackgroundPhotos/lightBG.svg"); */
+   background: linear-gradient(45deg,#E786CE,#bad7e5 ,#88C9E6); 
   background-repeat: no-repeat;
   background-size: cover;
 }

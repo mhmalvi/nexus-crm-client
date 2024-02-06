@@ -108,7 +108,6 @@ const CompanySettings = () => {
 
     if (updateCompany?.key === "success") {
       setToggleEditDetails(false);
-
       dispatch(setLoader(true));
       const syncResponse = await handleSyncLeads(
         companyDetails?.cid,

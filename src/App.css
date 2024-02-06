@@ -8,9 +8,9 @@
 }
 
 .light-background {
-  /* background: linear-gradient(39deg,#cfcfcf, #ffffff, #cfcfcf); */
+  background: linear-gradient(45deg,#E786CE,#bad7e5 ,#88C9E6); 
   background-position: center;
-  background-image: url("./assets/BackgroundPhotos/lightBG.svg");
+  /* background-image: url("./assets/BackgroundPhotos/lightBG.svg"); */
   background-repeat: no-repeat;
   background-size: 110vw;
   background-attachment: fixed;
