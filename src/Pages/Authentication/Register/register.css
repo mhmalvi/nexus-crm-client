@@ -1,0 +1,10 @@
+.register-left-background {
+  background-image: url("../../../assets/BackgroundPhotos/darkBG.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.register-right-background {
+  background-image: url("../../../assets/BackgroundPhotos/lightBG.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

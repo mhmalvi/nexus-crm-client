@@ -80,6 +80,18 @@ export const handleAddSenderEmail = async (data) => {
     return error.response;
   }
 };
+export const deleteEmailSettings = async (data) =>{
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/delete-mail`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+}
 export const handleUpdateSenderEmail = async (data, id) => {
   console.log(data);
   try {

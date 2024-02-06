@@ -3,7 +3,7 @@
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
-  background-size: 110vw;
+  background-size: cover ;
   background-attachment: fixed;
 }
 

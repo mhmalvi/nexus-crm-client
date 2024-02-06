@@ -17,7 +17,7 @@ import {
   updateFbToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
-import "../Login.css";
+import "./Login.css";
 const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
 
 const Login = () => {
@@ -53,8 +53,6 @@ const Login = () => {
       setBookMarkedAccounts(JSON.parse(Storage.getItem("__b__")));
     }
   }, [navigate, syncBookMarked]);
-
-  console.log("bookMarkedAccounts", bookMarkedAccounts);
 
   const userData = (e) => {
     const userdata = { ...data };
@@ -300,7 +298,7 @@ const Login = () => {
 
       <div className="relative flex items-center justify-center mx-auto w-full h-full p-[10px]">
         <div
-          className={` z-10 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-md px-4 py-8 overflow-hidden crm-scroll-none`}
+          className={` z-10 w-full !mx-auto relative max-w-md shadow-md backdrop-blur-2xl bg-[#ffffff11] border-[0.5px] border-[#ffffff44] rounded-md px-4 py-8 overflow-hidden`}
         >
           <Modal
             visible={addBookMarkOpen}
@@ -356,8 +354,11 @@ const Login = () => {
                     />
                   </a>
                 </div>
-                <form className="px-8 w-full" onSubmit={handleLoginReq}>
-                  <div className="mb-6 font-poppins ">
+                <form
+                  className="flex flex-col gap-4 px-8 w-full"
+                  onSubmit={handleLoginReq}
+                >
+                  <div className="font-poppins ">
                     <label
                       htmlFor="email"
                       className="block mb-2 text-sm text-white"
@@ -375,9 +376,9 @@ const Login = () => {
                       required
                     />
                   </div>
-                  <div className="mb-4 font-poppins w-full">
+                  <div className="font-poppins w-full">
                     {/* Forgot password */}
-                    <div className="flex flex-col justify-between">
+                    <div className="flex flex-col justify-between loginPassword">
                       <label
                         htmlFor="password"
                         className="text-sm text-white mb-2"
@@ -400,7 +401,7 @@ const Login = () => {
                       />
                     </div>
                   </div>
-                  <div className="mb-6 font-poppins flex items-center justify-between">
+                  <div className="font-poppins flex items-center justify-between">
                     <div className="w-full">
                       <input
                         className="cursor-pointer mr-2"
@@ -424,15 +425,23 @@ const Login = () => {
                       Forgot password?
                     </label>
                   </div>
-                  <div className="mb-6">
-                    <button
-                      type="submit"
-                      className="ease-in duration-200 lg:h-full w-full p-3 text-white font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
-                    >
-                      Log in
-                    </button>
-                  </div>
+
+                  <button
+                    type="submit"
+                    className="ease-in duration-200 lg:h-full w-full px-4 py-2 text-slate-300 font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                  >
+                    Log in
+                  </button>
                 </form>
+                <h1 className="m-0 p-0 text-slate-300">
+                  Don’t have any account?{" "}
+                  <span
+                    className="ease-in duration-100 text-brand-color hover:text-opacity-70 cursor-pointer"
+                    onClick={() => navigate("/register")}
+                  >
+                    Sign Up
+                  </span>
+                </h1>
               </>
             ) : (
               <>
@@ -458,7 +467,9 @@ const Login = () => {
                               size={38}
                               name={account?._ue_}
                             />
-                            <span className="px-4 text-slate-300 ">{account?._ue_}</span>
+                            <span className="px-4 text-slate-300 ">
+                              {account?._ue_}
+                            </span>
                           </div>
 
                           <div
@@ -486,14 +497,6 @@ const Login = () => {
               </>
             )}
           </div>
-
-          {/* Saved Accounts */}
-          {/* <div
-                  className="text-center font-semibold cursor-pointer"
-                  onClick={() => navigate("/register")}
-                >
-                  I don't have account
-                </div> */}
           <div className="absolute right-6 top-6">
             {!bookMarkOpen ? (
               <Tooltip title="Book marked accounts" placement="right">

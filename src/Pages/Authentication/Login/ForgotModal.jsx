@@ -1,7 +1,7 @@
 import { Modal, message } from "antd";
 import React, { useState } from "react";
 import Axios from "axios";
-
+import "./Login.css";
 const ForgotPassword = (props) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [emailCheckResponse, setEmailCheckResponse] = useState();
@@ -10,7 +10,6 @@ const ForgotPassword = (props) => {
   );
   const [emailData, setEmailData] = useState("");
 
-  console.log(emailData);
   const config = {
     headers: {
       Accept: "application/json",
@@ -62,18 +61,21 @@ const ForgotPassword = (props) => {
       okText={"Send Email"}
       okButtonProps={{ disabled: emailData ? false : true }}
       confirmLoading={confirmLoading}
+      centered
       onCancel={() => props.oncancel(false)}
+      className="forgotModal"
+      cancelButtonProps={{ style: { display: "none" } }}
     >
-      <p>{modalText}</p>
-      <input
-        className="w-full"
-        type="email"
-        placeholder="Enter a valid email"
-        onChange={(e) => {
-          e.preventDefault();
-          setEmailData(e.target.value);
-        }}
-      />
+        <p className="p-0 mx-0 mb-2 text-slate-300 text-sm">{modalText}</p>
+        <input
+          className="w-full rounded-md bg-transparent placeholder:text-sm p-2 text-slate-300"
+          type="email"
+          placeholder="Enter a valid email"
+          onChange={(e) => {
+            e.preventDefault();
+            setEmailData(e.target.value);
+          }}
+        />
     </Modal>
   );
 };

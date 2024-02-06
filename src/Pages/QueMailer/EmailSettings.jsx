@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { message } from "antd";
+import { message, Popconfirm } from "antd";
 import {
   handleAddSenderEmail,
   handleUpdateSenderEmail,
+  deleteEmailSettings,
 } from "../../Components/services/que-mail";
 import { useSelector } from "react-redux";
 
@@ -39,18 +40,15 @@ const EmailSettings = ({ currentEmail }) => {
       } else {
         response = await handleAddSenderEmail(currentEmailData);
       }
-
       const result = await response;
       if (result?.status === 201) {
         message.success(`Mail saved successfully to ${senderEmailData.email}`);
+        window.location.reload();
       } else {
-        message.error(result?.message);
+        message.error(result?.data?.message);
       }
-
-      window.location.reload();
-    } catch (error) {
-      console.error("Error while saving mail:", error);
-      message.error("Something went wrong while sending mails");
+    } catch (errors) {
+      message.error(errors);
     }
   };
 
@@ -60,139 +58,156 @@ const EmailSettings = ({ currentEmail }) => {
       [fieldName]: value,
     }));
   };
-
   return (
-    <div className="flex items-center justify-center h-full w-full">
-      <div className="h-full w-full rounded-md">
-        <form className="flex flex-col gap-8">
-          <div className="flex gap-4 items-center justify-between w-1/4">
+    <div className="flex items-center justify-center h-full w-full relative">
+      <form className="flex flex-col gap-8 w-1/5">
+        <div className="flex gap-4 items-center justify-between w-full">
+          <h1
+            className={`text-base m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            Email:
+          </h1>
+          {editEmailData ? (
+            <input
+              type="text"
+              defaultValue={
+                currentEmail?.status !== 404
+                  ? currentEmail.from_mail_address
+                  : ""
+              }
+              className={`w-3/5 !m-0 px-2 py-0 h-[4vh] rounded-md border-none bg-gray-800 text-right text-slate-300`}
+              required
+              onChange={(e) => handleInputChange("email", e.target.value)}
+            />
+          ) : (
             <h1
-              className={`text-base m-0 p-0 ${
+              className={`w-3/5 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              }`}
+              } flex items-center justify-end m-0 px-2 py-0 h-[4vh] text-base`}
             >
-              Email:
+              {currentEmail.from_mail_address}
             </h1>
-            {editEmailData ? (
-              <input
-                type="text"
-                defaultValue={
-                  currentEmail?.status !== 404
-                    ? currentEmail.from_mail_address
-                    : ""
-                }
-                className={`w-3/5 m-0 px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
-                required
-                onChange={(e) => handleInputChange("email", e.target.value)}
-              />
-            ) : (
-              <h1
-                className={` ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                } flex items-center justify-center m-0  px-2 py-0 h-[4vh] text-base`}
-              >
-                {currentEmail.from_mail_address}
-              </h1>
-            )}
-          </div>
-          <div className="flex gap-4 items-center justify-between w-1/4 ">
+          )}
+        </div>
+        <div className="flex gap-4 items-center justify-between w-full h-full ">
+          <h1
+            className={`text-base m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            } `}
+          >
+            APP Password:
+          </h1>
+          {editEmailData ? (
+            <input
+              type="text"
+              defaultValue={
+                currentEmail?.status !== 404 ? currentEmail.password : ""
+              }
+              className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
+              required
+              onChange={(e) => handleInputChange("password", e.target.value)}
+            />
+          ) : (
             <h1
-              className={`text-base m-0 p-0 ${
+              className={`w-3/5 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              }`}
+              } m-0 flex items-center justify-end px-2 py-0 h-[4vh] text-base`}
             >
-              APP Password:
+              {currentEmail.password}
             </h1>
-            {editEmailData ? (
-              <input
-                type="text"
-                defaultValue={
-                  currentEmail?.status !== 404 ? currentEmail.password : ""
-                }
-                className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
-                required
-                onChange={(e) => handleInputChange("password", e.target.value)}
-              />
-            ) : (
-              <h1 className={` ${
-                colorMode ? "text-slate-300" : "text-gray-800"
-              } m-0  px-2 py-0 h-[4vh] text-base`}>
-                {currentEmail.password}
-              </h1>
-            )}
-          </div>
-          <div className="flex gap-4 items-center justify-between w-1/4 ">
+          )}
+        </div>
+        <div className="flex gap-4 items-center justify-between w-full ">
+          <h1
+            className={` text-base m-0 p-0 ${
+              colorMode ? "text-slate-300" : "text-gray-800"
+            }`}
+          >
+            From Name:
+          </h1>
+          {editEmailData ? (
+            <input
+              type="text"
+              defaultValue={
+                currentEmail?.status !== 404 ? currentEmail.from_name : ""
+              }
+              className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-none bg-gray-800 text-right text-slate-300`}
+              required
+              onChange={(e) => handleInputChange("from_name", e.target.value)}
+            />
+          ) : (
             <h1
-              className={`text-base m-0 p-0 ${
+              className={`w-3/5 ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              }`}
+              } flex items-center justify-end m-0 px-2 py-0 h-[4vh] text-base `}
             >
-              From Name:
+              {currentEmail.from_name}
             </h1>
-            {editEmailData ? (
-              <input
-                type="text"
-                defaultValue={
-                  currentEmail?.status !== 404 ? currentEmail.from_name : ""
-                }
-                className={`w-3/5 m-0  px-2 py-0 h-[4vh] rounded-md border-transparent bg-gray-800 text-right text-slate-300`}
-                required
-                onChange={(e) => handleInputChange("from_name", e.target.value)}
-              />
-            ) : (
-              <h1 className={` ${
-                colorMode ? "text-slate-300" : "text-gray-800"
-              } m-0 px-2 py-0 h-[4vh] text-base`}>
-                {currentEmail.from_name}
-              </h1>
-            )}
-          </div>
-          <div className="w-1/4 flex justify-end items-center">
-            {editEmailData ? (
-              <div className="flex gap-4">
-                <button
-                  onClick={() => {
-                    handleSaveCurrentMail();
-                  }}
-                  type="button"
-                  className={`px-4 py-2 ${
-                    colorMode
-                      ? "bg-slate-300 text-gray-800"
-                      : "bg-gray-800 text-slate-300"
-                  } rounded-md`}
-                >
-                  Save
-                </button>
-                <div
-                  onClick={() => {
-                    setEditEmailData(false);
-                  }}
-                  className={`px-4 py-2 cursor-pointer ${
-                    colorMode
-                      ? "bg-slate-300 text-gray-800"
-                      : "bg-gray-800 text-slate-300"
-                  } rounded-md`}
-                >
-                  Close
-                </div>
-              </div>
-            ) : (
-              <div
+          )}
+        </div>
+        <div className="w-full flex justify-end items-center">
+          {editEmailData ? (
+            <div className="flex gap-4">
+              <button
+                onClick={() => {
+                  handleSaveCurrentMail();
+                }}
+                type="button"
                 className={`px-4 py-2 ${
                   colorMode
                     ? "bg-slate-300 text-gray-800"
                     : "bg-gray-800 text-slate-300"
-                } rounded-md cursor-pointer`}
-                onClick={() => {
-                  setEditEmailData(true);
-                }}
+                } rounded-md`}
               >
-                Edit
+                Save
+              </button>
+              <div
+                onClick={() => {
+                  setEditEmailData(false);
+                }}
+                className={`px-4 py-2 cursor-pointer ${
+                  colorMode
+                    ? "bg-slate-300 text-gray-800"
+                    : "bg-gray-800 text-slate-300"
+                } rounded-md`}
+              >
+                Close
               </div>
-            )}
-          </div>
-        </form>
-      </div>
+            </div>
+          ) : (
+            <div
+              className={`px-4 py-2 ${
+                colorMode
+                  ? "bg-slate-300 text-gray-800"
+                  : "bg-gray-800 text-slate-300"
+              } rounded-md cursor-pointer`}
+              onClick={() => {
+                setEditEmailData(true);
+              }}
+            >
+              Edit
+            </div>
+          )}
+        </div>
+      </form>
+      {currentEmail.status !== 404 ? (
+        <Popconfirm
+          title="Are you sure to delete this email?"
+          onConfirm={() => {
+            deleteEmailSettings({ id: currentEmail.id });
+          }}
+        >
+          <button
+            className={`absolute right-0 top-0 px-4 py-2 bg-red-500 border-none rounded-md text-slate-300 hover:text-gray-800 ease-in duration-100`}
+          >
+            Delete Mail
+          </button>
+        </Popconfirm>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
