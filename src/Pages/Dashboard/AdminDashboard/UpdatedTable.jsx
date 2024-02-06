@@ -149,19 +149,13 @@ const UpdatedTable = ({
   useEffect(() => {
     setTimeout(() => {
       setLoadingTime(false);
-    }, [3000]);
+    }, [5000]);
   });
 
   let locale = {
     emptyText: (
       <>
-        {userDetails?.role_id === 1 ||
-        userDetails?.role_id === 2 ||
-        userDetails?.role_id === 3 ? (
-          <div className="min-h-[50vh] mt-24">
-            <Loading />
-          </div>
-        ) : userDetails?.role_id === 5 && loadingTime ? (
+        { loadingTime ? (
           <div className="min-h-[50vh] mt-24">
             <Loading />
           </div>

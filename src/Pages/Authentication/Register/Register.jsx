@@ -156,7 +156,7 @@ const Register = () => {
                   name="confirm_password"
                   id="confirm_password"
                   placeholder="Confirm your password"
-                  className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                  className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                   required
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);

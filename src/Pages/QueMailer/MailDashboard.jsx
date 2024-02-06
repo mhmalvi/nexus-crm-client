@@ -7,6 +7,7 @@ import {
   handleImageUpload,
   handleGetAllImage,
   sendEmail,
+  updateEmail,
 } from "../../Components/services/que-mail";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
@@ -29,7 +30,6 @@ const MailDashboard = ({
   setFileName,
   setFile,
 }) => {
-
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [tempInitValue, setTempInitValue] = useState("");
@@ -45,6 +45,11 @@ const MailDashboard = ({
 
   const [mailSubject, setMailSubject] = useState("");
   const [selectedData, setSelectedData] = useState([]);
+  const [templateData, setTemplateData] = useState({
+    id: "",
+    name: "",
+    template: tempInitValue,
+  });
   const editorRef = useRef(null);
   const userDetails = useSelector((state) => state.user.userInfo);
 
@@ -118,7 +123,6 @@ const MailDashboard = ({
       data.forEach((email) => {
         formData.append("email[]", email);
       });
-
       formData.append("user_id", userDetails?.id);
 
       if (attachment.length) {
@@ -145,14 +149,23 @@ const MailDashboard = ({
       }
     }
   };
-
+  const handleUpdateMail = async () => {
+    const res = await updateEmail(templateData);
+    if (res?.status === 201) {
+      message.success("Template Updated Successfully");
+      setTimeout(()=>{
+        window.location.reload()
+      },[1500])
+    } else {
+      message.error(res.message);
+    }
+  };
   useEffect(() => {
     async function onSelectTemp() {
       let res = await fetchEmailTemplateList();
       let res2 = await handleGetAllImage();
       let galleryList = [];
       let tempList = [];
-
       res?.data?.map((item, idx) =>
         tempList.push({
           id: item?.id,
@@ -226,9 +239,17 @@ const MailDashboard = ({
 
   useEffect(() => {
     templateList?.forEach((itm, idx) => {
-      itm?.label | (itm?.value === tData) && setTempInitValue(itm?.template);
+      if (itm?.value === tData) {
+        setTempInitValue(itm?.template);
+        setTemplateData({
+          id: itm?.id,
+          name: itm?.name,
+          template: itm?.template,
+        });
+      }
     });
   }, [tData, templateList]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full flex justify-between gap-8">
@@ -353,7 +374,7 @@ const MailDashboard = ({
                     height: "calc(50vh - 5em)",
                     menubar: false,
                     resize: false,
-                  
+
                     plugins: [
                       "advlist",
                       "autolink",
@@ -384,6 +405,12 @@ const MailDashboard = ({
                     automatic_uploads: true,
                     images_reuse_filename: true,
                     images_upload_handler: handleImageUpload,
+                  }}
+                  onChange={(e) => {
+                    setTemplateData((prevData) => ({
+                      ...prevData,
+                      template: e.target.getContent(),
+                    }));
                   }}
                 />
                 <div className="w-full flex items-center justify-between relative">
@@ -441,22 +468,35 @@ const MailDashboard = ({
                       Max file size: 500kb, Total file size: 20mb
                     </h1>
                   </div>
-                  <Form.Item className="!m-0 flex items-center justify-center">
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      onClick={() => {
-                        setMailProgress(true);
-                      }}
-                      className={` !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
+                  <div className="flex items-center justify-center gap-4">
+                    {templateData.template !== tempInitValue ? (
+                      <button
+                      type="button"
+                        className="text-slate-300 px-4 py-2 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
+                        onClick={handleUpdateMail}
+                      >
+                        Update Template
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    <Form.Item className="!m-0 r">
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        onClick={() => {
+                          setMailProgress(true);
+                        }}
+                        className={` !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
                          `}
-                      disabled={
-                        !data.length || !mailSubject.length ? true : false
-                      }
-                    >
-                      Send Mail
-                    </Button>
-                  </Form.Item>
+                        disabled={
+                          !data.length || !mailSubject.length ? true : false
+                        }
+                      >
+                        Send Mail
+                      </Button>
+                    </Form.Item>{" "}
+                  </div>
                 </div>
               </div>
             ) : (
