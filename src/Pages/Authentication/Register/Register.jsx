@@ -4,270 +4,183 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { handleRegister } from "../../../Components/services/auth";
-
-const companyLogo = require("../../../assets/Icons/qq_logo_july.jpeg");
+import "./register.css";
+const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 const Register = () => {
   document.title = "Register";
   const navigate = useNavigate();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
-  const [isCreating, setIscreating] = useState(false);
-  const [role, setRole] = useState(1);
-  const handleChange = (value) => {
-    setRole(value);
-  };
-
-  const [data, setData] = useState({
-    name: "",
-    abn_number: null,
-    phone_number: null,
+  const [registrationData, setRegistrationData] = useState({
     email: "",
     password: "",
-    confirm_password: "",
-    address: "",
-    website: "",
   });
-  const userData = (e) => {
-    const userdata = { ...data };
-    userdata[e.target.id] = e.target.value;
-    setData(userdata);
-  };
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleLoginReq = async (e) => {
-    e.preventDefault();
-    setIscreating(true);
-    let userData = { ...data, role };
-    if (userData?.password !== userData?.confirm_password) {
-      message.warn("Password dose not match");
+  const registerUser = () => {
+    if (registrationData.password !== confirmPassword) {
+      return message.error("Passwords do not match!");
     } else {
-      const register = await handleRegister(userData);
-      if (register?.status === 201) {
-        setData({});
-        setRole(1);
-        setIscreating(false);
-        message?.success("Account created successfully");
-        navigate("/login");
-      } else {
-        setIscreating(false);
-        message.warning(register?.message || "Account creation failed");
+      const res = handleRegister(registrationData);
+      if (res) {
+        navigate("/login", { replace: true });
       }
     }
   };
-
   return (
-    <div className="flex justify-center min-h-[100vh] items-center bg-gray-100 loginBackground">
+    <div className="flex h-screen items-center ">
       {loadingDetails && (
         <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
           <Loading />
         </div>
       )}
-
-      <div className="max-w-[90vw] max-h-[95vh] bg-white px-8 py-4 rounded-md overflow-y-auto crm-scroll-none">
-        <div className="pb-3 pt-8 flex flex flex-col items-center justify-center">
-          <img
-            src={companyLogo}
-            alt="companyLogo"
-            srcset=""
-            className="w-60 cursor-pointer"
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-
-          <h1 className="text-2xl font-semibold text-gray-700 font-poppins">
-            Register
-          </h1>
-          <p className="text-gray-500 pt-2 pb-4 font-poppins">
-            Create New account
-          </p>
+      <div className="flex flex-col gap-8 items-center justify-center h-full  w-1/3 register-left-background">
+        <div className="flex flex-col">
+          <h1 className="text-9xl text-slate-300 m-0 p-0">CRM</h1>
+          <h2 className="text-xl text-slate-300 m-0 p-0">
+            Client Relationship Management
+          </h2>
         </div>
-        <form
-          className="mb-4 grid lg:grid-cols-2 grid-cols-1 lg:gap-x-10"
-          onSubmit={handleLoginReq}
-        >
-          <div className="mb-6 font-poppins col-span-2 ">
-            <label htmlFor="" className="block mb-2 text-sm text-gray-600">
-              Select Role
-            </label>
-            <Select
-              defaultValue={1}
-              className="w-full rounded-md"
-              onChange={handleChange}
-              options={[
-                { value: 1, label: `Agency` },
-                { value: 2, label: `Organization Manager` },
-              ]}
-            />
+        <div className="flex flex-col gap-8 w-3/5">
+          <div className="flex items-center gap-4">
+            <div className="rounded-full text-slate-300 border h-4 w-4 flex items-center justify-center m-0 p-2">
+              {">"}
+            </div>
+            <div>
+              <h1 className="text-xl m-0 p-0 text-slate-300">
+                Quick and free sign-up
+              </h1>
+              <p className=" text-base m-0 p-0 text-slate-300">
+                Enter your email address to create an account.
+              </p>
+            </div>
           </div>
-          <div className="mb-6 font-poppins lg:col-span-1 col-span-2">
-            <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
-              Name/Agency Name
-            </label>
-            <Input
-              size="large"
-              name="name"
-              id="name"
-              value={data.name}
-              placeholder="Enter your name"
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
+          <div className="flex items-center gap-4">
+            <div className="rounded-full text-slate-300 border h-4 w-4 flex items-center justify-center m-0 p-2">
+              {">"}
+            </div>
+            <div>
+              <h1 className="text-xl m-0 p-0 text-slate-300">
+                Automate your work
+              </h1>
+              <p className=" text-base m-0 p-0 text-slate-300">
+                Focus on bringing sales while Queleads CRM will manage all the
+                rest
+              </p>
+            </div>
           </div>
-          {role === 1 && (
-            <div className="mb-6 font-poppins">
-              <label
-                htmlFor="abn_number"
-                className="block mb-2 text-sm text-gray-600"
-              >
-                ABN Number
-              </label>
-              <Input
-                type="number"
-                size="large"
-                name="abn_number"
-                id="abn_number"
-                value={data.abn_number}
-                placeholder="Enter ABN Number"
-                className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                onChange={userData}
-                required
+          <div className="flex items-center gap-4">
+            <div className="rounded-full text-slate-300 border h-4 w-4 flex items-center justify-center m-0 p-2">
+              {">"}
+            </div>
+            <div>
+              <h1 className="text-xl m-0 p-0 text-slate-300">
+                Something for everyone
+              </h1>
+              <p className=" text-base m-0 p-0 text-slate-300">
+                The best customer experiences are built with Queleads CRM
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center w-2/3 register-right-background">
+        <div className="flex items-center justify-center h-screen rounded-md">
+          <div className="flex flex-col gap-8 h-2/3 shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md px-8 py-8">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              <img
+                src={companyLogo}
+                alt="companyLogo"
+                srcset=""
+                className="w-84 cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
               />
+              <div className="flex flex-col items-center justify-center">
+                <h1 className="text-xl font-semibold text-blue-500 font-poppins m-0 p-0">
+                  Create account
+                </h1>
+                <p className="text-gray-500 font-poppins p-0 m-0">
+                  Join us by creating your Queleads CRM account.
+                </p>
+              </div>
             </div>
-          )}
-          {role === 2 && (
-            <div className="mb-6 font-poppins">
-              <label
-                htmlFor="phone_number"
-                className="block mb-2 text-sm text-gray-600"
+            <form className="flex flex-col gap-4" onSubmit={registerUser}>
+              <div className="font-poppins ">
+                <label htmlFor="email" className=" px-2 text-gray-800">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="username"
+                  id="username"
+                  placeholder="Enter your username"
+                  className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                  onChange={(e) => {
+                    setRegistrationData({
+                      ...registrationData,
+                      email: e.target.value,
+                    });
+                  }}
+                  required
+                />
+              </div>
+              <div className="font-poppins ">
+                <label htmlFor="password" className=" px-2 text-gray-800">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                  onChange={(e) => {
+                    setRegistrationData({
+                      ...registrationData,
+                      password: e.target.value,
+                    });
+                  }}
+                  required
+                />
+              </div>
+              <div className="font-poppins ">
+                <label
+                  htmlFor="confirm_password"
+                  className="px-2 text-gray-800"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirm_password"
+                  id="confirm_password"
+                  placeholder="Confirm your password"
+                  className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                  required
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                className="ease-in duration-200 lg:h-full w-full px-4 py-2 text-slate-300 font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
               >
-                Phone Number
-              </label>
-              <Input
-                size="large"
-                name="phone_number"
-                id="phone_number"
-                value={data.phone_number}
-                placeholder="Enter your Phone Number"
-                className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                onChange={userData}
-                required
-              />
-            </div>
-          )}
-          <div className="mb-6 font-poppins lg:col-span-1 col-span-2">
-            <label htmlFor="name" className="block mb-2 text-sm text-gray-600">
-              Add website
-            </label>
-            <Input
-              size="large"
-              name="website"
-              id="website"
-              value={data.website}
-              placeholder="Enter website url"
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
+                Create
+              </button>
+              <h1 className="text-center font-semibold cursor-pointer">
+                Already have an account?{" "}
+                <span
+                  className="ease-in duration-100 text-brand-color hover:text-opacity-70 cursor-pointer"
+                  onClick={() => navigate("/login")}
+                >
+                  Log in
+                </span>
+              </h1>
+            </form>
           </div>
-          <div className="mb-6 font-poppins lg:col-span-1 col-span-2">
-            <label htmlFor="email" className="block mb-2 text-sm text-gray-600">
-              Email
-            </label>
-            <Input
-              size="large"
-              name="email"
-              id="email"
-              value={data.email}
-              placeholder="Enter your email"
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
-          </div>
-          <div className="mb-4 font-poppins lg:col-span-1 col-span-2">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm text-gray-600"
-            >
-              Password
-            </label>
-            <Input.Password
-              size="large"
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              value={data.password}
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
-          </div>
-          <div className="mb-4 font-poppins lg:col-span-1 col-span-2">
-            <label
-              htmlFor="confirm_password"
-              className="block mb-2 text-sm text-gray-600"
-            >
-              Confirm Password
-            </label>
-            <Input.Password
-              size="large"
-              name="confirm_password"
-              id="confirm_password"
-              placeholder="Confirm your password"
-              value={data.confirm_password}
-              className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-              onChange={userData}
-              required
-            />
-          </div>
-
-          {role === 1 && (
-            <div className="mb-6 font-poppins col-span-2">
-              <label
-                htmlFor="address"
-                className="block mb-2 text-sm text-gray-600"
-              >
-                Address
-              </label>
-              <Input.TextArea
-                rows={2}
-                cols={2}
-                size="large"
-                name="address"
-                id="address"
-                value={data.address}
-                placeholder="Enter Address"
-                className="w-full px-6 py-2 placeholder-gray-600 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:border-brand-color"
-                onChange={userData}
-                required
-              />
-            </div>
-          )}
-
-          {/* THIS IS THE BUTTON SECTION */}
-          <div className="col-span-2">
-            <div className="mb-6">
-              <Button
-                htmlType="submit"
-                loading={isCreating}
-                className="!w-full py-3 !text-white !font-medium !bg-brand-color !bg-opacity-80 hover:bg-primary-800 !rounded-md focus:outline-none font-poppins !border-none"
-              >
-                {isCreating ? "Creating" : "Create A Account"}
-              </Button>
-            </div>
-            <div
-              className="text-center font-semibold cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              I have an account
-            </div>
-            <div className="text-center">
-              <a className="font-semibold" href="/requisition" target="_blank">
-                Click Here To Explore Packages and Send Requisition
-              </a>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

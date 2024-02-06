@@ -1,0 +1,59 @@
+
+#password{
+  background-color: transparent !important;
+  border-radius: 10px;
+  color:white;
+}
+.bookmarkModal .ant-modal-content{
+  background-color: transparent !important;
+  box-shadow: 0 0 0 0;
+}
+.loginPassword .ant-input-password-icon.anticon{
+  color:#cbd5e1;
+}
+/* .ant-modal-mask{
+  background-color: #ffffff7f;
+} */
+.forgotModal .ant-modal-header {
+  background-color: transparent !important;
+  padding: 0;
+  width: 100%;
+  box-shadow: 0 0 0 0;
+  padding: 16px;
+  overflow: hidden;
+}
+.forgotModal .ant-modal-header .ant-modal-title {
+  color: #cbd5e1;
+  font-size: 16px;
+  font-weight: 400;
+}
+.forgotModal .ant-modal-close-x {
+  color: #cbd5e1;
+}
+.forgotModal .ant-modal-content {
+  backdrop-filter: blur(64px);
+  background-color: #ffffff11;
+  box-shadow: 0 0 0 0;
+  border-radius: 8px;
+  border: 0.5px solid #ffffff44;
+}
+.forgotModal .ant-modal-body {
+  padding: 16px;
+}
+.forgotModal .ant-modal-footer {
+  border-top: none;
+  padding: 0 16px 16px 0 ;
+}
+.forgotModal .ant-modal-footer .ant-btn{
+  
+  margin: 0;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #8A7CFD, #2596FB);
+  border:none;
+}
+.forgotModal .ant-modal-footer .ant-btn:disabled{
+  margin: 0;
+  border-radius: 8px;
+  background:#cbd5e1;
+  border-color: #cbd5e1;
+}
