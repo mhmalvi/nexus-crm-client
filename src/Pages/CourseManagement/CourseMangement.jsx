@@ -1,6 +1,5 @@
 import { Button, Form, Input, Popconfirm, Table, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
-import plus from "../../assets/Images/plus.png";
 import { useForm } from "antd/lib/form/Form";
 import {
   handleCourseCheckListInsert,

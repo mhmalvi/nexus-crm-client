@@ -43,6 +43,7 @@ export const getEmailHistory = async (data, pageNumber) => {
     return error.response;
   }
 };
+
 export const getEmailDetailsCount = async (data, pageNumber) => {
   try {
     const result = await axios.post(
@@ -223,6 +224,31 @@ export const handleDeleteImage = async (data) => {
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/delete-image`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const unsubscribeFromEmail = async (data) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/unsubscribe`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const unsubscribeFromQueLeadsMail = async (data) => {
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/queleads-unsubscribe`,
       data,
       config
     );

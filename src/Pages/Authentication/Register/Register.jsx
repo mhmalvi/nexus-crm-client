@@ -1,14 +1,26 @@
 import { Button, Input, Select, message } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { handleRegister } from "../../../Components/services/auth";
+import { Storage } from "../../../Components/Shared/utils/store";
 import "./register.css";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 const Register = () => {
   document.title = "Register";
+  
   const navigate = useNavigate();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  useEffect(() => {
+    if (Storage.getItem("auth_tok")) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [registrationData, setRegistrationData] = useState({
     email: "",

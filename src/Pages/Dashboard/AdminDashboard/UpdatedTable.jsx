@@ -155,7 +155,7 @@ const UpdatedTable = ({
   let locale = {
     emptyText: (
       <>
-        { loadingTime ? (
+        {loadingTime ? (
           <div className="min-h-[50vh] mt-24">
             <Loading />
           </div>
@@ -385,7 +385,8 @@ const UpdatedTable = ({
                   return color;
                 } else if (
                   record.form_data &&
-                  JSON.parse(record.form_data)[2].values[0] === "vietnam" &&
+                  (JSON.parse(record.form_data)[2].values[0] === "vietnam" ||
+                    JSON.parse(record.form_data)[2].values[0] === "Vietnam") &&
                   record.campaign_id >= 0
                 ) {
                   let color = `${
@@ -394,7 +395,7 @@ const UpdatedTable = ({
                   return color;
                 } else if (
                   record.form_data &&
-                  JSON.parse(record.form_data)[2].values[0] === "philippines" &&
+                  (JSON.parse(record.form_data)[2].values[0] === "philippines" || JSON.parse(record.form_data)[2].values[0] === "Philippines") &&
                   record.campaign_id >= 0
                 ) {
                   let color = `${

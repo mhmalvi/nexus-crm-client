@@ -29,7 +29,7 @@ import EditProfile from "../Settings/Profile/EditProfile";
 import UserProfile from "../Settings/Profile/UserProfile";
 import Sales from "../SalesEmployee";
 import ManageStudnet from "../StudentManagement/index";
-import CourseMangemnet from "../CourseManagemnet/CourseMangemnet";
+import CourseMangemnet from "../CourseManagement/CourseMangement";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
 import QueMailer from "../QueMailer";
@@ -90,8 +90,6 @@ const Layout = () => {
         <Sidebar
           Items={Items}
           active={active}
-          // openSideBar={openSideBar}
-          // setOpenSideBar={setOpenSideBar}
           setActive={setActive}
           toggleMessage={toggleMessage}
           setToggleMessage={setToggleMessage}

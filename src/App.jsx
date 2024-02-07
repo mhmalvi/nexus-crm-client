@@ -32,13 +32,14 @@ import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Register from "./Pages/Authentication/Register/Register";
 import MangeStudent from "./Pages/StudentManagement";
-import CourseMangemnet from "./Pages/CourseManagemnet/CourseMangemnet";
+import CourseMangemnet from "./Pages/CourseManagement/CourseMangement";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 import QueMailer from "./Pages/QueMailer";
 
 import { useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
+import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 
 function App() {
   const [state, setState] = useState("Active");
@@ -114,7 +115,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
-        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="unsubscribe" element={<Unsubscribe />} />
+        <Route path="queleads-unsubscribe" element={<Unsubscribe />} />
+        {/* <Route path="reset-password" element={<ResetPassword />} /> */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
