@@ -41,7 +41,6 @@ const Login = () => {
     if (Storage.getItem("auth_tok")) {
       navigate("/dashboard");
     }
-
     if (Storage.getItem("__ce__") && Storage.getItem("__cp__")) {
       setData({
         email: Storage.getItem("__ce__"),
@@ -93,10 +92,8 @@ const Login = () => {
       loginResponseSecond = await handleLoginSecond(loginFormData);
     }
 
-    console.log("loginResponse", loginResponse);
 
     if (loginResponse?.status === 200 && loginResponse?.data) {
-      console.log("loginResponse?.data?.data", loginResponse?.data?.data);
 
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
