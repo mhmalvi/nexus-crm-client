@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./quemailer.css";
 import Loading from "../../Components/Shared/Loader";
 import Icons from "../../Components/Shared/Icons";
-import "./quemailer.css"
+import "./quemailer.css";
 
 const EmailHistory = ({
   emailSessionRow,
@@ -15,6 +15,7 @@ const EmailHistory = ({
   openCountModal,
   countInfo,
   setEmailId,
+  setHistoryInnerPagination
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -74,14 +75,18 @@ const EmailHistory = ({
       title: "Clicked",
       dataIndex: "click",
       render: (_, record, idx) => (
-        <div className="w-full flex items-center justify-center">{record?.click === 1 ? <Icons.Tick /> : "No clicks yet"}</div>
+        <div className="w-full flex items-center justify-center">
+          {record?.click === 1 ? <Icons.Tick /> : "No clicks yet"}
+        </div>
       ),
     },
     {
       title: "Opened",
       dataIndex: "open",
       render: (_, record, idx) => (
-        <div className="w-full flex items-center justify-center">{record?.open === 1 ? <Icons.Tick /> : "Not opened yet"}</div>
+        <div className="w-full flex items-center justify-center">
+          {record?.open === 1 ? <Icons.Tick /> : "Not opened yet"}
+        </div>
       ),
     },
     {
@@ -105,6 +110,7 @@ const EmailHistory = ({
       </div>
     ),
   };
+  console.log(countInfo);
   return (
     <>
       <Table
@@ -124,18 +130,33 @@ const EmailHistory = ({
           total: emailSessionRow?.total,
         }}
       />
-      <Modal visible={openCountModal} onCancel={handleCancel} footer={false} className={`${colorMode ? "emailCountModal":""}`} width="60%">
+      <Modal
+        visible={openCountModal}
+        onCancel={handleCancel}
+        footer={false}
+        className={`${colorMode ? "emailCountModal" : ""}`}
+        width="60%"
+      >
         <div className="mt-8">
-        <Table
-          locale={locale}
-          className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
-          scroll={{
-            x:"1000",
-            y: "calc(75vh - 5em)",
-          }}
-          columns={innerTableColumns}
-          dataSource={countInfo?.data}
-        /></div>
+          <Table
+            locale={locale}
+            className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
+            scroll={{
+              x: "1000",
+              y: "calc(75vh - 5em)",
+            }}
+            pagination={{
+              onChange: (pageNum) => {
+                setHistoryInnerPagination(pageNum);
+                setClicked(true);
+              },
+              current: currentPage,
+              total: countInfo?.total,
+            }}
+            columns={innerTableColumns}
+            dataSource={countInfo?.data}
+          />
+        </div>
       </Modal>
     </>
   );

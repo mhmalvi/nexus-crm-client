@@ -10,6 +10,9 @@ import {
   handleCurrentEmail,
   dailyEmailCount,
 } from "../../Components/services/que-mail";
+import { useNavigate } from "react-router-dom";
+import { Storage } from "../../Components/Shared/utils/store";
+
 const QueMailer = () => {
   const [data, setData] = useState([]);
   const [attachment, setAttachment] = useState([]);
@@ -24,6 +27,7 @@ const QueMailer = () => {
   const [currentEmail, setCurrentEmail] = useState(null);
   const [fileName, setFileName] = useState("");
 
+  const navigate = useNavigate();
   const [pagination, setPagination] = useState(10);
   const [emailSessionRow, setEmailSessionRow] = useState(null);
   const [clicked, setClicked] = useState(false);
@@ -32,6 +36,7 @@ const QueMailer = () => {
   const [countInfo, setCountInfo] = useState("");
   const [openCountModal, setOpenCountModal] = useState(false);
   const [dailyCount, setDailyCount] = useState(null);
+  const [historyInnerPagination, setHistoryInnerPagination] = useState(1)
   useEffect(() => {
     async function fetchCurrentEmail() {
       const res = await handleCurrentEmail(+userDetails.userInfo.id);
@@ -41,7 +46,6 @@ const QueMailer = () => {
       fetchCurrentEmail();
     }
   }, [currentEmail, userDetails.userInfo.id]);
-
   useEffect(() => {
     const fetchEmailHistory = async () => {
       try {
@@ -63,13 +67,13 @@ const QueMailer = () => {
         id: emailId,
         per_page: 10,
       };
-      const res = await getEmailDetailsCount(data, 1);
+      const res = await getEmailDetailsCount(data, historyInnerPagination);
       setCountInfo(res?.data);
     }
     if (openCountModal || successMail) {
       fetchEmailCount();
     }
-  }, [emailId, openCountModal, successMail]);
+  }, [emailId, historyInnerPagination, openCountModal, successMail]);
   useEffect(() => {
     async function fetchDailyEmailCount() {
       const data = {
@@ -89,7 +93,15 @@ const QueMailer = () => {
       fetchDailyEmailCount();
     }
   }, [dailyCount, userDetails?.userInfo.id, successMail]);
-
+  useEffect(() => {
+    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+      navigate("/setup-your-profile");
+    }else  if (userDetails?.userInfo?.verification_status === 2 && Storage.getItem("auth_tok")) {
+      navigate("/dashboard");
+    }else if(!Storage.getItem("auth_tok")){
+      navigate("/login")
+    }
+  }, [navigate, userDetails]);
   return (
     <div className="flex items-center justify-center w-full h-screen gap-8">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh]">
@@ -244,6 +256,7 @@ const QueMailer = () => {
                 openCountModal={openCountModal}
                 countInfo={countInfo}
                 setEmailId={setEmailId}
+                setHistoryInnerPagination={setHistoryInnerPagination}
               />
             </div>
           </div>

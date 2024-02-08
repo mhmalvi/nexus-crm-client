@@ -17,7 +17,7 @@ const CSVParser = ({
   fileName,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  
+
   const handleFileChange = (e) => {
     setError("");
     if (successMail === "success") {
@@ -46,26 +46,25 @@ const CSVParser = ({
   };
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
-
     const reader = new FileReader();
-
     reader.onload = async ({ target }) => {
       const csv = Papa.parse(target.result, {
         header: false,
       });
-
       const parsedData = csv?.data || [];
-
-      const filteredData = parsedData.filter((row) =>
+      const removeTrailingChars = (cell) => cell.replace(/[.\s]+$/g, "");
+      const trimmedData = parsedData.map((row) =>
+        row.map((cell) =>
+          typeof cell === "string" ? removeTrailingChars(cell) : cell
+        )
+      );
+      const filteredData = trimmedData.filter((row) =>
         row.some((cell) => cell.trim() !== "")
       );
-
       setData(filteredData);
     };
-
     reader.readAsText(file);
   };
-  
 
   return (
     <div className="h-[77vh] flex flex-col gap-8">
@@ -126,7 +125,7 @@ const CSVParser = ({
                 </svg>
               </div>
             ) : (
-              <ol className="px-8 py-2 h-[55vh] overflow-y-scroll">
+              <ol className="px-8 py-2 h-5/6 overflow-y-scroll">
                 {fileName === "" ? (
                   <h1
                     className={`${

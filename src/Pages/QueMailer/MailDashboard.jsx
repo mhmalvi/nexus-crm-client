@@ -110,52 +110,54 @@ const MailDashboard = ({
         message.warning("Please enter mail subject");
       }
     } else {
-      const formData = new FormData();
-      formData.append("subject", mailSubject);
-      formData.append(
-        "template",
-        editorRef?.current
-          ? editorRef?.current?.getContent()
+      try {
+        const formData = new FormData();
+        formData.append("subject", mailSubject);
+        formData.append(
+          "template",
+          editorRef?.current
             ? editorRef?.current?.getContent()
+              ? editorRef?.current?.getContent()
+              : ""
             : ""
-          : ""
-      );
-      data.forEach((email) => {
-        formData.append("email[]", email);
-      });
-      formData.append("user_id", userDetails?.id);
-
-      if (attachment.length) {
-        attachment.forEach((file) => {
-          formData.append("files[]", file);
-        });
-      }
-
-      const res = await sendEmail(formData);
-
-      if (res?.status === 200) {
-        message.success(res?.message);
-        setSuccessMail("success");
-      } else if (res?.status === 304) {
-        message.warning(res?.message);
-        setSuccessMail("failed");
-      } else {
-        message.warning(
-          `It will take approximately ${
-            data.length * 1.5
-          } seconds for all the mail to be sent. Hang on tight !`
         );
-        setSuccessMail("success");
+        data.forEach((email) => {
+          formData.append("email[]", email);
+        });
+        formData.append("user_id", userDetails?.id);
+
+        if (attachment.length) {
+          attachment.forEach((file) => {
+            formData.append("files[]", file);
+          });
+        }
+
+        const res = await sendEmail(formData);
+
+        if (res?.status === 200) {
+          message.success(res?.message);
+          setSuccessMail("success");
+        } else if (res?.status === 304) {
+          message.warning(res?.message);
+          setSuccessMail("failed");
+        } else {
+          await message.warning(res?.data.message);
+          setSuccessMail("failed");
+        }
+      } catch (error) {
+        // setSuccessMail("success");
+        message.warning(error.response);
       }
     }
   };
+
   const handleUpdateMail = async () => {
     const res = await updateEmail(templateData);
     if (res?.status === 201) {
       message.success("Template Updated Successfully");
-      setTimeout(()=>{
-        window.location.reload()
-      },[1500])
+      setTimeout(() => {
+        window.location.reload();
+      }, [1500]);
     } else {
       message.error(res.message);
     }
@@ -458,7 +460,7 @@ const MailDashboard = ({
                         colorMode ? "text-slate-300" : "text-gray-800"
                       } text-xs m-0 p-0`}
                     >
-                      Allowed files: JPG, JPEG, PNG & PDF
+                      Allowed files: JPG, JPEG, PNG & PDF (200kb)
                     </h1>
                     <h1
                       className={`${
@@ -471,7 +473,7 @@ const MailDashboard = ({
                   <div className="flex items-center justify-center gap-4">
                     {templateData.template !== tempInitValue ? (
                       <button
-                      type="button"
+                        type="button"
                         className="text-slate-300 px-4 py-2 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
                         onClick={handleUpdateMail}
                       >

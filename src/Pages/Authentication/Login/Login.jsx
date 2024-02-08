@@ -25,6 +25,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loadingDetails = useSelector((state) => state?.user)?.loading;
+  const userDetails = useSelector((state) => state?.user);
   const [tooglePasswordForget, setTooglePasswordForget] = useState(false);
   const [bookMarkOpen, setBookMarkOpen] = useState(false);
   const [addBookMarkOpen, setAddBookMarkOpen] = useState(false);
@@ -36,11 +37,21 @@ const Login = () => {
     email: "",
     password: "",
   });
+  // useEffect(() => {
+  //   if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+  //     navigate("/setup-your-profile");
+  //   }
+  // }, [navigate, userDetails]);
 
   useEffect(() => {
-    if (Storage.getItem("auth_tok")) {
-      navigate("/dashboard");
-    }
+        
+    // if (Storage.getItem("auth_tok") && userDetails.userInfo.verification_status === 2) {
+    //       navigate("/dashboard");
+    //     }
+        
+        // else if(userDetails.userInfo.verification_status === 1){
+        //   navigate("/setup-your-profile");
+        // }
     if (Storage.getItem("__ce__") && Storage.getItem("__cp__")) {
       setData({
         email: Storage.getItem("__ce__"),
@@ -51,7 +62,7 @@ const Login = () => {
     if (Storage.getItem("__b__")) {
       setBookMarkedAccounts(JSON.parse(Storage.getItem("__b__")));
     }
-  }, [navigate, syncBookMarked]);
+  }, [navigate, syncBookMarked, userDetails]);
 
   const userData = (e) => {
     const userdata = { ...data };
@@ -90,7 +101,7 @@ const Login = () => {
     } else {
       loginResponseSecond = await handleLoginSecond(loginFormData);
     }
-    console.log(loginResponse);
+    
     if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
@@ -128,8 +139,12 @@ const Login = () => {
         setAddBookMarkOpen(true);
       } else {
         setTimeout(() => {
-          navigate("/dashboard");
-          window.location.reload();
+          userDetails.userInfo.role_id !== 3
+            ? navigate("/dashboard")
+            : userDetails.userInfo.role_id === 3 &&
+              loginResponse.data.data.verification_status === 1
+            ? navigate("/setup-your-profile")
+            : navigate("/dashboard");
         }, 500);
       }
     } else if (
@@ -152,7 +167,6 @@ const Login = () => {
       message.warning("Oops Wrong! Check You Email or Password/ABN Number");
     }
   };
-
   const handleOneClickLogin = useCallback(
     async (credentials) => {
       dispatch(setLoader(true));

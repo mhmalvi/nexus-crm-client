@@ -1,8 +1,8 @@
 // import { UserOutlined } from "@ant-design/icons";
 // import { Button, Input, message, Modal, ConfigProvider } from "antd";
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { handlePasswordReset } from "../../Components/services/auth";
 // import { Storage } from "../../Components/Shared/utils/store";
 import AdminDashboard from "./AdminDashboard";
@@ -14,6 +14,11 @@ import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 const Dashboard = () => {
   
   const userDetails = useSelector((state) => state?.user);
+  // useEffect(() => {
+  //   if(userDetails.userInfo.verification_status === 1){
+  //     navigate("/setup-your-profile");
+  //   } 
+  // }, [navigate, userDetails]);
 
   // const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
   // const [confirmLoading, setConfirmLoading] = useState(false);

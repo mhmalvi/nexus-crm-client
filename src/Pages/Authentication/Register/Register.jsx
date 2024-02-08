@@ -3,23 +3,17 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
-import { handleRegister } from "../../../Components/services/auth";
+import {
+  handleRegister,
+  handleInitialRegistration,
+} from "../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
 import "./register.css";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 const Register = () => {
   document.title = "Register";
-  
+
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-  useEffect(() => {
-    if (Storage.getItem("auth_tok")) {
-      navigate("/dashboard");
-    }
-  }, [navigate]);
 
   const loadingDetails = useSelector((state) => state?.user)?.loading;
   const [registrationData, setRegistrationData] = useState({
@@ -27,14 +21,26 @@ const Register = () => {
     password: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+  const userDetails = useSelector((state) => state?.user);
+  useEffect(() => {
+    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+      navigate("/setup-your-profile");
+    }else  if (userDetails?.userInfo?.verification_status === 2 && Storage.getItem("auth_tok")) {
+      navigate("/dashboard");
+    }
+  }, [navigate, userDetails]);
 
-  const registerUser = () => {
+  const registerUser = async () => {
     if (registrationData.password !== confirmPassword) {
       return message.error("Passwords do not match!");
     } else {
-      const res = handleRegister(registrationData);
-      if (res) {
-        navigate("/login", { replace: true });
+      const res = await handleInitialRegistration(registrationData);
+      console.log(res);
+      if (res?.status === 201) {
+        message.success("Please check your email for verification code")
+        navigate("/login");
+      } else {
+        return res?.message;
       }
     }
   };
@@ -117,14 +123,14 @@ const Register = () => {
                 </p>
               </div>
             </div>
-            <form className="flex flex-col gap-4" onSubmit={registerUser}>
+            <form className="flex flex-col gap-4">
               <div className="font-poppins ">
                 <label htmlFor="email" className=" px-2 text-gray-800">
                   Email
                 </label>
                 <input
                   type="email"
-                  name="username"
+                  // name="username"
                   id="username"
                   placeholder="Enter your username"
                   className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
@@ -143,7 +149,7 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  name="password"
+                  // name="password"
                   id="password"
                   placeholder="Enter your password"
                   className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
@@ -165,7 +171,7 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  name="confirm_password"
+                  // name="confirm_password"
                   id="confirm_password"
                   placeholder="Confirm your password"
                   className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
@@ -176,8 +182,18 @@ const Register = () => {
                 />
               </div>
               <button
-                type="submit"
-                className="ease-in duration-200 lg:h-full w-full px-4 py-2 text-slate-300 font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md focus:outline-none font-poppins hover:text-black"
+                type="button"
+                disabled={
+                  registrationData.email.length <= 1
+                    ? true
+                    : registrationData.password.length < 8
+                    ? true
+                    : registrationData.password !== confirmPassword
+                    ? true
+                    : false
+                }
+                onClick={registerUser}
+                className="ease-in duration-200 lg:h-full w-full px-4 py-2 hover:text-black disabled:hover:text-slate-300 text-slate-300 font-medium  bg-gradient-to-b disabled:from-[#f5f5f5] from-[#8A7CFD] disabled:to-[#f5f5f5] to-[#2596FB] rounded-md focus:outline-none font-poppins  disabled:cursor-not-allowed"
               >
                 Create
               </button>
