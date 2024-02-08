@@ -68,15 +68,13 @@ const Layout = () => {
   // }, []);
 
   useEffect(() => {
-    if (window.location.pathname === "/") {
-      if (Storage.getItem("auth_tok")) {
-        navigate("/dashboard");
-      } else {
-        navigate("/welcome");
+    // if (window.location.pathname === "/") {
+      if (!Storage.getItem("auth_tok")) {
+        navigate("/login");
       }
-    } else {
-      setActive(window.location.pathname.toString().slice(1));
-    }
+    // } else {
+    //   setActive(window.location.pathname.toString().slice(1));
+    // }
   }, [navigate]);
 
   return (
@@ -126,7 +124,6 @@ const Layout = () => {
                 key={navItem.key}
                 path={`${navItem.key}`}
                 element={navItem.component}
-                
               />
             </Route>
           </Routes>
