@@ -1,14 +1,42 @@
 import axios from "axios";
 import { btob_dev } from "./environment";
 const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+const configJSON = {
+  headers: {
+    Accept: "application/json",
+  },
+};
+export const handleInitialRegistration = async (registrationData) => {
+  try {
+    const result = await axios.post(
+      `https://crmuser.queleadscrm.com/api/user/registration`,
+      registrationData,
+      configJSON
+    );
+
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleMultipartRegistration = async (registrationData) => {
+  try {
+    const result = await axios.post(
+      `https://crmuser.queleadscrm.com/api/user/register`,
+      registrationData,
+      configJSON
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 export const handleRegistration = async (registrationDetails) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/register`,
       registrationDetails
     );
-
-    console.log("result", result);
 
     return result?.data;
   } catch (error) {
@@ -30,7 +58,6 @@ export const handleLogin = async (loginDetails) => {
     return error;
   }
 };
-
 export const handleLoginSecond = async (loginDetails) => {
   try {
     const result = await axios.post(
@@ -45,7 +72,6 @@ export const handleLoginSecond = async (loginDetails) => {
     return error;
   }
 };
-
 export const handleLogout = async () => {
   const config = {
     headers: {

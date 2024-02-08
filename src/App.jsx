@@ -41,6 +41,7 @@ import { useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
 import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
+import Welcome from "./Pages/Authentication/MultipartForm/Welcome";
 
 function App() {
   const [state, setState] = useState("Active");
@@ -112,8 +113,9 @@ function App() {
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="email-setting" element={<EmailSetting />} />
           <Route path="mail" element={<GmailModule />} />
-          <Route path="setup-your-profile" element={<MultipartForm />} />
         </Route>
+        <Route path="setup-your-profile" element={<MultipartForm />} />
+        <Route path="welcome" element={<Welcome />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />

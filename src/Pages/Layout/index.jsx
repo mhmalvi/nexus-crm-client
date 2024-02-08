@@ -68,13 +68,13 @@ const Layout = () => {
   // }, []);
 
   useEffect(() => {
-    // if (window.location.pathname === "/") {
+    if (window.location.pathname === "/") {
       if (!Storage.getItem("auth_tok")) {
         navigate("/login");
       }
-    // } else {
-    //   setActive(window.location.pathname.toString().slice(1));
-    // }
+    } else {
+      setActive(window.location.pathname.toString().slice(1));
+    }
   }, [navigate]);
 
   return (

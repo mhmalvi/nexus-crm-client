@@ -12,7 +12,7 @@ import {
 import { addCampaigns } from "../../features/Leads/campaignSlice";
 import { addLeads } from "../../features/Leads/leadsSlice";
 import { setLoader } from "../../features/user/userSlice";
-
+import { useNavigate } from "react-router-dom";
 import Summary from "./Summary";
 import IncomePerDay from "./Types/IncomePerDay";
 // import CampaignAnalytics from "./CampaignAnalytics";
@@ -33,7 +33,7 @@ const Overview = () => {
   const pdfRef = useRef(null);
   const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   const [companyEmployees, setCompanyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();
@@ -115,7 +115,12 @@ const Overview = () => {
   const getImage = () => {
     takeScreenShot(pdfRef.current).then(download);
   };
-
+  useEffect(() => {
+    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+      navigate("/setup-your-profile");
+    }
+  }, [navigate, userDetails]);
+  
   return (
     <div className="py-4 font-poppins px-8 h-screen flex flex-col items-center justify-center">
       {/* <button

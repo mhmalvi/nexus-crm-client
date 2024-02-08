@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import "./multipart.css";
-import { Select } from "antd";
+import { Select, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import {
+  handleLogout,
+  handleMultipartRegistration,
+} from "./../../../Components/services/auth";
+import { Storage } from "../../../Components/Shared/utils/store";
+import { useSelector } from "react-redux";
+
 const MultipartForm = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
+  const userDetails = useSelector((state) => state?.user);
   const [industriesList, setIndustriesList] = useState(["RTO"]);
   const [data, setData] = useState({
     username: "",
@@ -11,15 +21,40 @@ const MultipartForm = () => {
     company_name: "",
     company_address: "",
     industry: "RTO",
+    email: userDetails?.userInfo?.email,
     website: "",
     abn: "",
     company_code: "",
-    new_user: null,
   });
   const handleChange = (value) => {
     setIndustriesList(value);
   };
+
+  const logoutHandler = () => {
+    handleLogout();
+    Storage.removeItem("auth_tok");
+    Storage.removeItem("user_info");
+    Storage.removeItem("fac_t");
+    navigate("/login");
+    console.log("clicked");
+    // window.location.reload();
+  };
   const { Option } = Select;
+  const [hoverLogout, setHoverLogout] = useState(false);
+  console.log("User Details : ", userDetails);
+  const setupProfile = async () => {
+    try {
+      const res = await handleMultipartRegistration(data);
+      if (res.status === 201) {
+        message.success("You  have successfully created your profile.");
+        navigate("/welcome");
+      }else{
+      message.warning(res.message)
+      }
+    } catch (error) {
+      message.warning(error.response)
+    }
+  };
   return (
     <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins">
       {/* Screen 0 */}
@@ -59,7 +94,7 @@ const MultipartForm = () => {
 
       {/* FORM Screen 1,2,3 */}
       <form
-        className={`w-1/5 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
+        className={`2xl:w-1/5 lg:w-1/4 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
           screen === 0 || screen === 4 ? "hidden" : "block"
         }`}
       >
@@ -70,9 +105,9 @@ const MultipartForm = () => {
                 Username
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
-                required
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
                 placeholder="Username"
+                value={data.username}
                 onChange={(e) => {
                   setData((prevData) => ({
                     ...prevData,
@@ -86,9 +121,10 @@ const MultipartForm = () => {
                 Contact Number
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
                 required
                 placeholder="Contact Number"
+                value={data.contact}
                 onChange={(e) => {
                   setData((prevData) => ({
                     ...prevData,
@@ -101,7 +137,10 @@ const MultipartForm = () => {
               onClick={() => {
                 setScreen(2);
               }}
-              className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+              disabled={
+                data.username.length && data.contact.length ? false : true
+              }
+              className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
             >
               Next →
             </button>
@@ -114,8 +153,8 @@ const MultipartForm = () => {
                 Company Name
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
-                required
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                value={data.company_name}
                 placeholder="Company Name"
                 onChange={(e) => {
                   setData((prevData) => ({
@@ -130,9 +169,9 @@ const MultipartForm = () => {
                 Company Address
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
-                required
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300 "
                 placeholder="Company Address"
+                value={data.company_address}
                 onChange={(e) => {
                   setData((prevData) => ({
                     ...prevData,
@@ -147,9 +186,10 @@ const MultipartForm = () => {
               </h1>
               <Select
                 id="companies"
-                defaultValue={data.industries}
+                defaultValue={data.industry}
+                value={data.industry}
                 placeholder="Select an industry"
-                className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300"
+                className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
                 onChange={handleChange}
               >
                 {industriesList?.map((industry) => (
@@ -162,8 +202,9 @@ const MultipartForm = () => {
                 Website (Optional)
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
                 required
+                value={data.website}
                 placeholder="Website"
                 onChange={(e) => {
                   setData((prevData) => ({
@@ -186,7 +227,14 @@ const MultipartForm = () => {
                 onClick={() => {
                   setScreen(3);
                 }}
-                className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+                disabled={
+                  data.company_name.length &&
+                  data.company_address.length &&
+                  data.industry.length
+                    ? false
+                    : true
+                }
+                className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
               >
                 Next →
               </button>
@@ -197,12 +245,12 @@ const MultipartForm = () => {
           <div className="w-full flex flex-col gap-4 items-center justify-center">
             <div className="w-full">
               <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                ABN Number
+                ABN Number (Optional)
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
-                required
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
                 placeholder="ABN Number"
+                value={data.abn}
                 onChange={(e) => {
                   setData((prevData) => ({
                     ...prevData,
@@ -216,8 +264,9 @@ const MultipartForm = () => {
                 Company Code (Optional)
               </h1>
               <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300"
+                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
                 required
+                value={data.company_code}
                 placeholder="Company Code"
                 onChange={(e) => {
                   setData((prevData) => ({
@@ -238,10 +287,9 @@ const MultipartForm = () => {
                 ← Previous
               </button>
               <button
-                // onClick={() => {
-                //   setScreen(3);
-                // }}
-                className="m-0 text-gray-800  hover:text-slate-300 ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
+                type="button"
+                onClick={setupProfile}
+                className="m-0 text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
               >
                 Submit
               </button>
@@ -273,6 +321,32 @@ const MultipartForm = () => {
           ></div>
         </div>
       )}
+      <div
+        className="absolute top-0 right-0 flex items-center justify-center text-base cursor-pointer my-4"
+        onClick={logoutHandler}
+        onMouseEnter={() => setHoverLogout(true)}
+        onMouseLeave={() => setHoverLogout(false)}
+      >
+        <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md px-4 py-2 shadow-md overflow-hidden">
+          <div className="">
+            <Icons.LogOut className="m-0 p-0 text-white" />
+          </div>
+
+          <span
+            className={`ease-in duration-200  flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2 ${
+              hoverLogout ? " w-full h-5" : " w-0 h-5 hidden"
+            }`}
+          >
+            <h1
+              className={`m-0 p-0 w-full text-white text-sx ${
+                hoverLogout ? " w-full h-5" : " w-0 hidden"
+              }`}
+            >
+              Log out
+            </h1>
+          </span>
+        </button>
+      </div>
     </div>
   );
 };

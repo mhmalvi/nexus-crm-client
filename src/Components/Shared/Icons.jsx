@@ -79,6 +79,7 @@ import { ReactComponent as Fullscreen } from "../../assets/Icons/Fullscreen.svg"
 import { ReactComponent as Minimize } from "../../assets/Icons/Minimize.svg";
 import { ReactComponent as Buildings } from "../../assets/Icons/buildings.svg";
 import { ReactComponent as WelcomeStart } from "../../assets/Icons/welcome-image-start.svg";
+import { ReactComponent as WelcomeEnd } from "../../assets/Icons/welcome-image-end.svg";
 
 const Icons = {
   CompanyLogo,
@@ -162,6 +163,7 @@ const Icons = {
   Minimize,
   Buildings,
   WelcomeStart,
+  WelcomeEnd,
 };
 
 export default Icons;
