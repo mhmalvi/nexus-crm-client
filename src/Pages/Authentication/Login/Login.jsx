@@ -85,16 +85,13 @@ const Login = () => {
     loginFormData.append("role", role);
     let loginResponse;
     let loginResponseSecond;
-
     if (role === 0) {
       loginResponse = await handleLogin(loginFormData);
     } else {
       loginResponseSecond = await handleLoginSecond(loginFormData);
     }
-
-
+    console.log(loginResponse);
     if (loginResponse?.status === 200 && loginResponse?.data) {
-
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
         "auth_tok",
@@ -222,7 +219,6 @@ const Login = () => {
     },
     [data.email, data.password, makeid]
   );
-
   const handleAddToBookMark = () => {
     setBookMarkedAccounts([
       ...bookMarkedAccounts,
@@ -304,7 +300,7 @@ const Login = () => {
             centered
             className="bookmarkModal"
           >
-            <div className="py-8 px-8 flex flex-col gap-8 items-center justify-between shadow-md backdrop-blur-2xl bg-[#ffffff11] !rounded-md">
+            <div className="py-8 px-8 flex flex-col gap-8 items-center justify-between shadow-md backdrop-blur-2xl bg-[#ffffff11] !rounded-md ">
               <h1 className="m-0 p-0 text-lg font-poppins font-semibold text-slate-300">
                 Add to Bookmark?
               </h1>
@@ -443,19 +439,19 @@ const Login = () => {
             ) : (
               <>
                 <div
-                  className={`flex flex-col gap-8 justify-center items-center w-full h-full bookmarkModal ease-in duration-200`}
+                  className={`flex flex-col gap-8 justify-center items-center w-full h-full bookmarkModal ease-in duration-200 `}
                 >
                   <h1 className="text-xl m-0 p-0 text-slate-300 border-b font-semibold text-center">
                     Bookmarked Accounts
                   </h1>
                   <div
-                    className={`flex flex-col gap-4 justify-start items-center h-full w-full overfow-y-scroll`}
+                    className={`flex flex-col gap-4 justify-start items-center h-5/6 w-full overflow-y-scroll `}
                   >
                     {bookMarkedAccounts?.length ? (
                       bookMarkedAccounts?.map((account, i) => (
                         <div
                           key={i}
-                          className="w-full flex items-center justify-between relative p-1 rounded-md shadow-md cursor-pointer "
+                          className="w-full h-full flex items-center justify-between relative p-1 rounded-md shadow-md cursor-pointer "
                           onClick={() => handleOneClickLogin(account)}
                         >
                           <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md overflow-hidden">
@@ -468,7 +464,6 @@ const Login = () => {
                               {account?._ue_}
                             </span>
                           </div>
-
                           <div
                             className="flex bg-[#fc00ff] h-[20px] w-[20px] absolute right-0 rounded-full"
                             onClick={(e) => e.stopPropagation()}

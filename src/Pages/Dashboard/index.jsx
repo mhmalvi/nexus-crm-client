@@ -12,8 +12,6 @@ import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 const Dashboard = () => {
-  // const navigate = useNavigate();
-
   
   const userDetails = useSelector((state) => state?.user);
 

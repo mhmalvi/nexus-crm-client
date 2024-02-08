@@ -78,6 +78,7 @@ import { ReactComponent as LeftArrow } from "../../assets/Icons/leftArrow.svg";
 import { ReactComponent as Fullscreen } from "../../assets/Icons/Fullscreen.svg";
 import { ReactComponent as Minimize } from "../../assets/Icons/Minimize.svg";
 import { ReactComponent as Buildings } from "../../assets/Icons/buildings.svg";
+import { ReactComponent as WelcomeStart } from "../../assets/Icons/welcome-image-start.svg";
 
 const Icons = {
   CompanyLogo,
@@ -159,7 +160,8 @@ const Icons = {
   LeftArrow,
   Fullscreen,
   Minimize,
-  Buildings
+  Buildings,
+  WelcomeStart,
 };
 
 export default Icons;

@@ -1,0 +1,6 @@
+.formBackground {
+    background: url("../../../assets/BackgroundPhotos/darkBG.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(20px);
+  }
