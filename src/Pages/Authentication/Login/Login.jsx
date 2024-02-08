@@ -44,14 +44,13 @@ const Login = () => {
   // }, [navigate, userDetails]);
 
   useEffect(() => {
-        
     // if (Storage.getItem("auth_tok") && userDetails.userInfo.verification_status === 2) {
     //       navigate("/dashboard");
     //     }
-        
-        // else if(userDetails.userInfo.verification_status === 1){
-        //   navigate("/setup-your-profile");
-        // }
+
+    // else if(userDetails.userInfo.verification_status === 1){
+    //   navigate("/setup-your-profile");
+    // }
     if (Storage.getItem("__ce__") && Storage.getItem("__cp__")) {
       setData({
         email: Storage.getItem("__ce__"),
@@ -101,7 +100,7 @@ const Login = () => {
     } else {
       loginResponseSecond = await handleLoginSecond(loginFormData);
     }
-    
+
     if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
@@ -130,7 +129,6 @@ const Login = () => {
             makeid(3)
         );
       }
-      message.success("Successfully Logged In");
 
       if (
         !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
@@ -144,7 +142,11 @@ const Login = () => {
             : userDetails.userInfo.role_id === 3 &&
               loginResponse.data.data.verification_status === 1
             ? navigate("/setup-your-profile")
+            : userDetails.userInfo.role_id === 3 &&
+              loginResponse.data.data.verification_status === 0
+            ? message.warning("Please verify your email first.")
             : navigate("/dashboard");
+          // message.success("Successfully Logged In");
         }, 500);
       }
     } else if (
@@ -159,7 +161,22 @@ const Login = () => {
 
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponseSecond?.data?.data));
-      message.success("Successfully Logged In");
+      userDetails.userInfo.role_id !== 3 ? (
+        navigate("/dashboard")
+      ) : userDetails.userInfo.role_id === 3 &&
+        loginResponse.data.data.verification_status === 1 ? (
+        navigate("/setup-your-profile")
+      ) : userDetails.userInfo.role_id === 3 &&
+        loginResponse.data.data.verification_status === 0 ? (
+        message.warning("Please verify your email first.")
+      ) : (
+        <>
+          {() => {
+            navigate("/dashboard");
+            message.success("Successfully Logged In");
+          }}
+        </>
+      );
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));

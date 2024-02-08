@@ -23,7 +23,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const userDetails = useSelector((state) => state?.user);
   useEffect(() => {
-    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+    if (userDetails?.userInfo?.verification_status <= 1 && Storage.getItem("auth_tok")) {
       navigate("/setup-your-profile");
     }else  if (userDetails?.userInfo?.verification_status === 2 && Storage.getItem("auth_tok")) {
       navigate("/dashboard");
