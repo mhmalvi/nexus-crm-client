@@ -14,59 +14,6 @@ import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 const Dashboard = () => {
   
   const userDetails = useSelector((state) => state?.user);
-  // useEffect(() => {
-  //   if(userDetails.userInfo.verification_status === 1){
-  //     navigate("/setup-your-profile");
-  //   } 
-  // }, [navigate, userDetails]);
-
-  // const [toggleChanglePassword, setToggleChanglePassword] = useState(false);
-  // const [confirmLoading, setConfirmLoading] = useState(false);
-  // const [passwordDetails, setPasswordDetails] = useState("");
-
-  // useEffect(() => {
-  //   if (Storage.getItem("crm_password")) {
-  //     setPasswordDetails(Storage.getItem("crm_password").split("_")?.[0]);
-  //   }
-
-  //   if (userDetails?.userInfo?.flag) {
-  //     if (userDetails?.userInfo?.flag === 1) {
-  //       setToggleChanglePassword(true);
-  //     } else {
-  //       setToggleChanglePassword(false);
-  //     }
-  //   }
-  // }, [passwordDetails, userDetails?.userInfo?.flag]);
-
-  // const handleOk = () => {
-  //   setConfirmLoading(true);
-  //   setTimeout(async () => {
-  //     const newPassword = document.getElementById("new_password").value;
-  //     const rewNewPassword = document.getElementById("re_new_password").value;
-
-  //     if (newPassword === rewNewPassword) {
-  //       const passwordChangeResponse = await handlePasswordReset(
-  //         userDetails?.userInfo?.user_id,
-  //         newPassword.toString()
-  //       );
-  //       if (passwordChangeResponse?.status === 205) {
-  //         Storage.setItem("crm_password", newPassword);
-  //         message.success("Password Changed Successfully");
-
-  //         Storage.removeItem("auth_tok");
-  //         Storage.removeItem("user_info");
-  //         navigate("/login");
-  //       }
-  //     }
-
-  //     setToggleChanglePassword(false);
-  //     setConfirmLoading(false);
-  //   }, 2000);
-  // };
-
-  // const handleChange = (e) => {
-  //   setPasswordDetails(e?.target?.vaue);
-  // };
 
   return (
     <div className=" min-h-[100vh] ">

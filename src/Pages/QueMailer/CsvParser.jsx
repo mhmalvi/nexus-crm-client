@@ -61,7 +61,13 @@ const CSVParser = ({
       const filteredData = trimmedData.filter((row) =>
         row.some((cell) => cell.trim() !== "")
       );
-      setData(filteredData);
+      const validatedData = filteredData.filter((row) => {
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = row.every((cell) => typeof cell !== "string" || emailRegex.test(cell));
+        return isValidEmail;
+    });
+      setData(validatedData);
     };
     reader.readAsText(file);
   };

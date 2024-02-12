@@ -48,7 +48,7 @@ function App() {
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
   const navigate = useNavigate();
-
+  const userDetails = useSelector((state) => state?.user);
   const onIdle = () => {
     handleLogout();
     Storage.removeItem("auth_tok");
@@ -121,8 +121,16 @@ function App() {
         <Route path="requisition" element={<RequisitionForm />} />
         <Route path="unsubscribe" element={<Unsubscribe />} />
         <Route path="queleads-unsubscribe" element={<Unsubscribe />} />
-        {/* <Route path="reset-password" element={<ResetPassword />} /> */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route
+          path="*"
+          element={
+            userDetails?.userInfo?.verification_status === 1 ? (
+              <Navigate to="/setup-your-profile" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
       </Routes>
     </div>
   );
