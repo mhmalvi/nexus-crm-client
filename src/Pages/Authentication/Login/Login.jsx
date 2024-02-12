@@ -6,10 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
-import {
-  handleLogin,
-  handleLoginSecond,
-} from "../../../Components/services/auth";
+import { handleLogin } from "../../../Components/services/auth";
 import {
   addUserDetails,
   setCompanyId,
@@ -37,31 +34,32 @@ const Login = () => {
     email: "",
     password: "",
   });
-  // useEffect(() => {
-  //   if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
-  //     navigate("/setup-your-profile");
-  //   }
-  // }, [navigate, userDetails]);
 
   useEffect(() => {
-    // if (Storage.getItem("auth_tok") && userDetails.userInfo.verification_status === 2) {
-    //       navigate("/dashboard");
-    //     }
-
-    // else if(userDetails.userInfo.verification_status === 1){
-    //   navigate("/setup-your-profile");
-    // }
     if (Storage.getItem("__ce__") && Storage.getItem("__cp__")) {
       setData({
         email: Storage.getItem("__ce__"),
         password: Storage.getItem("__cp__")?.split("_")[0],
       });
     }
-
     if (Storage.getItem("__b__")) {
       setBookMarkedAccounts(JSON.parse(Storage.getItem("__b__")));
     }
-  }, [navigate, syncBookMarked, userDetails]);
+  }, [syncBookMarked]);
+
+  useEffect(() => {
+    if (Storage.getItem("auth_tok")) {
+      if (userDetails?.userInfo?.verification_status === 2) {
+        navigate("/dashboard");
+      } else if (userDetails?.userInfo?.verification_status === 1) {
+        navigate("/setup-your-profile");
+      } else {
+        navigate("/dashboard");
+      }
+    } else {
+      navigate("/login");
+    }
+  }, [navigate, userDetails]);
 
   const userData = (e) => {
     const userdata = { ...data };
@@ -94,12 +92,8 @@ const Login = () => {
     loginFormData.append("password", data.password);
     loginFormData.append("role", role);
     let loginResponse;
-    let loginResponseSecond;
-    if (role === 0) {
-      loginResponse = await handleLogin(loginFormData);
-    } else {
-      loginResponseSecond = await handleLoginSecond(loginFormData);
-    }
+
+    loginResponse = await handleLogin(loginFormData);
 
     if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
@@ -129,54 +123,14 @@ const Login = () => {
             makeid(3)
         );
       }
+      message.success("Successfully Logged In");
 
       if (
         !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
           ?.length
       ) {
         setAddBookMarkOpen(true);
-      } else {
-        setTimeout(() => {
-          userDetails.userInfo.role_id !== 3
-            ? navigate("/dashboard")
-            : userDetails.userInfo.role_id === 3 &&
-              loginResponse.data.data.verification_status === 1
-            ? navigate("/setup-your-profile")
-            : userDetails.userInfo.role_id === 3 &&
-              loginResponse.data.data.verification_status === 0
-            ? message.warning("Please verify your email first.")
-            : navigate("/dashboard");
-          // message.success("Successfully Logged In");
-        }, 500);
-      }
-    } else if (
-      loginResponseSecond?.status === 200 &&
-      loginResponseSecond?.data
-    ) {
-      Storage.setItem("user_info", loginResponseSecond?.data?.data);
-      Storage.setItem(
-        "auth_tok",
-        loginResponseSecond?.data?.token || loginResponseSecond?.data?.data
-      );
-
-      dispatch(setLoader(false));
-      dispatch(addUserDetails(loginResponseSecond?.data?.data));
-      userDetails.userInfo.role_id !== 3 ? (
-        navigate("/dashboard")
-      ) : userDetails.userInfo.role_id === 3 &&
-        loginResponse.data.data.verification_status === 1 ? (
-        navigate("/setup-your-profile")
-      ) : userDetails.userInfo.role_id === 3 &&
-        loginResponse.data.data.verification_status === 0 ? (
-        message.warning("Please verify your email first.")
-      ) : (
-        <>
-          {() => {
-            navigate("/dashboard");
-            message.success("Successfully Logged In");
-          }}
-        </>
-      );
+      } 
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
@@ -184,52 +138,44 @@ const Login = () => {
       message.warning("Oops Wrong! Check You Email or Password/ABN Number");
     }
   };
-  const handleOneClickLogin = useCallback(
-    async (credentials) => {
-      dispatch(setLoader(true));
-      const loginFormData = new FormData();
-      loginFormData.append("email", credentials?._ue_);
-      loginFormData.append("password", credentials?._up_?.split("_")[0]);
-      const loginResponse = await handleLogin(loginFormData);
-      console.log("loginResponse", loginResponse);
 
-      if (loginResponse?.status === 200) {
-        Storage.setItem("user_info", loginResponse?.data?.data);
-        Storage.setItem("auth_tok", loginResponse?.data?.token);
+  const handleOneClickLogin = async (credentials) => {
+    dispatch(setLoader(true));
+    const loginFormData = new FormData();
+    loginFormData.append("email", credentials?._ue_);
+    loginFormData.append("password", credentials?._up_?.split("_")[0]);
+    const loginResponse = await handleLogin(loginFormData);
+    if (loginResponse?.status === 200) {
+      Storage.setItem("user_info", loginResponse?.data?.data);
+      Storage.setItem("auth_tok", loginResponse?.data?.token);
 
-        dispatch(setLoader(false));
-        dispatch(addUserDetails(loginResponse?.data?.data));
+      dispatch(setLoader(false));
+      dispatch(addUserDetails(loginResponse?.data?.data));
 
-        if (loginResponse?.data?.data?.flag === 1) {
-          Storage.setItem("__ce__", data.email);
-          Storage.setItem(
-            "__cp__",
-            data.password +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3) +
-              "_" +
-              makeid(3)
-          );
-        }
-        dispatch(setLoader(false));
-        message.success("Successfully Logged In");
-        setTimeout(() => {
-          navigate("/dashboard");
-          window.location.reload();
-        }, 500);
-      } else {
-        setTimeout(() => {
-          dispatch(setLoader(false));
-        }, 2000);
-        message.warning("Oopps Wrong! Check You Email or Password");
+      if (loginResponse?.data?.data?.flag === 1) {
+        Storage.setItem("__ce__", data.email);
+        Storage.setItem(
+          "__cp__",
+          data.password +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3) +
+            "_" +
+            makeid(3)
+        );
       }
-    },
-    [dispatch, data.email, data.password, makeid, navigate]
-  );
+      dispatch(setLoader(false));
+      message.success("Successfully Logged In");
+    } else {
+      setTimeout(() => {
+        dispatch(setLoader(false));
+      }, 2000);
+      message.warning("Oopps Wrong! Check You Email or Password");
+    }
+  };
   const handleRememberMe = useCallback(
     (e) => {
       if (e.target.checked) {
@@ -293,11 +239,9 @@ const Login = () => {
       window.location.reload();
     }, 500);
   };
-
   const ForgotPasswordModal = () => {
     setTooglePasswordForget(true);
   };
-
   const handleRemoverBookmarkedAccount = (acoountDetials) => {
     console.log(acoountDetials?._ue_);
     setBookMarkedAccounts(
@@ -372,9 +316,9 @@ const Login = () => {
                       alt="companyLogo"
                       srcset=""
                       className="w-60 cursor-pointer"
-                      // onClick={() => {
-                      //   navigate("https://www.queleadscrm.com");
-                      // }}
+                      onClick={() => {
+                        navigate("https://www.queleadscrm.com");
+                      }}
                     />
                   </a>
                 </div>
@@ -482,7 +426,7 @@ const Login = () => {
                       bookMarkedAccounts?.map((account, i) => (
                         <div
                           key={i}
-                          className="w-full h-full flex items-center justify-between relative p-1 rounded-md shadow-md cursor-pointer "
+                          className="w-full flex items-center justify-start relative p-1 rounded-md shadow-md cursor-pointer "
                           onClick={() => handleOneClickLogin(account)}
                         >
                           <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md overflow-hidden">

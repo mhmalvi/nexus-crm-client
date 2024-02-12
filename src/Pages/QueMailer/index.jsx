@@ -97,7 +97,7 @@ const QueMailer = () => {
     if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
       navigate("/setup-your-profile");
     }else  if (userDetails?.userInfo?.verification_status === 2 && Storage.getItem("auth_tok")) {
-      navigate("/dashboard");
+      navigate("/que-mailer");
     }else if(!Storage.getItem("auth_tok")){
       navigate("/login")
     }

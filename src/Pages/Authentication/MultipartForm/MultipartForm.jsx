@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import "./multipart.css";
 import { Select, message } from "antd";
@@ -29,37 +29,48 @@ const MultipartForm = () => {
   const handleChange = (value) => {
     setIndustriesList(value);
   };
-
   const logoutHandler = () => {
     handleLogout();
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
+    message.success("Logout Successful.");
     navigate("/login");
-    console.log("clicked");
     // window.location.reload();
   };
   const { Option } = Select;
   const [hoverLogout, setHoverLogout] = useState(false);
-  console.log("User Details : ", userDetails);
   const setupProfile = async () => {
     try {
       const res = await handleMultipartRegistration(data);
       if (res.status === 201) {
         message.success("You  have successfully created your profile.");
         navigate("/welcome");
-      }else{
-      message.warning(res.message)
+      } else {
+        message.warning(res.message);
       }
     } catch (error) {
-      message.warning(error.response)
+      message.warning(error.response);
     }
   };
+  useEffect(() => {
+    if (Storage.getItem("auth_tok")) {
+      if (userDetails?.userInfo?.verification_status === 2) {
+        navigate("/dashboard");
+      } else if (userDetails?.userInfo?.verification_status === 1) {
+        navigate("/setup-your-profile");
+      } else {
+        navigate("/dashboard");
+      }
+    } else {
+      navigate("/setup-your-profile");
+    }
+  }, [navigate, userDetails]);
   return (
-    <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins">
+    <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins ">
       {/* Screen 0 */}
       {screen === 0 && (
-        <div className="w-1/3 flex flex-col items-center justify-center">
+        <div className="w-1/3 flex flex-col items-center justify-center animateDiv">
           <Icons.WelcomeStart className="w-full ease-in duration-200 w-full" />
           <h1 className="2xl:text-6xl text-5xl text-slate-300 m-0 p-0 text-center ">
             You are almost set
@@ -78,7 +89,6 @@ const MultipartForm = () => {
           </button>
         </div>
       )}
-
       {/* HEADING Screen 1,2,3 */}
       {screen === 1 && (
         <h1 className="text-xl text-slate-300 m-0 p-0 ">

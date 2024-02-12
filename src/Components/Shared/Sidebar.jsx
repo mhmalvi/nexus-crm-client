@@ -1,5 +1,5 @@
 import { handleLogout } from "../../Components/services/auth";
-import { Switch } from "antd";
+import { Switch, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -78,8 +78,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
+    message.success("Logout Successful.");
     navigate("/login");
-    // window.location.reload();
   };
 
   const getColorModePreference = () => {
@@ -100,6 +100,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     dispatch(setColorMode(newColorMode));
     saveColorModePreference(newColorMode);
   };
+  
   return (
     <div
       className={` bg-[#ffffff11] duration-200 ${
