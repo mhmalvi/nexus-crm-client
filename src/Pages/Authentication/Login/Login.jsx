@@ -359,7 +359,7 @@ const Login = () => {
                         id="password"
                         placeholder="Enter your password"
                         value={data.password}
-                        className="w-full px-6 py-2 border border-gray-300 !rounded-md !bg-transparent !active:bg-transparent !focus:ring-none !focus:none !active:ring-none !text-slate-300"
+                        className="w-full h-full p-0 !bg-transparent !rounded-md !active:bg-transparent placeholder-gray-600 border border-gray-300 !focus:outline-none !focus:border-brand-color !text-slate-300"
                         onChange={userData}
                         required
                       />

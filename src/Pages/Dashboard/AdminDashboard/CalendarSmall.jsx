@@ -45,7 +45,7 @@ const CalendarSmall = ({
   const onYearChange = (value) => {
     setSelectedYear(value.format("YYYY"));
   };
-  
+
   const onMonthChange = (value) => {
     setSelectedMonth(value.format("YYYY-MM").slice(5));
   };
@@ -58,10 +58,12 @@ const CalendarSmall = ({
   };
 
   const handlePanelChange = (value, mode) => {
-    if (mode === 'year' && value.month) {
+    if (mode === "year" && value.month) {
       const selectedYear = value.format("YYYY");
       const selectedMonth = value.month() + 1;
-      console.log(`Selected Year: ${selectedYear}, Selected Month: ${selectedMonth}`);
+      console.log(
+        `Selected Year: ${selectedYear}, Selected Month: ${selectedMonth}`
+      );
     }
   };
 
@@ -125,11 +127,13 @@ const CalendarSmall = ({
               >
                 <Radio.Group
                   size="small"
-                  onChange={(e) => onTypeChange(e.target.value)}
+                  onChange={(e) => {
+                    onTypeChange(e.target.value);
+                  }}
                   value={type}
                 >
-                  <Radio.Button value="month">Month</Radio.Button>
-                  <Radio.Button value="year">Year</Radio.Button>
+                  <Radio.Button value="month">Days</Radio.Button>
+                  <Radio.Button value="year">Months</Radio.Button>
                 </Radio.Group>
                 <div
                   className={
@@ -150,7 +154,9 @@ const CalendarSmall = ({
                     {yearOptions}
                   </Select>
                 </div>
-                <div className="calendarDropHead">
+                <div  className={
+                    colorMode ? "calendarDropHeadDark" : "calendarDropHeadWhite"
+                  }>
                   <Select
                     size="small"
                     dropdownMatchSelectWidth={false}
@@ -178,7 +184,7 @@ const CalendarSmall = ({
         }}
         onPanelChange={handlePanelChange}
         onChange={(value) => {
-          const date = parseInt(value.format("DD"));
+          const date = value.date();
           setSelectedDay(date < 10 ? `0${date}` : `${date}`);
         }}
       />

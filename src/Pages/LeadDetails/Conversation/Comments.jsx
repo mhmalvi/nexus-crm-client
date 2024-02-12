@@ -12,7 +12,6 @@ const Comments = ({ Comments }) => {
   useEffect(() => {
     setAllComents(Comments);
   }, [Comments]);
-  console.log("all comments:", allComents);
   const handleDeleteCommentReq = async (id) => {
     const commentDeleteRes = await handleDeleteComment(id);
     if (commentDeleteRes?.status === 200) {
@@ -23,7 +22,7 @@ const Comments = ({ Comments }) => {
   };
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-xl overflow-hidden">
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-xl overflow-hidden">
         <h1 className={`text-lg m-0 p-0 ${colorMode ? "text-slate-300" :"text-gray-800"}`}>Comments History</h1>
       </div>
 
@@ -31,7 +30,7 @@ const Comments = ({ Comments }) => {
         <div className={`w-full ${colorMode ?"text-slate-300":"text-gray-800"}  text-opacity-40`}>
           {allComents?.length
             ? allComents?.map((history) => (
-                <div className="flex w-full border rounded-lg p-2 my-2 shadow justify-between items-center">
+                <div className="flex w-full border rounded-xl p-2 my-2 shadow justify-between items-center">
                   <div>
                     <div className="text-base">{history?.comments}</div>
                     <div className="text-xs">

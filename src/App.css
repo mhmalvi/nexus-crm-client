@@ -125,13 +125,17 @@ table {
   justify-content: center;
 }
 .calendarBodyDark .ant-picker-month-panel .ant-picker-content .ant-picker-cell {
-  padding: 0;
+  padding: 0 !important;
+}
+.calendarBodyDark .ant-picker-month-panel .ant-picker-body {
+  padding: 4px;
 }
 .calendarBodyDark
   .ant-picker-month-panel
   .ant-picker-content
   .ant-picker-cell
   .ant-picker-cell-inner {
+    
   text-align: center;
   width: 100%;
 }
@@ -335,57 +339,6 @@ td {
 }
 ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Calendar */
-.calendar-wrapper {
-  position: relative;
-}
-
-.fade {
-  position: absolute;
-  bottom: 0px;
-  display: block;
-  width: 100%;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.9) 100%
-  );
-}
-
-.calendar-wrapper {
-  width: 50%;
-  overflow: auto;
-  position: relative;
-}
-
-.calendar-fader-left {
-  content: "";
-  position: absolute;
-  width: 20%;
-  left: -26px;
-  top: 0;
-  bottom: 0;
-  background-image: linear-gradient(
-    to right,
-    #aeffc6,
-    rgba(255, 255, 255, 0) 200px
-  );
-}
-
-.calendar-fader-right {
-  content: "";
-  position: absolute;
-  width: 20%;
-  right: 0px;
-  top: 0;
-  bottom: 0;
-  background-image: linear-gradient(
-    to left,
-    #aeffc6,
-    rgba(0, 128, 128, 0) 200px
-  );
 }
 
 .slick-current {
@@ -643,20 +596,23 @@ td {
 }
 
 @keyframes ping {
-  75%,
+  0%{
+    scale:0.6;
+    opacity: 0.8;
+  }
   100% {
-    transform: scale(0.7);
+    scale:1;
     opacity: 0;
   }
 }
 .animate-custom-ping {
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: ping 2s linear infinite;
 }
 
 @keyframes bounce {
   0%,
   100% {
-    transform: translateY(-2%);
+    transform: translateY(-1%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
   50% {

@@ -12,7 +12,9 @@
   height: 100%;
   border-radius: 8px !important;
   overflow: hidden;
+
 }
+
 .selectSalesLight .ant-select .ant-select-selector {
   background: transparent !important;
   color: black;

@@ -421,7 +421,7 @@ const LeadStatus = (props) => {
                 ? true
                 : false
             }
-            className={`cursor-pointer ${leadStatusColor}`}
+            className={`cursor-pointer ${leadStatusColor} `}
             overlay={menu}
             trigger="click"
           >
@@ -503,7 +503,6 @@ const LeadStatus = (props) => {
                     <Space
                       className=" border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
                       direction="vertical"
-                      // size={12}
                       style={{
                         width: "10rem",
                       }}
@@ -850,7 +849,7 @@ const LeadStatus = (props) => {
                       leadStatus["New Lead"]
                         ? "bg-green-500"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -925,7 +924,7 @@ const LeadStatus = (props) => {
                       leadStatus["Skilled"]
                         ? "bg-orange-400"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1005,7 +1004,7 @@ const LeadStatus = (props) => {
                       leadStatus["Called"]
                         ? "bg-blue-400"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1119,7 +1118,7 @@ const LeadStatus = (props) => {
                       leadStatus["Paid"]
                         ? "bg-teal-400"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1260,7 +1259,7 @@ const LeadStatus = (props) => {
                       leadStatus["Verified"]
                         ? "bg-violet-500"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1349,7 +1348,7 @@ const LeadStatus = (props) => {
                       leadStatus["Completed"]
                         ? "bg-red-500"
                         : `${
-                            colorMode ? "bg-slate-300" : "bg-gray-800"
+                          colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>

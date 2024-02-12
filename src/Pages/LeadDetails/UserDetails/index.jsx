@@ -218,6 +218,7 @@ const UserDetails = ({
   return (
     <div className="mt-5">
       <div className="grid grid-cols-3 gap-4 h-[55vh] ">
+        {/* Column 1 */}
         <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
           <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <h4
@@ -478,6 +479,7 @@ const UserDetails = ({
             ) : null}
           </div>
         </div>
+        {/* FORMS */}
         <div className="flex flex-col justify-between items-center gap-4 h-[55vh] ">
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
@@ -492,7 +494,7 @@ const UserDetails = ({
                 Lead Generation Form
               </h1>
               <button
-                className={`w-full px-1.5 py-2 bg-transparent border ${
+                className={`w-full py-2 bg-transparent border ${
                   colorMode
                     ? "text-slate-300 border-slate-300"
                     : "text-gray-800 border-gray-800"
@@ -572,9 +574,10 @@ const UserDetails = ({
             )}
           </div>
         </div>
+        {/* Column 3 */}
         <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
           {userDetails?.userInfo?.role_id !== 6 ? (
-            <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+            <div className="h-1/3 flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
               <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
                 <h1
                   className={`text-lg m-0 p-0 ${
@@ -634,15 +637,11 @@ const UserDetails = ({
               </form>
             </div>
           ) : null}
-          <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-            <div className="h-[150px] overflow-hidden">
+          <div className="h-1/3 w-full rounded-xl">
               <Comments Comments={leadDtls?.leadComments} />
-            </div>
           </div>
-          <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-            <div className="h-[200px] overflow-hidden">
+          <div className="h-1/3 w-full rounded-xl">
               <StatusShow leadDetails={leadDetails} />
-            </div>
           </div>
         </div>
 
