@@ -1,16 +1,18 @@
-
-#password{
+#password {
   background-color: transparent !important;
-  border-radius: 10px;
-  color:white;
+  color: white;
 }
-.bookmarkModal .ant-modal-content{
+.bookmarkModal .ant-modal-content {
   background-color: transparent !important;
   box-shadow: 0 0 0 0;
 }
-.loginPassword .ant-input-password-icon.anticon{
-  color:#cbd5e1;
+.loginPassword .ant-input-password-icon.anticon {
+  color: #cbd5e1;
 }
+.loginPassword span {
+  padding: 4px 8px !important;
+}
+
 /* .ant-modal-mask{
   background-color: #ffffff7f;
 } */
@@ -42,18 +44,17 @@
 }
 .forgotModal .ant-modal-footer {
   border-top: none;
-  padding: 0 16px 16px 0 ;
+  padding: 0 16px 16px 0;
 }
-.forgotModal .ant-modal-footer .ant-btn{
-  
+.forgotModal .ant-modal-footer .ant-btn {
   margin: 0;
   border-radius: 8px;
-  background: linear-gradient(to bottom, #8A7CFD, #2596FB);
-  border:none;
+  background: linear-gradient(to bottom, #8a7cfd, #2596fb);
+  border: none;
 }
-.forgotModal .ant-modal-footer .ant-btn:disabled{
+.forgotModal .ant-modal-footer .ant-btn:disabled {
   margin: 0;
   border-radius: 8px;
-  background:#cbd5e1;
+  background: #cbd5e1;
   border-color: #cbd5e1;
 }

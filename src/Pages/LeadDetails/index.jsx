@@ -144,11 +144,6 @@ const LeadDetails = () => {
         </Link>
       </div>
       <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
-        {loadingDetails && (
-          <div className="w-full h-screen text-7xl absolute z-50 flex justify-center items-center bg-slate-300 bg-opacity-70">
-            <Loading />
-          </div>
-        )}
         <div className={`flex flex-col `}>
           <div className="">
             <LeadStatus
