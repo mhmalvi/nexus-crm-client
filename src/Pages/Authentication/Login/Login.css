@@ -1,21 +1,17 @@
-#password {
-  background-color: transparent !important;
-  color: white;
-}
+
 .bookmarkModal .ant-modal-content {
   background-color: transparent !important;
   box-shadow: 0 0 0 0;
 }
-.loginPassword .ant-input-password-icon.anticon {
-  color: #cbd5e1;
+
+.inputBGLogin,.inputBGLogin input, .inputBGLogin input:active, input {
+  background-color: transparent !important;
+  color:#cbd5e17f !important;
 }
-.loginPassword span {
-  padding: 4px 8px !important;
+.inputBGLogin input::placeholder, input::placeholder{
+  color:#cbd5e17f !important;
 }
 
-/* .ant-modal-mask{
-  background-color: #ffffff7f;
-} */
 .forgotModal .ant-modal-header {
   background-color: transparent !important;
   padding: 0;

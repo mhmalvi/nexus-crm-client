@@ -8,10 +8,13 @@ import {
   handleMultipartRegistration,
 } from "./../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Loading from "../../../Components/Shared/Loader";
+import { addUserDetails } from "../../../features/user/userSlice";
 
 const MultipartForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [screen, setScreen] = useState(0);
   const userDetails = useSelector((state) => state?.user);
   const [industriesList, setIndustriesList] = useState(["RTO"]);
@@ -26,6 +29,7 @@ const MultipartForm = () => {
     abn: "",
     company_code: "",
   });
+  const [submitClicked, setSubmitClicked] = useState(false);
   const handleChange = (value) => {
     setIndustriesList(value);
   };
@@ -40,323 +44,341 @@ const MultipartForm = () => {
   };
   const { Option } = Select;
   const [hoverLogout, setHoverLogout] = useState(false);
+
   const setupProfile = async () => {
+    setSubmitClicked(true);
     try {
       const res = await handleMultipartRegistration(data);
+      console.log(res)
       if (res.status === 201) {
+        Storage.setItem("user_info", res?.data);
+        dispatch(addUserDetails(res.data));
+        setSubmitClicked(false);
         message.success("You  have successfully created your profile.");
-        navigate("/welcome");
       } else {
+        setSubmitClicked(false);
         message.warning(res.message);
       }
     } catch (error) {
+      setSubmitClicked(false);
       message.warning(error.response);
     }
   };
-  useEffect(() => {
-    if (Storage.getItem("auth_tok")) {
-      if (userDetails?.userInfo?.verification_status === 2) {
-        navigate("/dashboard");
-      } else if (userDetails?.userInfo?.verification_status === 1) {
-        navigate("/setup-your-profile");
-      } else {
-        navigate("/dashboard");
-      }
-    } else {
-      navigate("/setup-your-profile");
-    }
-  }, [navigate, userDetails]);
+  // useEffect(() => {
+  //   if (Storage.getItem("auth_tok")) {
+  //     if (userDetails?.userInfo?.verification_status === 2) {
+  //       navigate("/dashboard");
+  //     } else if (userDetails?.userInfo?.verification_status === 1) {
+  //       navigate("/setup-your-profile");
+  //     } else {
+  //       navigate("/dashboard");
+  //     }
+  //   } else {
+  //     navigate("/setup-your-profile");
+  //   }
+  // }, [navigate, userDetails]);
   return (
     <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins ">
-      {/* Screen 0 */}
-      {screen === 0 && (
-        <div className="w-1/3 flex flex-col items-center justify-center animateDiv">
-          <Icons.WelcomeStart className="w-full ease-in duration-200 w-full" />
-          <h1 className="2xl:text-6xl text-5xl text-slate-300 m-0 p-0 text-center ">
-            You are almost set
-          </h1>
-          <h1 className="2xl:text-lg text-sm text-slate-300 m-0 p-0 text-center w-full">
-            Now that you have verified your email, let&apos;s setup your
-            profile.
-          </h1>
-          <button
-            onClick={() => {
-              setScreen(1);
-            }}
-            className="px-4 py-2 m-0 text-blue-500 self-end 2xl:mr-12 xl:mr-0 mr-4 hover:text-slate-300 ease-in duration-100"
-          >
-            Next →
-          </button>
-        </div>
-      )}
-      {/* HEADING Screen 1,2,3 */}
-      {screen === 1 && (
-        <h1 className="text-xl text-slate-300 m-0 p-0 ">
-          Personal Information
-        </h1>
-      )}
-      {screen === 2 && (
-        <h1 className="text-xl text-slate-300 m-0 p-0 ">Company Information</h1>
-      )}
-      {screen === 3 && (
-        <h1 className="text-xl text-slate-300 m-0 p-0 ">Legal Information</h1>
-      )}
-
-      {/* FORM Screen 1,2,3 */}
-      <form
-        className={`2xl:w-1/5 lg:w-1/4 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
-          screen === 0 || screen === 4 ? "hidden" : "block"
-        }`}
-      >
-        {screen === 1 && (
-          <div className="w-full flex flex-col gap-4 items-center justify-center">
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Username
+      {submitClicked ? (
+        <Loading />
+      ) : (
+        <>
+          {/* Screen 0 */}
+          {screen === 0 && (
+            <div className="w-1/3 flex flex-col items-center justify-center animateDiv">
+              <Icons.WelcomeStart className="w-full ease-in duration-200 w-full" />
+              <h1 className="2xl:text-6xl text-5xl text-slate-300 m-0 p-0 text-center ">
+                You are almost set
               </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                placeholder="Username"
-                value={data.username}
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    username: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Contact Number
+              <h1 className="2xl:text-lg text-sm text-slate-300 m-0 p-0 text-center w-full">
+                Now that you have verified your email, let&apos;s setup your
+                profile.
               </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                required
-                placeholder="Contact Number"
-                value={data.contact}
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    contact: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <button
-              onClick={() => {
-                setScreen(2);
-              }}
-              disabled={
-                data.username.length && data.contact.length ? false : true
-              }
-              className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
-            >
-              Next →
-            </button>
-          </div>
-        )}
-        {screen === 2 && (
-          <div className="w-full flex flex-col gap-4 items-center justify-center">
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Company Name
-              </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                value={data.company_name}
-                placeholder="Company Name"
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    company_name: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Company Address
-              </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300 "
-                placeholder="Company Address"
-                value={data.company_address}
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    company_address: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Select Industry
-              </h1>
-              <Select
-                id="companies"
-                defaultValue={data.industry}
-                value={data.industry}
-                placeholder="Select an industry"
-                className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
-                onChange={handleChange}
-              >
-                {industriesList?.map((industry) => (
-                  <Option value={industry}>{industry}</Option>
-                ))}
-              </Select>
-            </div>
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Website (Optional)
-              </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                required
-                value={data.website}
-                placeholder="Website"
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    website: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <div className="w-full flex items-center justify-between">
               <button
                 onClick={() => {
                   setScreen(1);
                 }}
-                className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
-              >
-                ← Previous
-              </button>
-              <button
-                onClick={() => {
-                  setScreen(3);
-                }}
-                disabled={
-                  data.company_name.length &&
-                  data.company_address.length &&
-                  data.industry.length
-                    ? false
-                    : true
-                }
-                className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
+                className="px-4 py-2 m-0 text-blue-500 self-end 2xl:mr-12 xl:mr-0 mr-4 hover:text-slate-300 ease-in duration-100"
               >
                 Next →
               </button>
             </div>
-          </div>
-        )}
-        {screen === 3 && (
-          <div className="w-full flex flex-col gap-4 items-center justify-center">
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                ABN Number (Optional)
-              </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                placeholder="ABN Number"
-                value={data.abn}
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    abn: e.target.value,
-                  }));
-                }}
-              />
-            </div>
-            <div className="w-full">
-              <h1 className="m-0 w-full text-base text-slate-300 font-normal">
-                Company Code (Optional)
-              </h1>
-              <input
-                className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
-                required
-                value={data.company_code}
-                placeholder="Company Code"
-                onChange={(e) => {
-                  setData((prevData) => ({
-                    ...prevData,
-                    company_code: e.target.value,
-                  }));
-                }}
-              />
-            </div>
+          )}
+          {/* HEADING Screen 1,2,3 */}
+          {screen === 1 && (
+            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+              Personal Information
+            </h1>
+          )}
+          {screen === 2 && (
+            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+              Company Information
+            </h1>
+          )}
+          {screen === 3 && (
+            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+              Legal Information
+            </h1>
+          )}
 
-            <div className="w-full flex items-center justify-between">
-              <button
-                onClick={() => {
-                  setScreen(2);
-                }}
-                className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
-              >
-                ← Previous
-              </button>
-              <button
-                type="button"
-                onClick={setupProfile}
-                className="m-0 text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        )}
-      </form>
-
-      {screen === 0 || screen === 4 ? null : (
-        <div
-          className={`flex items-center justify-center ${
-            screen === 0 || screen === 4 ? "hidden" : "block"
-          }`}
-        >
-          <div
-            className={`${
-              screen >= 1 ? "bg-slate-300" : ""
-            } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
-          ></div>
-          <div
-            className={`${
-              screen >= 2 ? "bg-slate-300" : ""
-            } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
-          ></div>
-          <div
-            className={`${
-              screen >= 3 ? "bg-slate-300" : ""
-            } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
-          ></div>
-        </div>
-      )}
-      <div
-        className="absolute top-0 right-0 flex items-center justify-center text-base cursor-pointer my-4"
-        onClick={logoutHandler}
-        onMouseEnter={() => setHoverLogout(true)}
-        onMouseLeave={() => setHoverLogout(false)}
-      >
-        <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md px-4 py-2 shadow-md overflow-hidden">
-          <div className="">
-            <Icons.LogOut className="m-0 p-0 text-white" />
-          </div>
-
-          <span
-            className={`ease-in duration-200  flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2 ${
-              hoverLogout ? " w-full h-5" : " w-0 h-5 hidden"
+          {/* FORM Screen 1,2,3 */}
+          <form
+            className={`2xl:w-1/5 lg:w-1/4 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
+              screen === 0 || screen === 4 ? "hidden" : "block"
             }`}
           >
-            <h1
-              className={`m-0 p-0 w-full text-white text-sx ${
-                hoverLogout ? " w-full h-5" : " w-0 hidden"
+            {screen === 1 && (
+              <div className="w-full flex flex-col gap-4 items-center justify-center">
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Username
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    placeholder="Username"
+                    value={data.username}
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        username: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Contact Number
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    required
+                    placeholder="Contact Number"
+                    value={data.contact}
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        contact: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    setScreen(2);
+                  }}
+                  disabled={
+                    data.username.length && data.contact.length ? false : true
+                  }
+                  className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+            {screen === 2 && (
+              <div className="w-full flex flex-col gap-4 items-center justify-center">
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Company Name
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    value={data.company_name}
+                    placeholder="Company Name"
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        company_name: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Company Address
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300 "
+                    placeholder="Company Address"
+                    value={data.company_address}
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        company_address: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Select Industry
+                  </h1>
+                  <Select
+                    id="companies"
+                    defaultValue={data.industry}
+                    value={data.industry}
+                    placeholder="Select an industry"
+                    className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
+                    onChange={handleChange}
+                  >
+                    {industriesList?.map((industry) => (
+                      <Option value={industry}>{industry}</Option>
+                    ))}
+                  </Select>
+                </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Website (Optional)
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    required
+                    value={data.website}
+                    placeholder="Website"
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        website: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="w-full flex items-center justify-between">
+                  <button
+                    onClick={() => {
+                      setScreen(1);
+                    }}
+                    className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+                  >
+                    ← Previous
+                  </button>
+                  <button
+                    onClick={() => {
+                      setScreen(3);
+                    }}
+                    disabled={
+                      data.company_name.length &&
+                      data.company_address.length &&
+                      data.industry.length
+                        ? false
+                        : true
+                    }
+                    className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            )}
+            {screen === 3 && (
+              <div className="w-full flex flex-col gap-4 items-center justify-center">
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    ABN Number (Optional)
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    placeholder="ABN Number"
+                    value={data.abn}
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        abn: e.target.value || null,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                    Company Code
+                  </h1>
+                  <input
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    required
+                    value={data.company_code}
+                    placeholder="Company Code"
+                    onChange={(e) => {
+                      setData((prevData) => ({
+                        ...prevData,
+                        company_code: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+
+                <div className="w-full flex items-center justify-between">
+                  <button
+                    onClick={() => {
+                      setScreen(2);
+                    }}
+                    className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+                  >
+                    ← Previous
+                  </button>
+                  <button
+                    type="button"
+                    onClick={setupProfile}
+                    className="m-0 text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            )}
+          </form>
+
+          {screen === 0 || screen === 4 ? null : (
+            <div
+              className={`flex items-center justify-center ${
+                screen === 0 || screen === 4 ? "hidden" : "block"
               }`}
             >
-              Log out
-            </h1>
-          </span>
-        </button>
-      </div>
+              <div
+                className={`${
+                  screen >= 1 ? "bg-slate-300" : ""
+                } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
+              ></div>
+              <div
+                className={`${
+                  screen >= 2 ? "bg-slate-300" : ""
+                } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
+              ></div>
+              <div
+                className={`${
+                  screen >= 3 ? "bg-slate-300" : ""
+                } ease-in duration-100 w-1 h-1 rounded-full border border-slate-300 p-1 mx-2`}
+              ></div>
+            </div>
+          )}
+
+          <div
+            className="absolute top-0 right-0 flex items-center justify-center text-base cursor-pointer my-4"
+            onClick={logoutHandler}
+            onMouseEnter={() => setHoverLogout(true)}
+            onMouseLeave={() => setHoverLogout(false)}
+          >
+            <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md px-4 py-2 shadow-md overflow-hidden">
+              <div className="">
+                <Icons.LogOut className="m-0 p-0 text-white" />
+              </div>
+
+              <span
+                className={`ease-in duration-200  flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2 ${
+                  hoverLogout ? " w-full h-5" : " w-0 h-5 hidden"
+                }`}
+              >
+                <h1
+                  className={`m-0 p-0 w-full text-white text-sx ${
+                    hoverLogout ? " w-full h-5" : " w-0 hidden"
+                  }`}
+                >
+                  Log out
+                </h1>
+              </span>
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

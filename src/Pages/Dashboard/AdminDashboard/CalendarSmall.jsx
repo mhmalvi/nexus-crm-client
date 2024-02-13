@@ -9,8 +9,8 @@ dayjs.extend(dayLocaleData);
 const CalendarSmall = ({
   // filterDate,
   selectedDay,
-  // selectedMonth,
-  // selectedYear,
+  selectedMonth,
+  selectedYear,
   setFilterDate,
   setSelectedDay,
   setSelectedMonth,
@@ -51,10 +51,11 @@ const CalendarSmall = ({
   };
 
   const handleClearDate = () => {
+    const currentDate = dayjs();
     setFilterDate("");
     setSelectedDay("");
-    setSelectedMonth("");
-    setSelectedYear("");
+    setSelectedYear(currentDate.year());
+    setSelectedMonth(currentDate.month());
   };
 
   const handlePanelChange = (value, mode) => {
@@ -143,28 +144,31 @@ const CalendarSmall = ({
                   <Select
                     size="small"
                     dropdownMatchSelectWidth={false}
-                    className="my-year-select"
-                    value={year}
+                    value={selectedYear}
                     onChange={(newYear) => {
                       const now = value.clone().year(newYear);
                       onChange(now);
                       onYearChange(now);
+                      setSelectedYear(newYear);
                     }}
                   >
                     {yearOptions}
                   </Select>
                 </div>
-                <div  className={
+                <div
+                  className={
                     colorMode ? "calendarDropHeadDark" : "calendarDropHeadWhite"
-                  }>
+                  }
+                >
                   <Select
                     size="small"
                     dropdownMatchSelectWidth={false}
-                    value={month}
+                    value={selectedMonth}
                     onChange={(newMonth) => {
                       const now = value.clone().month(newMonth);
                       onChange(now);
                       onMonthChange(now);
+                      setSelectedMonth(newMonth);
                     }}
                   >
                     {monthOptions}

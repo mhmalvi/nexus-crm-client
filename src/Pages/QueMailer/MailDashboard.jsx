@@ -137,11 +137,11 @@ const MailDashboard = ({
         if (res?.status === 200) {
           message.success(res?.message);
           setSuccessMail("success");
-        } else if (res?.status === 304) {
-          message.warning(res?.message);
-          setSuccessMail("failed");
+        } else if (res?.status === 504) {
+          message.success("All mail has been sent !");
+          setSuccessMail("success");
         } else {
-          await message.warning(res?.data.message);
+          await message.warning(res?.message);
           setSuccessMail("failed");
         }
       } catch (error) {

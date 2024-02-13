@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { Input, Tooltip, message } from "antd";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const Register = () => {
       } else {
         navigate("/dashboard");
       }
-    }else{
+    } else {
       navigate("/register");
     }
   }, [navigate, userDetails]);
@@ -39,18 +39,17 @@ const Register = () => {
       return message.error("Passwords do not match!");
     } else {
       const res = await handleInitialRegistration(registrationData);
-      console.log(res);
       if (res?.status === 201) {
+        setLoading(false);
         message.success(res?.message);
         message.success("Please check your email for verification code");
-        setLoading(false);
         navigate("/login");
-      } else if (res?.status === 422) {
-        message.warning(res?.message);
+      } else if (res?.data.errors.password !== null) {
         setLoading(false);
-      } else {
-        message.warning(res?.message);
+        message.warning(res?.data.errors.password[0]);
+      } else if (res?.data.errors.email !== null) {
         setLoading(false);
+        message.warning(res?.data.errors.email[0]);
       }
     }
   };
@@ -136,12 +135,12 @@ const Register = () => {
                   <label htmlFor="email" className=" px-2 text-gray-800">
                     Email
                   </label>
-                  <input
+                  <Input
                     type="email"
                     // name="username"
                     id="username"
-                    placeholder="Enter your username"
-                    className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    placeholder="Enter your email"
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setRegistrationData({
                         ...registrationData,
@@ -151,16 +150,27 @@ const Register = () => {
                     required
                   />
                 </div>
-                <div className="font-poppins ">
-                  <label htmlFor="password" className=" px-2 text-gray-800">
+                <div className="font-poppins flex flex-col">
+                  <label htmlFor="password" className="px-2 w-full flex items-center justify-between text-gray-800">
+                    <span>
+
                     Password
+                    </span>
+                    <Tooltip
+                      align={"center"}
+                      title="Password must be of at least 8 characters, 1 special character, 1 capital letter & 1 number."
+                    >
+                      <span className="px-1.5 font-semibold border border-gray-500 rounded-full text-xs cursor-help">
+                        ?
+                      </span>
+                    </Tooltip>
                   </label>
-                  <input
+
+                  <Input.Password
                     type="password"
-                    // name="password"
                     id="password"
                     placeholder="Enter your password"
-                    className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setRegistrationData({
                         ...registrationData,
@@ -177,16 +187,16 @@ const Register = () => {
                   >
                     Confirm Password
                   </label>
-                  <input
+                  <Input.Password
                     type="password"
                     // name="confirm_password"
-                    id="confirm_password"
+                    id="password"
                     placeholder="Confirm your password"
-                    className="w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !placeholder-gray-400 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
-                    required
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
                     }}
+                    required
                   />
                 </div>
                 <button

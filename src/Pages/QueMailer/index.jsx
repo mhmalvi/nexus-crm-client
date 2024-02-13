@@ -36,7 +36,7 @@ const QueMailer = () => {
   const [countInfo, setCountInfo] = useState("");
   const [openCountModal, setOpenCountModal] = useState(false);
   const [dailyCount, setDailyCount] = useState(null);
-  const [historyInnerPagination, setHistoryInnerPagination] = useState(1)
+  const [historyInnerPagination, setHistoryInnerPagination] = useState(1);
   useEffect(() => {
     async function fetchCurrentEmail() {
       const res = await handleCurrentEmail(+userDetails.userInfo.id);
@@ -94,12 +94,18 @@ const QueMailer = () => {
     }
   }, [dailyCount, userDetails?.userInfo.id, successMail]);
   useEffect(() => {
-    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+    if (
+      userDetails?.userInfo?.verification_status === 1 &&
+      Storage.getItem("auth_tok")
+    ) {
       navigate("/setup-your-profile");
-    }else  if (userDetails?.userInfo?.verification_status === 2 && Storage.getItem("auth_tok")) {
+    } else if (
+      userDetails?.userInfo?.verification_status === 2 &&
+      Storage.getItem("auth_tok")
+    ) {
       navigate("/que-mailer");
-    }else if(!Storage.getItem("auth_tok")){
-      navigate("/login")
+    } else if (!Storage.getItem("auth_tok")) {
+      navigate("/login");
     }
   }, [navigate, userDetails]);
   return (
@@ -153,18 +159,6 @@ const QueMailer = () => {
               className={`${
                 colorMode ? "text-slate-600" : "text-gray-300"
               } px-4 text-base`}
-              // ${ colorMode
-              //     ? `hover:text-white ${
-              //         activeItem === "Statistics"
-              //           ? "text-white font-semibold"
-              //           : "text-slate-300"
-              //       }`
-              //     : `hover:text-gray-800 ${
-              //         activeItem === "Statistics"
-              //           ? "text-gray-800 font-semibold"
-              //           : "text-gray-500"
-              //       }`}
-
               onClick={() => {
                 setActiveItem("Statistics");
               }}
@@ -193,11 +187,33 @@ const QueMailer = () => {
             </button>
           </div>
           <div>
-            <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Emails Remaining: {1000 - dailyCount}</h1>
+            <h1
+              className={`m-0 p-0 ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              Emails Remaining: {1000 - dailyCount}
+            </h1>
           </div>
         </div>
-        {currentEmail?.status !== 404 ? (
-          <>
+        {currentEmail?.status === 404 ||
+        currentEmail === null ||
+        currentEmail === "" ? (
+          <div className="p-0 m-0 ease-in duration-100">
+            {activeItem === "Email" && (
+              <div className="flex items-center justify-center h-full">
+                <h1
+                  className={`${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  You need to set an email first
+                </h1>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="p-0 m-0 ease-in duration-100">
             {/* EMAIL EDITING SECTION */}
             {activeItem === "Email" && (
               <div className="flex h-full justify-between gap-8 ">
@@ -235,15 +251,7 @@ const QueMailer = () => {
                 </div>
               </div>
             )}
-          </>
-        ) : (
-          <>
-            {activeItem === "Email" && (
-              <div className="flex items-center justify-center h-full">
-                <h1>You need to set an email first</h1>
-              </div>
-            )}
-          </>
+          </div>
         )}
         {activeItem === "Email History" && (
           <div className="flex h-full justify-between gap-8 ">

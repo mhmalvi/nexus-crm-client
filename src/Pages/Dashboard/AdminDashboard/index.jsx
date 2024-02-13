@@ -17,7 +17,7 @@ import {
   handleSyncLeads,
 } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
-import { setLoader } from "../../../features/user/userSlice";
+import dayjs from "dayjs";
 import Filters from "./Filters";
 import { Button, Input, Modal, Space, Tooltip, message } from "antd";
 import Highlighter from "react-highlight-words";
@@ -70,8 +70,8 @@ const AdminDashboard = () => {
 
   // For Yearwise Filter
   const [selectedDay, setSelectedDay] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedYear, setSelectedYear] = useState(dayjs().year());
+  const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
   const [tableHeaders, setTableHeaders] = useState([]);
   const [salesOptions, setSalesOptions] = useState([]);
   const [selectedSales, setSelectedSales] = useState("");
