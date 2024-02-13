@@ -9,3 +9,10 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.inputBGRegister input, .inputBG input:active, input {
+  background-color: transparent !important;
+  color: #1f2937 !important;
+}
+.inputBGRegister input::placeholder, input::placeholder{
+  color:#1f29377f !important;
+}

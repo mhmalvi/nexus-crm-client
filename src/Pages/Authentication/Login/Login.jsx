@@ -48,18 +48,15 @@ const Login = () => {
   }, [syncBookMarked]);
 
   useEffect(() => {
-    if (Storage.getItem("auth_tok")) {
-      if (userDetails?.userInfo?.verification_status === 2) {
-        navigate("/dashboard");
-      } else if (userDetails?.userInfo?.verification_status === 1) {
-        navigate("/setup-your-profile");
-      } else {
-        navigate("/dashboard");
-      }
-    } else {
-      navigate("/login");
+    const isBookmarkSet = !!Storage.getItem("__b__");
+
+    if (!isBookmarkSet) {
+      setAddBookMarkOpen(true);
     }
-  }, [navigate, userDetails]);
+  }, []);
+  // useEffect(() => {
+
+  // }, [navigate, userDetails]);
 
   const userData = (e) => {
     const userdata = { ...data };
@@ -94,7 +91,6 @@ const Login = () => {
     let loginResponse;
 
     loginResponse = await handleLogin(loginFormData);
-
     if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
@@ -107,22 +103,6 @@ const Login = () => {
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
       dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
-
-      if (loginResponse?.data?.data?.flag === 1) {
-        Storage.setItem("__ce__", data.email);
-        Storage.setItem(
-          "__cp__",
-          data.password +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3)
-        );
-      }
       message.success("Successfully Logged In");
 
       if (
@@ -130,7 +110,15 @@ const Login = () => {
           ?.length
       ) {
         setAddBookMarkOpen(true);
-      } 
+      } else if (Storage.getItem("auth_tok")) {
+        if (userDetails?.userInfo?.verification_status === 2) {
+          navigate("/dashboard");
+        } else if (userDetails?.userInfo?.verification_status === 1) {
+          navigate("/setup-your-profile");
+        } else {
+          navigate("/dashboard");
+        }
+      }
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
@@ -152,23 +140,17 @@ const Login = () => {
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
 
-      if (loginResponse?.data?.data?.flag === 1) {
-        Storage.setItem("__ce__", data.email);
-        Storage.setItem(
-          "__cp__",
-          data.password +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3) +
-            "_" +
-            makeid(3)
-        );
-      }
       dispatch(setLoader(false));
       message.success("Successfully Logged In");
+      if (Storage.getItem("auth_tok")) {
+        if (userDetails?.userInfo?.verification_status === 2) {
+          navigate("/dashboard");
+        } else if (userDetails?.userInfo?.verification_status === 1) {
+          navigate("/setup-your-profile");
+        } else {
+          navigate("/dashboard");
+        }
+      }
     } else {
       setTimeout(() => {
         dispatch(setLoader(false));
@@ -339,7 +321,7 @@ const Login = () => {
                       id="email"
                       value={data.email}
                       placeholder="Enter your username"
-                      className="w-full px-6 py-2 !bg-transparent !active:bg-transparent placeholder-gray-600 border border-gray-300 !rounded-md !focus:outline-none !focus:border-brand-color !text-slate-300"
+                      className="inputBGLogin w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                       onChange={userData}
                       required
                     />
@@ -359,7 +341,7 @@ const Login = () => {
                         id="password"
                         placeholder="Enter your password"
                         value={data.password}
-                        className="w-full h-full p-0 !bg-transparent !rounded-md !active:bg-transparent placeholder-gray-600 border border-gray-300 !focus:outline-none !focus:border-brand-color !text-slate-300"
+                        className="inputBGLogin w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                         onChange={userData}
                         required
                       />

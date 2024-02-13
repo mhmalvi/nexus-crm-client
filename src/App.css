@@ -51,6 +51,7 @@ table {
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper {
   background-color: transparent !important;
   border: 0px;
+  
   color: #cbd5e1;
 }
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper-checked {
@@ -68,6 +69,10 @@ table {
   .ant-select:not(.ant-select-customize-input)
   .ant-select-selector {
   border: 1px solid #cbd5e1;
+  display: flex;
+  width: 60px !important;
+  align-items: center;
+  justify-content: space-between;
 }
 .calendarDropHeadDark .ant-select {
   border-radius: 5px;
@@ -82,6 +87,15 @@ table {
   background-color: transparent !important;
   color: #cbd5e1;
   border: 1px solid #cbd5e1;
+  overflow: hidden;
+  padding: 0;
+}
+.calendarDropHeadLight .ant-select-selector {
+  display: flex;
+  border-radius: 5px !important;
+  background-color: transparent !important;
+  color: #cbd5e1;
+  border: 1px solid #1f2937;
   overflow: hidden;
   padding: 0;
 }
