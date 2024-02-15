@@ -11,9 +11,7 @@ import {
   handleFetchStudentsPaymentHistory,
 } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
-// import Calendar from "../Dashboard/AdminDashboard/Calendar";
 import NoticeForm from "../Dashboard/AdminDashboard/NoticeForm";
-import Table from "../Dashboard/AdminDashboard/Table";
 import UpdatedTable from "../Dashboard/AdminDashboard/UpdatedTable";
 import CalendarSmall from "../Dashboard/AdminDashboard/CalendarSmall";
 
@@ -347,9 +345,9 @@ const Payment = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden grid grid-cols-12 gap-4">
-        <div className="col-span-9 rounded-xl px-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-          {/* {toggleTabs === "payment" ? ( */}
+      <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden flex gap-4">
+        <div className="w-3/4 rounded-xl">
+         
           <UpdatedTable
             table_title="Payment History"
             tableHeaders={tableHeaders}
@@ -364,21 +362,12 @@ const Payment = () => {
             setSyncLeads={null}
             syncLeads={null}
           />
-          {/* ) : (
-            <Table
-              title="Invoice History"
-              tableHeaders={invoiceHistoryTableHeaders}
-              data={invoiceHistory}
-              searchInput={searchInput}
-              setSearchInput={setSearchInput}
-            />
-          )} */}
         </div>
-        <div className="col-span-3 flex flex-col justify-around items-center  gap-8 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-          <div className="w-full max-h-1/2">
+        <div className="flex flex-col justify-between items-center ">
+          <div className="w-full ">
             <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
           </div>
-          <div className="max-h-1/2">
+          <div className="w-full">
             <CalendarSmall
               filterDate={filterDate}
               setFilterDate={setFilterDate}
@@ -398,12 +387,3 @@ const Payment = () => {
 
 export default Payment;
 
-const invoiceHistoryTableHeaders = [
-  "Invoice ID",
-  "Lead ID",
-  "Payer Name",
-  "Date",
-  "Course Code",
-  "Amount",
-  "Payment Via",
-];

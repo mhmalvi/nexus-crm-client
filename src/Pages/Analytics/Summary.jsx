@@ -84,7 +84,7 @@ const Summary = ({
         setDefaultCompany(companiesResponse?.data?.[0]?.name);
       }
     })();
-  }, []);
+  }, [setActiveCompanies]);
   return (
     <div className="flex flex-col justify-between items-start w-full gap-2">
       <div className="flex w-full items-center justify-between">
@@ -113,7 +113,7 @@ const Summary = ({
             </div>
           ) : null}
       </div>
-      <div className="w-full items-center justify-between flex gap-4">
+      <div className="w-full items-center justify-between flex flex-wrap gap-4">
         <div className="flex-grow">
           <div className="flex justify-between rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>

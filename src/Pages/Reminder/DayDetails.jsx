@@ -1,6 +1,6 @@
-import { DeleteOutlined, DownOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Popover, Space, TimePicker, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Popover, TimePicker, message } from "antd";
+import React, { useState } from "react";
 import {
   handleAddFollowUp,
   handleDeleteFollowUp,
@@ -77,7 +77,6 @@ const DayDetails = ({
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setTaskDetails(data);
   };
-
   const onRemiderTimeChange = (time, timeString) => {
     setRmtime(timeString);
     const DateString = (selectedEventTime?.start).toLocaleDateString();
@@ -108,12 +107,13 @@ const DayDetails = ({
 
   const handleAddFollowUpReq = async () => {
     setIsSaveDisable(true);
+
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
       notification_time: notifyDate,
     });
-    console.log(addFollowUpRes);
+    
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
       setTaskDetails(initialData);
@@ -143,6 +143,7 @@ const DayDetails = ({
       }
       setIsSaveDisable(false);
     }
+
   };
   const deleteReminder = async (fid) => {
     const res = await handleDeleteFollowUp(fid);

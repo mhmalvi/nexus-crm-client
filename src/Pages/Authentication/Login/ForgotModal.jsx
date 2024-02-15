@@ -68,7 +68,7 @@ const ForgotPassword = (props) => {
     >
         <p className="p-0 mx-0 mb-2 text-slate-300 text-sm">{modalText}</p>
         <input
-          className="w-full rounded-md bg-transparent placeholder:text-sm p-2 text-slate-300"
+          className="w-full rounded-md bg-transparent placeholder:text-sm p-2 !text-slate-300"
           type="email"
           placeholder="Enter a valid email"
           onChange={(e) => {

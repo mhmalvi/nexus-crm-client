@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import * as rcElement from "recharts";
+import {
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  Tooltip,
+  YAxis,
+  Legend,
+  Line,
+  LineChart,
+} from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 
@@ -119,12 +128,12 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
         </div>
       </div>
       <div>
-        <rcElement.ResponsiveContainer
+        <ResponsiveContainer
           width="100%"
           height={220}
           className="-ml-6"
         >
-          <rcElement.LineChart
+          <LineChart
             width={"100%"}
             height={220}
             data={campaignQualityRatio}
@@ -135,12 +144,12 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
               bottom: 0,
             }}
           >
-            <rcElement.CartesianGrid strokeDasharray="1 10" />
-            <rcElement.XAxis dataKey="campaign" tick={false} axisLine={false} />
-            <rcElement.YAxis domain={[0, 100]} />
-            <rcElement.Tooltip />
-            <rcElement.Legend />
-            <rcElement.Line
+            <CartesianGrid strokeDasharray="5 5" />
+            <XAxis dataKey="campaign" tick={false} axisLine={false} />
+            <YAxis domain={[0, 100]} />
+            <Tooltip />
+            <Legend />
+            <Line
               connectNulls
               type="monotone"
               dataKey="rate"
@@ -149,8 +158,8 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
               activeDot={"dot"}
               fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
             />
-          </rcElement.LineChart>
-        </rcElement.ResponsiveContainer>
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <Modal
         className="analyticModal"
@@ -165,12 +174,12 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
         <Icons.Minimize />
       </div>}
       >
-        <div className="h-[70vh]"><rcElement.ResponsiveContainer
+        <div className="h-[70vh]"><ResponsiveContainer
           width="100%"
           height="100%"
           className="-ml-6"
         >
-          <rcElement.LineChart
+          <LineChart
             width="100%"
             height="100%"
             data={campaignQualityRatio}
@@ -181,12 +190,12 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
               bottom: 0,
             }}
           >
-            <rcElement.CartesianGrid strokeDasharray="1 10" />
-            <rcElement.XAxis dataKey="campaign" tick={false} axisLine={false} />
-            <rcElement.YAxis domain={[0, 100]} />
-            <rcElement.Tooltip />
-            <rcElement.Legend />
-            <rcElement.Line
+            <CartesianGrid strokeDasharray="5 5" />
+            <XAxis dataKey="campaign" tick={false} axisLine={false} />
+            <YAxis domain={[0, 100]} />
+            <Tooltip />
+            <Legend />
+            <Line
               connectNulls
               type="monotone"
               dataKey="rate"
@@ -195,8 +204,8 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
               activeDot={"dot"}
               fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
             />
-          </rcElement.LineChart>
-        </rcElement.ResponsiveContainer></div></Modal>
+          </LineChart>
+        </ResponsiveContainer></div></Modal>
     </div>
   );
 };

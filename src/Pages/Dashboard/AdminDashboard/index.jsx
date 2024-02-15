@@ -28,6 +28,8 @@ import {
   handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
+// import { handleFetchNotificationList } from "../../../Components/services/notification";
+// import { setNotifications } from "../../../features/user/notificationSlice";
 import { useNavigate } from "react-router-dom";
 import ViewLeadCallDetails from "./ViewLeadCallDetails";
 import SearchEmployee from "./SearchEmployee";
@@ -38,6 +40,7 @@ import CalendarSmall from "./CalendarSmall";
 import { useMediaQuery } from "react-responsive";
 import ProfileSettings from "./ProfileSettings.jsx";
 import "./dashboard.css";
+// import { io } from "socket.io-client";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -663,7 +666,7 @@ const AdminDashboard = () => {
   );
 
   const handleSyncLeadsReq = async () => {
-    message.success("Sync in progress...")
+    message.success("Sync in progress...");
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
       userDetails?.userInfo?.ac_k
@@ -672,7 +675,7 @@ const AdminDashboard = () => {
       setSyncLeads(!syncLeads);
       window.location.reload();
     }
-  }
+  };
 
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {
@@ -694,10 +697,11 @@ const AdminDashboard = () => {
   const handleCancelProfile = () => {
     setOpenProfile(false);
   };
-
+ 
+    
   return (
-    <div className="w-full max-h-screen grid grid-cols-12 gap-5 h-[90vh] ">
-      <div className="col-span-9 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
+    <div className="w-full max-h-screen flex flew-wrap gap-4 h-[90vh] ">
+      <div className="w-4/5 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -717,8 +721,8 @@ const AdminDashboard = () => {
           />
         </Modal>
         <div className="relative flex flex-col justify-start h-full">
-          <div className="grid grid-cols-5 gap-5 z-100">
-            <div className="col-span-3">
+          <div className="w-full flex gap-5">
+            <div className="">
               <Filters
                 layout="Dashboard"
                 handleFilterLeadList={handleFilterLeadList}
@@ -739,11 +743,11 @@ const AdminDashboard = () => {
                 handleFilterAssignedEmployee={handleFilterAssignedEmployee}
               />
             </div>
-            <div className="col-span-2">
+            <div className="w-2/5">
               <CountryList table_title="Lead List" />
             </div>
           </div>
-          <div>
+          <div className="w-full">
             <UpdatedTable
               table_title="Lead List"
               tableHeaders={tableHeaders}
@@ -771,9 +775,10 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div
-        className={`col-span-3 grid grid-cols-1 relative gap-${
-          isBigScreen ? "5" : "2"
-        } min-h-[85vh]`}
+        className={`w-1/5 flex flex-col items-center justify-between h-full`}
+        // className={`w-1/5 grid grid-cols-1 relative gap-${
+        //   isBigScreen ? "5" : "2"
+        // } min-h-[85vh]`}
       >
         <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
@@ -809,7 +814,7 @@ const AdminDashboard = () => {
           />
         </div>
         {toggleNotification && (
-          <div className="ease-in duration-200 absolute min-w-full min-h-[30vh] rounded-xl shadow-md backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
+          <div className="absolute min-w-full h-[30vh] overflow-y-scroll rounded-xl shadow-md backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
             <Notifications
               toggleNotification={toggleNotification}
               setToggleNotification={setToggleNotification}
@@ -855,7 +860,7 @@ const AdminDashboard = () => {
               handleFilterAssignedEmployee={handleFilterAssignedEmployee}
             />
           </div>
-          <div>
+          <div className="w-full">
             <NoticeForm />
           </div>
           <div>

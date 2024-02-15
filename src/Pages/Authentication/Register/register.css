@@ -9,7 +9,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-.inputBGRegister input, .inputBG input:active, input {
+.inputBGRegister input, .inputBG input:active {
   background-color: transparent !important;
   color: #1f2937 !important;
 }

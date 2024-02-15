@@ -1,21 +1,17 @@
-import { Modal, Spin } from "antd";
+import { Modal } from "antd";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useDispatch, useSelector } from "react-redux";
-import { handleFetchFollowUp } from "../../Components/services/reminder";
-import { setLoader } from "../../features/user/userSlice";
+import { useSelector } from "react-redux";
 import DayDetails from "./DayDetails";
 import EventDetails from "./EventDetails";
-import Loader from "../../Components/Shared/Loader.jsx";
 import "./reminder.css";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
 
-const BigCalendar = () => {
-  const dispatch = useDispatch();
+const BigCalendar = ({ setLoading }) => {
   const userDetails = useSelector((state) => state.user.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [openDayDetails, setOpenDayDetails] = useState(false);
@@ -26,7 +22,6 @@ const BigCalendar = () => {
   const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [time, setTime] = useState("Select Time");
-  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   dispatch(setLoader(true));
@@ -90,82 +85,70 @@ const BigCalendar = () => {
 
   return (
     <div>
-      {loading ? (
-        <>
-          <div className="w-[80vw] h-[80vh] flex justify-center items-center">
-            <Loader />
-          </div>
-        </>
-      ) : (
-        <>
-          <Calendar
-            views={["day", "work_week", "month"]}
-            selectable
-            localizer={localizer}
-            defaultDate={new Date()}
-            defaultView="month"
-            events={eventsData}
-            onSelectEvent={(e) => handleUpdateEvent(e)}
-            onSelectSlot={handleSelect}
-            className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
-          />
-          <Modal
-            className="cross_btn reminderModal"
-            centered
-            visible={openDayDetails}
-            onOk={() => {
-              setOpenDayDetails(false);
-              setTime("Select Time");
-            }}
-            onCancel={() => {
-              setOpenDayDetails(false);
-              setTime("Select Time");
-            }}
-            footer={false}
-            width="50%"
-          >
-            <DayDetails
-              handleOpenDayDetailsCancel={handleOpenDayDetailsCancel}
-              selectedEventTime={selectedEventTime}
-              setSelectedEventTime={setSelectedEventTime}
-              eventDetails={eventDetails}
-              eventsData={eventsData}
-              setEventsData={setEventsData}
-              // synEvents={synEvents}
-              // setSynEvents={setSynEvents}
-              time={time}
-              setTime={setTime}
-              userDetails={userDetails}
-            />
-          </Modal>
+      <Calendar
+        views={["day", "work_week", "month"]}
+        selectable
+        localizer={localizer}
+        defaultDate={new Date()}
+        defaultView="month"
+        events={eventsData}
+        onSelectEvent={(e) => handleUpdateEvent(e)}
+        onSelectSlot={handleSelect}
+        className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
+      />
+      <Modal
+        className="cross_btn reminderModal"
+        centered
+        visible={openDayDetails}
+        onOk={() => {
+          setOpenDayDetails(false);
+          setTime("Select Time");
+        }}
+        onCancel={() => {
+          setOpenDayDetails(false);
+          setTime("Select Time");
+        }}
+        footer={false}
+        width="50%"
+      >
+        <DayDetails
+          handleOpenDayDetailsCancel={handleOpenDayDetailsCancel}
+          selectedEventTime={selectedEventTime}
+          setSelectedEventTime={setSelectedEventTime}
+          eventDetails={eventDetails}
+          eventsData={eventsData}
+          setEventsData={setEventsData}
+          time={time}
+          setTime={setTime}
+          userDetails={userDetails}
+        />
+      </Modal>
 
-          {/* For A Single Event */}
-          <Modal
-            className="cross_btn"
-            centered
-            visible={openEventDetails}
-            onOk={() => setOpenEventDetails(false)}
-            onCancel={() => {
-              setIsEdit(false);
-              setOpenEventDetails(false);
-            }}
-            footer={false}
-            width="50%"
-          >
-            <EventDetails
-              handleEventDetailsCancel={handleEventDetailsCancel}
-              eventDetails={eventDetails}
-              isEdit={isEdit}
-              setEventsData={setEventsData}
-              eventsData={eventsData}
-              setOpenEventDetails={setOpenEventDetails}
-              setIsEdit={setIsEdit}
-              synEvents={synEvents}
-              setSynEvents={setSynEvents}
-            />
-          </Modal>
-        </>
-      )}
+      {/* For A Single Event */}
+      <Modal
+        className="cross_btn"
+        centered
+        visible={openEventDetails}
+        onOk={() => setOpenEventDetails(false)}
+        onCancel={() => {
+          setIsEdit(false);
+          setOpenEventDetails(false);
+        }}
+        footer={false}
+        width="50%"
+      >
+        <EventDetails
+          handleEventDetailsCancel={handleEventDetailsCancel}
+          eventDetails={eventDetails}
+          isEdit={isEdit}
+          setEventsData={setEventsData}
+          eventsData={eventsData}
+          setOpenEventDetails={setOpenEventDetails}
+          setIsEdit={setIsEdit}
+          synEvents={synEvents}
+          setSynEvents={setSynEvents}
+        />
+      </Modal>
     </div>
   );
 };

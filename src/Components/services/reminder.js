@@ -8,10 +8,9 @@ export const handleAddFollowUp = async (followUpData) => {
       Accept: "application/json",
     },
   };
-
   try {
     const result = await axios.post(
-      `${crmNotification_dev}/api/follow-up`,
+      `http://192.168.0.121:7000/api/follow-up`,
       followUpData,
       config
     );
@@ -20,7 +19,6 @@ export const handleAddFollowUp = async (followUpData) => {
     return error;
   }
 };
-
 export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
   const config = {
     headers: {
@@ -38,7 +36,6 @@ export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
     return error.response;
   }
 };
-
 export const handleFetchFollowUp = async (userID) => {
   const config = {
     headers: {
@@ -58,7 +55,6 @@ export const handleFetchFollowUp = async (userID) => {
     return error.response;
   }
 };
-
 export const handleDeleteFollowUp = async (followupID) => {
   try {
     const result = await axios.get(

@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import * as rcElement from "recharts";
+import {
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  Tooltip,
+  YAxis,
+  Legend,
+  Line,
+  LineChart,
+} from "recharts";
 import { fetchCampaignwisePaymentDataOfCompany } from "../../../Components/services/payment";
-import * as chartUtils from "../utils";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
+import { CampaignRevenueCustomizedLabel } from "../utils";
 
 const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
   const [campaignwiseRevenue, setCampaignwiseRevenue] = useState([]);
@@ -104,12 +113,8 @@ const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
         </div>
       </div>
       <div>
-        <rcElement.ResponsiveContainer
-          width="100%"
-          height={220}
-          className="-ml-6"
-        >
-          <rcElement.LineChart
+        <ResponsiveContainer width="100%" height={220} className="-ml-6">
+          <LineChart
             width={"100%"}
             height={220}
             data={campaignwiseRevenue}
@@ -120,21 +125,21 @@ const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
               bottom: 0,
             }}
           >
-            <rcElement.CartesianGrid strokeDasharray="3 3" />
-            <rcElement.XAxis dataKey="campaign" tick={false} axisLine={false} />
-            <rcElement.YAxis />
-            <rcElement.Tooltip />
-            <rcElement.Legend />
-            <rcElement.Line
+            <CartesianGrid strokeDasharray="5 5" />
+            <XAxis dataKey="campaign" tick={false} axisLine={false} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
               connectNulls
               type="monotone"
               dataKey="revenue"
               stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
-              label={<chartUtils.CampaignRevenueCustomizedLabel />}
+              label={<CampaignRevenueCustomizedLabel />}
             />
-          </rcElement.LineChart>
-        </rcElement.ResponsiveContainer>
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <Modal
         className="analyticModal"
@@ -145,17 +150,15 @@ const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
         onCancel={handleMinimizeScreen}
         width={"70%"}
         height={"80%"}
-        closeIcon={<div className="flex items-center justify-center h-full w-full hover:scale-110">
-        <Icons.Minimize />
-      </div>}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
       >
         <div className="h-[70vh]">
-          <rcElement.ResponsiveContainer
-            width="100%"
-            height="100%"
-            className="-ml-6"
-          >
-            <rcElement.LineChart
+          <ResponsiveContainer width="100%" height="100%" className="-ml-6">
+            <LineChart
               width="100%"
               height="100%"
               data={campaignwiseRevenue}
@@ -166,25 +169,21 @@ const CampaignsRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
                 bottom: 0,
               }}
             >
-              <rcElement.CartesianGrid strokeDasharray="3 3" />
-              <rcElement.XAxis
-                dataKey="campaign"
-                tick={false}
-                axisLine={false}
-              />
-              <rcElement.YAxis />
-              <rcElement.Tooltip />
-              <rcElement.Legend />
-              <rcElement.Line
+              <CartesianGrid strokeDasharray="5 5" />
+              <XAxis dataKey="campaign" tick={false} axisLine={false} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
                 connectNulls
                 type="monotone"
                 dataKey="revenue"
                 stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
-                label={<chartUtils.CampaignRevenueCustomizedLabel />}
+                label={<CampaignRevenueCustomizedLabel />}
               />
-            </rcElement.LineChart>
-          </rcElement.ResponsiveContainer>
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </Modal>
     </div>

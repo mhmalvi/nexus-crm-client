@@ -43,11 +43,13 @@ import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
 
 function App() {
+  
   const [state, setState] = useState("Active");
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state?.user);
+  
   const onIdle = () => {
     handleLogout();
     Storage.removeItem("auth_tok");

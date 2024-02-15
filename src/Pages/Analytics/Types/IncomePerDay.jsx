@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as rcElement from "recharts";
+import {
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  Tooltip,
+  YAxis,
+  Legend,
+  Line,
+  LineChart,
+} from "recharts";
 import { fetchAverageIncomeOfLastWeek } from "../../../Components/services/payment";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
@@ -97,12 +106,12 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
         <Loading />
       ) : (
         <div className="">
-          <rcElement.ResponsiveContainer
+          <ResponsiveContainer
             width="100%"
             height={fullscreen ? "100%" : 220}
             className="-ml-6"
           >
-            <rcElement.LineChart
+            <LineChart
               width={"100%"}
               height={fullscreen ? "100%" : 220}
               data={lastWeekIncome}
@@ -113,20 +122,20 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
                 bottom: 0,
               }}
             >
-              <rcElement.CartesianGrid strokeDasharray="5 5" />
-              <rcElement.XAxis dataKey="dates" />
-              <rcElement.YAxis />
-              <rcElement.Tooltip />
-              <rcElement.Legend />
-              <rcElement.Line
+              <CartesianGrid strokeDasharray="5 5" />
+              <XAxis dataKey="dates" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
                 connectNulls
                 type="monotone"
                 dataKey="Income"
                 stroke="#cbd5e1"
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
-            </rcElement.LineChart>
-          </rcElement.ResponsiveContainer>
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       )}
       <Modal
@@ -143,12 +152,12 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
       </div>}
       >
         <div className="h-[70vh]">
-          <rcElement.ResponsiveContainer
+          <ResponsiveContainer
             width="100%"
             height="100%"
             className="-ml-6"
           >
-            <rcElement.LineChart
+            <LineChart
               width="100%"
               height="100%"
               data={lastWeekIncome}
@@ -159,20 +168,20 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
                 bottom: 0,
               }}
             >
-              <rcElement.CartesianGrid strokeDasharray="5 5" />
-              <rcElement.XAxis dataKey="dates" />
-              <rcElement.YAxis />
-              <rcElement.Tooltip />
-              <rcElement.Legend />
-              <rcElement.Line
+              <CartesianGrid strokeDasharray="5 5" />
+              <XAxis dataKey="dates" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
                 connectNulls
                 type="monotone"
                 dataKey="Income"
                 stroke="#cbd5e1"
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
-            </rcElement.LineChart>
-          </rcElement.ResponsiveContainer>
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </Modal>
     </div>

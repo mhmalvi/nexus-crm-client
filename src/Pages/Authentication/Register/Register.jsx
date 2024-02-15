@@ -115,7 +115,7 @@ const Register = () => {
                 <img
                   src={companyLogo}
                   alt="companyLogo"
-                  srcset=""
+                 
                   className="w-84 cursor-pointer"
                   onClick={() => {
                     navigate("/");

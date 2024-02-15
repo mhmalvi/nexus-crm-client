@@ -55,6 +55,7 @@ const MultipartForm = () => {
         dispatch(addUserDetails(res.data));
         setSubmitClicked(false);
         message.success("You  have successfully created your profile.");
+        navigate("/dashboard");
       } else {
         setSubmitClicked(false);
         message.warning(res.message);
@@ -87,10 +88,10 @@ const MultipartForm = () => {
           {screen === 0 && (
             <div className="w-1/3 flex flex-col items-center justify-center animateDiv">
               <Icons.WelcomeStart className="w-full ease-in duration-200 w-full" />
-              <h1 className="2xl:text-6xl text-5xl text-slate-300 m-0 p-0 text-center ">
+              <h1 className="2xl:text-6xl text-5xl !text-slate-300 m-0 p-0 text-center ">
                 You are almost set
               </h1>
-              <h1 className="2xl:text-lg text-sm text-slate-300 m-0 p-0 text-center w-full">
+              <h1 className="2xl:text-lg text-sm !text-slate-300 m-0 p-0 text-center w-full">
                 Now that you have verified your email, let&apos;s setup your
                 profile.
               </h1>
@@ -98,7 +99,7 @@ const MultipartForm = () => {
                 onClick={() => {
                   setScreen(1);
                 }}
-                className="px-4 py-2 m-0 text-blue-500 self-end 2xl:mr-12 xl:mr-0 mr-4 hover:text-slate-300 ease-in duration-100"
+                className="px-4 py-2 m-0 text-blue-500 self-end 2xl:mr-12 xl:mr-0 mr-4 hover:!text-slate-300 ease-in duration-100"
               >
                 Next →
               </button>
@@ -106,17 +107,17 @@ const MultipartForm = () => {
           )}
           {/* HEADING Screen 1,2,3 */}
           {screen === 1 && (
-            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+            <h1 className="text-xl !text-slate-300 m-0 p-0 ">
               Personal Information
             </h1>
           )}
           {screen === 2 && (
-            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+            <h1 className="text-xl !text-slate-300 m-0 p-0 ">
               Company Information
             </h1>
           )}
           {screen === 3 && (
-            <h1 className="text-xl text-slate-300 m-0 p-0 ">
+            <h1 className="text-xl !text-slate-300 m-0 p-0 ">
               Legal Information
             </h1>
           )}
@@ -130,11 +131,11 @@ const MultipartForm = () => {
             {screen === 1 && (
               <div className="w-full flex flex-col gap-4 items-center justify-center">
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Username
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     placeholder="Username"
                     value={data.username}
                     onChange={(e) => {
@@ -146,11 +147,11 @@ const MultipartForm = () => {
                   />
                 </div>
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Contact Number
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
                     placeholder="Contact Number"
                     value={data.contact}
@@ -169,7 +170,7 @@ const MultipartForm = () => {
                   disabled={
                     data.username.length && data.contact.length ? false : true
                   }
-                  className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
+                  className="m-0 text-blue-500 hover:text-gray-300 disabled:!text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
                 >
                   Next →
                 </button>
@@ -178,11 +179,11 @@ const MultipartForm = () => {
             {screen === 2 && (
               <div className="w-full flex flex-col gap-4 items-center justify-center">
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Company Name
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     value={data.company_name}
                     placeholder="Company Name"
                     onChange={(e) => {
@@ -194,11 +195,11 @@ const MultipartForm = () => {
                   />
                 </div>
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Company Address
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300 "
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300 "
                     placeholder="Company Address"
                     value={data.company_address}
                     onChange={(e) => {
@@ -210,7 +211,7 @@ const MultipartForm = () => {
                   />
                 </div>
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Select Industry
                   </h1>
                   <Select
@@ -227,11 +228,11 @@ const MultipartForm = () => {
                   </Select>
                 </div>
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Website (Optional)
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
                     value={data.website}
                     placeholder="Website"
@@ -248,7 +249,7 @@ const MultipartForm = () => {
                     onClick={() => {
                       setScreen(1);
                     }}
-                    className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+                    className="m-0 text-blue-500 self-end hover:!text-slate-300 ease-in duration-100"
                   >
                     ← Previous
                   </button>
@@ -263,7 +264,7 @@ const MultipartForm = () => {
                         ? false
                         : true
                     }
-                    className="m-0 text-blue-500 hover:text-gray-300 disabled:text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
+                    className="m-0 text-blue-500 hover:text-gray-300 disabled:!text-slate-300 disabled:text-opacity-10 disabled:hover:text-opacity-10 self-end ease-in duration-100 disabled:cursor-not-allowed"
                   >
                     Next →
                   </button>
@@ -273,11 +274,11 @@ const MultipartForm = () => {
             {screen === 3 && (
               <div className="w-full flex flex-col gap-4 items-center justify-center">
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     ABN Number (Optional)
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     placeholder="ABN Number"
                     value={data.abn}
                     onChange={(e) => {
@@ -289,11 +290,11 @@ const MultipartForm = () => {
                   />
                 </div>
                 <div className="w-full">
-                  <h1 className="m-0 w-full text-base text-slate-300 font-normal">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Company Code
                   </h1>
                   <input
-                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 text-slate-300"
+                    className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
                     value={data.company_code}
                     placeholder="Company Code"
@@ -311,14 +312,14 @@ const MultipartForm = () => {
                     onClick={() => {
                       setScreen(2);
                     }}
-                    className="m-0 text-blue-500 self-end hover:text-slate-300 ease-in duration-100"
+                    className="m-0 text-blue-500 self-end hover:!text-slate-300 ease-in duration-100"
                   >
                     ← Previous
                   </button>
                   <button
                     type="button"
                     onClick={setupProfile}
-                    className="m-0 text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
+                    className="m-0 !text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
                   >
                     Submit
                   </button>

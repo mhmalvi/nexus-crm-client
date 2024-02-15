@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import BigCalendar from "./BigCalender";
 import { useSelector } from "react-redux";
+import Loading from "../../Components/Shared/Loader";
 const Reminder = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
+  const [loading, setLoading] = useState(false);
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
@@ -16,12 +18,8 @@ const Reminder = () => {
             Add Reminders
           </h1>
           <div className="w-full">
-            <BigCalendar />
+            {loading ? <Loading /> : <BigCalendar setLoading={setLoading} />}
           </div>
-
-          {/* <div className="h-full w-full bg-black/50 backdrop-blur-sm absolute top-10 -bottom-10 z-50 flex items-center justify-center">
-        <div className="text-xl text-white">Feature Coming Soon</div>
-      </div> */}
         </div>
       </div>
     </div>
