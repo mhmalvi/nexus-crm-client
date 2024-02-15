@@ -28,8 +28,6 @@ import {
   handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
-// import { handleFetchNotificationList } from "../../../Components/services/notification";
-// import { setNotifications } from "../../../features/user/notificationSlice";
 import { useNavigate } from "react-router-dom";
 import ViewLeadCallDetails from "./ViewLeadCallDetails";
 import SearchEmployee from "./SearchEmployee";
@@ -37,10 +35,8 @@ import CountryList from "./CountryList";
 import UserLabel from "./UserLabel";
 import NoticeForm from "./NoticeForm";
 import CalendarSmall from "./CalendarSmall";
-import { useMediaQuery } from "react-responsive";
 import ProfileSettings from "./ProfileSettings.jsx";
 import "./dashboard.css";
-// import { io } from "socket.io-client";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -693,12 +689,10 @@ const AdminDashboard = () => {
     },
     [companyEmployeeList, leadList, setLeadData]
   );
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const handleCancelProfile = () => {
     setOpenProfile(false);
   };
- 
-    
+
   return (
     <div className="w-full max-h-screen flex flew-wrap gap-4 h-[90vh] ">
       <div className="w-4/5 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
@@ -776,15 +770,10 @@ const AdminDashboard = () => {
       </div>
       <div
         className={`w-1/5 flex flex-col items-center justify-between h-full`}
-        // className={`w-1/5 grid grid-cols-1 relative gap-${
-        //   isBigScreen ? "5" : "2"
-        // } min-h-[85vh]`}
       >
         <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
-            className={`${
-              toggleNotification ? "bg-white rounded-full " : ""
-            } realtive ease-in duration-200  m-0 p-2 cursor-pointer flex hover:scale-105 `}
+            className={` realtive ease-in duration-200  m-0 p-2 cursor-pointer flex hover:scale-105 `}
             onClick={(e) => {
               setToggleNotification(!toggleNotification);
               setNotificationLoading(true);
@@ -814,15 +803,23 @@ const AdminDashboard = () => {
           />
         </div>
         {toggleNotification && (
-          <div className="absolute min-w-full h-[30vh] overflow-y-scroll rounded-xl shadow-md backdrop-blur-3xl bg-[#FFFFFF60] z-50 mt-16 overflow-x-hidden ">
-            <Notifications
-              toggleNotification={toggleNotification}
-              setToggleNotification={setToggleNotification}
-              notificationLoading={notificationLoading}
-              setNotificationLoading={setNotificationLoading}
-              setIsNotifyOpen={setIsNotifyOpen}
-              setNotificationData={setNotificationData}
-            />
+          <div className="absolute w-screen h-screen flex justify-end left-0 top-0 z-50">
+            <div className="relative w-screen h-screen">
+              <div
+                className="absolute w-screen h-screen bg-[#ffffff11] backdrop-blur-sm z-51"
+                onClick={() => setToggleNotification(false)}
+              ></div>
+              <div className="absolute z-53 right-32 top-32">
+                <Notifications
+                  toggleNotification={toggleNotification}
+                  setToggleNotification={setToggleNotification}
+                  notificationLoading={notificationLoading}
+                  setNotificationLoading={setNotificationLoading}
+                  setIsNotifyOpen={setIsNotifyOpen}
+                  setNotificationData={setNotificationData}
+                />
+              </div>
+            </div>
           </div>
         )}
         <NotifyModal
@@ -863,7 +860,7 @@ const AdminDashboard = () => {
           <div className="w-full">
             <NoticeForm />
           </div>
-          <div>
+          <div className="w-full">
             <CalendarSmall
               filterDate={filterDate}
               setFilterDate={setFilterDate}

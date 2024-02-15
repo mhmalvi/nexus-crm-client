@@ -1,12 +1,14 @@
 import { Modal } from "antd";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from "react-redux";
 import DayDetails from "./DayDetails";
 import EventDetails from "./EventDetails";
 import "./reminder.css";
+import events from "./events1";
+import { handleFetchReminders } from "../../Components/services/reminder";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
@@ -22,6 +24,29 @@ const BigCalendar = ({ setLoading }) => {
   const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [time, setTime] = useState("Select Time");
+  const [test, setTest] = useState([
+    {
+      id: null,
+      title: "",
+      start: null,
+      end: null,
+    },
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = {
+        user_id: userDetails.id,
+      };
+      const res = await handleFetchReminders(data);
+    
+      
+      setTest(res.data);
+      console.log(test);
+    };
+  
+    fetchData();
+  }, [test, userDetails.id]);
 
   // useEffect(() => {
   //   dispatch(setLoader(true));
@@ -91,7 +116,7 @@ const BigCalendar = ({ setLoading }) => {
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
-        events={eventsData}
+        events={test}
         onSelectEvent={(e) => handleUpdateEvent(e)}
         onSelectSlot={handleSelect}
         className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
