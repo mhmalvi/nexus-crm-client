@@ -65,3 +65,21 @@ export const handleDeleteFollowUp = async (followupID) => {
     return error.response;
   }
 };
+
+export const handleFetchReminders = async (reminderData) => {
+  const config = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
+  try {
+    const result = await axios.post(
+      `http://192.168.0.121:7000/api/notification-fetch`,
+      reminderData,
+      config
+    );
+    return result?.data;
+  } catch (error) {
+    return error;
+  }
+};

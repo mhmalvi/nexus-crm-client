@@ -20,9 +20,7 @@ const Notifications = ({
   };
 
   return (
-    <div
-      className=""
-    >
+    
       <Notification
         notificationLoading={notificationLoading}
         setNotificationLoading={setNotificationLoading}
@@ -33,8 +31,8 @@ const Notifications = ({
         setNotificationData={setNotificationData}
         setIsNotifyOpen={setIsNotifyOpen}
         setToggleNotification={setToggleNotification}
-      />
-    </div>
+      /> 
+    
   );
 };
 

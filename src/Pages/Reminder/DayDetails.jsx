@@ -1,14 +1,15 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Popover, TimePicker, message } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   handleAddFollowUp,
   handleDeleteFollowUp,
   handleFetchFollowUp,
+  handleFetchReminders
 } from "../../Components/services/reminder";
 import Icons from "../../Components/Shared/Icons";
 import lazyImage from "../../assets/Images/lazy.png";
-
+import { useSelector } from "react-redux";
 const DayDetails = ({
   handleOpenDayDetailsCancel,
   selectedEventTime,
@@ -16,7 +17,7 @@ const DayDetails = ({
   eventDetails,
   eventsData,
   setEventsData,
-  userDetails,
+  // userDetails,
   time,
   setTime,
 }) => {
@@ -91,7 +92,11 @@ const DayDetails = ({
     // this is for bangladesh time when you want to change please comment out it an comment the others minus for australia block of code.
     setNotiFyDate(rmDate);
   };
-
+  const handleTextInputFieldChange = (e) => {
+    const data = { ...taskDetails };
+    data[e.target.id] = e.target.value;
+    setTaskDetails(data);
+  };
   const handlePriorityChange = (selected) => {
     const data = { ...taskDetails };
     data.priority = selected?.key;
@@ -99,11 +104,7 @@ const DayDetails = ({
     setSelectedPriority(selected);
   };
 
-  const handleTextInputFieldChange = (e) => {
-    const data = { ...taskDetails };
-    data[e.target.id] = e.target.value;
-    setTaskDetails(data);
-  };
+  
 
   const handleAddFollowUpReq = async () => {
     setIsSaveDisable(true);
@@ -113,7 +114,7 @@ const DayDetails = ({
       user_id: userDetails?.id,
       notification_time: notifyDate,
     });
-    
+
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
       setTaskDetails(initialData);
@@ -143,7 +144,6 @@ const DayDetails = ({
       }
       setIsSaveDisable(false);
     }
-
   };
   const deleteReminder = async (fid) => {
     const res = await handleDeleteFollowUp(fid);
@@ -159,10 +159,24 @@ const DayDetails = ({
       message.error(res?.message);
     }
   };
-
+  
+  const userDetails = useSelector((state) => state?.user);
+ 
+  useEffect(() => {
+    (async()=>{
+      const data = {
+        user_id: userDetails.id
+      }
+      console.log(data)
+      const res = await handleFetchReminders(data);
+      console.log(res);
+    })()
+    
+  }, [userDetails.id]);
+  
   return (
-    <div className="py-10">
-      <div className="text-lg font-semibold pb-10 w-11/12 mx-auto">
+    <div className="p-8 flex flex-col gap-4">
+      <div className="text-lg font-semibold ">
         <span>Selected Date: </span>
         {Math.ceil(
           (new Date(selectedEventTime?.end).getTime() -
@@ -181,14 +195,15 @@ const DayDetails = ({
         <br />
       </div>
 
-      <div className="w-11/12 mx-auto">
-        <div className="flex gap-6 items-center mb-4">
-          <div className="w-7/12">
+      <div className="bg-[#fc00ff]">
+        <div className="flex gap-4 items-center">
+          {/* Title */}
+          <div className="flex-grow">
             <div className="text-lg font-semibold">Enter Task Title:</div>
             <div className="flex items-center">
               <input
                 required
-                className="outline-none border-b-2 px-2 py-1 my-4 w-full"
+                className="outline-none border-b w-full"
                 type="text"
                 name="title"
                 placeholder="Task Title"
@@ -205,10 +220,10 @@ const DayDetails = ({
               <p></p>
             )}
           </div>
-          <div className="w-3/12">
-            {/* Start Time */}
-            <div className="text-[15px] font-semibold">Select Start Time:</div>
-            <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+          {/* Start Time */}
+          <div className="flex-grow ">
+            <div className="text-lg font-semibold">Select Start Time:</div>
+            <div className="border-b flex items-center justify-between">
               <div>
                 {time
                   ? time
@@ -230,9 +245,9 @@ const DayDetails = ({
             )}
           </div>
           {/* End Time */}
-          <div className="w-3/12">
-            <div className="text-[15px] font-semibold">Select End Time:</div>
-            <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+          <div className="flex-grow ">
+            <div className="text-lg font-semibold">Select End Time:</div>
+            <div className="border-b flex items-center justify-between">
               <div>{endTime || "Select Time"}</div>
               <TimePicker
                 format="HH:mm"
@@ -246,43 +261,43 @@ const DayDetails = ({
           </div>
         </div>
 
-        <div className="mb-8">
-          <div className="flex items-center gap-2 w-full ">
-            <div className=" flex-1">
-              <div className="text-lg font-semibold">
-                Enter Task Description:
-              </div>
-              <input
-                required
-                className="outline-none border-b-2 px-2 py-1 my-4 w-full"
-                type="text"
-                name="description"
-                placeholder="Task Description"
-                id="description"
-                value={taskDetails?.description}
-                onChange={handleTextInputFieldChange}
+        <div className="flex gap-4 items-center w-full ">
+          {/* Description */}
+          <div className=" flex-1">
+            <div className="text-lg font-semibold">Enter Task Description:</div>
+            <input
+              required
+              className="outline-none border-b-2 px-2 py-1 my-4 w-full"
+              type="text"
+              name="description"
+              placeholder="Task Description"
+              id="description"
+              value={taskDetails?.description}
+              onChange={handleTextInputFieldChange}
+            />
+          </div>
+          {/* Reminder Time */}
+          <div className="w-4/12">
+            <div className=" text-lg font-semibold">Set Reminder Time:</div>
+            <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
+              <div>{rmTime || "Select Time"}</div>
+              <TimePicker
+                format="HH:mm"
+                bordered={false}
+                onChange={onRemiderTimeChange}
               />
-            </div>
-            <div className="w-4/12">
-              <div className=" text-lg font-semibold">Set Reminder Time:</div>
-              <div className="border-b-2 pt-1 my-4 flex items-center justify-between">
-                <div>{rmTime || "Select Time"}</div>
-                <TimePicker
-                  format="HH:mm"
-                  bordered={false}
-                  onChange={onRemiderTimeChange}
-                />
-                <div className="text-red-500">
-                  {notifyError && notifyDate === "" ? (
-                    <p>{notifyError}</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
+              <div className="text-red-500">
+                {notifyError && notifyDate === "" ? (
+                  <p>{notifyError}</p>
+                ) : (
+                  <p></p>
+                )}
               </div>
             </div>
           </div>
         </div>
+
+        {/* Buttons */}
         <div className="flex justify-end">
           <div
             onClick={handleOpenDayDetailsCancel}
@@ -293,7 +308,7 @@ const DayDetails = ({
           {!isSaveDisable ? (
             <button
               className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
-              onClick={handleAddFollowUpReq}
+              // onClick={handleAddFollowUpReq}
             >
               Save
             </button>
@@ -305,7 +320,7 @@ const DayDetails = ({
         </div>
       </div>
 
-      <div className="w-11/12 mx-auto">
+      {/* <div className="w-11/12 mx-auto">
         <div className="text-lg font-semibold my-4">Tasks For Today</div>
         {currentDayEvents?.length ? (
           <div>
@@ -364,7 +379,7 @@ const DayDetails = ({
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

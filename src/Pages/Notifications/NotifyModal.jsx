@@ -4,6 +4,7 @@ import moment from "moment";
 const NotifyModal = ({ isNotifyOpen, setIsNotifyOpen, notificationData }) => {
   const handleOk = () => {
     setIsNotifyOpen(false);
+
   };
 
   const handleCancel = () => {
