@@ -1,4 +1,3 @@
-import { Select } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
@@ -15,9 +14,6 @@ import { setLoader } from "../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import Summary from "./Summary";
 import IncomePerDay from "./Types/IncomePerDay";
-// import CampaignAnalytics from "./CampaignAnalytics";
-// import CompanyMonthlyRevenue from "./CompanyMonthlyRevenue";
-// import ManagementAnalytics from "./ManagementAnalytics";
 import SalesAnalytics from "./Types/SalesAnalytics";
 import MonthlyRevenue from "./Types/MonthlyRevenue";
 import LeadConversionRatio from "./Types/LeadConversionRatio";
@@ -116,11 +112,14 @@ const Overview = () => {
     takeScreenShot(pdfRef.current).then(download);
   };
   useEffect(() => {
-    if (userDetails?.userInfo?.verification_status === 1 && Storage.getItem("auth_tok")) {
+    if (
+      userDetails?.userInfo?.verification_status === 1 &&
+      Storage.getItem("auth_tok")
+    ) {
       navigate("/setup-your-profile");
     }
   }, [navigate, userDetails]);
-  
+
   return (
     <div className="py-4 font-poppins px-8 h-screen flex flex-col items-center justify-center">
       {/* <button
@@ -138,63 +137,62 @@ const Overview = () => {
               setActiveCompanies={setActiveCompanies}
             />
           </div>
-          <div className="grid grid-cols-3 items-center justify-center gap-4 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
-            <div className="w-full">
+          <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <IncomePerDay
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <MonthlyRevenue
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <LeadConversionRatio
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <CampaignDetails
-                activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <CampaignsRevenue
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <LeadQualityRatio
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <AreaWiseLead
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <LeadStatusSummary
                 fullscreen={fullscreen}
                 setFullScreen={setFullScreen}
               />
             </div>
-            <div className="w-full">
+            <div className="flex-auto flex-shrink-0 w-1/4">
               <SalesAnalytics
                 activeCompany={activeCompany}
                 fullscreen={fullscreen}
@@ -202,15 +200,6 @@ const Overview = () => {
               />
             </div>
           </div>
-          {/* Management Analitics */}
-          {/* <ManagementAnalytics activeCompany={activeCompany} /> */}
-          {/* Comapny Analytics */}
-
-          {/* Campaign Analitics */}
-          {/* <CampaignAnalytics activeCompany={activeCompany} /> */}
-
-          {/* Sales Analitics */}
-          {/* <SalesAnalytics activeCompany={activeCompany} /> */}
         </div>
       </div>
     </div>

@@ -17,55 +17,6 @@ const Dashboard = () => {
 
   return (
     <div className=" min-h-[100vh] ">
-      {/* Password Change Modal */}
-      {/* <Modal
-        title="Change Password"
-        centered
-        visible={toggleChanglePassword}
-        confirmLoading={confirmLoading}
-        footer={[
-          <Button key="submit" type="primary" onClick={handleOk}>
-            Save
-          </Button>,
-        ]}
-      >
-        <div className="font-poppins">
-          <div>
-            <div className="mb-6">
-              <span className="text-sm mb-0.5 font-light">Old Password</span>
-              <Input.Password
-                required
-                value={passwordDetails}
-                onChange={handleChange}
-                placeholder="Old Password"
-                prefix={<UserOutlined />}
-              />
-            </div>
-            <div className="mb-3">
-              <span className="text-sm mb-0.5 font-light">New Password</span>
-              <Input.Password
-                required
-                id="new_password"
-                className="bg-white"
-                placeholder="New Password"
-                prefix={<UserOutlined />}
-              />
-            </div>
-            <div>
-              <span className="text-sm mb-0.5 font-light">
-                Re-Type New Password
-              </span>
-              <Input.Password
-                required
-                id="re_new_password"
-                className="bg-white"
-                placeholder="Re-Type New Password"
-                prefix={<UserOutlined />}
-              />
-            </div>
-          </div>
-        </div>
-      </Modal> */}
 
       <div className="2xl:px-5 h-[100vh] flex justify-center items-center">
         {userDetails?.userInfo?.role_id && (

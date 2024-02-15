@@ -83,10 +83,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   };
 
   const getColorModePreference = () => {
-    return localStorage.getItem('colorMode') === 'dark';
+    return localStorage.getItem("colorMode") === "dark";
   };
   const saveColorModePreference = (colorMode) => {
-    localStorage.setItem('colorMode', colorMode ? 'dark' : 'light');
+    localStorage.setItem("colorMode", colorMode ? "dark" : "light");
   };
   useEffect(() => {
     const storedColorMode = getColorModePreference();
@@ -100,10 +100,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     dispatch(setColorMode(newColorMode));
     saveColorModePreference(newColorMode);
   };
-  
+
   return (
     <div
-      className={` bg-[#ffffff11] duration-200 ${
+      className={` bg-[#ffffff11] duration-300 ${
         openSideBar ? "w-[80px] h-full" : "w-[277px] h-full"
       } overflow-x-hidden overflow-y-scroll`}
     >
@@ -113,7 +113,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
         }}
         className={`${
           openSideBar ? "w-full" : "w-16"
-        } ease-in duration-200 absolute top-3 right-0 z-[30]`}
+        } ease-in duration-300 absolute top-3 right-0 z-[30]`}
       >
         {openSideBar ? (
           <img
@@ -138,7 +138,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             className={`h-[100px] w-[100px]
             }]  ${
               openSideBar ? " hidden" : "rounded-full"
-            } ease-in duration-200 overflow-hidden flex items-center justify-center bg-white`}
+            } ease-in duration-300 overflow-hidden flex items-center justify-center bg-white`}
           >
             <img
               src={companyDetails?.company_logo}
@@ -159,7 +159,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   : colorMode
                   ? "text-[#B3B3B3]"
                   : "text-gray-800"
-              } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+              } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                 colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
               }`}
               onClick={() => setActive("dashboard")}
@@ -213,7 +213,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                   colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                 }`}
                 onClick={() => setActive("analytics")}
@@ -267,7 +267,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
-                } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                   colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                 }`}
                 onClick={() => setActive("que-mailer")}
@@ -324,7 +324,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("courses")}
@@ -380,7 +380,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("campaigns")}
@@ -441,7 +441,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                         : colorMode
                         ? "text-[#B3B3B3]"
                         : "text-gray-800"
-                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                    } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                       colorMode
                         ? "hover:text-[#ffffff]"
                         : "hover:text-[#000000]"
@@ -488,132 +488,62 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
 
           <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
             {/* Sales Employee */}
-            {user?.client_id === 0 ? (
-              companyId ? (
-                (userDetails?.userInfo?.role_id === 2 ||
-                  userDetails?.userInfo?.role_id === 3 ||
-                  userDetails?.userInfo?.role_id === 4) && (
-                  <div>
-                    <Link
-                      to={"/salesEmployee"}
-                      className={`${
-                        active === "salesEmployee"
-                          ? colorMode
-                            ? "text-[#FFFFFF]"
-                            : "text-[#000000]"
-                          : colorMode
-                          ? "text-[#B3B3B3]"
-                          : "text-gray-800"
-                      } ease-in duration-200 flex items-center justify-between text-base cursor-pointer my-5 py-1 ${
-                        colorMode
-                          ? "hover:text-[#ffffff]"
-                          : "hover:text-[#000000]"
-                      }`}
-                      onClick={() => setActive("salesEmployee")}
-                    >
-                      <div className="flex w-full h-8 items-center justify-around overflow-hidden">
-                        <Icons.MoneyCheck
-                          className={` ${
-                            colorMode
-                              ? "hover:text-[#ffffff]"
-                              : "hover:text-[#000000]"
-                          } w-5`}
-                        />
 
-                        <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
-                          <h1
-                            className={`m-0 p-0 w-[10vw] ${
-                              active === "que-mailer"
-                                ? colorMode
-                                  ? "text-[#FFFFFF]"
-                                  : "text-[#000000]"
-                                : colorMode
-                                ? "text-[#B3B3B3]"
-                                : "text-gray-800"
-                            }`}
-                          >
-                            Sales Employee
-                          </h1>
-                        </span>
-                      </div>
-                      {active === "salesEmployee" && (
-                        <div
-                          className={`active-option ${
-                            colorMode
-                              ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                              : "text-[#000000] bg-[#000000]"
+            {(userDetails?.userInfo?.role_id === 1 ||
+              userDetails?.userInfo?.role_id === 2 ||
+              userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id === 4) && (
+              <div>
+                <Link
+                  to={"/salesEmployee"}
+                  className={`${
+                    active === "reminder"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#000000]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                  }`}
+                  onClick={() => setActive("salesEmployee")}
+                >
+                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                    <Icons.MoneyCheck className={`w-5`} />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                        <h1
+                          className={`m-0 p-0 w-[10vw] ${
+                            active === "salesEmployee"
+                              ? colorMode
+                                ? "text-[#FFFFFF]"
+                                : "text-[#000000]"
+                              : colorMode
+                              ? "text-[#B3B3B3]"
+                              : "text-gray-800"
                           }`}
                         >
-                          |
-                        </div>
-                      )}
-                    </Link>
-                  </div>
-                )
-              ) : (
-                <>
-                  <div style={{ display: "none" }}></div>
-                </>
-              )
-            ) : (
-              (userDetails?.userInfo?.role_id === 1 ||
-                userDetails?.userInfo?.role_id === 2 ||
-                userDetails?.userInfo?.role_id === 3 ||
-                userDetails?.userInfo?.role_id === 4) && (
-                <div>
-                  <Link
-                    to={"/salesEmployee"}
-                    className={`${
-                      active === "salesEmployee"
-                        ? colorMode
-                          ? "text-[#FFFFFF]"
-                          : "text-[#000000]"
-                        : colorMode
-                        ? "text-[#B3B3B3]"
-                        : "text-gray-800"
-                    } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
-                      colorMode
-                        ? "hover:text-[#ffffff]"
-                        : "hover:text-[#000000]"
-                    }`}
-                    onClick={() => setActive("salesEmployee")}
-                  >
-                    <div className="flex w-full h-8 items-center justify-around overflow-hidden">
-                      <Icons.MoneyCheck className="w-5" />
-                      {openSideBar ? (
-                        ""
-                      ) : (
-                        <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
-                          <h1
-                            className={`m-0 p-0 w-[10vw] ${
-                              active === "salesEmployee"
-                                ? colorMode
-                                  ? "text-[#FFFFFF]"
-                                  : "text-[#000000]"
-                                : colorMode
-                                ? "text-[#B3B3B3]"
-                                : "text-gray-800"
-                            }`}
-                          >
-                            Sales Employee
-                          </h1>
-                        </span>
-                      )}
-                    </div>
-                    {active === "salesEmployee" && (
-                      <div
-                        className={`active-option ${
-                          colorMode
-                            ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                            : "text-[#000000] bg-[#000000]"
-                        }`}
-                      >
-                        |
-                      </div>
+                          Sales Employee
+                        </h1>
+                      </span>
                     )}
-                  </Link>
-                </div>
-              )
+                  </div>
+                  {active === "salesEmployee" && (
+                    <div
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#000000] bg-[#000000]"
+                      }`}
+                    >
+                      |
+                    </div>
+                  )}
+                </Link>
+              </div>
             )}
 
             {/* Reminder */}
@@ -633,37 +563,27 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("reminder")}
                 >
                   <div className="flex w-full h-8 items-center justify-around overflow-hidden">
-                    <Icons.Calender
-                      className={`${
-                        active === "reminder"
-                          ? colorMode
-                            ? "text-[#FFFFFF]"
-                            : "text-[#000000]"
-                          : colorMode
-                          ? "text-[#B3B3B3]"
-                          : "text-gray-800"
-                      } w-5`}
-                    />
+                    <Icons.Calender className={`w-5`} />
                     {openSideBar ? (
                       ""
                     ) : (
                       <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
                         <h1
                           className={`m-0 p-0 w-[10vw] ${
-                            active === "reminder"
+                            active === "salesEmployee"
                               ? colorMode
                                 ? "text-[#FFFFFF]"
                                 : "text-[#000000]"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
-                          } w-5`}
+                          }`}
                         >
                           Reminder
                         </h1>
@@ -691,29 +611,21 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 <Link
                   to={"/settings"}
                   className={`${
-                    active === "settings"
+                    active === "reminder"
                       ? colorMode
                         ? "text-[#FFFFFF]"
                         : "text-[#000000]"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-200 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("settings")}
                 >
-                  <div className="flex w-full items-center justify-around">
+                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
                     <Icons.Settings
-                      className={`${
-                        active === "settings"
-                          ? colorMode
-                            ? "text-[#FFFFFF]"
-                            : "text-[#000000]"
-                          : colorMode
-                          ? "text-[#B3B3B3]"
-                          : "text-gray-800"
-                      }`}
+                      className={`w-5`}
                     />
                     {openSideBar ? (
                       ""
@@ -750,74 +662,6 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               </div>
             )}
           </div>
-          {/* Requisitions section */}
-          {(userDetails?.userInfo?.role_id === 1 ||
-            userDetails?.userInfo?.role_id === 2) && (
-            <div>
-              <Link
-                to={"/requisitions"}
-                className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
-                style={{
-                  color: `${active === "requisitions" ? "#000000" : "#FFFFFF"}`,
-                }}
-                onClick={() => setActive("requisitions")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Pricing />
-                  <span className="ml-4 leading-6 font-medium font-poppins">
-                    Requisitions
-                  </span>
-                </div>
-                {active === "requisitions" && (
-                  <div
-                    className={`active-option ${
-                      colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
-                    }`}
-                  >
-                    |
-                  </div>
-                )}
-              </Link>
-            </div>
-          )}
-
-          {/* Agency menu items start  */}
-          {(userDetails?.userInfo?.role_id === 10 ||
-            userDetails?.userInfo?.role_id === 9 ||
-            userDetails?.userInfo?.role_id === 7) && (
-            <div>
-              <Link
-                to={"/studentManagement"}
-                className=" ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
-                style={{
-                  color: `${
-                    active === "studentManagement" ? "#000000" : "#FFFFFF"
-                  }`,
-                }}
-                onClick={() => setActive("studentManagement")}
-              >
-                <div className="flex w-full items-center justify-around">
-                  <Icons.Pricing />
-                  <span className="ml-4 leading-6 font-medium font-poppins">
-                    Student Management
-                  </span>
-                </div>
-                {active === "studentManagement" && (
-                  <div
-                    className={`active-option ${
-                      colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
-                    }`}
-                  >
-                    |
-                  </div>
-                )}
-              </Link>
-            </div>
-          )}
 
           {/* Agency menu items end */}
           {/* // Accountant menu items */}
@@ -825,7 +669,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/courseManagement"}
-                className="ease-in duration-200 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
                     active === "courseManagement" ? "#000000" : "#FFFFFF"
@@ -855,7 +699,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/paymentSlip"}
-                className="ease-in duration-200 flex items-center text-base cursor-pointer py-1 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center text-base cursor-pointer py-1 hover:text-[#ffffff]"
                 style={{
                   color: `${active === "paymentSlip" ? "#000000" : "#FFFFFF"}`,
                 }}
@@ -911,11 +755,11 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
         </div>
 
         {/* Logo Bottom */}
-        <div className="ease-in duration-200 flex flex-col justify-center items-center h-[200px]">
+        <div className="ease-in duration-300 flex flex-col justify-center items-center h-[200px]">
           {openSideBar ? (
             ""
           ) : (
-            <div className="ease-in duration-200 flex flex-col justify-center items-center">
+            <div className="ease-in duration-300 flex flex-col justify-center items-center">
               <div className="w-5/6 flex flex-col justify-center items-center overflow-hidden">
                 <img
                   className="w-[10vw] h-full"

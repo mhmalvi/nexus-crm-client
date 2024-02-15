@@ -693,7 +693,7 @@ const RequestDetailsModal = ({
                   className=" mx-auto  w-1/2"
                   src={paidPhoto}
                   alt=""
-                  srcset=""
+                 
                 />
               </div>
             )}

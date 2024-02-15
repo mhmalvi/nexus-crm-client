@@ -1,11 +1,16 @@
 import { Select } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import * as rcElement from "recharts";
-import * as chartUtils from "../utils";
+import {
+  ResponsiveContainer,
+  Legend,
+  PieChart,
+  Pie,
+} from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 import Loading from "../../../Components/Shared/Loader";
+import { LeadStatusCustomizedLabel } from "../utils";
 
 const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
   const { Option } = Select;
@@ -239,11 +244,11 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
       </div>
       {loading ? <Loading/>:
       <div className="pt-4">
-        <rcElement.ResponsiveContainer width="100%" height={220}>
-          <rcElement.PieChart width="100%" height={220}>
-            <rcElement.Pie
+        <ResponsiveContainer width="100%" height={220}>
+          <PieChart width="100%" height={220}>
+            <Pie
               activeIndex={activeIndex}
-              activeShape={chartUtils.LeadStatusCustomizedLabel}
+              activeShape={LeadStatusCustomizedLabel}
               data={campaignSummary}
               cx="50%"
               cy="50%"
@@ -253,10 +258,10 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
               dataKey="value"
               onMouseEnter={onPieEnter}
             >
-              <rcElement.Legend />
-            </rcElement.Pie>
-          </rcElement.PieChart>
-        </rcElement.ResponsiveContainer>
+              <Legend />
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
       </div>}
       <Modal
         className="analyticModal"
@@ -288,11 +293,11 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
               </Option>
             ))}
           </Select>
-          <rcElement.ResponsiveContainer width="100%" height="100%">
-            <rcElement.PieChart width="100%" height="100%">
-              <rcElement.Pie
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart width="100%" height="100%">
+              <Pie
                 activeIndex={activeIndex}
-                activeShape={chartUtils.LeadStatusCustomizedLabel}
+                activeShape={LeadStatusCustomizedLabel}
                 data={campaignSummary}
                 cx="50%"
                 cy="50%"
@@ -302,10 +307,10 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
                 dataKey="value"
                 onMouseEnter={onPieEnter}
               >
-                <rcElement.Legend />
-              </rcElement.Pie>
-            </rcElement.PieChart>
-          </rcElement.ResponsiveContainer>
+                <Legend />
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
         </div>
       </Modal>
     </div>

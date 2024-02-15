@@ -2,11 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as rcElement from "recharts";
+import {
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  Tooltip,
+  YAxis,
+  Legend,
+  Bar,
+  BarChart,
+} from "recharts";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import { fetchSalesEmployeesSale } from "../../../Components/services/leads";
 import { setLoader } from "../../../features/user/userSlice";
-import * as chartUtils from "../utils";
+import { TriangleBar } from "../utils";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 
@@ -122,12 +131,12 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
         </div>
       </div>
       <div className="pt-4">
-        <rcElement.ResponsiveContainer
+        <ResponsiveContainer
           width="100%"
           height={230}
           className="-ml-6"
         >
-          <rcElement.BarChart
+          <BarChart
             width={"100%"}
             height={230}
             data={employeesSales}
@@ -138,19 +147,19 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
               bottom: 0,
             }}
           >
-            <rcElement.CartesianGrid strokeDasharray="3 3" />
-            <rcElement.XAxis dataKey="name" tick={false} axisLine={false} />
-            <rcElement.YAxis />
-            <rcElement.Legend />
-            <rcElement.Tooltip />
-            <rcElement.Bar
+            <CartesianGrid strokeDasharray="5 5" />
+            <XAxis dataKey="name" tick={false} axisLine={false} />
+            <YAxis />
+            <Legend />
+            <Tooltip />
+            <Bar
               dataKey="amount"
               fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
             
-              shape={<chartUtils.TriangleBar />}
+              shape={<TriangleBar />}
             />
-          </rcElement.BarChart>
-        </rcElement.ResponsiveContainer>
+          </BarChart>
+        </ResponsiveContainer>
       </div>
       <Modal
         className="analyticModal"
@@ -168,12 +177,12 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
         }
       >
         <div className="h-[70vh]">
-          <rcElement.ResponsiveContainer
+          <ResponsiveContainer
             width="100%"
             height="100%"
             className="-ml-6"
           >
-            <rcElement.BarChart
+            <BarChart
               width="100%"
               height="100%"
               data={employeesSales}
@@ -184,18 +193,18 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
                 bottom: 0,
               }}
             >
-              <rcElement.CartesianGrid strokeDasharray="3 3" />
-              <rcElement.XAxis dataKey="name" tick={false} axisLine={false} />
-              <rcElement.YAxis />
-              <rcElement.Legend />
-              <rcElement.Tooltip />
-              <rcElement.Bar
+              <CartesianGrid strokeDasharray="5 5" />
+              <XAxis dataKey="name" tick={false} axisLine={false} />
+              <YAxis />
+              <Legend />
+              <Tooltip />
+              <Bar
                 dataKey="amount"
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
-                shape={<chartUtils.TriangleBar />}
+                shape={<TriangleBar />}
               />
-            </rcElement.BarChart>
-          </rcElement.ResponsiveContainer>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </Modal>
     </div>

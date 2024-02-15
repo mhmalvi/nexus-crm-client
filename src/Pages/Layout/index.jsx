@@ -36,36 +36,10 @@ import QueMailer from "../QueMailer";
 
 const Layout = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state?.user);
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
 
   const [active, setActive] = useState("dashboard");
   const [toggleMessage, setToggleMessage] = useState(false);
-  // const [openSideBar, setOpenSideBar] = useState(true);
-
-  // const fetchFollowUpNotification = async () => {
-  //   const notificationRes = await handleFetchNotificationList(
-  //     userDetails?.userInfo?.user_id
-  //   );
-
-  //   if (
-  //     notificationRes?.message === "success" ||
-  //     notificationRes?.status === 200
-  //   ) {
-  //     dispatch(setNotifications(notificationRes?.data));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchFollowUpNotification();
-  // },[fetchFollowUpNotification]);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     fetchFollowUpNotification();
-  //   }, 1000);
-  // }, []);
 
   useEffect(() => {
     if (window.location.pathname === "/") {

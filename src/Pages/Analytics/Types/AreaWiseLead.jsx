@@ -1,7 +1,15 @@
 import { Select } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import * as rcElement from "recharts";
+import {
+  ResponsiveContainer,
+  Radar,
+  PolarGrid,
+  RadarChart,
+  PolarAngleAxis,
+  Tooltip,
+  PolarRadiusAxis,
+} from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 import "./analytic.css";
@@ -44,10 +52,6 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
     setActiveCampaign(currentYearCampaign?.[0]?.campaign_id);
     setActiveCampaignSummary(currentYearCampaign?.[0]?.campaign_id);
   }, [currentYearCampaign]);
-
-  const handleAreaChange = (value) => {
-    setActiveCampaign(value);
-  };
 
   useEffect(() => {
     // For Areawise Lead Details
@@ -198,10 +202,12 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
           fill: "#a4de6c",
         },
       ]);
-      setLoading(false)
+      setLoading(false);
     }
   }, [activeCampaign, leads, userDetails?.userInfo?.role_id]);
-
+  const handleAreaChange = (value) => {
+    setActiveCampaign(value);
+  };
   const handleFullScreen = () => {
     setFullScreen("AreaWiseLead");
   };
@@ -248,22 +254,22 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
         <Loading />
       ) : (
         <div className="pt-4 min-h-32">
-          <rcElement.ResponsiveContainer width="100%" height={220}>
-            <rcElement.RadarChart
+          <ResponsiveContainer width="100%" height={220}>
+            <RadarChart
               cx="50%"
               cy="50%"
               activeDot={"dot"}
               outerRadius="70%"
               data={areawiseLeads}
             >
-              <rcElement.Tooltip />
-              <rcElement.PolarGrid />
-              <rcElement.PolarAngleAxis
+              <Tooltip />
+              <PolarGrid />
+              <PolarAngleAxis
                 dataKey="city"
                 stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
-              <rcElement.PolarRadiusAxis />
-              <rcElement.Radar
+              <PolarRadiusAxis />
+              <Radar
                 dataKey="percentage"
                 stroke="#8884d8"
                 fill="#7037ff"
@@ -271,8 +277,8 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
                 dot={true}
                 fillOpacity={0.8}
               />
-            </rcElement.RadarChart>
-          </rcElement.ResponsiveContainer>
+            </RadarChart>
+          </ResponsiveContainer>
         </div>
       )}
 
@@ -306,22 +312,22 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
               </Option>
             ))}
           </Select>
-          <rcElement.ResponsiveContainer width="100%" height="100%">
-            <rcElement.RadarChart
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart
               cx="50%"
               cy="50%"
               activeDot={"dot"}
               outerRadius="70%"
               data={areawiseLeads}
             >
-              <rcElement.Tooltip />
-              <rcElement.PolarGrid />
-              <rcElement.PolarAngleAxis
+              <Tooltip />
+              <PolarGrid />
+              <PolarAngleAxis
                 dataKey="city"
                 stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
-              <rcElement.PolarRadiusAxis />
-              <rcElement.Radar
+              <PolarRadiusAxis />
+              <Radar
                 dataKey="percentage"
                 stroke="#8884d8"
                 fill="#7037ff"
@@ -329,8 +335,8 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
                 dot={true}
                 fillOpacity={0.8}
               />
-            </rcElement.RadarChart>
-          </rcElement.ResponsiveContainer>
+            </RadarChart>
+          </ResponsiveContainer>
         </div>
       </Modal>
     </div>
