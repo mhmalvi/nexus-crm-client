@@ -1,4 +1,4 @@
-import { Input, Tooltip, message } from "antd";
+import { Input, Tooltip, message, Alert } from "antd";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { handleInitialRegistration } from "../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
 import "./register.css";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
+
 const Register = () => {
   document.title = "Register";
 
@@ -18,6 +19,8 @@ const Register = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const userDetails = useSelector((state) => state?.user);
+  const [unprocessableContent, setUnprocessableContent] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (Storage.getItem("auth_tok")) {
       if (userDetails?.userInfo?.verification_status === 2) {
@@ -32,24 +35,34 @@ const Register = () => {
     }
   }, [navigate, userDetails]);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const registerUser = async () => {
-    setLoading(true);
+    // setLoading(true);
+    setUnprocessableContent("");
     if (registrationData.password !== confirmPassword) {
-      setLoading(false);
+      // setLoading(false);
       return message.error("Passwords do not match!");
     } else {
       const res = await handleInitialRegistration(registrationData);
+      console.log(res?.data);
       if (res?.status === 201) {
-        setLoading(false);
+        // setLoading(false);
         message.success(res?.message);
         message.success("Please check your email for verification code");
         navigate("/login");
-      } else if (res?.data.errors.password !== null) {
-        setLoading(false);
-        message.warning(res?.data.errors.password[0]);
-      } else if (res?.data.errors.email !== null) {
-        setLoading(false);
-        message.warning(res?.data.errors.email[0]);
+      } else if (res.data.errors.email && res.data.errors.email[0] !== "") {
+        // setLoading(false);
+        // console.log(res?.data.errors.email[0]);
+        setUnprocessableContent(res?.data.errors.email[0]);
+      } else if (
+        res.data.errors.password &&
+        res?.data.errors.password[0] !== ""
+      ) {
+        // setLoading(false);
+        console.log(res?.data.errors.password[0]);
+        setUnprocessableContent(res?.data.errors.password[0]);
       }
     }
   };
@@ -112,10 +125,17 @@ const Register = () => {
           <div className="flex items-center justify-center h-screen rounded-md">
             <div className="flex flex-col gap-8 h-2/3 shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md px-8 py-8">
               <div className="flex flex-col gap-4 items-center justify-center">
+                {unprocessableContent && (
+                  <Alert
+                    message={unprocessableContent}
+                    type="warning"
+                    showIcon
+                    closable
+                  />
+                )}
                 <img
                   src={companyLogo}
                   alt="companyLogo"
-                 
                   className="w-84 cursor-pointer"
                   onClick={() => {
                     navigate("/");
@@ -151,11 +171,11 @@ const Register = () => {
                   />
                 </div>
                 <div className="font-poppins flex flex-col">
-                  <label htmlFor="password" className="px-2 w-full flex items-center justify-between text-gray-800">
-                    <span>
-
-                    Password
-                    </span>
+                  <label
+                    htmlFor="password"
+                    className="px-2 w-full flex items-center justify-between "
+                  >
+                    <span>Password</span>
                     <Tooltip
                       align={"center"}
                       title="Password must be of at least 8 characters, 1 special character, 1 capital letter & 1 number."
@@ -169,8 +189,9 @@ const Register = () => {
                   <Input.Password
                     type="password"
                     id="password"
+                    // style={{ color: "black !important" }}
                     placeholder="Enter your password"
-                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    className="w-full !px-2 !text-black !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setRegistrationData({
                         ...registrationData,
