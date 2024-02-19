@@ -6,10 +6,10 @@
 
 .inputBGLogin,.inputBGLogin input, .inputBGLogin input:active {
   background-color: transparent !important;
-  /* color:#cbd5e17f !important; */
+  color: #cbd5e1 !important
 }
-.inputBGLogin input::placeholder, input::placeholder{
-  color:#cbd5e17f !important;
+.inputBGLogin .anticon svg{
+  fill: #cbd5e1;
 }
 
 .forgotModal .ant-modal-header {
