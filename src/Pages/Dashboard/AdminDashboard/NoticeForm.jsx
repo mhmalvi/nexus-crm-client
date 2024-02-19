@@ -122,8 +122,8 @@ const NoticeForm = () => {
                   <input
                     className={`w-full px-3 py-1 rounded-md bg-transparent outline-none border ${
                       colorMode
-                        ? "border-slate-300 placeholder:text-slate-300"
-                        : "border-gray-800 placeholder:text-gray-800"
+                        ? "border-slate-300 placeholder:!text-slate-300 !text-slate-300"
+                        : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
                     }`}
                     type="text"
                     placeholder="Notice Title"
@@ -133,8 +133,8 @@ const NoticeForm = () => {
                   <textarea
                     className={`w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
                       colorMode
-                      ? "border-slate-300 placeholder:text-slate-300"
-                      : "border-gray-800 placeholder:text-gray-800"
+                      ? "border-slate-300 placeholder:text-slate-300 !text-slate-300"
+                      : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
                     }`}
                     name=""
                     style={{ resize: "none" }}

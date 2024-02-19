@@ -444,14 +444,14 @@ const UserDetails = ({
                   emptyIcon={<Icons.Star />}
                   half={false}
                   fullIcon={<Icons.Star />}
-                  color1="#1f2937"
+                  color1="#cbd5e1"
                   color2="#8C64D2"
                 />
                 <form className="flex justify-between items-center w-full gap-4">
                   <input
                     className={`w-5/6 outline-none border-b ${
-                      colorMode ? "border-slate-300" : "border-gray-800"
-                    } bg-transparent text-sm font-poppins text-black text-opacity-75`}
+                      colorMode ? "border-slate-300 placeholder:!text-slate-300 !text-slate-300" : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
+                    } bg-transparent text-sm font-poppins`}
                     onChange={(e) => setRatingRemarks(e.currentTarget.value)}
                     value={ratingRemarks}
                     placeholder="No comments yet"
@@ -461,7 +461,7 @@ const UserDetails = ({
                       colorMode
                         ? "border-slate-300 text-slate-300"
                         : "border-gray-800 text-gray-800"
-                    }  px-3 py-0.5 rounded-xl cursor-pointer`}
+                    }  px-3 py-0.5 rounded-md cursor-pointer`}
                     onClick={handleReviewRemarksSubmit}
                   >
                     Save
