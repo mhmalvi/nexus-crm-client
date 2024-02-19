@@ -10,6 +10,7 @@ const Notifications = ({
   setToggleNotification,
   setNotificationData,
   setIsNotifyOpen,
+  viewedData
 }) => {
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const Notifications = ({
   return (
     
       <Notification
+      viewedData={viewedData}
         notificationLoading={notificationLoading}
         setNotificationLoading={setNotificationLoading}
         toggleNotification={toggleNotification}

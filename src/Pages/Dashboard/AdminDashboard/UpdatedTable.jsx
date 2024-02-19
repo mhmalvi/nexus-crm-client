@@ -225,7 +225,7 @@ const UpdatedTable = ({
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
-                  } ease-in duration-200 `}
+                  } `}
                 >
                   Upload File
                 </div>
@@ -255,7 +255,7 @@ const UpdatedTable = ({
                       colorMode
                         ? "text-slate-300 border-slate-300"
                         : "text-gray-800 border-gray-800"
-                    } ease-in duration-200 `}
+                    } `}
                     onClick={() => setIsAddLeadFormOpen(true)}
                   >
                     Add Lead
@@ -290,7 +290,7 @@ const UpdatedTable = ({
                         colorMode
                           ? "text-slate-300 border-slate-300"
                           : "text-gray-800 border-gray-800"
-                      } ease-in duration-200 `}
+                      } `}
                       onClick={() => handleSyncLeadsReq()}
                     >
                       Sync Leads

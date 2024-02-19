@@ -6,7 +6,7 @@ const UserLabel = ({ setOpenProfile, openProfile }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
     <div
-      className={`ease-in duration-100 absolute group right-0 m-1 p-1 rounded-lg shadow-md cursor-pointer hover:scale-95 shadow-md bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB]`}
+      className={` absolute group right-0 m-1 p-1 rounded-lg shadow-md cursor-pointer hover:scale-95 shadow-md bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB]`}
       onClick={() => setOpenProfile(!openProfile)}
     >
       <Avatar

@@ -298,7 +298,6 @@ table {
 
 .settingsSidebar {
   width: 100%;
-  /* padding-left: 10px; */
 }
 
 .settingsSidebar .ant-menu-submenu {
@@ -308,7 +307,6 @@ table {
 .settingsSidebar .ant-menu-inline,
 .ant-menu-vertical,
 .ant-menu-vertical-left {
-  /* background-color: #17cdd9 !important; */
   color: transparent !important;
   border: 0px;
 }
@@ -358,10 +356,6 @@ td {
 .slick-current {
   font-weight: 600;
   color: black;
-}
-
-.ant-picker-input > input {
-  display: none;
 }
 
 .anticon-close-circle {
@@ -467,11 +461,6 @@ td {
   margin: auto !important;
 }
 
-.date-time-picker > .ant-picker-input > .ant-picker-suffix {
-  color: #cbd5e1 !important;
-  font-size: 12px;
-}
-
 .message-container {
   width: 100%;
   height: 100%;
@@ -562,7 +551,7 @@ td {
   background-color: #fff;
   border: none !important;
   border-radius: 2px;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1); */
 }
 
 .country .ant-select-auto-complete {
@@ -585,7 +574,7 @@ td {
   border-bottom: 1px solid rgb(209 213 219 1) !important;
   border-radius: 0.5rem !important;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1); */
 }
 
 @keyframes animloader {
