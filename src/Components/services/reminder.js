@@ -8,6 +8,7 @@ export const handleAddFollowUp = async (followUpData) => {
       Accept: "application/json",
     },
   };
+  console.log(followUpData)
   try {
     const result = await axios.post(
       `http://192.168.0.121:7000/api/follow-up`,
@@ -19,15 +20,16 @@ export const handleAddFollowUp = async (followUpData) => {
     return error;
   }
 };
-export const handleUpdateFollowUp = async (updatedFollowUpData, id) => {
+export const handleUpdateFollowUp = async (updatedFollowUpData) => {
   const config = {
     headers: {
       Authorization: "Bearer " + authToken,
+      Accept: "application/json",
     },
   };
   try {
     const result = await axios.put(
-      `${crmNotification_dev}/api/${id}/follow-up-update`,
+      `http://192.168.0.121:7000/api/follow-up-update`,
       updatedFollowUpData,
       config
     );
@@ -56,9 +58,18 @@ export const handleFetchFollowUp = async (userID) => {
   }
 };
 export const handleDeleteFollowUp = async (followupID) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+      Accept: "application/json",
+    },
+  };
+  console.log(followupID)
   try {
-    const result = await axios.get(
-      `${crmNotification_dev}/api/${followupID}/destroy`
+    const result = await axios.post(
+      `http://192.168.0.121:7000/api/delete-notification`,
+      {id:followupID},
+      config
     );
     return result?.data;
   } catch (error) {

@@ -37,6 +37,8 @@ import NoticeForm from "./NoticeForm";
 import CalendarSmall from "./CalendarSmall";
 import ProfileSettings from "./ProfileSettings.jsx";
 import "./dashboard.css";
+import { io } from "socket.io-client";
+import { setNotifications } from "../../../features/user/notificationSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -361,7 +363,7 @@ const AdminDashboard = () => {
                 const sid = localStorage.getItem("sales_id");
                 onAssignLead(record?.lead_id, sid);
               }}
-              className={`rounded-md px-2 py-1 ease-in duration-100 border ${
+              className={`rounded-md px-2 py-1 border ${
                 colorMode ? "border-slate-300" : "border-gray-800"
               } flex items-center justify-center w-full hover:scale-95`}
             >
@@ -474,9 +476,9 @@ const AdminDashboard = () => {
                 setClickedLeadId(record?.lead_id);
                 setOpenCallCountDetailsModal(true);
               }}
-              className={`rounded-md px-2 py-1 ease-in duration-100 flex items-center justify-center w-full hover:scale-95`}
+              className={`rounded-md px-2 py-1 flex items-center justify-center w-full hover:scale-95`}
             >
-              <div className="flex flex-row m-auto justify-between text-blue-500 underline underline-offset-2 cursor-pointer hover:text-blue-700">
+              <div className={`flex flex-row m-auto justify-between ${colorMode?"text-blue-300":"text-blue-800"} underline underline-offset-2 cursor-pointer hover:text-blue-700`}>
                 <p className={`text-xs m-0`}>
                   {record.call_count != null ? record.call_count : 0} Call
                   Details
@@ -692,7 +694,30 @@ const AdminDashboard = () => {
   const handleCancelProfile = () => {
     setOpenProfile(false);
   };
+  const [viewedData, setViewedData] = useState({
+    user_id: userDetails.userInfo.id,
+    id: [null],
+  });
+  const socket = io("http://192.168.0.121:7000");
 
+  socket.connect();
+  useEffect(() => {
+    socket.emit("message", { user_id: userDetails.userInfo.id });
+    const handleMessage = (e) => {
+      dispatch(setNotifications(e));
+      setViewedData((prevData) => ({
+        ...prevData,
+        id: e.map((item) => item.id),
+      }));
+      console.log(e);
+    };
+    socket.on("message", handleMessage);
+
+    return () => {
+      socket.off("message");
+      socket.disconnect();
+    };
+  }, [dispatch, socket, userDetails.userInfo.id, setViewedData]);
   return (
     <div className="w-full max-h-screen flex flew-wrap gap-4 h-[90vh] ">
       <div className="w-4/5 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
@@ -773,7 +798,7 @@ const AdminDashboard = () => {
       >
         <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
-            className={` realtive ease-in duration-200  m-0 p-2 cursor-pointer flex hover:scale-105 `}
+            className={` realtive  m-0 p-2 cursor-pointer flex hover:scale-105 `}
             onClick={(e) => {
               setToggleNotification(!toggleNotification);
               setNotificationLoading(true);
@@ -803,14 +828,15 @@ const AdminDashboard = () => {
           />
         </div>
         {toggleNotification && (
-          <div className="absolute w-screen h-screen flex justify-end left-0 top-0 z-50">
+          <div className="absolute w-screen h-screen flex justify-end left-0 top-0 z-10">
             <div className="relative w-screen h-screen">
               <div
-                className="absolute w-screen h-screen bg-[#ffffff11] backdrop-blur-sm z-51"
+                className="absolute w-screen h-screen bg-[#ffffff11] backdrop-blur-sm"
                 onClick={() => setToggleNotification(false)}
               ></div>
-              <div className="absolute z-53 right-32 top-32">
+              <div className="absolute right-32 top-32">
                 <Notifications
+                  viewedData={viewedData}
                   toggleNotification={toggleNotification}
                   setToggleNotification={setToggleNotification}
                   notificationLoading={notificationLoading}

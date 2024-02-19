@@ -1,47 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
-import { io } from "socket.io-client";
-import { setNotifications } from "../../features/user/notificationSlice";
 import { handleNotificationViewed } from "../../Components/services/notification";
 const Notification = ({
   handleNotificationNavigation,
   setNotificationData,
   setIsNotifyOpen,
+  viewedData
 }) => {
   const dispatch = useDispatch();
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
   );
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
-  const userDetails = useSelector((state) => state?.user);
-  const [viewedData, setViewedData] = useState({
-    user_id: userDetails.userInfo.id,
-    id: [null],
-  });
-  const socket = io("http://192.168.0.121:7000");
-
-  socket.on("connect", (e) => {
-    console.log("Socket connected");
-    socket.emit("message", { user_id: userDetails.userInfo.id });
-  });
-  useEffect(() => {
-    socket.on("message", (e) => {
-      dispatch(setNotifications(e));
-      setViewedData((prevData) => ({
-        ...prevData,
-        id: e.map((item) => item.id)
-      }));
-      console.log(e);
-    });
-    return () => {
-      socket.off("message");
-      socket.on("disconnect", () => {
-        console.log(socket.id);
-      });
-    };
-  }, [dispatch, socket]);
 
   const handleViewed = async () => {
     try {

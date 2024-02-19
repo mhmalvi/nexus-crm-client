@@ -6,7 +6,8 @@ import {
   handleDeleteFollowUp,
   handleUpdateFollowUp,
 } from "../../Components/services/reminder";
-
+import "./reminder.css";
+import UserDetails from "./../LeadDetails/UserDetails/index";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD HH:mm";
 
@@ -28,33 +29,31 @@ const EventDetails = ({
   const [updateEventData, setUpdateEventData] = useState({});
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
-  // useEffect(() => {
-  //   setSelectedPriority(
-  //     priorityList.find((priority) => priority?.key === eventDetails?.priority)
-  //   );
-  //   console.log("eventDetails", eventDetails);
+  useEffect(() => {
+    setSelectedPriority(
+      priorityList.find((priority) => priority?.key === eventDetails?.priority)
+    );
 
-  //   const eventDetailsData = { ...eventDetails };
+    const eventDetailsData = { ...eventDetails };
 
-  //   eventDetailsData.start =
-  //     typeof eventDetails?.start === "string"
-  //       ? new Date(`${eventDetails?.start}`)
-  //           ?.toISOString()
-  //           .replace("T", " ")
-  //           .slice(0, 16)
-  //       : eventDetails.start?.toISOString().replace("T", " ").slice(0, 16);
+    eventDetailsData.start =
+      typeof eventDetails?.start === "string"
+        ? new Date(`${eventDetails?.start}`)
+            ?.toISOString()
+            .replace("T", " ")
+            .slice(0, 16)
+        : eventDetails.start?.toISOString().replace("T", " ").slice(0, 16);
 
-  //   eventDetailsData.end =
-  //     typeof eventDetails?.end === "string"
-  //       ? new Date(`${eventDetails?.end}`)
-  //           ?.toISOString()
-  //           .replace("T", " ")
-  //           .slice(0, 16)
-  //       : eventDetails.end?.toISOString().replace("T", " ").slice(0, 16);
+    eventDetailsData.end =
+      typeof eventDetails?.end === "string"
+        ? new Date(`${eventDetails?.end}`)
+            ?.toISOString()
+            .replace("T", " ")
+            .slice(0, 16)
+        : eventDetails.end?.toISOString().replace("T", " ").slice(0, 16);
 
-
-  //   setUpdateEventData(eventDetailsData);
-  // }, [eventDetails]);
+    setUpdateEventData(eventDetailsData);
+  }, [eventDetails]);
 
   const handlePriorityChange = (selected) => {
     const data = { ...updateEventData };
@@ -75,8 +74,6 @@ const EventDetails = ({
   };
 
   const handleReminderDateTimeChange = (_, dateTimeString) => {
-    console.log("notify update: ", dateTimeString);
-
     const eventData = { ...updateEventData };
     eventData.notification_time = dateTimeString;
 
@@ -100,8 +97,8 @@ const EventDetails = ({
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
-
   const handleUpdateFollowUpReq = async () => {
+    setIsSaveDisable(true);
     const requestData = { ...updateEventData };
 
     requestData.start = startDateTime
@@ -115,18 +112,12 @@ const EventDetails = ({
       : `${eventDetails.notification_time}`;
 
     requestData.status = 1;
-
-    console.log("ok: ", requestData);
-
-    const updateFollowUpRes = await handleUpdateFollowUp(
-      requestData,
-      eventDetails?.id
-    );
-
-    console.log("updateFollowUpRes", updateFollowUpRes);
-
+    requestData.user_id = eventDetails.user_id;
+    const updateFollowUpRes = await handleUpdateFollowUp(requestData);
+    setIsSaveDisable(false);
     if (updateFollowUpRes?.status === 201) {
       message.success("Reminder Updated Successfully");
+      setIsSaveDisable(false);
       setIsEdit(false);
 
       const restFllowUpEvents = eventsData?.filter(
@@ -139,177 +130,178 @@ const EventDetails = ({
 
       setOpenEventDetails(false);
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
-      setIsSaveDisable(false);
     } else {
+      setIsSaveDisable(false);
       message.warn(
         updateFollowUpRes
           ? updateFollowUpRes?.data?.message
           : "Something went wrong with update"
       );
-      setIsSaveDisable(false);
     }
   };
-
+  // console.log(eventDetails)
   const handleDeleteFollowUpReq = async (id) => {
-    console.log("id", id);
-
     const deleteResp = await handleDeleteFollowUp(id);
 
     if (deleteResp?.status === 201) {
       message.success("Event has been completed");
       setSynEvents(!synEvents);
       setOpenEventDetails(false);
+    } else {
+      message.warning(deleteResp?.message || "Error in deleting the Event");
     }
   };
 
   return (
-    <div className="px-10 py-4 font-poppins">
-      <div className="flex justify-between items-center">
+    <div className="font-poppins">
+      <div className="flex justify-start gap-4 items-center pb-4 w-full">
         <div className="flex items-center">
-          <div className="text-xl list-item list-disc font-semibold py-6">
-            <div className="flex items-center">
-              {isEdit ? (
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  className="outline-none bg-gray-100 px-3 py-0.5 rounded-full mr-2 shadow-sm"
-                  value={updateEventData?.title}
-                  onChange={handleEventDetailsChange}
-                />
-              ) : eventDetails?.status ? (
-                <div>{eventDetails?.title}</div>
-              ) : (
-                <del>{eventDetails?.title}</del>
-              )}
-              <div>-Details</div>
+          {isEdit ? (
+            <input
+              type="text"
+              name="title"
+              id="title"
+              className="outline-none bg-transparent border border-slate-300 px-3 py-0.5 rounded-md mr-2 shadow-sm"
+              value={updateEventData?.title}
+              onChange={handleEventDetailsChange}
+            />
+          ) : eventDetails?.status ? (
+            <div className="text-lg font-semibold !text-slate-300">
+              {eventDetails?.title}
             </div>
-          </div>
-          <div>
-            <Tooltip title="If you have completed the Task">
-              <Icons.Correct
-                className="w-6 ml-4 text-green-600 hover:text-green-500 cursor-pointer transition-colors delay-200 duration-200"
-                onClick={() => handleDeleteFollowUpReq(eventDetails?.id)}
-              />
-            </Tooltip>
-          </div>
+          ) : (
+            <del className="text-lg font-semibold !text-slate-300">
+              {eventDetails?.title}
+            </del>
+          )}
+          <div className="text-lg font-semibold !text-slate-300">-Details</div>
         </div>
+
+        <div>
+          <Tooltip title="If you have completed the Task">
+            <Icons.Correct
+              className="w-6 ml-4 text-green-600 hover:text-green-500 cursor-pointer transition-colors delay-200 duration-200"
+              onClick={() => handleDeleteFollowUpReq(eventDetails?.id)}
+            />
+          </Tooltip>
+        </div>
+
         <div>
           <Icons.Edit
-            className="hover:text-brand-color cursor-pointer transition-colors delay-200 duration-200"
+            className="hover:text-brand-color cursor-pointer transition-colors delay-200 duration-200 "
             onClick={() => setIsEdit(!isEdit)}
           />
         </div>
       </div>
-
-      <div className="flex flex-col justify-start items-start">
+      <hr className="border-brand-color" />
+      <div className="mt-4 flex flex-col gap-4 justify-start items-start">
         {isEdit ? (
-          <div className="">
-            <h2 className="mt-6 text-[18px] text-[bold]">
-              Set Task Start Time:
-            </h2>
-            <div className="flex items-center">
-              <span>
-                {startDateTime
-                  ? new Date(startDateTime)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
-                  : (eventDetails?.start)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-              </span>
-              <span className="mx-2">-</span>
-              <span>
-                {endDateTime
-                  ? new Date(endDateTime)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
-                  : (eventDetails?.end)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-              </span>
-              <RangePicker
-                showTime
-                bordered={false}
-                onChange={handleDateTimeChange}
-                format={dateFormat}
-                separator={null}
-              />
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Set Task Start Time:
+              </h2>
+              <div className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full">
+                <RangePicker
+                  showTime
+                  bordered={false}
+                  onChange={handleDateTimeChange}
+                  format={dateFormat}
+                  separator={null}
+                  className="!w-full"
+                />
+              </div>
             </div>
-            {/* for notification */}
 
-            <h2 className="mt-6 text-[18px] text-[bold]">Set Reminder Time:</h2>
-            <div className="flex items-center">
-              <span>
-                {notifyTime
-                  ? new Date(notifyTime)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")
-                  : (eventDetails?.notification_time)
-                      .toString()
-                      .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
-              </span>
-              <DatePicker
-                showTime
-                bordered={false}
-                onChange={handleReminderDateTimeChange}
-                format={dateFormat}
-                separator={null}
-              />
+            {/* for notification */}
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Set Reminder Time:
+              </h2>
+              <div className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full">
+                <DatePicker
+                  showTime
+                  bordered={false}
+                  onChange={handleReminderDateTimeChange}
+                  format={dateFormat}
+                  separator={null}
+                  className="!w-full"
+                />
+              </div>
             </div>
           </div>
         ) : (
           <>
-            <h2 className="mt-6 text-[18px] text-[bold]">Task Start Time:</h2>
-            <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
-              {new Date(eventDetails?.start)
-                ?.toString()
-                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
-              -{" "}
-              {new Date(eventDetails?.end)
-                ?.toString()
-                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Task Start Time:
+              </h2>
+              <div className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full">
+                {new Date(eventDetails?.start)
+                  ?.toString()
+                  .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+                -{" "}
+                {new Date(eventDetails?.end)
+                  ?.toString()
+                  .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}
+              </div>
             </div>
-            <h2 className="mt-6 text-[18px] text-[bold]">Reminder Time:</h2>
-            <div className="float-left px-4 py-0.5 bg-home-color/20 rounded-full shadow-sm">
-              {new Date(eventDetails?.notification_time)
-                ?.toString()
-                .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Reminder Time:
+              </h2>
+              <div className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full">
+                {new Date(eventDetails?.notification_time)
+                  ?.toString()
+                  .replace(":00 GMT+0600 (Bangladesh Standard Time)", "")}{" "}
+              </div>
             </div>
           </>
         )}
-        <div className="text-base font-light my-8">
+        <div className="text-base font-light w-full">
           {isEdit ? (
-            <textarea
-              className="w-[42vw] bg-gray-100 outline-none p-2 rounded-xl shadow-sm"
-              rows={3}
-              // cols={110}
-              id="description"
-              onChange={handleEventDetailsChange}
-              value={updateEventData?.description}
-            />
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Task Description:
+              </h2>
+              <textarea
+                className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full"
+                rows={1}
+                // cols={110}
+                id="description"
+                onChange={handleEventDetailsChange}
+                value={updateEventData?.description}
+              />
+            </div>
           ) : (
-            <div>{updateEventData?.description}</div>
+            <div className="flex items-center w-full gap-4">
+              <h2 className="m-0 p-0 text-base font-bold text-slate-300 w-1/4">
+                Task Description:
+              </h2>
+              <div className="rounded-md bg-slate-300 text-gray-800 px-4 py-2 w-full">
+                {updateEventData?.description}
+              </div>
+            </div>
           )}
         </div>
         {isEdit ? (
           <div className="flex justify-end">
             <div
               onClick={handleEventDetailsCancel}
-              className="bg-red-600 font-semibold shadow rounded-full text-white px-5 py-1.5 text-center cursor-pointer"
+              className="bg-red-600 font-semibold shadow rounded-md text-white px-5 py-1.5 text-center cursor-pointer"
             >
               Cancel
             </div>
 
             {!isSaveDisable ? (
               <button
-                className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer"
+                className="bg-brand-color font-semibold shadow rounded-md text-slate-300 px-5 py-1.5 ml-4 text-center cursor-pointer"
                 onClick={handleUpdateFollowUpReq}
               >
                 Save
               </button>
             ) : (
-              <button className="bg-black font-semibold shadow rounded-full text-white px-5 py-1.5 ml-4 text-center cursor-pointer">
+              <button className="bg-brand-color font-semibold shadow rounded-md text-slate-300 px-5 py-1.5 ml-4 text-center cursor-pointer">
                 Saving...
               </button>
             )}

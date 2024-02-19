@@ -34,19 +34,15 @@ const BigCalendar = ({ setLoading }) => {
   ]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       const data = {
         user_id: userDetails.id,
       };
       const res = await handleFetchReminders(data);
-    
-      
+
       setTest(res.data);
-      console.log(test);
-    };
-  
-    fetchData();
-  }, [test, userDetails.id]);
+    })();
+  }, [test, userDetails]);
 
   // useEffect(() => {
   //   dispatch(setLoader(true));
@@ -151,7 +147,7 @@ const BigCalendar = ({ setLoading }) => {
 
       {/* For A Single Event */}
       <Modal
-        className="cross_btn"
+        className="cross_btn reminderModal"
         centered
         visible={openEventDetails}
         onOk={() => setOpenEventDetails(false)}
