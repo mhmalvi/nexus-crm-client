@@ -319,14 +319,6 @@ const UserDetails = ({
                   </span>
                 </div>
               </div>
-              {/* <div
-                className={`absolute ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                } top-2 right-5 hover:text-brand-color cursor-pointer`}
-                onClick={() => setToggleEditDetials(true)}
-              >
-                <Icons.Edit />
-              </div> */}
             </div>
           </div>
           <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
@@ -603,7 +595,7 @@ const UserDetails = ({
                 {userDetails?.userInfo?.role_id === 1 ||
                 userDetails?.userInfo?.role_id === 2 ||
                 userDetails?.userInfo?.role_id === 6 ? (
-                  <h1 className="bg-transparent text-base leading-6 font-semibold font-poppins text-black text-opacity-75">
+                  <h1 className="bg-transparent text-base font-semibold font-poppins">
                     {leadDetails?.leadComments?.length
                       ? leadDetails?.leadComments[
                           leadDetails?.leadComments.length - 1
@@ -615,8 +607,8 @@ const UserDetails = ({
                     <input
                       id="lead_comment"
                       className={`w-full outline-none border-b ${
-                        colorMode ? "border-slate-300" : "border-gray-800"
-                      } bg-transparent text-base font-poppins text-black text-opacity-75`}
+                        colorMode ? "border-slate-300 text-slate-300  placeholder:!text-slate-300" : "border-gray-800 text-gray-800 placeholder:!text-gray-800"
+                      } bg-transparent text-base font-poppins placeholder:text-sm`}
                       onChange={(e) => handleCommentChange(e)}
                       placeholder={"Write your comment"}
                       value={comment}
@@ -638,10 +630,10 @@ const UserDetails = ({
             </div>
           ) : null}
           <div className="h-1/3 w-full rounded-xl">
-              <Comments Comments={leadDtls?.leadComments} />
+            <Comments Comments={leadDtls?.leadComments} />
           </div>
           <div className="h-1/3 w-full rounded-xl">
-              <StatusShow leadDetails={leadDetails} />
+            <StatusShow leadDetails={leadDetails} />
           </div>
         </div>
 

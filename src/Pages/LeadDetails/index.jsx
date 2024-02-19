@@ -7,7 +7,6 @@ import {
   handleLeadStatusUpdate,
 } from "../../Components/services/leads";
 import { handlePaymentDetails } from "../../Components/services/payment";
-import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import LeadStatus from "./LeadStatus";
 import UserDetails from "./UserDetails";
@@ -16,7 +15,6 @@ import { Link } from "react-router-dom";
 const LeadDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
   const userDetails = useSelector((state) => state?.user)?.userInfo;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
