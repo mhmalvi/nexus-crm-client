@@ -160,7 +160,7 @@ const Register = () => {
                     // name="username"
                     id="username"
                     placeholder="Enter your email"
-                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !text-gray-800 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setRegistrationData({
                         ...registrationData,
@@ -189,9 +189,9 @@ const Register = () => {
                   <Input.Password
                     type="password"
                     id="password"
-                    // style={{ color: "black !important" }}
+                    style={{ color: "#1f2937 !important" }}
                     placeholder="Enter your password"
-                    className="w-full !px-2 !text-black !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !text-gray-800 !border !border-gray-400 !rounded-md !focus:border-brand-color"
                     onChange={(e) => {
                       setRegistrationData({
                         ...registrationData,
@@ -204,7 +204,7 @@ const Register = () => {
                 <div className="font-poppins ">
                   <label
                     htmlFor="confirm_password"
-                    className="px-2 text-gray-800"
+                    className="px-2 !text-gray-800"
                   >
                     Confirm Password
                   </label>
@@ -213,7 +213,7 @@ const Register = () => {
                     // name="confirm_password"
                     id="password"
                     placeholder="Confirm your password"
-                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                    className="inputBG w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !text-gray-800 !border !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
                     }}

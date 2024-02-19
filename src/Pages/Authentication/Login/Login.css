@@ -4,9 +4,9 @@
   box-shadow: 0 0 0 0;
 }
 
-.inputBGLogin,.inputBGLogin input, .inputBGLogin input:active, input {
+.inputBGLogin,.inputBGLogin input, .inputBGLogin input:active {
   background-color: transparent !important;
-  color:#cbd5e17f !important;
+  /* color:#cbd5e17f !important; */
 }
 .inputBGLogin input::placeholder, input::placeholder{
   color:#cbd5e17f !important;
