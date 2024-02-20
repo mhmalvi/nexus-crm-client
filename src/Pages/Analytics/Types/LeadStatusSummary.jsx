@@ -1,16 +1,12 @@
 import { Select } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  ResponsiveContainer,
-  Legend,
-  PieChart,
-  Pie,
-} from "recharts";
+import { ResponsiveContainer, Legend, PieChart, Pie } from "recharts";
 import Icons from "../../../Components/Shared/Icons";
 import { Modal } from "antd";
 import Loading from "../../../Components/Shared/Loader";
 import { LeadStatusCustomizedLabel } from "../utils";
+import "./analytic.css";
 
 const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
   const { Option } = Select;
@@ -191,7 +187,7 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
               : 0,
         },
       ]);
-      setLoading(false)
+      setLoading(false);
     }
   }, [
     activeCampaign,
@@ -208,22 +204,22 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
 
   return (
     <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">
-      <div className="flex items-center justify-between m-0">
+      <div className="w-full flex gap-4 items-center justify-between m-0">
         <h1
-          className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
+          className={`w-full text-base font-semibold px-4 m-0 py-0 font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
           }`}
         >
           Lead Status Summary
         </h1>
 
-        <div className="flex items-center">
+        <div className="w-1/2 flex items-center">
           <Select
             defaultValue={currentYearCampaign?.[0]?.campaign_name}
             placeholder={currentYearCampaign?.[0]?.campaign_name}
-            style={{
-              width: 240,
-            }}
+            className={`w-5/6 ${
+              colorMode ? "statusSummaryDark" : "statusSummaryLight"
+            }`}
             onChange={handleCampaignSummary}
           >
             {currentYearCampaign?.map((campaign) => (
@@ -242,27 +238,30 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
           </div>
         </div>
       </div>
-      {loading ? <Loading/>:
-      <div className="pt-4">
-        <ResponsiveContainer width="100%" height={220}>
-          <PieChart width="100%" height={220}>
-            <Pie
-              activeIndex={activeIndex}
-              activeShape={LeadStatusCustomizedLabel}
-              data={campaignSummary}
-              cx="50%"
-              cy="50%"
-              innerRadius="60%"
-              outerRadius="70%"
-              fill={COLORS[activeIndex]}
-              dataKey="value"
-              onMouseEnter={onPieEnter}
-            >
-              <Legend />
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="pt-4">
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart width="100%" height={220}>
+              <Pie
+                activeIndex={activeIndex}
+                activeShape={LeadStatusCustomizedLabel}
+                data={campaignSummary}
+                cx="50%"
+                cy="50%"
+                innerRadius="60%"
+                outerRadius="70%"
+                fill={COLORS[activeIndex]}
+                dataKey="value"
+                onMouseEnter={onPieEnter}
+              >
+                <Legend />
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
       <Modal
         className="analyticModal"
         title="Lead Status Summary"

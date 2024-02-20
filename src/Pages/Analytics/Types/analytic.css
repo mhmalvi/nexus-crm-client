@@ -8,3 +8,21 @@
   border-radius: 8px;
   overflow: hidden;
 }
+.statusSummaryDark .ant-select-selector {
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  border-color: #cbd5e1 !important;
+  color: #cbd5e1 !important;
+}
+.statusSummaryDark .ant-select-selector .ant-select-selection-placeholder {
+  color: #cbd5e1 !important;
+}
+.statusSummaryLight .ant-select-selector {
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  border-color: #1f2937 !important;
+  color: #1f2937 !important;
+}
+.statusSummaryLight .ant-select-selector .ant-select-selection-placeholder {
+  color: #1f2937 !important;
+}

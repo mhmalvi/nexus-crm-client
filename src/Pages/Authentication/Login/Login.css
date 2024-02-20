@@ -8,6 +8,9 @@
   background-color: transparent !important;
   color: #cbd5e1 !important
 }
+.inputBGLogin > input::placeholder{
+  color: #cbd5e1 !important;
+}
 .inputBGLogin .anticon svg{
   fill: #cbd5e1;
 }

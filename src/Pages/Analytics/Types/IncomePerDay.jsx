@@ -131,7 +131,7 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
                 connectNulls
                 type="monotone"
                 dataKey="Income"
-                stroke="#cbd5e1"
+                stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
             </LineChart>
@@ -177,7 +177,7 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
                 connectNulls
                 type="monotone"
                 dataKey="Income"
-                stroke="#cbd5e1"
+                stroke={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
                 fill={`${colorMode ? "#cbd5e1" : "#7037ff"}`}
               />
             </LineChart>

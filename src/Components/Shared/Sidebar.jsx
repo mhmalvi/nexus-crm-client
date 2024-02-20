@@ -624,9 +624,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   onClick={() => setActive("settings")}
                 >
                   <div className="flex w-full h-8 items-center justify-around overflow-hidden">
-                    <Icons.Settings
-                      className={`w-5`}
-                    />
+                    <Icons.Settings className={`w-5`} />
                     {openSideBar ? (
                       ""
                     ) : (
@@ -752,6 +750,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               defaultChecked
             />
           </div>
+       
         </div>
 
         {/* Logo Bottom */}

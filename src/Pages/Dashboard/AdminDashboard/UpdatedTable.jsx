@@ -355,7 +355,7 @@ const UpdatedTable = ({
             current: currentPage,
           }}
           scroll={{
-            x: 2000,
+            x: 3000,
             y:
               table_title === "Lead List"
                 ? "calc(50vh - 5em)"

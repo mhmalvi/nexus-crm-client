@@ -216,7 +216,7 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   };
   return (
     <div className="w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl p-4 flex flex-col ">
-      <div className="flex items-center justify-between m-0">
+      <div className="w-full flex gap-4 items-center justify-between m-0">
         <h1
           className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
@@ -224,13 +224,13 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
         >
           Areawise Lead Details
         </h1>
-        <div className="flex items-center">
+        <div className="w-1/2 flex items-center">
           <Select
             defaultValue={currentYearCampaign?.[0]?.campaign_name}
             placeholder={currentYearCampaign?.[0]?.campaign_name}
-            style={{
-              width: 240,
-            }}
+            className={`w-5/6 ${
+              colorMode ? "statusSummaryDark" : "statusSummaryLight"
+            }`}
             onChange={handleAreaChange}
           >
             {currentYearCampaign?.map((campaign) => (
