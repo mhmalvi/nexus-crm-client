@@ -459,9 +459,9 @@ const CampaignDetails = () => {
   return (
     <div className="flex items-center justify-center w-full h-screen gap-4">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 overflow-y-scroll">
-        <div className="grid grid-cols-3 gap-4 h-96 mb-8">
-          <div className="col-span-1 h-full w-full flex flex-col justify-between items-start gap-4">
-            <div className="shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md w-full flex flex-col justify-between">
+        <div className="flex gap-4">
+          <div className="flex flex-grow flex-col justify-between items-start gap-4">
+            <div className="w-full flex flex-col flex-grow shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md ">
               <div
                 className={`flex shadow-md backdrop-blur-2xl bg-[#ffffff11] px-4 py-2 rounded-t-md`}
               >
@@ -487,9 +487,9 @@ const CampaignDetails = () => {
                   }
                 </h1>
               </div>
-              <div className="px-4 py-4">
+              <div className="flex flex-col gap-4 p-4">
                 <h1
-                  className={`text-base font-poppins font-medium m-0 pb-2 ${
+                  className={`text-base font-poppins font-medium ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
@@ -499,7 +499,7 @@ const CampaignDetails = () => {
                 <h1
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } text-base font-poppins font-medium pb-2 m-0`}
+                  } text-base font-poppins font-medium`}
                 >
                   <span className="mr-4">Started Time:</span>{" "}
                   {campaignDetails?.start_time}
@@ -507,20 +507,20 @@ const CampaignDetails = () => {
                 <h1
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } text-base font-poppins font-medium pb-2 m-0`}
+                  } text-base font-poppins font-medium`}
                 >
                   <span className="mr-11">End Time:</span>{" "}
                   {campaignDetails?.stop_time}
                 </h1>
-
-                <div className="flex items-center">
+                <div className="flex items-center gap-16">
                   <span
                     className={` ${
                       colorMode ? "text-slate-300" : "text-gray-800"
-                    } text-base font-poppins font-medium mr-16`}
+                    } text-base font-poppins font-medium`}
                   >
                     Status:
                   </span>
+                  <div className="flex gap-2">
                   {campaignDetails?.campaign_status === "ACTIVE" ? (
                     <img className="w-6" src={activeImg} alt="" />
                   ) : (
@@ -533,9 +533,12 @@ const CampaignDetails = () => {
                   >
                     {campaignDetails?.campaign_status}
                   </h1>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* FILTER by STATUS */}
             <div className="w-full">
               <Filters
                 layout="Campaign"
@@ -551,7 +554,7 @@ const CampaignDetails = () => {
               />
             </div>
           </div>
-          <div className="col-span-1">
+          <div className="w-full">
             {campaignCourses?.length > 0 ? (
               <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
                 <h1
@@ -603,7 +606,7 @@ const CampaignDetails = () => {
               </div>
             ) : null}
           </div>
-          <div className="col-span-1 flex items-center justify-center">
+          {/* <div className="col-span-1 flex items-center justify-center">
             <CalendarSmall
               filterDate={filterDate}
               setFilterDate={setFilterDate}
@@ -614,7 +617,7 @@ const CampaignDetails = () => {
               selectedYear={selectedYear}
               setSelectedYear={setSelectedYear}
             />
-          </div>
+          </div> */}
         </div>
         <div className="">
           <UpdatedTable
@@ -638,20 +641,6 @@ const CampaignDetails = () => {
           />{" "}
         </div>
       </div>
-      {/* <Calendar
-        filterDate={filterDate}
-        setFilterDate={setFilterDate}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      />
-
-      
-
-     */}
     </div>
   );
 };

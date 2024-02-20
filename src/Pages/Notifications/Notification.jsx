@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Icons from "../../Components/Shared/Icons";
-import { handleNotificationViewed } from "../../Components/services/notification";
+
 const Notification = ({
   handleNotificationNavigation,
   setNotificationData,
   setIsNotifyOpen,
-  viewedData
 }) => {
-  const dispatch = useDispatch();
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
   );
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
-  const handleViewed = async () => {
-    try {
-      const res = await handleNotificationViewed(viewedData);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
   return (
     <div
       className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] bg-[#ffffff11] backdrop-blur-2xl shadow-md border  ${
@@ -46,12 +35,13 @@ const Notification = ({
               receiver_id: notification.receiver_id,
               type: notification.notification_type,
             });
-            handleViewed();
             setNotificationData(notification || {});
             setIsNotifyOpen(true);
           }}
           key={i}
-          className="py-3 px-3 cursor-pointer hover:bg-white"
+          className={`py-3 px-3 cursor-pointer ${
+            colorMode ? "hover:bg-gray-800" : "hover:bg-slate-300"
+          } ease-in duration-100`}
         >
           <div className="flex justify-between items-start">
             <div className="text-base font-poppins font-semibold flex items-center">

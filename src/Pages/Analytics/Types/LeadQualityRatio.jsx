@@ -15,10 +15,10 @@ import { Modal } from "antd";
 
 const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
   const [campaignQualityRatio, setCampaignQualityRatio] = useState([]);
-  const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
+  // const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
   const [leads, setLeads] = useState([]);
 
-  const userDetails = useSelector((state) => state.user?.userInfo);
+  // const userDetails = useSelector((state) => state.user?.userInfo);
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
   const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;

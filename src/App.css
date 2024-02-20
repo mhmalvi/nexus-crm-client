@@ -3,12 +3,12 @@
   background-position: center;
   background-image: url("./assets/BackgroundPhotos/darkBG.svg");
   background-repeat: no-repeat;
-  background-size: cover ;
+  background-size: cover;
   background-attachment: fixed;
 }
 
 .light-background {
-  background: linear-gradient(45deg,#E786CE,#bad7e5 ,#88C9E6); 
+  background: linear-gradient(45deg, #e786ce, #bad7e5, #88c9e6);
   background-position: center;
   /* background-image: url("./assets/BackgroundPhotos/lightBG.svg"); */
   background-repeat: no-repeat;
@@ -51,7 +51,7 @@ table {
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper {
   background-color: transparent !important;
   border: 0px;
-  
+
   color: #cbd5e1;
 }
 .calendarHeadDark .ant-radio-group .ant-radio-button-wrapper-checked {
@@ -149,18 +149,33 @@ table {
   .ant-picker-content
   .ant-picker-cell
   .ant-picker-cell-inner {
-    
   text-align: center;
   width: 100%;
 }
 .calendarBodyDark .ant-picker-panel .ant-picker-content tbody > tr > td {
   color: #cbd5e136;
 }
+
+.calendarBodyWhite .ant-picker-panel .ant-picker-content tbody > tr > td{
+  color: #1f293736;
+}
 .calendarBodyDark .ant-picker-content .ant-picker-cell-inner:hover {
   background-color: #7037ff;
   border-radius: 5px;
 }
+.calendarBodyWhite .ant-picker-content .ant-picker-cell-inner:hover {
+  background-color: #7037ff;
+  border-radius: 5px;
+}
 .calendarBodyDark
+  .ant-picker-content
+  .ant-picker-cell-selected
+  .ant-picker-cell-inner::before {
+  border-color: #7037ff;
+  border-radius: 5px;
+  color: #cbd5e1;
+}
+.calendarBodyWhite
   .ant-picker-content
   .ant-picker-cell-selected
   .ant-picker-cell-inner::before {
@@ -176,7 +191,23 @@ table {
   border-radius: 5px;
   color: #cbd5e1;
 }
+.calendarBodyWhite
+  .ant-picker-content
+  .ant-picker-cell-selected
+  .ant-picker-cell-inner {
+  background-color: #7037ff;
+  border-radius: 5px;
+  color: #cbd5e1;
+}
 .calendarBodyDark
+  .ant-picker-content
+  .ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border-color: #7037ff;
+  border-radius: 5px;
+  color: #cbd5e1;
+}
+.calendarBodyWhite
   .ant-picker-content
   .ant-picker-cell-today
   .ant-picker-cell-inner::before {
@@ -283,9 +314,6 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.calendarBodyWhite .ant-picker-panel .ant-picker-content tbody > tr > td {
-  color: #4f8dea;
 }
 .calendarBodyWhite
   .ant-picker-panel
@@ -599,12 +627,12 @@ td {
 }
 
 @keyframes ping {
-  0%{
-    scale:0.6;
+  0% {
+    scale: 0.6;
     opacity: 0.8;
   }
   100% {
-    scale:1;
+    scale: 1;
     opacity: 0;
   }
 }

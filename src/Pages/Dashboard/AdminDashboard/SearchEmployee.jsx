@@ -72,6 +72,13 @@ const SearchEmployee = ({
                   placeholder="Select Employee"
                   onChange={handleEmployeeChange}
                   options={employeeOptions}
+                  dropdownStyle={{
+                    borderRadius: "0px 0px 8px 8px",
+                    backgroundColor: "#cbd5e1",
+                    borderLeft: "1px solid #7037ff",
+                    borderRight: "1px solid #7037ff",
+                    borderBottom: "1px solid #7037ff",
+                  }}
                 />
               </div>
             </div>

@@ -5,14 +5,19 @@
 }
 .register-right-background {
   /* background-image: url("../../../assets/BackgroundPhotos/lightBG.svg"); */
-   background: linear-gradient(45deg,#E786CE,#bad7e5 ,#88C9E6); 
+  background: linear-gradient(45deg, #e786ce, #bad7e5, #88c9e6);
   background-repeat: no-repeat;
   background-size: cover;
 }
-.inputBGRegister input, .inputBG input:active {
+.inputBGRegister input,
+.inputBG input:active {
   background-color: transparent !important;
   color: #1f2937 !important;
 }
-.inputBGRegister input::placeholder, input::placeholder{
-  color:#1f29377f !important;
+.inputBGRegister input::placeholder,
+input::placeholder {
+  color: #1f29377f !important;
+}
+.inputBG .ant-input {
+  background-color: transparent !important;
 }

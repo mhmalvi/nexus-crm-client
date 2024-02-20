@@ -1,70 +1,72 @@
 import React from "react";
-import { Modal } from "antd";
 import moment from "moment";
-const NotifyModal = ({ isNotifyOpen, setIsNotifyOpen, notificationData }) => {
-  const handleOk = () => {
-    setIsNotifyOpen(false);
-
-  };
-
-  const handleCancel = () => {
-    setIsNotifyOpen(false);
-  };
+import { useSelector } from "react-redux";
+const NotifyModal = ({ notificationData }) => {
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <Modal
-      title={
-        <div className="flex justify-center items-center">
-          <p className="text-2xl text-white">Task Details</p>
-        </div>
-      }
-      open={isNotifyOpen}
-      visible={isNotifyOpen}
-      onOk={handleOk}
-      onCancel={handleCancel}
-      okButtonProps={{
-        style:{
-          backgroundColor:"#238cea",
-          borderRadius: "8px"
-        }
-      }}
-      cancelButtonProps={{
-        style:{
-          backgroundColor:"#fff",
-          borderRadius: "8px"
-        }
-      }}
-      className="NotificationModal font-[Poppins]"
+    <div
+      className={`flex flex-col min-w-[25vw]  min-h-2/3 bg-[#ffffff11] border ${
+        colorMode ? "border-slate-300" : "border-gray-800"
+      } backdrop-blur-2xl p-8 rounded-md`}
     >
-      <div className="flex flex-col justify-around items-center">
-        <h1 className="text-xl text-[#ffa500]">
-          {notificationData?.title || "Title"}
-        </h1>
-        <div>
-          <div className="flex gap-6 items-center text-[19px]">
-            <p className="font-extrabold text-[#ffa500]">Start : </p>
-            <p className="font-extrabold text-white text-md bg-clip-text">
-              {moment(notificationData?.start).format("D MMM YYYY h:mm A") ||
-                `${new Date.now()}`}
-            </p>
-          </div>
-          <div className="flex gap-6 items-center text-[19px]">
-            <p className="font-extrabold text-[#ffa500]">
-              <span className="ml-[12px]">End</span> :{" "}
-            </p>
-            <p className="font-extrabold text-white text-md bg-clip-text">
-              {moment(notificationData?.end).format("D MMM YYYY h:mm A") ||
-                `${new Date.now()}`}
-            </p>
-          </div>
-        </div>
-        <div>
-          <h2 className=" font-semibold text-[#ffa500] text-xl">Description</h2>
-          <p className="font-normal text-white text-base">
-            {notificationData?.description || "description"}
-          </p>
-        </div>
+      <h1
+        className={`text-xl ${colorMode ? "text-slate-300" : "text-gray-800"}`}
+      >
+        {notificationData?.title || "Title"}
+      </h1>
+
+      <div className="flex gap-4 items-center ">
+        <p
+          className={`font-extrabold ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          Start :
+        </p>
+        <p
+          className={`font-extrabold text-md bg-clip-text ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          {moment(notificationData?.start).format("D MMM YYYY h:mm A") ||
+            `${new Date.now()}`}
+        </p>
       </div>
-    </Modal>
+      <div className="flex gap-4 items-center">
+        <p
+          className={`font-extrabold ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          End :
+        </p>
+        <p
+          className={`font-extrabold text-md bg-clip-text ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          {moment(notificationData?.end).format("D MMM YYYY h:mm A") ||
+            `${new Date.now()}`}
+        </p>
+      </div>
+
+      <div>
+        <h2
+          className={`text-xl ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          Description
+        </h2>
+        <p
+          className={`text-xl ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          }`}
+        >
+          {notificationData?.description || "description"}
+        </p>
+      </div>
+    </div>
   );
 };
 

@@ -110,7 +110,7 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Legend className="bg-[#fc00ff]" />
+              <Legend />
               <Line
                 connectNulls
                 type="monotone"

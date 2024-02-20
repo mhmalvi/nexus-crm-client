@@ -8,7 +8,7 @@ export const handleAddFollowUp = async (followUpData) => {
       Accept: "application/json",
     },
   };
-  console.log(followUpData)
+  console.log("FollowUp",followUpData)
   try {
     const result = await axios.post(
       `http://192.168.0.121:7000/api/follow-up`,

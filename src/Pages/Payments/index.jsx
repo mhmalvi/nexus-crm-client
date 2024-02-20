@@ -62,9 +62,7 @@ const Payment = () => {
           close,
         }) => (
           <div
-            style={{
-              padding: 8,
-            }}
+           
             onKeyDown={(e) => e.stopPropagation()}
           >
             <Input

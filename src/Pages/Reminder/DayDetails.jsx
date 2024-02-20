@@ -25,10 +25,10 @@ const DayDetails = ({
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
-  const [rmTime, setRmTime] = useState("");
-  const [rmDate, setRmDate] = useState(null); // State to store reminder date
-  const [rmDateTime, setRmDateTime] = useState(null); // State to store reminder date and time
-  const [endTime, setEndTime] = useState("");
+  // const [rmTime, setRmTime] = useState("");
+  // const [rmDate, setRmDate] = useState(null); 
+  // const [rmDateTime, setRmDateTime] = useState(null);
+  // const [endTime, setEndTime] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
   // error handling
@@ -58,9 +58,9 @@ const DayDetails = ({
     data.start =
       startToDateString?.split("/")[2] +
       "-" +
-      startToDateString?.split("/")[0] +
-      "-" +
       startToDateString?.split("/")[1] +
+      "-" +
+      startToDateString?.split("/")[0] +
       " " +
       timeString;
 
@@ -68,15 +68,15 @@ const DayDetails = ({
   };
 
   const onEndTimeChange = (time, timeString) => {
-    setEndTime(timeString);
+    // setEndTime(timeString);
     const data = { ...taskDetails };
     const endToDateString = (selectedEventTime?.end).toLocaleDateString();
     data.end =
       endToDateString?.split("/")[2] +
       "-" +
-      endToDateString?.split("/")[0] +
-      "-" +
       endToDateString?.split("/")[1] +
+      "-" +
+      endToDateString?.split("/")[0] +
       " " +
       timeString;
 
@@ -88,9 +88,9 @@ const DayDetails = ({
   // };
 
   const onReminderDateChange = (value, dateString) => {
-    setRmTime(dateString);
-    setRmDateTime(value);
-    setRmDate(value); // Store reminder date in state
+    // setRmTime(dateString);
+    // setRmDateTime(value);
+    // setRmDate(value); // Store reminder date in state
     setNotiFyDate(dateString);
   };
 
@@ -99,10 +99,11 @@ const DayDetails = ({
     data[e.target.id] = e.target.value;
     setTaskDetails(data);
   };
-
   const handleAddFollowUpReq = async () => {
     setIsSaveDisable(true);
-    const isEmptyField = Object.values(taskDetails).some(value => value === "");
+    const isEmptyField = Object.values(taskDetails).some(
+      (value) => value === ""
+    );
 
     if (isEmptyField) {
       message.warning("Please fill in all the fields");
@@ -117,17 +118,16 @@ const DayDetails = ({
 
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
-      
+
       setIsSaveDisable(false);
       setTaskDetails(initialData);
       handleOpenDayDetailsCancel();
       setSelectedEventTime();
       setTime("Select Time");
-      setRmTime("Select Time");
+      // setRmTime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
       handleOpenDayDetailsCancel();
     } else {
-      
       setIsSaveDisable(false);
       if (addFollowUpRes.response.data.errors.end[0]) {
         setEndError(addFollowUpRes.response.data.errors.end[0]);

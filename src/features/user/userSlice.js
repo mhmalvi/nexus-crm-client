@@ -11,6 +11,7 @@ const initialState = {
   companyId: 0,
   colorMode: false,
   openSideBar: true,
+  helpModal: false,
 };
 
 export const userSlice = createSlice({
@@ -38,6 +39,9 @@ export const userSlice = createSlice({
     setOpenSidebar: (state, actions) => {
       state.openSideBar = actions.payload;
     },
+    setHelpModal: (state, actions) => {
+      state.helpModal = actions.payload;
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   setCompanyId,
   setColorMode,
   setOpenSidebar,
+  setHelpModal
 } = userSlice.actions;
 
 export default userSlice.reducer;

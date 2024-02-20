@@ -10,6 +10,7 @@ import Icons from "../../../Components/Shared/Icons";
 import Notifications from "../../Notifications/index.jsx";
 import NotifyModal from "../../Notifications/NotifyModal.jsx";
 
+import { handleNotificationViewed } from "../../../Components/services/notification";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
@@ -49,7 +50,6 @@ const AdminDashboard = () => {
   const notifications = useSelector(
     (state) => state?.notifications?.notifications
   );
-
   const [activeFilter, setActiveFilter] = useState(
     userDetails?.userInfo?.role_id === 5 ? 8 : 0
   );
@@ -87,6 +87,15 @@ const AdminDashboard = () => {
   const [toggleNotification, setToggleNotification] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
 
+  const handleViewed = async () => {
+    try {
+      const res = await handleNotificationViewed(viewedData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const memoizedFetchLeads = useMemo(
     () => async () => {
       const response = await handleFetchLeads({
@@ -105,7 +114,6 @@ const AdminDashboard = () => {
 
       if (fetchEmployees?.status === true) {
         setCompanyEmployeeList(fetchEmployees?.data);
-        console.log(fetchEmployees?.data);
       }
 
       setLeadData(response.data);
@@ -260,12 +268,7 @@ const AdminDashboard = () => {
           clearFilters,
           close,
         }) => (
-          <div
-            style={{
-              padding: 8,
-            }}
-            onKeyDown={(e) => e.stopPropagation()}
-          >
+          <div className="searchModals" onKeyDown={(e) => e.stopPropagation()}>
             <Input
               ref={tableSearchInput}
               placeholder={`Search ${dataIndex}`}
@@ -277,20 +280,15 @@ const AdminDashboard = () => {
               onPressEnter={() =>
                 handleSearch(selectedKeys, confirm, dataIndex)
               }
-              style={{
-                marginBottom: 8,
-                display: "block",
-              }}
+              className="focus:!border-brand-color active:!border-brand-color focus:!outline-none active:!ring-red-300"
             />
-            <Space>
+            <div className="w-full gap-2 flex items-center justify-between">
               <Button
                 type="primary"
                 onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
                 icon={<SearchOutlined />}
                 size="small"
-                style={{
-                  width: 90,
-                }}
+                className="!flex !flex-grow !items-center !justify-around !bg-brand-color !border-none !rounded-md "
               >
                 Search
               </Button>
@@ -301,13 +299,11 @@ const AdminDashboard = () => {
                   handleReset(clearFilters, selectedKeys, dataIndex);
                 }}
                 size="small"
-                style={{
-                  width: 90,
-                }}
+                className="!flex !flex-grow !items-center !justify-around !bg-slate-300 !border-none !rounded-md hover:!text-brand-color"
               >
                 Clear
               </Button>
-            </Space>
+            </div>
           </div>
         ),
         filterIcon: (filtered) => (
@@ -383,17 +379,11 @@ const AdminDashboard = () => {
       title: "Assigned to",
       dataIndex: "sales_user_id",
       key: "sales_user_id",
-      width: 150,
+      width: 100,
       render: (_, record, idx) => {
         return (
-          <div className="flex gap-4 items-center ">
-            <div className="flex items-center">
-              {(userDetails?.userInfo?.role_id === 3 ||
-                userDetails?.userInfo?.role_id === 4 ||
-                userDetails?.userInfo?.role_id === 5) &&
-              record?.sales_user_id !== 0 ? (
-                <div className="ml-3"></div>
-              ) : null}
+          <div className="flex gap-4 w-full items-center justify-center">
+            <div className="flex items-center ">
               {
                 companyEmployeeList?.find(
                   (employee) => employee?.user_id === record?.sales_user_id
@@ -401,12 +391,12 @@ const AdminDashboard = () => {
               }
             </div>
             <div className="flex items-center">
-              {(userDetails?.userInfo?.role_id === 3 ||
+              {/* {(userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4 ||
                 userDetails?.userInfo?.role_id === 5) &&
               record?.sales_user_id !== 0 ? (
-                <div className="ml-3"></div>
-              ) : null}
+                <div className=""></div>
+              ) : null} */}
               {companyEmployeeList?.find(
                 (employee) => employee?.user_id === record?.sales_user_id
               ) && (
@@ -478,7 +468,11 @@ const AdminDashboard = () => {
               }}
               className={`rounded-md px-2 py-1 flex items-center justify-center w-full hover:scale-95`}
             >
-              <div className={`flex flex-row m-auto justify-between ${colorMode?"text-blue-300":"text-blue-800"} underline underline-offset-2 cursor-pointer hover:text-blue-700`}>
+              <div
+                className={`flex flex-row m-auto justify-between ${
+                  colorMode ? "text-blue-300" : "text-blue-800"
+                } underline underline-offset-2 cursor-pointer hover:text-blue-700`}
+              >
                 <p className={`text-xs m-0`}>
                   {record.call_count != null ? record.call_count : 0} Call
                   Details
@@ -565,18 +559,18 @@ const AdminDashboard = () => {
         dataIndex: "lead_details_status",
         key: "lead_details_status",
         render: (lead_details_status) => (
-          <div className="flex items-center">
+          <div className="flex items-center justify-center">
             {statusColor
               .filter((status) => status.id === lead_details_status)
               .map((lead_status, i) => (
                 <div
                   key={i}
-                  className="w-24 flex items-center py-1.5 px-2 rounded-lg shadow-md"
+                  className=" flex gap-4 items-center py-1 px-4 rounded-md shadow-md bg-[#ffffff11]"
                 >
                   <div
                     className={`w-2 h-2 ${lead_status.color} rounded-full`}
                   ></div>
-                  <div className="ml-1">{lead_status.title}</div>
+                  <div>{lead_status.title}</div>
                 </div>
               ))}
           </div>
@@ -709,7 +703,6 @@ const AdminDashboard = () => {
         ...prevData,
         id: e.map((item) => item.id),
       }));
-      console.log(e);
     };
     socket.on("message", handleMessage);
 
@@ -729,7 +722,7 @@ const AdminDashboard = () => {
           <AddLeadForm setIsAddLeadFormOpen={setIsAddLeadFormOpen} />
         </Modal>
         <Modal
-          className=""
+          className="CallModal"
           visible={openCallCountDetailsModal}
           onCancel={() => setOpenCallCountDetailsModal(false)}
           footer={false}
@@ -740,7 +733,7 @@ const AdminDashboard = () => {
           />
         </Modal>
         <div className="relative flex flex-col justify-start h-full">
-          <div className="w-full flex gap-5">
+          <div className="w-full flex justify-between gap-4">
             <div className="">
               <Filters
                 layout="Dashboard"
@@ -803,6 +796,7 @@ const AdminDashboard = () => {
               setToggleNotification(!toggleNotification);
               setNotificationLoading(true);
               e.stopPropagation();
+              handleViewed();
             }}
           >
             <Icons.Bell
@@ -832,7 +826,10 @@ const AdminDashboard = () => {
             <div className="relative w-screen h-screen">
               <div
                 className="absolute w-screen h-screen bg-[#ffffff11] backdrop-blur-sm"
-                onClick={() => setToggleNotification(false)}
+                onClick={() => {
+                  setToggleNotification(false);
+                  setIsNotifyOpen(false);
+                }}
               ></div>
               <div className="absolute right-32 top-32">
                 <Notifications
@@ -845,14 +842,25 @@ const AdminDashboard = () => {
                   setNotificationData={setNotificationData}
                 />
               </div>
+              <div
+                className="absolute right-[30vw] top-32 flex items-center justify-center"
+                onClick={() => {
+                  setIsNotifyOpen(false);
+                  setToggleNotification(false);
+                }}
+              >
+                {isNotifyOpen && (
+                  <NotifyModal
+                    notificationData={notificationData}
+                    isNotifyOpen={isNotifyOpen}
+                    setIsNotifyOpen={setIsNotifyOpen}
+                  />
+                )}
+              </div>
             </div>
           </div>
         )}
-        <NotifyModal
-          notificationData={notificationData}
-          isNotifyOpen={isNotifyOpen}
-          setIsNotifyOpen={setIsNotifyOpen}
-        />
+
         <Modal
           visible={openProfile}
           onCancel={() => {

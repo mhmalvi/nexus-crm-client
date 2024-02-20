@@ -123,7 +123,7 @@ const Register = () => {
       ) : (
         <div className="flex items-center justify-center w-2/3 register-right-background">
           <div className="flex items-center justify-center h-screen rounded-md">
-            <div className="flex flex-col gap-8 h-2/3 shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md px-8 py-8">
+            <div className="flex flex-col gap-8 shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md px-8 py-8">
               <div className="flex flex-col gap-4 items-center justify-center">
                 {unprocessableContent && (
                   <Alert
