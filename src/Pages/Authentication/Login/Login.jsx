@@ -340,7 +340,7 @@ const Login = () => {
                           id="password"
                           placeholder="Enter your password"
                           value={data.password}
-                          className="inputBGLogin w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !text-slate-300 !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                          className="inputBGLogin w-full !px-2 !bg-transparent !active:bg-transparent !text-sm !border !text-slate-300 !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                           onChange={userData}
                           required
                         />

@@ -201,7 +201,11 @@ const UpdatedTable = ({
             </>
           )}
           {userDetails?.role_id === 5 && (
-            <div className="mr-4 selectSales">
+            <div
+              className={`mr-4 ${
+                colorMode ? "selectSalesDark" : "selectSalesLight"
+              }`}
+            >
               <Select
                 className=" min-w-[150px] "
                 defaultValue={""}

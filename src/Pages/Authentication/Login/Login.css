@@ -1,18 +1,22 @@
-
 .bookmarkModal .ant-modal-content {
   background-color: transparent !important;
   box-shadow: 0 0 0 0;
 }
 
-.inputBGLogin,.inputBGLogin input, .inputBGLogin input:active {
+.inputBGLogin,
+.inputBGLogin input,
+.inputBGLogin input:active {
   background-color: transparent !important;
-  color: #cbd5e1 !important
-}
-.inputBGLogin > input::placeholder{
   color: #cbd5e1 !important;
 }
-.inputBGLogin .anticon svg{
+.inputBGLogin > input::placeholder {
+  color: #cbd5e1 !important;
+}
+.inputBGLogin .anticon svg {
   fill: #cbd5e1;
+}
+.inputBGLogin .ant-input {
+  font-size: 14px;
 }
 
 .forgotModal .ant-modal-header {

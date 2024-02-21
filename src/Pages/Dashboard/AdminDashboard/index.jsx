@@ -45,6 +45,7 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
   const notifications = useSelector(
@@ -831,7 +832,11 @@ const AdminDashboard = () => {
                   setIsNotifyOpen(false);
                 }}
               ></div>
-              <div className="absolute right-32 top-32">
+              <div
+                className={`absolute ${
+                  openSideBar ? "right-32" : "right-80"
+                } top-32`}
+              >
                 <Notifications
                   viewedData={viewedData}
                   toggleNotification={toggleNotification}
