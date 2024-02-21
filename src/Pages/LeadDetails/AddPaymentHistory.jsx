@@ -41,42 +41,39 @@ const AddPaymentHistory = ({
   };
 
   return (
-    <div className="w-10/12 mx-auto font_poppins">
-      <div className="text-lg font-semibold mt-6 mb-8">Add Payment History</div>
-      <div>
-        <div className="flex items-center gap-4">
-          <div className="w-1/2 text-lg text-[#808080] leading-8 mb-4 tracking-wide">
-            <h1 className="text-sm mb-1">Enter the Amount:</h1>
-            <input
-              id="amount"
-              name="amount"
-              className={`mt-1 px-2 block w-full py-2 border-b border-gray-300 bg-zinc-50 focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color sm:text-sm`}
-              type="number"
-              placeholder="$0"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </div>
-        </div>
+    <div className="w-full flex flex-col gap-4 font_poppins">
+      <h1 className="m-0 p-0 text-lg text-slate-300 font-semibold">
+        Add Payment History
+      </h1>
+
+      <div className="flex flex-col items-start gap-2 justify-center">
+        <h1 className="text-base text-slate-300 m-0 p-0">Enter the Amount:</h1>
+        <input
+          id="amount"
+          name="amount"
+          className={`px-2 w-full py-2 border-b border-slate-300 bg-transparent focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color rounded-md placeholder:!text-slate-300`}
+          type="number"
+          placeholder="$0"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
       </div>
-      <div className="flex justify-center my-10 gap-1">
-        <div>
-          <button
-            className="py-1 font-semibold px-4 w-full mr-4 text-red-500 bg-slate-300 border border-red-500 rounded-lg transition-colors duration-150 focus:shadow-outline hover:border-gray-800 hover:text-gray-800 tracking-wide"
-            onClick={() => setIsAddPaymentHistoryOpen(false)}
-          >
-            Cancel
-          </button>
-        </div>
-        <div>
-          <button
-            key="submit"
-            onClick={handleAddPaymentHistoryReq}
-            className="py-1 font-semibold px-4 w-full border border-black text-slate-300 bg-black rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-gray-800 tracking-wide"
-          >
-            Save
-          </button>
-        </div>
+
+      <div className="flex justify-center gap-4">
+        <button
+          className="py-2 font-semibold px-4 w-full text-gray-800 bg-slate-300 rounded-md transition-colors duration-150 focus:shadow-outline hover:text-red-500 "
+          onClick={() => setIsAddPaymentHistoryOpen(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+          key="submit"
+          onClick={handleAddPaymentHistoryReq}
+          className="py-2 font-semibold px-4 w-full text-slate-300 bg-brand-color rounded-md transition-colors duration-100 focus:shadow-outline hover:text-gray-800 "
+        >
+          Save
+        </button>
       </div>
     </div>
   );

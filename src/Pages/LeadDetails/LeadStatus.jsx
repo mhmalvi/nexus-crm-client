@@ -554,11 +554,9 @@ const LeadStatus = (props) => {
             footer={false}
             className="callFormModal"
           >
-            <div>
-              <h1 className="font-poppins text-base font-semibold text-center text-slate-300">
-                Call History
-              </h1>
-            </div>
+            <h1 className="font-poppins text-base font-semibold text-center text-slate-300">
+              Call History
+            </h1>
             <div className="!w-full">
               <table className="!w-full flex flex-col">
                 <thead className="w-full">
@@ -627,7 +625,10 @@ const LeadStatus = (props) => {
                   {leadDetails?.leadAmountHistory?.length > 0 ? (
                     <>
                       {leadDetails?.leadAmountHistory?.map((history, i) => (
-                        <tr key={i} className="flex items-center justify-center w-full border-b border-brand-color">
+                        <tr
+                          key={i}
+                          className="flex items-center justify-center w-full border-b border-brand-color"
+                        >
                           <td className="w-full text-slate-300 text-center border-r border-brand-color">
                             {i + 1}
                           </td>
@@ -656,59 +657,70 @@ const LeadStatus = (props) => {
             onCancel={() => setIsPaymentHistoryOpen(false)}
             footer={false}
             width={900}
+            className="callFormModal"
           >
-            <div>
-              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
-                Payment History
-              </h1>
-            </div>
-            <div className="tbl-header">
-              <table cellPadding="0" cellSpacing="0" border="0">
-                <thead>
-                  <tr>
-                    <th className="w-16">No.</th>
-                    <th>Date Time</th>
-                    <th className="w-24">Amount</th>
-                    <th>Transaction ID</th>
-                    <th>Invoice ID</th>
-                    <th className="w-20">Action</th>
+            <h1 className="font-poppins text-base font-semibold text-center text-slate-300">
+              Payment History
+            </h1>
+            <div className="!w-full">
+              <table className="!w-full flex flex-col">
+                <thead className="w-full">
+                  <tr className="flex border-b border-brand-color">
+                    <th className="w-full text-center">No.</th>
+                    <th className="w-full text-center">Date Time</th>
+                    <th className="w-full text-center">Amount</th>
+                    <th className="w-full text-center">Transaction ID</th>
+                    <th className="w-full text-center">Invoice ID</th>
+                    <th className="w-full text-center">Action</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {paymentHistory?.length > 0 ? (
+                    <>
+                      {paymentHistory?.map((payment, i) => (
+                        <tr
+                          key={i}
+                          className=""
+                          flex
+                          items-center
+                          justify-center
+                          w-full
+                          border-b
+                          border-brand-color
+                        >
+                          <td className="w-full text-slate-300 text-center">
+                            {i + 1}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-x border-brand-color">
+                            {new Date(payment.created_at).toLocaleString()}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-r border-brand-color">
+                            {payment.payment_amount}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-r border-brand-color">
+                            {payment.transaction_id}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-r border-brand-color">
+                            {payment.invoice_number}
+                          </td>
+                          <td className="w-full text-slate-300 text-center">
+                            <Icons.Cross
+                              className="w-2.5 text-red-600"
+                              onClick={() =>
+                                handleDeletePaymentHistoryReq(payment?.id)
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : (
+                    <h1 className="text-xl w-full pt-8 text-slate-300 font-light text-center">
+                      Not Paid Yet
+                    </h1>
+                  )}
+                </tbody>
               </table>
-            </div>
-            <div className="">
-              {paymentHistory?.length > 0 ? (
-                <table
-                  className="custom-table"
-                  cellPadding="0"
-                  cellSpacing="0"
-                  border="0"
-                >
-                  <tbody>
-                    {paymentHistory?.map((payment, i) => (
-                      <tr key={i}>
-                        <td className="w-16">{i + 1}</td>
-                        <td>{new Date(payment.created_at).toLocaleString()}</td>
-                        <td className="w-24">{payment.payment_amount}</td>
-                        <td>{payment.transaction_id}</td>
-                        <td>{payment.invoice_number}</td>
-                        <td className="w-20">
-                          <Icons.Cross
-                            className="w-2.5 text-red-600"
-                            onClick={() =>
-                              handleDeletePaymentHistoryReq(payment?.id)
-                            }
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div className="py-20 flex justify-center items-center">
-                  <h1 className="text-xl font-light">Not Paid Yet</h1>
-                </div>
-              )}
             </div>
           </Modal>
 
@@ -717,7 +729,7 @@ const LeadStatus = (props) => {
             visible={isAddPaymentHistoryOpen}
             onCancel={() => setIsAddPaymentHistoryOpen(false)}
             footer={false}
-            width={900}
+            className="callFormModal"
           >
             <AddPaymentHistory
               leadDetails={leadDetails}
@@ -1135,12 +1147,12 @@ const LeadStatus = (props) => {
                         className="flex items-center cursor-pointer"
                         onClick={() => setIsPaymentHistoryOpen(true)}
                       >
-                        <Icons.AmountHistory
+                        {/* <Icons.AmountHistory
                           className={`w-5 ${
                             colorMode ? "text-slate-300" : "text-gray-800"
                           } mr-2 cursor-pointer`}
                           onClick={() => setIsAmountHistoryOpen(true)}
-                        />
+                        /> */}
                         <h6
                           className={`mb-0 text-base font-normal font-poppins ${
                             colorMode ? "text-slate-300" : "text-gray-800"
