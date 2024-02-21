@@ -217,9 +217,9 @@ const UserDetails = ({
   const { id } = useParams();
   return (
     <div className="mt-5">
-      <div className="grid grid-cols-3 gap-4 h-[55vh] ">
+      <div className="w-full flex flex-grow gap-4">
         {/* Column 1 */}
-        <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
+        <div className="w-full flex flex-col justify-between items-center gap-4">
           <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <h4
               className={`text-lg px-5 py-2 m-0 font-poppins ${
@@ -228,27 +228,25 @@ const UserDetails = ({
             >
               Details
             </h4>
-            <div className="relative flex justify-center items-center p-5 ">
+            <div className="relative flex justify-center items-center gap-4 p-5 overflow-hidden">
               {(userDetails?.userInfo?.role_id === 3 ||
                 userDetails?.userInfo?.role_id === 4 ||
                 userDetails?.userInfo?.role_id === 5) && (
-                <div className="flex flex-col justify-center items-center">
-                  <div className=" 2xl:w-20">
-                    <img
-                      className="w-full"
-                      src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
-                      alt=""
-                    />
-                    <div
-                      className={`text-[10px] ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } font-poppins mt-1 text-center font-medium`}
-                    >
-                      Scan To Call
-                    </div>
+                <div className="w-1/3 flex flex-col justify-center items-center gap-4">
+                  <img
+                    className="w-3/4"
+                    src={`https://qrcode.tec-it.com/API/QRCode?data=tel%3a${leadDetails?.leadDetails?.phone_number}&backcolor=%23ffffff`}
+                    alt=""
+                  />
+                  <div
+                    className={`text-[10px] ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    } font-poppins mt-1 text-center font-medium`}
+                  >
+                    Scan To Call
                   </div>
 
-                  <div className="mt-5">
+                  <div className="">
                     <Popconfirm
                       title="Are you sure to Suspend this lead?"
                       onConfirm={confirm}
@@ -271,9 +269,9 @@ const UserDetails = ({
                   </div>
                 </div>
               )}
-              <div className=" w-full flex flex-col justify-around ml-8">
+              <div className=" w-full flex flex-col justify-around">
                 <div
-                  className={`font-normal 2xl:text-xs ${
+                  className={`font-normal 2xl:text-base ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap `}
                 >
@@ -281,7 +279,7 @@ const UserDetails = ({
                   <span> {leadDetails?.leadDetails?.phone_number}</span>
                 </div>
                 <div
-                  className={`font-normal 2xl:text-xs ${
+                  className={`font-normal 2xl:text-base ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap pt-1`}
                 >
@@ -289,7 +287,7 @@ const UserDetails = ({
                   <span>{leadDetails?.leadDetails?.student_email}</span>
                 </div>
                 <div
-                  className={`font-normal 2xl:text-xs ${
+                  className={`font-normal 2xl:text-base ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex flex-wrap items-center pt-1`}
                 >
@@ -299,7 +297,7 @@ const UserDetails = ({
                   </span>
                 </div>
                 <div
-                  className={`font-normal 2xl:text-xs ${
+                  className={`font-normal 2xl:text-base ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex items-center pt-1`}
                 >
@@ -309,7 +307,7 @@ const UserDetails = ({
                   </span>
                 </div>
                 <div
-                  className={`font-normal 2xl:text-xs ${
+                  className={`font-normal 2xl:text-base ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } font-poppins flex items-center pt-1`}
                 >
@@ -450,7 +448,9 @@ const UserDetails = ({
                 <form className="flex justify-between items-center w-full gap-4">
                   <input
                     className={`w-5/6 outline-none border-b ${
-                      colorMode ? "border-slate-300 placeholder:!text-slate-300 !text-slate-300" : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
+                      colorMode
+                        ? "border-slate-300 placeholder:!text-slate-300 !text-slate-300"
+                        : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
                     } bg-transparent text-sm font-poppins`}
                     onChange={(e) => setRatingRemarks(e.currentTarget.value)}
                     value={ratingRemarks}
@@ -472,7 +472,7 @@ const UserDetails = ({
           </div>
         </div>
         {/* FORMS */}
-        <div className="flex flex-col justify-between items-center gap-4 h-[55vh] ">
+        <div className="w-full flex flex-col justify-between items-center gap-4">
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
           )}
@@ -567,7 +567,7 @@ const UserDetails = ({
           </div>
         </div>
         {/* Column 3 */}
-        <div className="flex flex-col justify-between items-center gap-4 h-[55vh]">
+        <div className="w-full flex flex-col justify-between items-center gap-4">
           {userDetails?.userInfo?.role_id !== 6 ? (
             <div className="h-1/3 flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
               <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
@@ -607,7 +607,9 @@ const UserDetails = ({
                     <input
                       id="lead_comment"
                       className={`w-full outline-none border-b ${
-                        colorMode ? "border-slate-300 text-slate-300  placeholder:!text-slate-300" : "border-gray-800 text-gray-800 placeholder:!text-gray-800"
+                        colorMode
+                          ? "border-slate-300 text-slate-300  placeholder:!text-slate-300"
+                          : "border-gray-800 text-gray-800 placeholder:!text-gray-800"
                       } bg-transparent text-base font-poppins placeholder:text-sm`}
                       onChange={(e) => handleCommentChange(e)}
                       placeholder={"Write your comment"}

@@ -30,6 +30,7 @@ import Icons from "../../Components/Shared/Icons";
 import { setLoader } from "../../features/user/userSlice";
 import AddPaymentHistory from "./AddPaymentHistory";
 import { handleDeletePaymentHistory } from "../../Components/services/payment";
+import "./userDetails.css";
 
 // ----Default Values----
 const LeadStatus = (props) => {
@@ -445,9 +446,11 @@ const LeadStatus = (props) => {
                     } shadow-md backdrop-blur-2xl bg-[#ffffff11] ml-3 p-1.5 rounded-md flex items-center `}
                   >
                     <div>
-                      <h1 className={`w-6 text-center mb-0 text-sm font-medium font-poppins ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } `}>
+                      <h1
+                        className={`w-6 text-center mb-0 text-sm font-medium font-poppins ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        } `}
+                      >
                         {leadDetails?.leadCallHistory?.length}
                       </h1>
                     </div>
@@ -488,54 +491,40 @@ const LeadStatus = (props) => {
             onOk={handleCallDetails}
             onCancel={handleCancel}
             okText="Save"
+            className="callFormModal"
           >
             <div>
-              <div className="">
-                <div className="font-poppins text-base font-semibold mb-6">
+              <div className="flex flex-col gap-4">
+                <div className="font-poppins text-lg font-semibold">
                   Call Details
                 </div>
-
-                <div className="flex items-end mb-4">
-                  <div className="mr-4">
-                    <h1 className="text-sm font-poppins">Duration:</h1>
-                  </div>
-                  <div className="flex items-start">
-                    <Space
-                      className=" border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
-                      direction="vertical"
-                      style={{
-                        width: "10rem",
-                      }}
-                    >
+                <hr className="border-slate-300" />
+                <div className="flex items-center justify-between">
+                  <h1 className="w-1/3 text-base font-poppins m-0 p-0 text-slate-300">
+                    Duration:
+                  </h1>
+                  <div className="flex items-center justify-center">
+                    <Space className=" border border-slate-300 rounded-md text-base text-center bg-transparent !text-slate-300 cursor-pointer font-poppins">
                       <DatePicker
-                        className="date-time-picker"
+                        className="callDatePicker"
                         suffixIcon={callStart}
                         bordered={false}
-                        showTime
+                        // showTime
                         onOk={onCallStart}
                         onChange={onCallStartChange}
                       />
                     </Space>
 
-                    <div>
-                      <span className="text-3xl font-semibold px-1 text-center">
-                        -
-                      </span>
+                    <div className="text-xl font-semibold px-2 text-center">
+                      -
                     </div>
 
-                    <Space
-                      className="border rounded-full text-base text-center py-1.5 bg-black text-slate-300 cursor-pointer font-poppins"
-                      direction="vertical"
-                      size={12}
-                      style={{
-                        width: "10rem",
-                      }}
-                    >
+                    <Space className=" border border-slate-300 rounded-md text-base text-center bg-transparent !text-slate-300 cursor-pointer font-poppins">
                       <DatePicker
-                        className="date-time-picker"
+                        className="callDatePicker"
                         suffixIcon={callEnd}
                         bordered={false}
-                        showTime
+                        // showTime
                         onOk={onCallEnd}
                         onChange={onCallEndChange}
                       />
@@ -543,9 +532,9 @@ const LeadStatus = (props) => {
                   </div>
                 </div>
 
-                <div className="border-b flex justify-between items-center pb-1 mt-12 pt-0.5">
+                <div className="flex justify-between items-center">
                   <input
-                    className="w-full font-poppins outline-none"
+                    className="w-full font-poppins outline-none bg-transparent border border-slate-300 rounded-md placeholder:!text-slate-300 text-slate-300"
                     type="text"
                     placeholder="Write Remark"
                     name="remark"
@@ -563,53 +552,53 @@ const LeadStatus = (props) => {
             visible={isCallHistoryOpen}
             onCancel={() => setIsCallHistoryOpen(false)}
             footer={false}
-            width={800}
+            className="callFormModal"
           >
             <div>
-              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              <h1 className="font-poppins text-base font-semibold text-center text-slate-300">
                 Call History
               </h1>
             </div>
-            <div className="tbl-header">
-              <table cellPadding="0" cellSpacing="0" border="0">
-                <thead>
-                  <tr>
-                    <th className="w-16">No.</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Remark</th>
+            <div className="!w-full">
+              <table className="!w-full flex flex-col">
+                <thead className="w-full">
+                  <tr className="flex border-b border-brand-color">
+                    <th className="w-full text-center">No.</th>
+                    <th className="w-full text-center">Start Time</th>
+                    <th className="w-full text-center">End Time</th>
+                    <th className="w-full text-center">Remark</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {leadDetails?.leadCallHistory?.length > 0 ? (
+                    <>
+                      {leadDetails?.leadCallHistory?.map((history, i) => (
+                        <tr
+                          key={i}
+                          className="flex items-center justify-center w-full border-b border-brand-color"
+                        >
+                          <td className="w-full text-slate-300 text-center">
+                            {i + 1}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-x border-brand-color">
+                            {new Date(history.call_start_time).toLocaleString()}
+                          </td>
+                          <td className="w-full text-slate-300 text-center border-r border-brand-color">
+                            {new Date(history.call_end_time).toLocaleString()}
+                          </td>
+                          <td className="w-full text-slate-300 text-center">
+                            {history.call_remark}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : (
+                    <h1 className="text-xl w-full pt-8 text-slate-300 font-light text-center">
+                      No Call History
+                    </h1>
+                  )}
+                </tbody>
               </table>
-            </div>
-            <div className="">
-              {leadDetails?.leadCallHistory?.length > 0 ? (
-                <table
-                  className="custom-table"
-                  cellPadding="0"
-                  cellSpacing="0"
-                  border="0"
-                >
-                  <tbody>
-                    {leadDetails?.leadCallHistory?.map((history, i) => (
-                      <tr key={i}>
-                        <td className="w-16">{i + 1}</td>
-                        <td>
-                          {new Date(history.call_start_time).toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(history.call_end_time).toLocaleString()}
-                        </td>
-                        <td>{history.call_remark}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div className="py-20 flex justify-center items-center">
-                  <h1 className="text-xl font-light">No Call History</h1>
-                </div>
-              )}
             </div>
           </Modal>
 
@@ -618,51 +607,46 @@ const LeadStatus = (props) => {
             visible={isAmountHistoryOpen}
             onCancel={() => setIsAmountHistoryOpen(false)}
             footer={false}
-            width={500}
+            className="callFormModal"
           >
             <div>
-              <h1 className="font-poppins text-base font-semibold text-center pb-1 pt-4">
+              <h1 className="font-poppins text-base font-semibold text-center text-slate-300">
                 Amount History
               </h1>
             </div>
-            <div className="tbl-header">
-              <table cellPadding="0" cellSpacing="0" border="0">
-                <thead>
-                  <tr>
-                    <th className="w-16">No.</th>
-                    <th>Date</th>
-                    <th className="w-32">Amount</th>
+            <div className="w-full">
+              <table className="w-full flex flex-col">
+                <thead className="w-full">
+                  <tr className="flex border-b border-brand-color">
+                    <th className="w-full text-center">No.</th>
+                    <th className="w-full text-center">Date</th>
+                    <th className="w-full text-center">Amount</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {leadDetails?.leadAmountHistory?.length > 0 ? (
+                    <>
+                      {leadDetails?.leadAmountHistory?.map((history, i) => (
+                        <tr key={i} className="flex items-center justify-center w-full border-b border-brand-color">
+                          <td className="w-full text-slate-300 text-center border-r border-brand-color">
+                            {i + 1}
+                          </td>
+                          <td className="w-full text-slate-300 text-center  border-x border-brand-color">
+                            {new Date(history.created_at)?.toLocaleString()}
+                          </td>
+                          <td className="w-full text-slate-300 text-center">
+                            <span>${history.amount}</span>
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : (
+                    <h1 className="text-xl w-full pt-8 text-slate-300 font-light text-center">
+                      No Amount History
+                    </h1>
+                  )}
+                </tbody>
               </table>
-            </div>
-            <div className="">
-              {leadDetails?.leadAmountHistory?.length > 0 ? (
-                <table
-                  className="custom-table"
-                  cellPadding="0"
-                  cellSpacing="0"
-                  border="0"
-                >
-                  <tbody>
-                    {leadDetails?.leadAmountHistory?.map((history, i) => (
-                      <tr key={i}>
-                        <td className="w-16">{i + 1}</td>
-                        <td>
-                          {new Date(history.created_at)?.toLocaleString()}
-                        </td>
-                        <td className="w-32">
-                          <span>${history.amount}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div className="py-20 flex justify-center items-center">
-                  <h1 className="text-xl font-light">No Amount History</h1>
-                </div>
-              )}
             </div>
           </Modal>
 
@@ -849,7 +833,7 @@ const LeadStatus = (props) => {
                       leadStatus["New Lead"]
                         ? "bg-green-500"
                         : `${
-                          colorMode ? "bg-gray-400" : "bg-slate-400"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1004,7 +988,7 @@ const LeadStatus = (props) => {
                       leadStatus["Called"]
                         ? "bg-blue-400"
                         : `${
-                          colorMode ? "bg-gray-400" : "bg-slate-400"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1118,7 +1102,7 @@ const LeadStatus = (props) => {
                       leadStatus["Paid"]
                         ? "bg-teal-400"
                         : `${
-                          colorMode ? "bg-gray-400" : "bg-slate-400"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1152,7 +1136,9 @@ const LeadStatus = (props) => {
                         onClick={() => setIsPaymentHistoryOpen(true)}
                       >
                         <Icons.AmountHistory
-                          className={`w-5 ${colorMode?"text-slate-300":"text-gray-800"} mr-2 cursor-pointer`}
+                          className={`w-5 ${
+                            colorMode ? "text-slate-300" : "text-gray-800"
+                          } mr-2 cursor-pointer`}
                           onClick={() => setIsAmountHistoryOpen(true)}
                         />
                         <h6
@@ -1259,7 +1245,7 @@ const LeadStatus = (props) => {
                       leadStatus["Verified"]
                         ? "bg-violet-500"
                         : `${
-                          colorMode ? "bg-gray-400" : "bg-slate-400"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
@@ -1348,7 +1334,7 @@ const LeadStatus = (props) => {
                       leadStatus["Completed"]
                         ? "bg-red-500"
                         : `${
-                          colorMode ? "bg-gray-400" : "bg-slate-400"
+                            colorMode ? "bg-gray-400" : "bg-slate-400"
                           } animate-custom-ping`
                     }`}
                   ></div>
