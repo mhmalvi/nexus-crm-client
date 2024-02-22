@@ -448,7 +448,7 @@ const SalesAdmins = ({ clientId }) => {
                 {inactiveAdminEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className="flex gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                    className="flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
@@ -463,7 +463,7 @@ const SalesAdmins = ({ clientId }) => {
                         {employee?.email}
                       </p>
                       <button
-                        className={`border w-1/3 ${
+                        className={`border w-2/3${
                           colorMode
                             ? "text-slate-300 border-slate-300"
                             : "text-gray-800 border-gray-800"
@@ -613,7 +613,7 @@ const SalesAdmins = ({ clientId }) => {
                 {inactiveSalesEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className="flex gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                    className="flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
@@ -628,7 +628,7 @@ const SalesAdmins = ({ clientId }) => {
                         {employee?.email}
                       </p>
                       <button
-                        className={`border w-1/3 ${
+                        className={`border w-2/3 ${
                           colorMode
                             ? "text-slate-300 border-slate-300"
                             : "text-gray-800 border-gray-800"
