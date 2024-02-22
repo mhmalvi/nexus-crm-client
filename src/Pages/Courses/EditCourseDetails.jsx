@@ -9,6 +9,7 @@ import {
 import { handleClientwiseCourseDetails } from "../../Components/services/leads";
 import { useSelector } from "react-redux";
 import Loading from "../../Components/Shared/Loader";
+import "./courses.css"
 const EditCourseDetails = ({
   open,
   setOpen,
@@ -83,7 +84,7 @@ const EditCourseDetails = ({
   return (
     <>
       <Modal
-        title="Edit Course Details"
+        
         okText={!updating ? "Update" : "Updating"}
         visible={open}
         open={open}
@@ -98,11 +99,14 @@ const EditCourseDetails = ({
             <Loading />
           </div>
         ) : (
-          <div>
+          <div className="flex flex-col gap-4">
+            <h1 className="p-0 m-0 text-lg border-b border-brand-color text-slate-300">Edit Course Details</h1>
             <Form onFinish={handleUpdate} layout="vertical">
-              <Form.Item label="Course Title" required>
+              <Form.Item >
+                <h1 className="!text-slate-300">Course Title</h1>
                 <Input
                   value={title}
+                  required
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 {!title && titleShow && (

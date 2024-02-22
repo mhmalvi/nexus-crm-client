@@ -6,6 +6,7 @@ import {
   handleAddCourse,
   handleClientwiseCourseDetails,
 } from "../../Components/services/leads";
+import "./courses.css";
 
 const AddCourseModal = ({
   addCourseOpen,
@@ -60,28 +61,17 @@ const AddCourseModal = ({
   return (
     <>
       <Modal
-        title="Add Course"
         visible={addCourseOpen}
         onCancel={onClose}
-        footer={[
-          <Button
-            onClick={onClose}
-            className="!bg-black !text-white !border-none !rounded"
-          >
-            Close
-          </Button>,
-          <Button
-            loading={isAddingCourse}
-            type="primary"
-            onClick={onAdd}
-            className=" !rounded"
-          >
-            Add
-          </Button>,
-        ]}
+        className="courseModal"
+        onOk={onAdd}
+        okText={"Add"}
       >
-        <div>
-          <div>
+        <div className="flex flex-col gap-4 ">
+          <h1 className="p-0 m-0 text-lg border-b border-brand-color text-slate-300">
+            Add Course
+          </h1>
+          <div className="courseInputs">
             <label>Course Code: </label>
             <Input
               value={courseCode}
@@ -89,7 +79,7 @@ const AddCourseModal = ({
               placeholder="Enter course code"
             />
           </div>
-          <div className="my-4">
+          <div className="courseInputs">
             <label>Course Name: </label>
             <Input
               value={courseName}
@@ -97,7 +87,7 @@ const AddCourseModal = ({
               placeholder="Enter course name"
             />
           </div>
-          <div>
+          <div className="courseInputs">
             <label>Course Description: </label>
             <Input
               value={courseDsc}

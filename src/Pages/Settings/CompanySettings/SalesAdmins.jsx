@@ -11,7 +11,7 @@ import { handleFetchCompanyEmployees } from "../../../Components/services/compan
 import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import { handleGetSalesAdmin } from "../../../Components/services/utils";
-
+import "../settings.css";
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
@@ -221,12 +221,15 @@ const SalesAdmins = ({ clientId }) => {
           </Modal>
 
           <Modal
-            title="Add Sales Employee"
             visible={activeAddSeals}
             footer={null}
             onCancel={() => setActiveAddSeals(false)}
             width={600}
+            className="adminModal"
           >
+            <h1 className="m-0 p-0 text-lg font-semibold uppercase text-slate-300 border-b border-brand-color">
+              Add Sales Employee
+            </h1>
             <EmployeeRegistrationForm
               clientId={clientId}
               roleId={userDetails?.userInfo?.role_id === 1 ? 2 : 5}

@@ -1,0 +1,28 @@
+.adminModal .ant-modal-content {
+    width: 100%;
+    backdrop-filter: blur(8px);
+    background-color: #1f2937;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    color: #cbd5e1;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .adminModal .ant-modal-content .ant-modal-footer .ant-btn-primary {
+    border-radius: 8px;
+    background: linear-gradient(to bottom, #8a7cfd, #2596fb);
+    border: none;
+    cursor: pointer;
+  }
+  .adminModal .ant-modal-content .ant-modal-footer .ant-btn-default {
+    border-radius: 8px;
+    background: #cbd5e1;
+    border: none;
+    cursor: pointer;
+  }
+  .adminModal .ant-modal-content .ant-modal-footer .ant-btn-primary:hover {
+    color: #1f2937;
+  }
+  .adminModal .ant-modal-content .ant-modal-footer .ant-btn-default:hover {
+    color: #8a7cfd;
+  }

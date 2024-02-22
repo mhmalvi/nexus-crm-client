@@ -4,14 +4,12 @@ import { useEffect } from "react";
 import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { fetchEmailTemplatList } from "../../../Components/services/leads";
-import {
-  handleRemoveTemplet,
-} from "../../../Components/services/utils";
+import { handleRemoveTemplet } from "../../../Components/services/utils";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
 import AttachModal from "./AttachModal";
 import { CloseOutlined } from "@ant-design/icons";
-
+import "../userDetails.css";
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -47,9 +45,9 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         : ""
     );
     formData.append("mail_subject", mailSubject);
-    
+
     formData.append("student_email", leadDetails?.leadDetails?.student_email);
-    
+
     formData.append("sender", userDetails?.email);
 
     if (!tData || !mailSubject || selectedData.length <= 0) {
@@ -97,40 +95,39 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
       let res = await fetchEmailTemplatList();
 
       let tempList = [];
-      res?.data?.map(
-        (itm, idx) =>
-          tempList.push({
-            id: itm?.id,
-            value: itm?.template_name,
-            label: (
-              <>
-                <div className="flex justify-between items-center">
-                  <h1>{itm.template_name}</h1>{" "}
-                  <Popconfirm
-                    title="Are you sure to remove this template"
-                    okText="Yes"
-                    onConfirm={async () => {
-                      const resRmTemp = await handleRemoveTemplet(itm?.id);
-                      if (resRmTemp?.status === 201) {
-                        message.success("Template successfully removed");
-                        setTData("");
-                        setTemplateList([{ value: "", label: "" }]);
-                        onSelectTemp();
-                      } else {
-                        message.warn(
-                          resRmTemp?.message ||
-                            "This Template already deleted Select another one/Something went wrong"
-                        );
-                      }
-                    }}
-                  >
-                    <CloseOutlined className="text-red-500" />
-                  </Popconfirm>
-                </div>
-              </>
-            ),
-            ...itm,
-          })
+      res?.data?.map((itm, idx) =>
+        tempList.push({
+          id: itm?.id,
+          value: itm?.template_name,
+          label: (
+            <>
+              <div className="flex justify-between items-center">
+                <h1>{itm.template_name}</h1>{" "}
+                <Popconfirm
+                  title="Are you sure to remove this template"
+                  okText="Yes"
+                  onConfirm={async () => {
+                    const resRmTemp = await handleRemoveTemplet(itm?.id);
+                    if (resRmTemp?.status === 201) {
+                      message.success("Template successfully removed");
+                      setTData("");
+                      setTemplateList([{ value: "", label: "" }]);
+                      onSelectTemp();
+                    } else {
+                      message.warn(
+                        resRmTemp?.message ||
+                          "This Template already deleted Select another one/Something went wrong"
+                      );
+                    }
+                  }}
+                >
+                  <CloseOutlined className="text-red-500" />
+                </Popconfirm>
+              </div>
+            </>
+          ),
+          ...itm,
+        })
       );
       staticTempListData && tempList.push(staticTempListData);
       setTemplateList(tempList);
@@ -157,37 +154,40 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         visible={openMailModal}
         onOk={handleSendMail}
         confirmLoading={confirmLoading}
-        width="80%"
+        width="900px"
         onCancel={handleMailCancel}
+        className="mailModal"
       >
-        <div className="flex items-center justify-between flex-wrap">
-          <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mt-5">
-            Email
-          </h1>
-          <Button
-            type="link"
-            className="mt-3 mr-4 text-[5px]  flex justify-center items-center"
-          >
-            <p
-              className="text-[15px] cursor-pointer font-bold  text-teal-600 hover:text-teal-700 hover:underline"
-              onClick={showAddNewTemplateModal}
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4 justify-start flex-wrap">
+            <h1 className="m-0 p-0 text-xl font-semibold font-poppins text-slate-300">
+              Email
+            </h1>
+            <Button
+              type="link"
+              className="m-0 p-0 flex justify-center items-center"
             >
-              Add new Template
-            </p>
-          </Button>
-        </div>
+              <p
+                className="m-0 p-0 cursor-pointer font-bold text-brand-color hover:text-teal-700 hover:underline"
+                onClick={showAddNewTemplateModal}
+              >
+                Add new Template
+              </p>
+            </Button>
+          </div>
 
-        <div className=" mt-6">
           <Form
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 14 }}
-            layout="vertical"
+            // labelCol={{ span: 8 }}
+            // wrapperCol={{ span: 14 }}
+            // layout="vertical"
             onFinish={handleSendMail}
           >
-            <div className="flex flex-wrap items-center gap-5">
-              <div>
-                <h2>Select Mail Template:</h2>
-                <Form.Item label="">
+            <div className="w-full flex flex-wrap items-center justify-between gap-4">
+              <div className="w-1/4 flex flex-col gap-2">
+                <h2 className="m-0 p-0 text-slate-300">
+                  Select Mail Template:
+                </h2>
+                <Form.Item>
                   <Select
                     defaultValue={!tData && ""}
                     placeholder="Select Email template"
@@ -201,8 +201,8 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 </Form.Item>
               </div>
 
-              <div className="mt-[-25px]">
-                <h2>Mail Subject:</h2>
+              <div className="mt-[-25px] flex flex-col gap-2 w-1/4">
+                <h2 className="m-0 p-0 text-slate-300">Mail Subject:</h2>
                 <Input
                   value={mailSubject}
                   onChange={(e) => setMailSubject(e?.target?.value)}
@@ -210,9 +210,9 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                 ></Input>
               </div>
 
-              <div className="flex gap-3 items-center mt-[5px] ">
+              <div className="w-1/4 flex gap-4 items-center mt-[5px] ">
                 <label
-                  className="py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white border border-slate-700 rounded"
+                  className="w-full py-[5px] px-[15px] cursor-pointer bg-slate-700 text-white border border-slate-700 rounded-md text-center"
                   style={{ border: "1px solid gray" }}
                   onClick={(e) => {
                     handleCheckListOpen(e);
@@ -278,7 +278,6 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
             )}
           </Form>
         </div>
-
         {/* edit  */}
       </Modal>
       <AddNewTemplate

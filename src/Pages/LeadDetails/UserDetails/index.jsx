@@ -319,8 +319,8 @@ const UserDetails = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-            <div className="flex justify-between items-center">
+          <div className="flex flex-col items-start justify-center gap-4 w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+            <div className="w-full flex justify-between items-center">
               <h1
                 className={`text-xl font-poppins ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -476,8 +476,8 @@ const UserDetails = ({
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
           )}
-          <div className="w-full h-full flex flex-col gap-4 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
-            <div className="flex flex-col justify-between items-center">
+          <div className="w-full h-full flex flex-col gap-4 items-center justify-around rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+            <div className="w-full flex flex-col justify-between items-start">
               <h1
                 className={`text-lg font-poppins ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -490,13 +490,13 @@ const UserDetails = ({
                   colorMode
                     ? "text-slate-300 border-slate-300"
                     : "text-gray-800 border-gray-800"
-                } text-base font-medium font-poppins rounded-md`}
+                } text-base font-poppins rounded-md`}
                 onClick={() => setToggleApplication(!toggleApplication)}
               >
                 View
               </button>
             </div>
-            <div className="flex flex-col justify-between items-center">
+            <div className="w-full flex flex-col justify-between items-start">
               <h1
                 className={`text-lg ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -517,7 +517,7 @@ const UserDetails = ({
                 <span className="ml-2">Download</span>
               </button>
             </div>
-            <div className="flex flex-col justify-between items-center">
+            <div className="w-full flex flex-col justify-between items-start">
               <h1
                 className={`text-lg font-poppins ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -610,7 +610,7 @@ const UserDetails = ({
                         colorMode
                           ? "border-slate-300 text-slate-300  placeholder:!text-slate-300"
                           : "border-gray-800 text-gray-800 placeholder:!text-gray-800"
-                      } bg-transparent text-base font-poppins placeholder:text-sm`}
+                      } bg-transparent text-base font-poppins placeholder:text-base`}
                       onChange={(e) => handleCommentChange(e)}
                       placeholder={"Write your comment"}
                       value={comment}

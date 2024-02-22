@@ -132,40 +132,40 @@ const CourseDetails = ({ selectedCourse }) => {
   };
 
   return (
-    <div className="w-full mx-8 py-4 flex flex-col gap-8">
-      <h1 className="m-0 p-0 text-lg font-semibold uppercase text-gray-800">
+    <div className="w-full flex flex-col gap-4">
+      <h1 className="m-0 p-0 text-lg font-semibold uppercase text-slate-300 border-b border-brand-color">
         {selectedCourse?.course_title}
       </h1>
 
       <div className="flex gap-4 flex-col justify-between">
-        <h1 className="m-0 p-0 text-base font-semibold text-gray-800">Check Lists</h1>
+        <h1 className="m-0 p-0 text-base font-semibold text-slate-300">Check Lists</h1>
         <div>
           {checklist.length ? (
             checklist?.map((list, i) => (
               <div key={i} className="flex items-center">
                 <li style={{ listStyleType: "circle" }}>{list?.title}</li>
                 <Icons.Cross
-                  className="text-red-600 w-2.5 ml-3 cursor-pointer"
+                  className="text-red-600  cursor-pointer"
                   onClick={() => handleDeleteChecklistReq(list?.id)}
                 />
               </div>
             ))
           ) : (
-            <h1 className="m-0 p-0 text-slate-700">No Checklist Added Yet</h1>
+            <h1 className="m-0 p-0 text-slate-300">No Checklist Added Yet</h1>
           )}
         </div>
 
-        <div className="">
+        <div className="flex w-full gap-4">
           <input
             id="checklist_title"
             type="text"
             value={checklistTitle}
             onChange={(e) => setChecklistTitle(e?.target?.value)}
-            className="font-poppins px-3 py-1 border border-brand-color outline-none rounded-md mr-2"
+            className="w-full font-poppins px-3 py-1 border border-brand-color outline-none rounded-md bg-transparent placeholder:!text-slate-300"
             placeholder="Checklist Title"
           />
           <button
-            className="bg-brand-color text-white px-4 py-1.5 shadow rounded-md"
+            className="w-1/3 bg-brand-color text-white px-4 py-1.5 shadow rounded-md"
             onClick={handleAddCheckList}
           >
             +{" "}Add
