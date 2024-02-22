@@ -48,16 +48,14 @@ const EmployeeRegistrationForm = ({
       role_id:
         (flag === 1 && 7) || (flag === 2 && 8) || (flag === 3 && 9) || roleId,
     });
-
-    if (registrationResponse?.status === true) {
+    if (registrationResponse?.status === 201) {
       const employeeAddResponse = await handleAddCompanyEmployees({
         company_id: clientId,
         user_id: registrationResponse?.data?.user_id,
       });
-      console.log("employeeAddResponse", employeeAddResponse);
 
-      if (employeeAddResponse?.status === 201) {
-        message.success(employeeAddResponse?.messaege);
+      if (employeeAddResponse?.status === true) {
+        message.success(registrationResponse?.message);
         setShowLoader(false);
         dispatch(setLoader(false));
         window.location.reload();
@@ -77,15 +75,17 @@ const EmployeeRegistrationForm = ({
         });
 
         setSyncEmployees(!syncEmployees);
-      } else if (employeeAddResponse?.status === 500) {
-        message.warn(employeeAddResponse?.message);
-        setShowLoader(false);
       } else {
         message.warn("Something went wrong. Please try again.");
         setShowLoader(false);
       }
+    } else if (registrationResponse?.status === 500) {
+      message.warn(registrationResponse?.data.errors.email[0]);
+      setShowLoader(false);
+    } else if (registrationResponse?.status === 422) {
+      message.warn(registrationResponse?.data.errors.email[0]);
+      setShowLoader(false);
     } else {
-      dispatch(setLoader(false));
       message.warn("Email is not correct. Please try again.");
       setShowLoader(false);
     }
