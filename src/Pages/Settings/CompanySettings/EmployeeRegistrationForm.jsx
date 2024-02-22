@@ -2,13 +2,13 @@ import { message } from "antd";
 import React from "react";
 import { useState } from "react";
 import {
+  handleEmployeeRegistration,
   handleRegister,
   handleRegistration,
 } from "../../../Components/services/auth";
 import { handleAddCompanyEmployees } from "../../../Components/services/company";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../../features/user/userSlice";
-import Loading from "../../../Components/Shared/Loader";
 import { handleRegistrationResponseMail } from "../../../Components/services/mail";
 
 const EmployeeRegistrationForm = ({
@@ -24,7 +24,6 @@ const EmployeeRegistrationForm = ({
 }) => {
   console.log("flag: ", flag);
   const dispatch = useDispatch();
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [employeeDetails, setEmployeeDetails] = useState({
     full_name: "",
@@ -42,13 +41,12 @@ const EmployeeRegistrationForm = ({
 
   const handleAddEmployee = async () => {
     dispatch(setLoader(true));
-    const registrationResponse = await handleRegistration({
+
+    const registrationResponse = await handleEmployeeRegistration({
       ...employeeDetails,
       role_id:
         (flag === 1 && 7) || (flag === 2 && 8) || (flag === 3 && 9) || roleId,
     });
-
-    console.log("registrationResponse <><><>", registrationResponse);
 
     if (registrationResponse?.status === true) {
       const employeeAddResponse = await handleAddCompanyEmployees({
@@ -88,65 +86,56 @@ const EmployeeRegistrationForm = ({
 
   return (
     <div className="py-8 px-6">
-      {loadingDetails && (
-        <div className="w-full h-full text-7xl absolute top-0 left-0 z-50 flex justify-center items-center bg-slate-300 bg-opacity-70">
-          <Loading />
-          &nbsp;
-        </div>
-      )}
-      <div>
-        <h1 className="text-base font-semibold text-left text-brand-color uppercase tracking-wide ">
-          Personal Information
-        </h1>
-        <div className="grid grid-cols-2 gap-1">
-          <div className="mb-6">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Your Name
-              </span>
-              <div>
-                <input
-                  type="text"
-                  name="full_name"
-                  id="full_name"
-                  placeholder="Full Name"
-                  className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm"
-                  value={employeeDetails.full_name}
-                  onChange={handleChange}
-                />
-              </div>
-            </label>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleAddEmployee();
+        }}
+      >
+        <div className="w-full flex gap-4">
+          <div className="w-full">
+            <h1 className="m-0 p-0 font-poppins text-base font-medium text-slate-300">
+              Your Name
+            </h1>
+            <input
+              type="text"
+              name="full_name"
+              id="full_name"
+              placeholder="Full Name"
+              className=" w-full py-2 px-4 rounded-md border border-slate-300 bg-transparent shadow-sm focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color placeholder:!text-slate-300 text-slate-300"
+              value={employeeDetails.full_name}
+              onChange={handleChange}
+            />
           </div>
-          <div className="mb-6">
-            <label>
-              <span className="block text-sm font-medium text-gray-700 tracking-wide">
-                Email
-              </span>
-              <input
-                name="email"
-                type="email"
-                id="email"
-                className=" mt-1 block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
-                placeholder="email"
-                value={employeeDetails.email}
-                onChange={handleChange}
-              />
-            </label>
+          <div className="w-full">
+            <h1 className="m-0 p-0 font-poppins text-base font-medium text-slate-300">
+              Email
+            </h1>
+            <input
+              name="email"
+              type="email"
+              id="email"
+              className=" w-full py-2 px-4 rounded-md border border-slate-300 bg-transparent shadow-sm focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color placeholder:!text-slate-300 text-slate-300"
+              placeholder="email"
+              value={employeeDetails.email}
+              onChange={handleChange}
+            />
           </div>
         </div>
         {flag !== 3 && (
           <div className="w-full flex items-center">
             <div className="w-full mb-2">
-              <label className="block text-sm font-medium text-gray-700 tracking-wide">
+              <h1 className="m-0 p-0 font-poppins text-base font-medium text-slate-300">
                 Contact
-              </label>
+              </h1>
               <div className="flex justify-start gap-1 my-2">
                 <div className="w-full">
                   <input
                     name="contact_number"
                     type="text"
                     id="contact_number"
-                    className="block w-full py-2 px-3 border-b border-gray-300 bg-slate-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-b focus:border-indigo-500 sm:text-sm "
+                    className=" w-full py-2 px-4 rounded-md border border-slate-300 bg-transparent shadow-sm focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color placeholder:!text-slate-300 text-slate-300"
                     placeholder="Contact No."
                     value={employeeDetails.contact_number}
                     onChange={handleChange}
@@ -230,17 +219,13 @@ const EmployeeRegistrationForm = ({
             </div>
           </div>
         )}
-        <div className="pt-10 pb-6">
-          <button
-            className="float-right py-2 px-4 text-base leading-6 font-medium bg-black rounded-md text-slate-300"
-            onClick={() => {
-              handleAddEmployee();
-            }}
-          >
-            Add
-          </button>
-        </div>
-      </div>
+        <button
+          className="py-2 px-4 text-base font-medium bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] rounded-md text-slate-300"
+          type="submit"
+        >
+          Add
+        </button>
+      </form>
     </div>
   );
 };

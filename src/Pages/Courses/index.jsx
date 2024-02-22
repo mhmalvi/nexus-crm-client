@@ -38,8 +38,7 @@ const Courses = () => {
           visible={courseDetailsOpen}
           footer={null}
           onCancel={() => setCourseDetailsOpen(false)}
-          width={900}
-          closeIcon={<CloseOutlined  />}
+          closeIcon={<CloseOutlined />}
         >
           <CourseDetails selectedCourse={selectedCourse} />
         </Modal>

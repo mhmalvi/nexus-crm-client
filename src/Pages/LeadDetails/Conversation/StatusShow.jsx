@@ -38,11 +38,17 @@ const StatusShow = ({ leadDetails }) => {
   }, [leadDetails?.leadDetails?.lead_id]);
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
-        <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-xl overflow-hidden">
-        <h1 className={`text-lg m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"} `}>Status Logs</h1>
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-xl overflow-hidden">
+        <h1
+          className={`text-lg m-0 p-0 ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          } `}
+        >
+          Status Logs
+        </h1>
         <Button
           size="small"
-          className="!rounded-xl"
+          className="!rounded-md"
           onClick={() => {
             getStatusLogs();
           }}
@@ -51,13 +57,27 @@ const StatusShow = ({ leadDetails }) => {
         </Button>
       </div>
 
-      <div className={`flex flex-col  ${colorMode?"text-slate-300":"text-gray-800"} w-full p-5 gap-4 overflow-y-scroll overflow-x-hidden`}>
+      <div
+        className={`flex flex-col  ${
+          colorMode ? "text-slate-300" : "text-gray-800"
+        } w-full p-5 gap-4 overflow-y-scroll overflow-x-hidden`}
+      >
         {statusLogs?.length
           ? statusLogs?.map((log) => (
-              <div className="flex flex-col w-full border-b shadow justify-between items-start pb-2 ">
-                <div className="text-xs flex items-center gap-2">
-                  <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Status: </h1>
-                  <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>
+              <div className="flex flex-col w-full border-b shadow justify-between items-start gap-2 pb-4">
+                <div className="text-base flex items-center gap-8">
+                  <h1
+                    className={`m-0 p-0 py-2 ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    Status:{" "}
+                  </h1>
+                  <p
+                    className={`m-0 p-0 ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
                     {(log?.lead_status === 1 && "New Lead") ||
                       (log?.lead_status === 2 && "Skilled") ||
                       (log?.lead_status === 3 && "Called") ||
@@ -68,14 +88,36 @@ const StatusShow = ({ leadDetails }) => {
                   </p>
                 </div>
                 {log?.selected_by && (
-                  <div className="text-xs flex items-center gap-2">
-                    <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Selected by: </h1>
-                    <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>{log?.selected_by}</p>
+                  <div className="text-base flex items-center gap-4">
+                    <h1
+                      className={`m-0 p-0 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
+                      Selected by:{" "}
+                    </h1>
+                    <p
+                      className={`m-0 p-0 ${
+                        colorMode ? "text-slate-300" : "text-gray-800"
+                      }`}
+                    >
+                      {log?.selected_by}
+                    </p>
                   </div>
                 )}
-                <div className="text-xs flex items-center gap-2">
-                  <h1 className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>Created at: </h1>
-                  <p className={`m-0 p-0 ${colorMode?"text-slate-300":"text-gray-800"}`}>
+                <div className="text-base flex items-center gap-4">
+                  <h1
+                    className={`m-0 p-0 ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
+                    Created at:{" "}
+                  </h1>
+                  <p
+                    className={`m-0 p-0 ${
+                      colorMode ? "text-slate-300" : "text-gray-800"
+                    }`}
+                  >
                     {new Date(log.created_at).toLocaleString()}
                   </p>
                 </div>

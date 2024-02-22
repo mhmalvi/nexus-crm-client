@@ -12,6 +12,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
 import Loading from "../../Components/Shared/Loader";
+import "./salesEmployee.css";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -225,7 +226,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   return (
     <div>
       <Modal
-        className=""
+        className="salesModal"
         open={openCallCountDetailsModal}
         visible={openCallCountDetailsModal}
         confirmLoading={confirmLoading}
@@ -239,31 +240,39 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
       </Modal>
       <Modal
         width={1000}
-        title={isByMe ? "Assigned Leads" : "Un-Assigned Leads"}
         open={openSalesModel}
         visible={openSalesModel}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        className="salesModal"
       >
-        <div>
-          <div className="flex justify-end gap-4 mb-4">
-            <Button
-              type={`${isByMe ? "primary" : "default"}`}
-              onClick={() => {
-                setIsByMe(true);
-              }}
-            >
-              Assigned
-            </Button>
-            <Button
-              type={`${!isByMe ? "primary" : "default"}`}
-              onClick={() => {
-                setIsByMe(false);
-              }}
-            >
-              All Leads
-            </Button>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-4 items-center">
+            {isByMe ? (
+              <h1 className="m-0 p-0 text-slate-300">Assigned Leads</h1>
+            ) : (
+              <h1 className="m-0 p-0 text-slate-300">Un-Assigned Leads</h1>
+            )}
+            <div className="flex justify-end gap-4">
+              <Button
+                type={`${isByMe ? "primary" : "default"}`}
+                onClick={() => {
+                  setIsByMe(true);
+                }}
+              >
+                Assigned
+              </Button>
+              <Button
+                type={`${!isByMe ? "primary" : "default"}`}
+                onClick={() => {
+                  setIsByMe(false);
+                }}
+                className="!rounded-md"
+              >
+                All Leads
+              </Button>
+            </div>
           </div>
           {/* Search section */}
           <Table

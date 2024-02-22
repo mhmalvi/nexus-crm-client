@@ -31,6 +31,18 @@ export const handleMultipartRegistration = async (registrationData) => {
     return error.response;
   }
 };
+export const handleEmployeeRegistration = async (registrationDetails) => {
+  try {
+    const result = await axios.post(
+      `https://crmuser.queleadscrm.com/api/user/add`,
+      registrationDetails,
+      configJSON
+    );
+    return result?.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 export const handleRegistration = async (registrationDetails) => {
   try {
     const result = await axios.post(

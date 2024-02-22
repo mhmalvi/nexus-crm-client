@@ -114,8 +114,8 @@ const Sales = () => {
   return (
     <>
       <div className="h-screen flex justify-center items-center">
-        <div className="h-[90vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
-          <div className="w-full flex items-center justify-between mb-5">
+        <div className="h-[90vh] w-full flex flex-col gap-4 mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+          <div className="w-full flex items-center justify-between">
             <div
               className={`text-xl font-semibold ${
                 colorMode ? "text-white" : "text-gray-800"
@@ -125,7 +125,7 @@ const Sales = () => {
             </div>
           </div>
           {/* Sales Employees */}
-          <div className="mb-6">
+          <div>
             <Table
               locale={locale}
               className={`${
