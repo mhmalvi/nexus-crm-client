@@ -199,8 +199,8 @@ const SalesAdmins = ({ clientId }) => {
   // };
 
   return (
-    <div className="relative flex flex-col justify-between gap-5 w-full h-full">
-      <div className="h-2/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+    <div className="relative flex flex-col justify-start gap-4 w-full h-full">
+      <div className="flex flex-col flex-grow gap-4 overflow-y-scroll w-full rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
         <div>
           <Modal
             title="Add Admin Employee"
@@ -208,6 +208,7 @@ const SalesAdmins = ({ clientId }) => {
             footer={null}
             onCancel={() => setActiveAddSupervisor(false)}
             width={600}
+            className="adminModal"
           >
             <EmployeeRegistrationForm
               roleId={4}
@@ -280,7 +281,7 @@ const SalesAdmins = ({ clientId }) => {
             />
           </Modal>
 
-          <div className="flex items-center w-full pb-2">
+          <div className="flex items-center w-full gap-4">
             <h1
               className={`font-semibold text-xl ${
                 colorMode ? "text-slate-300" : "text-gray-800"
@@ -294,11 +295,11 @@ const SalesAdmins = ({ clientId }) => {
             userDetails?.userInfo?.role_id === 3 ? (
               <div>
                 <button
-                  className={`py-1 slate-300space-nowrap px-2 text-xs font-medium border ${
+                  className={`py-1 text-slate-300 space-nowrap px-2 text-xs font-medium border ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
-                  } rounded-lg 2xl:ml-29`}
+                  } rounded-md `}
                   onClick={() => setActiveAddSupervisor(true)}
                 >
                   Add Supervisor
@@ -306,62 +307,68 @@ const SalesAdmins = ({ clientId }) => {
               </div>
             ) : null}
           </div>
-          <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
         </div>
 
-        <div className="mt-5 h-[22vh] overflow-y-scroll">
-          <div className="grid grid-cols-2 gap-8 ">
+        <hr className="border-b border-brand-color" />
+        <div className="overflow-y-scroll w-full flex flex-col ">
+          <div className="flex flex-wrap justify-around w-full gap-4 ">
             {/* Admin of Company */}
             {companyAdminEmployee ? (
-              <Badge.Ribbon
-                style={{
-                  fontSize: "16px",
-                }}
-                text="*"
-                color="volcano"
-                size="small"
-              >
-                <div
-                  className={`flex justify-start items-center p-2 shadow-md shadow-inner ${
-                    colorMode ? "shadow-[#ffffff22]" : "shadow-[#33333322]"
-                  } rounded-md`}
+              <div className="flex flex-wrap gap-4 justify-center items-center w-5/12 ">
+                <Badge.Ribbon
+                  style={{
+                    fontSize: "16px",
+                  }}
+                  text="*"
+                  color="volcano"
+                  size="small"
+                  className=""
                 >
-                  <Avatar
-                    className="rounded-full cursor-pointer "
-                    size="38"
-                    color={"#804DFF"}
-                    name={companyAdminEmployee?.full_name}
-                  />
-                  <div className="ml-4 w-52 py-2">
-                    <h1
-                      className={`font-semibold text-lg ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } m-0`}
-                    >
-                      {companyAdminEmployee?.full_name}
-                    </h1>
-                    <p
-                      className={`font-medium text-xs m-0 ${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      }`}
-                    >
-                      {companyAdminEmployee?.email}
-                    </p>
+                  <div
+                    className={`flex w-full gap-4 items-center py-2 px-8 shadow-md shadow-inner ${
+                      colorMode ? "shadow-[#ffffff22]" : "shadow-[#33333322]"
+                    } rounded-md`}
+                  >
+                    <Avatar
+                      className="rounded-full cursor-pointer "
+                      size="38"
+                      color={"#804DFF"}
+                      name={companyAdminEmployee?.full_name}
+                    />
+                    <div className="w-full py-2">
+                      <h1
+                        className={`font-semibold text-lg ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        } m-0`}
+                      >
+                        {companyAdminEmployee?.full_name}
+                      </h1>
+                      <p
+                        className={`font-medium text-xs m-0 ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        }`}
+                      >
+                        {companyAdminEmployee?.email}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Badge.Ribbon>
+                </Badge.Ribbon>
+              </div>
             ) : null}
 
             {companyAdvisorEmployees.length ? (
               companyAdvisorEmployees.map((employee, i) => (
-                <div key={i} className="flex justify-start items-center">
+                <div
+                  key={i}
+                  className="flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border border-slate-300"
+                >
                   <Avatar
                     className="rounded-full cursor-pointer"
                     size="38"
                     color={"#804DFF"}
                     name={employee?.full_name}
                   />
-                  <div className="ml-4 w-52 flex flex-col justify-around">
+                  <div className="flex flex-col justify-around">
                     <h1
                       className={`font-semibold text-lg ${
                         colorMode ? "text-slate-300" : "text-gray-800"
@@ -418,32 +425,49 @@ const SalesAdmins = ({ clientId }) => {
                 </div>
               ))
             ) : (
-              <h1 className="font-semibold text-base">No Employee Added Yet</h1>
+              <h1
+                className={`font-semibold text-base ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                No Employee Added Yet
+              </h1>
             )}
           </div>
           {inactiveAdminEmployees.length ? (
-            <div className="mt-2 shadow-md">
-              <h1 className="font-semibold text-xl leading-8 py-5 px-4 my-0 text-slate-300">
+            <div className="w-full flex flex-col gap-4">
+              <h1
+                className={`font-semibold text-xl ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
                 Inactive Admins
               </h1>
-              <hr />
-              <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+              <hr className="border-b border-brand-color" />
+              <div className="flex flex-wrap justify-around w-full gap-4 ">
                 {inactiveAdminEmployees.map((employee, i) => (
-                  <div key={i} className="flex ">
+                  <div
+                    key={i}
+                    className="flex gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                  >
                     <Avatar
                       className="rounded-full cursor-pointer"
                       size="38"
                       name={employee?.full_name}
                     />
-                    <div className="ml-4">
-                      <h1 className="text-red-500 font-semibold text-lg leading-5">
+                    <div className="flex flex-col gap-2 w-full">
+                      <h1 className="m-0 p-0 text-red-500 font-semibold text-base">
                         {employee?.full_name}
                       </h1>
-                      <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                      <p className="m-0 p-0 text-red-500 font-medium text-sm">
                         {employee?.email}
                       </p>
                       <button
-                        className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                        className={`border w-1/3 ${
+                          colorMode
+                            ? "text-slate-300 border-slate-300"
+                            : "text-gray-800 border-gray-800"
+                        } px-2 py-0.5 text-sm rounded-md`}
                         onClick={() =>
                           handleAddSuspendedEmployee(employee?.user_id)
                         }
@@ -460,8 +484,8 @@ const SalesAdmins = ({ clientId }) => {
       </div>
 
       {/* Sales admins box */}
-      <div className="h-3/5 overflow-hidden w-full !col-span-12  lg:!col-span-6 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
-        <div className="flex items-center w-full pb-2">
+      <div className="flex flex-col flex-grow gap-4 overflow-y-scroll w-full rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+        <div className="flex items-center w-full gap-4">
           <h1
             className={`font-semibold text-xl ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -480,7 +504,7 @@ const SalesAdmins = ({ clientId }) => {
                   colorMode
                     ? "text-slate-300 border-slate-300 "
                     : "text-gray-800 border-gray-800"
-                } ml-29`}
+                } `}
                 onClick={() => setActiveAddSeals(true)}
               >
                 Add Sales
@@ -488,23 +512,25 @@ const SalesAdmins = ({ clientId }) => {
             </div>
           ) : null}
         </div>
-        <hr className={colorMode ? "border-slate-300" : "border-gray-800"} />
+        <hr className="border-b border-brand-color" />
 
-        <div className="mt-5 h-[35vh] overflow-y-scroll pb-2">
-          <div className="grid grid-cols-2 gap-8 ">
+        <div className="overflow-y-scroll w-full flex flex-col ">
+          <div className="flex flex-wrap justify-around w-full gap-4 ">
             {companySalesEmployees.length ? (
               companySalesEmployees
                 .filter((employee) => employee.suspend === 0)
                 .map((employee, i) => (
-                  <div key={i} className="flex justify-start items-center">
+                  <div
+                    key={i}
+                    className="flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border border-slate-300"
+                  >
                     <Avatar
                       className="rounded-full cursor-pointer"
                       size="38"
                       color={"#804DFF"}
                       name={employee?.full_name}
                     />
-                    {console.log(employee)}
-                    <div className="ml-4 w-52 flex flex-col justify-around">
+                    <div className="flex flex-col justify-around">
                       <h1
                         className={`font-semibold text-lg ${
                           colorMode ? "text-slate-300" : "text-gray-800"
@@ -574,32 +600,39 @@ const SalesAdmins = ({ clientId }) => {
           </div>
 
           {inactiveSalesEmployees.length ? (
-            <div className="mt-2">
+            <div className="w-full flex flex-col gap-4">
               <h1
-                className={`font-semibold text-xl py-5 px-4 my-0 ${
+                className={`font-semibold text-xl ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
                 Inactive Sales Admins
               </h1>
-              <hr />
-              <div className="mt-3 grid grid-cols-2 gap-6 px-4">
+              <hr className="border-b border-brand-color" />
+              <div className="flex flex-wrap justify-around w-full gap-4 ">
                 {inactiveSalesEmployees.map((employee, i) => (
-                  <div key={i} className="flex ">
+                  <div
+                    key={i}
+                    className="flex gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                  >
                     <Avatar
                       className="rounded-full cursor-pointer"
                       size="38"
                       name={employee?.full_name}
                     />
-                    <div className="ml-4">
-                      <h1 className="text-red-500 font-semibold text-lg leading-5">
+                    <div className="flex flex-col w-full gap-2">
+                      <h1 className="m-0 p-0 text-red-500 font-semibold text-base">
                         {employee?.full_name}
                       </h1>
-                      <p className="text-red-500 font-medium text-xs leading-5 mb-0 text-opacity-75">
+                      <p className="m-0 p-0 text-red-500 font-medium text-sm ">
                         {employee?.email}
                       </p>
                       <button
-                        className="border border-black px-2 py-0.5 text-xs rounded-md font-semibold text-black mt-3"
+                        className={`border w-1/3 ${
+                          colorMode
+                            ? "text-slate-300 border-slate-300"
+                            : "text-gray-800 border-gray-800"
+                        } px-2 py-0.5 text-sm rounded-md`}
                         onClick={() =>
                           handleAddSuspendedEmployee(employee?.user_id)
                         }
