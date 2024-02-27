@@ -360,7 +360,9 @@ const SalesAdmins = ({ clientId }) => {
               companyAdvisorEmployees.map((employee, i) => (
                 <div
                   key={i}
-                  className="flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border border-slate-300"
+                  className={`flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border ${
+                    colorMode ? "border-slate-300" : "border-gray-800"
+                  }`}
                 >
                   <Avatar
                     className="rounded-full cursor-pointer"
@@ -400,7 +402,7 @@ const SalesAdmins = ({ clientId }) => {
                             }
                           >
                             <button
-                              className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                              className={`border px-1 py-0.5 text-xs rounded-md ${
                                 colorMode
                                   ? "text-slate-300 border-slate-300"
                                   : "text-gray-800 border-gray-800"
@@ -411,7 +413,7 @@ const SalesAdmins = ({ clientId }) => {
                           </Popconfirm>
                         )}
                         <button
-                          className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                          className="border border-red-500 px-1 py-0.5 text-xs rounded-md text-red-500 mt-3"
                           onClick={() => {
                             handleSuspendEmployee(employee?.user_id);
                             console.log(employee?.user_id);
@@ -448,7 +450,9 @@ const SalesAdmins = ({ clientId }) => {
                 {inactiveAdminEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className="flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                    className={`flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border ${
+                      colorMode ? "border-slate-300" : "border-gray-800"
+                    }`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
@@ -463,7 +467,7 @@ const SalesAdmins = ({ clientId }) => {
                         {employee?.email}
                       </p>
                       <button
-                        className={`border w-2/3${
+                        className={`border w-2/3 ${
                           colorMode
                             ? "text-slate-300 border-slate-300"
                             : "text-gray-800 border-gray-800"
@@ -522,7 +526,9 @@ const SalesAdmins = ({ clientId }) => {
                 .map((employee, i) => (
                   <div
                     key={i}
-                    className="flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border border-slate-300"
+                    className={`flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border ${
+                      colorMode ? "border-slate-300" : "border-gray-800"
+                    }`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
@@ -564,7 +570,7 @@ const SalesAdmins = ({ clientId }) => {
                               okText="Yes"
                             >
                               <button
-                                className={`border px-1 py-0.5 text-xs rounded-md font-semibold ${
+                                className={`border px-1 py-0.5 text-xs rounded-md ${
                                   colorMode
                                     ? "text-slate-300 border-slate-300"
                                     : "text-gray-800 border-gray-800"
@@ -576,7 +582,7 @@ const SalesAdmins = ({ clientId }) => {
                           )}
 
                           <button
-                            className="border border-red-500 px-1 py-0.5 text-xs rounded-md font-semibold text-red-500 mt-3"
+                            className="border border-red-500 px-1 py-0.5 text-xs rounded-md text-red-500 mt-3"
                             onClick={() =>
                               handleSuspendEmployee(employee?.user_id)
                             }
@@ -613,7 +619,9 @@ const SalesAdmins = ({ clientId }) => {
                 {inactiveSalesEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className="flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border border-slate-300"
+                    className={`flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border ${
+                      colorMode ? "border-slate-300" : "border-gray-800"
+                    }`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"

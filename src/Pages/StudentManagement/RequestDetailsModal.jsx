@@ -327,7 +327,7 @@ const RequestDetailsModal = ({
                         </div>
                         <div className="flex justify-between items-center gap-3">
                           <Input
-                            className=" !rounded-xl"
+                            className=" !rounded-md"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="What's on your mind ?"
@@ -530,7 +530,7 @@ const RequestDetailsModal = ({
                         </div>
                         <div className="flex justify-between items-center gap-3">
                           <Input
-                            className=" !rounded-xl"
+                            className=" !rounded-md"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="What's on your mind ?"

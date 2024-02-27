@@ -26,7 +26,7 @@ const Conversation = ({ leadDetails, id }) => {
   }
 
   return (
-    <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+    <div className="w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
       <h1
         className={`px-5 py-2 text-lg font-poppins ${
           colorMode ? "text-slate-300" : "text-gray-800"
@@ -36,7 +36,7 @@ const Conversation = ({ leadDetails, id }) => {
       </h1>
       <div className="flex flex-col gap-4 p-5 rounded-t-xl">
         {userDetails?.userInfo?.role_id !== 6 ? (
-          <button className="px-4 py-2 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]">
+          <button className="px-4 py-2 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]">
             <a
               className="flex items-center"
               href={`https://api.whatsapp.com/send?phone=${leadDetails?.leadDetails?.phone_number.replace(
@@ -60,7 +60,7 @@ const Conversation = ({ leadDetails, id }) => {
         {/* Custom click to open modal message */}
 
         <button
-          className="px-4 py-2 w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]"
+          className="px-4 py-2 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]"
           onClick={showMailModal}
         >
           <div className="flex items-center">

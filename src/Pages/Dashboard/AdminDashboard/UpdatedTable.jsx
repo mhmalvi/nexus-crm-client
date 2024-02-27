@@ -165,7 +165,7 @@ const UpdatedTable = ({
   };
   return (
     <div
-      className={`!rounded-xl ${table_title === "Leads" ? "mt-0" : "mt-12"}`}
+      className={`!rounded-md ${table_title === "Leads" ? "mt-0" : "mt-12"}`}
     >
       <div className="flex justify-between items-center">
         <h1
@@ -201,19 +201,26 @@ const UpdatedTable = ({
             </>
           )}
           {userDetails?.role_id === 5 && (
-            <div
-              className={`mr-4 ${
-                colorMode ? "selectSalesDark" : "selectSalesLight"
-              }`}
-            >
-              <Select
-                className=" min-w-[150px] "
-                defaultValue={""}
-                onChange={onSelectCompanyData}
-                options={companyList}
-                placeholder="Select Company"
-              />
-            </div>
+            <>
+              {window.location.pathname.includes("campaigns") ||
+              window.location.pathname.includes("payments") ? (
+                ""
+              ) : (
+                <div
+                  className={`mr-4 ${
+                    colorMode ? "selectSalesDark" : "selectSalesLight"
+                  }`}
+                >
+                  <Select
+                    className=" min-w-[150px] "
+                    defaultValue={""}
+                    onChange={onSelectCompanyData}
+                    options={companyList}
+                    placeholder="Select Company"
+                  />
+                </div>
+              )}
+            </>
           )}
 
           {table_title === "Lead List" ? (

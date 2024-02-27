@@ -100,7 +100,7 @@ const LeadQualityRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
     setFullScreen("");
   };
   return (
-    <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">
+    <div className="w-full rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] py-4 flex flex-col ">
       <div className="flex items-center justify-between m-0">
         <h1
           className={`text-base font-semibold px-4 m-0 py-0 font-poppins ${

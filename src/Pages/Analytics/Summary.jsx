@@ -115,7 +115,7 @@ const Summary = ({
       </div>
       <div className="w-full items-center justify-between flex flex-wrap gap-4">
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${
@@ -142,7 +142,7 @@ const Summary = ({
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${
@@ -172,7 +172,7 @@ const Summary = ({
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${
@@ -202,7 +202,7 @@ const Summary = ({
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${
@@ -229,7 +229,7 @@ const Summary = ({
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${
@@ -259,7 +259,7 @@ const Summary = ({
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex justify-between rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
                 className={`text-lg font-semibold ${

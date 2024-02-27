@@ -123,7 +123,7 @@ const RequisitionTable = ({
   };
 
   return (
-    <div className="border rounded-xl px-10 py-7.5 font-poppins">
+    <div className="border rounded-md px-10 py-7.5 font-poppins">
       {/* Requisition Details */}
       <Modal
         visible={showRequisitionDetails}

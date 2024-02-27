@@ -220,7 +220,7 @@ const UserDetails = ({
       <div className="w-full flex flex-grow gap-4">
         {/* Column 1 */}
         <div className="w-full flex flex-col justify-between items-center gap-4">
-          <div className="h-full w-full rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="h-full w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <h4
               className={`text-lg px-5 py-2 m-0 font-poppins ${
                 colorMode ? "text-slate-300" : "text-gray-800"
@@ -319,7 +319,7 @@ const UserDetails = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-center gap-4 w-full h-full rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex flex-col items-start justify-center gap-4 w-full h-full rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div className="w-full flex justify-between items-center">
               <h1
                 className={`text-xl font-poppins ${
@@ -476,7 +476,7 @@ const UserDetails = ({
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
           )}
-          <div className="w-full h-full flex flex-col gap-4 items-center justify-around rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+          <div className="w-full h-full flex flex-col gap-4 items-center justify-around rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
             <div className="w-full flex flex-col justify-between items-start">
               <h1
                 className={`text-lg font-poppins ${
@@ -569,7 +569,7 @@ const UserDetails = ({
         {/* Column 3 */}
         <div className="w-full flex flex-col justify-between items-center gap-4">
           {userDetails?.userInfo?.role_id !== 6 ? (
-            <div className="h-1/3 flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl">
+            <div className="h-1/3 flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
               <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
                 <h1
                   className={`text-lg m-0 p-0 ${
@@ -631,10 +631,10 @@ const UserDetails = ({
               </form>
             </div>
           ) : null}
-          <div className="h-1/3 w-full rounded-xl">
+          <div className="h-1/3 w-full rounded-md">
             <Comments Comments={leadDtls?.leadComments} />
           </div>
-          <div className="h-1/3 w-full rounded-xl">
+          <div className="h-1/3 w-full rounded-md">
             <StatusShow leadDetails={leadDetails} />
           </div>
         </div>

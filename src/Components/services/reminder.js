@@ -8,10 +8,10 @@ export const handleAddFollowUp = async (followUpData) => {
       Accept: "application/json",
     },
   };
-  console.log("FollowUp",followUpData)
+  console.log("FollowUp", followUpData);
   try {
     const result = await axios.post(
-      `http://192.168.0.121:7000/api/follow-up`,
+      `https://crmnotification.queleadscrm.com/api/follow-up`,
       followUpData,
       config
     );
@@ -29,7 +29,7 @@ export const handleUpdateFollowUp = async (updatedFollowUpData) => {
   };
   try {
     const result = await axios.put(
-      `http://192.168.0.121:7000/api/follow-up-update`,
+      `https://crmnotification.queleadscrm.com/api/follow-up-update`,
       updatedFollowUpData,
       config
     );
@@ -64,11 +64,11 @@ export const handleDeleteFollowUp = async (followupID) => {
       Accept: "application/json",
     },
   };
-  console.log(followupID)
+  console.log(followupID);
   try {
     const result = await axios.post(
-      `http://192.168.0.121:7000/api/delete-notification`,
-      {id:followupID},
+      `https://crmnotification.queleadscrm.com/api/delete-notification`,
+      { id: followupID },
       config
     );
     return result?.data;
@@ -85,7 +85,7 @@ export const handleFetchReminders = async (reminderData) => {
   };
   try {
     const result = await axios.post(
-      `http://192.168.0.121:7000/api/notification-fetch`,
+      `https://crmnotification.queleadscrm.com/api/notification-fetch`,
       reminderData,
       config
     );

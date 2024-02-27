@@ -34,11 +34,11 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
           {filterOptions.map((option) => (
             <div key={option.id} onClick={() => setActiveFilter(option.id)}>
               <h1
-                className={`text-xs leading-4 font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                className={`text-xs font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
                   activeFilter === option.id
                     ? "text-white bg-brand-color"
                     : "text-black bg-white"
-                }  rounded-full`}
+                }  rounded-md`}
             
               >
                 {option.title}
@@ -57,7 +57,7 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
         >
           Search Campaign
         </h1>
-        <div className="flex justify-between items-center rounded-xl gap-x-5 pr-5 shadow-md backdrop-blur-2xl bg-[#ffffff44]">
+        <div className="flex justify-between items-center rounded-md gap-x-5 pr-5 shadow-md backdrop-blur-2xl bg-[#ffffff44]">
           <div>
             <input
               className="appearance-none active:outline-none focus:outline-none outline-none text-xs bg-transparent border-0 font-medium font-poppins ml-4"

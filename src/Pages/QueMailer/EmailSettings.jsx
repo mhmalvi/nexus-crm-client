@@ -60,7 +60,7 @@ const EmailSettings = ({ currentEmail }) => {
   };
   return (
     <div className="flex items-center justify-center h-full w-full relative">
-      <form className="flex flex-col gap-8 w-1/5">
+      <form className="flex flex-col gap-8 w-2/5">
         <div className="flex gap-4 items-center justify-between w-full">
           <h1
             className={`text-base m-0 p-0 ${

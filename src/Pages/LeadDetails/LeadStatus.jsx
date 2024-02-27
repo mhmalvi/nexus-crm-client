@@ -404,7 +404,7 @@ const LeadStatus = (props) => {
   };
 
   return (
-    <div className="min-h-full flex flex-col justify-center items-start rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+    <div className="min-h-full flex flex-col justify-center items-start rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
       <div className="flex justify-center items-center gap-4">
         <h1
           className={`text-xl font-semibold font-poppins ${

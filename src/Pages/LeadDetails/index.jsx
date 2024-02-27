@@ -141,7 +141,7 @@ const LeadDetails = () => {
           </button>
         </Link>
       </div>
-      <div className="h-[85vh] w-full mx-5 rounded-xl p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
+      <div className="h-[85vh] w-full mx-5 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
         <div className={`flex flex-col `}>
           <div className="">
             <LeadStatus

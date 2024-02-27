@@ -11,7 +11,7 @@ import { handleFetchFile } from "../services/utils";
 import HamW from "../../assets/Images/hamburgerW.png";
 
 import HamD from "../../assets/Images/hamburgerB.png";
-import { setColorMode } from "../../features/user/userSlice";
+import { setColorMode, setHelpModal } from "../../features/user/userSlice";
 import { setOpenSidebar } from "../../features/user/userSlice";
 import { ReactComponent as SunIcon } from "../../../src/assets/PNGS/sun.svg";
 import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
@@ -24,20 +24,18 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   const userDetails = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
+  const helpModal = useSelector((state) => state?.user)?.helpModal;
 
-  const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
-  const companyId = useSelector(
-    (state) => state?.user?.companyId,
-    shallowEqual
-  );
+  // const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
+  // const companyId = useSelector(
+  //   (state) => state?.user?.companyId,
+  //   shallowEqual
+  // );
 
   const [companyDetails, setCompanyDetails] = useState({
     company_name: null,
     company_logo: null,
   });
-  // const ToogleSideBar = (index) => {
-  //   setOpenSideBar(index);
-  // };
 
   useEffect(() => {
     (async () => {
@@ -99,6 +97,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     const newColorMode = !colorMode;
     dispatch(setColorMode(newColorMode));
     saveColorModePreference(newColorMode);
+  };
+  const toggleHelp = () => {
+    const newHelpModal = !helpModal;
+    dispatch(setHelpModal(newHelpModal));
   };
 
   return (
@@ -497,7 +499,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 <Link
                   to={"/salesEmployee"}
                   className={`${
-                    active === "reminder"
+                    active === "salesEmployee"
                       ? colorMode
                         ? "text-[#FFFFFF]"
                         : "text-[#000000]"
@@ -606,12 +608,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             )}
 
             {/* Company Settings */}
-            {userDetails?.userInfo?.role_id !== 10 && (
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id !== 5) && (
               <div>
                 <Link
                   to={"/settings"}
                   className={`${
-                    active === "reminder"
+                    active === "settings"
                       ? colorMode
                         ? "text-[#FFFFFF]"
                         : "text-[#000000]"
@@ -750,7 +753,14 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               defaultChecked
             />
           </div>
-       
+          <div className="flex justify-center items-center">
+            <button
+              onClick={toggleHelp}
+              className={`${helpModal ? "text-blue-500" : "text-orange-500"}`}
+            >
+              Help
+            </button>
+          </div>
         </div>
 
         {/* Logo Bottom */}
