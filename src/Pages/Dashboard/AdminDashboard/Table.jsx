@@ -73,7 +73,7 @@ const Table = ({
 
   return (
     <div className="mt-0.5">
-      <div className="border rounded-xl px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
+      <div className="border rounded-md px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
         <div className="flex justify-between items-center">
           <div className="flex items-start">
             <div>

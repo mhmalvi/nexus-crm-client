@@ -1,6 +1,7 @@
 import { Modal } from "antd";
+import dayjs from "dayjs";
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from "react-redux";
@@ -24,7 +25,7 @@ const BigCalendar = ({ setLoading }) => {
   const [synEvents, setSynEvents] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [time, setTime] = useState("Select Time");
-  const [test, setTest] = useState([
+  const [showReminder, setShowReminder] = useState([
     {
       id: null,
       title: "",
@@ -34,15 +35,19 @@ const BigCalendar = ({ setLoading }) => {
   ]);
 
   useEffect(() => {
+    fetchingReminders();
+  }, []);
+
+  const fetchingReminders = () => {
     (async () => {
       const data = {
         user_id: userDetails.id,
       };
       const res = await handleFetchReminders(data);
 
-      setTest(res.data);
+      setShowReminder(res.data);
     })();
-  }, [test, userDetails]);
+  };
 
   // useEffect(() => {
   //   dispatch(setLoader(true));
@@ -104,6 +109,7 @@ const BigCalendar = ({ setLoading }) => {
     setOpenEventDetails(false);
   };
 
+  console.log(dayjs.locale( ));
   return (
     <div>
       <Calendar
@@ -112,7 +118,7 @@ const BigCalendar = ({ setLoading }) => {
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
-        events={test}
+        events={showReminder}
         onSelectEvent={(e) => handleUpdateEvent(e)}
         onSelectSlot={handleSelect}
         className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
@@ -142,6 +148,7 @@ const BigCalendar = ({ setLoading }) => {
           time={time}
           setTime={setTime}
           userDetails={userDetails}
+          fetchingReminders={fetchingReminders}
         />
       </Modal>
 
@@ -168,6 +175,7 @@ const BigCalendar = ({ setLoading }) => {
           setIsEdit={setIsEdit}
           synEvents={synEvents}
           setSynEvents={setSynEvents}
+          fetchingReminders={fetchingReminders}
         />
       </Modal>
     </div>

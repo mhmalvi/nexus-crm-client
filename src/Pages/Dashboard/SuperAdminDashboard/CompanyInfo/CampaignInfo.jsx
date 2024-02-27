@@ -205,14 +205,14 @@ const CampaignInfo = () => {
     <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">
       {/* Campaign Details */}
       <div
-        className="rounded-xl mb-16"
+        className="rounded-md mb-16"
         style={{
           backgroundImage: `url(${campaignBg})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-xl">
+        <div className="h-full w-full bg-black bg-opacity-40 backdrop-blur-sm flex justify-between items-start p-16 rounded-md">
           <div className="border rounded-2xl p-6 bg-white bg-opacity-75">
             <div>
               <h1 className="text-xl leading-8 font-poppins font-semibold">

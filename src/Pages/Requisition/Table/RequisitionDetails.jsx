@@ -106,7 +106,7 @@ const RequisitionDetails = ({
           <span>Package : </span>
         </h1>
         <div
-          className={`w-72 mt-4 mx-auto flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center`}
+          className={`w-72 mt-4 mx-auto flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-md text-center`}
         >
           <h3 className="font-bold py-10 text-[20px]">
             {requisitionPackageDetails?.package_name}

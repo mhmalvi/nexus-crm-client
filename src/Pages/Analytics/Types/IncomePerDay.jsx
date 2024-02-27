@@ -79,7 +79,7 @@ const IncomePerDay = ({ activeCompany, setFullScreen, fullscreen }) => {
     setFullScreen("");
   };
   return (
-    <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl flex flex-col ">
+    <div className="w-full rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] flex flex-col ">
       <div
         className={`w-full flex justify-between items-center ${
           colorMode ? "text-slate-300" : "text-gray-800"

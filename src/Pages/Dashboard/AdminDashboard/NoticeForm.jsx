@@ -92,7 +92,7 @@ const NoticeForm = () => {
         userDetails?.role_id === 5) && (
         <div className="">
           {userDetails?.role_id === 3 ? (
-            <div className="w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+            <div className="w-full p-3 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
               <div className="mb-2 flex justify-between items-center">
                 <h1
                   className={`text-${
@@ -156,7 +156,7 @@ const NoticeForm = () => {
             </div>
           ) : (
             <div>
-              <div className="w-full p-3 rounded-xl shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+              <div className="w-full p-3 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
                 <div className="mb-2 flex justify-between items-center">
                   <h1
                     className={`text-${

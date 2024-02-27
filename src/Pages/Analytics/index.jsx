@@ -128,7 +128,7 @@ const Overview = () => {
       >
         Capture Report
       </button> */}
-      <div className="font-poppins rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full overflow-hidden">
+      <div className="font-poppins rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full overflow-hidden">
         <div ref={pdfRef} className="flex flex-col gap-4 ">
           <div className="">
             <Summary

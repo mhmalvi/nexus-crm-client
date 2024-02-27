@@ -28,7 +28,7 @@ const QueMailer = () => {
   const [fileName, setFileName] = useState("");
 
   const navigate = useNavigate();
-  const [pagination, setPagination] = useState(10);
+  const [emailsPerPage, setEmailsPerPage] = useState(20);
   const [emailSessionRow, setEmailSessionRow] = useState(null);
   const [clicked, setClicked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +37,8 @@ const QueMailer = () => {
   const [openCountModal, setOpenCountModal] = useState(false);
   const [dailyCount, setDailyCount] = useState(null);
   const [historyInnerPagination, setHistoryInnerPagination] = useState(1);
+  const [totalEmail, setTotalEmail] = useState(null);
+
   useEffect(() => {
     async function fetchCurrentEmail() {
       const res = await handleCurrentEmail(+userDetails.userInfo.id);
@@ -46,34 +48,45 @@ const QueMailer = () => {
       fetchCurrentEmail();
     }
   }, [currentEmail, userDetails.userInfo.id]);
+
   useEffect(() => {
     const fetchEmailHistory = async () => {
       try {
         const data = {
-          page: currentPage,
+          per_page: emailsPerPage,
           user_id: userDetails?.userInfo.id,
         };
-        const res = await getEmailHistory(data);
+        const res = await getEmailHistory(data, currentPage);
         setEmailSessionRow(res.data);
+        setTotalEmail(res.data.total);
       } catch (error) {
         console.error("Error fetching email history:", error);
       }
     };
     fetchEmailHistory();
-  }, [currentPage, pagination, userDetails?.userInfo.id]);
+  }, [currentPage, emailsPerPage, userDetails?.userInfo.id]);
+
   useEffect(() => {
     async function fetchEmailCount() {
       const data = {
         id: emailId,
-        per_page: 10,
+        per_page: emailsPerPage,
       };
       const res = await getEmailDetailsCount(data, historyInnerPagination);
+      console.log("TOTAL_COUNT", res);
       setCountInfo(res?.data);
     }
     if (openCountModal || successMail) {
       fetchEmailCount();
     }
-  }, [emailId, historyInnerPagination, openCountModal, successMail]);
+  }, [
+    emailId,
+    emailsPerPage,
+    historyInnerPagination,
+    openCountModal,
+    successMail,
+  ]);
+
   useEffect(() => {
     async function fetchDailyEmailCount() {
       const data = {
@@ -109,8 +122,8 @@ const QueMailer = () => {
     }
   }, [navigate, userDetails]);
   return (
-    <div className="flex items-center justify-center w-full h-screen gap-8">
-      <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh]">
+    <div className="flex items-start justify-center w-full h-screen py-8">
+      <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
         <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
           <div className="flex gap-8">
@@ -196,11 +209,11 @@ const QueMailer = () => {
             </h1>
           </div>
         </div>
-        {currentEmail?.status === 404 ||
-        currentEmail === null ||
-        currentEmail === "" ? (
-          <div className="p-0 m-0 ease-in duration-100">
-            {activeItem === "Email" && (
+        {activeItem === "Email" &&
+          (currentEmail?.status === 404 ||
+          currentEmail === null ||
+          currentEmail === "" ? (
+            <div className="p-0 m-0 ease-in duration-100">
               <div className="flex items-center justify-center h-full">
                 <h1
                   className={`${
@@ -210,14 +223,13 @@ const QueMailer = () => {
                   You need to set an email first
                 </h1>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className="p-0 m-0 ease-in duration-100">
-            {/* EMAIL EDITING SECTION */}
-            {activeItem === "Email" && (
-              <div className="flex h-full justify-between gap-8 ">
-                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] max-h-[77vh] p-8 !z-4">
+            </div>
+          ) : (
+            <div className="p-0 m-0 ease-in duration-100">
+              {/* EMAIL EDITING SECTION */}
+
+              <div className="flex h-full justify-between gap-4">
+                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 !z-4">
                   <MailDashboard
                     openMailModal={openMailModal}
                     setOpenMailModal={setOpenMailModal}
@@ -250,30 +262,29 @@ const QueMailer = () => {
                   />
                 </div>
               </div>
-            )}
-          </div>
-        )}
-        {activeItem === "Email History" && (
-          <div className="flex h-full justify-between gap-8 ">
-            <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] max-h-[77vh] p-8 !z-4">
-              <EmailHistory
-                emailSessionRow={emailSessionRow}
-                setCurrentPage={setCurrentPage}
-                setClicked={setClicked}
-                setOpenCountModal={setOpenCountModal}
-                openCountModal={openCountModal}
-                countInfo={countInfo}
-                setEmailId={setEmailId}
-                setHistoryInnerPagination={setHistoryInnerPagination}
-              />
             </div>
+          ))}
+
+        {activeItem === "Email History" && (
+          <div className="m-0 p-0 flex rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 !z-4 h-full">
+            <EmailHistory
+              emailSessionRow={emailSessionRow}
+              setCurrentPage={setCurrentPage}
+              setClicked={setClicked}
+              setOpenCountModal={setOpenCountModal}
+              openCountModal={openCountModal}
+              countInfo={countInfo}
+              setEmailId={setEmailId}
+              setHistoryInnerPagination={setHistoryInnerPagination}
+              totalEmail={totalEmail}
+              setEmailsPerPage={setEmailsPerPage}
+              emailsPerPage={emailsPerPage}
+            />
           </div>
         )}
         {activeItem === "Email Settings" && (
-          <div className="flex h-full justify-between gap-8 ">
-            <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 overflow-hidden">
-              <EmailSettings currentEmail={currentEmail} />
-            </div>
+          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 h-full overflow-hidden">
+            <EmailSettings currentEmail={currentEmail} />
           </div>
         )}
       </div>

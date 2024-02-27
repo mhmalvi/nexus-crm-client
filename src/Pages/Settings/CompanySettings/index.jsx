@@ -196,7 +196,7 @@ const CompanySettings = () => {
               id="name"
               className={`text-xl ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } font-semibold rounded-xl backdrop-blur-xl bg-[#ffffff11] ${
+              } font-semibold rounded-md backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
                   ? "outline-none bg-[#ffffff11] px-2"
                   : "bg-transparent "

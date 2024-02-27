@@ -15,7 +15,10 @@ const EmailHistory = ({
   openCountModal,
   countInfo,
   setEmailId,
-  setHistoryInnerPagination
+  setHistoryInnerPagination,
+  totalEmail,
+  setEmailsPerPage,
+  emailsPerPage,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -110,7 +113,6 @@ const EmailHistory = ({
       </div>
     ),
   };
-  console.log(countInfo);
   return (
     <>
       <Table
@@ -119,15 +121,18 @@ const EmailHistory = ({
         columns={mainTableColumns}
         dataSource={emailSessionRow?.data}
         scroll={{
-          y: "calc(75vh - 5em)",
+          y: "calc(65vh - 5em)",
         }}
         pagination={{
-          onChange: (pageNum) => {
+          onChange: (pageNum, pageSize) => {
             setCurrentPage(pageNum);
+            setEmailsPerPage(pageSize);
             setClicked(true);
           },
+
+          defaultPageSize: 20,
           current: currentPage,
-          total: emailSessionRow?.total,
+          total: totalEmail,
         }}
       />
       <Modal
@@ -146,8 +151,9 @@ const EmailHistory = ({
               y: "calc(75vh - 5em)",
             }}
             pagination={{
-              onChange: (pageNum) => {
+              onChange: (pageNum, pageSize) => {
                 setHistoryInnerPagination(pageNum);
+                setEmailsPerPage(pageSize);
                 setClicked(true);
               },
               current: currentPage,

@@ -693,7 +693,7 @@ const AdminDashboard = () => {
     user_id: userDetails.userInfo.id,
     id: [null],
   });
-  const socket = io("http://192.168.0.121:7000");
+  const socket = io("https://crmnotification.queleadscrm.com");
 
   socket.connect();
   useEffect(() => {
@@ -790,7 +790,7 @@ const AdminDashboard = () => {
       <div
         className={`w-1/5 flex flex-col items-center justify-between h-full`}
       >
-        <div className="relative w-full flex items-center justify-between p-3 rounded-xl h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
+        <div className="relative w-full flex items-center justify-between p-3 rounded-md h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
             className={` realtive  m-0 p-2 cursor-pointer flex hover:scale-105 `}
             onClick={(e) => {

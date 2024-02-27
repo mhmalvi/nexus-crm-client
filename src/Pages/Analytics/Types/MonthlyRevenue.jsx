@@ -75,7 +75,7 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
 
   return (
     <>
-      <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl py-4 flex flex-col ">
+      <div className="w-full rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] py-4 flex flex-col ">
         <div className="w-full flex justify-between items-center">
           <h1
             className={`text-base font-semibold px-4 m-0 font-poppins ${

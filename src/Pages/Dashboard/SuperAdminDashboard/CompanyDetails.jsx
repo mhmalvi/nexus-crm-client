@@ -287,7 +287,7 @@ const CompanyDetails = () => {
                         okText="Yes"
                         cancelText="No"
                       >
-                        <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-black rounded-xl text-black hover:bg-black hover:text-white hover:transition-colors hover:delay-100">
+                        <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-black rounded-md text-black hover:bg-black hover:text-white hover:transition-colors hover:delay-100">
                           Active
                         </div>
                       </Popconfirm>
@@ -301,7 +301,7 @@ const CompanyDetails = () => {
                         okText="Yes"
                         cancelText="No"
                       >
-                        <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-red-500 rounded-xl text-red-500 hover:bg-red-500 hover:text-white hover:transition-colors hover:delay-100">
+                        <div className="cursor-pointer text-sm px-2 py-0.5 border font-semibold border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:transition-colors hover:delay-100">
                           Inactive
                         </div>
                       </Popconfirm>
@@ -570,7 +570,7 @@ const CompanyDetails = () => {
                     </h1>
                     {companyDetails?.pid ? (
                       <div
-                        className={`w-48 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                        className={`w-48 cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-md text-center`}
                       >
                         <h3 className="font-bold py-2 text-xs">
                           {companyDetails?.package_name}

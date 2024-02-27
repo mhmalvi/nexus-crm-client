@@ -19,7 +19,7 @@ const DayDetails = ({
   eventsData,
   setEventsData,
   userDetails,
-  time,
+  fetchingReminders,
   setTime,
 }) => {
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
@@ -120,6 +120,7 @@ const DayDetails = ({
       message.success("Reminder Added Successfully");
 
       setIsSaveDisable(false);
+      fetchingReminders();
       setTaskDetails(initialData);
       handleOpenDayDetailsCancel();
       setSelectedEventTime();
@@ -160,7 +161,6 @@ const DayDetails = ({
       message.error(res?.message);
     }
   };
-
   return (
     <div className="flex flex-col gap-4">
       <div className="text-lg font-semibold ">
@@ -326,7 +326,7 @@ const DayDetails = ({
                     showTime
                     format="YYYY-MM-DD HH:mm"
                     onChange={onReminderDateChange}
-                    className="w-full timePickerInput"
+                    className="w-full datePicker"
                     placeholder="Select Reminder Date and Time"
                   />
                 </div>

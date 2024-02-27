@@ -198,8 +198,8 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
                 <div
                   className={`cursor-pointer ${
                     selected1.includes(plan.id)
-                      ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-xl text-center"
-                      : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
+                      ? "flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-8 rounded-md text-center"
+                      : "flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-md text-center hover:border-[#5625dc] hover:shadow-md hover:transition ease-in-out delay-160"
                   }`}
                   onClick={() => updateSelected1(plan.id)}
                 >
@@ -288,7 +288,7 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
               inActivePackages?.map((plan, i) => (
                 <div key={i}>
                   <div
-                    className="cursor-pointer flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-xl text-center hover:transition ease-in-out delay-150"
+                    className="cursor-pointer flex flex-col border-2 border-slate-200 shadow p-8 bg-white rounded-md text-center hover:transition ease-in-out delay-150"
                     onClick={() => updateSelected1(plan.id)}
                   >
                     <div className="flex justify-between gap-2">

@@ -116,3 +116,17 @@
 .timePickerInput svg {
   fill: #cbd5e1;
 }
+
+.datePicker {
+  background-color: transparent;
+  border: none;
+}
+.datePicker input {
+  color: #cbd5e1 !important;
+}
+.datePicker input::placeholder {
+  color: #cbd5e1 !important;
+}
+.datePicker svg {
+  fill: #cbd5e1;
+}

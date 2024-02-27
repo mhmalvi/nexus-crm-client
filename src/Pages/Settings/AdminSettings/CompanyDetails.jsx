@@ -488,7 +488,7 @@ const CompanyDetails = () => {
                 </div>
                 <div>
                   <div
-                    className={`w-32 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-xl text-center`}
+                    className={`w-32 mx-auto cursor-pointer flex flex-col border-4 border-[#966dff] shadow bg-[#f3efff] text-white p-6 rounded-md text-center`}
                   >
                     <h3 className="font-bold py-2 text-xs">
                       {companyDetails?.package_name}

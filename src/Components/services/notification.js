@@ -49,7 +49,7 @@ export const handleNotificationViewed = async (data) => {
   };
   try {
     const result = await axios.post(
-      `http://192.168.0.121:7000/api/notification-view`,
+      `https://crmnotification.queleadscrm.com/api/notification-view`,
       data,
       config
     );

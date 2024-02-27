@@ -21,6 +21,8 @@ const EventDetails = ({
   setOpenEventDetails,
   synEvents,
   setSynEvents,
+
+  fetchingReminders,
 }) => {
   const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [startDateTime, setStartDateTime] = useState("");
@@ -54,13 +56,6 @@ const EventDetails = ({
 
     setUpdateEventData(eventDetailsData);
   }, [eventDetails]);
-
-  const handlePriorityChange = (selected) => {
-    const data = { ...updateEventData };
-    data.priority = selected?.key;
-    setUpdateEventData(data);
-    setSelectedPriority(selected);
-  };
 
   const handleDateTimeChange = (_, dateTimeString) => {
     const eventData = { ...updateEventData };
@@ -109,7 +104,7 @@ const EventDetails = ({
       : convertDateString(`${eventDetails.end}`);
     requestData.notification_time = notifyTime
       ? notifyTime
-      : `${eventDetails.notification_time}`;
+      : convertDateString(`${eventDetails.notification_time}`);
 
     requestData.status = 1;
     requestData.user_id = eventDetails.user_id;
@@ -119,6 +114,7 @@ const EventDetails = ({
       message.success("Reminder Updated Successfully");
       setIsSaveDisable(false);
       setIsEdit(false);
+      fetchingReminders();
 
       const restFllowUpEvents = eventsData?.filter(
         (envent) => envent.id !== eventDetails?.id

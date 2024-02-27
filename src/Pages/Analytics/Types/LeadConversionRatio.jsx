@@ -50,7 +50,7 @@ const LeadConversionRatio = ({ activeCompany, fullscreen, setFullScreen }) => {
   };
 
   return (
-    <div className="w-full rounded-xl p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-xl flex flex-col ">
+    <div className="w-full rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] flex flex-col ">
       <div className="flex items-center justify-between m-0">
         <h1 className={`2xl:text-base text-sm font-semibold 3xl:px-4 m-0 py-0 font-poppins ${colorMode ? "text-slate-300" : "text-gray-800"}`}>
           Lead Conversion Ratio
