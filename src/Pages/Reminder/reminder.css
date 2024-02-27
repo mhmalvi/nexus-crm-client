@@ -111,10 +111,13 @@
 }
 
 .timePickerInput input {
-  color: #cbd5e1;
+  color: #cbd5e1 !important;
+}
+.timePickerInput input::placeholder {
+  color: #cbd5e1 !important;
 }
 .timePickerInput svg {
-  fill: #cbd5e1;
+  fill: #cbd5e1 !important;
 }
 
 .datePicker {
