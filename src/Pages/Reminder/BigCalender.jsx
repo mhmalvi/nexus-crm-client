@@ -45,7 +45,29 @@ const BigCalendar = ({ setLoading }) => {
       };
       const res = await handleFetchReminders(data);
 
-      setShowReminder(res.data);
+      // Manipulate the data to update the notification_time
+      const updatedReminders = res.data.map((reminder) => {
+        const utcDate = new Date(reminder.notification_time);
+        const year = utcDate.getUTCFullYear();
+        const month = String(utcDate.getUTCMonth() + 1).padStart(2, "0");
+        const day = String(utcDate.getUTCDate()).padStart(2, "0");
+        const hours = String(utcDate.getUTCHours()).padStart(2, "0");
+        const minutes = String(utcDate.getUTCMinutes()).padStart(2, "0");
+        const seconds = String(utcDate.getUTCSeconds()).padStart(2, "0");
+        const milliseconds = String(utcDate.getUTCMilliseconds()).padStart(
+          3,
+          "0"
+        );
+        const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+
+        return {
+          ...reminder,
+          notification_time: formattedDate,
+        };
+      });
+
+      console.log(updatedReminders);
+      setShowReminder(updatedReminders);
     })();
   };
 
@@ -108,8 +130,6 @@ const BigCalendar = ({ setLoading }) => {
     setIsEdit(false);
     setOpenEventDetails(false);
   };
-
-  console.log(dayjs.locale( ));
   return (
     <div>
       <Calendar
@@ -123,6 +143,7 @@ const BigCalendar = ({ setLoading }) => {
         onSelectSlot={handleSelect}
         className={colorMode ? "reminderBodyDark" : "reminderBodyWhite"}
       />
+
       <Modal
         className="cross_btn reminderModal"
         centered

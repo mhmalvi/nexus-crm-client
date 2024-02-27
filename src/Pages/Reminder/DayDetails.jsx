@@ -26,7 +26,7 @@ const DayDetails = ({
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
   // const [rmTime, setRmTime] = useState("");
-  // const [rmDate, setRmDate] = useState(null); 
+  // const [rmDate, setRmDate] = useState(null);
   // const [rmDateTime, setRmDateTime] = useState(null);
   // const [endTime, setEndTime] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
@@ -88,10 +88,12 @@ const DayDetails = ({
   // };
 
   const onReminderDateChange = (value, dateString) => {
+    const utcDate = new Date(dateString).toISOString();
     // setRmTime(dateString);
     // setRmDateTime(value);
     // setRmDate(value); // Store reminder date in state
-    setNotiFyDate(dateString);
+    setNotiFyDate(utcDate);
+    console.log(notifyDate);
   };
 
   const handleTextInputFieldChange = (e) => {
