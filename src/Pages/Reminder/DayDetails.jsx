@@ -90,14 +90,13 @@ const DayDetails = ({
     setTime(timeString);
     const data = { ...taskDetails };
 
-    const startToDateString = selectedEventTime?.start.toLocaleDateString();
-
+    const start = selectedEventTime?.start;
     const formattedDateString =
-      startToDateString.split("/")[2] +
+      start.getFullYear() +
       "-" +
-      startToDateString.split("/")[1] +
+      ("0" + (start.getMonth() + 1)).slice(-2) +
       "-" +
-      startToDateString.split("/")[0];
+      ("0" + start.getDate()).slice(-2);
 
     const formattedTimeString = timeString;
 
@@ -115,14 +114,14 @@ const DayDetails = ({
   const onEndTimeChange = (time, timeString) => {
     // setEndTime(timeString);
     const data = { ...taskDetails };
-    const endToDateString = selectedEventTime?.end.toLocaleDateString();
+    const end = selectedEventTime?.end;
 
     const formattedDateString =
-      endToDateString.split("/")[2] +
+      end.getFullYear() +
       "-" +
-      endToDateString.split("/")[1] +
+      ("0" + (end.getMonth() + 1)).slice(-2) +
       "-" +
-      endToDateString.split("/")[0];
+      ("0" + end.getDate()).slice(-2);
 
     const formattedTimeString = timeString;
 
@@ -132,7 +131,7 @@ const DayDetails = ({
 
     // Convert the date to ISO format
     data.end = endDate.toISOString().slice(0, 19).replace("T", " ");
-
+    console.log(taskDetails);
     setTaskDetails(data);
   };
   const onReminderDateChange = (value, dateString) => {
