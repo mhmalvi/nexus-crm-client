@@ -11,8 +11,8 @@ import UserDashboard from "./UserDashboard";
 import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
-import { TourProvider } from "@reactour/tour";
-import steps from "./steps";
+// import { TourProvider } from "@reactour/tour";
+// import steps from "./steps";
 const Dashboard = () => {
   const userDetails = useSelector((state) => state?.user);
 
@@ -26,9 +26,9 @@ const Dashboard = () => {
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4 ||
               userDetails?.userInfo?.role_id === 5) && (
-              <TourProvider steps={steps}>
-                <AdminDashboard />
-              </TourProvider>
+              // <TourProvider steps={steps}>
+              <AdminDashboard />
+              // </TourProvider>
             )}
             {userDetails?.userInfo?.role_id === 6 && <UserDashboard />}
             {userDetails?.userInfo?.role_id === 9 && <AgencyDashboard />}
