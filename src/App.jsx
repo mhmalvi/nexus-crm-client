@@ -15,7 +15,7 @@ import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashboard";
 import CompanyDetails from "./Pages/Dashboard/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "./Pages/Dashboard/SuperAdminDashboard/CompanyInfo/CampaignInfo";
-import GmailModule from "./Pages/Gmail";
+// import GmailModule from "./Pages/Gmail";
 import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
 import Analytics from "./Pages/Analytics";
@@ -113,7 +113,7 @@ function App() {
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="email-setting" element={<EmailSetting />} />
-          <Route path="mail" element={<GmailModule />} />
+          {/* <Route path="mail" element={<GmailModule />} /> */}
         </Route>
         <Route path="setup-your-profile" element={<MultipartForm />} />
         <Route path="login" element={<Login />} />
