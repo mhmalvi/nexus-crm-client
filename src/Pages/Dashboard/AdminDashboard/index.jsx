@@ -706,7 +706,6 @@ const AdminDashboard = () => {
       }));
     };
     socket.on("message", handleMessage);
-
     return () => {
       socket.off("message");
       socket.disconnect();

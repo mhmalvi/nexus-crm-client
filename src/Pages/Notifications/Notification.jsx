@@ -11,7 +11,16 @@ const Notification = ({
     (state) => state?.notifications?.notifications
   );
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  function formatUTCDateTime(dateTimeString) {
+    const dateTime = new Date(dateTimeString);
+    const year = dateTime;
+    const month = String(dateTime).padStart(2, "0");
+    const day = String(dateTime).padStart(2, "0");
+    const hours = String(dateTime).padStart(2, "0");
+    const minutes = String(dateTime).padStart(2, "0");
+    const formattedDateTime = `${year}`;
+    return formattedDateTime;
+  }
   return (
     <div
       className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] bg-[#ffffff11] backdrop-blur-2xl shadow-md border  ${
@@ -65,7 +74,7 @@ const Notification = ({
                   colorMode ? "text-white" : "text-gray-800"
                 }`}
               >
-                {notification.notification_time?.slice(0, 16)}
+                {formatUTCDateTime(notification.notification_time)}
               </span>
             </div>
           </div>
