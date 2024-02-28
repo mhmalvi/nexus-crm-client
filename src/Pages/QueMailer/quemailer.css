@@ -457,3 +457,9 @@ label.label input[type="file"] {
   border-radius: 8px;
   overflow: hidden;
 }
+.tox-fullscreen{
+  position: absolute;
+  z-index: 50 !important;
+  width: 100% !important;
+  height: 100% !important;
+}

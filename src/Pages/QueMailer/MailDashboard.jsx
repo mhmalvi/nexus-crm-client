@@ -362,9 +362,9 @@ const MailDashboard = ({
               ""
             )}
           </div>
-          <div className="h-full w-full flex flex-col items-center justify-center w-full mt-4 !z-4 ">
+          <div className="template h-full w-full flex flex-col items-center justify-center w-full mt-4  ">
             {tData ? (
-              <div className="w-full flex flex-col gap-8 z-40000 emailEditorCustom">
+              <div className="w-full flex flex-col gap-8 emailEditorCustom">
                 <Editor
                   apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
                   onInit={(evt, editor) => (editorRef.current = editor)}
