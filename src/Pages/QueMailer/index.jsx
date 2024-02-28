@@ -170,8 +170,8 @@ const QueMailer = () => {
             <button
               disabled
               className={`${
-                colorMode ? "text-slate-600" : "text-gray-300"
-              } px-4 text-base`}
+                colorMode ? "text-slate-600 disabled:text-slate-500" : "text-gray-300 disabled:text-gray-500"
+              } px-4 text-base cursor-not-allowed`}
               onClick={() => {
                 setActiveItem("Statistics");
               }}
@@ -228,8 +228,8 @@ const QueMailer = () => {
             <div className="p-0 m-0 ease-in duration-100">
               {/* EMAIL EDITING SECTION */}
 
-              <div className="flex h-full justify-between gap-4">
-                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 !z-4">
+              <div className="flex h-full justify-between gap-4 z-5">
+                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10">
                   <MailDashboard
                     openMailModal={openMailModal}
                     setOpenMailModal={setOpenMailModal}
@@ -247,7 +247,7 @@ const QueMailer = () => {
                     setError={setError}
                   />
                 </div>
-                <div className="w-1/3 ">
+                <div className="w-1/3 z-0">
                   <CsvParser
                     data={data}
                     setData={setData}

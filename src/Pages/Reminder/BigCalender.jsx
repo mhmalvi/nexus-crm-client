@@ -1,20 +1,18 @@
 import { Modal } from "antd";
-import dayjs from "dayjs";
 import moment from "moment";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from "react-redux";
 import DayDetails from "./DayDetails";
 import EventDetails from "./EventDetails";
 import "./reminder.css";
-import events from "./events1";
 import { handleFetchReminders } from "../../Components/services/reminder";
 moment.locale("en-GB");
 
 const localizer = momentLocalizer(moment);
 
-const BigCalendar = ({ setLoading }) => {
+const BigCalendar = () => {
   const userDetails = useSelector((state) => state.user.userInfo);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [openDayDetails, setOpenDayDetails] = useState(false);

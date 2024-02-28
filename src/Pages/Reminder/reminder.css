@@ -133,3 +133,6 @@
 .datePicker svg {
   fill: #cbd5e1;
 }
+.rbc-row-content {
+  min-height: 310px !important;
+}

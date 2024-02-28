@@ -73,7 +73,7 @@ const CSVParser = ({
   };
 
   return (
-    <div className="h-[77vh] flex flex-col gap-8">
+    <div className="h-[77vh] flex flex-col gap-8 !z-1">
       <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] !z-1 h-3/4 overflow-hidden ">
         {error ? (
           error
