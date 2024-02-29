@@ -24,7 +24,7 @@ const EmailHistory = ({
 
   const mainTableColumns = [
     {
-      title: "ID",
+      title: "S/N",
       render: (_, record, idx) => {
         return (
           <>
@@ -38,6 +38,10 @@ const EmailHistory = ({
           </>
         );
       },
+    },
+    {
+      title: "Campaign ID",
+      dataIndex: "id",
     },
     {
       title: "Sent From",
@@ -59,7 +63,7 @@ const EmailHistory = ({
       ),
     },
     {
-      title: "Time",
+      title: "Sending Time",
       dataIndex: "created_at",
       render: (created_at) => {
         const date = new Date(created_at);
@@ -74,15 +78,15 @@ const EmailHistory = ({
       title: "Recipient",
       dataIndex: "recipients_mail",
     },
-    {
-      title: "Clicked",
-      dataIndex: "click",
-      render: (_, record, idx) => (
-        <div className="w-full flex items-center justify-center">
-          {record?.click === 1 ? <Icons.Tick /> : "No clicks yet"}
-        </div>
-      ),
-    },
+    // {
+    //   title: "Clicked",
+    //   dataIndex: "click",
+    //   render: (_, record, idx) => (
+    //     <div className="w-full flex items-center justify-center">
+    //       {record?.click === 1 ? <Icons.Tick /> : "No clicks yet"}
+    //     </div>
+    //   ),
+    // },
     {
       title: "Opened",
       dataIndex: "open",
@@ -93,7 +97,7 @@ const EmailHistory = ({
       ),
     },
     {
-      title: "Time",
+      title: "Sending Time",
       dataIndex: "created_at",
       render: (created_at) => {
         const date = new Date(created_at);
@@ -101,6 +105,19 @@ const EmailHistory = ({
         const formattedTime = date.toLocaleTimeString();
         return `${formattedDate} ${formattedTime}`;
       },
+    },
+    {
+      title: "Subscriber",
+      dataIndex: "subscribed_or_unsubscribed",
+      render: (_, record, idx) => (
+        <div className="w-full flex items-center justify-center">
+          {record?.subscribed_or_unsubscribed === 1 ? (
+            <Icons.Tick />
+          ) : (
+            "Unsubscribed"
+          )}
+        </div>
+      ),
     },
   ];
   const handleCancel = () => {

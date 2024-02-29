@@ -877,6 +877,8 @@ const AdminDashboard = () => {
           className={
             colorMode ? "profileSettingsModalDark" : "profileSettingsModalLight"
           }
+        transitionName=""
+          closeIcon={" "}
           mask={() => setOpenProfile(false)}
           width="21%"
         >
