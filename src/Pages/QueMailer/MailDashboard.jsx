@@ -6,7 +6,6 @@ import {
   Popconfirm,
   Select,
   Modal,
-  Dropdown,
 } from "antd";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -97,7 +96,7 @@ const MailDashboard = ({
     }
     setAttachment(files);
   };
-  console.log(categorizedData)
+
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -112,18 +111,36 @@ const MailDashboard = ({
     } else {
       try {
         const formData = new FormData();
-        formData.append("subject", mailSubject);
-        formData.append(
-          "template",
-          editorRef?.current
-            ? editorRef?.current?.getContent()
-              ? editorRef?.current?.getContent()
-              : ""
-            : ""
-        );
-        data.forEach((email) => {
-          formData.append("email[]", email);
+        const emailTemplatePairs = [];
+
+        categorizedData && categorizedData.forEach((data, index) => {
+          let modifiedTemplateContent = editorRef?.current?.getContent() || "";
+          let modifiedMailSubject = mailSubject;
+          headerData.forEach((placeholder) => {
+            const regex = new RegExp(`{${placeholder}}`, "g");
+            modifiedTemplateContent = modifiedTemplateContent.replace(
+              regex,
+              data[placeholder] || ""
+            );
+            modifiedMailSubject = modifiedMailSubject.replace(
+              regex,
+              data[placeholder] || ""
+            );
+          });
+
+          emailTemplatePairs.push({
+            email: data.Email || data.email || data.EMAIL,
+            templateContent: modifiedTemplateContent,
+            subject: modifiedMailSubject,
+          });
         });
+
+        emailTemplatePairs.forEach((data) => {
+          formData.append("email[]", data.email);
+          formData.append("template[]", data.templateContent);
+          formData.append("subject[]", data.subject);
+        });
+
         formData.append("user_id", userDetails?.id);
 
         if (attachment.length) {
@@ -249,9 +266,7 @@ const MailDashboard = ({
       }
     });
   }, [tData, templateList]);
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+
   return (
     <div className=" flex flex-col gap-4">
       <div className="w-full flex justify-between gap-8">
@@ -473,16 +488,15 @@ const MailDashboard = ({
                     <Select
                       defaultValue="Select dynamic function"
                       style={{ width: 220 }}
+                      className="templateSelect"
                       onChange={(selectedOption) => {
-                        console.log(selectedOption)
                         navigator.clipboard.writeText(`{${selectedOption}}`);
-                        message.success(selectedOption)
-                    }}
+                        message.success(selectedOption);
+                      }}
                       options={headerData.map((header) => ({
                         value: header,
                         label: header,
                       }))}
-                      
                     />
                     {templateData.template !== tempInitValue ? (
                       <button
