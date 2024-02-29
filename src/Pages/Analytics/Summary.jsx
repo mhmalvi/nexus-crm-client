@@ -8,15 +8,10 @@ import {
 } from "../../Components/services/payment";
 import { Select } from "antd";
 import { setLoader } from "../../features/user/userSlice";
-import {
-  handleFetchCompanies,
-} from "../../Components/services/company";
+import { handleFetchCompanies } from "../../Components/services/company";
+import "./Types/analytic.css"
 
-const Summary = ({
-  activeCompany,
-  companyEmployees,
-  setActiveCompanies,
-}) => {
+const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
   const { Option } = Select;
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user)?.userInfo;
@@ -86,7 +81,7 @@ const Summary = ({
     })();
   }, [setActiveCompanies]);
   return (
-    <div className="flex flex-col justify-between items-start w-full gap-2">
+    <div className="flex flex-col justify-between items-start w-full shadow-md w-full pb-4 border-b">
       <div className="flex w-full items-center justify-between">
         <h1
           className={`text-xl font-semibold font-poppins ${
@@ -96,29 +91,29 @@ const Summary = ({
           Summary
         </h1>
         {userDetails?.role_id === 1 ? (
-            <div className="font">
-              <Select
-                id="companies"
-                defaultValue={defaultCompany}
-                placeholder={defaultCompany}
-                style={{
-                  width: 200,
-                }}
-                onChange={handleChange}
-              >
-                {companies?.map((company) => (
-                  <Option value={company?.id}>{company?.name}</Option>
-                ))}
-              </Select>
-            </div>
-          ) : null}
+          <div className="font">
+            <Select
+              id="companies"
+              defaultValue={defaultCompany}
+              placeholder={defaultCompany}
+              style={{
+                width: 200,
+              }}
+              onChange={handleChange}
+            >
+              {companies?.map((company) => (
+                <Option value={company?.id}>{company?.name}</Option>
+              ))}
+            </Select>
+          </div>
+        ) : null}
       </div>
       <div className="w-full items-center justify-between flex flex-wrap gap-4">
         <div className="flex-grow">
-          <div className="flex justify-between rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
+          <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -134,7 +129,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.Briefcase
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />
@@ -145,7 +140,7 @@ const Summary = ({
           <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -155,7 +150,7 @@ const Summary = ({
                   : 0}
               </h1>
               <p
-                className={`text-xs font-medium ${
+                className={`text-xs ${
                   colorMode ? "text-white" : "text-gray-800"
                 } mb-0`}
               >
@@ -164,7 +159,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.CalendarMonth
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />
@@ -175,7 +170,7 @@ const Summary = ({
           <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -194,7 +189,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.CalendarWeek
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />
@@ -205,7 +200,7 @@ const Summary = ({
           <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -221,7 +216,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.Campaigns
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />
@@ -232,7 +227,7 @@ const Summary = ({
           <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -251,7 +246,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.MoneyCheck
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />
@@ -262,7 +257,7 @@ const Summary = ({
           <div className="flex justify-between rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
             <div>
               <h1
-                className={`text-lg font-semibold ${
+                className={`2xl:text-lg text-sm font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -278,7 +273,7 @@ const Summary = ({
             </div>
             <div>
               <Icons.PeopleGroup
-                className={`w-5 ${
+                className={`2xl:w-5 w-4 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               />

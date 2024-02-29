@@ -73,7 +73,6 @@ const DayDetails = ({
     console.log(data.start);
     setTaskDetails(data);
   };
-
   const onEndTimeChange = (time, timeString) => {
     const data = { ...taskDetails };
     const end = selectedEventTime?.end;

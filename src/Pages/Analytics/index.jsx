@@ -128,16 +128,18 @@ const Overview = () => {
       >
         Capture Report
       </button> */}
-      <div className="font-poppins rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-screen w-full overflow-hidden">
-        <div ref={pdfRef} className="flex flex-col gap-4 ">
-          <div className="">
-            <Summary
-              activeCompany={activeCompany}
-              companyEmployees={companyEmployees}
-              setActiveCompanies={setActiveCompanies}
-            />
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll overflow-x-hidden h-[75vh] w-full rounded-md ">
+      <div className="font-poppins rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full w-full overflow-hidden">
+        <div
+          ref={pdfRef}
+          className="flex flex-col gap-4 justify-between h-full"
+        >
+          <Summary
+            activeCompany={activeCompany}
+            companyEmployees={companyEmployees}
+            setActiveCompanies={setActiveCompanies}
+          />
+
+          <div className="flex flex-wrap items-center justify-center gap-4 !overflow-y-scroll overflow-x-hidden h-4/5 w-full rounded-md ">
             <div className="flex-auto flex-shrink-0 w-1/4">
               <IncomePerDay
                 activeCompany={activeCompany}

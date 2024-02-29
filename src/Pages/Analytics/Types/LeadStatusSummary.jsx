@@ -243,7 +243,12 @@ const LeadStatusSummary = ({ fullscreen, setFullScreen }) => {
       ) : (
         <div className="pt-4">
           <ResponsiveContainer width="100%" height={220}>
-            <PieChart width="100%" height={220}>
+            <PieChart
+              width="100%"
+              height={220}
+              fill="#7037FF"
+              className={colorMode ? "pieChartCssDark" : "pieChartCssLight"}
+            >
               <Pie
                 activeIndex={activeIndex}
                 activeShape={LeadStatusCustomizedLabel}
