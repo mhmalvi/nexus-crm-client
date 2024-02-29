@@ -97,9 +97,8 @@ const Login = () => {
         "auth_tok",
         loginResponse?.data?.token || loginResponse?.data?.data
       );
-      Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
-      dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
-
+      // Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      // dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
       dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));

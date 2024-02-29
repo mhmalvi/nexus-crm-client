@@ -26,3 +26,32 @@
 .statusSummaryLight .ant-select-selector .ant-select-selection-placeholder {
   color: #1f2937 !important;
 }
+.recharts-default-tooltip {
+  background-color: #1f2937 !important;
+  border-radius: 8px !important;
+  border-color: #cbd5e1 !important;
+  color: #cbd5e1 !important;
+}
+.recharts-tooltip-cursor {
+  fill: #0d0d0d !important;
+  border-radius: 8px;
+}
+.pieChartCssDark .recharts-pie-sector > g > text {
+  fill: #cbd5e1 !important;
+  stroke-width: 0.1px !important;
+  stroke: #cbd5e1 !important;
+}
+
+.pieChartCssLight .recharts-pie-sector > g > text {
+  fill: #7037ff !important;
+  stroke-width: 0.1px !important;
+  stroke: #7037ff !important;
+}
+
+.recharts-cartesian-axis-tick > text {
+  fill: #0d0d0d;
+}
+.recharts-cartesian-grid-horizontal > line,
+.recharts-cartesian-grid-vertical > line {
+  stroke: #0d0d0d;
+}

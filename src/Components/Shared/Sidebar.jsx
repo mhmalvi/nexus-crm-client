@@ -19,6 +19,7 @@ import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
 const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
 
 const Sidebar = ({ active, setActive, setOpenSideBar }) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
@@ -31,7 +32,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   //   (state) => state?.user?.companyId,
   //   shallowEqual
   // );
-
+  console.log(userDetails.userInfo);
   const [companyDetails, setCompanyDetails] = useState({
     company_name: null,
     company_logo: null,
@@ -72,7 +73,11 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   }, [dispatch, userDetails]);
 
   const logoutHandler = () => {
-    handleLogout();
+    handleLogout({
+      user_id: userDetails.userInfo.user_id,
+      email: userDetails.userInfo.email,
+      token: authToken,
+    });
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");

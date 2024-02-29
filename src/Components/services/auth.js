@@ -84,15 +84,17 @@ export const handleLoginSecond = async (loginDetails) => {
     return error;
   }
 };
-export const handleLogout = async () => {
+export const handleLogout = async (logOut) => {
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
   try {
     const result = await axios.post(
       `https://crmuser.queleadscrm.com/api/logout`,
+      logOut,
       config
     );
     return result;
