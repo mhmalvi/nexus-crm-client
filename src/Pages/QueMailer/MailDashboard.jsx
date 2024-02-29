@@ -1,4 +1,13 @@
-import { Button, Form, Input, message, Popconfirm, Select, Modal } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Select,
+  Modal,
+  Dropdown,
+} from "antd";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,7 +21,6 @@ import {
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
 import { CloseOutlined } from "@ant-design/icons";
-import Gallery from "./Gallery";
 import "./quemailer.css";
 
 const allowedExtensions = ["jpg", "jpeg", "png", "pdf"];
@@ -29,6 +37,8 @@ const MailDashboard = ({
   data,
   setFileName,
   setFile,
+  categorizedData,
+  headerData,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -38,10 +48,6 @@ const MailDashboard = ({
   const [tempOpen, setTempOpen] = useState(false);
   const [templateList, setTemplateList] = useState([]);
   const [staticTempListData, setStaticTempListData] = useState("");
-
-  const [showGallery, setShowGallery] = useState(false);
-  const [galleryList, setGalleryList] = useState("");
-  const [staticGalleryListData, setStaticGalleryListData] = useState("");
 
   const [mailSubject, setMailSubject] = useState("");
   const [selectedData, setSelectedData] = useState([]);
@@ -58,9 +64,6 @@ const MailDashboard = ({
   };
   const showAddNewTemplateModal = () => {
     setTempOpen(true);
-  };
-  const showGalleryModal = () => {
-    setShowGallery(true);
   };
   const handleAttachment = (e) => {
     const files = Array.from(e.target.files);
@@ -82,22 +85,19 @@ const MailDashboard = ({
         }
       }
     });
-
     if (!isValid) {
       setAttachment([]);
       return;
     }
-
     const totalSizeInMB = totalSize / (1024 * 1024);
     if (totalSizeInMB > 20) {
       message.warning("Total selected files exceed the 20MB limit.");
       setAttachment([]);
       return;
     }
-
     setAttachment(files);
   };
-
+  console.log(categorizedData)
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -209,12 +209,10 @@ const MailDashboard = ({
         })
       );
       staticTempListData && tempList.push(staticTempListData);
-      staticGalleryListData && galleryList.push(staticGalleryListData);
       setTemplateList(tempList);
-      setGalleryList(galleryList);
     }
     onSelectTemp();
-  }, [staticGalleryListData, staticTempListData]);
+  }, [staticTempListData]);
 
   useEffect(() => {
     if (successMail === "success" || successMail === "failed") {
@@ -251,9 +249,11 @@ const MailDashboard = ({
       }
     });
   }, [tData, templateList]);
-
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   return (
-    <div className="flex flex-col gap-4">
+    <div className=" flex flex-col gap-4">
       <div className="w-full flex justify-between gap-8">
         <div>
           <h1
@@ -376,7 +376,6 @@ const MailDashboard = ({
                     height: "calc(50vh - 5em)",
                     menubar: false,
                     resize: false,
-
                     plugins: [
                       "advlist",
                       "autolink",
@@ -471,6 +470,20 @@ const MailDashboard = ({
                     </h1>
                   </div>
                   <div className="flex items-center justify-center gap-4">
+                    <Select
+                      defaultValue="Select dynamic function"
+                      style={{ width: 220 }}
+                      onChange={(selectedOption) => {
+                        console.log(selectedOption)
+                        navigator.clipboard.writeText(`{${selectedOption}}`);
+                        message.success(selectedOption)
+                    }}
+                      options={headerData.map((header) => ({
+                        value: header,
+                        label: header,
+                      }))}
+                      
+                    />
                     {templateData.template !== tempInitValue ? (
                       <button
                         type="button"
@@ -517,12 +530,6 @@ const MailDashboard = ({
         setStaticTempListData={setStaticTempListData}
         tempOpen={tempOpen}
         setTempOpen={setTempOpen}
-      />
-      <Gallery
-        galleryList={galleryList}
-        setStaticGalleryListData={setStaticGalleryListData}
-        showGallery={showGallery}
-        setShowGallery={setShowGallery}
       />
       <Modal
         width="20%"

@@ -57,24 +57,9 @@ const EventDetails = ({
     setUpdateEventData(eventDetailsData);
   }, [eventDetails]);
 
-  const handleDateTimeChange = (_, dateTimeString) => {
-    const eventData = { ...updateEventData };
 
-    eventData.start = dateTimeString[0];
-    eventData.end = dateTimeString[1];
 
-    setUpdateEventData(eventData);
-    setStartDateTime(eventData?.start);
-    setEndDateTime(eventData?.end);
-  };
 
-  const handleReminderDateTimeChange = (_, dateTimeString) => {
-    const eventData = { ...updateEventData };
-    eventData.notification_time = dateTimeString;
-
-    setUpdateEventData(eventData);
-    setNotifyTime(eventData?.notification_time);
-  };
 
   const handleEventDetailsChange = (e) => {
     const updatedValue = { ...updateEventData };
@@ -89,22 +74,40 @@ const EventDetails = ({
     const day = date.getDate().toString().padStart(2, "0");
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
-
+  
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
+  const handleDateTimeChange = (_, dateTimeString) => {
+    const eventData = { ...updateEventData };
+  
+    eventData.start = convertDateString(dateTimeString[0]);
+    eventData.end = convertDateString(dateTimeString[1]);
+  
+    setUpdateEventData(eventData);
+    setStartDateTime(eventData?.start);
+    setEndDateTime(eventData?.end);
+  };
+  
+  const handleReminderDateTimeChange = (_, dateTimeString) => {
+    const eventData = { ...updateEventData };
+    eventData.notification_time = convertDateString(dateTimeString);
+  
+    setUpdateEventData(eventData);
+    setNotifyTime(eventData?.notification_time);
+  };
   const handleUpdateFollowUpReq = async () => {
     setIsSaveDisable(true);
     const requestData = { ...updateEventData };
 
     requestData.start = startDateTime
       ? startDateTime
-      : convertDateString(`${eventDetails.start}`);
+      : `${eventDetails.start}`;
     requestData.end = endDateTime
       ? endDateTime
-      : convertDateString(`${eventDetails.end}`);
+      : `${eventDetails.end}`;
     requestData.notification_time = notifyTime
       ? notifyTime
-      : convertDateString(`${eventDetails.notification_time}`);
+      : `${eventDetails.notification_time}`;
 
     requestData.status = 1;
     requestData.user_id = eventDetails.user_id;

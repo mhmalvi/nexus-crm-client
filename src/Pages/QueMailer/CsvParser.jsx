@@ -15,6 +15,8 @@ const CSVParser = ({
   mailProgress,
   setFileName,
   fileName,
+  setHeaderData,
+  setCategorizedData
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -44,37 +46,77 @@ const CSVParser = ({
       setFile(inputFile);
     }
   };
+  // const handleParse = () => {
+  //   if (!file) return alert("Enter a valid file");
+  //   const reader = new FileReader();
+  //   reader.onload = async ({ target }) => {
+  //     const csv = Papa.parse(target.result, {
+  //       header: false,
+  //     });
+  //     const parsedData = csv?.data || [];
+  //     const removeTrailingChars = (cell) => cell.replace(/[.\s]+$/g, "");
+  //     const trimmedData = parsedData.map((row) =>
+  //       row.map((cell) =>
+  //         typeof cell === "string" ? removeTrailingChars(cell) : cell
+  //       )
+  //     );
+  //     const filteredData = trimmedData.filter((row) =>
+  //       row.some((cell) => cell.trim() !== "")
+  //     );
+  //     const validatedData = filteredData.filter((row) => {
+  //       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //       const isValidEmail = row.every(
+  //         (cell) => typeof cell !== "string" || emailRegex.test(cell)
+  //       );
+  //       return isValidEmail;
+  //     });
+  //     setData(validatedData);
+  //   };
+  //   reader.readAsText(file);
+  // };
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
     reader.onload = async ({ target }) => {
-      const csv = Papa.parse(target.result, {
-        header: false,
-      });
-      const parsedData = csv?.data || [];
-      const removeTrailingChars = (cell) => cell.replace(/[.\s]+$/g, "");
-      const trimmedData = parsedData.map((row) =>
-        row.map((cell) =>
-          typeof cell === "string" ? removeTrailingChars(cell) : cell
-        )
-      );
-      const filteredData = trimmedData.filter((row) =>
-        row.some((cell) => cell.trim() !== "")
-      );
-      const validatedData = filteredData.filter((row) => {
-        // Email Validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValidEmail = row.every((cell) => typeof cell !== "string" || emailRegex.test(cell));
-        return isValidEmail;
-    });
-      setData(validatedData);
+        const csv = Papa.parse(target.result, {
+            header: false,
+        });
+        const parsedData = csv?.data || [];
+
+        // Extracting the header row
+        const headerRow = parsedData.length > 0 ? parsedData[0] : [];
+        setHeaderData(headerRow)
+        // Rest of the rows excluding the header
+        const dataRows = parsedData.slice(1);
+        
+        // Organizing data under headings
+        const organizedData = dataRows.map((row) => {
+            const rowData = {};
+            headerRow.forEach((header, index) => {
+                rowData[header] = row[index];
+            });
+            return rowData;
+        });
+        setCategorizedData(organizedData)
+        // Extracting email addresses from organizedData
+        const emailAddresses = organizedData
+            .map((row) => row['Email']) // Assuming 'Email' is the header for email addresses
+            .filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)); // Filtering valid email addresses
+
+        setData(emailAddresses);
+        
     };
     reader.readAsText(file);
-  };
+};
+
 
   return (
-    <div className="h-[77vh] flex flex-col gap-8 !z-1">
-      <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] !z-1 h-3/4 overflow-hidden ">
+    <div className="h-[77vh] flex flex-col flex-grow gap-8 !z-1">
+      <div
+        className={`${
+          data.length <= 0 ? "hidden" : "content"
+        } rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] !z-1 h-3/4 overflow-hidden `}
+      >
         {error ? (
           error
         ) : (
@@ -160,7 +202,7 @@ const CSVParser = ({
                           colorMode ? "text-slate-300" : "text-gray-800"
                         } text-xs flex items-center justify-center p-0 m-0`}
                       >
-                        {email[0]}
+                        {email}
                       </h1>
                     </li>
                   ))
@@ -170,17 +212,34 @@ const CSVParser = ({
           </div>
         )}
       </div>
-      <div className="rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] !z-1 h-1/4 overflow-hidden">
+      <div
+        className={`flex flex-col shadow-md backdrop-blur-2xl bg-[#ffffff11] !z-1 ${
+          data.length <= 0 ? "h-full" : "h-1/4"
+        } overflow-hidden`}
+      >
         <h3
-          className={`${
+          className={`rounded-t-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ${
             colorMode
               ? "text-slate-300 bg-[#ffffff11]"
               : "text-gray-800 bg-[#ffffff7f]"
-          } px-8 py-2 text-xl`}
+          } px-4 py-2 text-xl`}
         >
-          Upload a CSV file
+          {data.length <= 0 ? (
+            <span>
+              Upload a CSV file{" "}
+              <span className="text-sm">
+                - (Row 1 must contain all the headers)
+              </span>
+            </span>
+          ) : (
+            "Reupload and add more emails"
+          )}
         </h3>
-        <div className="csvFile flex w-full items-center justify-between h-1/2 px-8">
+        <div
+          className={`ease-in duration-200 flex gap-4 w-full h-full items-center ${
+            data.length <= 0 ? "justify-center" : "justify-between"
+          } px-8`}
+        >
           <label
             className={`${
               fileName ? "" : colorMode ? "labelDark" : "labelLight"
@@ -224,7 +283,7 @@ const CSVParser = ({
               handleParse();
               console.log(data);
             }}
-            className={`w-1/3 py-2 px-4 rounded-md border text-xs hover:scale-95 ease-in duration-100 ${
+            className={`py-2 px-4 rounded-md border text-xs hover:scale-95 ease-in duration-100 ${
               colorMode
                 ? "border-slate-300 text-slate-300"
                 : "border-gray-800 text-gray-800"
