@@ -38,6 +38,8 @@ const QueMailer = () => {
   const [dailyCount, setDailyCount] = useState(null);
   const [historyInnerPagination, setHistoryInnerPagination] = useState(1);
   const [totalEmail, setTotalEmail] = useState(null);
+  const [headerData, setHeaderData] = useState()
+  const [categorizedData, setCategorizedData] = useState()
 
   useEffect(() => {
     async function fetchCurrentEmail() {
@@ -86,7 +88,6 @@ const QueMailer = () => {
     openCountModal,
     successMail,
   ]);
-
   useEffect(() => {
     async function fetchDailyEmailCount() {
       const data = {
@@ -229,7 +230,8 @@ const QueMailer = () => {
               {/* EMAIL EDITING SECTION */}
 
               <div className="flex h-full justify-between gap-4 z-5">
-                <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10">
+                <div className={`${data.length <= 0 ?"hidden":"content"} ease-in duration-200 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}>
+                  
                   <MailDashboard
                     openMailModal={openMailModal}
                     setOpenMailModal={setOpenMailModal}
@@ -245,9 +247,11 @@ const QueMailer = () => {
                     setAttachment={setAttachment}
                     setFile={setFile}
                     setError={setError}
+                    categorizedData={categorizedData}
+                    headerData={headerData}
                   />
                 </div>
-                <div className="w-1/3 z-0">
+                <div className={`${data.length <= 0 ?"w-full":"w-1/2"} flex flex-col z-0`}>
                   <CsvParser
                     data={data}
                     setData={setData}
@@ -259,6 +263,8 @@ const QueMailer = () => {
                     successMail={successMail}
                     fileName={fileName}
                     setFileName={setFileName}
+                    setHeaderData={setHeaderData}
+                    setCategorizedData={setCategorizedData}
                   />
                 </div>
               </div>

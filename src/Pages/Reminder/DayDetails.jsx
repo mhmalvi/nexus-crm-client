@@ -49,43 +49,6 @@ const DayDetails = ({
     );
   }, [selectedEventTime, eventDetails, eventsData, setEventsData]);
 
-  // const onStartTimeChange = (time, timeString) => {
-  //   setTime(timeString);
-  //   const data = { ...taskDetails };
-
-  //   const startToDateString = (selectedEventTime?.start).toLocaleDateString();
-
-  //   data.start =
-  //     startToDateString?.split("/")[2] +
-  //     "-" +
-  //     startToDateString?.split("/")[1] +
-  //     "-" +
-  //     startToDateString?.split("/")[0] +
-  //     " " +
-  //     timeString;
-  //   console.log(data.start);
-  //   setTaskDetails(data);
-  // };
-
-  // const onEndTimeChange = (time, timeString) => {
-  //   // setEndTime(timeString);
-  //   const data = { ...taskDetails };
-  //   const endToDateString = (selectedEventTime?.end).toLocaleDateString();
-  //   data.end =
-  //     endToDateString?.split("/")[2] +
-  //     "-" +
-  //     endToDateString?.split("/")[1] +
-  //     "-" +
-  //     endToDateString?.split("/")[0] +
-  //     " " +
-  //     timeString;
-
-  //   setTaskDetails(data);
-  // };
-
-  // const onReminderTimeChange = (value, dateString) => {
-  //    // Store reminder date and time in state
-  // };
   const onStartTimeChange = (time, timeString) => {
     setTime(timeString);
     const data = { ...taskDetails };
@@ -112,7 +75,6 @@ const DayDetails = ({
   };
 
   const onEndTimeChange = (time, timeString) => {
-    // setEndTime(timeString);
     const data = { ...taskDetails };
     const end = selectedEventTime?.end;
 
@@ -136,9 +98,6 @@ const DayDetails = ({
   };
   const onReminderDateChange = (value, dateString) => {
     const utcDate = new Date(dateString).toISOString();
-    // setRmTime(dateString);
-    // setRmDateTime(value);
-    // setRmDate(value); // Store reminder date in state
     setNotiFyDate(utcDate);
     console.log(notifyDate);
   };
