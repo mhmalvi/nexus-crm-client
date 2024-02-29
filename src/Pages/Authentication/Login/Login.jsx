@@ -47,12 +47,12 @@ const Login = () => {
     }
   }, [syncBookMarked]);
 
-  useEffect(() => {
-    const isBookmarkSet = !!Storage.getItem("__b__");
-    if (!isBookmarkSet) {
-      setAddBookMarkOpen(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isBookmarkSet = !!Storage.getItem("__b__");
+  //   if (!isBookmarkSet) {
+  //     setAddBookMarkOpen(true);
+  //   }
+  // }, []);
   // useEffect(() => {
 
   // }, [navigate, userDetails]);
