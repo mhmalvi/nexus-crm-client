@@ -80,10 +80,10 @@
   border-top: none;
 }
 .reminderBodyWhite .rbc-off-range-bg {
-  background-color: #a17cff !important;
+  background-color: #cbd5e1bb !important;
 }
 .reminderBodyDark .rbc-off-range-bg {
-  background-color: #a17cff !important;
+  background-color: #1f2937b9 !important;
 }
 .reminderBodyWhite .rbc-off-range button,
 .reminderBodyDark .rbc-off-range button {
