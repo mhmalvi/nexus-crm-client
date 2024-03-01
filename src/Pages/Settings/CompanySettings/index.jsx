@@ -231,11 +231,11 @@ const CompanySettings = () => {
             </h1>
             {!toggleEditDetails ? (
               <button
-                className="flex items-center justify-center gap-2 px-2 bg-slate-300 rounded-md"
+                className="flex items-center justify-center gap-2 px-2 bg-gray-800 rounded-md"
                 onClick={() => setToggleEditDetails(true)}
               >
-                <span className="text-brand-color">Edit</span>
-                <Icons.Edit className="cursor-pointer text-brand-color" />
+                <span className="text-slate-300">Edit</span>
+                <Icons.Edit className="cursor-pointer text-slate-300" />
               </button>
             ) : (
               <div className="flex items-center justify-end gap-1">
@@ -266,7 +266,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="trading_name"
-                  className={`w-full outline-none border-0  ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -297,7 +297,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="contact"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -328,7 +328,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="business_email"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -360,7 +360,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="address"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -391,7 +391,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="abn"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -422,7 +422,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="rto_code"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -454,7 +454,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="website"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
@@ -487,7 +487,7 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="country_name"
-                  className={`w-full outline-none border-0 ${
+                  className={`w-full outline-none border-0 rounded-md ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   } ${colorMode ? " bg-[#ffffff11]" : "bg-[#33333322]"} py-0`}
                   type="text"
@@ -516,7 +516,7 @@ const CompanySettings = () => {
 
               <input
                 id="fb_ac_credential"
-                className={`w-full  ${
+                className={`w-full ml-2 rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
@@ -553,7 +553,7 @@ const CompanySettings = () => {
               </span>
               <input
                 id="secret_key"
-                className={`w-full  ${
+                className={`w-full ml-2 rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
@@ -591,7 +591,7 @@ const CompanySettings = () => {
 
               <input
                 id="app_id"
-                className={`w-full  ${
+                className={`w-full ml-2 rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
