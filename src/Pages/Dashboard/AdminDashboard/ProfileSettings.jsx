@@ -112,19 +112,19 @@ const ProfileSettings = ({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center ">
-        <div className="flex">
-          <div className="rounded-full mr-4">
+        <div className="flex gap-2">
+          <div className="rounded-full w-1/3 mr-4">
             <Avatar
               className="rounded-md cursor-pointer"
-              size="80"
-              color="#fff"
+              size="60"
+              color="#cbd5e1"
               fgColor="#000"
               name={profileData?.full_name}
             />
           </div>
           <div className="flex-col font-poppins my-auto">
             <div
-              className={`text-lg ${
+              className={`2xl:text-lg text-base ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
@@ -136,7 +136,7 @@ const ProfileSettings = ({
               }`}
             >
               My role
-              <span className="font-semibold px-1">
+              <span className="2xl-font-semibold px-1">
                 {ProfileDetails?.role_id === 1 && "Super Admin"}
                 {ProfileDetails?.role_id === 2 && "CRM Sales"}
                 {ProfileDetails?.role_id === 3 && "Admin"}
@@ -149,10 +149,10 @@ const ProfileSettings = ({
         </div>
         <div className="flex justify-end">
           {openProfile && toggleEditDetails ? (
-            <div className="flex justify-center gap-2">
+            <div className="flex 2xl:flex-row flex-col justify-center gap-2">
               <div>
                 <button
-                  className="py-2 px-4 w-full hover:text-gray-800 bg-white border-2 hover:border-black rounded-lg transition-colors duration-150 focus:shadow-outline border-none"
+                  className="2xl:py-2 py-1 2xl:px-4 px-2 w-full hover:text-gray-800 bg-white border-2 hover:border-black rounded-lg transition-colors duration-150 focus:shadow-outline border-none"
                   onClick={cancelEdit}
                 >
                   Cancel
@@ -162,7 +162,7 @@ const ProfileSettings = ({
                 <button
                   type="submit"
                   onClick={UpdateUserDetailsReq}
-                  className="py-2 px-4 w-full text-white hover:bg-black rounded-lg transition-colors duration-150 focus:shadow-outline bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] tracking-wide"
+                  className="2xl:py-2 py-1 2xl:px-4 px-2 w-full text-white hover:bg-black rounded-lg transition-colors duration-150 focus:shadow-outline bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] tracking-wide"
                 >
                   Save
                 </button>
@@ -170,7 +170,7 @@ const ProfileSettings = ({
             </div>
           ) : (
             <button
-              className={`bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] font-poppins text-sm rounded-md py-2 px-4 flex items-center`}
+              className={`bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] font-poppins text-sm rounded-md 2xl:py-2 py-1 2xl:px-4 px-2 flex items-center`}
               onClick={() => {
                 setToggleEditDetails(true);
               }}
@@ -182,7 +182,7 @@ const ProfileSettings = ({
         </div>
       </div>
       <div className=" w-full h-[60vh] overflow-y-scroll">
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -196,7 +196,7 @@ const ProfileSettings = ({
               name="full_name"
               className={`text-start w-full px-2 py-0 m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -204,7 +204,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm  text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -212,7 +212,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -225,7 +225,7 @@ const ProfileSettings = ({
             <div
               className={`m-0 p-0 w-full bg-transparent flex items-center justify-between ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base`}
+              } 2xl:text-base text-sm `}
             >
               <DatePicker
                 onChange={onChange}
@@ -237,7 +237,7 @@ const ProfileSettings = ({
             </div>
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -247,7 +247,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -262,7 +262,7 @@ const ProfileSettings = ({
               name="secondary_contact"
               className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm  rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -270,7 +270,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm  text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -280,7 +280,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -292,9 +292,9 @@ const ProfileSettings = ({
             <input
               id="location"
               name="location"
-              className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
+              className={`text-start w-full px-2 py-0 m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              }  2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -302,7 +302,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -310,7 +310,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -325,7 +325,7 @@ const ProfileSettings = ({
               name="address"
               className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -333,7 +333,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -341,7 +341,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -353,9 +353,9 @@ const ProfileSettings = ({
             <input
               id="region"
               name="region"
-              className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
+              className={`text-start w-full px-2 py-0 m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -363,7 +363,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -371,7 +371,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -385,7 +385,7 @@ const ProfileSettings = ({
               name="postcode"
               className={`text-start w-full px-2 py-0 m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -393,7 +393,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -401,7 +401,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -415,7 +415,7 @@ const ProfileSettings = ({
               name="profession"
               className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -423,7 +423,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -431,7 +431,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2 border-b">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -449,7 +449,7 @@ const ProfileSettings = ({
               <div
                 className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
                   colorMode ? "text-slate-300" : "text-gray-800"
-                } text-base rounded-md`}
+                } 2xl:text-base text-sm rounded-md`}
               >
                 {profileData?.work_experiences
                   ? profileData?.work_experiences
@@ -458,7 +458,7 @@ const ProfileSettings = ({
             </Dropdown>
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >
@@ -468,7 +468,7 @@ const ProfileSettings = ({
             </h1>
           )}
         </div>
-        <div className="w-full flex flex-col items-center text-base text-white py-2 border-b">
+        <div className="w-full flex flex-col items-center text-white py-2">
           <h1
             className={`text-sm font-normal m-0 p-0 ${
               colorMode ? "text-slate-300" : "text-gray-800"
@@ -482,7 +482,7 @@ const ProfileSettings = ({
               name="qualification"
               className={`text-start w-full px-2 py-0  m-0 bg-transparent font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } text-base rounded-md`}
+              } 2xl:text-base text-sm rounded-md`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
               onChange={userData}
@@ -490,7 +490,7 @@ const ProfileSettings = ({
             />
           ) : (
             <h1
-              className={`w-full m-0 p-0 text-base text-white text-start font-bold ${
+              className={`w-full m-0 p-0 2xl:text-base text-sm text-white text-start font-bold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } `}
             >

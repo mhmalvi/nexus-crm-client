@@ -21,10 +21,10 @@ const Notification = ({
     const formattedDateTime = `${year}`;
     return formattedDateTime;
   }
-  
+
   return (
     <div
-      className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] bg-[#ffffff11] backdrop-blur-2xl shadow-md border  ${
+      className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] max-h-[70vh] bg-gray-800 backdrop-blur-2xl shadow-md border  ${
         colorMode ? "border-slate-300" : "border-gray-800"
       }`}
     >

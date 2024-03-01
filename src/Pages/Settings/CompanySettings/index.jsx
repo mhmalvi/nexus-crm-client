@@ -169,7 +169,7 @@ const CompanySettings = () => {
 
   return (
     <div className="h-[90vh] w-full mx-6 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] flex gap-4">
-      <div className="w-2/3 flex flex-col justify-center items-center h-full gap-4 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
+      <div className="w-2/3 flex flex-col justify-center items-center h-full gap-4 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
         <div className="w-full flex justify-between items-center ">
           <div className="relative flex w-24">
             <img
@@ -194,7 +194,7 @@ const CompanySettings = () => {
           <div className="">
             <input
               id="name"
-              className={`text-xl ${
+              className={`2xl:text-xl text-base ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } font-semibold rounded-md backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
@@ -223,7 +223,7 @@ const CompanySettings = () => {
         <div className="w-full rounded-md">
           <div className="flex justify-between">
             <h1
-              className={`text-lg font-semibold ${
+              className={`2xl:text-lg text-base font-semibold ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
@@ -237,10 +237,25 @@ const CompanySettings = () => {
                 <span className="text-brand-color">Edit</span>
                 <Icons.Edit className="cursor-pointer text-brand-color" />
               </button>
-            ) : null}
+            ) : (
+              <div className="flex items-center justify-end gap-1">
+                <button
+                  className="px-4 py-1 rounded-md bg-black text-slate-300"
+                  onClick={() => setToggleEditDetails(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-1 ml-2 rounded-md bg-brand-color text-slate-300"
+                  onClick={handleUpdateCompanyDetailsReq}
+                >
+                  Save
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex flex-col justify-evenly">
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300 h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300 h-10">
               <span
                 className={`w-48  ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -271,7 +286,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -302,7 +317,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -333,7 +348,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -365,7 +380,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -396,7 +411,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -427,7 +442,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -460,7 +475,7 @@ const CompanySettings = () => {
                 </a>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -490,7 +505,7 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -528,7 +543,7 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -565,7 +580,7 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10 w-full">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10 w-full">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -603,7 +618,7 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] text-base text-slate-300  h-10 w-full">
+            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10 w-full">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -659,22 +674,6 @@ const CompanySettings = () => {
               )}
             </div>
           </div>
-          {toggleEditDetails ? (
-            <div className="flex items-center justify-end w-full mt-4">
-              <button
-                className="px-4 py-1 rounded-md bg-black text-slate-300"
-                onClick={() => setToggleEditDetails(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-1 ml-2 rounded-md bg-brand-color text-slate-300"
-                onClick={handleUpdateCompanyDetailsReq}
-              >
-                Save
-              </button>
-            </div>
-          ) : null}
         </div>
       </div>
       <div className="w-full">
