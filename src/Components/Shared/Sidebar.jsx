@@ -27,12 +27,6 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
   const helpModal = useSelector((state) => state?.user)?.helpModal;
 
-  // const user = useSelector((state) => state?.user?.userInfo, shallowEqual);
-  // const companyId = useSelector(
-  //   (state) => state?.user?.companyId,
-  //   shallowEqual
-  // );
-  console.log(userDetails.userInfo);
   const [companyDetails, setCompanyDetails] = useState({
     company_name: null,
     company_logo: null,

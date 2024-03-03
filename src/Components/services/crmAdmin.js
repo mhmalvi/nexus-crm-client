@@ -24,7 +24,6 @@ export const handleUpdateRequisitions = async (requisitionId, status) => {
 };
 
 export const handleCreatePackage = async (packageDetails) => {
-  console.log(packageDetails);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_COMPANY_URL}/api/store/package`,
@@ -37,7 +36,6 @@ export const handleCreatePackage = async (packageDetails) => {
 };
 
 export const handleUpdatePackage = async (packageDetails) => {
-  console.log(packageDetails);
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_COMPANY_URL}/api/update/package`,

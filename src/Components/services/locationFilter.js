@@ -1,9 +1,10 @@
 import axios from "axios";
-const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
 
 export const handleFetchLocation = async (client_id) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -19,8 +20,10 @@ export const handleFetchLocation = async (client_id) => {
 };
 
 export const handleAddLocation = async (client_id, location, color) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -43,8 +46,10 @@ export const handleAddLocation = async (client_id, location, color) => {
 };
 
 export const handleUpdateLocation = async (client_id, location, color) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };

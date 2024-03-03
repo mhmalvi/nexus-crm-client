@@ -81,7 +81,7 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
     })();
   }, [setActiveCompanies]);
   return (
-    <div className="flex flex-col justify-between items-start w-full shadow-md w-full pb-4 border-b">
+    <div className="flex flex-col justify-between items-start w-full w-full pb-4 border-b border-slate-300">
       <div className="flex w-full items-center justify-between">
         <h1
           className={`text-xl font-semibold font-poppins ${

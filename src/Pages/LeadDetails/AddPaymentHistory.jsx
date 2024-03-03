@@ -51,7 +51,8 @@ const AddPaymentHistory = ({
         <input
           id="amount"
           name="amount"
-          className={`px-2 w-full py-2 border-b border-slate-300 bg-transparent focus:outline-none focus:ring-brand-color focus:border-b focus:border-brand-color rounded-md placeholder:!text-slate-300`}
+          autofocus
+          className={`px-2 w-full py-2 border-b border-slate-300 bg-transparent focus:ring-brand-color rounded-md placeholder:!text-slate-300`}
           type="number"
           placeholder="$0"
           value={amount}

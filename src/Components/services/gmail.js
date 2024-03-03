@@ -12,7 +12,6 @@ export const handleFetchEmails = async () => {
 };
 
 export const handleFetchEmailDetails = async (id) => {
-  console.log("resullllt IDddd", id);
   try {
     const result = await axios.get(`http://localhost:8000/api/mail/read/${id}`);
     return result.data;

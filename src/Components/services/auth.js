@@ -85,6 +85,7 @@ export const handleLoginSecond = async (loginDetails) => {
   }
 };
 export const handleLogout = async (logOut) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
       Accept: "application/json",
@@ -105,8 +106,10 @@ export const handleLogout = async (logOut) => {
 };
 
 export const handleRegister = async (RegisterDetails) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -125,8 +128,10 @@ export const handleRegister = async (RegisterDetails) => {
   }
 };
 export const handleSuspandB2BUser = async (cid, uid, status) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -145,7 +150,7 @@ export const handleSuspandB2BUser = async (cid, uid, status) => {
   }
 };
 export const handleProfileDetails = async (user_id) => {
-  console.log("apiResultID", user_id);
+  
   try {
     const result = await axios.get(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/${user_id}/details`,
@@ -158,8 +163,10 @@ export const handleProfileDetails = async (user_id) => {
   }
 };
 export const handleFetchB2BUser = async (rid, status) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -176,7 +183,7 @@ export const handleFetchB2BUser = async (rid, status) => {
 };
 
 export const handleUpdateProfileDetails = async (user_id, profileData) => {
-  console.log(user_id);
+  
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_AUTH_URL}/api/user/update`,
