@@ -476,94 +476,106 @@ const UserDetails = ({
           {userDetails?.role_id !== 6 && (
             <Conversation leadDetails={leadDetails} id={id} />
           )}
-          <div className="w-full h-full flex flex-col gap-4 items-center justify-around rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
-            <div className="w-full flex flex-col justify-between items-start">
-              <h1
-                className={`text-lg font-poppins ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                } m-0 p-0`}
-              >
-                Lead Generation Form
-              </h1>
-              <button
-                className={`w-full py-2 bg-transparent border ${
-                  colorMode
-                    ? "text-slate-300 border-slate-300"
-                    : "text-gray-800 border-gray-800"
-                } text-base font-poppins rounded-md`}
-                onClick={() => setToggleApplication(!toggleApplication)}
-              >
-                View
-              </button>
-            </div>
-            <div className="w-full flex flex-col justify-between items-start">
-              <h1
-                className={`text-lg ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                } m-0 p-0`}
-              >
-                Application Form
-              </h1>
 
-              <button
-                onClick={() => message.success("No file available")}
-                className={`w-full px-1.5 py-2 bg-transparent border ${
-                  colorMode
-                    ? "text-slate-300 border-slate-300"
-                    : "text-gray-800 border-gray-800"
-                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
-              >
-                <Icons.DownArrow className="w-6 rounded-full text-slate-300 text-opacity-50" />
-                <span className="ml-2">Download</span>
-              </button>
-            </div>
-            <div className="w-full flex flex-col justify-between items-start">
+          <div className="w-full h-full flex flex-col rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
+            <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-md overflow-hidden font=">
               <h1
-                className={`text-lg font-poppins ${
+                className={`text-lg m-0 p-0 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
-                } m-0 p-0`}
+                } `}
               >
-                Check Lists
+                Documents
               </h1>
-
-              <Modal
-                title="Documents"
-                className="applicationFormModal"
-                visible={toggleChcekList}
-                footer={null}
-                onCancel={handleCancel}
-              >
-                <CheckList leadDetails={leadDetails?.leadDetails} />
-              </Modal>
-
-              <button
-                className={`w-full px-1.5 py-2 bg-transparent border ${
-                  colorMode
-                    ? "text-slate-300 border-slate-300"
-                    : "text-gray-800 border-gray-800"
-                } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
-                onClick={() => setToggleChcekList(true)}
-              >
-                View
-              </button>
             </div>
-            {userDetails?.userInfo?.role_id === 6 && (
-              <div className="flex flex-col justify-between items-center">
-                <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
-                  Payment
+            <div className="w-full h-full flex flex-col gap-4 items-center p-5 justify-around">
+              <div className="w-full flex justify-between items-center">
+                <h1
+                  className={`w-full 2xl:text-lg text-base font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } m-0 p-0`}
+                >
+                  Lead Generation Form
                 </h1>
-                <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
-                  <button
-                    className="w-full px-1.5 py-2 bg-transparent border border-slate-300 text-slate-300 text-base font-medium font-poppins rounded-md flex items-center justify-center"
-                    onClick={() => {
-                      Storage.setItem("_tp_", totalPaid);
-                    }}
-                  >
-                    Pay
-                  </button>
-                </Link>
+                <button
+                  className={`w-1/2 py-2 bg-transparent border ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  } text-base font-poppins rounded-md`}
+                  onClick={() => setToggleApplication(!toggleApplication)}
+                >
+                  View
+                </button>
               </div>
-            )}
+              <div className="w-full flex justify-between items-center">
+                <h1
+                  className={`w-full 2xl:text-lg text-base ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } m-0 p-0`}
+                >
+                  Application Form
+                </h1>
+
+                <button
+                  onClick={() => message.success("No file available")}
+                  className={`w-1/2 px-1.5 py-2 bg-transparent border ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
+                >
+                  <Icons.DownArrow className="w-6 rounded-full text-slate-300 text-opacity-50" />
+                  <span className="ml-2">Download</span>
+                </button>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <h1
+                  className={`w-full 2xl:text-lg text-base font-poppins ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  } m-0 p-0`}
+                >
+                  Check Lists
+                </h1>
+
+                <Modal
+                  title="Documents"
+                  className="applicationFormModal"
+                  visible={toggleChcekList}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <CheckList leadDetails={leadDetails?.leadDetails} />
+                </Modal>
+
+                <button
+                  className={`w-1/2 px-1.5 py-2 bg-transparent border ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  } text-base font-medium font-poppins rounded-md flex items-center justify-center`}
+                  onClick={() => setToggleChcekList(true)}
+                >
+                  View
+                </button>
+              </div>
+              {userDetails?.userInfo?.role_id === 6 && (
+                <div className="flex flex-col justify-between items-center">
+                  <h1 className="text-xl leading-8 font-semibold font-poppins text-black text-opacity-50 mb-5">
+                    Payment
+                  </h1>
+                  <Link to={`/pay/${leadDetails?.leadDetails?.lead_id}`}>
+                    <button
+                      className="w-full px-1.5 py-2 bg-transparent border border-slate-300 text-slate-300 text-base font-medium font-poppins rounded-md flex items-center justify-center"
+                      onClick={() => {
+                        Storage.setItem("_tp_", totalPaid);
+                      }}
+                    >
+                      Pay
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {/* Column 3 */}

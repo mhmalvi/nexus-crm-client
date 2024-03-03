@@ -9,7 +9,6 @@ import {
   handleCompanyList,
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
-import { handleFetchLocation } from "../../../Components/services/locationFilter";
 
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import "./dashboard.css";

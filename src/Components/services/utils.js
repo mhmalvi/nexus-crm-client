@@ -448,8 +448,10 @@ export const handleRemoveTemplet = async (id) => {
   }
 };
 export const handleShowStatusLogs = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };

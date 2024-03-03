@@ -58,7 +58,6 @@ export const handleAddLead = async (leadData) => {
   }
 };
 
-
 export const handleAddCourse = async (details) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -112,8 +111,6 @@ export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
   }
 };
 
-
-
 export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
   try {
     const result = await axios.put(
@@ -126,9 +123,7 @@ export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
   }
 };
 
-export const handleLeadStatusUpdate = async (
-  data
-) => {
+export const handleLeadStatusUpdate = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
@@ -148,10 +143,7 @@ export const handleLeadStatusUpdate = async (
   }
 };
 
-export const handleCallResponseUpdate = async (
-  
-  data
-) => {
+export const handleCallResponseUpdate = async (data) => {
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/response`,
@@ -179,10 +171,7 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
   }
 };
 
-export const handleLeadCommentUpdate = async (
-  leadId,
-  remarks
-) => {
+export const handleLeadCommentUpdate = async (leadId, remarks) => {
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
@@ -197,6 +186,13 @@ export const handleLeadCommentUpdate = async (
 };
 
 export const handleAddCall = async (leadId, startTime, endTime, remark) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/add/call`,
@@ -205,7 +201,8 @@ export const handleAddCall = async (leadId, startTime, endTime, remark) => {
         call_start_time: startTime,
         call_end_time: endTime,
         call_remark: remark,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -214,13 +211,21 @@ export const handleAddCall = async (leadId, startTime, endTime, remark) => {
 };
 
 export const handleAddAmount = async (leadId, amount) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/add/amount`,
       {
         lead_id: leadId,
         amount: amount,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -524,12 +529,20 @@ export const handleLeadCertificatetDetailsUpdate = async (
 };
 
 export const handleReviewRemarksSubmitReq = async (remarks, leadId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/review/${leadId}`,
       {
         remarks: remarks,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -538,12 +551,20 @@ export const handleReviewRemarksSubmitReq = async (remarks, leadId) => {
 };
 
 export const handleCommentsSubmitReq = async (remarks, leadId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
       {
         comments: remarks,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
