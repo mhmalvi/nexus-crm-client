@@ -278,7 +278,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
           <Table
             locale={locale}
             className={`${
-              colorMode ? "updatedTableDark" : "updatedTableLight"
+              colorMode ? "updatedTableDark" : "updatedTableDark"
             }`}
             columns={leadColumn || []}
             dataSource={

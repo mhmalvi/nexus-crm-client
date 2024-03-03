@@ -100,10 +100,18 @@ export const handleUploadLeadFile = async (fileDetails) => {
 };
 
 export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead-update/${leadId}`,
-      updatedDetails
+      updatedDetails,
+      config
     );
     return result.data;
   } catch (error) {
@@ -144,10 +152,18 @@ export const handleLeadStatusUpdate = async (data) => {
 };
 
 export const handleCallResponseUpdate = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/response`,
-      data
+      data,
+      config
     );
     return result.data;
   } catch (error) {
@@ -156,6 +172,13 @@ export const handleCallResponseUpdate = async (data) => {
 };
 
 export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/quality/update`,
@@ -163,7 +186,8 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
         lead_id: leadId,
         star_review: parseInt(rating),
         sales_user_id: salesUserId,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -172,12 +196,20 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
 };
 
 export const handleLeadCommentUpdate = async (leadId, remarks) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
       {
         comments: remarks,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -475,6 +507,13 @@ export const handleDeleteChecklist = async (checkListId) => {
 };
 
 export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/assign`,
@@ -482,7 +521,8 @@ export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
         lead_id: leadId,
         sales_user_id: salesUserId,
         assign_by: assignBy,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -573,12 +613,20 @@ export const handleCommentsSubmitReq = async (remarks, leadId) => {
 };
 
 export const handleDeleteComment = async (commentId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/delete-lead-comments`,
       {
         comment_id: commentId,
-      }
+      },
+      config
     );
     return result.data;
   } catch (error) {
@@ -602,9 +650,17 @@ export const fetchSalesEmployeesSale = async (companyId) => {
 
 // Fetch email templet list
 export const fetchEmailTemplatList = async () => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/mail-templates`
+      `${process.env?.REACT_APP_LEAD_URL}/api/mail-templates`,
+      config
     );
     return result.data;
   } catch (error) {

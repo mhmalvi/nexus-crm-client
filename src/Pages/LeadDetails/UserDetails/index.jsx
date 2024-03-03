@@ -224,7 +224,7 @@ const UserDetails = ({
             <h4
               className={`text-lg px-5 py-2 m-0 font-poppins ${
                 colorMode ? "text-slate-300" : "text-gray-800"
-              } backdrop-blur-2xl bg-[#ffffff11] shadow-md rounded-t-xl`}
+              } backdrop-blur-2xl bg-[#ffffff11] shadow-md rounded-t-md`}
             >
               Details
             </h4>
@@ -582,7 +582,7 @@ const UserDetails = ({
         <div className="w-full flex flex-col justify-between items-center gap-4">
           {userDetails?.userInfo?.role_id !== 6 ? (
             <div className="h-1/3 flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
-              <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-xl overflow-hidden">
+              <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] text-slate-300 px-5 py-2 rounded-t-md overflow-hidden">
                 <h1
                   className={`text-lg m-0 p-0 ${
                     colorMode ? "text-slate-300" : "text-gray-800"

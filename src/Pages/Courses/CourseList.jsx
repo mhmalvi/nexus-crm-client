@@ -8,7 +8,7 @@ import AddCourseModal from "./AddCourseModal";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import Loading from "../../Components/Shared/Loader";
-
+import "./courses.css"
 const CourseList = ({
   courses,
   setCourses,
@@ -225,7 +225,7 @@ const CourseList = ({
         <Button
           type="primary"
           onClick={() => setAddCourseOpen(true)}
-          className={` !rounded  ${
+          className={` !rounded focus:ring-brand-color ${
             colorMode
               ? "!bg-slate-300 !text-gray-800"
               : "!bg-gray-800 !text-slate-300"
@@ -238,7 +238,7 @@ const CourseList = ({
       <div>
         <Table
           locale={locale}
-          className={`${colorMode ? "updatedTableDark" : "updatedTableLight"}`}
+          className={`${colorMode ? "courseTableDark" : "courseTableLight"}`}
           // loading={locale}
           columns={courseLinstTableHeaders}
           dataSource={courses}

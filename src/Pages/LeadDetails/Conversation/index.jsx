@@ -30,11 +30,11 @@ const Conversation = ({ leadDetails, id }) => {
       <h1
         className={`px-5 py-2 text-lg font-poppins ${
           colorMode ? "text-slate-300" : "text-gray-800"
-        } shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-t-xl`}
+        } shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-t-md`}
       >
         Contact
       </h1>
-      <div className="flex flex-col gap-4 p-5 rounded-t-xl">
+      <div className="flex flex-col gap-4 p-5 rounded-t-md">
         {userDetails?.userInfo?.role_id !== 6 ? (
           <button className="px-4 py-2 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ease-in duration-200 hover:scale-[0.98]">
             <a

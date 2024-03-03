@@ -62,9 +62,17 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
       }
     } else {
       setConfirmLoading(true);
+      const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+      const config = {
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + authToken,
+        },
+      };
       fetch("https://crmleads.queleadscrm.com/api/lead/mail", {
         method: "POST",
         body: formData,
+        config,
       })
         .then((res) => res.json())
         .then((result) => {

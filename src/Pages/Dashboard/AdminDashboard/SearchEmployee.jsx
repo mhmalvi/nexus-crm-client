@@ -9,7 +9,6 @@ const SearchEmployee = ({
   handleFilterAssignedEmployee,
   companyEmployeeList,
 }) => {
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user?.userInfo);
@@ -53,9 +52,7 @@ const SearchEmployee = ({
             userDetails?.role_id === 4) && (
             <div className="px-3 py-3 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11]">
               <h1
-                className={`${
-                  isBigScreen ? "text-xl" : "text-base"
-                } font-normal font-poppins ${
+                className={`2xl:text-xl text-sm font-normal font-poppins ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
