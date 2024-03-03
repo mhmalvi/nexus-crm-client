@@ -31,7 +31,7 @@ const BigCalendar = () => {
       end: null,
     },
   ]);
-
+  
   useEffect(() => {
     fetchingReminders();
   }, []);

@@ -14,7 +14,7 @@ export const handleCreateCompany = async (companyDetails) => {
 };
 
 export const handleUpdateCompany = async (companyDetails) => {
-  console.log("updatedCompanyDetails", companyDetails);
+  
   try {
     const result = await axios.put(
       `${process.env?.REACT_APP_COMPANY_URL}/api/company/update`,
@@ -49,8 +49,10 @@ export const handleFetchCompanyDetails = async (companyId) => {
 };
 
 export const handleFetchCompanyEmployees = async (companyId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -184,8 +186,10 @@ export const handleCompanyStatusUpdate = async (companyId, status) => {
   }
 };
 export const handleCompanyDelete = async (companyId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };

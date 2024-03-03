@@ -873,12 +873,10 @@ const AdminDashboard = () => {
             setToggleEditDetails(false);
           }}
           footer={null}
-          closable={handleCancelProfile}
+          closable={false}
           className={
             colorMode ? "profileSettingsModalDark" : "profileSettingsModalLight"
           }
-          transitionName=""
-          closeIcon={" "}
           mask={() => setOpenProfile(false)}
           width="21%"
         >

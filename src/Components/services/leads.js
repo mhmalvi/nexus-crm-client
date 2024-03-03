@@ -1,11 +1,51 @@
 import axios from "axios";
-const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-const config = {
-  headers: {
-    Authorization: "Bearer " + authToken,
-  },
+
+export const handleFetchLeads = async (details) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
+      details,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const handleLeadDetails = async (leadId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `${process.env?.REACT_APP_LEAD_URL}/api/lead/details`,
+      { lead_id: leadId },
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
 };
 export const handleAddLead = async (leadData) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/create-lead`,
@@ -18,19 +58,15 @@ export const handleAddLead = async (leadData) => {
   }
 };
 
-export const handleFetchLeads = async (details) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/list`,
-      details,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 export const handleAddCourse = async (details) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/add-course`,
@@ -44,6 +80,13 @@ export const handleAddCourse = async (details) => {
 };
 
 export const handleUploadLeadFile = async (fileDetails) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/excel-read`,
@@ -69,17 +112,7 @@ export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
   }
 };
 
-export const handleLeadDetails = async (leadId) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/details`,
-      { lead_id: leadId }
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 
 export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
   try {
@@ -96,8 +129,10 @@ export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
 export const handleLeadStatusUpdate = async (
   data
 ) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -146,7 +181,7 @@ export const handleLeadReviewUpdate = async (leadId, rating, salesUserId) => {
 
 export const handleLeadCommentUpdate = async (
   leadId,
-  /* salesUserId, */ remarks
+  remarks
 ) => {
   try {
     const result = await axios.post(
@@ -213,7 +248,6 @@ export const handleChecklistDocumentUpload = async (documentDetails) => {
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/add/document`,
       documentDetails
     );
-    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -228,7 +262,6 @@ export const handleChecklistDocumentDelete = async (checklistId, studentId) => {
         student_id: studentId,
       }
     );
-    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -241,7 +274,6 @@ export const handleFetchLeadCheckListDocuments = async (details) => {
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist/student/documents`,
       details
     );
-    console.log(result.data);
     return result.data;
   } catch (error) {
     return error.response;
@@ -249,8 +281,10 @@ export const handleFetchLeadCheckListDocuments = async (details) => {
 };
 
 export const handleFetchCampaigns = async (clientId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -290,8 +324,10 @@ export const handleFetchCourses = async () => {
 };
 
 export const handleClientwiseCourseDetails = async (clientId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -308,8 +344,10 @@ export const handleClientwiseCourseDetails = async (clientId) => {
 };
 
 export const handleCoursewiseSalesAssign = async (requestData) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -326,8 +364,10 @@ export const handleCoursewiseSalesAssign = async (requestData) => {
 };
 
 export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -344,8 +384,10 @@ export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
 };
 
 export const handleFetchCourseCheckList = async (courseId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -381,8 +423,10 @@ export const handleCreateChecklist = async (
   courseId,
   title
 ) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -404,8 +448,10 @@ export const handleCreateChecklist = async (
 };
 
 export const handleDeleteChecklist = async (checkListId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -440,8 +486,10 @@ export const handleLeadAssign = async (leadId, salesUserId, assignBy) => {
 };
 
 export const handleSyncLeads = async (clientId, acToken) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };

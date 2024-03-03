@@ -139,7 +139,7 @@ const Overview = () => {
             setActiveCompanies={setActiveCompanies}
           />
 
-          <div className="flex flex-wrap items-center justify-center gap-4 !overflow-y-scroll overflow-x-hidden h-4/5 w-full rounded-md ">
+          <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll h-4/5 w-full rounded-md ">
             <div className="flex-auto flex-shrink-0 w-1/4">
               <IncomePerDay
                 activeCompany={activeCompany}

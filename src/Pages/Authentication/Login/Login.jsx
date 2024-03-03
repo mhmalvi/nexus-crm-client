@@ -11,7 +11,7 @@ import {
   addUserDetails,
   setCompanyId,
   setLoader,
-  updateFbToken,
+  updateBearerToken
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 import "./Login.css";
@@ -97,8 +97,9 @@ const Login = () => {
         "auth_tok",
         loginResponse?.data?.token || loginResponse?.data?.data
       );
+      console.log(Storage.getItem("auth_tok"))
       // Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
-      // dispatch(updateFbToken(loginResponse?.data?.data?.ac_k));
+      dispatch(updateBearerToken(loginResponse?.data?.token));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
       dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
@@ -110,6 +111,7 @@ const Login = () => {
           ?.length
       ) {
         setAddBookMarkOpen(true);
+        
       } else if (Storage.getItem("auth_tok")) {
         if (userDetails?.userInfo?.verification_status === 2) {
           navigate("/dashboard");
@@ -135,8 +137,12 @@ const Login = () => {
     if (loginResponse?.status === 200) {
       setLoginClicked(false);
       Storage.setItem("user_info", loginResponse?.data?.data);
-      Storage.setItem("auth_tok", loginResponse?.data?.token);
+      Storage.setItem(
+        "auth_tok",
+        loginResponse?.data?.token || loginResponse?.data?.data
+      );
 
+      console.log(Storage.getItem("auth_tok"))
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
 

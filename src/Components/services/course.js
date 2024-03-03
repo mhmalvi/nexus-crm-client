@@ -1,8 +1,6 @@
 import axios from "axios";
 import { environment_dev } from "./environment";
 
-const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-
 export const getCourseDetailById = async (id) => {
   try {
     const res = await axios.get(
@@ -15,8 +13,10 @@ export const getCourseDetailById = async (id) => {
 
 };
 export const updateCourseDetailById = async (id, data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -26,8 +26,6 @@ export const updateCourseDetailById = async (id, data) => {
       data,
       config
     );
-
-    console.log("result", result);
 
     return result?.data;
   } catch (error) {

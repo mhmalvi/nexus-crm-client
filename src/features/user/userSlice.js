@@ -6,6 +6,7 @@ const initialState = {
   userInfo: Storage.getItem("user_info"),
   userToken: null,
   fbToken: Storage.getItem("fac_t"),
+  bearerToken: Storage.getItem("auth_tok"),
   error: null,
   success: false,
   companyId: 0,
@@ -30,6 +31,9 @@ export const userSlice = createSlice({
     updateFbToken: (state, actions) => {
       state.fbToken = actions.payload;
     },
+    updateBearerToken: (state, actions) => {
+      state.bearerToken = actions.payload;
+    },
     setLoader: (state, actions) => {
       state.loading = actions.payload;
     },
@@ -50,6 +54,7 @@ export const {
   addUserDetails,
   updateUserDetails,
   updateFbToken,
+  updateBearerToken,
   setLoader,
   setCompanyId,
   setColorMode,

@@ -214,6 +214,7 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   const handleMinimizeScreen = () => {
     setFullScreen("");
   };
+  console.log(campaigns)
   return (
     <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11]  p-4 flex flex-col ">
       <div className="w-full flex gap-4 items-center justify-between m-0">
