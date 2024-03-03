@@ -13,6 +13,7 @@ import Loading from "../../../Components/Shared/Loader";
 import { addUserDetails } from "../../../features/user/userSlice";
 
 const MultipartForm = () => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [screen, setScreen] = useState(0);
@@ -34,7 +35,11 @@ const MultipartForm = () => {
     setIndustriesList(value);
   };
   const logoutHandler = () => {
-    handleLogout();
+    handleLogout({
+      user_id: userDetails.userInfo.user_id,
+      email: userDetails.userInfo.email,
+      token: authToken,
+    });
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
