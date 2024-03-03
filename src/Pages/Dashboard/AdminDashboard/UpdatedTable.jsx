@@ -36,16 +36,6 @@ const UpdatedTable = ({
   const [companyWiseListData, setCompanyWiseListData] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState({});
   const [currentPage, setCurrentPage] = useState();
-  const [locationColor, setLocationColor] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await handleFetchLocation(userDetails?.client_id);
-      if (response?.data) {
-        setLocationColor(response?.data?.filter((item) => item.location));
-      }
-    })();
-  }, [userDetails?.client_id]);
 
   useEffect(() => {
     (async () => {

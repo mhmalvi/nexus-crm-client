@@ -38,11 +38,11 @@ const StatusShow = ({ leadDetails }) => {
   }, [leadDetails?.leadDetails?.lead_id]);
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
-      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-xl overflow-hidden">
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-md overflow-hidden">
         <h1
           className={`text-lg m-0 p-0 ${
             colorMode ? "text-slate-300" : "text-gray-800"
-          } `}
+          }`}
         >
           Status Logs
         </h1>
@@ -60,7 +60,7 @@ const StatusShow = ({ leadDetails }) => {
       <div
         className={`flex flex-col  ${
           colorMode ? "text-slate-300" : "text-gray-800"
-        } w-full p-5 gap-4 overflow-y-scroll overflow-x-hidden`}
+        } w-full p-5 gap-4 max-h-[20vh] overflow-y-scroll overflow-x-hidden`}
       >
         {statusLogs?.length
           ? statusLogs?.map((log) => (

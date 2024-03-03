@@ -44,6 +44,7 @@ import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
 
 function App() {
   
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const [state, setState] = useState("Active");
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
@@ -51,7 +52,11 @@ function App() {
   const userDetails = useSelector((state) => state?.user);
   
   const onIdle = () => {
-    handleLogout();
+    handleLogout({
+      user_id: userDetails.userInfo.user_id,
+      email: userDetails.userInfo.email,
+      token: authToken,
+    });
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
