@@ -25,7 +25,7 @@ import Highlighter from "react-highlight-words";
 import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
 import {
-  handleAssignLeadToSales,
+  handleSalesAssignLead,
   handleGetSalesAdmin,
   handleSalesRemoveLead,
 } from "../../../Components/services/utils";
@@ -183,7 +183,7 @@ const AdminDashboard = () => {
           active_status: 1,
         };
         try {
-          const res = await handleAssignLeadToSales(data);
+          const res = await handleSalesAssignLead(data);
           if (res?.status === 201) {
             setAssignLoading(false);
             message.success("Lead successfully assigned to sales");

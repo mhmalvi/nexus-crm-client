@@ -22,7 +22,7 @@ const Comments = ({ Comments }) => {
   };
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
-      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] px-5 py-2 rounded-t-md overflow-hidden">
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] !px-5 !py-4 rounded-t-md overflow-hidden">
         <h1
           className={`text-lg m-0 p-0 ${
             colorMode ? "text-slate-300" : "text-gray-800"
@@ -32,7 +32,11 @@ const Comments = ({ Comments }) => {
         </h1>
       </div>
 
-      <div className="flex items-end p-5">
+      <div
+        className={`flex flex-col  ${
+          colorMode ? "text-slate-300" : "text-gray-800"
+        } w-full p-5 gap-4 max-h-[25vh] overflow-y-scroll`}
+      >
         <div
           className={`w-full ${
             colorMode ? "text-slate-300" : "text-gray-800"
@@ -56,7 +60,13 @@ const Comments = ({ Comments }) => {
               </div>
             ))
           ) : (
-            <h1 className={`text-base ${colorMode?"text-slate-300":"text-gray-800"} m-0 p-0 `}>No comments yet</h1>
+            <h1
+              className={`text-base ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              } m-0 p-0 `}
+            >
+              No comments yet
+            </h1>
           )}
         </div>
       </div>

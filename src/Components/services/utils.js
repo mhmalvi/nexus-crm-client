@@ -14,11 +14,18 @@ export const handleUploadFile = async (fileDetails) => {
   }
 };
 export const handleLeadMailUpload = async (data) => {
-  console.log("data: ", data);
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.post(
       `${process.env?.REACT_APP_LEAD_URL}/api/lead/mail`,
-      data
+      data,
+      config
     );
     return result.data;
   } catch (error) {
@@ -27,9 +34,17 @@ export const handleLeadMailUpload = async (data) => {
 };
 
 export const handleFetchFile = async (fileId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
   try {
     const result = await axios.get(
-      `${process.env?.REACT_APP_FILE_SERVER_URL}/api/documents/${fileId}`
+      `${process.env?.REACT_APP_FILE_SERVER_URL}/api/documents/${fileId}`,
+      config
     );
     return result.data;
   } catch (error) {
@@ -56,8 +71,10 @@ export const handleFetchSales = async (cid) => {
 // Fetch Leqds data by id of sales employee
 
 export const handleFetchLeadsBySalesId = async (id) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -66,7 +83,6 @@ export const handleFetchLeadsBySalesId = async (id) => {
       `${process.env?.REACT_APP_LEAD_URL}/api/assigned-lead-list/${id}`,
       config
     );
-    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -75,8 +91,10 @@ export const handleFetchLeadsBySalesId = async (id) => {
 
 // fetch unassigned lead list
 export const handleFetchUnassignedLeadList = async (id) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -93,8 +111,10 @@ export const handleFetchUnassignedLeadList = async (id) => {
 
 // Sales Lead assign
 export const handleSalesAssignLead = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -112,8 +132,10 @@ export const handleSalesAssignLead = async (data) => {
 // Sales remove assign
 
 export const handleSalesRemoveLead = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -132,8 +154,10 @@ export const handleSalesRemoveLead = async (data) => {
 // Remove sales man
 
 export const handleSalesManRemove = async (sid) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -431,8 +455,10 @@ export const handleCourseCheckLists = async () => {
 };
 // REMOVE SALES ADMIN
 export const handleRemoveTemplet = async (id) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };
@@ -465,23 +491,7 @@ export const handleShowStatusLogs = async (data) => {
     return error.response;
   }
 };
-export const handleAssignLeadToSales = async (data) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.post(
-      `${environment_dev}/api/assign-leads`,
-      data,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 export const handleGetSalesAdmin = async () => {
   const config = {
     headers: {
@@ -799,8 +809,10 @@ export const handleCompanyList = async (rid) => {
 };
 
 export const handleCompanyWiseLeadList = async (sid, cid) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
+      Accept: "application/json",
       Authorization: "Bearer " + authToken,
     },
   };

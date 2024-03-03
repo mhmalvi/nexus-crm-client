@@ -38,7 +38,7 @@ const StatusShow = ({ leadDetails }) => {
   }, [leadDetails?.leadDetails?.lead_id]);
   return (
     <div className="h-full flex flex-col w-full shadow-md backdrop-blur-2xl bg-[#ffffff11] rounded-md">
-      <div className="w-full h-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] !px-5 !py-4 rounded-t-md overflow-hidden">
+      <div className="w-full flex justify-between items-center backdrop-blur-2xl bg-[#ffffff11] !px-5 !py-4 rounded-t-md overflow-hidden">
         <h1
           className={`text-lg m-0 p-0 ${
             colorMode ? "text-slate-300" : "text-gray-800"
@@ -64,10 +64,10 @@ const StatusShow = ({ leadDetails }) => {
       >
         {statusLogs?.length
           ? statusLogs?.map((log) => (
-              <div className="flex flex-col w-full border-b shadow justify-between items-start gap-2 pb-4">
-                <div className="text-base flex items-center gap-8">
+              <div className="flex flex-col w-full border-b shadow justify-between items-start gap-2 pb-2">
+                <div className="text-sm flex items-center gap-4">
                   <h1
-                    className={`m-0 p-0 py-2 ${
+                    className={`m-0 p-0 ${
                       colorMode ? "text-slate-300" : "text-gray-800"
                     }`}
                   >
@@ -75,8 +75,21 @@ const StatusShow = ({ leadDetails }) => {
                   </h1>
                   <p
                     className={`m-0 p-0 ${
-                      colorMode ? "text-slate-300" : "text-gray-800"
+                      log?.lead_status === 1
+                        ? "text-green-400"
+                        : log?.lead_status === 2
+                        ? "text-orange-400"
+                        : log?.lead_status === 3
+                        ? "text-blue-400"
+                        : log?.lead_status === 4
+                        ? "text-teal-400"
+                        : log?.lead_status === 5
+                        ? "text-purple-400"
+                        : log?.lead_status === 6
+                        ? "text-violet-400"
+                        : "text-black"
                     }`}
+                    FF9500
                   >
                     {(log?.lead_status === 1 && "New Lead") ||
                       (log?.lead_status === 2 && "Skilled") ||
@@ -88,7 +101,7 @@ const StatusShow = ({ leadDetails }) => {
                   </p>
                 </div>
                 {log?.selected_by && (
-                  <div className="text-base flex items-center gap-4">
+                  <div className="text-xs flex items-center gap-4">
                     <h1
                       className={`m-0 p-0 ${
                         colorMode ? "text-slate-300" : "text-gray-800"
@@ -105,7 +118,7 @@ const StatusShow = ({ leadDetails }) => {
                     </p>
                   </div>
                 )}
-                <div className="text-base flex items-center gap-4">
+                <div className="text-xs flex items-center gap-4">
                   <h1
                     className={`m-0 p-0 ${
                       colorMode ? "text-slate-300" : "text-gray-800"
@@ -130,3 +143,15 @@ const StatusShow = ({ leadDetails }) => {
 };
 
 export default StatusShow;
+const statusColor = [
+  {
+    lable: "Verified",
+    color: "#7037FF",
+    class: "color-violet",
+  },
+  {
+    lable: "Completed",
+    color: "#FF0000",
+    class: "color-red",
+  },
+];

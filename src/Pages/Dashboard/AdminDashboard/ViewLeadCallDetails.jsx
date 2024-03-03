@@ -3,11 +3,23 @@ import axios from "axios";
 
 const ViewLeadCallDetails = ({ lead_id, setOpenCallCountDetailsModal }) => {
   const [callHistory, setCallHistory] = useState([""]);
+
   useEffect(() => {
+    const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+    const config = {
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + authToken,
+      },
+    };
     axios
-      .post(`${process.env?.REACT_APP_LEAD_URL}/api/lead/details`, {
-        lead_id: lead_id,
-      })
+      .post(
+        `${process.env?.REACT_APP_LEAD_URL}/api/lead/details`,
+        {
+          lead_id: lead_id,
+        },
+        config
+      )
       .then((response) => {
         setCallHistory(response.data.leadCallHistory);
       });

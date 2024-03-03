@@ -69,7 +69,7 @@ const CalendarSmall = ({
   };
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   return (
     <div>
       <Calendar
@@ -114,7 +114,7 @@ const CalendarSmall = ({
             <div>
               <h1
                 level={4}
-                className={`text-${isBigScreen ? "xl" : "base"} ${
+                className={`2xl:text-xl text-sm ${
                   colorMode ? " text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -176,7 +176,7 @@ const CalendarSmall = ({
                 </div>
 
                 <button
-                  className={colorMode ? "text-slate-300" : "text-gray-800"}
+                  className={`2xl:text-base text-sm ${colorMode ? "text-slate-300" : "text-gray-800"}`}
                   size="small"
                   onClick={handleClearDate}
                 >
