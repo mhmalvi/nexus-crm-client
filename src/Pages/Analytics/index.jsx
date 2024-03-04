@@ -36,8 +36,6 @@ const Overview = () => {
   const [fullscreen, setFullScreen] = useState("");
 
   useEffect(() => {
-    dispatch(setLoader(true));
-
     (async () => {
       dispatch(setLoader(true));
       const response = await handleFetchCampaigns(
@@ -81,36 +79,36 @@ const Overview = () => {
     })();
   }, [activeCompany, dispatch, userDetails?.userInfo]);
 
-  useEffect(() => {
-    if (
-      dayjs().date() === 1 &&
-      localStorage.getItem("monthly_report") !== `${dayjs().$D}-${dayjs().$M}`
-    ) {
-      setTimeout(() => {
-        getImage();
-      }, 10000);
-      localStorage.setItem("monthly_report", `${dayjs().$D}-${dayjs().$M}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     dayjs().date() === 1 &&
+  //     localStorage.getItem("monthly_report") !== `${dayjs().$D}-${dayjs().$M}`
+  //   ) {
+  //     setTimeout(() => {
+  //       getImage();
+  //     }, 10000);
+  //     localStorage.setItem("monthly_report", `${dayjs().$D}-${dayjs().$M}`);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // For Generate Rport and Download
-  const download = (
-    image,
-    {
-      name = `Overview (${dayjs().$D}-${dayjs().$M + 1}-${dayjs().$y})`,
-      extension = "jpg",
-    } = {}
-  ) => {
-    const a = document.createElement("a");
-    a.href = image;
-    a.download = createFileName(extension, name);
-    a.click();
-  };
+  // const download = (
+  //   image,
+  //   {
+  //     name = `Overview (${dayjs().$D}-${dayjs().$M + 1}-${dayjs().$y})`,
+  //     extension = "jpg",
+  //   } = {}
+  // ) => {
+  //   const a = document.createElement("a");
+  //   a.href = image;
+  //   a.download = createFileName(extension, name);
+  //   a.click();
+  // };
 
-  const getImage = () => {
-    takeScreenShot(pdfRef.current).then(download);
-  };
+  // const getImage = () => {
+  //   takeScreenShot(pdfRef.current).then(download);
+  // };
   useEffect(() => {
     if (
       userDetails?.userInfo?.verification_status === 1 &&
@@ -121,16 +119,15 @@ const Overview = () => {
   }, [navigate, userDetails]);
 
   return (
-    <div className="py-4 font-poppins px-8 h-screen flex flex-col items-center justify-center">
+    <div className="h-screen flex justify-center items-center">
       {/* <button
         className="text-black bg-white px-2 py-1 mb-5 rounded-full cursor-pointer font-semibold font-[Poppins] border border-black text-xs"
         onClick={getImage}
       >
         Capture Report
       </button> */}
-      <div className="font-poppins rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full w-full overflow-hidden">
+      <div className="h-[90vh] w-full mx-5 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
         <div
-          ref={pdfRef}
           className="flex flex-col gap-4 justify-between h-full"
         >
           <Summary

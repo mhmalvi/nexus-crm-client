@@ -16,7 +16,8 @@ const CSVParser = ({
   setFileName,
   fileName,
   setHeaderData,
-  setCategorizedData
+  setCategorizedData,
+  setBounced
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -78,37 +79,42 @@ const CSVParser = ({
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
     reader.onload = async ({ target }) => {
-        const csv = Papa.parse(target.result, {
-            header: false,
-        });
-        const parsedData = csv?.data || [];
+      const csv = Papa.parse(target.result, {
+        header: false,
+      });
+      const parsedData = csv?.data || [];
 
-        // Extracting the header row
-        const headerRow = parsedData.length > 0 ? parsedData[0] : [];
-        setHeaderData(headerRow)
-        // Rest of the rows excluding the header
-        const dataRows = parsedData.slice(1);
-        
-        // Organizing data under headings
-        const organizedData = dataRows.map((row) => {
-            const rowData = {};
-            headerRow.forEach((header, index) => {
-                rowData[header] = row[index];
-            });
-            return rowData;
-        });
-        setCategorizedData(organizedData)
-        // Extracting email addresses from organizedData
-        const emailAddresses = organizedData
-            .map((row) => row['Email']) // Assuming 'Email' is the header for email addresses
-            .filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)); // Filtering valid email addresses
+      // Extracting the header row
+      const headerRow = parsedData.length > 0 ? parsedData[0] : [];
+      setHeaderData(headerRow);
+      // Rest of the rows excluding the header
+      const dataRows = parsedData.slice(1);
 
-        setData(emailAddresses);
-        
+      // Organizing data under headings
+      const organizedData = dataRows.map((row) => {
+        const rowData = {};
+        headerRow.forEach((header, index) => {
+          rowData[header] = row[index];
+        });
+        return rowData;
+      });
+      setCategorizedData(organizedData);
+      // Extracting email addresses from organizedData
+      const emailData = organizedData.map((row) => row["Email"]); // Assuming 'Email' is the header for email addresses
+
+      const validEmails = emailData.filter((email) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      ); // Filtering valid email addresses
+      const filteredOutEmails = emailData.filter(
+        (email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      ); // Filtering out invalid email addresses
+
+      setData(validEmails);
+      setBounced(filteredOutEmails);
+      
     };
     reader.readAsText(file);
-};
-
+  };
 
   return (
     <div className="h-[77vh] flex flex-col flex-grow gap-8 !z-1">
@@ -126,7 +132,7 @@ const CSVParser = ({
                 colorMode
                   ? "text-slate-300 bg-[#ffffff11]"
                   : "text-gray-800 bg-[#ffffff7f]"
-              } text-xl px-4 py-2`}
+              } 2xl:text-xl text-sm px-4 py-2`}
             >
               Email To
             </h2>
@@ -222,7 +228,7 @@ const CSVParser = ({
             colorMode
               ? "text-slate-300 bg-[#ffffff11]"
               : "text-gray-800 bg-[#ffffff7f]"
-          } px-4 py-2 text-xl`}
+          } px-4 py-2 2xl:text-xl text-sm`}
         >
           {data.length <= 0 ? (
             <span>

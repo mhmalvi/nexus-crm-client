@@ -16,15 +16,13 @@ const Filters = ({
       {layout !== "Payment" && (
         <div className="h-full px-8 py-4 rounded-md backdrop-blur-2xl bg-[#ffffff11] min-h-[16vh]">
           <h1
-            className={`text-lg text-${
-              colorMode ? "slate-300" : "gray-800"
+            className={`3xl:text-lg text-base ${
+              colorMode ? "text-slate-300" : "text-gray-800"
             } font-normal font-poppins`}
           >
-            <span className="text-base">Filter by</span> Status
+            Filter by Status
           </h1>
-          <div
-            className={`flex flex-wrap gap-2`}
-          >
+          <div className={`flex flex-wrap gap-2`}>
             {/* Status Filters */}
             {filterOptions.map((option) => (
               <div
@@ -34,8 +32,10 @@ const Filters = ({
                 <h1
                   className={`w-full text-xs text-center font-normal font-poppins 2xl:px-4 2xl:py-2 px-2 py-1 cursor-pointer ${
                     activeFilter === option.id
-                      // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
-                      ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
+                      ? // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
+                        colorMode
+                        ? "text-white bg-[#ffffff7f] border-[0.5px] border-white"
+                        : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
                       : colorMode
                       ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
                       : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
@@ -57,14 +57,16 @@ const Filters = ({
                     className={`flex flex-wrap gap-4`}
                   >
                     <h1
-                     className={`w-full text-xs text-center font-normal font-poppins 2xl:px-4 2xl:py-2 px-2 py-1 cursor-pointer ${
-                      activeFilter === rate?.id
-                        // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
-                        ? colorMode ? "text-white bg-[#ffffff7f] border-[0.5px] border-white" : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
-                        : colorMode
-                        ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
-                        : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
-                    }  rounded-md`}
+                      className={`w-full text-xs text-center font-normal font-poppins 2xl:px-4 2xl:py-2 px-2 py-1 cursor-pointer ${
+                        activeFilter === rate?.id
+                          ? // ? "text-slate-300 bg-[#7037ff] border-[0.5px] border-brand-color" #100b1e,#0b0815,#000000
+                            colorMode
+                            ? "text-white bg-[#ffffff7f] border-[0.5px] border-white"
+                            : "text-black bg-[#ffffff7f] border-[0.5px] border-black"
+                          : colorMode
+                          ? "text-slate-300 bg-transparent border-[0.05px] border-slate-300 "
+                          : "text-gray-800 bg-transparent border-[0.05px] border-gray-800"
+                      }  rounded-md`}
                     >
                       {rate?.title}
                     </h1>

@@ -311,7 +311,6 @@ const DayDetails = ({
                 <div className="text-base font-semibold">Select End Time:</div>
                 <div className="border-b flex items-center justify-between">
                   <TimePicker
-                    // defaultValue={dayjs().set("hour", 0).set("minute", 0)}
                     format="HH:mm"
                     bordered={false}
                     onChange={onEndTimeChange}

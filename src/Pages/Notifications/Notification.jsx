@@ -13,27 +13,21 @@ const Notification = ({
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   function formatUTCDateTime(dateTimeString) {
     const dateTime = new Date(dateTimeString);
-    const year = dateTime;
-    const month = String(dateTime).padStart(2, "0");
-    const day = String(dateTime).padStart(2, "0");
-    const hours = String(dateTime).padStart(2, "0");
-    const minutes = String(dateTime).padStart(2, "0");
-    const formattedDateTime = `${year}`;
+    const year = dateTime.getFullYear();
+    const month = dateTime.getMonth();
+    const day = dateTime.getDay();
+    const hours = dateTime.getHours();
+    const minutes = dateTime.getMinutes();
+    const formattedDateTime = `${year}-0${month}-0${day}  ${hours}:${minutes}`;
     return formattedDateTime;
   }
 
   return (
     <div
-      className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] max-h-[70vh] bg-gray-800 backdrop-blur-2xl shadow-md border  ${
-        colorMode ? "border-slate-300" : "border-gray-800"
-      }`}
+      className={`overflow-y-auto min-w-[20vw] rounded-md min-h-[40vh] max-h-[70vh] bg-gray-800 backdrop-blur-2xl shadow-md border border-slate-300`}
     >
       {!notifications?.length && (
-        <div
-          className={`text-lg font-poppins text-center my-6 ${
-            colorMode ? "text-slate-300" : "text-gray-800"
-          }`}
-        >
+        <div className={`text-lg font-poppins text-center my-6 text-slate-300`}>
           No Notification Yet
         </div>
       )}
@@ -49,9 +43,7 @@ const Notification = ({
             setIsNotifyOpen(true);
           }}
           key={i}
-          className={`py-3 px-3 cursor-pointer ${
-            colorMode ? "hover:bg-gray-800" : "hover:bg-slate-300"
-          } ease-in duration-100`}
+          className={`py-3 px-3 cursor-pointer hover:bg-gray-800 ease-in duration-100`}
         >
           <div className="flex justify-between items-start">
             <div className="text-base font-poppins font-semibold flex items-center">
@@ -64,17 +56,11 @@ const Notification = ({
                   />
                 ) : null}
               </span>
-              <span className={`${colorMode ? "text-white" : "text-gray-800"}`}>
-                {notification?.title}
-              </span>
+              <span className={`text-slate-300`}>{notification?.title}</span>
             </div>
             {/* Date & Time */}
             <div>
-              <span
-                className={`font-medium text-xs mr-1.5 ${
-                  colorMode ? "text-white" : "text-gray-800"
-                }`}
-              >
+              <span className={`font-medium text-xs mr-1.5 text-slate-300`}>
                 {formatUTCDateTime(notification.notification_time)}
               </span>
             </div>

@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   return (
     <div className=" min-h-[100vh] ">
-      <div className="2xl:px-5 h-[100vh] flex justify-center items-center">
+      <div className="2xl:px-5 w-full h-[100vh] flex justify-center items-center">
         {userDetails?.userInfo?.role_id && (
           <>
             {(userDetails?.userInfo?.role_id === 1 ||

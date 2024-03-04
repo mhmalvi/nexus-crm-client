@@ -95,7 +95,7 @@ const NoticeForm = () => {
             <div className="w-full p-3 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] ">
               <div className="mb-2 flex justify-between items-center">
                 <h1
-                  className={`2xl:text-xl text-sm text-start text-${
+                  className={`3xl:text-xl 2xl:text-base text-sm text-start text-${
                     colorMode ? "slate-300" : "gray-800"
                   } font-poppins m-0 p-0`}
                 >
@@ -105,8 +105,10 @@ const NoticeForm = () => {
                   onClick={() => {
                     setShowNotices(true);
                   }}
-                  className={`2xl:text-base text-xs ease-in duration-200 border ${
-                    colorMode ? "border-slate-300 text-slate-300" : "border-gray-800 text-gray-800"
+                  className={`3xl:text-base 2xl:text-sm text-xs ease-in duration-200 border ${
+                    colorMode
+                      ? "border-slate-300 text-slate-300"
+                      : "border-gray-800 text-gray-800"
                   } px-2 py-1  rounded-md `}
                 >
                   Preview
@@ -118,7 +120,7 @@ const NoticeForm = () => {
                   className="flex items-center flex-col justify-center gap-4"
                 >
                   <input
-                    className={`placeholder:2xl:!text-base placeholder:!text-sm w-full px-3 py-1 rounded-md bg-transparent outline-none border ${
+                    className={`placeholder:3xl:text-xl placeholder:2xl:text-base placeholder:!text-sm w-full px-3 py-1 rounded-md bg-transparent outline-none border ${
                       colorMode
                         ? "border-slate-300 placeholder:!text-slate-300 !text-slate-300"
                         : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
@@ -129,10 +131,10 @@ const NoticeForm = () => {
                     onChange={(e) => setNoticeTitle(e.target.value)}
                   />
                   <textarea
-                    className={`placeholder:2xl:!text-base placeholder:!text-sm w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
+                    className={`placeholder:3xl:text-xl placeholder:2xl:text-base placeholder:!text-sm w-full outline-none border px-3 py-1 rounded-md bg-transparent ${
                       colorMode
-                      ? "border-slate-300 placeholder:text-slate-300 !text-slate-300"
-                      : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
+                        ? "border-slate-300 placeholder:text-slate-300 !text-slate-300"
+                        : "border-gray-800 placeholder:!text-gray-800 !text-gray-800"
                     }`}
                     name=""
                     style={{ resize: "none" }}

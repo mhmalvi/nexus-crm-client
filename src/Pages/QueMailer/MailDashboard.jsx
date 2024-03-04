@@ -5,6 +5,7 @@ import {
   message,
   Popconfirm,
   Select,
+  DatePicker,
   Modal,
 } from "antd";
 import { useState, useRef, useEffect } from "react";
@@ -16,6 +17,7 @@ import {
   handleGetAllImage,
   sendEmail,
   updateEmail,
+  scheduleEmail,
 } from "../../Components/services/que-mail";
 import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
@@ -38,15 +40,18 @@ const MailDashboard = ({
   setFile,
   categorizedData,
   headerData,
+  bounced,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  console.log(bounced);
   const [tempInitValue, setTempInitValue] = useState("");
   const [tData, setTData] = useState("");
   const [attachModal, setAttachModal] = useState(false);
   const [tempOpen, setTempOpen] = useState(false);
   const [templateList, setTemplateList] = useState([]);
   const [staticTempListData, setStaticTempListData] = useState("");
+  const [scheduleModal, setScheduleModal] = useState(false);
+  const [scheduleTime, setScheduleTime] = useState();
 
   const [mailSubject, setMailSubject] = useState("");
   const [selectedData, setSelectedData] = useState([]);
@@ -61,9 +66,11 @@ const MailDashboard = ({
   const handleTdata = (value) => {
     setTData(value);
   };
+
   const showAddNewTemplateModal = () => {
     setTempOpen(true);
   };
+
   const handleAttachment = (e) => {
     const files = Array.from(e.target.files);
     let totalSize = 0;
@@ -113,27 +120,29 @@ const MailDashboard = ({
         const formData = new FormData();
         const emailTemplatePairs = [];
 
-        categorizedData && categorizedData.forEach((data, index) => {
-          let modifiedTemplateContent = editorRef?.current?.getContent() || "";
-          let modifiedMailSubject = mailSubject;
-          headerData.forEach((placeholder) => {
-            const regex = new RegExp(`{${placeholder}}`, "g");
-            modifiedTemplateContent = modifiedTemplateContent.replace(
-              regex,
-              data[placeholder] || ""
-            );
-            modifiedMailSubject = modifiedMailSubject.replace(
-              regex,
-              data[placeholder] || ""
-            );
-          });
+        categorizedData &&
+          categorizedData.forEach((data, index) => {
+            let modifiedTemplateContent =
+              editorRef?.current?.getContent() || "";
+            let modifiedMailSubject = mailSubject;
+            headerData.forEach((placeholder) => {
+              const regex = new RegExp(`{${placeholder}}`, "g");
+              modifiedTemplateContent = modifiedTemplateContent.replace(
+                regex,
+                data[placeholder] || ""
+              );
+              modifiedMailSubject = modifiedMailSubject.replace(
+                regex,
+                data[placeholder] || ""
+              );
+            });
 
-          emailTemplatePairs.push({
-            email: data.Email || data.email || data.EMAIL,
-            templateContent: modifiedTemplateContent,
-            subject: modifiedMailSubject,
+            emailTemplatePairs.push({
+              email: data.Email || data.email || data.EMAIL,
+              templateContent: modifiedTemplateContent,
+              subject: modifiedMailSubject,
+            });
           });
-        });
 
         emailTemplatePairs.forEach((data) => {
           formData.append("email[]", data.email);
@@ -178,6 +187,10 @@ const MailDashboard = ({
     } else {
       message.error(res.message);
     }
+  };
+
+  const onMailSchedule = (dateTimeStamp) => {
+    
   };
   useEffect(() => {
     async function onSelectTemp() {
@@ -272,31 +285,21 @@ const MailDashboard = ({
       <div className="w-full flex justify-between gap-8">
         <div>
           <h1
-            className={`m-0 p-0 ${
+            className={`m-0 p-0 2xl:text-xl text-sm ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
             }`}
           >
             Current Sender Email:{" "}
-            <span className="font-bold text-green-500">
+            <span className="text-green-600">
               {currentEmail && currentEmail.from_mail_address}
             </span>
           </h1>
         </div>
         <div className="flex gap-8">
-          {/* <button
-            className={`px-4 py-2 border rounded-md ${
-              colorMode
-                ? "text-slate-300 border-slate-300"
-                : "text-gray-800 border-gray-800"
-            }`}
-            onClick={showGalleryModal}
-          >
-            Open Gallery
-          </button> */}
           <button
-            className={`ease-in duration-100 px-4 py-2 border rounded-md hover:border-brand-color ${
+            className={`2xl:text-base text-xs ease-in duration-100 px-4 py-1 border rounded-md hover:border-brand-color ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
@@ -316,53 +319,72 @@ const MailDashboard = ({
           className="w-full"
         >
           <div className="flex justify-between items-center w-full gap-20">
-            <div className="flex items-center w-full h-8">
-              <h2
-                className={`w-1/3 m-0 p-0 ${
-                  colorMode
-                    ? "text-slate-300 border-slate-300"
-                    : "text-gray-800 border-gray-800"
-                }`}
-              >
-                Mail Subject:
-              </h2>
-              <Input
-                disabled={
-                  mailProgress
-                    ? true
-                    : successMail === "success"
-                    ? false
-                    : false
+            <div className="flex-col gap-4 w-1/2">
+              <div className="flex justify-between items-center w-full h-10">
+                <h2
+                  className={`w-full m-0 p-0 2xl:text-base text-xs ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  }`}
+                >
+                  Select Mail Template:
+                </h2>
+                <Form.Item className=" !text-black !rounded-lg !w-full !p-0 !m-0">
+                  <Select
+                    disabled={mailProgress ? true : successMail ? false : false}
+                    defaultValue={!tData && ""}
+                    value={tData || "Select Email template"}
+                    placeholder="Select Email template"
+                    className="templateSelect !rounded-lg !m-0 !p-0 !text-slate-400 !w-full 2xl:!text-base !text-xs"
+                    onChange={handleTdata}
+                    options={templateList || []}
+                  />
+                </Form.Item>
+              </div>
+              <div className="flex items-center w-full h-10">
+                <h2
+                  className={`w-full 2xl:text-base text-xs m-0 p-0 ${
+                    colorMode
+                      ? "text-slate-300 border-slate-300"
+                      : "text-gray-800 border-gray-800"
+                  }`}
+                >
+                  Mail Subject:
+                </h2>
+                <Input
+                  disabled={
+                    mailProgress
+                      ? true
+                      : successMail === "success"
+                      ? false
+                      : false
+                  }
+                  className="!rounded-lg placeholder:!text-slate-400 2xl:!text-base !text-xs !w-full"
+                  value={mailSubject}
+                  onChange={(e) => setMailSubject(e?.target?.value)}
+                  placeholder="Enter subject of mail"
+                />
+              </div>
+            </div>
+            <div className="flex w-1/4">
+              <Select
+                defaultValue="Select dynamic function"
+                style={{ width: "100%" }}
+                className="templateSelect 2xl:!text-base !text-xs"
+                onChange={(selectedOption) => {
+                  navigator.clipboard.writeText(`{${selectedOption}}`);
+                  message.success(`${selectedOption} copied to clipboard`);
+                }}
+                options={
+                  headerData &&
+                  headerData.map((header) => ({
+                    value: header,
+                    label: header,
+                  }))
                 }
-                className="!rounded-lg placeholder:!text-slate-400 "
-                value={mailSubject}
-                onChange={(e) => setMailSubject(e?.target?.value)}
-                placeholder="Enter subject of mail"
               />
             </div>
-            <div className="flex items-center justify-between w-full h-8">
-              <h2
-                className={`w-1/2 m-0 p-0 ${
-                  colorMode
-                    ? "text-slate-300 border-slate-300"
-                    : "text-gray-800 border-gray-800"
-                }`}
-              >
-                Select Mail Template:
-              </h2>
-              <Form.Item className=" !text-black !rounded-lg !w-full !p-0 !m-0">
-                <Select
-                  disabled={mailProgress ? true : successMail ? false : false}
-                  defaultValue={!tData && ""}
-                  value={tData || "Select Email template"}
-                  placeholder="Select Email template"
-                  className="templateSelect !rounded-lg !m-0 !p-0 !text-slate-400"
-                  onChange={handleTdata}
-                  options={templateList || []}
-                />
-              </Form.Item>
-            </div>
-
             {selectedData.length > 0 ? (
               <ul className="flex">
                 {selectedData?.map((item, idx) => {
@@ -377,7 +399,7 @@ const MailDashboard = ({
               ""
             )}
           </div>
-          <div className="template h-full w-full flex flex-col items-center justify-center w-full mt-4  ">
+          <div className="template h-full w-full flex flex-col items-center justify-center w-full  ">
             {tData ? (
               <div className="w-full flex flex-col gap-8 emailEditorCustom">
                 <Editor
@@ -484,24 +506,11 @@ const MailDashboard = ({
                       Max file size: 500kb, Total file size: 20mb
                     </h1>
                   </div>
-                  <div className="flex items-center justify-center gap-4">
-                    <Select
-                      defaultValue="Select dynamic function"
-                      style={{ width: 220 }}
-                      className="templateSelect"
-                      onChange={(selectedOption) => {
-                        navigator.clipboard.writeText(`{${selectedOption}}`);
-                        message.success(selectedOption);
-                      }}
-                      options={headerData.map((header) => ({
-                        value: header,
-                        label: header,
-                      }))}
-                    />
+                  <div className="flex w-1/2 items-center justify-end gap-4">
                     {templateData.template !== tempInitValue ? (
                       <button
                         type="button"
-                        className="text-slate-300 px-4 py-2 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
+                        className="w-2/5 text-slate-300 px-4 py-1 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
                         onClick={handleUpdateMail}
                       >
                         Update Template
@@ -509,7 +518,20 @@ const MailDashboard = ({
                     ) : (
                       ""
                     )}
-                    <Form.Item className="!m-0 r">
+                    <button
+                      type="button"
+                      className={`px-4 py-1 !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
+                         `}
+                      disabled={
+                        !data.length || !mailSubject.length ? true : false
+                      }
+                      onClick={() => {
+                        setScheduleModal(true);
+                      }}
+                    >
+                      Schedule Mail
+                    </button>
+                    <Form.Item className="flex gap-4 !m-0 r-0">
                       <Button
                         type="primary"
                         htmlType="submit"
@@ -522,9 +544,9 @@ const MailDashboard = ({
                           !data.length || !mailSubject.length ? true : false
                         }
                       >
-                        Send Mail
+                        Send Mail Now
                       </Button>
-                    </Form.Item>{" "}
+                    </Form.Item>
                   </div>
                 </div>
               </div>
@@ -567,6 +589,40 @@ const MailDashboard = ({
             );
           })}
         </div>
+      </Modal>
+      <Modal
+        width="20%"
+        visible={scheduleModal}
+        className="emailModals"
+        onOk={() => {
+          onMailSchedule(scheduleTime)
+          setScheduleModal(false);
+        }}
+        okText={"Schedule Mail"}
+        onCancel={() => {
+          setScheduleModal(false);
+        }}
+      >
+        <DatePicker
+          onChange={(e) => {
+            const formattedDateString =
+              e._d.getFullYear() +
+              "-" +
+              ("0" + (e._d.getMonth() + 1)).slice(-2) +
+              "-" +
+              ("0" + e._d.getDate()).slice(-2) +
+              " " +
+              ("0" + e._d.getHours()).slice(-2) +
+              ":" +
+              ("0" + e._d.getMinutes()).slice(-2) +
+              ":" +
+              ("0" + e._d.getSeconds()).slice(-2);
+
+            setScheduleTime(formattedDateString);
+          }}
+          showTime
+          needConfirm={false}
+        />
       </Modal>
     </div>
   );

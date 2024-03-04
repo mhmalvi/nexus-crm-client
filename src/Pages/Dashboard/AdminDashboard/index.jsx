@@ -716,8 +716,8 @@ const AdminDashboard = () => {
   console.log(notifications);
 
   return (
-    <div className="w-full max-h-screen flex flew-wrap gap-4 h-[90vh] ">
-      <div className="w-4/5 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
+    <div className="w-full max-h-screen flex flew-wrap 2xl:gap-4 gap-2 h-[90vh] ">
+      <div className="w-full border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
@@ -791,7 +791,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div
-        className={`w-1/5 flex flex-col items-center justify-between h-full`}
+        className={`w-3/12 flex flex-col items-center justify-between h-full`}
       >
         <div className="relative w-full flex items-center justify-between p-3 rounded-md h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
@@ -838,7 +838,7 @@ const AdminDashboard = () => {
               <div
                 className={`absolute ${
                   openSideBar ? "right-32" : "right-80"
-                } top-32`}
+                } 2xl:top-32 top-24`}
               >
                 <Notifications
                   viewedData={viewedData}
@@ -851,7 +851,7 @@ const AdminDashboard = () => {
                 />
               </div>
               <div
-                className="absolute right-[30vw] top-32 flex items-center justify-center"
+                className="absolute 2xl:right-[30vw] right-[30vw] top-32 flex items-center justify-center"
                 onClick={() => {
                   setIsNotifyOpen(false);
                   setToggleNotification(false);

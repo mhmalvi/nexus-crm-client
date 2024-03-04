@@ -176,6 +176,25 @@ export const sendEmail = async (data) => {
     return error.response;
   }
 };
+export const scheduleEmail = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/mail-schedule-store`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 export const updateEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {

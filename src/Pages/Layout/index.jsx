@@ -54,7 +54,7 @@ const Layout = () => {
 
   return (
     <div
-      className="flex justify-start items-start font-poppins overflow-x-hidden dashboard-background"
+      className="relative flex justify-start items-start font-poppins overflow-x-hidden dashboard-background"
       onClick={() => {
         setToggleMessage(false);
       }}
@@ -70,7 +70,9 @@ const Layout = () => {
       </div>
       <div
         className={`relative ml-auto duration-300 ${
-          openSideBar ? "w-[calc(100vw-80px)]" : "w-[calc(100vw-277px)]"
+          openSideBar
+            ? "2xl:w-[calc(100vw-80px)] w-[calc(100vw-70px)]"
+            : "2xl:w-[calc(100vw-256px)] w-[calc(100vw-230px)]"
         }`}
       >
         <Routes>
