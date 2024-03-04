@@ -63,8 +63,6 @@ const BigCalendar = () => {
           notification_time: formattedDate,
         };
       });
-
-      console.log(updatedReminders);
       setShowReminder(updatedReminders);
     })();
   };
