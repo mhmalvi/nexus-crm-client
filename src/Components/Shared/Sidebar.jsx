@@ -148,8 +148,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             />
           </div>
         </div>
-        <div className="w-full h-full">
-          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
+        <div className="w-full h-full flex flex-col gap-8 ">
+          <div className={`${openSideBar ? "ml-0" : "ml-8"}`}>
             <Link
               to={"/dashboard"}
               className={`${
@@ -165,7 +165,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               }`}
               onClick={() => setActive("dashboard")}
             >
-              <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+              <div className="flex w-full items-center justify-around overflow-hidden">
                 <Icons.Dashboard />
                 {openSideBar ? (
                   ""
@@ -219,7 +219,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 }`}
                 onClick={() => setActive("analytics")}
               >
-                <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                <div className="flex w-full items-center justify-around overflow-hidden">
                   <Icons.Chart />
                   {openSideBar ? (
                     ""
@@ -273,7 +273,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 }`}
                 onClick={() => setActive("que-mailer")}
               >
-                <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                <div className="flex w-full items-center justify-around overflow-hidden">
                   <Icons.SidebarMail />
                   {openSideBar ? (
                     ""
@@ -310,7 +310,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             )}
           </div>
 
-          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
+          <div className={`${openSideBar ? "ml-0" : "ml-8"}`}>
             {/* Lead Courses */}
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id === 4) && (
@@ -330,7 +330,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   }`}
                   onClick={() => setActive("courses")}
                 >
-                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                  <div className="flex w-full items-center justify-around overflow-hidden">
                     <Icons.Courses className="w-5" />
                     {openSideBar ? (
                       ""
@@ -386,7 +386,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   }`}
                   onClick={() => setActive("campaigns")}
                 >
-                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                  <div className="flex w-full items-center justify-around overflow-hidden">
                     <Icons.Campaigns />
                     {openSideBar ? (
                       ""
@@ -449,7 +449,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     }`}
                     onClick={() => setActive("payments")}
                   >
-                    <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                    <div className="flex w-full items-center justify-around overflow-hidden">
                       <Icons.Payment />
                       {openSideBar ? (
                         ""
@@ -487,7 +487,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               )}
           </div>
 
-          <div className={`${openSideBar ? "ml-0" : "ml-8"} mb-8`}>
+          <div className={`${openSideBar ? "ml-0" : "ml-8"}`}>
             {/* Sales Employee */}
 
             {(userDetails?.userInfo?.role_id === 1 ||
@@ -510,7 +510,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   }`}
                   onClick={() => setActive("salesEmployee")}
                 >
-                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                  <div className="flex w-full items-center justify-around overflow-hidden">
                     <Icons.MoneyCheck className={`w-5`} />
                     {openSideBar ? (
                       ""
@@ -569,7 +569,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   }`}
                   onClick={() => setActive("reminder")}
                 >
-                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                  <div className="flex w-full items-center justify-around overflow-hidden">
                     <Icons.Calender className={`w-5`} />
                     {openSideBar ? (
                       ""
@@ -625,7 +625,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   }`}
                   onClick={() => setActive("settings")}
                 >
-                  <div className="flex w-full h-8 items-center justify-around overflow-hidden">
+                  <div className="flex w-full items-center justify-around overflow-hidden">
                     <Icons.Settings className={`w-5`} />
                     {openSideBar ? (
                       ""

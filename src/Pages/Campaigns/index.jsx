@@ -115,7 +115,7 @@ const Campaigns = () => {
             <Loading />
           </div>
         ) : (
-          <div className="h-[75vh] grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 overflow-y-scroll">
+          <div className="h-[75vh] flex flex-wrap gap-8 overflow-y-scroll">
             {campaignList
               ?.map((campaign, i) => <Campaign key={i} campaign={campaign} />)
               .reverse()}

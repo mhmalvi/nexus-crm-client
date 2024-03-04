@@ -281,7 +281,8 @@ const AdminDashboard = () => {
               onPressEnter={() =>
                 handleSearch(selectedKeys, confirm, dataIndex)
               }
-              className="focus:!border-brand-color active:!border-brand-color focus:!outline-none active:!ring-red-300"
+              className={`active:!border-brand-color focus:!ring-brand-color active:!ring-red-300`}
+              autoFocus={true}
             />
             <div className="w-full gap-2 flex items-center justify-between">
               <Button

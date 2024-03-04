@@ -52,11 +52,12 @@ const AddPaymentHistory = ({
           id="amount"
           name="amount"
           autofocus
-          className={`px-2 w-full py-2 border-b border-slate-300 bg-transparent focus:ring-brand-color rounded-md placeholder:!text-slate-300`}
+          className={`px-2 w-full py-2 bg-transparent focus:ring-brand-color rounded-md placeholder:!text-slate-300`}
           type="number"
           placeholder="$0"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          autoFocus={true}
         />
       </div>
 
