@@ -33,6 +33,7 @@ import CourseMangemnet from "../CourseManagement/CourseMangement";
 import PaySlip from "../PaySlip/PaySlip";
 import EmailSetting from "../EmailSetting/EmailSetting";
 import QueMailer from "../QueMailer";
+import Billing from "../Billing";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -220,6 +221,13 @@ const Items = [
     name: "que-mailer",
     label: "Que Mailer",
     component: <QueMailer />,
+    count: 0,
+  },
+  {
+    key: "billing",
+    name: "billing",
+    label: "Billing",
+    component: <Billing />,
     count: 0,
   },
 ];

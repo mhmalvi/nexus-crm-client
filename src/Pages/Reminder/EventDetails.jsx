@@ -58,9 +58,6 @@ const EventDetails = ({
   }, [eventDetails]);
 
 
-
-
-
   const handleEventDetailsChange = (e) => {
     const updatedValue = { ...updateEventData };
     updatedValue[e.target.id] = e.target.value;
