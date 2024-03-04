@@ -31,7 +31,7 @@ const Campaign = ({ campaign }) => {
       >
         <div className="flex flex-col justify-center items-center gap-4">
           <h2
-            className={`m-0 px-4 py-2 font-semibold text-sm text-start border-b ${
+            className={`m-0 px-4 py-2 font-semibold text-sm text-start border-b border-brand-color ${
               colorMode ? "text-gray-800" : "text-slate-300"
             }`}
           >
