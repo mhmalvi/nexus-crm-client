@@ -36,6 +36,7 @@ import CourseMangemnet from "./Pages/CourseManagement/CourseMangement";
 import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 import QueMailer from "./Pages/QueMailer";
+import Billing from "./Pages/Billing";
 
 import { useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
@@ -43,14 +44,13 @@ import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
 
 function App() {
-  
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const [state, setState] = useState("Active");
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state?.user);
-  
+
   const onIdle = () => {
     handleLogout({
       user_id: userDetails.userInfo.user_id,
@@ -118,6 +118,8 @@ function App() {
           <Route path="user-profile" element={<UserProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="email-setting" element={<EmailSetting />} />
+          <Route path="billing" element={<Billing />} />
+
           {/* <Route path="mail" element={<GmailModule />} /> */}
         </Route>
         <Route path="setup-your-profile" element={<MultipartForm />} />

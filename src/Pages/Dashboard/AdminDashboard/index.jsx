@@ -697,6 +697,7 @@ const AdminDashboard = () => {
   const socket = io("https://crmnotification.queleadscrm.com");
 
   socket.connect();
+
   useEffect(() => {
     socket.emit("message", { user_id: userDetails.userInfo.id });
     const handleMessage = (e) => {
@@ -712,6 +713,8 @@ const AdminDashboard = () => {
       socket.disconnect();
     };
   }, [dispatch, socket, userDetails.userInfo.id, setViewedData]);
+  console.log(notifications);
+
   return (
     <div className="w-full max-h-screen flex flew-wrap gap-4 h-[90vh] ">
       <div className="w-4/5 border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">

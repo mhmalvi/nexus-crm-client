@@ -96,9 +96,21 @@ const DayDetails = ({
     setTaskDetails(data);
   };
   const onReminderDateChange = (value, dateString) => {
-    const utcDate = new Date(dateString).toISOString();
+    const utcDate = new Date(dateString).toISOString().slice(0, 19).replace("T", " ");
+    // const formattedDateString =
+    //   utcDate.getFullYear() +
+    //   "-" +
+    //   ("0" + (utcDate.getMonth() + 1)).slice(-2) +
+    //   "-" +
+    //   ("0" + utcDate.getDate()).slice(-2) +
+    //   " " +
+    //   ("0" + utcDate.getHours()).slice(-2) +
+    //   ":" +
+    //   ("0" + utcDate.getMinutes()).slice(-2) +
+    //   ":" +
+    //   ("0" + utcDate.getSeconds()).slice(-2);
     setNotiFyDate(utcDate);
-    console.log(notifyDate);
+    console.log(utcDate);
   };
 
   const handleTextInputFieldChange = (e) => {
@@ -117,15 +129,16 @@ const DayDetails = ({
       setIsSaveDisable(false);
       return;
     }
+
+    console.log("Before: ", notifyDate);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
       notification_time: notifyDate,
     });
-
     if (addFollowUpRes?.status === 201) {
       message.success("Reminder Added Successfully");
-
+      console.log("After: ", addFollowUpRes);
       setIsSaveDisable(false);
       fetchingReminders();
       setTaskDetails(initialData);

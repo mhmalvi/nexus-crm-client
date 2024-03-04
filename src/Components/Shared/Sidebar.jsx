@@ -160,7 +160,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   : colorMode
                   ? "text-[#B3B3B3]"
                   : "text-gray-800"
-              } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+              } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                 colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
               }`}
               onClick={() => setActive("dashboard")}
@@ -214,7 +214,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
-                } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                   colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                 }`}
                 onClick={() => setActive("analytics")}
@@ -268,7 +268,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
-                } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                   colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                 }`}
                 onClick={() => setActive("que-mailer")}
@@ -325,7 +325,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("courses")}
@@ -381,7 +381,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("campaigns")}
@@ -442,7 +442,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                         : colorMode
                         ? "text-[#B3B3B3]"
                         : "text-gray-800"
-                    } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                    } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                       colorMode
                         ? "hover:text-[#ffffff]"
                         : "hover:text-[#000000]"
@@ -505,7 +505,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("salesEmployee")}
@@ -564,7 +564,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("reminder")}
@@ -577,7 +577,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
                         <h1
                           className={`m-0 p-0 w-[10vw] ${
-                            active === "salesEmployee"
+                            active === "reminder"
                               ? colorMode
                                 ? "text-[#FFFFFF]"
                                 : "text-[#000000]"
@@ -606,6 +606,62 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               </div>
             )}
 
+            {/* Billing */}
+            {(userDetails?.userInfo?.role_id === 3 ||
+              userDetails?.userInfo?.role_id !== 5) && (
+              <div>
+                <Link
+                  to={"/billing"}
+                  className={`${
+                    active === "billing"
+                      ? colorMode
+                        ? "text-[#FFFFFF]"
+                        : "text-[#000000]"
+                      : colorMode
+                      ? "text-[#B3B3B3]"
+                      : "text-gray-800"
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
+                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                  }`}
+                  onClick={() => setActive("billing")}
+                >
+                  <div className="flex w-full items-center justify-around overflow-hidden">
+                    <Icons.Billing className={`w-5`} />
+                    {openSideBar ? (
+                      ""
+                    ) : (
+                      <span className="w-3/4 font-medium font-poppins text-[100%] overflow-hidden">
+                        <h1
+                          className={`m-0 p-0 w-[10vw] ${
+                            active === "billing"
+                              ? colorMode
+                                ? "text-[#FFFFFF]"
+                                : "text-[#000000]"
+                              : colorMode
+                              ? "text-[#B3B3B3]"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          Billing Information
+                        </h1>
+                      </span>
+                    )}
+                  </div>
+                  {active === "billing" && (
+                    <div
+                      className={`active-option ${
+                        colorMode
+                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
+                          : "text-[#000000] bg-[#000000]"
+                      }`}
+                    >
+                      |
+                    </div>
+                  )}
+                </Link>
+              </div>
+            )}
+
             {/* Company Settings */}
             {(userDetails?.userInfo?.role_id === 3 ||
               userDetails?.userInfo?.role_id !== 5) && (
@@ -620,7 +676,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
-                  } ease-in duration-300 flex items-center justify-between text-base cursor-pointer py-1 ${
+                  } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                     colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
                   }`}
                   onClick={() => setActive("settings")}
@@ -669,7 +725,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/courseManagement"}
-                className="ease-in duration-300 flex items-center text-base cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
                 style={{
                   color: `${
                     active === "courseManagement" ? "#000000" : "#FFFFFF"
@@ -699,7 +755,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/paymentSlip"}
-                className="ease-in duration-300 flex items-center text-base cursor-pointer py-1 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer py-1 hover:text-[#ffffff]"
                 style={{
                   color: `${active === "paymentSlip" ? "#000000" : "#FFFFFF"}`,
                 }}
@@ -726,7 +782,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
 
           {/* Logout */}
           <div
-            className=" flex items-center justify-center text-base cursor-pointer my-4"
+            className=" flex items-center justify-center 2xl:text-base text-sm  cursor-pointer my-4"
             onClick={logoutHandler}
           >
             <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md overflow-hidden">
