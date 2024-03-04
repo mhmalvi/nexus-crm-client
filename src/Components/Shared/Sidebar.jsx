@@ -134,9 +134,9 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
         )}
       </div>
       <div className="flex flex-col items-center justify-around h-screen">
-        <div className="w-[15vw] flex items-center justify-center min-h-[200px] origin-center overflow-hidden">
+        <div className="w-[15vw] h-52 flex items-center justify-center origin-center overflow-hidden">
           <div
-            className={`h-[100px] w-[100px]
+            className={`h-24 w-24
             }]  ${
               openSideBar ? " hidden" : "rounded-full"
             } ease-in duration-300 overflow-hidden flex items-center justify-center bg-white`}
@@ -148,7 +148,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             />
           </div>
         </div>
-        <div className="w-full h-full flex flex-col gap-8 ">
+        <div className="w-full h-full flex flex-col 2xl:gap-8 gap-4">
           <div className={`${openSideBar ? "ml-0" : "ml-8"}`}>
             <Link
               to={"/dashboard"}
@@ -782,7 +782,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
 
           {/* Logout */}
           <div
-            className=" flex items-center justify-center 2xl:text-base text-sm  cursor-pointer my-4"
+            className=" flex items-center justify-center 2xl:text-base text-sm  cursor-pointer"
             onClick={logoutHandler}
           >
             <button className="flex w-full items-center justify-center bg-[#D93D3D] mx-2 rounded-md py-2 shadow-md overflow-hidden">
@@ -797,24 +797,29 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               )}
             </button>
           </div>
-
-          {/* Color Switcher */}
-          <div className="flex justify-center items-center">
-            <Switch
-              onClick={toggleColorMode}
-              className="colorModeToggler"
-              checkedChildren={<SunIcon />}
-              unCheckedChildren={<MoonIcon />}
-              defaultChecked
-            />
-          </div>
-          <div className="flex justify-center items-center">
-            <button
-              onClick={toggleHelp}
-              className={`${helpModal ? "text-blue-500" : "text-orange-500"}`}
-            >
-              Help
-            </button>
+          <div
+            className={`flex gap-4 ${
+              openSideBar ? "flex-col" : "flex-rows"
+            } justify-around items-center w-full`}
+          >
+            {/* Color Switcher */}
+            <div className="flex justify-center items-center">
+              <Switch
+                onClick={toggleColorMode}
+                className="colorModeToggler"
+                checkedChildren={<SunIcon />}
+                unCheckedChildren={<MoonIcon />}
+                defaultChecked
+              />
+            </div>
+            <div className="flex justify-center items-center">
+              <button
+                onClick={toggleHelp}
+                className={`${helpModal ? "text-blue-500" : "text-orange-500"}`}
+              >
+                Help
+              </button>
+            </div>
           </div>
         </div>
 
