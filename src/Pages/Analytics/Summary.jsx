@@ -17,8 +17,8 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
   const userDetails = useSelector((state) => state.user)?.userInfo;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const campaigns = useSelector((state) => state.campaigns?.campaigns);
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
-  const [lastWeekIncome, setLastWeekIncome] = useState([]);
+  // const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  // const [lastWeekIncome, setLastWeekIncome] = useState([]);
   const [totalLastWeekIncome, setTotalLastWeekIncome] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [companies, setCompanies] = useState([]);
@@ -30,12 +30,6 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
       const monthlyRevenueResp = await fetchMonthPaymentDataOfCompany(
         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
       );
-
-      console.log("monthlyRevenueResp", monthlyRevenueResp);
-
-      if (monthlyRevenueResp?.status === 200) {
-        setMonthlyRevenue((monthlyRevenueResp?.data).reverse());
-      }
 
       let totalMonthlyRevenue = 0;
       monthlyRevenueResp?.data?.forEach((rev) => {
@@ -50,11 +44,6 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
       );
 
-      console.log("lastWeekIncomeResp", lastWeekIncomeResp);
-
-      if (lastWeekIncomeResp?.status === 200) {
-        setLastWeekIncome(lastWeekIncomeResp?.data);
-      }
 
       let totalLastWeekIncome = 0;
       lastWeekIncomeResp?.data?.forEach((rev) => {

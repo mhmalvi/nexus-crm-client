@@ -26,6 +26,7 @@ const QueMailer = () => {
   const userDetails = useSelector((state) => state.user);
   const [currentEmail, setCurrentEmail] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [bounced, setBounced] = useState([]);
 
   const navigate = useNavigate();
   const [emailsPerPage, setEmailsPerPage] = useState(20);
@@ -38,8 +39,8 @@ const QueMailer = () => {
   const [dailyCount, setDailyCount] = useState(null);
   const [historyInnerPagination, setHistoryInnerPagination] = useState(1);
   const [totalEmail, setTotalEmail] = useState(null);
-  const [headerData, setHeaderData] = useState()
-  const [categorizedData, setCategorizedData] = useState()
+  const [headerData, setHeaderData] = useState();
+  const [categorizedData, setCategorizedData] = useState();
 
   useEffect(() => {
     async function fetchCurrentEmail() {
@@ -132,14 +133,10 @@ const QueMailer = () => {
               className={`${
                 colorMode
                   ? `hover:text-white ${
-                      activeItem === "Email"
-                        ? "text-white font-semibold"
-                        : "text-slate-300"
+                      activeItem === "Email" ? "text-white" : "text-slate-300"
                     }`
                   : `hover:text-gray-800  ${
-                      activeItem === "Email"
-                        ? "text-gray-800 font-semibold"
-                        : "text-gray-500"
+                      activeItem === "Email" ? "text-gray-800" : "text-gray-500"
                     }`
               } px-4 text-base`}
               onClick={() => {
@@ -153,13 +150,13 @@ const QueMailer = () => {
                 colorMode
                   ? `hover:text-white ${
                       activeItem === "Email History"
-                        ? "text-white font-semibold "
-                        : "text-slate-300  "
+                        ? "text-white"
+                        : "text-slate-300"
                     }`
                   : `hover:text-gray-800 ${
                       activeItem === "Email History"
-                        ? "text-gray-800 font-semibold "
-                        : "text-gray-500  "
+                        ? "text-gray-800"
+                        : "text-gray-500"
                     }`
               } px-4 text-base`}
               onClick={() => {
@@ -171,7 +168,9 @@ const QueMailer = () => {
             <button
               disabled
               className={`${
-                colorMode ? "text-slate-600 disabled:text-slate-500" : "text-gray-300 disabled:text-gray-500"
+                colorMode
+                  ? "text-slate-600 disabled:text-slate-500"
+                  : "text-gray-300 disabled:text-gray-500"
               } px-4 text-base cursor-not-allowed`}
               onClick={() => {
                 setActiveItem("Statistics");
@@ -184,12 +183,12 @@ const QueMailer = () => {
                 colorMode
                   ? `hover:text-white ${
                       activeItem === "Email Settings"
-                        ? "text-white font-semibold"
+                        ? "text-white"
                         : "text-slate-300"
                     }`
                   : `hover:text-gray-800 ${
                       activeItem === "Email Settings"
-                        ? "text-gray-800 font-semibold"
+                        ? "text-gray-800"
                         : "text-gray-500"
                     }`
               } px-4 text-base`}
@@ -226,12 +225,15 @@ const QueMailer = () => {
               </div>
             </div>
           ) : (
-            <div className="p-0 m-0 ease-in duration-100">
+            <div className="p-0 m-0 ease-in duration-100 h-full">
               {/* EMAIL EDITING SECTION */}
 
-              <div className="flex h-full justify-between gap-4 z-5">
-                <div className={`${data.length <= 0 ?"hidden":"content"} ease-in duration-200 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}>
-                  
+              <div className="flex h-full justify-between gap-4 z-5 ">
+                <div
+                  className={`${
+                    data.length <= 0 ? "hidden" : "content"
+                  } ease-in duration-200 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
+                >
                   <MailDashboard
                     openMailModal={openMailModal}
                     setOpenMailModal={setOpenMailModal}
@@ -249,9 +251,14 @@ const QueMailer = () => {
                     setError={setError}
                     categorizedData={categorizedData}
                     headerData={headerData}
+                    bounced={bounced}
                   />
                 </div>
-                <div className={`${data.length <= 0 ?"w-full":"w-1/2"} flex flex-col z-0`}>
+                <div
+                  className={`${
+                    data.length <= 0 ? "w-full" : "w-1/3"
+                  } flex flex-col z-0`}
+                >
                   <CsvParser
                     data={data}
                     setData={setData}
@@ -265,6 +272,7 @@ const QueMailer = () => {
                     setFileName={setFileName}
                     setHeaderData={setHeaderData}
                     setCategorizedData={setCategorizedData}
+                    setBounced={setBounced}
                   />
                 </div>
               </div>

@@ -114,7 +114,7 @@ const CalendarSmall = ({
             <div>
               <h1
                 level={4}
-                className={`2xl:text-xl text-sm ${
+                className={`3xl:text-xl 2xl:text-base text-sm ${
                   colorMode ? " text-slate-300" : "text-gray-800"
                 }`}
               >
