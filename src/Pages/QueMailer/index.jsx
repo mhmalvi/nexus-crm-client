@@ -26,6 +26,8 @@ const QueMailer = () => {
   const userDetails = useSelector((state) => state.user);
   const [currentEmail, setCurrentEmail] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [csvFileName, setCSVFileName] = useState("");
+
   const [bounced, setBounced] = useState([]);
 
   const navigate = useNavigate();
@@ -127,7 +129,7 @@ const QueMailer = () => {
     <div className="flex items-start justify-center w-full h-screen py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
-        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
+        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
           <div className="flex gap-8">
             <button
               className={`${
@@ -270,6 +272,7 @@ const QueMailer = () => {
                     successMail={successMail}
                     fileName={fileName}
                     setFileName={setFileName}
+                    setCSVFileName={setCSVFileName}
                     setHeaderData={setHeaderData}
                     setCategorizedData={setCategorizedData}
                     setBounced={setBounced}
@@ -278,7 +281,6 @@ const QueMailer = () => {
               </div>
             </div>
           ))}
-
         {activeItem === "Email History" && (
           <div className="m-0 p-0 flex rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 !z-4 h-full">
             <EmailHistory
@@ -296,6 +298,7 @@ const QueMailer = () => {
             />
           </div>
         )}
+        
         {activeItem === "Email Settings" && (
           <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 h-full overflow-hidden">
             <EmailSettings currentEmail={currentEmail} />

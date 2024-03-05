@@ -43,7 +43,7 @@ const MailDashboard = ({
   bounced,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  console.log(bounced);
+
   const [tempInitValue, setTempInitValue] = useState("");
   const [tData, setTData] = useState("");
   const [attachModal, setAttachModal] = useState(false);
@@ -103,7 +103,7 @@ const MailDashboard = ({
     }
     setAttachment(files);
   };
-
+console.log(data)
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -189,8 +189,83 @@ const MailDashboard = ({
     }
   };
 
-  const onMailSchedule = (dateTimeStamp) => {
-    
+  const onMailSchedule = async (dateTimeStamp) => {
+    if (!data || !tData || !mailSubject) {
+      if (!data) {
+        message.warning("Please upload a csv");
+      }
+      if (!tData) {
+        message.warning("Please select template");
+      }
+      if (!mailSubject) {
+        message.warning("Please enter mail subject");
+      }
+    } else {
+      try {
+        const formData = new FormData();
+        const emailTemplatePairs = [];
+
+        categorizedData &&
+          categorizedData.forEach((data, index) => {
+            let modifiedTemplateContent =
+              editorRef?.current?.getContent() || "";
+            let modifiedMailSubject = mailSubject;
+            headerData.forEach((placeholder) => {
+              const regex = new RegExp(`{${placeholder}}`, "g");
+              modifiedTemplateContent = modifiedTemplateContent.replace(
+                regex,
+                data[placeholder] || ""
+              );
+              modifiedMailSubject = modifiedMailSubject.replace(
+                regex,
+                data[placeholder] || ""
+              );
+            });
+
+            emailTemplatePairs.push({
+              email: data.Email || data.email || data.EMAIL,
+              templateContent: modifiedTemplateContent,
+              subject: modifiedMailSubject,
+            });
+          });
+
+        emailTemplatePairs.forEach((data) => {
+          formData.append("email[]", data.email);
+          formData.append("template[]", data.templateContent);
+          formData.append("subject[]", data.subject);
+          console.log(data.subject)
+        });
+        formData.append("schedule", dateTimeStamp);
+        formData.append("user_id", userDetails?.id);
+
+        if (attachment.length) {
+          attachment.forEach((file) => {
+            formData.append("files[]", file);
+          });
+        }
+        if (bounced.length) {
+          bounced.forEach((data) => {
+            formData.append("bounced_email[]", data);
+            console.log(data);
+          });
+        }
+        const res = await scheduleEmail(formData);
+
+        if (res?.status === 200) {
+          message.success(res?.message);
+          setSuccessMail("success");
+        } else if (res?.status === 504) {
+          message.success("All mail has been sent !");
+          setSuccessMail("success");
+        } else {
+          await message.warning(res?.message);
+          setSuccessMail("failed");
+        }
+      } catch (error) {
+        // setSuccessMail("success");
+        message.warning(error.response);
+      }
+    }
   };
   useEffect(() => {
     async function onSelectTemp() {
@@ -285,7 +360,7 @@ const MailDashboard = ({
       <div className="w-full flex justify-between gap-8">
         <div>
           <h1
-            className={`m-0 p-0 2xl:text-xl text-sm ${
+            className={`m-0 p-0 2xl:text-base text-sm ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
@@ -336,7 +411,7 @@ const MailDashboard = ({
                     defaultValue={!tData && ""}
                     value={tData || "Select Email template"}
                     placeholder="Select Email template"
-                    className="templateSelect !rounded-lg !m-0 !p-0 !text-slate-400 !w-full 2xl:!text-base !text-xs"
+                    className="templateSelect !rounded-lg !m-0 !p-0 !text-slate-400 !w-full !2xl:text-base !text-xs"
                     onChange={handleTdata}
                     options={templateList || []}
                   />
@@ -360,7 +435,7 @@ const MailDashboard = ({
                       ? false
                       : false
                   }
-                  className="!rounded-lg placeholder:!text-slate-400 2xl:!text-base !text-xs !w-full"
+                  className="!rounded-lg placeholder:!text-slate-400 2xl:text-base !text-xs !w-full"
                   value={mailSubject}
                   onChange={(e) => setMailSubject(e?.target?.value)}
                   placeholder="Enter subject of mail"
@@ -369,9 +444,9 @@ const MailDashboard = ({
             </div>
             <div className="flex w-1/4">
               <Select
-                defaultValue="Select dynamic function"
+                defaultValue="Copy dynamic header"
                 style={{ width: "100%" }}
-                className="templateSelect 2xl:!text-base !text-xs"
+                className="templateSelect 2xl:text-base !text-xs"
                 onChange={(selectedOption) => {
                   navigator.clipboard.writeText(`{${selectedOption}}`);
                   message.success(`${selectedOption} copied to clipboard`);
@@ -595,7 +670,7 @@ const MailDashboard = ({
         visible={scheduleModal}
         className="emailModals"
         onOk={() => {
-          onMailSchedule(scheduleTime)
+          onMailSchedule(scheduleTime);
           setScheduleModal(false);
         }}
         okText={"Schedule Mail"}

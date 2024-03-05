@@ -17,48 +17,48 @@ const CountryList = ({ table_title }) => {
           className="flex flex-wrap items-start gap-4"
         >
           <div
-            className={` flex items-center 3xl:text-base text-sm ${
+            className={` flex items-center 2xl:text-base text-xs ${
               colorMode ? "text-slate-300" : "text-gray-800"
             } `}
           >
             <div
-              className={`bg-[#26D4AB7f] w-[25px] h-[25px] rounded-full mr-2 border-4 ${
+              className={`bg-[#26D4AB7f] 2xl:w-6 2xl:h-6 w-3 h-3 rounded-full mr-2 2xl:border-4 border-2 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
             <p className="m-0 p-0">WA</p>
           </div>
           <div
-            className={`flex items-center 3xl:text-base text-sm ${
+            className={`flex items-center 2xl:text-base text-xs ${
               colorMode ? "text-slate-300" : "text-gray-800"
             } `}
           >
             <div
-              className={`bg-[#F3E45B7f] w-[25px] h-[25px] rounded-full mr-2 border-4 ${
+              className={`bg-[#F3E45B7f] 2xl:w-6 2xl:h-6 w-3 h-3 rounded-full mr-2 2xl:border-4 border-2 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
             <p className="m-0 p-0">Vietnam</p>
           </div>
           <div
-            className={`flex items-center 3xl:text-base text-sm ${
+            className={`flex items-center 2xl:text-base text-xs ${
               colorMode ? "text-slate-300" : "text-gray-800"
             } `}
           >
             <div
-              className={`bg-[#FF8A8A7f] w-[25px] h-[25px] rounded-full mr-2 border-4 ${
+              className={`bg-[#FF8A8A7f] 2xl:w-6 2xl:h-6 w-3 h-3 rounded-full mr-2 2xl:border-4 border-2 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>
             <p className="m-0 p-0">Philippines</p>
           </div>
           <div
-            className={`flex items-center 3xl:text-base text-sm ${
+            className={`flex items-center 2xl:text-base text-xs ${
               colorMode ? "text-slate-300" : "text-gray-800"
             } `}
           >
             <div
-              className={`bg-transparent w-[25px] h-[25px] rounded-full mr-2 border-4 ${
+              className={`bg-transparent 2xl:w-6 2xl:h-6 w-3 h-3 rounded-full mr-2 2xl:border-4 border-2 ${
                 colorMode ? "border-slate-200" : "border-gray-800"
               }`}
             ></div>

@@ -17,7 +17,7 @@ const CSVParser = ({
   fileName,
   setHeaderData,
   setCategorizedData,
-  setBounced
+  setBounced,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -79,18 +79,20 @@ const CSVParser = ({
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
     reader.onload = async ({ target }) => {
+      console.log("File name:", target);
       const csv = Papa.parse(target.result, {
         header: false,
       });
+      console.log("File name:", file.name);
       const parsedData = csv?.data || [];
 
-      // Extracting the header row
       const headerRow = parsedData.length > 0 ? parsedData[0] : [];
       setHeaderData(headerRow);
-      // Rest of the rows excluding the header
-      const dataRows = parsedData.slice(1);
 
-      // Organizing data under headings
+      const dataRows = parsedData
+        .slice(1)
+        .filter((row) => row.some((cell) => cell.trim() !== ""));
+
       const organizedData = dataRows.map((row) => {
         const rowData = {};
         headerRow.forEach((header, index) => {
@@ -98,20 +100,25 @@ const CSVParser = ({
         });
         return rowData;
       });
-      setCategorizedData(organizedData);
-      // Extracting email addresses from organizedData
-      const emailData = organizedData.map((row) => row["Email"]); // Assuming 'Email' is the header for email addresses
+
+      const validEmailsData = organizedData.filter((row) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row["Email"])
+      );
+
+      setCategorizedData(validEmailsData);
+
+      const emailData = organizedData.map((row) => row["Email"]);
 
       const validEmails = emailData.filter((email) =>
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      ); // Filtering valid email addresses
+      );
+
       const filteredOutEmails = emailData.filter(
         (email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      ); // Filtering out invalid email addresses
+      );
 
       setData(validEmails);
       setBounced(filteredOutEmails);
-      
     };
     reader.readAsText(file);
   };
