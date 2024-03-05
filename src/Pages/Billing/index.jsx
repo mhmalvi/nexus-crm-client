@@ -10,19 +10,19 @@ const Billing = () => {
     <div className="flex items-start justify-center w-full h-screen py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
-        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
-          <div className="flex gap-8">
+        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
+          <div className="flex gap-4">
             <button
               className={`${
                 colorMode
                   ? `hover:text-white ${
                       activeItem === "Method"
-                        ? "text-white font-semibold"
+                        ? "text-white"
                         : "text-slate-300"
                     }`
                   : `hover:text-gray-800  ${
                       activeItem === "Method"
-                        ? "text-gray-800 font-semibold"
+                        ? "text-gray-800"
                         : "text-gray-500"
                     }`
               } px-4 text-base`}
@@ -37,13 +37,13 @@ const Billing = () => {
                 colorMode
                   ? `hover:text-white ${
                       activeItem === "Billing History"
-                        ? "text-white font-semibold "
+                        ? "text-white"
                         : "text-slate-300  "
                     }`
                   : `hover:text-gray-800 ${
                       activeItem === "Billing History"
-                        ? "text-gray-800 font-semibold "
-                        : "text-gray-500  "
+                        ? "text-gray-800"
+                        : "text-gray-500"
                     }`
               } px-4 text-base`}
               onClick={() => {

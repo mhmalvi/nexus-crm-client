@@ -139,7 +139,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             className={`h-24 w-24
             }]  ${
               openSideBar ? " hidden" : "rounded-full"
-            } ease-in duration-300 overflow-hidden flex items-center justify-center bg-white`}
+            } ease-in duration-300 overflow-hidden flex items-center justify-center background-blur-2xl bg-[#ffffff22] border border-white p-2`}
           >
             <img
               src={companyDetails?.company_logo}
@@ -155,13 +155,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               className={`${
                 active === "dashboard"
                   ? colorMode
-                    ? "text-[#FFFFFF]"
-                    : "text-[#000000]"
+                    ? "text-white"
+                    : "text-black"
                   : colorMode
                   ? "text-[#B3B3B3]"
                   : "text-gray-800"
-              } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+              } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm cursor-pointer py-1 ${
+                colorMode ? "hover:text-white" : "hover:text-black"
               }`}
               onClick={() => setActive("dashboard")}
             >
@@ -175,8 +175,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                       className={`m-0 p-0 w-[10vw] ${
                         active === "dashboard"
                           ? colorMode
-                            ? "text-[#FFFFFF]"
-                            : "text-[#000000]"
+                            ? "text-white"
+                            : "text-black"
                           : colorMode
                           ? "text-[#B3B3B3]"
                           : "text-gray-800"
@@ -189,10 +189,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               </div>
               {active === "dashboard" && (
                 <div
-                  className={`active-option ${
+                  className={`absolute absolute right-0 active-option ${
                     colorMode
-                      ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                      : "text-[#000000] bg-[#000000]"
+                      ? "text-white bg-white"
+                      : "text-black bg-black"
                   }`}
                 >
                   |
@@ -209,13 +209,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 className={`${
                   active === "analytics"
                     ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#000000]"
+                      ? "text-white"
+                      : "text-black"
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
                 } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                  colorMode ? "hover:text-white" : "hover:text-black"
                 }`}
                 onClick={() => setActive("analytics")}
               >
@@ -229,8 +229,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                         className={`m-0 p-0 w-[10vw] ${
                           active === "analytics"
                             ? colorMode
-                              ? "text-[#FFFFFF]"
-                              : "text-[#000000]"
+                              ? "text-white"
+                              : "text-black"
                             : colorMode
                             ? "text-[#B3B3B3]"
                             : "text-gray-800"
@@ -243,10 +243,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 </div>
                 {active === "analytics" && (
                   <div
-                    className={`active-option ${
+                    className={`absolute right-0 active-option ${
                       colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
+                        ? "text-white bg-white"
+                        : "text-black bg-black"
                     }`}
                   >
                     |
@@ -263,13 +263,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 className={`${
                   active === "que-mailer"
                     ? colorMode
-                      ? "text-[#FFFFFF]"
-                      : "text-[#000000]"
+                      ? "text-white"
+                      : "text-black"
                     : colorMode
                     ? "text-[#B3B3B3]"
                     : "text-gray-800"
                 } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                  colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                  colorMode ? "hover:text-white" : "hover:text-black"
                 }`}
                 onClick={() => setActive("que-mailer")}
               >
@@ -283,8 +283,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                         className={`m-0 p-0 w-[10vw] ${
                           active === "que-mailer"
                             ? colorMode
-                              ? "text-[#FFFFFF]"
-                              : "text-[#000000]"
+                              ? "text-white"
+                              : "text-black"
                             : colorMode
                             ? "text-[#B3B3B3]"
                             : "text-gray-800"
@@ -297,10 +297,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 </div>
                 {active === "que-mailer" && (
                   <div
-                    className={`active-option ${
+                    className={`absolute right-0 active-option ${
                       colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
+                        ? "text-white bg-white"
+                        : "text-black bg-black"
                     }`}
                   >
                     |
@@ -320,13 +320,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "courses"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("courses")}
                 >
@@ -340,8 +340,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "courses"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -354,10 +354,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "courses" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -376,13 +376,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "campaigns"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("campaigns")}
                 >
@@ -396,8 +396,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "campaigns"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -410,10 +410,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "campaigns" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -437,15 +437,15 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     className={`${
                       active === "payments"
                         ? colorMode
-                          ? "text-[#FFFFFF]"
-                          : "text-[#000000]"
+                          ? "text-white"
+                          : "text-black"
                         : colorMode
                         ? "text-[#B3B3B3]"
                         : "text-gray-800"
                     } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
                       colorMode
-                        ? "hover:text-[#ffffff]"
-                        : "hover:text-[#000000]"
+                        ? "hover:text-white"
+                        : "hover:text-black"
                     }`}
                     onClick={() => setActive("payments")}
                   >
@@ -459,8 +459,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                             className={`m-0 p-0 w-[10vw] ${
                               active === "payments"
                                 ? colorMode
-                                  ? "text-[#FFFFFF]"
-                                  : "text-[#000000]"
+                                  ? "text-white"
+                                  : "text-black"
                                 : colorMode
                                 ? "text-[#B3B3B3]"
                                 : "text-gray-800"
@@ -473,10 +473,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                     </div>
                     {active === "payments" && (
                       <div
-                        className={`active-option ${
+                        className={`absolute right-0 active-option ${
                           colorMode
-                            ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                            : "text-[#000000] bg-[#000000]"
+                            ? "text-white bg-white"
+                            : "text-black bg-black"
                         }`}
                       >
                         |
@@ -500,13 +500,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "salesEmployee"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("salesEmployee")}
                 >
@@ -520,8 +520,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "salesEmployee"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -534,10 +534,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "salesEmployee" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -559,13 +559,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "reminder"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("reminder")}
                 >
@@ -579,8 +579,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "reminder"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -593,10 +593,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "reminder" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -615,13 +615,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "billing"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("billing")}
                 >
@@ -635,8 +635,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "billing"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -649,10 +649,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "billing" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -671,13 +671,13 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   className={`${
                     active === "settings"
                       ? colorMode
-                        ? "text-[#FFFFFF]"
-                        : "text-[#000000]"
+                        ? "text-white"
+                        : "text-black"
                       : colorMode
                       ? "text-[#B3B3B3]"
                       : "text-gray-800"
                   } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                    colorMode ? "hover:text-[#ffffff]" : "hover:text-[#000000]"
+                    colorMode ? "hover:text-white" : "hover:text-black"
                   }`}
                   onClick={() => setActive("settings")}
                 >
@@ -691,8 +691,8 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                           className={`m-0 p-0 w-[10vw] ${
                             active === "settings"
                               ? colorMode
-                                ? "text-[#FFFFFF]"
-                                : "text-[#000000]"
+                                ? "text-white"
+                                : "text-black"
                               : colorMode
                               ? "text-[#B3B3B3]"
                               : "text-gray-800"
@@ -705,10 +705,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                   </div>
                   {active === "settings" && (
                     <div
-                      className={`active-option ${
+                      className={`absolute right-0 active-option ${
                         colorMode
-                          ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                          : "text-[#000000] bg-[#000000]"
+                          ? "text-white bg-white"
+                          : "text-black bg-black"
                       }`}
                     >
                       |
@@ -725,7 +725,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/courseManagement"}
-                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer my-5 py-0.5 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer my-5 py-0.5 hover:text-white"
                 style={{
                   color: `${
                     active === "courseManagement" ? "#000000" : "#FFFFFF"
@@ -739,10 +739,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 </span>
                 {active === "courseManagement" && (
                   <div
-                    className={`active-option ${
+                    className={`absolute right-0 active-option ${
                       colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
+                        ? "text-white bg-white"
+                        : "text-black bg-black"
                     }`}
                   >
                     |
@@ -755,7 +755,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div>
               <Link
                 to={"/paymentSlip"}
-                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer py-1 hover:text-[#ffffff]"
+                className="ease-in duration-300 flex items-center 2xl:text-base text-sm  cursor-pointer py-1 hover:text-white"
                 style={{
                   color: `${active === "paymentSlip" ? "#000000" : "#FFFFFF"}`,
                 }}
@@ -767,10 +767,10 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 </span>
                 {active === "paymentSlip" && (
                   <div
-                    className={`active-option ${
+                    className={`absolute right-0 active-option ${
                       colorMode
-                        ? "text-[#FFFFFF] bg-[#FFFFFF]"
-                        : "text-[#000000] bg-[#000000]"
+                        ? "text-white bg-white"
+                        : "text-black bg-black"
                     }`}
                   >
                     |
@@ -789,7 +789,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               {openSideBar ? (
                 <Icons.LogOut className="m-0 p-0 text-white" />
               ) : (
-                <span className="flex items-center justify-center font-medium font-poppins text-[#FFFFFF] px-2">
+                <span className="flex items-center justify-center font-medium font-poppins text-white px-2">
                   <h1 className="m-0 p-0 text-white w-[10vw] text-sx">
                     Log out
                   </h1>
