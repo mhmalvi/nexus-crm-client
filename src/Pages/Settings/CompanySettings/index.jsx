@@ -20,7 +20,6 @@ const CompanySettings = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
   const [companyDetails, setCompanyDetails] = useState(initialState);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookCredential, setToggleFacebookCredential] =
@@ -632,7 +631,7 @@ const CompanySettings = () => {
               </span>
               {companyDetails?.pid ? (
                 <div
-                  className={`w-full cursor-pointer flex items-center justify-center border-2 border-[#966dff] shadow text-slate-300 p-2 rounded-md text-center`}
+                  className={`w-full cursor-pointer flex items-center justify-center border-2 border-brand-color shadow text-slate-300 p-2 rounded-md text-center`}
                 >
                   <h3
                     className={`m-0 pr-2 font-bold text-xs ${

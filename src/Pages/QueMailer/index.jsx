@@ -126,7 +126,7 @@ const QueMailer = () => {
     }
   }, [navigate, userDetails]);
   return (
-    <div className="flex items-start justify-center w-full h-screen py-8">
+    <div className="flex items-start justify-center w-full h-screen py-8 px-5">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
         <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
@@ -254,7 +254,7 @@ const QueMailer = () => {
                 <div
                   className={`${
                     data.length <= 0 ? "hidden" : "content"
-                  } ease-in duration-200 w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
+                  } ease-in duration-200 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
                 >
                   <MailDashboard
                     openMailModal={openMailModal}
@@ -303,7 +303,7 @@ const QueMailer = () => {
             </div>
           ))}
         {activeItem === "Email History" && (
-          <div className="m-0 p-0 flex rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 !z-4 h-full">
+           <div className=" rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
             <EmailHistory
               emailSessionRow={emailSessionRow}
               setCurrentPage={setCurrentPage}

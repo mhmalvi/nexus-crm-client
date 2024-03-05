@@ -1,13 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal } from "antd";
 import { useSelector } from "react-redux";
+import { getScheduledJobs, getScheduledJobsDetails } from "../../Components/services/que-mail";
 import "./quemailer.css";
 import Loading from "../../Components/Shared/Loader";
 import Icons from "../../Components/Shared/Icons";
 import "./quemailer.css";
 
 const Scheduling = () => {
+  const userDetails = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+
+  const [perPage, setPerPage] = useState(2);
+  const [scheduledItems, setScheduledItems] = useState(null);
+  const [current, setCurrent] = useState(1);
+  const [total, setTotal] = useState(1);
+
+  useEffect(() => {
+    // ScheduledJobs
+    (async () => {
+      try {
+        const data = {
+          per_page: perPage,
+          user_id: userDetails?.userInfo.id,
+        };
+        const res = await getScheduledJobs(data, current);
+        setScheduledItems(res.data);
+        setTotal(res.data.total);
+      } catch (error) {
+        console.error("Error fetching email history:", error);
+      }
+    })();
+
+    // Scheduled Details
+    (async () => {
+      try {
+        const data = {
+          per_page: perPage,
+          user_id: userDetails?.userInfo.id,
+          job_id: scheduledItems?.data
+        };
+        console.log(data)
+        const res = await getScheduledJobsDetails(data, current);
+        console.log(res)
+        setScheduledItems(res.data);
+        setTotal(res.data.total);
+      } catch (error) {
+        console.error("Error fetching email history:", error);
+      }
+    })();
+  }, [current, perPage, scheduledItems?.id, userDetails?.userInfo.id]);
 
   const mainTableColumns = [
     {
@@ -27,16 +69,16 @@ const Scheduling = () => {
       },
     },
     {
-      title: "Campaign ID",
+      title: "Job ID",
       dataIndex: "id",
     },
     {
-      title: "Sent From",
-      dataIndex: "sender",
+      title: "CSV Name",
+      dataIndex: "file_name",
     },
     {
-      title: "Email Count",
-      dataIndex: "counts",
+      title: "Number of Mails",
+      dataIndex: "number_of_mails",
       render: (_, record, idx) => (
         <h1
           className={`m-0 p-0 text-blue-500 underline underline-offset-2 cursor-pointer hover:text-blue-700`}
@@ -50,8 +92,8 @@ const Scheduling = () => {
       ),
     },
     {
-      title: "Sending Time",
-      dataIndex: "created_at",
+      title: "Scheduled For",
+      dataIndex: "schedule",
       render: (created_at) => {
         const date = new Date(created_at);
         const formattedDate = date.toLocaleDateString();
@@ -123,20 +165,20 @@ const Scheduling = () => {
         locale={locale}
         className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
         columns={mainTableColumns}
-        // dataSource={emailSessionRow?.data}
+        dataSource={scheduledItems?.data}
         scroll={{
           y: "calc(65vh - 5em)",
         }}
         pagination={{
           onChange: (pageNum, pageSize) => {
-            // setCurrentPage(pageNum);
-            // setEmailsPerPage(pageSize);
+            setCurrent(pageNum);
+            setPerPage(pageSize);
             // setClicked(true);
           },
 
           defaultPageSize: 20,
-          // current: currentPage,
-          // total: totalEmail,
+          current: current,
+          total: total,
         }}
       />
       <Modal
@@ -157,7 +199,7 @@ const Scheduling = () => {
             pagination={{
               onChange: (pageNum, pageSize) => {
                 // setHistoryInnerPagination(pageNum);
-                // setEmailsPerPage(pageSize);
+                setPerPage(pageSize);
                 // setClicked(true);
               },
               // current: currentPage,

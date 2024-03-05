@@ -46,7 +46,7 @@ export const getEmailHistory = async (data, pageNumber) => {
       Authorization: "Bearer " + authToken,
     },
   };
-  console.log(config)
+  console.log(config);
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/email-history?page=${pageNumber}`,
@@ -58,7 +58,9 @@ export const getEmailHistory = async (data, pageNumber) => {
     return error.response;
   }
 };
-
+// 
+// 
+// 
 export const getEmailDetailsCount = async (data, pageNumber) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -156,7 +158,9 @@ export const handleUpdateSenderEmail = async (data, id) => {
     return error.response;
   }
 };
-
+// 
+// 
+// 
 export const sendEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -168,25 +172,6 @@ export const sendEmail = async (data) => {
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/send-mail`,
-      data,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
-export const scheduleEmail = async (data) => {
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-  const config = {
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.post(
-      `https://emailmarketing.queleadscrm.com/api/mail-schedule-store`,
       data,
       config
     );
@@ -343,7 +328,9 @@ export const handleDeleteImage = async (data) => {
     return error.response;
   }
 };
-
+// 
+// 
+// 
 export const unsubscribeFromEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -374,6 +361,67 @@ export const unsubscribeFromQueLeadsMail = async (data) => {
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/queleads-unsubscribe`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// 
+// 
+// 
+export const scheduleEmail = async (data) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/mail-schedule-store`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const getScheduledJobs = async (data, pageNumber) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  console.log(config);
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/scheduled-jobs?page=${pageNumber}`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const getScheduledJobsDetails = async (data, pageNumber) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://emailmarketing.queleadscrm.com/api/scheduled-mails?page=${pageNumber}`,
       data,
       config
     );

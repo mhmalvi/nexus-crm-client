@@ -69,10 +69,10 @@ const Layout = () => {
         />
       </div>
       <div
-        className={`relative ml-auto duration-300 ${
+        className={` ml-auto duration-300 ${
           openSideBar
             ? "2xl:w-[calc(100vw-80px)] w-[calc(100vw-70px)]"
-            : "2xl:w-[calc(100vw-256px)] w-[calc(100vw-230px)]"
+            : "2xl:w-[calc(100vw-260px)] w-[calc(100vw-230px)]"
         }`}
       >
         <Routes>
