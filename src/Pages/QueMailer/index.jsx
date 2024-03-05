@@ -4,6 +4,7 @@ import MailDashboard from "./MailDashboard";
 import EmailHistory from "./EmailHistory";
 import { useSelector } from "react-redux";
 import EmailSettings from "./EmailSettings";
+import Scheduling from "./Scheduling";
 import {
   getEmailHistory,
   getEmailDetailsCount,
@@ -55,7 +56,7 @@ const QueMailer = () => {
   }, [currentEmail, userDetails.userInfo.id]);
 
   useEffect(() => {
-    const fetchEmailHistory = async () => {
+    (async () => {
       try {
         const data = {
           per_page: emailsPerPage,
@@ -67,8 +68,7 @@ const QueMailer = () => {
       } catch (error) {
         console.error("Error fetching email history:", error);
       }
-    };
-    fetchEmailHistory();
+    })();
   }, [currentPage, emailsPerPage, userDetails?.userInfo.id]);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const QueMailer = () => {
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
         <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
-          <div className="flex gap-8">
+          <div className="flex gap-4">
             <button
               className={`${
                 colorMode
@@ -179,6 +179,26 @@ const QueMailer = () => {
               }}
             >
               Statistics
+            </button>
+            <button
+              className={`${
+                colorMode
+                  ? `hover:text-white ${
+                      activeItem === "Scheduling"
+                        ? "text-white"
+                        : "text-slate-300"
+                    }`
+                  : `hover:text-gray-800 ${
+                      activeItem === "Scheduling"
+                        ? "text-gray-800"
+                        : "text-gray-500"
+                    }`
+              } px-4 text-base`}
+              onClick={() => {
+                setActiveItem("Scheduling");
+              }}
+            >
+              Scheduling
             </button>
             <button
               className={`${
@@ -299,10 +319,16 @@ const QueMailer = () => {
             />
           </div>
         )}
-        
+
         {activeItem === "Email Settings" && (
-          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-[77vh] p-8 !z-4 h-full overflow-hidden">
+          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
             <EmailSettings currentEmail={currentEmail} />
+          </div>
+        )}
+
+        {activeItem === "Scheduling" && (
+          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
+            <Scheduling />
           </div>
         )}
       </div>

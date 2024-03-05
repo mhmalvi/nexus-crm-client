@@ -360,7 +360,7 @@ const SalesAdmins = ({ clientId }) => {
               companyAdvisorEmployees.map((employee, i) => (
                 <div
                   key={i}
-                  className={`flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border ${
+                  className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
                     colorMode ? "border-slate-300" : "border-gray-800"
                   }`}
                 >
@@ -526,7 +526,7 @@ const SalesAdmins = ({ clientId }) => {
                 .map((employee, i) => (
                   <div
                     key={i}
-                    className={`flex flex-wrap gap-4 justify-start items-center w-5/12 p-2 rounded-md border ${
+                    className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
                       colorMode ? "border-slate-300" : "border-gray-800"
                     }`}
                   >
@@ -545,7 +545,7 @@ const SalesAdmins = ({ clientId }) => {
                         {employee?.full_name}
                       </h1>
                       <p
-                        className={`font-medium text-xs mb-0 ${
+                        className={`font-medium whitespace-nowrap text-ellipsis overflow-hidden text-xs mb-0 ${
                           colorMode ? "text-slate-300" : "text-gray-800"
                         }`}
                       >

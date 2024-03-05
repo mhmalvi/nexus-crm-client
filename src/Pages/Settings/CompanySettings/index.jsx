@@ -168,15 +168,17 @@ const CompanySettings = () => {
   };
 
   return (
-    <div className="h-[90vh] w-full mx-6 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] flex gap-4">
-      <div className="w-2/3 flex flex-col justify-center items-center h-full gap-4 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
-        <div className="w-full flex justify-between items-center ">
-          <div className="relative flex w-24">
-            <img
-              className="w-full rounded-md shadow-sm"
-              src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
-              alt=""
-            />
+    <div className="h-[90vh] w-full mx-4 rounded-md flex gap-4">
+      <div className="w-5/12 flex flex-col justify-start items-center h-full gap-4 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <div className="relative w-full flex gap-4 items-start justify-between">
+          <div className="flex">
+            <div className="flex border rounded-md p-4 shadow-md">
+              <img
+                className="h-10 rounded-md"
+                src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
+                alt=""
+              />
+            </div>
             {toggleEditDetails ? (
               <Upload
                 className="company_avatar"
@@ -185,7 +187,7 @@ const CompanySettings = () => {
                 accept="image/png, image/jpeg, image/jpg"
                 fileList={fileList}
               >
-                <div className="w-6 h-6 absolute bottom-1 -right-5 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-sm">
+                <div className="w-6 h-6 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-md">
                   <Icons.AddImage className="w-4 text-slate-300" />
                 </div>
               </Upload>
@@ -199,7 +201,7 @@ const CompanySettings = () => {
               } font-semibold rounded-md backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
                   ? "outline-none bg-[#ffffff11] px-2"
-                  : "bg-transparent "
+                  : "bg-transparent px-2"
               }`}
               type="text"
               disabled={!toggleEditDetails ? "disabled" : ""}
@@ -254,10 +256,10 @@ const CompanySettings = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col justify-evenly">
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300 h-10">
+          <div className="flex flex-col gap-4">
+            <div className="font-normal flex items-center border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48  ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -270,7 +272,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -278,7 +280,7 @@ const CompanySettings = () => {
                 />
               ) : (
                 <span
-                  className={`w-full px-3 ${
+                  className={`text-sm w-full px-3 py-1 ${
                     colorMode ? "text-slate-300" : "text-gray-800"
                   }`}
                 >
@@ -286,9 +288,9 @@ const CompanySettings = () => {
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -297,11 +299,11 @@ const CompanySettings = () => {
               {toggleEditDetails ? (
                 <input
                   id="contact"
-                  className={`w-full outline-none border-0 rounded-md ${
+                  className={`text-sm w-full outline-none border-0 rounded-md ${
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -311,15 +313,15 @@ const CompanySettings = () => {
                 <span
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full px-3 text-sm py-1`}
                 >
                   {companyDetails?.contact}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -332,7 +334,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -342,15 +344,15 @@ const CompanySettings = () => {
                 <span
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full px-3 text-sm py-1`}
                 >
                   {companyDetails?.business_email}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -364,7 +366,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -372,17 +374,17 @@ const CompanySettings = () => {
                 />
               ) : (
                 <span
-                  className={`${
+                  className={`flex ${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full px-3 text-sm py-1 overflow-hidden text-ellipsis whitespace-nowrap`}
                 >
                   {companyDetails?.address}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -395,7 +397,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -405,15 +407,15 @@ const CompanySettings = () => {
                 <span
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full px-3 text-sm py-1`}
                 >
                   {companyDetails?.abn}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -426,7 +428,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -436,15 +438,15 @@ const CompanySettings = () => {
                 <span
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full px-3 text-sm py-1`}
                 >
                   {companyDetails?.rto_code}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -458,7 +460,7 @@ const CompanySettings = () => {
                     colorMode
                       ? "text-slate-300 bg-[#ffffff11]"
                       : "text-gray-800 bg-[#33333322]"
-                  } py-0`}
+                  } py-1 text-sm`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -469,15 +471,15 @@ const CompanySettings = () => {
                   href={companyDetails?.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full px-3"
+                  className="w-full px-3 py-1 !text-sm"
                 >
                   {companyDetails?.website}
                 </a>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -489,7 +491,9 @@ const CompanySettings = () => {
                   id="country_name"
                   className={`w-full outline-none border-0 rounded-md ${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } ${colorMode ? " bg-[#ffffff11]" : "bg-[#33333322]"} py-0`}
+                  } ${
+                    colorMode ? " bg-[#ffffff11]" : "bg-[#33333322]"
+                  } px-3 text-sm py-1`}
                   type="text"
                   disabled={!toggleEditDetails ? "disabled" : ""}
                   onChange={handleLoadCompanyDetails}
@@ -499,15 +503,15 @@ const CompanySettings = () => {
                 <span
                   className={`${
                     colorMode ? "text-slate-300" : "text-gray-800"
-                  } w-full px-3`}
+                  } w-full !px-3 text-sm py-1`}
                 >
                   {companyDetails?.country_name}
                 </span>
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -515,16 +519,16 @@ const CompanySettings = () => {
               </span>
 
               <input
-                id="fb_ac_credential"
+                id=""
                 className={`w-full ml-2 rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
                     ? `outline-none border-0 ${
                         colorMode ? "bg-[#ffffff11]" : "bg-[#33333322]"
-                      } py-0`
+                      } `
                     : "bg-transparent border-transparent"
-                }`}
+                } py-1 text-sm`}
                 type="password"
                 disabled={!toggleEditDetails ? "disabled" : ""}
                 onChange={handleLoadCompanyDetails}
@@ -543,9 +547,9 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -553,13 +557,13 @@ const CompanySettings = () => {
               </span>
               <input
                 id="secret_key"
-                className={`w-full ml-2 rounded-md ${
+                className={`w-full ml-2 py-1 text-sm rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
                     ? `outline-none border-0  ${
                         colorMode ? "bg-[#ffffff11]" : "bg-[#33333322]"
-                      } py-0`
+                      } py-1`
                     : "bg-transparent border-transparent"
                 }`}
                 type="password"
@@ -580,9 +584,9 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10 w-full">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300 w-full">
               <span
-                className={`w-48 ${
+                className={`w-48 text-sm ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 }`}
               >
@@ -591,13 +595,13 @@ const CompanySettings = () => {
 
               <input
                 id="app_id"
-                className={`w-full ml-2 rounded-md ${
+                className={`w-full ml-2 py-1 text-sm rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
                   toggleEditDetails
                     ? `outline-none border-0 ${
                         colorMode ? "bg-[#ffffff11]" : "bg-[#33333322]"
-                      } py-0`
+                      }`
                     : "bg-transparent border-transparent"
                 }`}
                 type="password"
@@ -618,7 +622,7 @@ const CompanySettings = () => {
                 />
               )}
             </div>
-            <div className="font-normal flex items-center border-b border-[#ffffff55] 2xl:text-base text-sm text-slate-300  h-10 w-full">
+            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300 w-full">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -676,7 +680,7 @@ const CompanySettings = () => {
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-7/12">
         <SalesAdmins
           clientId={userDetails?.userInfo?.client_id}
           syncEmployees={syncEmployees}
