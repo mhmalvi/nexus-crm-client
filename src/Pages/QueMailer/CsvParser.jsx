@@ -18,6 +18,7 @@ const CSVParser = ({
   setHeaderData,
   setCategorizedData,
   setBounced,
+  setCSVFileName,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -79,11 +80,10 @@ const CSVParser = ({
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
     reader.onload = async ({ target }) => {
-      console.log("File name:", target);
       const csv = Papa.parse(target.result, {
         header: false,
       });
-      console.log("File name:", file.name);
+      setCSVFileName(file.name);
       const parsedData = csv?.data || [];
 
       const headerRow = parsedData.length > 0 ? parsedData[0] : [];
