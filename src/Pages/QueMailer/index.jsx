@@ -250,6 +250,7 @@ const QueMailer = () => {
                     attachment={attachment}
                     setAttachment={setAttachment}
                     setFile={setFile}
+                    csvFileName={csvFileName}
                     setError={setError}
                     categorizedData={categorizedData}
                     headerData={headerData}

@@ -41,6 +41,7 @@ const MailDashboard = ({
   categorizedData,
   headerData,
   bounced,
+  csvFileName,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
@@ -103,7 +104,7 @@ const MailDashboard = ({
     }
     setAttachment(files);
   };
-console.log(data)
+  console.log(data);
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -150,6 +151,7 @@ console.log(data)
           formData.append("subject[]", data.subject);
         });
 
+        formData.append("file_name", csvFileName);
         formData.append("user_id", userDetails?.id);
 
         if (attachment.length) {
@@ -157,7 +159,12 @@ console.log(data)
             formData.append("files[]", file);
           });
         }
-
+        if (bounced.length) {
+          bounced.forEach((data) => {
+            formData.append("bounced_email[]", data);
+            console.log(data);
+          });
+        }
         const res = await sendEmail(formData);
 
         if (res?.status === 200) {
@@ -233,8 +240,8 @@ console.log(data)
           formData.append("email[]", data.email);
           formData.append("template[]", data.templateContent);
           formData.append("subject[]", data.subject);
-          console.log(data.subject)
         });
+        formData.append("file_name", csvFileName);
         formData.append("schedule", dateTimeStamp);
         formData.append("user_id", userDetails?.id);
 
