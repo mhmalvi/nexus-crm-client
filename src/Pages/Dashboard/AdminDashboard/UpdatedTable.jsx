@@ -158,8 +158,8 @@ const UpdatedTable = ({
     >
       <div className="flex justify-between items-center">
         <h1
-          className={`text-2xl text-${
-            colorMode ? "slate-300" : "gray-800"
+          className={`text-2xl ${
+            colorMode ? "text-slate-300" : "text-gray-800"
           } px-3 m-0 font-poppins`}
         >
           {table_title}
@@ -178,7 +178,7 @@ const UpdatedTable = ({
                 >
                   <Select
                     defaultValue={""}
-                    className="min-w-[150px] "
+                    className="min-w-36"
                     onChange={(v) => {
                       localStorage.setItem("sales_id", v);
                     }}
@@ -221,7 +221,7 @@ const UpdatedTable = ({
               >
                 <div
                   htmlFor="upload_lead_file"
-                  className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
+                  className={`cursor-pointer px-2 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
@@ -251,7 +251,7 @@ const UpdatedTable = ({
                 <div className="mr-4">
                   <button
                     id="add_leads"
-                    className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
+                    className={`cursor-pointer px-2 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                       colorMode
                         ? "text-slate-300 border-slate-300"
                         : "text-gray-800 border-gray-800"
@@ -286,7 +286,7 @@ const UpdatedTable = ({
                   <div className="mr-12">
                     <button
                       id="sync_leads"
-                      className={`cursor-pointer px-3 py-1 rounded-lg shadow-md border hover:border-brand-color ${
+                      className={`cursor-pointer px-2 py-1 rounded-lg shadow-md border hover:border-brand-color ${
                         colorMode
                           ? "text-slate-300 border-slate-300"
                           : "text-gray-800 border-gray-800"
@@ -327,7 +327,7 @@ const UpdatedTable = ({
                 : table_title
             }
           >
-            <div className="bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] px-4 py-2 rounded-md cursor-pointer font-semibold font-poppins">
+            <div className="bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB] px-2 py-1 rounded-md cursor-pointer font-semibold font-poppins">
               <h1 className="m-0 p-0 text-white text-xs">Export CSV</h1>
             </div>
           </CSVLink>

@@ -1,7 +1,7 @@
 import { handleLogout } from "../../Components/services/auth";
 import { Switch, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { handleFetchCompanyDetails } from "../services/company";
 import Icons from "./Icons";
