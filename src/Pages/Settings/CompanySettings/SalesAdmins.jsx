@@ -309,9 +309,13 @@ const SalesAdmins = ({ clientId }) => {
           </div>
         </div>
 
-        <hr className="border-b border-brand-color" />
+        <hr
+          className={`border-b border-slate-300 ${
+            colorMode ? "border-slate-300" : "border-gray-800"
+          }`}
+        />
         <div className="overflow-y-scroll w-full flex flex-col ">
-          <div className="flex flex-wrap justify-around w-full gap-4 ">
+          <div className="flex flex-wrap justify-around w-full gap-4 pb-8">
             {/* Admin of Company */}
             {companyAdminEmployee ? (
               <div className="flex flex-wrap gap-4 justify-center items-center w-5/12 ">
@@ -360,9 +364,7 @@ const SalesAdmins = ({ clientId }) => {
               companyAdvisorEmployees.map((employee, i) => (
                 <div
                   key={i}
-                  className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
-                    colorMode ? "border-slate-300" : "border-gray-800"
-                  }`}
+                  className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border border-brand-color`}
                 >
                   <Avatar
                     className="rounded-full cursor-pointer"
@@ -438,32 +440,39 @@ const SalesAdmins = ({ clientId }) => {
           </div>
           {inactiveAdminEmployees.length ? (
             <div className="w-full flex flex-col gap-4">
-              <h1
-                className={`font-semibold text-xl ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                }`}
-              >
-                Inactive Admins
-              </h1>
-              <hr className="border-b border-brand-color" />
+              <div>
+                <h1
+                  className={`font-semibold text-xl ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Inactive Admins
+                </h1>
+                <hr className="border-b border-brand-color" />
+              </div>
               <div className="flex flex-wrap justify-around w-full gap-4 ">
                 {inactiveAdminEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className={`flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border ${
+                    className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
                       colorMode ? "border-slate-300" : "border-gray-800"
                     }`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
                       size="38"
+                      color={"#804DFF"}
                       name={employee?.full_name}
                     />
-                    <div className="flex flex-col gap-2 w-full">
-                      <h1 className="m-0 p-0 text-red-500 font-semibold text-base">
+                    <div className="flex flex-col justify-around">
+                      <h1
+                        className={`font-semibold text-lg ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        } m-0`}
+                      >
                         {employee?.full_name}
                       </h1>
-                      <p className="m-0 p-0 text-red-500 font-medium text-sm">
+                      <p className={`font-medium text-xs mb-0 text-red-500`}>
                         {employee?.email}
                       </p>
                       <button
@@ -516,19 +525,21 @@ const SalesAdmins = ({ clientId }) => {
             </div>
           ) : null}
         </div>
-        <hr className="border-b border-brand-color" />
+        <hr
+          className={`border-b ${
+            colorMode ? "border-slate-300" : "border-gray-800"
+          }`}
+        />
 
         <div className="overflow-y-scroll w-full flex flex-col ">
-          <div className="flex flex-wrap justify-around w-full gap-4 ">
+          <div className="flex flex-wrap justify-around w-full gap-4 pb-8">
             {companySalesEmployees.length ? (
               companySalesEmployees
                 .filter((employee) => employee.suspend === 0)
                 .map((employee, i) => (
                   <div
                     key={i}
-                    className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
-                      colorMode ? "border-slate-300" : "border-gray-800"
-                    }`}
+                    className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border border-brand-color`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
@@ -607,32 +618,43 @@ const SalesAdmins = ({ clientId }) => {
 
           {inactiveSalesEmployees.length ? (
             <div className="w-full flex flex-col gap-4">
-              <h1
-                className={`font-semibold text-xl ${
-                  colorMode ? "text-slate-300" : "text-gray-800"
-                }`}
-              >
-                Inactive Sales Admins
-              </h1>
-              <hr className="border-b border-brand-color" />
+              <div>
+                <h1
+                  className={`font-semibold text-xl ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
+                >
+                  Inactive Sales Admins
+                </h1>
+                <hr className="border-b border-brand-color" />
+              </div>
               <div className="flex flex-wrap justify-around w-full gap-4 ">
                 {inactiveSalesEmployees.map((employee, i) => (
                   <div
                     key={i}
-                    className={`flex flex-wrap gap-4 justify-start items-center w-2/5 p-4 rounded-md border ${
+                    className={`flex flex-wrap gap-4 justify-start items-center p-2 w-5/12 rounded-md border ${
                       colorMode ? "border-slate-300" : "border-gray-800"
                     }`}
                   >
                     <Avatar
                       className="rounded-full cursor-pointer"
                       size="38"
+                      color={"#804DFF"}
                       name={employee?.full_name}
                     />
-                    <div className="flex flex-col w-full gap-2">
-                      <h1 className="m-0 p-0 text-red-500 font-semibold text-base">
+                    <div className="flex flex-col justify-around">
+                      <h1
+                        className={`font-semibold text-lg ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        } m-0`}
+                      >
                         {employee?.full_name}
                       </h1>
-                      <p className="m-0 p-0 text-red-500 font-medium text-sm ">
+                      <p
+                        className={`font-medium whitespace-nowrap text-ellipsis overflow-hidden text-xs mb-0 ${
+                          colorMode ? "text-slate-300" : "text-gray-800"
+                        }`}
+                      >
                         {employee?.email}
                       </p>
                       <button
