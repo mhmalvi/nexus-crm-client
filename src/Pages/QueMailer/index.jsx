@@ -254,7 +254,7 @@ const QueMailer = () => {
                 <div
                   className={`${
                     data.length <= 0 ? "hidden" : "content"
-                  } ease-in duration-200 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
+                  } w-2/3 ease-in duration-200 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
                 >
                   <MailDashboard
                     openMailModal={openMailModal}
@@ -303,7 +303,7 @@ const QueMailer = () => {
             </div>
           ))}
         {activeItem === "Email History" && (
-           <div className=" rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
+          <div className=" rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
             <EmailHistory
               emailSessionRow={emailSessionRow}
               setCurrentPage={setCurrentPage}
