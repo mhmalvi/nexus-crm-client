@@ -21,7 +21,7 @@ const EmailHistory = ({
   emailsPerPage,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  const [loadingTime, setLoadingTime] = useState(true);
   const mainTableColumns = [
     {
       title: "S/N",
@@ -123,11 +123,31 @@ const EmailHistory = ({
   const handleCancel = () => {
     setOpenCountModal(false);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingTime(false);
+    }, [5000]);
+  });
+
   let locale = {
     emptyText: (
-      <div className="min-h-[10vh] mt-24">
-        <Loading />
-      </div>
+      <>
+        {loadingTime ? (
+          <div className="min-h-[50vh] mt-24">
+            <Loading />
+          </div>
+        ) : (
+          <div className="min-h-[50vh] mt-24">
+            <h1
+              className={`m-0 p-0 ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              No data
+            </h1>
+          </div>
+        )}
+      </>
     ),
   };
   return (

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import BillingMethod from "./Method/BillingMethod";
 
 const Billing = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
 
   const [activeItem, setActiveItem] = useState("Method");
+  const [detailsClicked, setDetailsClicked] = useState({
+    screen: "default",
+    data: "",
+  });
   return (
     <div className="flex items-start justify-center w-full h-screen py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
@@ -16,9 +21,7 @@ const Billing = () => {
               className={`${
                 colorMode
                   ? `hover:text-white ${
-                      activeItem === "Method"
-                        ? "text-white"
-                        : "text-slate-300"
+                      activeItem === "Method" ? "text-white" : "text-slate-300"
                     }`
                   : `hover:text-gray-800  ${
                       activeItem === "Method"
@@ -55,7 +58,15 @@ const Billing = () => {
           </div>
         </div>
         {/* MAIN BOX */}
-        <div className="flex justify-between w-full h-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8"></div>
+        <div className="flex justify-between w-full h-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8">
+          {activeItem === "Method" && (
+            <BillingMethod
+              detailsClicked={detailsClicked}
+              setDetailsClicked={setDetailsClicked}
+            />
+          )}
+          {activeItem === "Billing History" && <h1>Billing History</h1>}
+        </div>
       </div>
     </div>
   );

@@ -81,6 +81,7 @@ import { ReactComponent as Buildings } from "../../assets/Icons/buildings.svg";
 import { ReactComponent as WelcomeStart } from "../../assets/Icons/welcome-image-start.svg";
 import { ReactComponent as WelcomeEnd } from "../../assets/Icons/welcome-image-end.svg";
 import { ReactComponent as Billing } from "../../assets/Icons/Billing.svg";
+import { ReactComponent as EmptyBilling } from "../../assets/Icons/empty-billing.svg";
 
 const Icons = {
   CompanyLogo,
@@ -165,7 +166,8 @@ const Icons = {
   Buildings,
   WelcomeStart,
   WelcomeEnd,
-  Billing
+  Billing,
+  EmptyBilling
 };
 
 export default Icons;
