@@ -142,10 +142,10 @@ const CourseDetails = ({ selectedCourse }) => {
         <div>
           {checklist.length ? (
             checklist?.map((list, i) => (
-              <div key={i} className="flex items-center">
-                <li style={{ listStyleType: "circle" }}>{list?.title}</li>
+              <div key={i} className="flex items-center gap-4 justify-between w-full border-b ">
+                <li className="list-disc ">{list?.title}</li>
                 <Icons.Cross
-                  className="text-red-600  cursor-pointer"
+                  className="text-red-600 w-4 cursor-pointer"
                   onClick={() => handleDeleteChecklistReq(list?.id)}
                 />
               </div>

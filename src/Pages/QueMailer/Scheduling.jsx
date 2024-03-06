@@ -11,10 +11,18 @@ const Scheduling = () => {
   const userDetails = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
+  const [loadingTime, setLoadingTime] = useState(true);
   const [perPage, setPerPage] = useState(2);
   const [scheduledItems, setScheduledItems] = useState(null);
+  const [scheduledItemsInner, setScheduledItemsInner] = useState(null);
+  const [openMailCount,setOpenMailCount] = useState({
+    open:false,
+    job_id:null
+  })
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState(1);
+  const [currentInner, setCurrentInner] = useState(1);
+  const [totalInner, setTotalInner] = useState(1);
 
   useEffect(() => {
     // ScheduledJobs
@@ -38,19 +46,19 @@ const Scheduling = () => {
         const data = {
           per_page: perPage,
           user_id: userDetails?.userInfo.id,
-          job_id: scheduledItems?.data
+          job_id: openMailCount.job_id
         };
-        console.log(data)
         const res = await getScheduledJobsDetails(data, current);
         console.log(res)
-        setScheduledItems(res.data);
-        setTotal(res.data.total);
+        setScheduledItemsInner(res.data);
+        setTotalInner(res.data.total);
       } catch (error) {
         console.error("Error fetching email history:", error);
       }
     })();
-  }, [current, perPage, scheduledItems?.id, userDetails?.userInfo.id]);
-
+  }, [current, openMailCount.job_id, perPage, userDetails?.userInfo.id]);
+  // console.log("Inner",scheduledItemsInner)
+  
   const mainTableColumns = [
     {
       title: "S/N",
@@ -83,11 +91,13 @@ const Scheduling = () => {
         <h1
           className={`m-0 p-0 text-blue-500 underline underline-offset-2 cursor-pointer hover:text-blue-700`}
           onClick={() => {
-            // setEmailId(record?.id);
-            // setOpenCountModal(true);
+            setOpenMailCount({
+              open:true,
+              job_id:record.id
+            })
           }}
         >
-          {record?.counts}
+          {record?.number_of_mails}
         </h1>
       ),
     },
@@ -104,9 +114,33 @@ const Scheduling = () => {
   ];
   const innerTableColumns = [
     {
-      title: "Recipient",
-      dataIndex: "recipients_mail",
+      title: "S/N",
+      render: (_, record, idx) => {
+        return (
+          <>
+            <h1
+              className={`m-0 p-0 ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              {idx + 1}
+            </h1>
+          </>
+        );
+      },
     },
+    {
+      title:"Email",
+      dataIndex:"email"
+    },
+    {
+      title:"Bounce",
+      dataIndex:"bounce_status"
+    },
+    {
+      title:"Delivery Status",
+      dataIndex:"delivery_status"
+    }
     // {
     //   title: "Clicked",
     //   dataIndex: "click",
@@ -116,49 +150,66 @@ const Scheduling = () => {
     //     </div>
     //   ),
     // },
-    {
-      title: "Opened",
-      dataIndex: "open",
-      render: (_, record, idx) => (
-        <div className="w-full flex items-center justify-center">
-          {record?.open === 1 ? <Icons.Tick /> : "Not opened yet"}
-        </div>
-      ),
-    },
-    {
-      title: "Sending Time",
-      dataIndex: "created_at",
-      render: (created_at) => {
-        const date = new Date(created_at);
-        const formattedDate = date.toLocaleDateString();
-        const formattedTime = date.toLocaleTimeString();
-        return `${formattedDate} ${formattedTime}`;
-      },
-    },
-    {
-      title: "Subscriber",
-      dataIndex: "subscribed_or_unsubscribed",
-      render: (_, record, idx) => (
-        <div className="w-full flex items-center justify-center">
-          {record?.subscribed_or_unsubscribed === 1 ? (
-            <Icons.Tick />
-          ) : (
-            "Unsubscribed"
-          )}
-        </div>
-      ),
-    },
+    // {
+    //   title: "Opened",
+    //   dataIndex: "open",
+    //   render: (_, record, idx) => (
+    //     <div className="w-full flex items-center justify-center">
+    //       {record?.open === 1 ? <Icons.Tick /> : "Not opened yet"}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   title: "Sending Time",
+    //   dataIndex: "created_at",
+    //   render: (created_at) => {
+    //     const date = new Date(created_at);
+    //     const formattedDate = date.toLocaleDateString();
+    //     const formattedTime = date.toLocaleTimeString();
+    //     return `${formattedDate} ${formattedTime}`;
+    //   },
+    // },
+    // {
+    //   title: "Subscriber",
+    //   dataIndex: "subscribed_or_unsubscribed",
+    //   render: (_, record, idx) => (
+    //     <div className="w-full flex items-center justify-center">
+    //       {record?.subscribed_or_unsubscribed === 1 ? (
+    //         <Icons.Tick />
+    //       ) : (
+    //         "Unsubscribed"
+    //       )}
+    //     </div>
+    //   ),
+    // },
   ];
+  
   const handleCancel = () => {
-    // setOpenCountModal(false);
+    setOpenMailCount(false);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingTime(false);
+    }, [5000]);
+  });
+
   let locale = {
     emptyText: (
-      <div className="min-h-[10vh] mt-24">
-        <Loading />
-      </div>
+      <>
+        {loadingTime ? (
+          <div className="min-h-[50vh] mt-24">
+            <Loading />
+          </div>
+        ) : (
+          <div className="min-h-[50vh] mt-24">
+            <h1 className={`m-0 p-0 ${colorMode ?"text-slate-300":"text-gray-800"}`}>No data</h1>
+          </div>
+        )}
+      </>
     ),
   };
+
   return (
     <>
       <Table
@@ -182,7 +233,7 @@ const Scheduling = () => {
         }}
       />
       <Modal
-        // visible={openCountModal}
+        visible={openMailCount.open}
         onCancel={handleCancel}
         footer={false}
         className={`${colorMode ? "emailCountModal" : ""}`}
@@ -196,17 +247,18 @@ const Scheduling = () => {
               x: "1000",
               y: "calc(75vh - 5em)",
             }}
+            
+            dataSource={scheduledItemsInner?.data}
+            columns={innerTableColumns}
             pagination={{
               onChange: (pageNum, pageSize) => {
-                // setHistoryInnerPagination(pageNum);
+                setCurrentInner(pageNum)
                 setPerPage(pageSize);
                 // setClicked(true);
               },
-              // current: currentPage,
+              current: currentInner,
               // total: countInfo?.total,
             }}
-            columns={innerTableColumns}
-            // dataSource={countInfo?.data}
           />
         </div>
       </Modal>

@@ -439,7 +439,7 @@ const Login = () => {
                         ))
                       ) : (
                         <div className="w-full flex justify-center items-center">
-                          <h1 className="mt-28 text-base">
+                          <h1 className="mt-28 text-base text-slate-300">
                             No Accounts Bookmarked Yet
                           </h1>
                         </div>

@@ -44,8 +44,8 @@ import { setNotifications } from "../../../features/user/notificationSlice";
 const AdminDashboard = () => {
   const dispatch = useDispatch();
 
-  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
+  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const leadList = useSelector((state) => state.leads)?.leads;
   const notifications = useSelector(
@@ -716,7 +716,7 @@ const AdminDashboard = () => {
   console.log(notifications);
 
   return (
-    <div className="w-full max-h-screen flex flew-wrap 2xl:gap-4 gap-2 h-[90vh] ">
+    <div className="w-full max-h-screen flex flew-grow 2xl:gap-4 gap-2 h-[90vh] ">
       <div className="w-full border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
