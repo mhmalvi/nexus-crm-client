@@ -12,7 +12,7 @@ const Scheduling = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [loadingTime, setLoadingTime] = useState(true);
-  const [perPage, setPerPage] = useState(2);
+  const [perPage, setPerPage] = useState(20);
   const [scheduledItems, setScheduledItems] = useState(null);
   const [scheduledItemsInner, setScheduledItemsInner] = useState(null);
   const [openMailCount,setOpenMailCount] = useState({
@@ -224,7 +224,6 @@ const Scheduling = () => {
           onChange: (pageNum, pageSize) => {
             setCurrent(pageNum);
             setPerPage(pageSize);
-            // setClicked(true);
           },
 
           defaultPageSize: 20,

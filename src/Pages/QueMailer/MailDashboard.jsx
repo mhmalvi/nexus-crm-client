@@ -688,19 +688,20 @@ const MailDashboard = ({
         <DatePicker
           onChange={(e) => {
             const formattedDateString =
-              e._d.getFullYear() +
+              e._d.getUTCFullYear() +
               "-" +
-              ("0" + (e._d.getMonth() + 1)).slice(-2) +
+              ("0" + (e._d.getUTCMonth() + 1)).slice(-2) +
               "-" +
-              ("0" + e._d.getDate()).slice(-2) +
+              ("0" + e._d.getUTCDate()).slice(-2) +
               " " +
-              ("0" + e._d.getHours()).slice(-2) +
+              ("0" + e._d.getUTCHours()).slice(-2) +
               ":" +
-              ("0" + e._d.getMinutes()).slice(-2) +
+              ("0" + e._d.getUTCMinutes()).slice(-2) +
               ":" +
-              ("0" + e._d.getSeconds()).slice(-2);
+              ("0" + e._d.getUTCSeconds()).slice(-2);
 
             setScheduleTime(formattedDateString);
+            console.log(formattedDateString)
           }}
           showTime
           needConfirm={false}
