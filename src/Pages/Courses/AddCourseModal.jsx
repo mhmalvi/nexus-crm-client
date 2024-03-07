@@ -1,5 +1,5 @@
 import { Button, Input, Modal, message } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -29,6 +29,7 @@ const AddCourseModal = ({
         course_code: courseCode.trim().split(" ").join(""),
         course_title: courseName,
         course_description: courseDsc,
+        client_id: userDetails.client_id,
       };
       const res = await handleAddCourse(data);
       if (res?.status === 201) {
@@ -72,7 +73,7 @@ const AddCourseModal = ({
             Add Course
           </h1>
           <div className="courseInputs">
-            <label>Course Code: </label>
+            <label>Course Code:{userDetails.client_id} </label>
             <Input
               value={courseCode}
               onChange={(e) => setCourseCode(e.target.value)}
@@ -80,7 +81,7 @@ const AddCourseModal = ({
             />
           </div>
           <div className="courseInputs">
-            <label>Course Name: </label>
+            <label>Course Name:</label>
             <Input
               value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
