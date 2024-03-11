@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
+import * as XLSX from "xlsx"; // Import XLSX as named exports
 import { useSelector } from "react-redux";
 import "./quemailer.css";
-const allowedExtensions = ["csv"];
+
+const allowedExtensions = ["csv", "xlsx"]; // Add xlsx to the allowed extensions
 
 const CSVParser = ({
   setError,
@@ -26,10 +28,10 @@ const CSVParser = ({
     setError("");
     if (successMail === "success") {
       const inputFile = "";
-      const fileExtension = inputFile?.type.split("/")[1];
+      const fileExtension = inputFile?.name.split(".").pop().toLowerCase(); // Get file extension
 
       if (!allowedExtensions.includes(fileExtension)) {
-        setError("Please input a csv file");
+        setError("Please input a csv or xlsx file");
         return;
       }
       setData([]);
@@ -37,10 +39,10 @@ const CSVParser = ({
       setFile("");
     } else if (e.target.files.length) {
       const inputFile = e.target.files[0];
-      const fileExtension = inputFile?.type.split("/")[1];
+      const fileExtension = inputFile?.name.split(".").pop().toLowerCase(); // Get file extension
 
       if (!allowedExtensions.includes(fileExtension)) {
-        setError("Please input a csv file");
+        setError("Please input a csv or xlsx file");
         return;
       }
 
@@ -48,63 +50,117 @@ const CSVParser = ({
       setFile(inputFile);
     }
   };
+
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
     reader.onload = async ({ target }) => {
-      const csv = Papa.parse(target.result, {
-        header: false,
-      });
-      setCSVFileName(file.name);
-      const parsedData = csv?.data || [];
+      let parsedData = [];
+      const fileExtension = file.name.split(".").pop().toLowerCase(); // Get file extension
+      if (fileExtension === "csv") {
+        parsedData =
+          Papa.parse(target.result, {
+            header: false,
+          })?.data || [];
 
-      const headerRow = parsedData.length > 0 ? parsedData[0] : [];
-      setHeaderData(headerRow);
+        setCSVFileName(file.name);
+        const headerRow = parsedData.length > 0 ? parsedData[0] : [];
+        setHeaderData(headerRow);
 
-      const dataRows = parsedData
-        .slice(1)
-        .filter((row) => row.some((cell) => cell.trim() !== ""));
+        const dataRows = parsedData
+          .slice(1)
+          .filter((row) => row.some((cell) => cell.trim() !== ""));
 
-      const organizedData = dataRows.map((row) => {
-        const rowData = {};
-        headerRow.forEach((header, index) => {
-          rowData[header] = row[index];
+        const organizedData = dataRows.map((row) => {
+          const rowData = {};
+          headerRow.forEach((header, index) => {
+            rowData[header] = row[index];
+          });
+          return rowData;
         });
-        return rowData;
-      });
 
-      const validEmailsData = organizedData.filter((row) =>
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row["Email"])
-      );
+        const validEmailsData = organizedData.filter((row) =>
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row["Email"])
+        );
 
-      setCategorizedData(validEmailsData);
+        setCategorizedData(validEmailsData);
 
-      const emailData = organizedData.map((row) => {
-        const emailKeys = ["email", "EMAIL", "EmailAddress", "Email"];
-        let email = null;
-        emailKeys.some(key => {
-          if (row[key]) {
-            email = row[key];
-            return true; // stop searching once email is found
-          }
-          return false;
+        const emailData = organizedData.map((row) => {
+          const emailKeys = ["email", "EMAIL", "EmailAddress", "Email"];
+          let email = null;
+          emailKeys.some((key) => {
+            if (row[key]) {
+              email = row[key];
+              return true; // stop searching once email is found
+            }
+            return false;
+          });
+          return email;
         });
-        return email;
-      });
-      
 
-      const validEmails = emailData.filter((email) =>
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      );
+        const validEmails = emailData.filter((email) =>
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        );
 
-      const filteredOutEmails = emailData.filter(
-        (email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      );
+        const filteredOutEmails = emailData.filter(
+          (email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        );
 
-      setData(validEmails);
-      setBounced(filteredOutEmails);
+        setData(validEmails);
+        setBounced(filteredOutEmails);
+      } else if (fileExtension === "xlsx") {
+        const workbook = XLSX.read(target.result, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        parsedData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        setCSVFileName(file.name);
+        const headerRow = parsedData.length > 0 ? parsedData[0] : [];
+        setHeaderData(headerRow);
+        console.log(headerRow)
+        const dataRows = parsedData.slice(1).filter((row) => {
+          return row.some((cell) => {
+            return typeof cell === "string" && cell.trim() !== "";
+          });
+        });
+        const organizedData = dataRows.map((row) => {
+          const rowData = {};
+          headerRow.forEach((header, index) => {
+            rowData[header] = row[index];
+          });
+          return rowData;
+        });
+        const validEmailsData = organizedData.filter((row) =>
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row["Email"])
+        );
+
+        setCategorizedData(validEmailsData);
+
+        const emailData = organizedData.map((row) => {
+          const emailKeys = ["email", "EMAIL", "EmailAddress", "Email"];
+          let email = null;
+          emailKeys.some((key) => {
+            if (row[key]) {
+              email = row[key];
+              return true; // stop searching once email is found
+            }
+            return false;
+          });
+          return email;
+        });
+
+        const validEmails = emailData.filter((email) =>
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        );
+
+        const filteredOutEmails = emailData.filter(
+          (email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        );
+
+        setData(validEmails);
+        setBounced(filteredOutEmails);
+      }
     };
-    reader.readAsText(file);
+    reader.readAsBinaryString(file);
   };
 
   return (
@@ -223,7 +279,7 @@ const CSVParser = ({
         >
           {data.length <= 0 ? (
             <span>
-              Upload a CSV file{" "}
+              Upload a CSV or XLSX file{" "}
               <span className="text-sm">
                 - (Row 1 must contain all the headers)
               </span>
