@@ -29,7 +29,7 @@ const AddCourseModal = ({
         course_code: courseCode.trim().split(" ").join(""),
         course_title: courseName,
         course_description: courseDsc,
-        client_id: userDetails.client_id,
+        client_id: userDetails.client_id_in_courses_info,
       };
       const res = await handleAddCourse(data);
       if (res?.status === 201) {
@@ -73,7 +73,7 @@ const AddCourseModal = ({
             Add Course
           </h1>
           <div className="courseInputs">
-            <label>Course Code:{userDetails.client_id} </label>
+            <label>Course Code: </label>
             <Input
               value={courseCode}
               onChange={(e) => setCourseCode(e.target.value)}
