@@ -185,6 +185,7 @@ export const updateEmail = async (data) => {
   const config = {
     headers: {
       Accept: "application/json",
+      Accept: "application/x-www-form-urlencoded",
       Authorization: "Bearer " + authToken,
     },
   };
