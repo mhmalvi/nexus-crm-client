@@ -103,7 +103,6 @@ module.exports = {
         50: "12.7rem",
       },
     },
-
     screens: {
       xsm: "360px",
       sm: "640px",

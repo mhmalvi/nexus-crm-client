@@ -518,7 +518,7 @@ const CompanySettings = () => {
               </span>
 
               <input
-                id=""
+                id="fb_ac_credential"
                 className={`w-full ml-2 rounded-md ${
                   colorMode ? "text-slate-300" : "text-gray-800"
                 } ${
@@ -536,7 +536,7 @@ const CompanySettings = () => {
 
               {!toggleFacebookCredential ? (
                 <Icons.Eye
-                  onClick={showFacebookCredential}
+                  onClick={()=>showFacebookCredential()}
                   className="w-4 h-4 ml-3 font-semibold text-brand-color cursor-pointer"
                 />
               ) : (

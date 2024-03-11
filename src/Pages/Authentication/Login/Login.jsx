@@ -98,7 +98,7 @@ const Login = () => {
         loginResponse?.data?.token || loginResponse?.data?.data
       );
       console.log(Storage.getItem("auth_tok"))
-      // Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
       dispatch(updateBearerToken(loginResponse?.data?.token));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
