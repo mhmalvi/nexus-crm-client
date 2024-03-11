@@ -48,34 +48,6 @@ const CSVParser = ({
       setFile(inputFile);
     }
   };
-  // const handleParse = () => {
-  //   if (!file) return alert("Enter a valid file");
-  //   const reader = new FileReader();
-  //   reader.onload = async ({ target }) => {
-  //     const csv = Papa.parse(target.result, {
-  //       header: false,
-  //     });
-  //     const parsedData = csv?.data || [];
-  //     const removeTrailingChars = (cell) => cell.replace(/[.\s]+$/g, "");
-  //     const trimmedData = parsedData.map((row) =>
-  //       row.map((cell) =>
-  //         typeof cell === "string" ? removeTrailingChars(cell) : cell
-  //       )
-  //     );
-  //     const filteredData = trimmedData.filter((row) =>
-  //       row.some((cell) => cell.trim() !== "")
-  //     );
-  //     const validatedData = filteredData.filter((row) => {
-  //       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //       const isValidEmail = row.every(
-  //         (cell) => typeof cell !== "string" || emailRegex.test(cell)
-  //       );
-  //       return isValidEmail;
-  //     });
-  //     setData(validatedData);
-  //   };
-  //   reader.readAsText(file);
-  // };
   const handleParse = () => {
     if (!file) return alert("Enter a valid file");
     const reader = new FileReader();
@@ -107,7 +79,19 @@ const CSVParser = ({
 
       setCategorizedData(validEmailsData);
 
-      const emailData = organizedData.map((row) => row["Email"]);
+      const emailData = organizedData.map((row) => {
+        const emailKeys = ["email", "EMAIL", "EmailAddress", "Email"];
+        let email = null;
+        emailKeys.some(key => {
+          if (row[key]) {
+            email = row[key];
+            return true; // stop searching once email is found
+          }
+          return false;
+        });
+        return email;
+      });
+      
 
       const validEmails = emailData.filter((email) =>
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
