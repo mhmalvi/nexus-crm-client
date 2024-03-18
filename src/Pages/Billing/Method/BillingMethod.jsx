@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Popover } from "antd";
 import { useSelector } from "react-redux";
 import BillingForm from "./BillingForm";
 import NoBilling from "./NoBilling";
 import { Elements } from "@stripe/react-stripe-js";
+import Icons from "../../../Components/Shared/Icons";
 
 const BillingMethod = ({
   detailsClicked,
@@ -12,9 +14,17 @@ const BillingMethod = ({
   stripePromise,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const userDetails = useSelector((state) => state.user);
 
   const [hasBillingDetails, setHasBillingDetails] = useState(true);
+  const [openPopover, setOpenPopover] = useState(false);
+
+  const hide = () => {
+    setOpenPopover(false);
+  };
+  const handleOpenChange = (newOpen) => {
+    setOpenPopover(newOpen);
+  };
+
   useEffect(() => {
     if (totalSavedCards.length > 0) {
       setHasBillingDetails(true);
@@ -22,7 +32,7 @@ const BillingMethod = ({
       setHasBillingDetails(false);
     }
   }, [totalSavedCards.length]);
-  console.log(customerDetails);
+
   return (
     <>
       {detailsClicked.screen === "default" ? (
@@ -76,12 +86,29 @@ const BillingMethod = ({
                       >
                         Country: {items.country}
                       </h1>
-
-                      <button className="bg-yellow-500 flex gap-4">
-                        <div className="w-2 h-2 rounded-full bg-black"></div>
-                        <div className="w-2 h-2 rounded-full bg-black"></div>
-                        <div className="w-2 h-2 rounded-full bg-black"></div>
-                      </button>
+                      <Popover
+                        content={
+                          <div className="flex gap-2">
+                            <button className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100">
+                              Update
+                            </button>
+                            <button className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100">
+                              Delete
+                            </button>
+                          </div>
+                        }
+                        trigger="click"
+                        open={openPopover}
+                        onOpenChange={handleOpenChange}
+                      >
+                        <button className="flex gap-2 hover:scale-110">
+                          <Icons.Edit
+                            className={`${
+                              colorMode ? "text-slate-300" : "text-gray-800"
+                            }`}
+                          />
+                        </button>
+                      </Popover>
                     </div>
                   </div>
                 );
