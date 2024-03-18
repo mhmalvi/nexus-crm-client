@@ -254,7 +254,7 @@ const QueMailer = () => {
                 <div
                   className={`${
                     data.length <= 0 ? "hidden" : "content"
-                  } w-2/3 ease-in duration-200 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
+                  } w-3/4 ease-in duration-200 rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 z-10`}
                 >
                   <MailDashboard
                     openMailModal={openMailModal}
@@ -279,7 +279,7 @@ const QueMailer = () => {
                 </div>
                 <div
                   className={`${
-                    data.length <= 0 ? "w-full" : "w-1/3"
+                    data.length <= 0 ? "w-full" : "w-1/4"
                   } flex flex-col z-0`}
                 >
                   <CsvParser

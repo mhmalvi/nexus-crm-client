@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import BillingMethod from "./Method/BillingMethod";
-import { getCardDetails } from "../../Components/services/billing";
+import {
+  getCardDetails,
+  getCustomerDetails,
+} from "../../Components/services/billing";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Billing = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const userDetails = useSelector((state) => state.user);
 
   const [activeItem, setActiveItem] = useState("Method");
   const [detailsClicked, setDetailsClicked] = useState({
@@ -14,21 +16,19 @@ const Billing = () => {
     data: "",
   });
   const [totalSavedCards, setTotalSavedCards] = useState([]);
+  const [customerDetails, setCustomerDetails] = useState([]);
 
   const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   useEffect(() => {
-    const data = {
-      client_id: userDetails.userInfo.client_id,
-      email: userDetails.userInfo.email,
-    };
     (async () => {
-      const response = await getCardDetails(data);
-      console.log(response)
-      if (response.status === 200) {
-        setTotalSavedCards(response.data);
-      }
+      const responseCard = await getCardDetails();
+      setTotalSavedCards(responseCard.data);
     })();
-  }, [userDetails.userInfo.client_id, userDetails.userInfo.email]);
+    (async () => {
+      const responseCustomer = await getCustomerDetails();
+      setCustomerDetails(responseCustomer.data);
+    })();
+  }, []);
 
   return (
     <div className="flex items-start justify-center w-full h-screen py-8">
@@ -84,6 +84,7 @@ const Billing = () => {
               setDetailsClicked={setDetailsClicked}
               totalSavedCards={totalSavedCards}
               stripePromise={stripePromise}
+              customerDetails={customerDetails}
             />
           )}
           {activeItem === "Billing History" && <h1>Billing History</h1>}
