@@ -192,10 +192,10 @@ const CompanySettings = () => {
               </Upload>
             ) : null}
           </div>
-          <div className="">
+          <div className="flex flex-col items-end w-4/5">
             <input
               id="name"
-              className={`2xl:text-xl text-base ${
+              className={`w-full ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } font-semibold rounded-md backdrop-blur-xl bg-[#ffffff11] ${
                 toggleEditDetails
@@ -210,7 +210,7 @@ const CompanySettings = () => {
             <p
               id="description"
               contentEditable={toggleEditDetails}
-              className={`overflow-y-auto text-right ${
+              className={` text-xs overflow-y-auto text-justify ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               } justify-end pt-2 ${toggleEditDetails && "outline-none"}`}
             >
@@ -255,7 +255,7 @@ const CompanySettings = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col 2xl:gap-4 gap-1">
             <div className="font-normal flex items-center border-[#ffffff55] text-slate-300">
               <span
                 className={`w-48 text-sm ${

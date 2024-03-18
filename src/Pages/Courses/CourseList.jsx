@@ -6,7 +6,6 @@ import Highlighter from "react-highlight-words";
 import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
 import { useSelector } from "react-redux";
-import { useMediaQuery } from "react-responsive";
 import Loading from "../../Components/Shared/Loader";
 import "./courses.css"
 const CourseList = ({
@@ -30,7 +29,6 @@ const CourseList = ({
     setOpen(true);
   };
 
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const tableSearchInput = useRef(null);

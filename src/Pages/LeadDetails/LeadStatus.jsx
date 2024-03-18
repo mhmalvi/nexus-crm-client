@@ -229,7 +229,6 @@ const LeadStatus = (props) => {
   };
 
   const handleTooltipMessage = (e) => {
-    console.log("e.target", e.target?.outerText);
     setTooltipMessage(tooltipMessages[`${e.target.outerText}`]?.message);
   };
 

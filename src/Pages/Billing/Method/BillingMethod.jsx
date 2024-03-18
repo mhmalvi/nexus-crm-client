@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BillingDetails from "./BillingDetails";
 import BillingForm from "./BillingForm";
 import NoBilling from "./NoBilling";
-const BillingMethod = ({ detailsClicked, setDetailsClicked }) => {
+import { Elements } from "@stripe/react-stripe-js";
+
+const BillingMethod = ({
+  detailsClicked,
+  setDetailsClicked,
+  totalSavedCards,
+  stripePromise,
+}) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
 
-  const [hasBillingDetails, setHasBillingDetails] = useState(false);
+  const [hasBillingDetails, setHasBillingDetails] = useState(true);
+  console.log(totalSavedCards);
+  useEffect(() => {
+    if (totalSavedCards.length > 0) {
+      setHasBillingDetails(true);
+    } else {
+      setHasBillingDetails(false);
+    }
+  }, [totalSavedCards.length]);
 
   return (
     <>
@@ -15,28 +30,26 @@ const BillingMethod = ({ detailsClicked, setDetailsClicked }) => {
         hasBillingDetails ? (
           <div className="flex grow gap-4 w-full">
             {/* MAP BILLING DETAILS HERE */}
-            <div
-              className="w-1/3 rounded-md h-1/3 bg-brand-color shadow-md hover:scale-[0.98] cursor-pointer ease-in duration-200"
-              onClick={() => {
-                setDetailsClicked({
-                  screen: "card-details",
-                  data: "okay",
-                });
-              }}
-            >
-              ok
-            </div>
-            <div
-              className="w-1/3 rounded-md h-1/3 bg-brand-color shadow-md hover:scale-[0.98] cursor-pointer ease-in duration-200"
-              onClick={() => {
-                setDetailsClicked({
-                  screen: "card-details",
-                  data: "not okay",
-                });
-              }}
-            >
-              Not ok
-            </div>
+            {totalSavedCards &&
+              totalSavedCards.map((items, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="w-1/3 rounded-md h-1/3 bg-brand-color shadow-md hover:scale-[0.98] cursor-pointer ease-in duration-200 p-4"
+                    onClick={() => {
+                      setDetailsClicked({
+                        screen: "card-details",
+                        data: items,
+                      });
+                    }}
+                  >
+                    <h1>Debit/Credit Card</h1>
+                    <h1>Card Number</h1>
+                    <h1>Exp Date</h1>
+                    <h1>Card Name</h1>
+                  </div>
+                );
+              })}
 
             {/* ADD NEW CARD */}
             <div
@@ -61,14 +74,18 @@ const BillingMethod = ({ detailsClicked, setDetailsClicked }) => {
               ></div>
             </div>
           </div>
-        ) : <NoBilling setDetailsClicked={setDetailsClicked} />
+        ) : (
+          <NoBilling setDetailsClicked={setDetailsClicked} />
+        )
       ) : detailsClicked.screen === "card-details" ? (
         <BillingDetails
           setDetailsClicked={setDetailsClicked}
           detailsClicked={detailsClicked}
         />
       ) : (
-        <BillingForm setDetailsClicked={setDetailsClicked} />
+        <Elements stripe={stripePromise}>
+          <BillingForm setDetailsClicked={setDetailsClicked} />
+        </Elements>
       )}
     </>
   );

@@ -129,7 +129,7 @@ const BigCalendar = () => {
   return (
     <div>
       <Calendar
-        views={["day", "work_week", "month"]}
+        views={["month"]}
         selectable
         localizer={localizer}
         defaultDate={new Date()}

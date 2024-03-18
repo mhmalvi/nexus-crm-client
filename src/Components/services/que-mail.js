@@ -169,6 +169,7 @@ export const sendEmail = async (data) => {
       Authorization: "Bearer " + authToken,
     },
   };
+  console.log(data)
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/send-mail`,
@@ -185,7 +186,7 @@ export const updateEmail = async (data) => {
   const config = {
     headers: {
       Accept: "application/json",
-      Accept: "application/x-www-form-urlencoded",
+      // 'Content-Type': "application/x-www-form-urlencoded",
       Authorization: "Bearer " + authToken,
     },
   };
