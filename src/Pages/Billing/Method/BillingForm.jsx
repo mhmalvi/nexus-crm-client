@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import { saveCardDetails } from "../../../Components/services/billing";
+import {
+  saveCardDetails,
+  createCard,
+} from "../../../Components/services/billing";
+import qs from "qs";
 import { message } from "antd";
 
 const BillingForm = ({ setDetailsClicked }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const userDetails = useSelector((state) => state.user);
+  const userDetails = useSelector((state) => state.user); 
   const stripe = useStripe();
   const elements = useElements();
   const [paymentDetails, setPaymentDetails] = useState({
@@ -25,16 +29,17 @@ const BillingForm = ({ setDetailsClicked }) => {
         elements.getElement(CardElement)
       );
       const stripeToken = stripeTokenResponse.token.id;
-  
+
       setPaymentDetails((prevData) => ({
         ...prevData,
-        tokenStripe: stripeToken,
+        tokenStripe:  stripeToken,
       }));
-      
-      const response =  await saveCardDetails(paymentDetails);
-      console.log(response)
+
+      // const response =  await saveCardDetails(paymentDetails);
+      const response = await createCard(stripeToken);
+      console.log(response);
     } catch (error) {
-      console.error('Error saving card details:', error);
+      console.error("Error saving card details:", error);
     }
   };
 

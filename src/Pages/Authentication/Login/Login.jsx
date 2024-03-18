@@ -80,32 +80,28 @@ const Login = () => {
 
   const handleLoginReq = async (e) => {
     setLoginClicked(true);
-    e.preventDefault();
     dispatch(setLoader(true));
 
     const loginFormData = new FormData();
     loginFormData.append("email", data.email);
-    loginFormData.append("abn_number", data.email);
     loginFormData.append("password", data.password);
-    loginFormData.append("role", role);
-    let loginResponse;
-
-    loginResponse = await handleLogin(loginFormData);
-    console.log(loginResponse.data);
+    const loginResponse = await handleLogin(loginFormData);
     if (
       loginResponse?.data.token === "" ||
       loginResponse?.data.message === "Account not verified"
     ) {
       message.warning("Please check your email for a verification link.");
-      setLoginClicked(false)
-    }
-    else if (loginResponse?.status === 200 && loginResponse?.data) {
+      setLoginClicked(false);
+    } else if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
         "auth_tok",
         loginResponse?.data?.token || loginResponse?.data?.data
       );
-      Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
+      Storage.setItem(
+        "cust_id",
+        loginResponse?.data?.data?.customer_id || loginResponse?.data?.data
+      );
       dispatch(updateBearerToken(loginResponse?.data?.token));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
@@ -134,6 +130,7 @@ const Login = () => {
   const handleOneClickLogin = async (credentials) => {
     setLoginClicked(true);
     dispatch(setLoader(true));
+
     const loginFormData = new FormData();
     loginFormData.append("email", credentials?._ue_);
     loginFormData.append("password", credentials?._up_?.split("_")[0]);
@@ -145,8 +142,10 @@ const Login = () => {
         "auth_tok",
         loginResponse?.data?.token || loginResponse?.data?.data
       );
-
-      console.log(Storage.getItem("auth_tok"));
+      Storage.setItem(
+        "cust_id",
+        loginResponse?.data?.data?.customer_id || loginResponse?.data?.data
+      );
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
 

@@ -363,8 +363,8 @@ const MailDashboard = ({
   }, [tData, templateList]);
 
   return (
-    <div className=" flex flex-col gap-4">
-      <div className="w-full flex justify-between gap-8">
+    <div className="flex flex-col gap-4 justify-center h-full">
+      <div className="w-full flex justify-between gap-8 border-b border-brand-color pb-4">
         <div>
           <h1
             className={`m-0 p-0 text-sm ${
@@ -392,25 +392,25 @@ const MailDashboard = ({
           </button>
         </div>
       </div>
-      <div className="flex gap-8 min-h-[50vh]">
+      <div className="flex gap-4 h-full">
         <Form
           layout="vertical"
           onFinish={() => {
             handleSendMail();
           }}
-          className="w-full"
+          className="flex flex-col w-full h-full"
         >
-          <div className="flex justify-between items-center w-full gap-20">
-            <div className="flex-col gap-4 w-5/12">
-              <div className="flex justify-between items-center w-full h-10">
+          <div className="flex justify-between items-center w-full gap-2">
+            <div className="flex flex-col items-center gap-2 w-1/4">
+              <div className="flex items-center gap-2 w-full h-10">
                 <h2
-                  className={`w-full m-0 p-0 2xl:text-sm text-xs ${
+                  className={`m-0 p-0 2xl:text-sm text-xs font-semibold ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
                   }`}
                 >
-                  Select Mail Template:
+                  1.
                 </h2>
                 <Form.Item className=" !text-black !rounded-lg !w-full !p-0 !m-0">
                   <Select
@@ -424,15 +424,15 @@ const MailDashboard = ({
                   />
                 </Form.Item>
               </div>
-              <div className="flex items-center w-full h-10">
+              <div className="flex items-center gap-2 w-full h-10">
                 <h2
-                  className={`w-full 2xl:text-sm text-xs m-0 p-0 ${
+                  className={`2xl:text-sm text-xs m-0 p-0 font-semibold ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
                   }`}
                 >
-                  Mail Subject:
+                  2.
                 </h2>
                 <Input
                   disabled={
@@ -442,14 +442,15 @@ const MailDashboard = ({
                       ? false
                       : false
                   }
-                  className="!rounded-lg placeholder:!text-slate-400 2xl:text-base !text-xs !w-full"
+                  className="!rounded-lg placeholder:!text-slate-400 2xl:text-base !text-xs !w-full !py-2"
                   value={mailSubject}
                   onChange={(e) => setMailSubject(e?.target?.value)}
                   placeholder="Enter subject of mail"
                 />
               </div>
             </div>
-            <div className="flex w-1/4">
+            <div className="flex flex-col w-1/4 bg-orange-400">
+              <h1 className="m-0 p-0 text-end text-sm">Action Buttons</h1>
               <Select
                 defaultValue="Copy dynamic header"
                 style={{ width: "100%" }}
@@ -466,6 +467,7 @@ const MailDashboard = ({
                   }))
                 }
               />
+              <h1>Unsubscribe</h1>
             </div>
             {selectedData.length > 0 ? (
               <ul className="flex">
@@ -481,9 +483,9 @@ const MailDashboard = ({
               ""
             )}
           </div>
-          <div className="template h-full w-full flex flex-col items-center justify-center w-full  ">
+          <div className="h-full w-full flex flex-col items-center justify-between">
             {tData ? (
-              <div className="w-full flex flex-col gap-8 emailEditorCustom">
+              <div className="w-full h-full flex flex-col justify-between gap-4 emailEditorCustom">
                 <Editor
                   apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -492,7 +494,7 @@ const MailDashboard = ({
                     "<p>This is the initial content of the editor.</p>"
                   }
                   init={{
-                    height: "calc(50vh - 5em)",
+                    height: "calc(60vh - 5em)",
                     menubar: false,
                     resize: false,
                     plugins: [
