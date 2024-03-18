@@ -87,7 +87,7 @@ const Login = () => {
     loginFormData.append("password", data.password);
     const loginResponse = await handleLogin(loginFormData);
     if (
-      loginResponse?.data.token === "" ||
+      // loginResponse?.data.token === "" ||
       loginResponse?.data.message === "Account not verified"
     ) {
       message.warning("Please check your email for a verification link.");

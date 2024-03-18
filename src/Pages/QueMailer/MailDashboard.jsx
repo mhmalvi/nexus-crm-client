@@ -7,6 +7,7 @@ import {
   Select,
   DatePicker,
   Modal,
+  Tooltip,
 } from "antd";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -364,21 +365,20 @@ const MailDashboard = ({
 
   return (
     <div className="flex flex-col gap-4 justify-center h-full">
-      <div className="w-full flex justify-between gap-8 border-b border-brand-color pb-4">
-        <div>
-          <h1
-            className={`m-0 p-0 text-sm ${
-              colorMode
-                ? "text-slate-300 border-slate-300"
-                : "text-gray-800 border-gray-800"
-            }`}
-          >
-            Current Sender Email:{" "}
-            <span className="text-green-600">
-              {currentEmail && currentEmail.from_mail_address}
-            </span>
-          </h1>
-        </div>
+      <div className="w-full flex items-center justify-between gap-8 border-b border-brand-color pb-4">
+        <h1
+          className={`m-0 p-0 text-sm ${
+            colorMode
+              ? "text-slate-300 border-slate-300"
+              : "text-gray-800 border-gray-800"
+          }`}
+        >
+          Current Sender Email:{" "}
+          <span className="text-green-600">
+            {currentEmail && currentEmail.from_mail_address}
+          </span>
+        </h1>
+
         <div className="flex gap-8">
           <button
             className={`2xl:text-sm text-xs ease-in duration-100 px-4 py-1 border rounded-md hover:border-brand-color ${
@@ -494,7 +494,8 @@ const MailDashboard = ({
                     "<p>This is the initial content of the editor.</p>"
                   }
                   init={{
-                    height: "calc(60vh - 5em)",
+                    // height: "calc(60vh - 5em)",
+                    height: "100%",
                     menubar: false,
                     resize: false,
                     plugins: [
@@ -552,43 +553,43 @@ const MailDashboard = ({
                           Files Selected: {attachment.length}
                         </h1>
                       )}
-                      <label
-                        htmlFor="file-input"
-                        className={`flex items-center gap-8 label `}
+                      <Tooltip
+                        title={
+                          <div>
+                            <h1 className="text-slate-300">
+                              Allowed files: JPG, JPEG, PNG & PDF (200kb).
+                            </h1>
+                            <h1 className="text-slate-300">
+                              Max file size: 500kb, Total file size: 20mb
+                            </h1>
+                          </div>
+                        }
+                        placement="right"
                       >
-                        <input
-                          type="file"
-                          multiple
-                          onChange={handleAttachment}
-                          className="hidden"
-                          id="file-input"
-                        />
-
-                        <span
-                          className={`${
-                            colorMode
-                              ? "bg-transparent border border-slate-300 text-slate-300"
-                              : "text-gray-800 bg-transparent border border-gray-800"
-                          }   rounded-md m-0 px-4 py-2 cursor-pointer text-sm`}
+                        <label
+                          htmlFor="file-input"
+                          className={`flex items-center gap-8 label `}
                         >
-                          Attach File
-                        </span>
-                      </label>
+                          <input
+                            type="file"
+                            multiple
+                            onChange={handleAttachment}
+                            className="hidden"
+                            id="file-input"
+                          />
+
+                          <span
+                            className={`${
+                              colorMode
+                                ? "bg-transparent border border-slate-300 text-slate-300"
+                                : "text-gray-800 bg-transparent border border-gray-800"
+                            }   rounded-md m-0 px-4 py-2 cursor-pointer text-sm`}
+                          >
+                            Attach File
+                          </span>
+                        </label>
+                      </Tooltip>
                     </div>
-                    <h1
-                      className={`${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } text-xs m-0 p-0`}
-                    >
-                      Allowed files: JPG, JPEG, PNG & PDF (200kb)
-                    </h1>
-                    <h1
-                      className={`${
-                        colorMode ? "text-slate-300" : "text-gray-800"
-                      } text-xs m-0 p-0`}
-                    >
-                      Max file size: 500kb, Total file size: 20mb
-                    </h1>
                   </div>
                   <div className="flex w-1/2 items-center justify-end gap-4">
                     {templateData.template !== tempInitValue ? (
