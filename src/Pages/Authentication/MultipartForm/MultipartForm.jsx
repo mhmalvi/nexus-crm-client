@@ -70,19 +70,8 @@ const MultipartForm = () => {
       message.warning(error.response);
     }
   };
-  // useEffect(() => {
-  //   if (Storage.getItem("auth_tok")) {
-  //     if (userDetails?.userInfo?.verification_status === 2) {
-  //       navigate("/dashboard");
-  //     } else if (userDetails?.userInfo?.verification_status === 1) {
-  //       navigate("/setup-your-profile");
-  //     } else {
-  //       navigate("/dashboard");
-  //     }
-  //   } else {
-  //     navigate("/setup-your-profile");
-  //   }
-  // }, [navigate, userDetails]);
+ 
+  
   return (
     <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins ">
       {submitClicked ? (

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { btob_dev } from "./environment";
-const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-const configJSON = {
-  headers: {
-    Accept: "application/json",
-  },
-};
+
 export const handleInitialRegistration = async (registrationData) => {
+  const configJSON = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
   try {
     const result = await axios.post(
       `https://crmuser.queleadscrm.com/api/user/registration`,
@@ -20,6 +20,11 @@ export const handleInitialRegistration = async (registrationData) => {
   }
 };
 export const handleMultipartRegistration = async (registrationData) => {
+  const configJSON = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
   try {
     const result = await axios.post(
       `https://crmuser.queleadscrm.com/api/user/register`,
@@ -32,6 +37,11 @@ export const handleMultipartRegistration = async (registrationData) => {
   }
 };
 export const handleEmployeeRegistration = async (registrationDetails) => {
+  const configJSON = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
   try {
     const result = await axios.post(
       `https://crmuser.queleadscrm.com/api/user/add`,
@@ -62,7 +72,6 @@ export const handleLogin = async (loginDetails) => {
       `${process.env?.REACT_APP_AUTH_URL}/api/user/login`,
       loginDetails
     );
-
     console.log(result);
     return result;
   } catch (error) {

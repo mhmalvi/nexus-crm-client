@@ -31,9 +31,15 @@
 }
 .reminderBodyWhite .rbc-toolbar-label {
   color: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .reminderBodyDark .rbc-toolbar-label {
   color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .reminderBodyWhite .rbc-time-view,
 .reminderBodyWhite .rbc-month-view {

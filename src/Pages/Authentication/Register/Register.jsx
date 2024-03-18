@@ -49,18 +49,15 @@ const Register = () => {
       console.log(res?.data);
       if (res?.status === 201) {
         // setLoading(false);
-        message.success(res?.message);
-        message.success("Please check your email for verification code");
+        message.success(`${res?.message}. Please check your email for verification code`);
         navigate("/login");
       } else if (res.data.errors.email && res.data.errors.email[0] !== "") {
-        // setLoading(false);
-        // console.log(res?.data.errors.email[0]);
+        
         setUnprocessableContent(res?.data.errors.email[0]);
       } else if (
         res.data.errors.password &&
         res?.data.errors.password[0] !== ""
       ) {
-        // setLoading(false);
         console.log(res?.data.errors.password[0]);
         setUnprocessableContent(res?.data.errors.password[0]);
       }

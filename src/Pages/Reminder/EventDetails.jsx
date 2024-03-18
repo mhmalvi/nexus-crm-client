@@ -135,7 +135,6 @@ const EventDetails = ({
       );
     }
   };
-  // console.log(eventDetails)
   const handleDeleteFollowUpReq = async (id) => {
     const deleteResp = await handleDeleteFollowUp(id);
 
@@ -162,13 +161,13 @@ const EventDetails = ({
               onChange={handleEventDetailsChange}
             />
           ) : eventDetails?.status ? (
-            <div className="text-lg font-semibold !text-slate-300">
-              {eventDetails?.title}
-            </div>
+            <h1 className="text-lg font-semibold !text-slate-300">
+              {(eventDetails?.title)}
+            </h1>
           ) : (
-            <del className="text-lg font-semibold !text-slate-300">
+            <h1 className="text-lg font-semibold !text-slate-300">
               {eventDetails?.title}
-            </del>
+            </h1>
           )}
           <div className="text-lg font-semibold !text-slate-300">-Details</div>
         </div>

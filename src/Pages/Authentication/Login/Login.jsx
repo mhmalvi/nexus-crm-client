@@ -11,7 +11,7 @@ import {
   addUserDetails,
   setCompanyId,
   setLoader,
-  updateBearerToken
+  updateBearerToken,
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 import "./Login.css";
@@ -91,42 +91,46 @@ const Login = () => {
     let loginResponse;
 
     loginResponse = await handleLogin(loginFormData);
-    if (loginResponse?.status === 200 && loginResponse?.data) {
+    console.log(loginResponse.data);
+    if (
+      loginResponse?.data.token === "" ||
+      loginResponse?.data.message === "Account not verified"
+    ) {
+      message.warning("Please check your email for a verification link.");
+      setLoginClicked(false)
+    }
+    else if (loginResponse?.status === 200 && loginResponse?.data) {
       Storage.setItem("user_info", loginResponse?.data?.data);
       Storage.setItem(
         "auth_tok",
         loginResponse?.data?.token || loginResponse?.data?.data
       );
-      console.log(Storage.getItem("auth_tok"))
       Storage.setItem("fac_t", loginResponse?.data?.data?.ac_k);
       dispatch(updateBearerToken(loginResponse?.data?.token));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
       dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
       setLoginClicked(false);
-      message.success("Successfully Logged In");
-
       if (
         !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
           ?.length
       ) {
         setAddBookMarkOpen(true);
-        
       } else if (Storage.getItem("auth_tok")) {
         if (userDetails?.userInfo?.verification_status === 2) {
           navigate("/dashboard");
         } else if (userDetails?.userInfo?.verification_status === 1) {
           navigate("/setup-your-profile");
         } else {
-          navigate("/dashboard");
+          message.warning("Please check your email for a verification link.");
         }
       }
     } else {
       setLoginClicked(false);
-
-      message.warning("Oops Wrong! Check You Email or Password/ABN Number");
+      message.warning("Oops Wrong! Check You Email or Password");
     }
   };
+
   const handleOneClickLogin = async (credentials) => {
     setLoginClicked(true);
     dispatch(setLoader(true));
@@ -142,7 +146,7 @@ const Login = () => {
         loginResponse?.data?.token || loginResponse?.data?.data
       );
 
-      console.log(Storage.getItem("auth_tok"))
+      console.log(Storage.getItem("auth_tok"));
       dispatch(setLoader(false));
       dispatch(addUserDetails(loginResponse?.data?.data));
 
@@ -154,7 +158,7 @@ const Login = () => {
         } else if (userDetails?.userInfo?.verification_status === 1) {
           navigate("/setup-your-profile");
         } else {
-          navigate("/dashboard");
+          message.warning("Please check your email for a verification link.");
         }
       }
     } else {
@@ -324,7 +328,7 @@ const Login = () => {
                         id="email"
                         value={data.email}
                         placeholder="Enter your username"
-                        className="inputBGLogin placeholder:!text-slate-300 w-full !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !text-slate-300 !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
+                        className="inputBGLogin placeholder:!text-slate-300 w-full focus:!bg-transparent !px-2 !py-2 !bg-transparent !active:bg-transparent !text-sm !border !text-slate-300 !border-gray-400 !rounded-md !focus:outline-none !focus:border-brand-color"
                         onChange={userData}
                         required
                       />

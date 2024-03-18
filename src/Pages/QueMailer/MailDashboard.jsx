@@ -270,7 +270,7 @@ const MailDashboard = ({
         }
       } catch (error) {
         // setSuccessMail("success");
-        message.warning(error.response);
+        message.success(error.response);
       }
     }
   };
@@ -367,7 +367,7 @@ const MailDashboard = ({
       <div className="w-full flex justify-between gap-8">
         <div>
           <h1
-            className={`m-0 p-0 2xl:text-base text-sm ${
+            className={`m-0 p-0 text-sm ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
@@ -381,7 +381,7 @@ const MailDashboard = ({
         </div>
         <div className="flex gap-8">
           <button
-            className={`2xl:text-base text-xs ease-in duration-100 px-4 py-1 border rounded-md hover:border-brand-color ${
+            className={`2xl:text-sm text-xs ease-in duration-100 px-4 py-1 border rounded-md hover:border-brand-color ${
               colorMode
                 ? "text-slate-300 border-slate-300"
                 : "text-gray-800 border-gray-800"
@@ -401,10 +401,10 @@ const MailDashboard = ({
           className="w-full"
         >
           <div className="flex justify-between items-center w-full gap-20">
-            <div className="flex-col gap-4 w-1/2">
+            <div className="flex-col gap-4 w-5/12">
               <div className="flex justify-between items-center w-full h-10">
                 <h2
-                  className={`w-full m-0 p-0 2xl:text-base text-xs ${
+                  className={`w-full m-0 p-0 2xl:text-sm text-xs ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
@@ -426,7 +426,7 @@ const MailDashboard = ({
               </div>
               <div className="flex items-center w-full h-10">
                 <h2
-                  className={`w-full 2xl:text-base text-xs m-0 p-0 ${
+                  className={`w-full 2xl:text-sm text-xs m-0 p-0 ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
@@ -567,7 +567,7 @@ const MailDashboard = ({
                             colorMode
                               ? "bg-transparent border border-slate-300 text-slate-300"
                               : "text-gray-800 bg-transparent border border-gray-800"
-                          }   rounded-md m-0 px-4 py-2 cursor-pointer`}
+                          }   rounded-md m-0 px-4 py-2 cursor-pointer text-sm`}
                         >
                           Attach File
                         </span>
@@ -592,7 +592,7 @@ const MailDashboard = ({
                     {templateData.template !== tempInitValue ? (
                       <button
                         type="button"
-                        className="w-2/5 text-slate-300 px-4 py-1 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
+                        className="text-sm w-2/5 text-slate-300 px-4 py-1 bg-gray-800 rounded-md hover:text-brand-color ease-in duration-100"
                         onClick={handleUpdateMail}
                       >
                         Update Template
@@ -602,8 +602,7 @@ const MailDashboard = ({
                     )}
                     <button
                       type="button"
-                      className={`px-4 py-1 !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
-                         `}
+                      className={`text-sm px-4 py-1 !rounded-md disabled:!bg-slate-200 disabled:cursor-not-allowed disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300`}
                       disabled={
                         !data.length || !mailSubject.length ? true : false
                       }
@@ -614,20 +613,19 @@ const MailDashboard = ({
                       Schedule Mail
                     </button>
                     <Form.Item className="flex gap-4 !m-0 r-0">
-                      <Button
+                      <button
                         type="primary"
                         htmlType="submit"
                         onClick={() => {
                           setMailProgress(true);
                         }}
-                        className={` !rounded-md disabled:!bg-slate-200 disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300"
-                         `}
+                        className={`text-sm px-4 py-1 !rounded-md disabled:!bg-slate-200 disabled:cursor-not-allowed disabled:!text-slate-400 !bg-gray-800 !text-slate-300 !border-slate-300`}
                         disabled={
                           !data.length || !mailSubject.length ? true : false
                         }
                       >
                         Send Mail Now
-                      </Button>
+                      </button>
                     </Form.Item>
                   </div>
                 </div>
@@ -701,7 +699,7 @@ const MailDashboard = ({
               ("0" + e._d.getUTCSeconds()).slice(-2);
 
             setScheduleTime(formattedDateString);
-            console.log(formattedDateString)
+            console.log(formattedDateString);
           }}
           showTime
           needConfirm={false}

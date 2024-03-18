@@ -11,7 +11,7 @@ const BillingDetails = ({ setDetailsClicked, detailsClicked }) => {
         back
       </div>
       <h1>BillingDetails</h1>
-      {detailsClicked.data}
+      {/* {detailsClicked.data} */}
     </div>
   );
 };
