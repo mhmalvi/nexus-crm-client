@@ -23,9 +23,9 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
     <div className="flex justify-between items-center mb-5">
       <div>
         <h1
-          className={`text-lg ${
-            colorMode ? "text-white" : "text-gray-800"
-          } font-normal font-poppins`}
+          className={`text-2xl ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          } font-poppins`}
         >
           Filters
         </h1>
@@ -34,12 +34,11 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
           {filterOptions.map((option) => (
             <div key={option.id} onClick={() => setActiveFilter(option.id)}>
               <h1
-                className={`text-xs font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                className={`text-base font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
                   activeFilter === option.id
                     ? "text-white bg-brand-color"
                     : "text-black bg-white"
                 }  rounded-md`}
-            
               >
                 {option.title}
               </h1>
@@ -51,8 +50,8 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
       {/* Search Option */}
       <div className="">
         <h1
-          className={`text-lg ${
-            colorMode ? "text-white" : "text-gray-800"
+          className={`text-base ${
+            colorMode ? "text-slate-300" : "text-gray-800"
           } font-normal font-poppins`}
         >
           Search Campaign

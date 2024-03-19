@@ -30,12 +30,12 @@ const BillingMethod = ({
   };
 
   useEffect(() => {
-    if (totalSavedCards.length > 0) {
+    if (totalSavedCards.length >= 1) {
       setHasBillingDetails(true);
     } else {
       setHasBillingDetails(false);
     }
-  }, [totalSavedCards.length]);
+  }, [totalSavedCards]);
 
   const handleDeleteCard = async (cardId) => {
     setDeleteButtonClicked(true);
@@ -63,14 +63,13 @@ const BillingMethod = ({
       console.error("Error deleting card:", error);
     }
   };
-
   return (
     <>
       {detailsClicked.screen === "default" ? (
         hasBillingDetails ? (
           <div className="flex grow gap-4 w-full">
             {/* MAP BILLING DETAILS HERE */}
-            {totalSavedCards &&
+            {totalSavedCards.length > 0 &&
               totalSavedCards.map((items, index) => {
                 return (
                   <div

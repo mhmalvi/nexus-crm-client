@@ -9,7 +9,7 @@ import {
 import { Select } from "antd";
 import { setLoader } from "../../features/user/userSlice";
 import { handleFetchCompanies } from "../../Components/services/company";
-import "./Types/analytic.css"
+import "./Types/analytic.css";
 
 const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
   const { Option } = Select;
@@ -44,7 +44,6 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
         userDetails?.role_id === 3 ? userDetails?.client_id : activeCompany
       );
 
-
       let totalLastWeekIncome = 0;
       lastWeekIncomeResp?.data?.forEach((rev) => {
         totalLastWeekIncome += rev?.Income;
@@ -73,7 +72,7 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
     <div className="flex flex-col justify-between items-start w-full w-full pb-4 border-b border-slate-300">
       <div className="flex w-full items-center justify-between">
         <h1
-          className={`text-xl font-semibold font-poppins ${
+          className={`text-2xl font-poppins ${
             colorMode ? "text-slate-300" : "text-gray-800"
           }`}
         >

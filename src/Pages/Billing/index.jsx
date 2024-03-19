@@ -23,7 +23,14 @@ const Billing = () => {
   useEffect(() => {
     (async () => {
       const responseCard = await getCardDetails();
-      setTotalSavedCards(responseCard.data);
+      const responseData = responseCard.data;
+    
+      if (responseData && responseData.length > 0) {
+        const cardsArray = Array.isArray(responseData) ? responseData : [responseData];
+        setTotalSavedCards(cardsArray);
+      } else {
+        setTotalSavedCards([]);
+      }
     })();
     (async () => {
       const responseCustomer = await getCustomerDetails();
@@ -48,7 +55,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Method");
               }}
@@ -68,7 +75,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Billing History");
               }}
@@ -88,7 +95,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Packages");
               }}

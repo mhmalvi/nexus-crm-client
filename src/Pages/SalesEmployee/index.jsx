@@ -117,8 +117,8 @@ const Sales = () => {
         <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
           <div className="w-full flex items-center justify-between">
             <div
-              className={`text-xl font-semibold ${
-                colorMode ? "text-white" : "text-gray-800"
+              className={`text-2xl font-poppins ${
+                colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >
               All Sales Employees
