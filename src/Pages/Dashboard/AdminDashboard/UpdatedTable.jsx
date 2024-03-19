@@ -356,8 +356,8 @@ const UpdatedTable = ({
             x: 2000,
             y:
               table_title === "Lead List"
-                ? "calc(50vh - 5em)"
-                : "calc(70vh - 5em)",
+                ? `calc(55vh - 4em)`
+                : `calc(70vh - 5em)`,
           }}
           rowClassName={(record) => {
             if (
