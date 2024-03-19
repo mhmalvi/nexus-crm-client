@@ -129,7 +129,7 @@ const QueMailer = () => {
     <div className="flex items-start justify-center w-full h-screen py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
-        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] py-4">
+        <div className="flex justify-between items-center w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] py-4">
           <div className="flex gap-4">
             <button
               className={`${
@@ -140,7 +140,7 @@ const QueMailer = () => {
                   : `hover:text-gray-800  ${
                       activeItem === "Email" ? "text-gray-800" : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Email");
               }}
@@ -160,7 +160,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Email History");
               }}
@@ -173,7 +173,7 @@ const QueMailer = () => {
                 colorMode
                   ? "text-slate-600 disabled:text-slate-500"
                   : "text-gray-300 disabled:text-gray-500"
-              } px-4 text-base cursor-not-allowed`}
+              } px-4 text-2xl cursor-not-allowed`}
               onClick={() => {
                 setActiveItem("Statistics");
               }}
@@ -193,7 +193,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Scheduling");
               }}
@@ -213,7 +213,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-base`}
+              } px-4 text-2xl`}
               onClick={() => {
                 setActiveItem("Email Settings");
               }}
@@ -223,7 +223,7 @@ const QueMailer = () => {
           </div>
           <div>
             <h1
-              className={`m-0 p-0 ${
+              className={`m-0 px-4 py-0 m-0 text-xl ${
                 colorMode ? "text-slate-300" : "text-gray-800"
               }`}
             >

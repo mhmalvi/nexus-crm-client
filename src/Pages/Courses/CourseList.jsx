@@ -7,7 +7,7 @@ import EditCourseDetails from "./EditCourseDetails";
 import AddCourseModal from "./AddCourseModal";
 import { useSelector } from "react-redux";
 import Loading from "../../Components/Shared/Loader";
-import "./courses.css"
+import "./courses.css";
 const CourseList = ({
   courses,
   setCourses,
@@ -214,9 +214,9 @@ const CourseList = ({
     <div>
       <div className="w-full flex items-center justify-between mb-5 ">
         <div
-          className={`text-xl ${
-            colorMode ? "text-white" : "text-gray-800"
-          } font-semibold`}
+          className={`text-2xl font-poppins ${
+            colorMode ? "text-slate-300" : "text-gray-800"
+          } `}
         >
           All Courses
         </div>
