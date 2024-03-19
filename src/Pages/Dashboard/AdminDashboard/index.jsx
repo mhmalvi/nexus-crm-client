@@ -736,7 +736,7 @@ const AdminDashboard = () => {
             setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
           />
         </Modal>
-        <div className="relative flex flex-col justify-start h-full">
+        <div className="relative flex flex-col justify-between h-full">
           <div className="w-full flex justify-between gap-4">
             <div className="">
               <Filters
