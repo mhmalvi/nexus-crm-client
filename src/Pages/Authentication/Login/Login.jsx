@@ -79,95 +79,106 @@ const Login = () => {
   }, []);
 
   const handleLoginReq = async (e) => {
-    setLoginClicked(true);
-    dispatch(setLoader(true));
+    try {
+      setLoginClicked(true);
+      dispatch(setLoader(true));
 
-    const loginFormData = new FormData();
-    loginFormData.append("email", data.email);
-    loginFormData.append("password", data.password);
-    const loginResponse = await handleLogin(loginFormData);
-    if (
-      // loginResponse?.data.token === "" ||
-      loginResponse?.data.message === "Account not verified"
-    ) {
-      message.warning("Please check your email for a verification link.");
-      setLoginClicked(false);
-    } else if (loginResponse?.status === 200 && loginResponse?.data) {
-      Storage.setItem("user_info", loginResponse?.data?.data);
-      Storage.setItem(
-        "auth_tok",
-        loginResponse?.data?.token || loginResponse?.data?.data
-      );
-      Storage.setItem(
-        "cust_id",
-        loginResponse?.data?.data?.customer_id || loginResponse?.data?.data
-      );
-      dispatch(updateBearerToken(loginResponse?.data?.token));
-      dispatch(setLoader(false));
-      dispatch(addUserDetails(loginResponse?.data?.data));
-      dispatch(setCompanyId(loginResponse?.data?.data?.company?.id));
-      setLoginClicked(false);
+      const loginFormData = new FormData();
+      loginFormData.append("email", data.email);
+      loginFormData.append("password", data.password);
+      const loginResponse = await handleLogin(loginFormData);
+
       if (
-        !bookMarkedAccounts?.filter((account) => account?._ue_ === data?.email)
-          ?.length
+        loginResponse?.data &&
+        loginResponse?.data.message === "Account not verified"
       ) {
-        setAddBookMarkOpen(true);
-      } else if (Storage.getItem("auth_tok")) {
-        if (userDetails?.userInfo?.verification_status === 2) {
-          navigate("/dashboard");
-        } else if (userDetails?.userInfo?.verification_status === 1) {
-          navigate("/setup-your-profile");
+        message.warning("Please check your email for a verification link.");
+        setLoginClicked(false);
+      } else if (loginResponse?.status === 200 && loginResponse?.data) {
+        Storage.setItem("user_info", loginResponse?.data.data);
+        Storage.setItem(
+          "auth_tok",
+          loginResponse?.data.token || loginResponse?.data.data
+        );
+        Storage.setItem(
+          "cust_id",
+          loginResponse?.data.data?.customer_id || loginResponse?.data.data
+        );
+        dispatch(updateBearerToken(loginResponse?.data.token));
+        dispatch(setLoader(false));
+        dispatch(addUserDetails(loginResponse?.data.data));
+        dispatch(setCompanyId(loginResponse?.data.data?.company?.id));
+        setLoginClicked(false);
+        if (
+          !bookMarkedAccounts.some((account) => account?._ue_ === data?.email)
+        ) {
+          setAddBookMarkOpen(true);
         } else {
-          message.warning("Please check your email for a verification link.");
+          if (userDetails?.userInfo?.verification_status === 2) {
+            navigate("/dashboard");
+          } else if (userDetails?.userInfo?.verification_status === 1) {
+            navigate("/setup-your-profile");
+          } else {
+            message.warning("Please check your email for a verification link.");
+          }
         }
+      } else {
+        setLoginClicked(false);
+        message.warning("Oops! Wrong email or password.");
       }
-    } else {
+    } catch (error) {
+      console.error("Error during login:", error);
       setLoginClicked(false);
-      message.warning("Oops Wrong! Check You Email or Password");
+      message.error("An error occurred during login.");
     }
   };
 
   const handleOneClickLogin = async (credentials) => {
-    setLoginClicked(true);
-    dispatch(setLoader(true));
+    try {
+      setLoginClicked(true);
+      dispatch(setLoader(true));
 
-    const loginFormData = new FormData();
-    loginFormData.append("email", credentials?._ue_);
-    loginFormData.append("password", credentials?._up_?.split("_")[0]);
-    const loginResponse = await handleLogin(loginFormData);
-    if (loginResponse?.status === 200) {
-      setLoginClicked(false);
-      Storage.setItem("user_info", loginResponse?.data?.data);
-      Storage.setItem(
-        "auth_tok",
-        loginResponse?.data?.token || loginResponse?.data?.data
-      );
-      Storage.setItem(
-        "cust_id",
-        loginResponse?.data?.data?.customer_id || loginResponse?.data?.data
-      );
-      dispatch(setLoader(false));
-      dispatch(addUserDetails(loginResponse?.data?.data));
+      const loginFormData = new FormData();
+      loginFormData.append("email", credentials?._ue_);
+      loginFormData.append("password", credentials?._up_?.split("_")[0]);
+      const loginResponse = await handleLogin(loginFormData);
 
-      dispatch(setLoader(false));
-      message.success("Successfully Logged In");
-      if (Storage.getItem("auth_tok")) {
-        if (userDetails?.userInfo?.verification_status === 2) {
-          navigate("/dashboard");
-        } else if (userDetails?.userInfo?.verification_status === 1) {
-          navigate("/setup-your-profile");
-        } else {
-          message.warning("Please check your email for a verification link.");
-        }
-      }
-    } else {
-      setLoginClicked(false);
-      setTimeout(() => {
+      if (loginResponse?.status === 200 && loginResponse?.data) {
+        setLoginClicked(false);
+        Storage.setItem("user_info", loginResponse?.data.data);
+        Storage.setItem(
+          "auth_tok",
+          loginResponse?.data.token || loginResponse?.data.data
+        );
+        Storage.setItem(
+          "cust_id",
+          loginResponse?.data.data?.customer_id || loginResponse?.data.data
+        );
+        dispatch(addUserDetails(loginResponse?.data.data));
         dispatch(setLoader(false));
-      }, 2000);
-      message.warning("Oopps Wrong! Check You Email or Password");
+        message.success("Successfully logged in.");
+        if (Storage.getItem("auth_tok")) {
+          if (userDetails?.userInfo?.verification_status === 2) {
+            navigate("/dashboard");
+          } else if (userDetails?.userInfo?.verification_status === 1) {
+            navigate("/setup-your-profile");
+          } else {
+            message.warning("Please check your email for a verification link.");
+          }
+        }
+      } else {
+        setLoginClicked(false);
+        dispatch(setLoader(false));
+        message.warning("Oops! Wrong email or password.");
+      }
+    } catch (error) {
+      console.error("Error during one-click login:", error);
+      setLoginClicked(false);
+      dispatch(setLoader(false));
+      message.error("An error occurred during login.");
     }
   };
+
   const handleRememberMe = useCallback(
     (e) => {
       if (e.target.checked) {

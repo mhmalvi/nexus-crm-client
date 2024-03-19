@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import {
-  saveCardDetails,
-  createCard,
-} from "../../../Components/services/billing";
-import qs from "qs";
-import { message } from "antd";
+import { createCard } from "../../../Components/services/billing";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 const BillingForm = ({ setDetailsClicked }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const userDetails = useSelector((state) => state.user); 
+  const userDetails = useSelector((state) => state.user);
   const stripe = useStripe();
   const elements = useElements();
   const [paymentDetails, setPaymentDetails] = useState({
@@ -22,8 +19,9 @@ const BillingForm = ({ setDetailsClicked }) => {
     tokenStripe: "",
   });
   const [cardInputComplete, setCardInputComplete] = useState(false);
-
+  const [saveButtonClicked, setSaveButtonClicked] = useState(false);
   const SaveCardDetails = async () => {
+    setSaveButtonClicked(true);
     try {
       const stripeTokenResponse = await stripe.createToken(
         elements.getElement(CardElement)
@@ -32,12 +30,15 @@ const BillingForm = ({ setDetailsClicked }) => {
 
       setPaymentDetails((prevData) => ({
         ...prevData,
-        tokenStripe:  stripeToken,
+        tokenStripe: stripeToken,
       }));
 
       // const response =  await saveCardDetails(paymentDetails);
       const response = await createCard(stripeToken);
-      console.log(response);
+      if (response.cvc_check === "pass") {
+        setSaveButtonClicked(false);
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error saving card details:", error);
     }
@@ -113,7 +114,21 @@ const BillingForm = ({ setDetailsClicked }) => {
               }
               className={`ease-in duration-300 w-1/4 px-4 py-2 rounded-md bg-brand-color text-slate-300 disabled:bg-gray-500 disabled:cursor-not-allowed`}
             >
-              Save
+              {saveButtonClicked ? (
+                <Spin
+                  indicator={
+                    <LoadingOutlined
+                      style={{
+                        fontSize: 24,
+                      }}
+                      spin
+                      className="!text-slate-300"
+                    />
+                  }
+                />
+              ) : (
+                "Save"
+              )}
             </button>
           </div>
         </form>

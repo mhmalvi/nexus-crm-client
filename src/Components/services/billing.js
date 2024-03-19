@@ -67,6 +67,28 @@ export const createCard = async (stripeToken) => {
     return error.response;
   }
 };
+export const deleteCard = async (cardId) => {
+  const custId = JSON.parse(window.localStorage.getItem("cust_id"));
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+    transformRequest: [(data) => data],
+  };
+
+  try {
+    const result = await axios.delete(
+      `https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const getCustomerDetails = async () => {
   const custId = JSON.parse(window.localStorage.getItem("cust_id"));
@@ -80,6 +102,27 @@ export const getCustomerDetails = async () => {
   try {
     const result = await axios.get(
       `https://api.stripe.com/v1/customers/${custId}`,
+      config
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const updateDefaultCard = async (defaultCard) => {
+  const custId = JSON.parse(window.localStorage.getItem("cust_id"));
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const data = qs.stringify({ default_source: defaultCard });
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://api.stripe.com/v1/customers/${custId}`,
+      data,
       config
     );
     return result;

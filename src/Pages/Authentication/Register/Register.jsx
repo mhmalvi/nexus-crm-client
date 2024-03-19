@@ -1,10 +1,12 @@
-import { Input, Tooltip, message, Alert } from "antd";
+import { Input, Tooltip, message, Alert, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { handleInitialRegistration } from "../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
+
+import { LoadingOutlined } from "@ant-design/icons";
 import "./register.css";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 
@@ -21,6 +23,7 @@ const Register = () => {
   const userDetails = useSelector((state) => state?.user);
   const [unprocessableContent, setUnprocessableContent] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [createButtonClicked, setCreateButtonClicked] = useState(false);
   useEffect(() => {
     if (Storage.getItem("auth_tok")) {
       if (userDetails?.userInfo?.verification_status === 2) {
@@ -49,10 +52,11 @@ const Register = () => {
       console.log(res?.data);
       if (res?.status === 201) {
         // setLoading(false);
-        message.success(`${res?.message}. Please check your email for verification code`);
+        message.success(
+          `${res?.message}. Please check your email for verification code`
+        );
         navigate("/login");
       } else if (res.data.errors.email && res.data.errors.email[0] !== "") {
-        
         setUnprocessableContent(res?.data.errors.email[0]);
       } else if (
         res.data.errors.password &&
@@ -231,7 +235,21 @@ const Register = () => {
                   onClick={registerUser}
                   className="ease-in duration-200 lg:h-full w-full px-4 py-2 hover:text-black disabled:hover:text-slate-300 text-slate-300 font-medium  bg-gradient-to-b disabled:from-[#f5f5f5] from-[#8A7CFD] disabled:to-[#f5f5f5] to-[#2596FB] rounded-md focus:outline-none font-poppins  disabled:cursor-not-allowed"
                 >
-                  Create
+                  {createButtonClicked ? (
+                    <Spin
+                      indicator={
+                        <LoadingOutlined
+                          style={{
+                            fontSize: 24,
+                          }}
+                          spin
+                          className="!text-slate-300"
+                        />
+                      }
+                    />
+                  ) : (
+                    "Create"
+                  )}
                 </button>
                 <h1 className="text-center font-semibold cursor-pointer">
                   Already have an account?{" "}
