@@ -216,8 +216,8 @@ const UserDetails = ({
   };
   const { id } = useParams();
   return (
-    <div className="mt-5 flex flex-grow">
-      <div className="w-full flex flex-grow gap-4">
+    <div className="h-full flex flex-grow">
+      <div className="w-full h-full flex flex-grow gap-4">
         {/* Column 1 */}
         <div className="w-full flex flex-col justify-between items-center gap-4">
           <div className="h-full w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11]">

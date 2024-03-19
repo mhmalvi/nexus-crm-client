@@ -736,8 +736,8 @@ const AdminDashboard = () => {
             setOpenCallCountDetailsModal={setOpenCallCountDetailsModal}
           />
         </Modal>
-        <div className="relative flex flex-col justify-between h-full">
-          <div className="w-full flex justify-between gap-4">
+        <div className="relative flex flex-col justify-start h-full">
+          <div className="w-full h-3/12 flex justify-between gap-4">
             <div className="">
               <Filters
                 layout="Dashboard"
@@ -763,7 +763,7 @@ const AdminDashboard = () => {
               <CountryList table_title="Lead List" />
             </div>
           </div>
-          <div className="w-full">
+          <div className="w-full h-9/12">
             <UpdatedTable
               table_title="Lead List"
               tableHeaders={tableHeaders}

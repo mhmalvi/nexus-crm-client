@@ -129,7 +129,7 @@ const LeadDetails = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col mx-5 justify-center items-center">
+    <div className="min-h-screen h-full flex flex-col justify-center items-center py-8 px-4">
       <div className="w-full">
         <Link to={"/dashboard"}>
           <button
@@ -141,8 +141,8 @@ const LeadDetails = () => {
           </button>
         </Link>
       </div>
-      <div className="h-[85vh] w-full mx-5 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
-        <div className={`flex flex-col `}>
+      <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll">
+        <div className="flex flex-col flex-grow justify-between gap-4 h-full">
           <div className="">
             <LeadStatus
               leadStatus={leadStatusDetails}
@@ -156,7 +156,7 @@ const LeadDetails = () => {
               setSyncTotalPaid={setSyncTotalPaid}
             />
           </div>
-          <div>
+          <div className="h-full ">
             <UserDetails
               leadDetails={leadDetails}
               syncDetails={syncDetails}

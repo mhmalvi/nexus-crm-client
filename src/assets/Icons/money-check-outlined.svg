@@ -1,6 +1,12 @@
-<svg width="27" height="21" viewBox="0 0 27 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1.25" y="1.25" width="24.8136" height="18.2858" rx="3.57613" stroke="currentColor" stroke-width="2.5"/>
-<rect x="16.743" y="6.15266" width="4.32893" height="2.57194" rx="0.471021" stroke="currentColor" stroke-width="2"/>
-<rect x="6.05942" y="9.18783" width="7.24759" height="0.658872" rx="0.329436" stroke="currentColor" stroke-width="2"/>
-<rect x="6.05942" y="13.141" width="15.154" height="0.658872" rx="0.329436" stroke="currentColor" stroke-width="2"/>
+<svg width="37" height="27" viewBox="0 0 37 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1.5636" y="1.20807" width="34.1864" height="25.0342" rx="3.57613" stroke="currentColor"
+        stroke-width="2" />
+    <rect x="22.3236" y="7.12004" width="7.39007" height="4.92671" rx="0.942042" fill="currentColor" />
+    <rect x="7.54358" y="11.574" width="11.0851" height="1.84752" rx="0.923758" fill="currentColor" />
+    <rect x="7.54358" y="17.1162" width="22.1702" height="1.84752" rx="0.923758" fill="currentColor" />
+    <rect x="1.5636" y="1.20807" width="34.1864" height="25.0342" rx="3.57613" stroke="currentColor"
+        stroke-width="2" />
+    <rect x="22.3236" y="7.12004" width="7.39007" height="4.92671" rx="0.942042" fill="currentColor" />
+    <rect x="7.54358" y="11.574" width="11.0851" height="1.84752" rx="0.923758" fill="currentColor" />
+    <rect x="7.54358" y="17.1162" width="22.1702" height="1.84752" rx="0.923758" fill="currentColor" />
 </svg>
