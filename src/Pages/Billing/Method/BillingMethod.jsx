@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Popover } from "antd";
+import { Popover, Spin } from "antd";
 import { useSelector } from "react-redux";
 import BillingForm from "./BillingForm";
 import NoBilling from "./NoBilling";
 import { Elements } from "@stripe/react-stripe-js";
 import Icons from "../../../Components/Shared/Icons";
+import {
+  deleteCard,
+  updateDefaultCard,
+} from "../../../Components/services/billing";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const BillingMethod = ({
   detailsClicked,
@@ -14,13 +19,12 @@ const BillingMethod = ({
   stripePromise,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-
+  console.log(customerDetails);
   const [hasBillingDetails, setHasBillingDetails] = useState(true);
   const [openPopover, setOpenPopover] = useState(false);
+  const [deleteButtonClicked, setDeleteButtonClicked] = useState(false);
+  const [updateButtonClicked, setUpdateButtonClicked] = useState(false);
 
-  const hide = () => {
-    setOpenPopover(false);
-  };
   const handleOpenChange = (newOpen) => {
     setOpenPopover(newOpen);
   };
@@ -32,6 +36,33 @@ const BillingMethod = ({
       setHasBillingDetails(false);
     }
   }, [totalSavedCards.length]);
+
+  const handleDeleteCard = async (cardId) => {
+    setDeleteButtonClicked(true);
+    try {
+      const response = await deleteCard(cardId);
+
+      if (response.deleted === true) {
+        setDeleteButtonClicked(false);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error deleting card:", error);
+    }
+  };
+
+  const handleDefaultCard = async (cardId) => {
+    setUpdateButtonClicked(true);
+    try {
+      const response = await updateDefaultCard(cardId);
+      if (response) {
+        setUpdateButtonClicked(false);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error deleting card:", error);
+    }
+  };
 
   return (
     <>
@@ -89,11 +120,39 @@ const BillingMethod = ({
                       <Popover
                         content={
                           <div className="flex gap-2">
-                            <button className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100">
-                              Update
+                            <button
+                              disabled={
+                                items.id === customerDetails.default_source &&
+                                true
+                              }
+                              className="disabled:opacity-20 px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100"
+                              onClick={() => {
+                                handleDefaultCard(items.id);
+                              }}
+                            >
+                              Set to Default
                             </button>
-                            <button className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100">
-                              Delete
+                            <button
+                              className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100"
+                              onClick={() => {
+                                handleDeleteCard(items.id);
+                              }}
+                            >
+                              {deleteButtonClicked ? (
+                                <Spin
+                                  indicator={
+                                    <LoadingOutlined
+                                      style={{
+                                        fontSize: 24,
+                                      }}
+                                      spin
+                                      className="!text-slate-300"
+                                    />
+                                  }
+                                />
+                              ) : (
+                                "Delete"
+                              )}
                             </button>
                           </div>
                         }
@@ -116,7 +175,7 @@ const BillingMethod = ({
 
             {/* ADD NEW CARD */}
             <div
-              className={`flex flex-grow justify-center items-center relative w-3/12 h-1/3 rounded-md shadow-md cursor-pointer ease-in duration-200 border ring-inset ${
+              className={`flex justify-center items-center relative w-3/12 h-1/3 rounded-md shadow-md cursor-pointer ease-in duration-200 border ring-inset ${
                 colorMode ? "border-slate-300" : "border-gray-800"
               }`}
               onClick={() => {

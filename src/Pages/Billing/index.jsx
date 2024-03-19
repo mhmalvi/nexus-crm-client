@@ -6,6 +6,7 @@ import {
   getCustomerDetails,
 } from "../../Components/services/billing";
 import { loadStripe } from "@stripe/stripe-js";
+import Packages from "./Packages";
 
 const Billing = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -74,6 +75,26 @@ const Billing = () => {
             >
               Billing History
             </button>
+            <button
+              className={`${
+                colorMode
+                  ? `hover:text-white ${
+                      activeItem === "Packages"
+                        ? "text-white"
+                        : "text-slate-300  "
+                    }`
+                  : `hover:text-gray-800 ${
+                      activeItem === "Packages"
+                        ? "text-gray-800"
+                        : "text-gray-500"
+                    }`
+              } px-4 text-base`}
+              onClick={() => {
+                setActiveItem("Packages");
+              }}
+            >
+              Packages
+            </button>
           </div>
         </div>
         {/* MAIN BOX */}
@@ -88,6 +109,7 @@ const Billing = () => {
             />
           )}
           {activeItem === "Billing History" && <h1>Billing History</h1>}
+          {activeItem === "Packages" && <Packages />}
         </div>
       </div>
     </div>
