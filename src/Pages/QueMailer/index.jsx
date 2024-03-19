@@ -126,10 +126,10 @@ const QueMailer = () => {
     }
   }, [navigate, userDetails]);
   return (
-    <div className="flex items-start justify-center w-full h-screen py-8 px-5">
+    <div className="flex items-start justify-center w-full h-screen py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
         {/* MENU BAR */}
-        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
+        <div className="flex justify-between w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] py-4">
           <div className="flex gap-4">
             <button
               className={`${

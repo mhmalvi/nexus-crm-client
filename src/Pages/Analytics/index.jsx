@@ -110,19 +110,10 @@ const Overview = () => {
   //   takeScreenShot(pdfRef.current).then(download);
   // };
 
-
   return (
-    <div className="h-screen flex justify-center items-center">
-      {/* <button
-        className="text-black bg-white px-2 py-1 mb-5 rounded-full cursor-pointer font-semibold font-[Poppins] border border-black text-xs"
-        onClick={getImage}
-      >
-        Capture Report
-      </button> */}
-      <div className="h-[90vh] w-full mx-5 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
-        <div
-          className="flex flex-col gap-4 justify-between h-full"
-        >
+    <div className="h-screen flex justify-center items-center py-8">
+      <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+        <div className="flex flex-col gap-4 justify-between h-full">
           <Summary
             activeCompany={activeCompany}
             companyEmployees={companyEmployees}

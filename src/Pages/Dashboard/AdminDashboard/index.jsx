@@ -716,8 +716,8 @@ const AdminDashboard = () => {
   console.log(notifications);
 
   return (
-    <div className="w-full max-h-screen flex flew-grow 2xl:gap-4 gap-2 h-[90vh] ">
-      <div className="w-full border-black rounded-md p-4 max-h-[90vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
+    <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8">
+      <div className="w-full border-black rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
           onCancel={() => setIsAddLeadFormOpen(false)}
