@@ -22,6 +22,7 @@ import CampaignsRevenue from "./Types/CampaignsRevenue";
 import LeadQualityRatio from "./Types/LeadQualityRatio";
 import AreaWiseLead from "./Types/AreaWiseLead";
 import LeadStatusSummary from "./Types/LeadStatusSummary";
+import Loading from "../../Components/Shared/Loader";
 
 const Overview = () => {
   document.title = "Overview | Queleads CRM";
@@ -31,6 +32,8 @@ const Overview = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
+  const openSideBar = useSelector((state) => state?.user)?.openSideBar;
+  const [showAnalytics, setShowAnalytics] = useState(true);
   const [companyEmployees, setCompanyEmployees] = useState();
   const [activeCompany, setActiveCompanies] = useState();
   const [fullscreen, setFullScreen] = useState("");
@@ -79,111 +82,94 @@ const Overview = () => {
     })();
   }, [activeCompany, dispatch, userDetails?.userInfo]);
 
-  // useEffect(() => {
-  //   if (
-  //     dayjs().date() === 1 &&
-  //     localStorage.getItem("monthly_report") !== `${dayjs().$D}-${dayjs().$M}`
-  //   ) {
-  //     setTimeout(() => {
-  //       getImage();
-  //     }, 10000);
-  //     localStorage.setItem("monthly_report", `${dayjs().$D}-${dayjs().$M}`);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    setShowAnalytics(false);
+    const timeoutId = setTimeout(() => {
+      setShowAnalytics(true);
+    }, 500);
 
-  // For Generate Rport and Download
-  // const download = (
-  //   image,
-  //   {
-  //     name = `Overview (${dayjs().$D}-${dayjs().$M + 1}-${dayjs().$y})`,
-  //     extension = "jpg",
-  //   } = {}
-  // ) => {
-  //   const a = document.createElement("a");
-  //   a.href = image;
-  //   a.download = createFileName(extension, name);
-  //   a.click();
-  // };
-
-  // const getImage = () => {
-  //   takeScreenShot(pdfRef.current).then(download);
-  // };
+    return () => clearTimeout(timeoutId);
+  }, [openSideBar]);
 
   return (
     <div className="h-screen flex justify-center items-center py-8">
       <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
-        <div className="flex flex-col gap-4 justify-between h-full">
-          <Summary
-            activeCompany={activeCompany}
-            companyEmployees={companyEmployees}
-            setActiveCompanies={setActiveCompanies}
-          />
-
-          <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll h-4/5 w-full rounded-md ">
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <IncomePerDay
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <MonthlyRevenue
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <LeadConversionRatio
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <CampaignDetails
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <CampaignsRevenue
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <LeadQualityRatio
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <AreaWiseLead
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <LeadStatusSummary
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
-            </div>
-            <div className="flex-auto flex-shrink-0 w-1/4">
-              <SalesAnalytics
-                activeCompany={activeCompany}
-                fullscreen={fullscreen}
-                setFullScreen={setFullScreen}
-              />
+        {showAnalytics ? (
+          <div className="flex flex-col gap-4 justify-between h-full">
+            <Summary
+              activeCompany={activeCompany}
+              companyEmployees={companyEmployees}
+              setActiveCompanies={setActiveCompanies}
+            />
+            <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll h-4/5 w-full rounded-md ">
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <IncomePerDay
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <MonthlyRevenue
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <LeadConversionRatio
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <CampaignDetails
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <CampaignsRevenue
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <LeadQualityRatio
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <AreaWiseLead
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <LeadStatusSummary
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
+              <div className="flex-auto flex-shrink-0 w-1/4">
+                <SalesAnalytics
+                  activeCompany={activeCompany}
+                  fullscreen={fullscreen}
+                  setFullScreen={setFullScreen}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center gap-4 overflow-y-scroll h-4/5 w-full rounded-md ">
+            <Loading />
+          </div>
+        )}
       </div>
     </div>
   );
