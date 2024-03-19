@@ -109,14 +109,7 @@ const Overview = () => {
   // const getImage = () => {
   //   takeScreenShot(pdfRef.current).then(download);
   // };
-  useEffect(() => {
-    if (
-      userDetails?.userInfo?.verification_status === 1 &&
-      Storage.getItem("auth_tok")
-    ) {
-      navigate("/setup-your-profile");
-    }
-  }, [navigate, userDetails]);
+
 
   return (
     <div className="h-screen flex justify-center items-center">
