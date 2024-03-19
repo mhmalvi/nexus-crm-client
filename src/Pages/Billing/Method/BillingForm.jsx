@@ -3,7 +3,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
 import { createCard } from "../../../Components/services/billing";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 
 const BillingForm = ({ setDetailsClicked }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -40,6 +40,8 @@ const BillingForm = ({ setDetailsClicked }) => {
         window.location.reload();
       }
     } catch (error) {
+      setSaveButtonClicked(false);
+      message.error(error);
       console.error("Error saving card details:", error);
     }
   };

@@ -23,7 +23,7 @@ const BillingMethod = ({
   const [hasBillingDetails, setHasBillingDetails] = useState(true);
   const [openPopover, setOpenPopover] = useState(false);
   const [deleteButtonClicked, setDeleteButtonClicked] = useState(false);
-  const [updateButtonClicked, setUpdateButtonClicked] = useState(false);
+  const [defaultButtonClicked, setDefaultButtonClicked] = useState(false);
 
   const handleOpenChange = (newOpen) => {
     setOpenPopover(newOpen);
@@ -52,11 +52,11 @@ const BillingMethod = ({
   };
 
   const handleDefaultCard = async (cardId) => {
-    setUpdateButtonClicked(true);
+    setDefaultButtonClicked(true);
     try {
       const response = await updateDefaultCard(cardId);
       if (response) {
-        setUpdateButtonClicked(false);
+        setDefaultButtonClicked(false);
         window.location.reload();
       }
     } catch (error) {
@@ -129,7 +129,21 @@ const BillingMethod = ({
                                 handleDefaultCard(items.id);
                               }}
                             >
-                              Set to Default
+                              {defaultButtonClicked ? (
+                                <Spin
+                                  indicator={
+                                    <LoadingOutlined
+                                      style={{
+                                        fontSize: 24,
+                                      }}
+                                      spin
+                                      className="!text-slate-300"
+                                    />
+                                  }
+                                />
+                              ) : (
+                                "Set to Default"
+                              )}
                             </button>
                             <button
                               className="px-4 py-2 border border-brand-color rounded-md text-slate-300 hover:scale-95 ease-in duration-100"
