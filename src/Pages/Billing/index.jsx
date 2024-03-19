@@ -57,7 +57,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl font-light`}
+              } px-4 text-xl font-light`}
               onClick={() => {
                 setActiveItem("Method");
               }}
@@ -77,7 +77,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl font-light`}
+              } px-4 text-xl font-light`}
               onClick={() => {
                 setActiveItem("Billing History");
               }}
@@ -97,7 +97,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl font-light`}
+              } px-4 text-xl font-light`}
               onClick={() => {
                 setActiveItem("Packages");
               }}

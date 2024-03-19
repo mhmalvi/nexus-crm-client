@@ -158,7 +158,7 @@ const UpdatedTable = ({
         <h1
           className={`text-2xl ${
             colorMode ? "text-slate-300" : "text-gray-800"
-          } px-3 m-0 font-poppins`}
+          } px-0 m-0 font-poppins`}
         >
           {table_title}
         </h1>
@@ -335,7 +335,6 @@ const UpdatedTable = ({
       <div className="w-full pt-3">
         <Table
           locale={locale}
-          virtual
           columns={tableHeaders}
           className={`${colorMode ? "updatedTableDark" : "updatedTableLight"}`}
           dataSource={Array.isArray(list) ? list : ""}

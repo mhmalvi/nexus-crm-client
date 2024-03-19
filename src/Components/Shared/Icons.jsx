@@ -1,11 +1,14 @@
 import { ReactComponent as CompanyLogo } from "../../assets/Icons/QQ_logo.svg";
 import { ReactComponent as Dashboard } from "../../assets/Icons/dashboard.svg";
 import { ReactComponent as Chart } from "../../assets/Icons/chart.svg";
+import { ReactComponent as SidebarMail } from "../../assets/Icons/mail-sidebar.svg";
+import { ReactComponent as Courses } from "../../assets/Icons/courses.svg";
+import { ReactComponent as Campaigns } from "../../assets/Icons/campaigns.svg";
+import { ReactComponent as Payment } from "../../assets/Icons/payment.svg";
+import { ReactComponent as MoneyCheck } from "../../assets/Icons/money-check-outlined.svg";
 import { ReactComponent as Message } from "../../assets/Icons/message.svg";
 import { ReactComponent as Excel } from "../../assets/Icons/excel.svg";
 import { ReactComponent as Settings } from "../../assets/Icons/settings.svg";
-import { ReactComponent as Payment } from "../../assets/Icons/payment.svg";
-import { ReactComponent as Campaigns } from "../../assets/Icons/campaigns.svg";
 import { ReactComponent as CheckOut } from "../../assets/Icons/checkout.svg";
 import { ReactComponent as PeopleRounded } from "../../assets/Icons/people-rounded.svg";
 import { ReactComponent as MessageRounded } from "../../assets/Icons/message-rounded.svg";
@@ -27,7 +30,6 @@ import { ReactComponent as LineChart } from "../../assets/Icons/chart-line-solid
 import { ReactComponent as PeopleGroup } from "../../assets/Icons/people-group-solid.svg";
 import { ReactComponent as CalendarWeek } from "../../assets/Icons/calendar-week-solid.svg";
 import { ReactComponent as CalendarMonth } from "../../assets/Icons/calendar-days-solid.svg";
-import { ReactComponent as MoneyCheck } from "../../assets/Icons/money-check-outlined.svg";
 import { ReactComponent as PhoneVolume } from "../../assets/Icons/phone-volume.svg";
 import { ReactComponent as Alert } from "../../assets/Icons/alert.svg";
 import { ReactComponent as Cross } from "../../assets/Icons/cross.svg";
@@ -67,13 +69,11 @@ import { ReactComponent as InventoryMgt } from "../../assets/Icons/inventory-mgt
 import { ReactComponent as DownArrow } from "../../assets/Icons/down-arrow.svg";
 import { ReactComponent as Gmail } from "../../assets/Icons/mail.svg";
 import { ReactComponent as Calender } from "../../assets/Icons/calender.svg";
-import { ReactComponent as Courses } from "../../assets/Icons/courses.svg";
 import { ReactComponent as Bookmark } from "../../assets/Icons/bookmark.svg";
 import { ReactComponent as Flag } from "../../assets/Icons/flag.svg";
 import { ReactComponent as Download } from "../../assets/Icons/down-arrow-download.svg";
 import { ReactComponent as Volume } from "../../assets/Icons/volume.svg";
 import { ReactComponent as Correct } from "../../assets/Icons/correct.svg";
-import { ReactComponent as SidebarMail } from "../../assets/Icons/mail-sidebar.svg";
 import { ReactComponent as LeftArrow } from "../../assets/Icons/leftArrow.svg";
 import { ReactComponent as Fullscreen } from "../../assets/Icons/Fullscreen.svg";
 import { ReactComponent as Minimize } from "../../assets/Icons/Minimize.svg";
@@ -167,7 +167,7 @@ const Icons = {
   WelcomeStart,
   WelcomeEnd,
   Billing,
-  EmptyBilling
+  EmptyBilling,
 };
 
 export default Icons;
