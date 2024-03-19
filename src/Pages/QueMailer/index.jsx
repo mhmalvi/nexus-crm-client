@@ -140,7 +140,7 @@ const QueMailer = () => {
                   : `hover:text-gray-800  ${
                       activeItem === "Email" ? "text-gray-800" : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Email");
               }}
@@ -160,7 +160,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Email History");
               }}
@@ -173,7 +173,7 @@ const QueMailer = () => {
                 colorMode
                   ? "text-slate-600 disabled:text-slate-500"
                   : "text-gray-300 disabled:text-gray-500"
-              } px-4 text-2xl cursor-not-allowed`}
+              } px-4 text-2xl font-light cursor-not-allowed`}
               onClick={() => {
                 setActiveItem("Statistics");
               }}
@@ -193,7 +193,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Scheduling");
               }}
@@ -213,7 +213,7 @@ const QueMailer = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Email Settings");
               }}

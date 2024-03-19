@@ -24,9 +24,11 @@ const Billing = () => {
     (async () => {
       const responseCard = await getCardDetails();
       const responseData = responseCard.data;
-    
+
       if (responseData && responseData.length > 0) {
-        const cardsArray = Array.isArray(responseData) ? responseData : [responseData];
+        const cardsArray = Array.isArray(responseData)
+          ? responseData
+          : [responseData];
         setTotalSavedCards(cardsArray);
       } else {
         setTotalSavedCards([]);
@@ -55,7 +57,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Method");
               }}
@@ -75,7 +77,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Billing History");
               }}
@@ -95,7 +97,7 @@ const Billing = () => {
                         ? "text-gray-800"
                         : "text-gray-500"
                     }`
-              } px-4 text-2xl`}
+              } px-4 text-2xl font-light`}
               onClick={() => {
                 setActiveItem("Packages");
               }}
