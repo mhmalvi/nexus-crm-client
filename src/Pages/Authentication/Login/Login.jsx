@@ -114,9 +114,9 @@ const Login = () => {
         ) {
           setAddBookMarkOpen(true);
         } else {
-          if (userDetails?.userInfo?.verification_status === 2) {
+          if (loginResponse.data.data.verification_status === 2) {
             navigate("/dashboard");
-          } else if (userDetails?.userInfo?.verification_status === 1) {
+          } else if (loginResponse.data.data.verification_status === 1) {
             navigate("/setup-your-profile");
           } else {
             message.warning("Please check your email for a verification link.");
@@ -132,7 +132,6 @@ const Login = () => {
       message.error("An error occurred during login.");
     }
   };
-
   const handleOneClickLogin = async (credentials) => {
     try {
       setLoginClicked(true);
@@ -158,13 +157,15 @@ const Login = () => {
         dispatch(setLoader(false));
         message.success("Successfully logged in.");
         if (Storage.getItem("auth_tok")) {
-          if (userDetails?.userInfo?.verification_status === 2) {
+          if (loginResponse.data.data.verification_status === 2) {
             navigate("/dashboard");
-          } else if (userDetails?.userInfo?.verification_status === 1) {
+          } else if (loginResponse.data.data.verification_status === 1) {
             navigate("/setup-your-profile");
           } else {
             message.warning("Please check your email for a verification link.");
           }
+        } else {
+          alert("No Token");
         }
       } else {
         setLoginClicked(false);
@@ -178,7 +179,6 @@ const Login = () => {
       message.error("An error occurred during login.");
     }
   };
-
   const handleRememberMe = useCallback(
     (e) => {
       if (e.target.checked) {

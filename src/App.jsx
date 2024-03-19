@@ -45,7 +45,7 @@ import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
 
 function App() {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-  
+
   const [state, setState] = useState("Active");
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
@@ -122,7 +122,7 @@ function App() {
           <Route path="billing" element={<Billing />} />
           {/* <Route path="mail" element={<GmailModule />} /> */}
         </Route>
-          <Route path="setup-your-profile" element={<MultipartForm />} />
+        <Route path="setup-your-profile" element={<MultipartForm />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="requisition" element={<RequisitionForm />} />
