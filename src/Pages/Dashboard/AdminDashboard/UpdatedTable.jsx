@@ -153,9 +153,7 @@ const UpdatedTable = ({
     ),
   };
   return (
-    <div
-      className={`!rounded-md ${table_title === "Leads" ? "mt-0" : "mt-12"}`}
-    >
+    <div className={`!rounded-md py-4`}>
       <div className="flex justify-between items-center">
         <h1
           className={`text-2xl ${

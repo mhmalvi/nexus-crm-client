@@ -31,8 +31,8 @@ const Courses = () => {
   }, [userDetails]);
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="h-[90vh] w-full mx-5 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
+    <div className="h-screen flex justify-center items-center py-8">
+      <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
         <Modal
           className="courseModal"
           visible={courseDetailsOpen}

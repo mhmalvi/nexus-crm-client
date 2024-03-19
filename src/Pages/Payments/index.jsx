@@ -339,8 +339,8 @@ const Payment = () => {
   }, [allPayments, selectedDay, selectedMonth, selectedYear]);
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="flex h-[90vh] w-full rounded-md px-5 shadow-md overflow-hidden gap-4">
+    <div className="h-screen flex justify-center items-center py-8">
+      <div className="flex gap-4 w-full h-full mx-5 rounded-md overflow-hidden">
         <div className="w-3/4 rounded-md backdrop-blur-2xl bg-[#ffffff11] h-full px-5 ">
           <UpdatedTable
             table_title="Payment History"
