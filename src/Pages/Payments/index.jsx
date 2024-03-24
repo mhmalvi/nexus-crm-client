@@ -341,7 +341,7 @@ const Payment = () => {
   return (
     <div className="h-screen flex justify-center items-center py-8">
       <div className="flex gap-4 w-full h-full mx-5 rounded-md overflow-hidden">
-        <div className="w-3/4 rounded-md backdrop-blur-2xl bg-[#ffffff11] h-full px-5 ">
+        <div className="w-3/4 rounded-md backdrop-blur-2xl bg-[#ffffff11] h-full px-4 ">
           <UpdatedTable
             table_title="Payment History"
             tableHeaders={tableHeaders}

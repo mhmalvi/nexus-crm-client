@@ -303,7 +303,7 @@ const QueMailer = () => {
             </div>
           ))}
         {activeItem === "Email History" && (
-          <div className=" rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
+          <div className=" rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-4 !z-4 h-full overflow-hidden">
             <EmailHistory
               emailSessionRow={emailSessionRow}
               setCurrentPage={setCurrentPage}
@@ -327,7 +327,7 @@ const QueMailer = () => {
         )}
 
         {activeItem === "Scheduling" && (
-          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-8 !z-4 h-full overflow-hidden">
+          <div className="w-full rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] h-full p-4 !z-4 h-full overflow-hidden">
             <Scheduling />
           </div>
         )}

@@ -53,6 +53,7 @@
     "react-scroll-to-bottom": "^4.2.0",
     "react-skeleton-loader": "^1.0.4",
     "react-slick": "^0.29.0",
+    "react-sound": "^1.2.0",
     "react-stars": "^2.2.5",
     "reactour": "^1.19.2",
     "recharts": "^2.1.13",
