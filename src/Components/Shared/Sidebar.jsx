@@ -190,9 +190,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
               {active === "dashboard" && (
                 <div
                   className={`absolute absolute right-0 active-option ${
-                    colorMode
-                      ? "text-white bg-white"
-                      : "text-black bg-black"
+                    colorMode ? "text-white bg-white" : "text-black bg-black"
                   }`}
                 >
                   |
@@ -244,9 +242,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 {active === "analytics" && (
                   <div
                     className={`absolute right-0 active-option ${
-                      colorMode
-                        ? "text-white bg-white"
-                        : "text-black bg-black"
+                      colorMode ? "text-white bg-white" : "text-black bg-black"
                     }`}
                   >
                     |
@@ -298,9 +294,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 {active === "que-mailer" && (
                   <div
                     className={`absolute right-0 active-option ${
-                      colorMode
-                        ? "text-white bg-white"
-                        : "text-black bg-black"
+                      colorMode ? "text-white bg-white" : "text-black bg-black"
                     }`}
                   >
                     |
@@ -443,9 +437,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                         ? "text-[#B3B3B3]"
                         : "text-gray-800"
                     } ease-in duration-300 flex items-center justify-between 2xl:text-base text-sm  cursor-pointer py-1 ${
-                      colorMode
-                        ? "hover:text-white"
-                        : "hover:text-black"
+                      colorMode ? "hover:text-white" : "hover:text-black"
                     }`}
                     onClick={() => setActive("payments")}
                   >
@@ -740,9 +732,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 {active === "courseManagement" && (
                   <div
                     className={`absolute right-0 active-option ${
-                      colorMode
-                        ? "text-white bg-white"
-                        : "text-black bg-black"
+                      colorMode ? "text-white bg-white" : "text-black bg-black"
                     }`}
                   >
                     |
@@ -768,9 +758,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
                 {active === "paymentSlip" && (
                   <div
                     className={`absolute right-0 active-option ${
-                      colorMode
-                        ? "text-white bg-white"
-                        : "text-black bg-black"
+                      colorMode ? "text-white bg-white" : "text-black bg-black"
                     }`}
                   >
                     |
@@ -780,7 +768,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             </div>
           )}
 
-          {/* Logout */}
+          {/* LOGOUT */}
           <div
             className=" flex items-center justify-center 2xl:text-base text-sm  cursor-pointer"
             onClick={logoutHandler}

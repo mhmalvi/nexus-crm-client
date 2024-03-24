@@ -87,6 +87,10 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
+  const subscription = userDetails.userInfo.package;
+  const endDate =
+    subscription === "trial" &&
+    new Date(userDetails.userInfo.end_date.date || null);
 
   const handleViewed = async () => {
     try {
@@ -713,10 +717,49 @@ const AdminDashboard = () => {
       socket.disconnect();
     };
   }, [dispatch, socket, userDetails.userInfo.id, setViewedData]);
-  console.log(notifications);
 
   return (
-    <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8">
+    <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8 relative">
+      {subscription === "trial" ? (
+        <div className="absolute flex flex-col items-center justify-center z-40 top-0 w-full">
+          <div
+            className={`flex gap-4 items-center ${
+              colorMode ? "bg-brand-color" : "bg-gray-800"
+            } rounded-b-md`}
+          >
+            <h1
+              className={`m-0 py-2 px-4 border-r border-slate-300 text-xs font-semibold text-slate-300`}
+            >
+              Trial exprires on
+            </h1>
+            <div className="flex gap-2 ">
+              <h1 className={`m-0 p-0 text-xs font-semibold text-slate-300`}>
+                Date:
+              </h1>
+              <h1 className={`m-0 p-0 text-xs font-semibold text-red-300`}>
+                {endDate.getUTCFullYear() +
+                  "-" +
+                  endDate.getUTCMonth() +
+                  "-" +
+                  endDate.getDate()}
+              </h1>
+            </div>
+            <div className="flex gap-2 py-2 pr-4">
+              <h1 className={`m-0 p-0 text-xs font-semibold text-slate-300`}>
+                Time:
+              </h1>
+              <h1 className={`m-0 p-0 text-xs font-semibold text-red-300 `}>
+                {endDate.getHours() % 12 || 12}
+                <span className="animate-pulse text-slate-300"> : </span>
+                {endDate.getMinutes()} {endDate.getHours() < 12 ? "AM" : "PM"}
+              </h1>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="w-full border-black rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}

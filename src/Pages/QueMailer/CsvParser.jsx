@@ -116,7 +116,7 @@ const CSVParser = ({
         setCSVFileName(file.name);
         const headerRow = parsedData.length > 0 ? parsedData[0] : [];
         setHeaderData(headerRow);
-        console.log(headerRow)
+        console.log(headerRow);
         const dataRows = parsedData.slice(1).filter((row) => {
           return row.some((cell) => {
             return typeof cell === "string" && cell.trim() !== "";

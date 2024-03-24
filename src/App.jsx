@@ -92,13 +92,7 @@ function App() {
   });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
-    <div
-      className={`${
-        colorMode
-          ? "bg-gradient-to-b from-[#140424] via-[#140424] to-[#0d0d0d]"
-          : "light-background"
-      }`}
-    >
+    <div className={`${colorMode ? "dark-background" : "light-background"}`}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
