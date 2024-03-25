@@ -212,3 +212,26 @@ export const getSubscriptionDetails = async (subID) => {
     return error.response;
   }
 };
+
+export const getCustomerTransactions = async () => {
+  const custId = JSON.parse(window.localStorage.getItem("cust_id"));
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://crm-payment.queleadscrm.com/api/get-customer-transactions`,
+      {
+        customer_id: custId,
+      },
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
