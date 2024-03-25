@@ -27,7 +27,7 @@ const BillingMethod = ({
   const handleOpenChange = (newOpen) => {
     setOpenPopover(newOpen);
   };
-  console.log(totalSavedCards);
+  
   useEffect(() => {
     if (totalSavedCards.length >= 1) {
       setHasBillingDetails(true);
@@ -40,7 +40,6 @@ const BillingMethod = ({
     setDeleteButtonClicked(true);
     try {
       const response = await deleteCard(cardId);
-
       if (response.deleted === true) {
         setDeleteButtonClicked(false);
         window.location.reload();
@@ -62,26 +61,27 @@ const BillingMethod = ({
       console.error("Error deleting card:", error);
     }
   };
+
   return (
     <>
       {detailsClicked.screen === "default" ? (
         hasBillingDetails ? (
-          <div className="flex flex-wrap gap-8 w-full">
+          <div className="flex flex-wrap items-center justify-around gap-8">
             {/* MAP BILLING DETAILS HERE */}
             {totalSavedCards.length > 0 &&
               totalSavedCards.map((items, index) => {
                 return (
                   <div
                     key={index}
-                    className={`relative w-[26vw] rounded-md h-2/6 hover:border ${
+                    className={`relative w-[26vw] rounded-md h-2/6 border ${
                       colorMode
-                        ? "hover:border-slate-300 bg-gradient-to-r from-black to-gray-900"
-                        : "hover:border-gray-800 bg-gradient-to-r from-sky-300 to-purple-300"
-                    }  flex flex-col items-start gap-1 justify-around shadow-md cursor-pointer ease-in duration-100 p-8`}
+                        ? "hover:border-slate-300 bg-gradient-to-r from-black to-gray-900 border-slate-700"
+                        : "hover:border-gray-800 bg-gradient-to-r from-sky-300 to-purple-300 border-slate-400"
+                    }  flex flex-col items-start justify-center shadow-md cursor-pointer ease-in duration-100 px-4 py-8`}
                   >
-                    <div className="w-full flex items-center justify-between">
+                   <div className="w-full flex items-center justify-between">
                       <h1
-                        className={`m-0 p-0 2xl:text-2xl text-sm font-semibold ${
+                        className={`m-0 p-0 2xl:text-xl text-sm font-semibold ${
                           colorMode ? "text-slate-300" : "text-gray-800"
                         }`}
                       >
@@ -150,7 +150,7 @@ const BillingMethod = ({
                           >
                             <Icons.Edit className={`text-slate-300`} />
                             {items.id === customerDetails.default_source && (
-                              <p className="m-0 px-2 2xl:py-2 py-1 h-full text-slate-300">
+                              <p className="m-0 px-2 h-full text-slate-300">
                                 Default
                               </p>
                             )}
@@ -159,7 +159,7 @@ const BillingMethod = ({
                       </div>
                     </div>
                     <img
-                      className="2xl:my-2 2xl:w-12 2xl:h-12 w-8 h-8"
+                      className="w-12"
                       alt="Icons8 flat sim card chip"
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Icons8_flat_sim_card_chip.svg/512px-Icons8_flat_sim_card_chip.svg.png"
                     ></img>
@@ -172,7 +172,7 @@ const BillingMethod = ({
                         Card Number
                       </h1>
                       <h1
-                        className={`m-0 p-0 2xl:text-4xl text-2xl flex justify-around ${
+                        className={`m-0 p-0 2xl:text-2xl text-xl flex justify-around ${
                           colorMode ? "text-gray-400" : "text-gray-800"
                         }`}
                       >
@@ -191,7 +191,7 @@ const BillingMethod = ({
                           Name
                         </h1>
                         <h1
-                          className={`m-0 p-0 2xl:text-lg ${
+                          className={`m-0 p-0 text-xs ${
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
@@ -200,14 +200,14 @@ const BillingMethod = ({
                       </div>
                       <div className="flex flex-col">
                         <h1
-                          className={`m-0 p-0 uppercase 2xl:text-sm text-xs ${
+                          className={`m-0 p-0 uppercase text-base ${
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
                           Country
                         </h1>
                         <h1
-                          className={`m-0 p-0 2xl:text-lg ${
+                          className={`m-0 p-0 text-xs ${
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
@@ -216,21 +216,21 @@ const BillingMethod = ({
                       </div>
                       <div className="flex flex-col">
                         <h1
-                          className={`m-0 p-0 uppercase 2xl:text-sm text-xs ${
+                          className={`m-0 p-0 uppercase text-base ${
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
                           Valid till
                         </h1>
                         <h1
-                          className={`m-0 p-0 2xl:text-xl flex justify-around ${
+                          className={`m-0 p-0 text-xs flex justify-around ${
                             colorMode ? "text-gray-400" : "text-gray-800"
                           }`}
                         >
                           {items.exp_month} / {items.exp_year}
                         </h1>
                       </div>
-                    </div>
+                    </div> 
                   </div>
                 );
               })}
@@ -260,6 +260,7 @@ const BillingMethod = ({
               </div>
             </div>
           </div>
+          
         ) : (
           <NoBilling setDetailsClicked={setDetailsClicked} />
         )

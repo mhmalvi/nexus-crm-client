@@ -8,6 +8,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import Packages from "./Packages";
 import Superadminview from "./Superadminview";
+import BillingHistory from "./History/BillingHistory";
 
 const Billing = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -124,7 +125,7 @@ const Billing = () => {
                 customerDetails={customerDetails}
               />
             )}
-            {activeItem === "Billing History" && <h1>Billing History</h1>}
+            {activeItem === "Billing History" && <BillingHistory/>}
             {activeItem === "Packages" && <Packages />}
           </div>
         </div>

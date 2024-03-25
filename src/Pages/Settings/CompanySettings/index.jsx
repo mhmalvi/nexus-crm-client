@@ -167,7 +167,7 @@ const CompanySettings = () => {
   };
 
   return (
-    <div className="flex gap-4 w-full h-full mx-5 rounded-md shadow-md  overflow-hidden">
+    <div className="flex gap-4 w-full h-full mx-5 rounded-md overflow-hidden">
       <div className="w-5/12 flex flex-col justify-start items-center h-full gap-4 rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-hidden">
         <div className="relative w-full flex gap-4 items-start justify-between">
           <div className="flex">
