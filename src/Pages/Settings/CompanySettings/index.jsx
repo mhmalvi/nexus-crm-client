@@ -1,4 +1,4 @@
-import { message, Upload } from "antd";
+import { Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import companyIcon from "../../../assets/Images/company_icon.png";
@@ -15,6 +15,7 @@ import Icons from "../../../Components/Shared/Icons";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader, updateFbToken } from "../../../features/user/userSlice";
 import SalesAdmins from "./SalesAdmins";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const CompanySettings = () => {
   const dispatch = useDispatch();
@@ -117,8 +118,7 @@ const CompanySettings = () => {
         Storage.setItem("fac_t", companyDetails?.fb_ac_credential);
         dispatch(updateFbToken(companyDetails?.fb_ac_credential));
       }
-
-      message.success("Company Details updated Successfully");
+successNotification("Company details updated successfully.");
     }
   };
 

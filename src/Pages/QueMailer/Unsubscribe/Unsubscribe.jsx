@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { unsubscribeFromEmail, unsubscribeFromQueLeadsMail } from "../../../Components/services/que-mail";
-import { message } from "antd";
 import { useSelector } from "react-redux";
+import { errorNotification, successNotification } from "../../../Components/Shared/Toast";
 
 const Unsubscribe = () => {
   
@@ -13,16 +13,16 @@ const Unsubscribe = () => {
     if (userDetails?.role_id === 1) {
       const res = await unsubscribeFromEmail(email);
       if (res?.status === 201) {
-          message.success("You have been successfully unsubscribed");
+        successNotification("You have been successfully unsubscribed.");
       } else {
-          message.error(res?.data?.message);
+        errorNotification(res?.data?.message);
       }
   } else {
       const res = await unsubscribeFromQueLeadsMail(email);
       if (res?.status === 201) {
-          message.success("You have been successfully unsubscribed");
+        successNotification("You have been successfully unsubscribed.");
       } else {
-          message.error(res?.data?.message);
+        errorNotification(res?.data?.message);
       }
   }
   };

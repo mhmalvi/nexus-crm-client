@@ -16,7 +16,7 @@
   border-radius: 8px !important;
   overflow: hidden;
   backdrop-filter: blur(40px);
-  background-color: #ffffff11;
+  background-color: transparent;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .emailTableLight .ant-table {
@@ -57,7 +57,7 @@
   line-height: 100%;
   color: #cbd5e1 !important;
   border-bottom: 1px solid #c0c0c02f !important;
-  background: #ffffff3f !important;
+  background: #1f2937 !important;
 }
 
 .emailTableDark .ant-table-tbody tr td {
@@ -75,9 +75,9 @@
   /* background-color: #ffffffaf; */
 }
 .emailTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  /* backdrop-filter: blur(8px); */
+  background-color: #1f2937 !important;
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); */
   color: #cbd5e1;
 }
 .emailTableDark .ant-pagination {
@@ -86,8 +86,7 @@
   align-items: center;
 }
 .emailTableDark .ant-pagination li {
-  border: 0px;
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
 }
 .emailTableDark .ant-pagination li a {
@@ -96,6 +95,7 @@
 }
 .emailTableDark .ant-pagination .ant-pagination-item-active {
   border: 1px solid #cbd5e1;
+  background-color: #0000007f;
 }
 .emailTableDark .ant-pagination .ant-pagination-item-ellipsis {
   color: #cbd5e1;
@@ -107,7 +107,7 @@
 }
 .emailTableDark .ant-pagination .ant-pagination-prev > button,
 .emailTableDark .ant-pagination .ant-pagination-next > button {
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -275,7 +275,10 @@
   align-items: center;
 }
 
-.emailTableLight .ant-pagination .ant-pagination-options .ant-select-selector {
+.emailTableLight
+  .ant-pagination
+  .ant-pagination-options
+  .ant-select-selector {
   border: 0px solid #1f2937;
   border-radius: 8px;
 }
@@ -290,10 +293,14 @@
 }
 
 .emailTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  color: #cbd5e1;
+  /* backdrop-filter: blur(8px); */
+  background-color: #1f2937 !important;
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); */
+  color: #cbd5e1 !important;
+}
+.ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: #00000022;
 }
 
 /*  */

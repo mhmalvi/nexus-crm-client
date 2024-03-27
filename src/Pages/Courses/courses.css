@@ -1,56 +1,8 @@
-.courseModal .ant-modal-content {
-  width: 100%;
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  color: #cbd5e1;
-  padding: 0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.courseModal .ant-modal-content .ant-modal-footer{
-  border-radius: 8px;
-  border-top:none;
-  padding-top: 0 !important;
-  margin-top: 0 !important;
-  border: none;
-  cursor: pointer;
-}
-.courseModal .ant-modal-content .ant-modal-footer .ant-btn-primary {
-  border-radius: 8px;
-  background: linear-gradient(to bottom, #8a7cfd, #2596fb);
-  border: none;
-  cursor: pointer;
-}
-.courseModal .ant-modal-content .ant-modal-footer .ant-btn-default {
-  border-radius: 8px;
-  background: #cbd5e1;
-  border: none;
-  cursor: pointer;
-}
-.courseModal .ant-modal-content .ant-modal-footer .ant-btn-primary:hover {
-  color: #1f2937;
-}
-.courseModal .ant-modal-content .ant-modal-footer .ant-btn-default:hover {
-  color: #8a7cfd;
-}
-.courseModal .ant-form-item-control-input-content > input,
-.courseInputs > input {
-  background-color: transparent;
-  border-radius: 8px;
-  color: #cbd5e1;
-  border-color: #cbd5e1;
-}
-.courseModal .ant-form-item-control-input-content > input::placeholder,
-.courseInputs > input::placeholder {
-  color: #cbd5e17f !important;
-}
-
 .courseTableDark .ant-table {
   border-radius: 8px !important;
   overflow: hidden;
   backdrop-filter: blur(40px);
-  background-color: #ffffff11;
+  background-color: transparent;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .courseTableLight .ant-table {
@@ -78,9 +30,11 @@
 .courseTableDark .ant-table-tbody .ant-table-cell h4 {
   color: #cbd5e1;
   margin: 0;
-  text-align: start;
+  text-align: center;
 }
-
+/* .courseTableDark .ant-table-container::after{
+  background-color: #1b0538;
+} */
 .courseTableDark th {
   padding: 18px 18px 18px 0;
   text-align: left;
@@ -89,12 +43,13 @@
   line-height: 100%;
   color: #cbd5e1 !important;
   border-bottom: 1px solid #c0c0c02f !important;
-  background: #ffffff3f !important;
+  background: #1f2937 !important;
 }
 
 .courseTableDark .ant-table-tbody tr td {
-  padding-left: 32px;
-  text-align: start;
+  padding: 8px;
+}
+.courseTableDark .ant-table-tbody tr td {
   border-bottom: 1px solid #c0c0c02f !important;
   border-right: 1px solid #c0c0c02f !important;
 }
@@ -103,11 +58,12 @@
   text-align: center;
   font-weight: 600;
   backdrop-filter: blur(8px);
+  /* background-color: #ffffffaf; */
 }
 .courseTableDark .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  /* backdrop-filter: blur(8px); */
+  background-color: #1f2937 !important;
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); */
   color: #cbd5e1;
 }
 .courseTableDark .ant-pagination {
@@ -116,8 +72,7 @@
   align-items: center;
 }
 .courseTableDark .ant-pagination li {
-  border: 0px;
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
 }
 .courseTableDark .ant-pagination li a {
@@ -126,6 +81,7 @@
 }
 .courseTableDark .ant-pagination .ant-pagination-item-active {
   border: 1px solid #cbd5e1;
+  background-color: #0000007f;
 }
 .courseTableDark .ant-pagination .ant-pagination-item-ellipsis {
   color: #cbd5e1;
@@ -137,7 +93,7 @@
 }
 .courseTableDark .ant-pagination .ant-pagination-prev > button,
 .courseTableDark .ant-pagination .ant-pagination-next > button {
-  background-color: #0000007f;
+  background-color: transparent;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -178,29 +134,38 @@
   border: 0px solid #1f2937;
 }
 
-/* LIGHT TABLE */
+/* | */
+/* | */
+/* | */
+/* LIGHT MODE */
+/* | */
+/* | */
+/* | */
+
+.courseTableLight .ant-table-thead th {
+  backdrop-filter: blur(40px);
+  background-color: transparent;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
 
 .courseTableLight .ant-table-body::-webkit-scrollbar {
-  height: 5px !important;
-  background-color: #1f2937 !important;
+  height: 8px !important;
 }
 .courseTableLight .ant-table-body::-webkit-scrollbar-corner {
-  background-color: #1f2937 !important;
-  border: 1px solid #1f2937;
+  background-color: #cbd5e1;
 }
 .courseTableLight .ant-table-body::-webkit-scrollbar-track {
-  background-color: #1f2937;
+  background-color: #cbd5e1;
 }
 .courseTableLight .ant-table-body::-webkit-scrollbar-thumb {
-  background-color: #7037ff !important;
+  background-color: #1f2937;
 }
 .courseTableLight .ant-table-tbody .ant-table-cell,
 .courseTableLight .ant-table-tbody .ant-table-cell h4 {
   color: #1f2937;
   margin: 0;
-  text-align: start;
+  text-align: center;
 }
-
 .courseTableLight th {
   padding: 18px 18px 18px 0;
   text-align: left;
@@ -208,27 +173,34 @@
   font-size: 12px;
   line-height: 100%;
   color: #1f2937 !important;
-  border-bottom: 1px solid #c0c0c02f !important;
-  background: #ffffff3f !important;
+  /* background: linear-gradient( #946bfc,#351a77,#1f0f47)  !important;  */
+  /* background: linear-gradient( #7a51e3,#6e48cb,#55389f)  !important; 
+   */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border-bottom: 1px solid #1f293729 !important;
+  border-top: 1px solid #1f293729 !important;
 }
-
 .courseTableLight .ant-table-tbody tr td {
-  padding-left: 32px;
-  text-align: start;
-  border-bottom: 1px solid #c0c0c02f !important;
-  border-right: 1px solid #c0c0c02f !important;
+  padding: 8px;
+}
+.courseTableLight .ant-table-tbody tr td {
+  border-bottom: 1px solid #1f293729 !important;
+  border-right: 1px solid #1f293729 !important;
 }
 .courseTableLight .ant-table-thead tr th {
-  border-right: 1px solid #c0c0c02f !important;
+  border-right: 1px solid #1f293729 !important;
   text-align: center;
   font-weight: 600;
   backdrop-filter: blur(8px);
+  background-color: #ffffff7f;
 }
-.courseTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
-  backdrop-filter: blur(8px);
-  background-color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  color: #1f2937;
+.courseTableLight thead .ant-table-cell-fix-left-last:first-child {
+  background-color: #7037ff !important;
+  color: #cbd5e1 !important;
+}
+.courseTableDark thead .ant-table-cell-fix-left-last:first-child {
+  background-color: #7037ff !important;
+  color: #cbd5e1 !important;
 }
 .courseTableLight .ant-pagination {
   display: flex;
@@ -236,47 +208,51 @@
   align-items: center;
 }
 .courseTableLight .ant-pagination li {
-  border: 0px;
-  background-color: #0000007f;
+  border: 0.5px solid #1f2937;
+  background-color: transparent;
   border-radius: 8px;
 }
 .courseTableLight .ant-pagination li a {
-  color: #cbd5e1;
-  border: none;
+  color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-item-active {
-  border: 1px solid #1f2937;
+  background-color: #ffffff;
+}
+.courseTableLight .ant-pagination .ant-pagination-item-active a {
+  color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-item-ellipsis {
-  color: #cbd5e1;
+  color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-disabled,
 .courseTableLight .ant-pagination .ant-pagination-prev,
 .courseTableLight .ant-pagination .ant-pagination-next {
   overflow: hidden;
+  color: #ffffff7f;
 }
 .courseTableLight .ant-pagination .ant-pagination-prev > button,
 .courseTableLight .ant-pagination .ant-pagination-next > button {
-  background-color: #0000007f;
+  background-color: #ffffff7f;
+  border: 0px;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #cbd5e1;
+  color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-disabled > button {
-  /* background-color: #cbd5e1; */
+  background-color: #cbd5e1;
   color: #1f293797;
 }
 .courseTableLight .ant-pagination .ant-pagination-disabled > button:hover,
 .courseTableLight .ant-pagination .ant-pagination-prev > button:hover,
 .courseTableLight .ant-pagination .ant-pagination-next > button:hover {
-  border: 1px solid #1f2937;
+  border-radius: 8px;
   color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-item-link-icon {
-  color: #cbd5e1;
+  color: #1f2937;
 }
 .courseTableLight .ant-pagination .ant-pagination-item-container {
   height: 100%;
@@ -284,16 +260,28 @@
   justify-content: center;
   align-items: center;
 }
+
 .courseTableLight .ant-pagination .ant-pagination-options .ant-select-selector {
+  border: 0px solid #1f2937;
   border-radius: 8px;
 }
 .courseTableLight .ant-pagination .ant-pagination-options {
-  border-radius: 8px;
-  border: 0px;
+  border: 0px solid #1f2937;
 }
 .courseTableLight
   .ant-pagination
   .ant-pagination-options
   .ant-select-selector:hover {
-  border: 0px solid #cbd5e1;
+  border: 0px;
+}
+
+.courseTableLight .ant-table-tbody .ant-table-cell-fix-left-last:first-child {
+  /* backdrop-filter: blur(8px); */
+  background-color: #1f2937 !important;
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); */
+  color: #cbd5e1 !important;
+}
+.ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: #00000022;
 }

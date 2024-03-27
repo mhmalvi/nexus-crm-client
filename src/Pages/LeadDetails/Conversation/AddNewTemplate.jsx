@@ -1,7 +1,8 @@
-import { Input, message, Modal } from "antd";
+import { Input, Modal } from "antd";
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { AddNewTemplateList } from "../../../Components/services/leads";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -20,20 +21,20 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
     });
     if (!templateTitle || !editorRef?.current?.getContent()) {
       if (!templateTitle) {
-        message.warning("Template Title missing!");
+        warningNotification("Template title missing!");
       }
       if (!editorRef?.current?.getContent()) {
-        message.warning("Template Description missing!");
+        warningNotification("Template description missing!");
       }
     } else {
       setConfirmLoading(true);
       const res = await AddNewTemplateList(data);
       if (res?.status === 201) {
-        message.success(res?.message || "Template added successfully");
+        successNotification(res?.message || "Template added successfully.");
         setTempOpen(false);
         setConfirmLoading(false);
       } else {
-        message.warn(res?.message || "Something went wrong");
+        warningNotification(res?.message || "Something went wrong.");
         setConfirmLoading(false);
       }
     }

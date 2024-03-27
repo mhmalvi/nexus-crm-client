@@ -1,9 +1,9 @@
-import { message } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { handleDeleteComment } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const Comments = ({ Comments }) => {
   const [allComents, setAllComents] = useState([]);
@@ -15,7 +15,7 @@ const Comments = ({ Comments }) => {
   const handleDeleteCommentReq = async (id) => {
     const commentDeleteRes = await handleDeleteComment(id);
     if (commentDeleteRes?.status === 200) {
-      message.success("Comment Deleted Successfully");
+      successNotification("Comment deleted successfully.");
       const currentComments = [...allComents]?.filter((c) => c.id !== id);
       setAllComents(currentComments);
     }

@@ -1,5 +1,5 @@
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Modal, Popover, Table, message } from "antd";
+import { Button, Modal, Popover, Table } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -13,6 +13,7 @@ import { useSearchParams } from "react-router-dom";
 import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
 import Loading from "../../Components/Shared/Loader";
 import "./salesEmployee.css";
+import { errorNotification, successNotification } from "../../Components/Shared/Toast";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -94,11 +95,11 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     };
     let res = await handleSalesAssignLead(data);
     if (res?.status === 201) {
-      message.success(res?.message);
+      successNotification(res?.message);
       assignedByLeadsDataId();
       setIsByMe(true);
     } else {
-      message.error(res?.message);
+      errorNotification(res?.message);
     }
   };
 
@@ -110,10 +111,10 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     };
     let res = await handleSalesRemoveLead(data);
     if (res?.status === 201) {
-      message.success(res?.message);
+      successNotification(res?.message);
       assignedByLeadsDataId();
     } else {
-      message.error(res?.message);
+      errorNotification(res?.message);
     }
   };
 

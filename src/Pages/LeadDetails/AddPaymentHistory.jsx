@@ -1,6 +1,6 @@
-import { message } from "antd";
 import React, { useState } from "react";
 import { handleAddLeadPaymentHistory } from "../../Components/services/payment";
+import { successNotification } from "../../Components/Shared/Toast";
 
 const AddPaymentHistory = ({
   leadDetails,
@@ -33,7 +33,7 @@ const AddPaymentHistory = ({
     });
 
     if (resp?.status === 201) {
-      message.success("Payment Added Successfully");
+      successNotification("Payment added successfully.")
       setSyncTotalPaid(!syncTotalPaid);
       setAmount(0);
       setIsAddPaymentHistoryOpen(false);

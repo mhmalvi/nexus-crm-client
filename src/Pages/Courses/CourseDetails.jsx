@@ -13,7 +13,7 @@ import {
 import Icons from "../../Components/Shared/Icons";
 import { useEffect } from "react";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
-import { message } from "antd";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const CourseDetails = ({ selectedCourse }) => {
   const [checklist, setChecklist] = useState([]);
@@ -104,12 +104,12 @@ const CourseDetails = ({ selectedCourse }) => {
 
       if (addChecklistResponse?.status === 201) {
         setChecklist([...checklist, addChecklistResponse?.data]);
-        message.success(
+        successNotification(
           addChecklistResponse ? addChecklistResponse?.message : "Inserted"
         );
       } else {
         console.log("auth check:", addChecklistResponse);
-        message.warn(
+       warningNotification(
           addChecklistResponse
             ? addChecklistResponse?.data?.message
             : "Something went wrong"
@@ -125,7 +125,7 @@ const CourseDetails = ({ selectedCourse }) => {
     if (deleteCourseCheckList?.status === 201) {
       setChecklist(checklist?.filter((list) => list?.id !== checkListId));
     } else {
-      message.warn(
+      warningNotification(
         deleteCourseCheckList ? deleteCourseCheckList?.data?.message : "Failed"
       );
     }

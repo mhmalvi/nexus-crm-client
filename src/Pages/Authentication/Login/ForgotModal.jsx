@@ -1,13 +1,15 @@
-import { Modal, message } from "antd";
+import { Modal } from "antd";
 import React, { useState } from "react";
 import Axios from "axios";
 import "./Login.css";
+import {
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast";
 const ForgotPassword = (props) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [emailCheckResponse, setEmailCheckResponse] = useState();
-  const [modalText, setModalText] = useState(
-    "A Verification mail will be sent to the designated email."
-  );
+  const modalText = "A Verification mail will be sent to the designated email.";
   const [emailData, setEmailData] = useState("");
 
   const config = {
@@ -28,22 +30,20 @@ const ForgotPassword = (props) => {
           config
         )
           .then((res) => {
-            console.log(res.data.message);
             setEmailCheckResponse(res.data);
-            message.success(
+            successNotification(
               "Verfication mail has been sent to the designated email."
             );
           })
           .catch((err) => {
-            console.log(err.response.data.message);
             setEmailCheckResponse(err.response.data);
-            message.warning("Please enter a valid email.");
+            warningNotification("Please enter a valid email address.");
           });
       } else {
-        message.warning("Please enter a valid email address.");
+        warningNotification("Please enter a valid email address.");
       }
     } else {
-      message.warning("Enter your email first.");
+      warningNotification("Enter your email first.");
     }
 
     setConfirmLoading(true);
@@ -66,16 +66,16 @@ const ForgotPassword = (props) => {
       className="forgotModal"
       cancelButtonProps={{ style: { display: "none" } }}
     >
-        <p className="p-0 mx-0 mb-2 text-slate-300 text-sm">{modalText}</p>
-        <input
-          className="w-full rounded-md bg-transparent placeholder:text-sm p-2 !text-slate-300"
-          type="email"
-          placeholder="Enter a valid email"
-          onChange={(e) => {
-            e.preventDefault();
-            setEmailData(e.target.value);
-          }}
-        />
+      <p className="p-0 mx-0 mb-2 text-slate-300 text-sm">{modalText}</p>
+      <input
+        className="w-full rounded-md bg-transparent placeholder:text-sm p-2 !text-slate-300"
+        type="email"
+        placeholder="Enter a valid email"
+        onChange={(e) => {
+          e.preventDefault();
+          setEmailData(e.target.value);
+        }}
+      />
     </Modal>
   );
 };

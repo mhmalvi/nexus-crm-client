@@ -13,7 +13,6 @@ import {
   Table,
   Tag,
   Tooltip,
-  message,
 } from "antd";
 import React, { useRef } from "react";
 import { useEffect } from "react";
@@ -21,11 +20,9 @@ import { useState } from "react";
 import {
   handleGetComments,
   handleGetStudentAdmissionDetailsAgency,
-  handleGetStudentAdmissionRequestsDetails,
   handleGetStudentCompleteDetailsCheck,
   handleIncompleteUpdateStudentFile,
   handleRemoveFileAgencyCheck,
-  handleSendComment,
   handleSendCommentAgency,
   handleUpdateStudentFile,
   handleUpoladPaySlip,
@@ -33,6 +30,11 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 import { btob_dev } from "../../Components/services/environment";
 import "./checkDetailsModal.css";
+import {
+  errorNotification,
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const CheckDetailsModal = ({
   checkModalOpen,
@@ -54,7 +56,6 @@ const CheckDetailsModal = ({
   const [paySlipUploadLoading, setPaySlipUploadLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsData, setCommentsData] = useState([]);
-  const [inCompleteFile, setInCompleteFile] = useState({});
   const [fid, setFid] = useState(0);
   const [flg, setFlg] = useState(1);
 
@@ -138,7 +139,7 @@ const CheckDetailsModal = ({
       setFileName([]);
     } else {
       setIsUpdating(false);
-      message.warn(res?.data?.message || "Something went wrong");
+      warningNotification(res?.data?.message || "Something went wrong.");
     }
   };
   const handleRemoveFile = async (fid, flag) => {
@@ -168,14 +169,14 @@ const CheckDetailsModal = ({
         setStudentListLoading(false);
       }
     } else {
-      message.warn("Something went wrong");
+      warningNotification("Something went wrong.");
     }
   };
 
   const handleCheckInvoice = () => {
     AdmissionDetails?.invoice
       ? window.open(`${AdmissionDetails?.invoice?.file_path}`, "_blank")
-      : message.warning("No invoice");
+      : warningNotification("No invoice.");
   };
   const handleClose = () => {
     setCheckModalOpen(false);
@@ -186,7 +187,7 @@ const CheckDetailsModal = ({
 
   async function handlePayUpload(e) {
     if (!AdmissionDetails?.invoice) {
-      message.warning("Please check invoice first");
+      warningNotification("Please check invoice first.");
     } else {
       setpayFIle(e.target.files[0]);
       if (payFile) {
@@ -197,13 +198,12 @@ const CheckDetailsModal = ({
         const res = await handleUpoladPaySlip(formData);
         if (res?.status === 201) {
           setPaySlipUploadLoading(false);
-          message.success("PaySlip successfully sent");
+          successNotification("PaySlip successfully sent.");
           setpayFIle({});
           e.target.files[0] = {};
         } else {
           setPaySlipUploadLoading(false);
-          message.warn("PaySlip failed to send something went wrong");
-          message.error("Select again");
+          warningNotification("PaySlip failed to send. Please try again later");
           setpayFIle({});
           e.target.files[0] = {};
         }
@@ -231,10 +231,9 @@ const CheckDetailsModal = ({
     if (res?.status === 201) {
       setComment("");
       onGetCommnets(fid);
-
-      message.success("Comment sent successfully");
+      successNotification("Comment sent successfully.");
     } else {
-      message.warn(res?.data?.message || "Failed/Someting went wrong");
+      warningNotification(res?.data?.message || "Someting went wrong.");
     }
   };
   const scrollToBottom = () => {
@@ -244,42 +243,40 @@ const CheckDetailsModal = ({
   };
   const sendAndUploadIncompleteFile = async (e) => {
     e.preventDefault();
-    console.log("my fid: ", fid);
-    console.log("selec file is: ", e.target.files[0]);
     // setInCompleteFile(e.target.files[0]);
     if (e.target.files[0]) {
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
       const res = await handleIncompleteUpdateStudentFile(fid, flg, formData);
       if (res?.status === 201) {
-        message.success("File successfully uploaded");
+        successNotification("File successfully uploaded.");
         SyncRefresh();
         e.target.value = null;
         e.target.files[0] = null;
       } else {
-        message.warn(
-          res?.data?.message || "Error uploading/Something went wrong"
+        errorNotification(
+          res?.data?.message || "Error uploading."
         );
         e.target.value = null;
         e.target.files[0] = null;
       }
     } else {
-      message.warn("Please select file");
+      warningNotification("Please select file.");
       e.target.value = null;
       e.target.files[0] = null;
     }
   };
   const columns = [
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Name</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Name</h1>;
       },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Status</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Status</h1>;
       },
       dataIndex: "status",
       key: "status",
@@ -409,8 +406,8 @@ const CheckDetailsModal = ({
     },
 
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">Action</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">Action</h1>;
       },
       dataIndex: "action",
       key: "action",
@@ -435,8 +432,8 @@ const CheckDetailsModal = ({
                   <CloseOutlined
                     onClick={() => {
                       if (record?.status === 1) {
-                        message.warn(
-                          "Cannot remove completed file contact with ITEC manager"
+                        warningNotification(
+                          "Cannot remove completed file contact with manager."
                         );
                       } else {
                         handleRemoveFile(record?.id, 1);
@@ -475,8 +472,8 @@ const CheckDetailsModal = ({
   ];
   const mcolumns = [
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Type</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Type</h1>;
       },
       dataIndex: "file_type",
       key: "file_type",
@@ -489,15 +486,15 @@ const CheckDetailsModal = ({
       },
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Name</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Name</h1>;
       },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Status</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Status</h1>;
       },
       dataIndex: "status",
       key: "status",
@@ -628,8 +625,8 @@ const CheckDetailsModal = ({
     },
 
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">Action</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">Action</h1>;
       },
       dataIndex: "action",
       key: "action",

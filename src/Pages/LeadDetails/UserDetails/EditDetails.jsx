@@ -1,10 +1,11 @@
-import { AutoComplete, message } from "antd";
+import { AutoComplete } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleFetchCourses,
   handleUpdateLeadContact,
 } from "../../../Components/services/leads";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const EditDetails = ({
   leadDetails,
@@ -87,7 +88,7 @@ const EditDetails = ({
     );
 
     if (contactUpdateResp?.status === 200) {
-      message.success("Contact updated successfully");
+      successNotification("Contact updated successfully.");
       setToggleEditDetials(false);
       setSyncDetails(!syncDetails);
     }

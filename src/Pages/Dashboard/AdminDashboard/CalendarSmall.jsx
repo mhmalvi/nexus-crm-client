@@ -124,60 +124,66 @@ const CalendarSmall = ({
               <div
                 className={`${
                   colorMode ? "calendarHeadDark" : "calendarHeadWhite"
-                } mb-2 flex justify-between items-center`}
+                } flex flex-col items-center gap-2 border-b border-brand-color`}
               >
-                <Radio.Group
-                  size="small"
-                  onChange={(e) => {
-                    onTypeChange(e.target.value);
-                  }}
-                  value={type}
-                >
-                  <Radio.Button value="month">Days</Radio.Button>
-                  <Radio.Button value="year">Months</Radio.Button>
-                </Radio.Group>
-                <div
-                  className={
-                    colorMode ? "calendarDropHeadDark" : "calendarDropHeadWhite"
-                  }
-                >
-                  <Select
+                <div className="flex w-full justify-between ">
+                  <Radio.Group
                     size="small"
-                    dropdownMatchSelectWidth={false}
-                    value={selectedYear}
-                    onChange={(newYear) => {
-                      const now = value.clone().year(newYear);
-                      onChange(now);
-                      onYearChange(now);
-                      setSelectedYear(newYear);
+                    onChange={(e) => {
+                      onTypeChange(e.target.value);
                     }}
+                    value={type}
                   >
-                    {yearOptions}
-                  </Select>
-                </div>
-                <div
-                  className={
-                    colorMode ? "calendarDropHeadDark" : "calendarDropHeadWhite"
-                  }
-                >
-                  <Select
-                    size="small"
-                    dropdownMatchSelectWidth={false}
-                    value={selectedMonth}
-                    onChange={(newMonth) => {
-                      const now = value.clone().month(newMonth);
-                      onChange(now);
-                      onMonthChange(now);
-                      setSelectedMonth(newMonth);
-                    }}
+                    <Radio.Button value="month">Days</Radio.Button>
+                    <Radio.Button value="year">Months</Radio.Button>
+                  </Radio.Group>
+                  <div
+                    className={
+                      colorMode
+                        ? "calendarDropHeadDark"
+                        : "calendarDropHeadWhite"
+                    }
                   >
-                    {monthOptions}
-                  </Select>
+                    <Select
+                      size="small"
+                      dropdownMatchSelectWidth={false}
+                      value={selectedYear}
+                      onChange={(newYear) => {
+                        const now = value.clone().year(newYear);
+                        onChange(now);
+                        onYearChange(now);
+                        setSelectedYear(newYear);
+                      }}
+                    >
+                      {yearOptions}
+                    </Select>
+                  </div>
+                  <div
+                    className={
+                      colorMode
+                        ? "calendarDropHeadDark"
+                        : "calendarDropHeadWhite"
+                    }
+                  >
+                    <Select
+                      size="small"
+                      dropdownMatchSelectWidth={false}
+                      value={selectedMonth}
+                      onChange={(newMonth) => {
+                        const now = value.clone().month(newMonth);
+                        onChange(now);
+                        onMonthChange(now);
+                        setSelectedMonth(newMonth);
+                      }}
+                    >
+                      {monthOptions}
+                    </Select>
+                  </div>
                 </div>
-
                 <button
-                  className={`2xl:text-base text-sm ${colorMode ? "text-slate-300" : "text-gray-800"}`}
-                  size="small"
+                  className={`text-sm m-0 p-0 ${
+                    colorMode ? "text-slate-300" : "text-gray-800"
+                  }`}
                   onClick={handleClearDate}
                 >
                   Clear Date

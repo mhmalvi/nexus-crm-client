@@ -1,4 +1,4 @@
-import { message, Modal, Popconfirm } from "antd";
+import { Modal, Popconfirm } from "antd";
 import Axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import Loading from "../../Components/Shared/Loader";
 import { setLoader } from "../../features/user/userSlice";
 import PackageForm from "../Package/PackageForm";
 import PackageUpdate from "../Package/PackageUpdate";
+import { successNotification } from "../../Components/Shared/Toast";
 
 const Package = ({ setShowRequisitionForm, data, setData }) => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
       Axios.get(
         `${process.env?.REACT_APP_COMPANY_URL}/api/delete/package/${idRef.current}/5`
       )
-        .then((res) => message.success("Package Deleted Successfully"))
+        .then((res) => successNotification("Package deleted successfully"))
         .catch((err) => console.log(err.response.data.message));
     }
   };

@@ -1,4 +1,4 @@
-import { Input, Modal, Tooltip, message } from "antd";
+import { Input, Modal, Tooltip } from "antd";
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,11 @@ import {
 } from "../../../features/user/userSlice";
 import ForgotPassword from "./ForgotModal";
 import "./Login.css";
+import {
+  successNotification,
+  warningNotification,
+  errorNotification,
+} from "../../../Components/Shared/Toast";
 const companyLogo = require("../../../assets/PNGS/qq_logo_w.png");
 
 const Login = () => {
@@ -92,7 +97,7 @@ const Login = () => {
         loginResponse?.data &&
         loginResponse?.data.message === "Account not verified"
       ) {
-        message.warning("Please check your email for a verification link.");
+        warningNotification("Please check your email for a verification link.");
         setLoginClicked(false);
       } else if (loginResponse?.status === 200 && loginResponse?.data) {
         Storage.setItem("user_info", loginResponse?.data.data);
@@ -114,22 +119,32 @@ const Login = () => {
         ) {
           setAddBookMarkOpen(true);
         } else {
-          if (loginResponse.data.data.verification_status === 2) {
+          if (
+            loginResponse.data.data.verification_status === 2 &&
+            loginResponse.data.data.active === 1
+          ) {
             navigate("/dashboard");
-          } else if (loginResponse.data.data.verification_status === 1) {
+          } else if (
+            loginResponse.data.data.verification_status === 1 &&
+            loginResponse.data.data.active === 1
+          ) {
             navigate("/setup-your-profile");
+          } else if (loginResponse.data.data.active === 2) {
+            navigate("/select-package");
           } else {
-            message.warning("Please check your email for a verification link.");
+            warningNotification(
+              "Please check your email for a verification link."
+            );
           }
         }
       } else {
         setLoginClicked(false);
-        message.warning("Oops! Wrong email or password.");
+        warningNotification("Oops! Wrong email or password.");
       }
     } catch (error) {
       console.error("Error during login:", error);
       setLoginClicked(false);
-      message.error("An error occurred during login.");
+      errorNotification("An error occurred during login.");
     }
   };
   const handleOneClickLogin = async (credentials) => {
@@ -155,14 +170,22 @@ const Login = () => {
         );
         dispatch(addUserDetails(loginResponse?.data.data));
         dispatch(setLoader(false));
-        message.success("Successfully logged in.");
+        successNotification("Successfully logged in.");
         if (Storage.getItem("auth_tok")) {
-          if (loginResponse.data.data.verification_status === 2) {
+          if (
+            loginResponse.data.data.verification_status === 2 &&
+            loginResponse.data.data.active === 1
+          ) {
             navigate("/dashboard");
-          } else if (loginResponse.data.data.verification_status === 1) {
+          } else if (
+            loginResponse.data.data.verification_status === 1 &&
+            loginResponse.data.data.active === 1
+          ) {
             navigate("/setup-your-profile");
+          } else if (loginResponse.data.data.active === 2) {
+            navigate("/select-package");
           } else {
-            message.warning("Please check your email for a verification link.");
+            warningNotification("Please check your email for a verification link.");
           }
         } else {
           alert("No Token");
@@ -170,13 +193,13 @@ const Login = () => {
       } else {
         setLoginClicked(false);
         dispatch(setLoader(false));
-        message.warning("Oops! Wrong email or password.");
+        warningNotification("Oops! Wrong email or password.");
       }
     } catch (error) {
       console.error("Error during one-click login:", error);
       setLoginClicked(false);
       dispatch(setLoader(false));
-      message.error("An error occurred during login.");
+      errorNotification("An error occurred during login.");
     }
   };
   const handleRememberMe = useCallback(
@@ -236,7 +259,7 @@ const Login = () => {
       ])
     );
     setAddBookMarkOpen(false);
-    message.success("Added to the Bookmark");
+    successNotification("Added to bookmark");
     setTimeout(() => {
       navigate("/dashboard");
       window.location.reload();

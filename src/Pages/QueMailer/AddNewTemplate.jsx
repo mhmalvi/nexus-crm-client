@@ -1,4 +1,4 @@
-import { Input, message, Modal } from "antd";
+import { Input, Modal } from "antd";
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import {
@@ -6,10 +6,9 @@ import {
   handleImageUpload,
 } from "../../Components/services/que-mail";
 import "./quemailer.css";
-import { useSelector } from "react-redux";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
-  const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [templateTitle, setTemplateTitle] = useState("");
   const editorRef = useRef(null);
@@ -26,22 +25,22 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
 
     if (!templateTitle || !editorRef?.current?.getContent()) {
       if (!templateTitle) {
-        message.warning("Template Title missing!");
+        warningNotification("Template title missing!");
       }
       if (!editorRef?.current?.getContent()) {
-        message.warning("Template Description missing!");
+        warningNotification("Template description missing!");
       }
     } else {
       setConfirmLoading(true);
       const res = await AddNewTemplateList(data);
       if (res?.status === 201) {
-        message.success(res?.message || "Template added successfully");
+        successNotification(res?.message || "Template added successfully.");
         setTempOpen(false);
         setConfirmLoading(false);
 
         window.location.reload();
       } else {
-        message.warning(res?.message || "Something went wrong");
+        warningNotification(res?.message || "Something went wrong.");
         setConfirmLoading(false);
       }
     }

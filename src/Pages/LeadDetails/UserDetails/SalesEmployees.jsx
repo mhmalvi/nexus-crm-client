@@ -1,4 +1,4 @@
-import { message, Modal } from "antd";
+import { Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ import { handleLeadAssign } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const SalesEmployees = ({
   addSealsman,
@@ -74,7 +75,7 @@ const SalesEmployees = ({
 
     if (assignEmployeeResponse?.status === true) {
       setAddSealsman(false);
-      message.success(assignEmployeeResponse?.message);
+      successNotification(assignEmployeeResponse?.message);
       setSyncDetails(!syncDetails);
     }
   };

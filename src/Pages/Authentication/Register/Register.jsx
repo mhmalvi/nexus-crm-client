@@ -1,4 +1,4 @@
-import { Input, Tooltip, message, Alert, Spin } from "antd";
+import { Input, Tooltip, Alert, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Storage } from "../../../Components/Shared/utils/store";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import "./register.css";
+import { errorNotification, successNotification } from "../../../Components/Shared/Toast";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 
 const Register = () => {
@@ -46,13 +47,13 @@ const Register = () => {
     setUnprocessableContent("");
     if (registrationData.password !== confirmPassword) {
       // setLoading(false);
-      return message.error("Passwords do not match!");
+      return errorNotification("Passwords do not match!");
     } else {
       const res = await handleInitialRegistration(registrationData);
       console.log(res?.data);
       if (res?.status === 201) {
         // setLoading(false);
-        message.success(
+        successNotification(
           `${res?.message}. Please check your email for verification code`
         );
         navigate("/login");

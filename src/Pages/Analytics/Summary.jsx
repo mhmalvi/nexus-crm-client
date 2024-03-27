@@ -73,6 +73,7 @@ const Summary = ({ activeCompany, companyEmployees, setActiveCompanies }) => {
       className={`flex flex-col justify-between items-start w-full w-full pb-4 border-b ${
         colorMode ? "border-slate-300" : "border-gray-800"
       }`}
+      data-tour="analytic1"
     >
       <div className="flex w-full items-center justify-between">
         <h1

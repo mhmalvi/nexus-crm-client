@@ -1,4 +1,4 @@
-import { DatePicker, Dropdown, Menu, message } from "antd";
+import { DatePicker, Dropdown, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -6,6 +6,7 @@ import {
   handleUpdateProfileDetails,
 } from "../../../Components/services/auth";
 import Icons from "../../../Components/Shared/Icons";
+import { errorNotification, successNotification } from "../../../Components/Shared/Toast";
 
 function ProfileSettingForm() {
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
@@ -64,9 +65,9 @@ function ProfileSettingForm() {
 
     if (updateResponse?.data?.status === true) {
       setToggleEditDetails(false);
-      message.success("Profile Update Success");
+      successNotification("Profile update success.");
     } else {
-      message.warn("There was an error updating!");
+      errorNotification("There was an error updating!");
     }
   };
 

@@ -366,7 +366,6 @@ td {
   text-align: left;
 }
 
-
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -674,4 +673,16 @@ td {
   border-radius: 8px;
   color: #cbd5e1;
   border: none;
+}
+
+.tourSteps {
+  background-color: #1f2937 !important;
+  border-radius: 8px !important;
+  color: #cbd5e1 !important;
+}
+.tourSteps span {
+  background-color: #7037ff !important;
+}
+.tourSteps > div > div {
+  color: #7037ff !important;
 }

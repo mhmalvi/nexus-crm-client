@@ -1,16 +1,13 @@
-import { message } from "antd";
 import React from "react";
 import { useState } from "react";
 import {
   handleEmployeeRegistration,
-  handleRegister,
-  handleRegistration,
 } from "../../../Components/services/auth";
 import { handleAddCompanyEmployees } from "../../../Components/services/company";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLoader } from "../../../features/user/userSlice";
-import { handleRegistrationResponseMail } from "../../../Components/services/mail";
 import Loading from "../../../Components/Shared/Loader";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const EmployeeRegistrationForm = ({
   roleId,
@@ -55,7 +52,7 @@ const EmployeeRegistrationForm = ({
       });
 
       if (employeeAddResponse?.status === true) {
-        message.success(registrationResponse?.message);
+        successNotification(registrationResponse?.message);
         setShowLoader(false);
         dispatch(setLoader(false));
         window.location.reload();
@@ -76,17 +73,17 @@ const EmployeeRegistrationForm = ({
 
         setSyncEmployees(!syncEmployees);
       } else {
-        message.warn("Something went wrong. Please try again.");
+        warningNotification("Something went wrong. Please try again.");
         setShowLoader(false);
       }
     } else if (registrationResponse?.status === 500) {
-      message.warn(registrationResponse?.data.errors.email[0]);
+      warningNotification(registrationResponse?.data.errors.email[0]);
       setShowLoader(false);
     } else if (registrationResponse?.status === 422) {
-      message.warn(registrationResponse?.data.errors.email[0]);
+      warningNotification(registrationResponse?.data.errors.email[0]);
       setShowLoader(false);
     } else {
-      message.warn("Email is not correct. Please try again.");
+      warningNotification("Email is not correct. Please try again.");
       setShowLoader(false);
     }
   };

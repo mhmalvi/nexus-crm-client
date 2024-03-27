@@ -1,7 +1,11 @@
-import { message, Select } from "antd";
+import { Select } from "antd";
 import React, { useState } from "react";
 import { handleCreatePackage } from "../../Components/services/crmAdmin";
 import "./package.css";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const PackageForm = ({
   syncPackages,
@@ -72,10 +76,9 @@ const PackageForm = ({
         package_details: "",
         price: 0,
       });
-
-      message.success("Package Added Successfully");
+      successNotification("Package added successfully.");
     } else {
-      message.warn(validate(Data));
+      warningNotification(validate(Data));
     }
   };
 

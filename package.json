@@ -55,6 +55,7 @@
     "react-slick": "^0.29.0",
     "react-sound": "^1.2.0",
     "react-stars": "^2.2.5",
+    "react-toastify": "^10.0.5",
     "reactour": "^1.19.2",
     "recharts": "^2.1.13",
     "serve": "^14.1.2",

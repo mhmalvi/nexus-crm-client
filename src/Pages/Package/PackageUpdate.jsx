@@ -1,7 +1,11 @@
-import { message, Select } from "antd";
+import { Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { handleUpdatePackage } from "../../Components/services/crmAdmin";
 import "./package.css";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const PackageUpdate = ({
   setTogglePackageUpdate,
@@ -22,7 +26,6 @@ const PackageUpdate = ({
       return 3;
     }
   };
-
 
   const [Data, setData] = useState({});
 
@@ -102,10 +105,9 @@ const PackageUpdate = ({
         package_details: "",
         price: 0,
       });
-
-      message.success("Package Updated Successfully");
+      successNotification("Package updated successfully");
     } else {
-      message.warn(validate(Data));
+      warningNotification(validate(Data));
     }
   };
 

@@ -1,11 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Radio,
-  Select,
-  message,
-} from "antd";
+import { Button, Dropdown, Menu, Radio, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +7,10 @@ import {
 } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import { setLoader } from "../../../features/user/userSlice";
+import {
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast";
 
 const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   const dispatch = useDispatch();
@@ -43,7 +40,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   });
 
   useEffect(() => {
-
     (async () => {
       const courseResponse = await handleFetchCourses();
 
@@ -111,24 +107,24 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
       },
     ]);
     if (leadData.full_name === "") {
-      message.warning("Student Name Required");
+      warningNotification("Student Name Required");
     } else if (leadData.phone_number === "") {
-      message.warning("Student Phone Number Required");
+      warningNotification("Student Phone Number Required");
     } else if (leadData.student_email === "") {
-      message.warning("Student Mail Required");
+      warningNotification("Student Mail Required");
     } else if (
       !leadData.student_email.includes("@") &&
       !leadData.student_email.includes(".")
     ) {
-      message.warning(
+      warningNotification(
         "Email are not Valid it should be like this example@mail.com"
       );
     } else if (leadData.industry === "") {
-      message.warning("Industry Required");
+      warningNotification("Industry Required");
     } else if (leadData.work_location === "") {
-      message.warning("Living Location Required");
+      warningNotification("Living Location Required");
     } else if (leadData.course_id === "") {
-      message.warning("Course Name Required");
+      warningNotification("Course Name Required");
     } else {
       setIsCreating(true);
       dispatch(setLoader(true));
@@ -137,7 +133,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
       if (addLeadResponse?.status === 201) {
         setIsCreating(false);
         dispatch(setLoader(false));
-        message.success("Lead added successfully");
+        successNotification("Lead added successfully");
         setIsAddLeadFormOpen(false);
 
         const responseData = { ...addLeadResponse.data };
@@ -187,7 +183,7 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
         dispatch(setLoader(false));
         window.location.reload();
       } else {
-        message.warn(
+        warningNotification(
           addLeadResponse?.data?.errors?.student_email[0] ||
             "Something went wrong"
         );
@@ -372,7 +368,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
                   : "Select Location"}
               </div>
             </Dropdown>
-
           </div>
         </div>
 

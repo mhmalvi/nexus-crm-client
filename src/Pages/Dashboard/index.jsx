@@ -1,9 +1,5 @@
-// import { UserOutlined } from "@ant-design/icons";
-// import { Button, Input, message, Modal, ConfigProvider } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { handlePasswordReset } from "../../Components/services/auth";
-// import { Storage } from "../../Components/Shared/utils/store";
 import AdminDashboard from "./AdminDashboard";
 import SuperAdminDashboard from "./SuperAdminDashboard";
 import UserDashboard from "./UserDashboard";
@@ -11,8 +7,7 @@ import AgencyDashboard from "./AgencyDashboard/AgencyDashboard";
 import ManagerDashboard from "./ManagerDashboard/ManagerDashboard";
 import AccountantDashboard from "./AccountantDashboard/AccountantDashboard";
 import Loading from "../../Components/Shared/Loader";
-// import { TourProvider } from "@reactour/tour";
-// import steps from "./steps";
+
 const Dashboard = () => {
   const userDetails = useSelector((state) => state?.user);
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
