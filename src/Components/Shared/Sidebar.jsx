@@ -106,7 +106,7 @@ const Sidebar = ({ active, setActive }) => {
     dispatch(setHelpModal(newHelpModal));
     setIsOpen(true);
   };
-  
+
   useEffect(() => {
     setCurrentStep(0);
     if (active === "dashboard") {
@@ -868,9 +868,13 @@ const Sidebar = ({ active, setActive }) => {
             <div className="flex justify-center items-center">
               <button
                 onClick={toggleHelp}
-                className={`${
-                  helpModal ? "text-brand-color" : "text-slate-300"
-                }`}
+                className={`border ${
+                  helpModal
+                    ? "text-brand-color"
+                    : colorMode
+                    ? "text-slate-300 border-slate-300"
+                    : "text-gray-800 border-gray-800"
+                }   px-2 py-1 rounded-md`}
               >
                 Help
               </button>
