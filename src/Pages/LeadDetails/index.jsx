@@ -1,4 +1,4 @@
-import { message, Popconfirm, Tooltip } from "antd";
+import { Popconfirm, Tooltip } from "antd";
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import { setLoader } from "../../features/user/userSlice";
 import LeadStatus from "./LeadStatus";
 import UserDetails from "./UserDetails";
 import { Link } from "react-router-dom";
+import { successNotification } from "../../Components/Shared/Toast";
 
 const LeadDetails = () => {
   const { id } = useParams();
@@ -120,7 +121,7 @@ const LeadDetails = () => {
     });
 
     if (statusUpdateResponse?.status) {
-      message.success("Lead Has Been Released Successfully");
+      successNotification("Lead has been released successfully.")
       setSyncDetails(!syncDetails);
     }
   };

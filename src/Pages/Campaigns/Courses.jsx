@@ -5,7 +5,7 @@ import {
   handleCreateChecklist,
   handleDeleteChecklist,
   handleFetchCourseCheckList,
-  handleFetchCourses
+  handleFetchCourses,
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 
@@ -78,9 +78,6 @@ const Courses = () => {
         if (courseCheckList?.data) {
           setChecklist(courseCheckList?.data);
         }
-
-        console.log("courseCheckList", courseCheckList);
-        // message.success("Checklist Added Successfully");
       }
     }
 

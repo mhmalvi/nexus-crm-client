@@ -1,5 +1,4 @@
 import {
-  message,
   Modal,
   Popconfirm,
   Tooltip,
@@ -31,6 +30,7 @@ import { handleSalesManRemove } from "../../../Components/services/utils";
 import { handleLeadDetails } from "../../../Components/services/leads";
 import StatusShow from "../Conversation/StatusShow";
 import "../userDetails.css";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const UserDetails = ({
   leadDetails,
@@ -62,7 +62,6 @@ const UserDetails = ({
   const params = useParams();
 
   useEffect(() => {
-    console.log(leadDetails);
     if (leadDetails?.leadSalesEmployeeHistory?.length) {
       if (leadDetails?.leadDetails?.sales_user_id) {
         const salesman = leadDetails?.leadSalesEmployeeHistory?.find(
@@ -131,9 +130,9 @@ const UserDetails = ({
     );
 
     if (reviewResponse?.status === true) {
-      message.success("Rating Added Successfully");
+      successNotification("Rating added successfully.");
     } else {
-      message.warn("Lead is not assigned yet or something went wrong  ");
+      warningNotification("Lead is not assigned yet or something went wrong.");
     }
     setRating(newRating);
   };
@@ -150,7 +149,7 @@ const UserDetails = ({
     if (commentUpdateResponse?.status) {
       setAllComents(commentUpdateResponse?.data);
       setComment("");
-      message.success("Comment Added Successfully");
+      successNotification("Comment added successfully.");
       document.getElementById("lead_comment").style.caretColor = "transparent";
     }
     window.location.reload();
@@ -173,7 +172,7 @@ const UserDetails = ({
     });
 
     if (statusUpdateResponse?.status) {
-      message.success("Lead Has Been Suspended Successfully");
+      successNotification("Lead has been suspended successfully.");
       navigate("/dashboard");
     }
   };
@@ -181,10 +180,10 @@ const UserDetails = ({
   const confirmCancleSalesEmployee = async (sid) => {
     const res = await handleSalesManRemove(sid);
     if (res?.status === 201) {
-      message.success(res?.message || "Salesman has been successfully removed");
+      successNotification(res?.message || "Salesman has been successfully removed.");
       setCloseSealsman(false);
     } else {
-      message.warn(res?.message || "Something went wrong");
+      warningNotification(res?.message || "Something went wrong.");
     }
   };
 
@@ -199,17 +198,16 @@ const UserDetails = ({
     );
 
     if (reviewRemarksResponse?.status === 200) {
-      message.success("Remark added successfully");
+      successNotification("Remark added successfully.");
     } else {
-      message.warn("Something went wrong. Unable to add remark");
+      warningNotification("Something went wrong. Unable to add remark.");
     }
-    console.log("reviewRemarksResponse", reviewRemarksResponse);
   };
 
   const handleDeleteCommentReq = async (id) => {
     const commentDeleteRes = await handleDeleteComment(id);
     if (commentDeleteRes?.status === 200) {
-      message.success("Comment Deleted Successfully");
+      successNotification("Comment deleted successfully.");
       const currentComments = [...allComents]?.filter((c) => c.id !== id);
       setAllComents(currentComments);
     }
@@ -517,7 +515,7 @@ const UserDetails = ({
                 </h1>
 
                 <button
-                  onClick={() => message.success("No file available")}
+                  onClick={() => successNotification("No file available.")}
                   className={`w-1/2 px-1.5 py-2 bg-transparent border ${
                     colorMode
                       ? "text-slate-300 border-slate-300"

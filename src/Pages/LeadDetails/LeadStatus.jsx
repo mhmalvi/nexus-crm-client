@@ -2,7 +2,6 @@ import {
   DatePicker,
   Dropdown,
   Menu,
-  message,
   Modal,
   Radio,
   Space,
@@ -31,6 +30,7 @@ import { setLoader } from "../../features/user/userSlice";
 import AddPaymentHistory from "./AddPaymentHistory";
 import { handleDeletePaymentHistory } from "../../Components/services/payment";
 import "./userDetails.css";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 // ----Default Values----
 const LeadStatus = (props) => {
@@ -192,7 +192,7 @@ const LeadStatus = (props) => {
     console.log("leadDetails ......", leadDetails);
 
     if (statusUpdateResponse?.status === 201) {
-      message.success("Status Updated Successfully");
+      successNotification("Status updated successfully.")
       setSyncDetails(!syncDetails);
 
       if (
@@ -218,13 +218,13 @@ const LeadStatus = (props) => {
         });
 
         if (sendMailResponse === "success") {
-          message.success("An email has been sent");
+          successNotification("An email has been sent.")
         } else {
-          message.warn("Something went wrong");
+          warningNotification("Something went wrong.")
         }
       }
     } else {
-      message.warn("Something went wrong");
+      warningNotification("Something went wrong.")
     }
   };
 
@@ -265,9 +265,9 @@ const LeadStatus = (props) => {
       });
 
       if (sendResponseMail === "success") {
-        message.success("An email has been sent");
+        successNotification("An email has been sent.")
       } else {
-        message.warn("Someting went wrong");
+        warningNotification("Something went wrong,")
       }
     }
   };
@@ -341,7 +341,7 @@ const LeadStatus = (props) => {
       setCallEnd("End Time");
       setCallRemark("");
       setSyncDetails(!syncDetails);
-      message.success("Call Details Added Successfully");
+      successNotification("Call details added successfully.");
     }
     setIsCallDetailsOpen(false);
   };
@@ -358,9 +358,9 @@ const LeadStatus = (props) => {
       if (response?.status) {
         setAmount("");
         setSyncDetails(!syncDetails);
-        message.success("Amount Details Added Successfully");
+        successNotification("Amount details added successfully.");
       } else {
-        message.warn("Something went wrong");
+        warningNotification("Something went wrong.");
       }
     }
   };
@@ -397,7 +397,7 @@ const LeadStatus = (props) => {
     console.log("deleteHistoryResp", deleteHistoryResp);
 
     if (deleteHistoryResp?.status === 200) {
-      message.success("History Deleted Successfully");
+      successNotification("History deleted successfully.");
       setSyncTotalPaid(!syncTotalPaid);
     }
   };

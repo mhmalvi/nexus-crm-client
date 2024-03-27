@@ -1,5 +1,4 @@
-import { DownOutlined } from "@ant-design/icons";
-import { DatePicker, Dropdown, Menu, Space, Tooltip, message } from "antd";
+import { DatePicker, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import Icons from "../../Components/Shared/Icons";
 import {
@@ -7,7 +6,10 @@ import {
   handleUpdateFollowUp,
 } from "../../Components/services/reminder";
 import "./reminder.css";
-import UserDetails from "./../LeadDetails/UserDetails/index";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD HH:mm";
 
@@ -57,7 +59,6 @@ const EventDetails = ({
     setUpdateEventData(eventDetailsData);
   }, [eventDetails]);
 
-
   const handleEventDetailsChange = (e) => {
     const updatedValue = { ...updateEventData };
     updatedValue[e.target.id] = e.target.value;
@@ -71,24 +72,24 @@ const EventDetails = ({
     const day = date.getDate().toString().padStart(2, "0");
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
-  
+
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
   const handleDateTimeChange = (_, dateTimeString) => {
     const eventData = { ...updateEventData };
-  
+
     eventData.start = convertDateString(dateTimeString[0]);
     eventData.end = convertDateString(dateTimeString[1]);
-  
+
     setUpdateEventData(eventData);
     setStartDateTime(eventData?.start);
     setEndDateTime(eventData?.end);
   };
-  
+
   const handleReminderDateTimeChange = (_, dateTimeString) => {
     const eventData = { ...updateEventData };
     eventData.notification_time = convertDateString(dateTimeString);
-  
+
     setUpdateEventData(eventData);
     setNotifyTime(eventData?.notification_time);
   };
@@ -96,12 +97,8 @@ const EventDetails = ({
     setIsSaveDisable(true);
     const requestData = { ...updateEventData };
 
-    requestData.start = startDateTime
-      ? startDateTime
-      : `${eventDetails.start}`;
-    requestData.end = endDateTime
-      ? endDateTime
-      : `${eventDetails.end}`;
+    requestData.start = startDateTime ? startDateTime : `${eventDetails.start}`;
+    requestData.end = endDateTime ? endDateTime : `${eventDetails.end}`;
     requestData.notification_time = notifyTime
       ? notifyTime
       : `${eventDetails.notification_time}`;
@@ -111,7 +108,7 @@ const EventDetails = ({
     const updateFollowUpRes = await handleUpdateFollowUp(requestData);
     setIsSaveDisable(false);
     if (updateFollowUpRes?.status === 201) {
-      message.success("Reminder Updated Successfully");
+      successNotification("Reminder updated successfully.");
       setIsSaveDisable(false);
       setIsEdit(false);
       fetchingReminders();
@@ -128,10 +125,10 @@ const EventDetails = ({
       setEventsData([...restFllowUpEvents, updateFollowUpRes?.data]);
     } else {
       setIsSaveDisable(false);
-      message.warn(
+      warningNotification(
         updateFollowUpRes
           ? updateFollowUpRes?.data?.message
-          : "Something went wrong with update"
+          : "Something went wrong with update."
       );
     }
   };
@@ -139,11 +136,16 @@ const EventDetails = ({
     const deleteResp = await handleDeleteFollowUp(id);
 
     if (deleteResp?.status === 201) {
-      message.success("Event has been completed");
+      successNotification("Event has been completed.");
       setSynEvents(!synEvents);
       setOpenEventDetails(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, [2000]);
     } else {
-      message.warning(deleteResp?.message || "Error in deleting the Event");
+      warningNotification(
+        deleteResp?.message || "Error in deleting the event."
+      );
     }
   };
 
@@ -162,7 +164,7 @@ const EventDetails = ({
             />
           ) : eventDetails?.status ? (
             <h1 className="text-lg font-semibold !text-slate-300">
-              {(eventDetails?.title)}
+              {eventDetails?.title}
             </h1>
           ) : (
             <h1 className="text-lg font-semibold !text-slate-300">

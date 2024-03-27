@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import "./multipart.css";
-import { Select, message } from "antd";
+import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   handleLogout,
@@ -11,6 +11,7 @@ import { Storage } from "../../../Components/Shared/utils/store";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../../Components/Shared/Loader";
 import { addUserDetails } from "../../../features/user/userSlice";
+import { errorNotification, successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const MultipartForm = () => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
@@ -43,7 +44,7 @@ const MultipartForm = () => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
-    message.success("Logout Successful.");
+    warningNotification("Logout Successful.");
     navigate("/login");
     // window.location.reload();
   };
@@ -59,15 +60,15 @@ const MultipartForm = () => {
         Storage.setItem("user_info", res?.data);
         dispatch(addUserDetails(res.data));
         setSubmitClicked(false);
-        message.success("You  have successfully created your profile.");
+        successNotification("You  have successfully created your profile.");
         navigate("/dashboard");
       } else {
         setSubmitClicked(false);
-        message.warning(res.message);
+        warningNotification(res.message);
       }
     } catch (error) {
       setSubmitClicked(false);
-      message.warning(error.response);
+      errorNotification(error.response);
     }
   };
  

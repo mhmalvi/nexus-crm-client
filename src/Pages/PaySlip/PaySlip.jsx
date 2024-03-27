@@ -4,7 +4,7 @@ import {
   EyeOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
-import { Table, Tag, Tooltip, message } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -12,6 +12,7 @@ import {
   handleGetPaySlip,
 } from "../../Components/services/utils";
 import { btob_dev } from "../../Components/services/environment";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const PaySlip = () => {
   const [data, setData] = useState([]);
@@ -48,11 +49,11 @@ const PaySlip = () => {
     const res = await handleChangeStatusPaySlip(data);
     if (res?.status === 201) {
       setChangeStatusLoading(false);
-      message.success(res?.data?.message || "Status changed successfully");
+      successNotification(res?.data?.message || "Status changed successfully.");
       onSyncGetPaySlips();
     } else {
       setChangeStatusLoading(false);
-      message.warn(res?.data?.message || "Failed/ Something went wrong");
+      warningNotification(res?.data?.message || "Something went wrong.");
     }
   };
   const column = [
@@ -115,7 +116,7 @@ const PaySlip = () => {
                         if (record?.pay_slip) {
                           window.open(`${btob_dev}/public/${record?.pay_slip}`);
                         } else {
-                          message.warning("Pay slip not available");
+                          warningNotification("Pay slip not available.");
                         }
                       }}
                     />

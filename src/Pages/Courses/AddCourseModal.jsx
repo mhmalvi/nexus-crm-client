@@ -1,5 +1,5 @@
-import { Button, Input, Modal, message } from "antd";
-import React, { useEffect } from "react";
+import { Input, Modal } from "antd";
+import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
   handleClientwiseCourseDetails,
 } from "../../Components/services/leads";
 import "./courses.css";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const AddCourseModal = ({
   addCourseOpen,
@@ -23,7 +24,7 @@ const AddCourseModal = ({
     setIsAddingCourse(true);
 
     if (!courseCode && !courseName && !courseDsc) {
-      message.warn("Course Code || Course Name || Course Description required");
+      warningNotification("Course Code || Course Name || Course Description required");
     } else {
       const data = {
         course_code: courseCode.trim().split(" ").join(""),
@@ -34,7 +35,7 @@ const AddCourseModal = ({
       const res = await handleAddCourse(data);
       if (res?.status === 201) {
         setIsAddingCourse(false);
-        message.success("Course added successfully");
+        successNotification("Course added successfully");
         setCourseCode("");
         setCourseName("");
         setCourseDsc("");
@@ -51,7 +52,7 @@ const AddCourseModal = ({
         }
       } else {
         setIsAddingCourse(false);
-        message.warn("Something went wrong try again");
+        warningNotification("Something went wrong try again");
       }
     }
   };

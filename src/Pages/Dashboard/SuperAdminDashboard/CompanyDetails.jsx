@@ -1,4 +1,4 @@
-import { Button, message, Popconfirm, Upload } from "antd";
+import { Button, Popconfirm, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
 import CompanyInfo from "./CompanyInfo";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -102,7 +103,7 @@ const CompanyDetails = () => {
 
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
-      message.success("Company Details updated Successfully");
+      successNotification("Company details updated successfully")
     }
   };
 
@@ -140,7 +141,7 @@ const CompanyDetails = () => {
     const refreshResponse = await handleRefreshCompanyFBToken(id);
     if (refreshResponse?.status === true) {
       setCompanyDetails(refreshResponse?.data);
-      message.success("Facebook Token Updated Successfully");
+      successNotification("Facebook token updated successfully")
     }
   };
 
@@ -178,19 +179,19 @@ const CompanyDetails = () => {
       dispatch(setLoader(false));
 
       if (status) {
-        message.success("Company Activated Successfully");
+        successNotification("Company activated successfully")
       } else {
-        message.success("Company Inactivated Successfully");
+        successNotification("Company inactivated successfully")
       }
     }
   };
   const DeleteCompany = async () => {
     const res = await handleCompanyDelete(id);
     if (res?.status === 201) {
-      message.success("Company deleted successfully");
+      successNotification("Company deleted successfully")
       navigate(-1);
     } else {
-      message.warn("Something went wrong!");
+      warningNotification("Something went wrong!");
     }
   };
 

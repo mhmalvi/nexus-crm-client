@@ -1,5 +1,4 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { message } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +12,7 @@ import visa from "../../assets/Images/visa.png";
 import { handleAddEwayPaymentDetails } from "../../Components/services/payment";
 import { Storage } from "../../Components/Shared/utils/store";
 import { setLoader } from "../../features/user/userSlice";
+import { successNotification } from "../../Components/Shared/Toast";
 
 const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
     );
 
     if (error) {
-      console.log(error.message);
       dispatch(setLoader(false));
     } else {
       console.log({
@@ -69,7 +68,7 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
       });
 
       if (paymentResponse.status === 201) {
-        message.success("Payment Completed Successfully");
+        successNotification("Payment completed successfully.");
         navigate(`/success/${requestedLeadDetails?.leadDetails?.lead_id}`);
       }
 

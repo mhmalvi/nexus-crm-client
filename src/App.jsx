@@ -8,7 +8,6 @@ import "slick-carousel/slick/slick.css";
 import "./App.css";
 
 import Login from "./Pages/Authentication/Login/Login";
-import ResetPassword from "./Pages/Authentication/Login/ResetPassword";
 import Reminder from "./Pages/Reminder";
 import Campaigns from "./Pages/Campaigns";
 import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
@@ -24,8 +23,6 @@ import Pay from "./Pages/Pay";
 import Success from "./Pages/Pay/Success";
 import PaymentStatus from "./Pages/Payments";
 import Invoice from "./Pages/Payments/Invoice";
-import RequisitionForm from "./Pages/Requisition";
-import RequisitionTable from "./Pages/Requisition/Table";
 import Sales from "./Pages/SalesEmployee";
 import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
@@ -38,10 +35,18 @@ import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 import QueMailer from "./Pages/QueMailer";
 import Billing from "./Pages/Billing";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
 import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
+import PackageDue from "./Pages/Billing/PackageDue";
+
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { TourProvider, useTour } from "@reactour/tour";
+import { Steps } from "./Components/Shared/Steps";
+import { setHelpModal } from "./features/user/userSlice";
 
 function App() {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
@@ -91,55 +96,86 @@ function App() {
     };
   });
   const colorMode = useSelector((state) => state?.user)?.colorMode;
+  const dispatch = useDispatch();
   return (
-    <div className={`${colorMode ? "dark-background" : "light-background"}`}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path={"dashboard/company/:id"} element={<CompanyDetails />} />
-          <Route path="lead/:id" element={<LeadDetails />} />
-          <Route path="payments" element={<PaymentStatus />} />
-          <Route path="renew-package" element={<RenewPackage />} />
-          <Route path="pay/:id" element={<Pay />} />
-          <Route path="invoice/:id" element={<Invoice />} />
-          <Route path={"campaigns/:id"} element={<CampaignDetails />} />
-          <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
-          <Route path={"success/:id"} element={<Success />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="campaigns" element={<Campaigns />} />
-          <Route path="courses" element={<Campaigns />} />
-          <Route path="que-mailer" element={<QueMailer />} />
-          <Route path="salesEmployee" element={<Sales />} />
-          <Route path="studentManagement" element={<MangeStudent />} />
-          <Route path="courseManagement" element={<CourseMangemnet />} />
-          <Route path="paymentSlip" element={<PaySlip />} />
-          <Route path="reminder" element={<Reminder />} />
-          <Route path="requisitions" element={<RequisitionTable />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="user-profile" element={<UserProfile />} />
-          <Route path="edit-profile" element={<EditProfile />} />
-          <Route path="email-setting" element={<EmailSetting />} />
-          <Route path="billing" element={<Billing />} />
-          {/* <Route path="mail" element={<GmailModule />} /> */}
-        </Route>
-        <Route path="setup-your-profile" element={<MultipartForm />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="requisition" element={<RequisitionForm />} />
-        <Route path="unsubscribe" element={<Unsubscribe />} />
-        <Route path="queleads-unsubscribe" element={<Unsubscribe />} />
-        <Route
-          path="*"
-          element={
-            userDetails?.userInfo?.verification_status === 1 ? (
-              <Navigate to="/setup-your-profile" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
+    <TourProvider
+      className="tourSteps"
+      steps={Steps}
+      onClickClose={(e) => {
+        dispatch(setHelpModal(false));
+        e.setIsOpen(false);
+      }}
+      onClickMask={(e) => {
+        dispatch(setHelpModal(false));
+        e.setIsOpen(false);
+      }}
+    >
+      <div className={`${colorMode ? "dark-background" : "light-background"}`}>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          pauseOnHover
+          theme={`${colorMode ? "light" : "dark"}`}
+          transition={Slide}
         />
-      </Routes>
-    </div>
+        <Routes>
+          {userDetails?.userInfo?.active !== 2 ? (
+            <Route element={<Layout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route
+                path={"dashboard/company/:id"}
+                element={<CompanyDetails />}
+              />
+              <Route path="lead/:id" element={<LeadDetails />} />
+              <Route path="payments" element={<PaymentStatus />} />
+              <Route path="renew-package" element={<RenewPackage />} />
+              <Route path="pay/:id" element={<Pay />} />
+              <Route path="invoice/:id" element={<Invoice />} />
+              <Route path={"campaigns/:id"} element={<CampaignDetails />} />
+              <Route path={"campaign-details/:id"} element={<CampaignInfo />} />
+              <Route path={"success/:id"} element={<Success />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="campaigns" element={<Campaigns />} />
+              <Route path="courses" element={<Campaigns />} />
+              <Route path="que-mailer" element={<QueMailer />} />
+              <Route path="salesEmployee" element={<Sales />} />
+              <Route path="studentManagement" element={<MangeStudent />} />
+              <Route path="courseManagement" element={<CourseMangemnet />} />
+              <Route path="paymentSlip" element={<PaySlip />} />
+              <Route path="reminder" element={<Reminder />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="user-profile" element={<UserProfile />} />
+              <Route path="edit-profile" element={<EditProfile />} />
+              <Route path="email-setting" element={<EmailSetting />} />
+              <Route path="billing" element={<Billing />} />
+              {/* <Route path="mail" element={<GmailModule />} /> */}
+            </Route>
+          ) : (
+            <Route path="select-package" element={<PackageDue />} />
+          )}
+          <Route path="setup-your-profile" element={<MultipartForm />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="unsubscribe" element={<Unsubscribe />} />
+          <Route path="queleads-unsubscribe" element={<Unsubscribe />} />
+          <Route
+            path="*"
+            element={
+              userDetails?.userInfo?.verification_status === 1 ? (
+                <Navigate to="/setup-your-profile" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+        </Routes>
+      </div>
+    </TourProvider>
   );
 }
 

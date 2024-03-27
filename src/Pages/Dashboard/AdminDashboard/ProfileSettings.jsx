@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Space, Dropdown, Menu, message } from "antd";
+import { DatePicker, Dropdown, Menu } from "antd";
 import Avatar from "react-avatar";
 import {
   handleProfileDetails,
@@ -7,7 +7,7 @@ import {
 } from "../../../Components/services/auth";
 import { useSelector } from "react-redux";
 import Icons from "../../../Components/Shared/Icons";
-// import { setLoader } from "../../../features/user/userSlice";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 const ProfileSettings = ({
   openProfile,
@@ -65,9 +65,9 @@ const ProfileSettings = ({
 
     if (updateResponse?.data?.status === true) {
       setToggleEditDetails(false);
-      message.success("Profile Update Success");
+      successNotification("Profile update success")
     } else {
-      message.warn("There was an error updating!");
+      warningNotification("There was an error updating!")
     }
   };
 

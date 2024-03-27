@@ -1,4 +1,4 @@
-import { message, Upload } from "antd";
+import { Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,6 +12,7 @@ import {
   handleUploadFile,
 } from "../../../Components/services/utils";
 import Icons from "../../../Components/Shared/Icons";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const CheckList = ({ leadDetails }) => {
   const [fileList, setFileList] = useState([]);
@@ -66,7 +67,7 @@ const CheckList = ({ leadDetails }) => {
     });
 
     if (saveDocumentDetails?.status) {
-      message.success("Document Added Successfully");
+      successNotification("Document added successfully.");
       setSyncDocumentList(!syncDocumentList);
     }
   };
@@ -81,7 +82,7 @@ const CheckList = ({ leadDetails }) => {
       const deleteResponse = await handleDocumentDelete(documentId);
 
       if (deleteResponse?.status === 200) {
-        message.success("Document Removed Successfully");
+        successNotification("Document removed successfully.");
       }
       setSyncDocumentList(!syncDocumentList);
     }

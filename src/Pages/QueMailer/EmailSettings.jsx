@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { message, Popconfirm } from "antd";
+import {  Popconfirm } from "antd";
 import {
   handleAddSenderEmail,
   handleUpdateSenderEmail,
   deleteEmailSettings,
 } from "../../Components/services/que-mail";
 import { useSelector } from "react-redux";
+import { errorNotification, successNotification } from "../../Components/Shared/Toast";
 
 const EmailSettings = ({ currentEmail }) => {
   const userDetails = useSelector((state) => state.user);
@@ -42,13 +43,13 @@ const EmailSettings = ({ currentEmail }) => {
       }
       const result = await response;
       if (result?.status === 201) {
-        message.success(`Mail saved successfully to ${senderEmailData.email}`);
+        successNotification(`Mail saved successfully to ${senderEmailData.email}`);
         window.location.reload();
       } else {
-        message.error(result?.data?.message);
+        errorNotification(result?.data?.message);
       }
     } catch (errors) {
-      message.error(errors);
+      errorNotification(errors);
     }
   };
 

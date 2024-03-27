@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, message } from "antd";
+import { Modal } from "antd";
 import Notice from "./Notice";
 import { useSelector } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
   handleFetchNotices,
 } from "../../../Components/services/company";
 import { useMediaQuery } from "react-responsive";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const NoticeForm = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -40,7 +41,7 @@ const NoticeForm = () => {
 
       if (handleAddNotile?.status) {
         setSyncNotices(!syncNotices);
-        message.success("Notice updated Successfully");
+        successNotification("Notice updated Successfully")
       }
       setSyncNotifications(!syncNotifications);
       setNoticeTitle("");

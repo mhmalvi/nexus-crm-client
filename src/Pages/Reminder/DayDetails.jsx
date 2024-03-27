@@ -1,5 +1,5 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { Popover, TimePicker, message, DatePicker } from "antd";
+import { Popover, TimePicker, DatePicker } from "antd";
 
 import lazyImage from "../../assets/Images/lazy.png";
 import React, { useState, useEffect } from "react";
@@ -7,9 +7,8 @@ import {
   handleAddFollowUp,
   handleDeleteFollowUp,
   handleFetchFollowUp,
-  handleFetchReminders,
 } from "../../Components/services/reminder";
-import dayjs from "dayjs";
+import { errorNotification, successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const DayDetails = ({
   handleOpenDayDetailsCancel,
@@ -25,10 +24,6 @@ const DayDetails = ({
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
   const [taskDetails, setTaskDetails] = useState(initialData);
   const [notifyDate, setNotiFyDate] = useState("");
-  // const [rmTime, setRmTime] = useState("");
-  // const [rmDate, setRmDate] = useState(null);
-  // const [rmDateTime, setRmDateTime] = useState(null);
-  // const [endTime, setEndTime] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
   // error handling
@@ -70,7 +65,6 @@ const DayDetails = ({
     // Convert the date to ISO format
     data.start = startDate.toISOString().slice(0, 19).replace("T", " ");
 
-    console.log(data.start);
     setTaskDetails(data);
   };
   const onEndTimeChange = (time, timeString) => {
@@ -92,7 +86,6 @@ const DayDetails = ({
 
     // Convert the date to ISO format
     data.end = endDate.toISOString().slice(0, 19).replace("T", " ");
-    console.log(taskDetails);
     setTaskDetails(data);
   };
   const onReminderDateChange = (value, dateString) => {
@@ -110,7 +103,6 @@ const DayDetails = ({
     //   ":" +
     //   ("0" + utcDate.getSeconds()).slice(-2);
     setNotiFyDate(utcDate);
-    console.log(utcDate);
   };
 
   const handleTextInputFieldChange = (e) => {
@@ -125,27 +117,24 @@ const DayDetails = ({
     );
 
     if (isEmptyField) {
-      message.warning("Please fill in all the fields");
+      warningNotification("Please fill in all the fields.");
       setIsSaveDisable(false);
       return;
     }
 
-    console.log("Before: ", notifyDate);
     const addFollowUpRes = await handleAddFollowUp({
       ...taskDetails,
       user_id: userDetails?.id,
       notification_time: notifyDate,
     });
     if (addFollowUpRes?.status === 201) {
-      message.success("Reminder Added Successfully");
-      console.log("After: ", addFollowUpRes);
+      successNotification("Reminder added successfully.");
       setIsSaveDisable(false);
       fetchingReminders();
       setTaskDetails(initialData);
       handleOpenDayDetailsCancel();
       setSelectedEventTime();
       setTime("Select Time");
-      // setRmTime("Select Time");
       setEventsData([...eventsData, addFollowUpRes?.data]);
       handleOpenDayDetailsCancel();
     } else {
@@ -170,7 +159,7 @@ const DayDetails = ({
   const deleteReminder = async (fid) => {
     const res = await handleDeleteFollowUp(fid);
     if (res?.status === 201) {
-      message.success(res?.message || "Successfully deleted");
+      successNotification(res?.message || "Successfully deleted.");
       const featFollowUp = await handleFetchFollowUp(userDetails?.user_id);
       featFollowUp?.data?.forEach((event) => {
         event.start = new Date(event.start);
@@ -178,7 +167,7 @@ const DayDetails = ({
       });
       setEventsData(featFollowUp?.data);
     } else {
-      message.error(res?.message);
+      errorNotification(res?.message);
     }
   };
   return (

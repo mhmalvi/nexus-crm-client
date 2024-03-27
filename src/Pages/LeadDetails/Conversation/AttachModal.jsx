@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Table, message } from "antd";
+import { Button, Modal, Table } from "antd";
 import {
   DeleteOutlined,
   FilePdfOutlined,
@@ -13,6 +13,7 @@ import {
   handleGetPDFShow,
 } from "../../../Components/services/utils";
 import { useEffect } from "react";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 const AttachModal = ({
   attachOpen,
   setAttachOpen,
@@ -58,7 +59,7 @@ const AttachModal = ({
     setUploadLoading(true);
     const res = await handleAddNewAttachment(formData);
     if (res?.status === 201 || res?.status === 200) {
-      message.success(res?.message || "Uploaded successfully");
+      successNotification(res?.message || "Uploaded successfully.");
       const resp = await handleGetAllCheckLists(userDetail?.client_id);
       if (resp?.status === 201 || resp?.status === 200) {
         setAllCheckLists(resp?.data);
@@ -68,7 +69,7 @@ const AttachModal = ({
       setUploadLoading(false);
     } else {
       setUploadLoading(false);
-      message.warn(res?.data?.message || "Something went wrong");
+      warningNotification(res?.data?.message || "Something went wrong.");
     }
   };
 
@@ -79,7 +80,7 @@ const AttachModal = ({
       attach_list
     );
     if (res?.status === 201 || res?.status === 200) {
-      message.success(res?.message || "Delete attachment successfully");
+      successNotification(res?.message || "Delete attachment successfully.");
       setSelectedData([]);
       const resp = await handleGetAllCheckLists(userDetail?.client_id);
       if (resp?.status === 200 || resp?.status === 201) {
@@ -92,7 +93,7 @@ const AttachModal = ({
         item.isChecked = false;
       });
     } else {
-      message.warning(res?.message || "Something went wrong");
+      warningNotification(res?.message || "Something went wrong.");
     }
   };
 

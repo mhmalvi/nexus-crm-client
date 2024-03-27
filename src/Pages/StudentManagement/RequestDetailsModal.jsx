@@ -7,7 +7,6 @@ import {
   Table,
   Tag,
   Tooltip,
-  message,
 } from "antd";
 import React, { useRef } from "react";
 import { useState } from "react";
@@ -32,6 +31,7 @@ import {
 import paidPhoto from "../../assets/PNGS/paid.svg";
 import { shallowEqual, useSelector } from "react-redux";
 import "./checkDetailsModal.css"
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 const RequestDetailsModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -132,16 +132,16 @@ const RequestDetailsModal = ({
         setIssendingMail(false);
         setSubject("");
         setEmail("");
-        message.success("Mail sent successfully");
+        successNotification("Mail sent successfully.");
       } else {
         setIssendingMail(false);
-        message.warn(res?.data?.message || "Failed");
+        warningNotification(res?.data?.message || "Failed.");
       }
     } else {
       if (subject === "") {
-        message.warn("Subject is required");
+        warningNotification("Subject is required.");
       } else if (email === "") {
-        message.warn("Email is required");
+        warningNotification("Email is required.");
       }
     }
   };
@@ -154,11 +154,11 @@ const RequestDetailsModal = ({
     if (res?.status === 201) {
       setCoursePrice(0.0);
       setIsGeneratingPdf(false);
-      message.success("Successfully generated");
+      successNotification("Successfully generated.");
       window.open(`${res?.data?.file_path}`, "_blank");
     } else {
       setIsGeneratingPdf(false);
-      message.warn(res?.data?.message || "Something went wrong");
+      warningNotification(res?.data?.message || "Something went wrong.");
     }
   };
 
@@ -192,11 +192,10 @@ const RequestDetailsModal = ({
     if (res?.status === 201) {
       setComment("");
       onGetCommnets(fid);
-
-      message.success("Comment sent successfully");
+successNotification("Comment sent successfully.");
       // scrollToBottom();
     } else {
-      message.warn(res?.data?.message || "Failed/Someting went wrong");
+      warningNotification(res?.data?.message || "Failed.");
     }
   };
   const scrollToBottom = () => {
@@ -215,7 +214,7 @@ const RequestDetailsModal = ({
       const res = await handleUploadCertificate(formData);
       if (res?.status === 201) {
         setUploadCertificateLoading(false);
-        message.success("Certificate uploaded successfully");
+        successNotification("Certificate uploaded successfully.");
         setTimeout(() => {
           window.location.reload();
         }, 200);
@@ -224,8 +223,7 @@ const RequestDetailsModal = ({
         e.target.files[0] = null;
       } else {
         setUploadCertificateLoading(false);
-
-        message.warn(res?.data?.message || "Failed");
+warningNotification(res?.data?.message || "Failed.");
         e.target.files[0] = null;
         setCetificate({});
       }

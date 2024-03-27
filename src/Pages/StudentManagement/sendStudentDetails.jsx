@@ -1,4 +1,4 @@
-import { Input, Select, message } from "antd";
+import { Input, Select } from "antd";
 import React from "react";
 import { useState } from "react";
 import {
@@ -9,6 +9,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { handleClientwiseCourseDetails } from "../../Components/services/leads";
 import { environment_dev } from "../../Components/services/environment";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const SendStudentDetails = ({
   data,
@@ -141,7 +142,7 @@ const SendStudentDetails = ({
       !usiFile
       
     ) {
-      message.warn("Please select all files");
+      warningNotification("Please select all files.");
     } else {
       setUploadLoading(true);
       const res = await handleSendStudentDetails(formData);
@@ -156,7 +157,7 @@ const SendStudentDetails = ({
         setpayFIle(false);
         setUploadLoading(false);
         setData({});
-        message.success("Send successfully");
+        successNotification("Sent successfully.");
 
         setStudentListLoading(true);
         setCreateOpen(false);
@@ -173,7 +174,7 @@ const SendStudentDetails = ({
         window.location.reload();
       } else {
         setUploadLoading(false);
-        message.warn(res?.data?.message || "Send failed/ Something went wrong");
+        warningNotification(res?.data?.message || "Sending failed.");
       }
     }
   };

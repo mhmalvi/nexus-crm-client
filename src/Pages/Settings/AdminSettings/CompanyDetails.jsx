@@ -1,4 +1,4 @@
-import { message, Popconfirm, Upload } from "antd";
+import { Popconfirm, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ import Loading from "../../../Components/Shared/Loader";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { setLoader } from "../../../features/user/userSlice";
 import SalesAdmins from "../CompanySettings/SalesAdmins";
+import { successNotification } from "../../../Components/Shared/Toast";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -98,7 +99,7 @@ const CompanyDetails = () => {
 
     if (createCompany?.key === "success") {
       setToggleEditDetails(false);
-      message.success("Company Details updated Successfully");
+      successNotification("Company details updated successfully.");
     }
   };
 
@@ -144,7 +145,7 @@ const CompanyDetails = () => {
     if (refreshResponse?.status === true) {
       Storage.setItem("refresh_tok", futureDate);
       setCompanyDetails(refreshResponse?.data);
-      message.success("Facebook Token Updated Successfully");
+      successNotification("Facebook token updated successfully.");
     }
   };
 

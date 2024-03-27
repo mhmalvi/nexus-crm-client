@@ -1,4 +1,4 @@
-import { Button, Form, Input, Popconfirm, Table, Tooltip, message } from "antd";
+import { Button, Form, Input, Popconfirm, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { useForm } from "antd/lib/form/Form";
 import {
@@ -15,6 +15,7 @@ import {
   FilePdfOutlined,
 } from "@ant-design/icons";
 import { environment_dev } from "../../Components/services/environment";
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 
 const CourseMangemnet = () => {
   const userDetails = useSelector(
@@ -64,7 +65,7 @@ const CourseMangemnet = () => {
       setInputFields([{ value: "" }]);
       setFile(false);
       setFileName("");
-      message.success("Saved");
+      successNotification("Saved");
       setIsCourseListLoading(true);
       const resFetch = await handleCourseCheckLists();
       if (resFetch?.status === 200) {
@@ -81,7 +82,7 @@ const CourseMangemnet = () => {
       setCourseTitle("");
       setCourseDesc("");
     } else {
-      message?.warning(res?.data?.message || "Failed/ Something went wrong");
+      warningNotification(res?.data?.message || "Something went wrong.");
       setIsLoading(false);
     }
   };
@@ -125,7 +126,7 @@ const CourseMangemnet = () => {
     if (res?.status === 200) {
       syncCourse();
     } else {
-      message.warn(res?.data?.message || "Failed/Something went wrong");
+      warningNotification(res?.data?.message || "Failed/Something went wrong");
     }
   };
   const getEditCourseDetails = async (id) => {

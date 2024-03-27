@@ -57,7 +57,6 @@ const CourseList = ({
       selectedKeys,
       confirm,
       clearFilters,
-      close,
     }) => (
       <div
         style={{

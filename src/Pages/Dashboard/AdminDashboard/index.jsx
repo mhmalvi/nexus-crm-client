@@ -20,7 +20,7 @@ import {
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import dayjs from "dayjs";
 import Filters from "./Filters";
-import { Button, Input, Modal, Space, Tooltip, message } from "antd";
+import { Button, Input, Modal, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import UpdatedTable from "./UpdatedTable";
 import AddLeadForm from "./AddLeadForm";
@@ -40,6 +40,11 @@ import ProfileSettings from "./ProfileSettings.jsx";
 import "./dashboard.css";
 import { io } from "socket.io-client";
 import { setNotifications } from "../../../features/user/notificationSlice";
+import {
+  errorNotification,
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast.jsx";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -190,7 +195,7 @@ const AdminDashboard = () => {
           const res = await handleSalesAssignLead(data);
           if (res?.status === 201) {
             setAssignLoading(false);
-            message.success("Lead successfully assigned to sales");
+            successNotification("Lead successfully assigned to sales");
 
             // Fetch leads without updating the state
             const response = await handleFetchLeads({
@@ -204,16 +209,16 @@ const AdminDashboard = () => {
             }
           } else {
             setAssignLoading(false);
-            message.warn("Failed/Something went wrong");
+            warningNotification("Failed/Something went wrong");
           }
         } catch (error) {
           console.error("Error assigning lead:", error);
           setAssignLoading(false);
-          message.error("An error occurred while assigning lead");
+          errorNotification("An error occurred while assigning lead");
         }
       } else {
         setAssignLoading(false);
-        message.warn("Please select a sales to assign");
+        warningNotification("Please select a sales person to assign");
       }
     },
     [
@@ -233,7 +238,7 @@ const AdminDashboard = () => {
       try {
         const res = await handleSalesRemoveLead(data);
         if (res?.status === 201) {
-          message.success("Removed Sales Successfully");
+          successNotification("Removed Sales Successfully");
           const response = await handleFetchLeads({
             client_id: userDetails?.userInfo?.client_id,
             user_id: userDetails?.userInfo?.user_id,
@@ -244,11 +249,11 @@ const AdminDashboard = () => {
             setLeadData(response.data);
           }
         } else {
-          message.warn("Failed/Something went wrong");
+          warningNotification("Failed/Something went wrong");
         }
       } catch (error) {
         console.error("Error removing sales:", error);
-        message.error("An error occurred while removing sales");
+        errorNotification("An error occurred while removing sales");
       }
     },
     [userDetails?.userInfo, setLeadData]
@@ -664,7 +669,7 @@ const AdminDashboard = () => {
   );
 
   const handleSyncLeadsReq = async () => {
-    message.success("Sync in progress...");
+    successNotification("Sync in progress...");
     const syncResponse = await handleSyncLeads(
       userDetails?.userInfo?.client_id,
       userDetails?.userInfo?.ac_k
@@ -781,7 +786,7 @@ const AdminDashboard = () => {
         </Modal>
         <div className="relative flex flex-col justify-start h-full">
           <div className="w-full h-3/12 flex justify-between gap-4">
-            <div className="">
+            <div className="" data-tour="dashboard1">
               <Filters
                 layout="Dashboard"
                 handleFilterLeadList={handleFilterLeadList}
@@ -802,11 +807,11 @@ const AdminDashboard = () => {
                 handleFilterAssignedEmployee={handleFilterAssignedEmployee}
               />
             </div>
-            <div className="w-2/5">
+            <div className="w-2/5" data-tour="dashboard2">
               <CountryList table_title="Lead List" />
             </div>
           </div>
-          <div className="w-full h-9/12">
+          <div className="w-full h-9/12" data-tour="dashboard3">
             <UpdatedTable
               table_title="Lead List"
               tableHeaders={tableHeaders}
@@ -836,7 +841,7 @@ const AdminDashboard = () => {
       <div
         className={`w-3/12 flex flex-col items-center justify-between h-full`}
       >
-        <div className="relative w-full flex items-center justify-between p-3 rounded-md h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
+        <div className="relative w-full flex items-center justify-between p-3 rounded-md overflow-hidden h-[6vh] shadow-md backdrop-blur-2xl bg-[#ffffff11] z-50">
           <div
             className={` realtive  m-0 p-2 cursor-pointer flex hover:scale-105 `}
             onClick={(e) => {
@@ -845,6 +850,7 @@ const AdminDashboard = () => {
               e.stopPropagation();
               handleViewed();
             }}
+            data-tour="dashboard4"
           >
             <Icons.Bell
               className={`${
@@ -863,10 +869,12 @@ const AdminDashboard = () => {
               </div>
             ) : null}
           </div>
-          <UserLabel
-            setOpenProfile={setOpenProfile}
-            openProfile={openProfile}
-          />
+          <div className="!m-0 !p-0" data-tour="dashboard5">
+            <UserLabel
+              setOpenProfile={setOpenProfile}
+              openProfile={openProfile}
+            />
+          </div>
         </div>
         {toggleNotification && (
           <div className="absolute w-screen h-screen flex justify-end left-0 top-0 z-10">
@@ -935,17 +943,17 @@ const AdminDashboard = () => {
         </Modal>
 
         <>
-          <div className="w-full">
+          <div className="w-full" data-tour="dashboard6">
             <SearchEmployee
               layout="Dashboard"
               companyEmployeeList={companyEmployeeList}
               handleFilterAssignedEmployee={handleFilterAssignedEmployee}
             />
           </div>
-          <div className="w-full">
+          <div className="w-full" data-tour="dashboard7">
             <NoticeForm />
           </div>
-          <div className="w-full">
+          <div className="w-full" data-tour="dashboard8">
             <CalendarSmall
               filterDate={filterDate}
               setFilterDate={setFilterDate}

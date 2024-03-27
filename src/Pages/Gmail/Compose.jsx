@@ -1,11 +1,11 @@
-import { message } from "antd";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { closeMessageBox } from "./features/mailSlice";
 import { selectMailUser } from "./features/mailUserSlice";
 import { db } from "./Firebase/firebase";
+import { successNotification } from "../../Components/Shared/Toast";
 
 const Compose = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Compose = () => {
       setSubject("");
       setBody("");
       setBtnActive(false);
-      message.success("Email successfully sent.");
+      successNotification("Email successfully sent.")
       dispatch(closeMessageBox());
     }
   };

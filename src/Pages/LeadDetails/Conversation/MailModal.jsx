@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Modal, Popconfirm, Select } from "antd";
+import { Button, Form, Input, Modal, Popconfirm, Select } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState, useRef } from "react";
@@ -10,6 +10,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import AttachModal from "./AttachModal";
 import { CloseOutlined } from "@ant-design/icons";
 import "../userDetails.css";
+import { errorNotification, successNotification, warningNotification } from "../../../Components/Shared/Toast";
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -52,13 +53,13 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
 
     if (!tData || !mailSubject || selectedData.length <= 0) {
       if (!tData) {
-        message.warning("Please select template");
+        warningNotification("Please select a template.");
       }
       if (!mailSubject) {
-        message.warning("Please enter mail subject");
+        warningNotification("Please enter a mail subject.");
       }
       if (selectedData.length <= 0) {
-        message.warning("Please select file");
+        warningNotification("Please select a file.");
       }
     } else {
       setConfirmLoading(true);
@@ -77,17 +78,17 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
         .then((res) => res.json())
         .then((result) => {
           if (result?.status === 200) {
-            message.success("Mail sent successfully!");
+            successNotification("Mail sent successfully.");
             setOpenMailModal(false);
             setConfirmLoading(false);
             window.location.reload();
           } else {
-            message.error(result?.message || "Something went wrong");
+            errorNotification(result?.message || "Something went wrong.");
             setConfirmLoading(false);
           }
         })
         .catch((error) => {
-          message.error("Something went wrong");
+          errorNotification("Something went wrong.");
           setConfirmLoading(false);
         });
     }
@@ -117,14 +118,14 @@ const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
                   onConfirm={async () => {
                     const resRmTemp = await handleRemoveTemplet(itm?.id);
                     if (resRmTemp?.status === 201) {
-                      message.success("Template successfully removed");
+                      successNotification("Template successfully removed.");
                       setTData("");
                       setTemplateList([{ value: "", label: "" }]);
                       onSelectTemp();
                     } else {
-                      message.warn(
+                      warningNotification(
                         resRmTemp?.message ||
-                          "This Template already deleted Select another one/Something went wrong"
+                          "This template has already been deleted. Select another one."
                       );
                     }
                   }}

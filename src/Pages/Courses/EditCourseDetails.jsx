@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Spin } from "antd";
+import { Form, Input, Modal } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { handleClientwiseCourseDetails } from "../../Components/services/leads";
 import { useSelector } from "react-redux";
 import Loading from "../../Components/Shared/Loader";
 import "./courses.css"
+import { successNotification, warningNotification } from "../../Components/Shared/Toast";
 const EditCourseDetails = ({
   open,
   setOpen,
@@ -39,7 +40,7 @@ const EditCourseDetails = ({
           setOpen(false);
           setConfirmLoading(false);
           setUpdating(false);
-          message.success(res ? res?.message : "Successfully updated!");
+          successNotification(res ? res?.message : "Successfully updated!");
         }, 500);
         setCourseListLoading(true);
         const courseResponse = await handleClientwiseCourseDetails(
@@ -53,7 +54,7 @@ const EditCourseDetails = ({
         }
       } else {
         console.log("auth msg: ", res);
-        message.warn(res ? res?.data?.message : "Something went wrong");
+        warningNotification(res ? res?.data?.message : "Something went wrong");
         setConfirmLoading(false);
         setUpdating(false);
       }

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import ProtectedRoute from "../../Components/Shared/PrivateRoutes/ProtectedRoute";
 import Sidebar from "../../Components/Shared/Sidebar";
 import { Storage } from "../../Components/Shared/utils/store";
-import { handleFetchNotificationList } from "../../Components/services/notification";
-import { setNotifications } from "../../features/user/notificationSlice";
 import Reminder from "../Reminder";
 import Campaigns from "../Campaigns";
 import CampaignDetails from "../Campaigns/CampaignDetails";
@@ -22,7 +20,6 @@ import Pay from "../Pay";
 import Success from "../Pay/Success";
 import PaymentStatus from "../Payments";
 import Invoice from "../Payments/Invoice";
-import Requisitions from "../Requisition/Table";
 import Settings from "../Settings";
 import AdminCompanyDetails from "../Settings/AdminSettings/CompanyDetails";
 import EditProfile from "../Settings/Profile/EditProfile";
@@ -167,13 +164,6 @@ const Items = [
     name: "reminder",
     label: "Reminder",
     component: <Reminder />,
-    count: 0,
-  },
-  {
-    key: "requisitions",
-    name: "requisitions",
-    label: "requisitions",
-    component: <Requisitions />,
     count: 0,
   },
   {

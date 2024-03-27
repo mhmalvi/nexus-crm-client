@@ -1,4 +1,4 @@
-import { Select, Table, Tooltip, Upload, message } from "antd";
+import { Select, Table, Tooltip, Upload } from "antd";
 import React, { useEffect, useState, useCallback } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import {
 
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import "./dashboard.css";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 const UpdatedTable = ({
   table_title,
   tableHeaders,
@@ -83,14 +84,14 @@ const UpdatedTable = ({
       const leadFileUploadResp = await handleUploadLeadFile(fileData);
 
       if (leadFileUploadResp?.status === 200) {
-        message.success("Lead uploaded successfully");
+        successNotification("Lead uploaded successfully")
         setSyncLeads(!syncLeads);
       } else if (leadFileUploadResp?.status === 403) {
-        message.warn("Data already exists");
+        warningNotification("Data already exists")
       } else if (leadFileUploadResp?.status === 400) {
-        message.warn("Please reformat excel sheet columns");
+        warningNotification("Please reformat excel sheet columns")
       } else {
-        message.warn("Something went wrong. Please try again");
+        warningNotification("Something went wrong. Please try again")
       }
     },
     [userDetails?.client_id, setSyncLeads, syncLeads]

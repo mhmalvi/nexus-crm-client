@@ -1,10 +1,11 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Input, message } from "antd";
+import { Input } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Storage } from "../../../Components/Shared/utils/store";
 import { handlePasswordReset } from "../../../Components/services/auth";
+import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
 
 function PasswordResetForm() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function PasswordResetForm() {
 
     if (newPassword === rewNewPassword) {
       if (!newPassword?.length && !rewNewPassword?.length) {
-        message.warn("Please enter a valid password");
+        warningNotification("Please enter a valid password.");
         return;
       }
 
@@ -29,16 +30,16 @@ function PasswordResetForm() {
       console.log("passwordChangeResponse", passwordChangeResponse);
 
       if (passwordChangeResponse?.status === 205) {
-        message.success("Password changed successfully");
+        successNotification("Password changed successfully.");
 
         Storage.removeItem("auth_tok");
         Storage.removeItem("user_info");
         navigate("/login");
       } else {
-        message.warn("Wrong Password");
+        warningNotification("Wrong password.");
       }
     } else {
-      message.warn("Passwords are not matched");
+      warningNotification("Passwords do not match.");
     }
   };
 

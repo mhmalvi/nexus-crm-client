@@ -1,4 +1,4 @@
-import { Badge, message, Modal, Popconfirm } from "antd";
+import { Badge, Modal, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { setLoader } from "../../../features/user/userSlice";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import { handleGetSalesAdmin } from "../../../Components/services/utils";
 import "../settings.css";
+import { successNotification } from "../../../Components/Shared/Toast";
 const SalesAdmins = ({ clientId }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
@@ -134,18 +135,17 @@ const SalesAdmins = ({ clientId }) => {
     if (statusUpdateResponse?.data?.status === true) {
       getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
-      message.success("Employee Removed Successfully");
+      successNotification("Employee removed successfully.");
     }
   };
 
   const handleAddSuspendedEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 0);
-    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
-      message.success("Employee reassigned Successfully");
+      successNotification("Employee reassigned successfully.");
     }
   };
 
@@ -154,7 +154,7 @@ const SalesAdmins = ({ clientId }) => {
     console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
-      message.success("Employee suspended Successfully");
+      successNotification("Employee suspended successfully.");
       getSalesAdminsSync();
       setSyncEmployees(!syncEmployees);
     }

@@ -1,5 +1,5 @@
 import { handleLogout } from "../../Components/services/auth";
-import { Switch, message } from "antd";
+import { Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,10 +15,13 @@ import { setColorMode, setHelpModal } from "../../features/user/userSlice";
 import { setOpenSidebar } from "../../features/user/userSlice";
 import { ReactComponent as SunIcon } from "../../../src/assets/PNGS/sun.svg";
 import { ReactComponent as MoonIcon } from "../../../src/assets/PNGS/moon.svg";
+import { successNotification } from "./Toast";
+import { useTour } from "@reactour/tour";
+import { Steps } from "./Steps";
 
 const qq_Logo = require("../../../src/assets/Icons/Queleads_Logo.png");
 
-const Sidebar = ({ active, setActive, setOpenSideBar }) => {
+const Sidebar = ({ active, setActive }) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -75,7 +78,7 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     Storage.removeItem("auth_tok");
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
-    message.success("Logout Successful.");
+    successNotification("Logout Successful.");
     navigate("/login");
   };
 
@@ -97,11 +100,73 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
     dispatch(setColorMode(newColorMode));
     saveColorModePreference(newColorMode);
   };
+  const { setIsOpen, setSteps, setCurrentStep } = useTour();
   const toggleHelp = () => {
     const newHelpModal = !helpModal;
     dispatch(setHelpModal(newHelpModal));
+    setIsOpen(true);
   };
-
+  
+  useEffect(() => {
+    setCurrentStep(0);
+    if (active === "dashboard") {
+      setSteps([
+        {
+          selector: '[data-tour="dashboard1"]',
+          content: "This is the filter tab where you can filter your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard2"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard3"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard4"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard5"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard6"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard7"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+        {
+          selector: '[data-tour="dashboard8"]',
+          content:
+            "This is the color associated with the location of your leads.",
+        },
+      ]);
+    } else if (active === "analytics") {
+      setSteps([
+        {
+          selector: '[data-tour="analytic1"]',
+          content: "This is the summary of your running campaigns.",
+        },
+        {
+          selector: '[data-tour="analytic2"]',
+          content:
+            "This is where you can see the statistics of your running campaigns.",
+        },
+      ]);
+    } else {
+      setSteps(Steps);
+    }
+  }, [active, setCurrentStep, setSteps]);
   return (
     <div
       className={` bg-[#ffffff11] ease-in-out duration-300 ${
@@ -803,7 +868,9 @@ const Sidebar = ({ active, setActive, setOpenSideBar }) => {
             <div className="flex justify-center items-center">
               <button
                 onClick={toggleHelp}
-                className={`${helpModal ? "text-blue-500" : "text-orange-500"}`}
+                className={`${
+                  helpModal ? "text-brand-color" : "text-slate-300"
+                }`}
               >
                 Help
               </button>

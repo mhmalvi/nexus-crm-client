@@ -1,8 +1,6 @@
 import {
-  Button,
   Form,
   Input,
-  message,
   Popconfirm,
   Select,
   DatePicker,
@@ -24,6 +22,11 @@ import AddNewTemplate from "./AddNewTemplate";
 import { Editor } from "@tinymce/tinymce-react";
 import { CloseOutlined } from "@ant-design/icons";
 import "./quemailer.css";
+import {
+  errorNotification,
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const allowedExtensions = ["jpg", "jpeg", "png", "pdf"];
 
@@ -81,12 +84,12 @@ const MailDashboard = ({
     files.forEach((file) => {
       const fileExtension = file?.type.split("/")[1];
       if (!allowedExtensions.includes(fileExtension)) {
-        message.warning("Please input jpg, jpeg, png or pdf files");
+        warningNotification("Please input jpg, jpeg, png or pdf files.");
         isValid = false;
       } else {
         const fileSizeInKB = file.size / 1024;
         if (fileSizeInKB > 500) {
-          message.warning(`${file.name} exceeds the 500KB size limit.`);
+          warningNotification(`${file.name} exceeds the 500KB size limit.`);
           isValid = false;
         } else {
           totalSize += file.size;
@@ -99,7 +102,7 @@ const MailDashboard = ({
     }
     const totalSizeInMB = totalSize / (1024 * 1024);
     if (totalSizeInMB > 20) {
-      message.warning("Total selected files exceed the 20MB limit.");
+      warningNotification("Total selected files exceed the 20MB limit.");
       setAttachment([]);
       return;
     }
@@ -109,13 +112,13 @@ const MailDashboard = ({
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
-        message.warning("Please upload a csv");
+        warningNotification("Please upload a csv.");
       }
       if (!tData) {
-        message.warning("Please select template");
+        warningNotification("Please select template.");
       }
       if (!mailSubject) {
-        message.warning("Please enter mail subject");
+        warningNotification("Please enter mail subject.");
       }
     } else {
       try {
@@ -169,18 +172,18 @@ const MailDashboard = ({
         const res = await sendEmail(formData);
 
         if (res?.status === 200) {
-          message.success(res?.message);
+          successNotification(res?.message);
           setSuccessMail("success");
         } else if (res?.status === 504) {
-          message.success("All mail has been sent !");
+          successNotification("All mail has been sent !");
           setSuccessMail("success");
         } else {
-          await message.warning(res?.message);
+          await warningNotification(res?.message);
           setSuccessMail("failed");
         }
       } catch (error) {
         // setSuccessMail("success");
-        message.warning(error.response);
+        warningNotification(error.response);
       }
     }
   };
@@ -188,25 +191,25 @@ const MailDashboard = ({
   const handleUpdateMail = async () => {
     const res = await updateEmail(templateData);
     if (res?.status === 201) {
-      message.success("Template Updated Successfully");
+      successNotification("Template updated successfully.");
       setTimeout(() => {
         window.location.reload();
       }, [1500]);
     } else {
-      message.error(res.message);
+      errorNotification(res.message);
     }
   };
 
   const onMailSchedule = async (dateTimeStamp) => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
-        message.warning("Please upload a csv");
+        warningNotification("Please upload a csv.");
       }
       if (!tData) {
-        message.warning("Please select template");
+        warningNotification("Please select template");
       }
       if (!mailSubject) {
-        message.warning("Please enter mail subject");
+        warningNotification("Please enter mail subject");
       }
     } else {
       try {
@@ -260,18 +263,18 @@ const MailDashboard = ({
         const res = await scheduleEmail(formData);
 
         if (res?.status === 200) {
-          message.success(res?.message);
+          successNotification(res?.message);
           setSuccessMail("success");
         } else if (res?.status === 504) {
-          message.success("All mail has been sent !");
+          successNotification("All mail has been sent !");
           setSuccessMail("success");
         } else {
-          await message.warning(res?.message);
+          warningNotification(res?.message);
           setSuccessMail("failed");
         }
       } catch (error) {
         // setSuccessMail("success");
-        message.success(error.response);
+        successNotification(error.response);
       }
     }
   };
@@ -296,14 +299,14 @@ const MailDashboard = ({
                     const resRmTemp = await handleRemoveTemplate(item?.id);
 
                     if (resRmTemp?.status === 200) {
-                      message.success("Template successfully removed");
+                      successNotification("Template successfully removed.");
                       setTData("");
                       setTemplateList([{ value: "", label: "" }]);
                       onSelectTemp();
                     } else {
-                      message.warning(
+                      warningNotification(
                         resRmTemp?.message ||
-                          "This Template is already deleted Select another one/Something went wrong"
+                          "This template has already been deleted. Select another one."
                       );
                     }
                   }}
@@ -404,13 +407,13 @@ const MailDashboard = ({
             <div className="flex flex-col items-center gap-2 w-1/4">
               <div className="flex items-center gap-2 w-full h-10">
                 <h2
-                  className={`m-0 p-0 2xl:text-sm text-xs font-semibold ${
+                  className={`m-0 p-0 2xl:text-sm text-xs w-28 font-semibold ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
                   }`}
                 >
-                  1.
+                  Template:
                 </h2>
                 <Form.Item className=" !text-black !rounded-lg !w-full !p-0 !m-0">
                   <Select
@@ -426,13 +429,13 @@ const MailDashboard = ({
               </div>
               <div className="flex items-center gap-2 w-full h-10">
                 <h2
-                  className={`2xl:text-sm text-xs m-0 p-0 font-semibold ${
+                  className={`2xl:text-sm text-xs m-0 p-0 w-28 font-semibold ${
                     colorMode
                       ? "text-slate-300 border-slate-300"
                       : "text-gray-800 border-gray-800"
                   }`}
                 >
-                  2.
+                  Subject:
                 </h2>
                 <Input
                   disabled={
@@ -457,7 +460,7 @@ const MailDashboard = ({
                 className="templateSelect 2xl:text-base !text-xs"
                 onChange={(selectedOption) => {
                   navigator.clipboard.writeText(`{${selectedOption}}`);
-                  message.success(`${selectedOption} copied to clipboard`);
+                  successNotification(`${selectedOption} copied to clipboard`);
                 }}
                 options={
                   headerData &&

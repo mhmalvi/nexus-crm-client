@@ -27,7 +27,7 @@ const BillingMethod = ({
   const handleOpenChange = (newOpen) => {
     setOpenPopover(newOpen);
   };
-  
+
   useEffect(() => {
     if (totalSavedCards.length >= 1) {
       setHasBillingDetails(true);
@@ -73,15 +73,15 @@ const BillingMethod = ({
                 return (
                   <div
                     key={index}
-                    className={`relative w-[26vw] rounded-md h-2/6 border ${
+                    className={`relative w-[26vw] rounded-md h-1/3 border ${
                       colorMode
                         ? "hover:border-slate-300 bg-gradient-to-r from-black to-gray-900 border-slate-700"
                         : "hover:border-gray-800 bg-gradient-to-r from-sky-300 to-purple-300 border-slate-400"
                     }  flex flex-col items-start justify-center shadow-md cursor-pointer ease-in duration-100 px-4 py-8`}
                   >
-                   <div className="w-full flex items-center justify-between">
+                    <div className="w-full flex items-center justify-between">
                       <h1
-                        className={`m-0 p-0 2xl:text-xl text-sm font-semibold ${
+                        className={`m-0 p-0 3xl:text-xl 2xl:text-lg text-sm font-semibold ${
                           colorMode ? "text-slate-300" : "text-gray-800"
                         }`}
                       >
@@ -230,7 +230,7 @@ const BillingMethod = ({
                           {items.exp_month} / {items.exp_year}
                         </h1>
                       </div>
-                    </div> 
+                    </div>
                   </div>
                 );
               })}
@@ -260,7 +260,6 @@ const BillingMethod = ({
               </div>
             </div>
           </div>
-          
         ) : (
           <NoBilling setDetailsClicked={setDetailsClicked} />
         )
