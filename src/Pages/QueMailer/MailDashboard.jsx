@@ -499,7 +499,7 @@ const MailDashboard = ({
                   init={{
                     // height: "calc(60vh - 5em)",
                     height: "100%",
-                    menubar: false,
+                    menubar: "tools",
                     resize: false,
                     plugins: [
                       "advlist",
@@ -519,11 +519,14 @@ const MailDashboard = ({
                       "table",
                       "help",
                       "wordcount",
+                      "code",
+                      "style",
                     ],
+                    theme_advanced_buttons3_add : "styleprops",
                     toolbar:
                       "undo redo | casechange blocks | fontfamily | fontsize | fontsizeinput | forecolor | bold italic backcolor | image link |" +
                       "alignleft aligncenter alignright alignjustify |" +
-                      "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help ",
+                      "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help | code",
                     content_style:
                       "body { width:60vw,Arial,sans-serif; font-size:14px; overflow-x:hidden; overflow-y }",
                     images_upload_url:

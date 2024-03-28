@@ -58,9 +58,9 @@ export const getEmailHistory = async (data, pageNumber) => {
     return error.response;
   }
 };
-// 
-// 
-// 
+//
+//
+//
 export const getEmailDetailsCount = async (data, pageNumber) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -158,9 +158,9 @@ export const handleUpdateSenderEmail = async (data, id) => {
     return error.response;
   }
 };
-// 
-// 
-// 
+//
+//
+//
 export const sendEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -169,7 +169,7 @@ export const sendEmail = async (data) => {
       Authorization: "Bearer " + authToken,
     },
   };
-  console.log(data)
+  console.log(data);
   try {
     const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/send-mail`,
@@ -240,6 +240,7 @@ export const handleRemoveTemplate = async (id) => {
   }
 };
 export const handleImageUpload = (blobInfo, progress, failure) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   return new Promise((resolve, reject) => {
     if (blobInfo.blob().size > 200 * 1024) {
       reject("Image size exceeds 200kb");
@@ -251,6 +252,8 @@ export const handleImageUpload = (blobInfo, progress, failure) => {
       "https://emailmarketing.queleadscrm.com/api/upload-image",
       true
     );
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
 
     const formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
@@ -330,9 +333,9 @@ export const handleDeleteImage = async (data) => {
     return error.response;
   }
 };
-// 
-// 
-// 
+//
+//
+//
 export const unsubscribeFromEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -371,9 +374,9 @@ export const unsubscribeFromQueLeadsMail = async (data) => {
     return error.response;
   }
 };
-// 
-// 
-// 
+//
+//
+//
 export const scheduleEmail = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
