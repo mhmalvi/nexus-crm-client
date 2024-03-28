@@ -4,6 +4,8 @@ import { Storage } from "../../../Components/Shared/utils/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   createSubscription,
   getPriceList,
@@ -13,6 +15,8 @@ import {
 import { handleLogout } from "./../../../Components/services/auth";
 import { Spin } from "antd";
 import { successNotification } from "../../../Components/Shared/Toast";
+import BillingForm from "../Method/BillingForm";
+import DueBillForm from "./DueBillForm";
 
 const PackageDue = () => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
@@ -27,35 +31,7 @@ const PackageDue = () => {
     userDetails.userInfo.subscription_id
   );
   const [subscriptionDetails, setSubscriptionDetails] = useState(null);
-
-  const subscribe = async (interval, package_name, price_id) => {
-    const userInfo = JSON.parse(localStorage.getItem("user_info"));
-    const response = await createSubscription(interval, package_name, price_id);
-
-    userInfo.package = package_name;
-    userInfo.interval = interval;
-    userInfo.subscription_id = response.data?.data?.id;
-    let modifiedDataString = JSON.stringify(userInfo);
-    setSubscriptionId(userInfo.subscription_id);
-
-    if (response.status === 200 || response.message === "success") {
-      setButtonClicked(null);
-      localStorage.setItem("user_info", modifiedDataString);
-      successNotification(
-        "You have subscribed to the " +
-          package_name.toUpperCase() +
-          " " +
-          interval +
-          " package."
-      );
-    } else if (response.status === 422) {
-      setButtonClicked(null);
-      successNotification("Cannot use the monthly subscription of this package");
-    } else {
-      setButtonClicked(null);
-      successNotification("Subscription already available");
-    }
-  };
+  const [subscriptionClicked, setSubscriptionClicked] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -72,12 +48,13 @@ const PackageDue = () => {
     productId !== null &&
       (async () => {
         const response = await getProduct(productId);
+
         setProductData((prevData) => ({
           ...prevData,
           response,
         }));
       })();
-  }, [productId, subscriptionDetails, subscriptionId]);
+  }, [productId, subscriptionId]);
 
   const logoutHandler = () => {
     handleLogout({
@@ -92,7 +69,10 @@ const PackageDue = () => {
     navigate("/login");
     window.location.reload();
   };
+  
+  
   const [hoverLogout, setHoverLogout] = useState(false);
+  const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   return (
     <div className="relative w-full h-screen flex items-center justify-center gap-8 p-8">
       {productData && priceDetails ? (
@@ -106,11 +86,11 @@ const PackageDue = () => {
               colorMode ? "text-slate-300" : "text-gray-800 "
             }`}
           >
-            {productData.response?.name} Package
+            {productData?.response?.name} Package
           </h1>
           {priceDetails.data.map((item, idx) => {
             return (
-              <div key={idx}>
+              <div key={idx + 1}>
                 <h1
                   className={` flex items-center justify-center gap-2 w-full m-0 py-2 px-4 2xl:text-3xl text-xl font-semibold ${
                     colorMode ? "text-slate-300" : "text-gray-800 "
@@ -134,15 +114,15 @@ const PackageDue = () => {
                         : "hover:disabled:bg-gray-800 hover:bg-brand-color bg-gray-800"
                     }`}
                     onClick={() => {
-                      subscribe(
-                        item.recurring.interval,
-                        productData.response.name,
-                        item.id
-                      );
-                      setButtonClicked(idx);
+                      setSubscriptionClicked({
+                        interval: item.recurring.interval,
+                        package_name: productData.response.name,
+                        price_id: item.id,
+                      });
+                      setButtonClicked(idx + 1);
                     }}
                   >
-                    {buttonClicked === idx ? (
+                    {buttonClicked === idx + 1 ? (
                       <Spin
                         indicator={
                           <LoadingOutlined
@@ -168,15 +148,15 @@ const PackageDue = () => {
       ) : (
         <h1>Loading...</h1>
       )}
-      {subscriptionDetails && (
-        <div
-          className={`w-[40vw] h-full border flex flex-col justify-around ${
-            colorMode ? "border-brand-color" : "border-gray-800"
-          } rounded-md `}
-        >
-          ok
-        </div>
+      {buttonClicked > 0 && (
+        <Elements stripe={stripePromise}>
+          <DueBillForm
+            subscriptionClicked={subscriptionClicked}
+            setButtonClicked={setButtonClicked}
+          />
+        </Elements>
       )}
+
       <div
         className="absolute top-0 right-0 flex items-center justify-center text-base cursor-pointer my-4"
         onClick={logoutHandler}

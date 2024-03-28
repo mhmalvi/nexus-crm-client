@@ -26,7 +26,6 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
     }
   }, [amount, requestedLeadDetails?.leadDetails]);
 
-  console.log(requestedLeadDetails);
 
   const handleSubmit = async (event) => {
     dispatch(setLoader(true));
@@ -39,20 +38,6 @@ const CardPaymentForm = ({ requestedLeadDetails, amount, setAmount }) => {
     if (error) {
       dispatch(setLoader(false));
     } else {
-      console.log({
-        user_id: requestedLeadDetails?.leadDetails?.student_id,
-        lead_id: requestedLeadDetails?.leadDetails?.lead_id,
-        campaign_id: requestedLeadDetails?.leadDetails?.campaign_id,
-        full_name: requestedLeadDetails?.leadDetails?.full_name,
-        user_email: requestedLeadDetails?.leadDetails?.student_email,
-        role_id: 6,
-        token: token.id,
-        client_id: requestedLeadDetails?.leadDetails?.client_id,
-        amount: parseFloat(amount),
-        course_code: requestedLeadDetails?.leadDetails?.course_code,
-        course_title: requestedLeadDetails?.leadDetails?.course_title,
-      });
-
       const paymentResponse = await handleAddEwayPaymentDetails({
         user_id: requestedLeadDetails?.leadDetails?.student_id,
         lead_id: requestedLeadDetails?.leadDetails?.lead_id,

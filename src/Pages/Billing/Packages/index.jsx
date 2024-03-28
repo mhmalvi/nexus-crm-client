@@ -73,7 +73,7 @@ const Packages = () => {
         }));
       })();
       
-  }, [productId, subscriptionDetails, subscriptionId]);
+  }, [productId, subscriptionId]);
 
   return (
     <div className="w-full flex items-center justify-center gap-8">
@@ -88,7 +88,7 @@ const Packages = () => {
               colorMode ? "text-slate-300" : "text-gray-800 "
             }`}
           >
-            {productData.response?.name} Package
+            {productData?.response?.name} Package
           </h1>
           {priceDetails.data.map((item, idx) => {
             return (

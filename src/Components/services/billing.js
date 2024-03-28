@@ -136,6 +136,7 @@ export const createSubscription = async (interval, package_name, price_id) => {
     interval: interval,
     package_name: package_name,
     price_id: price_id,
+    sub_id: JSON.parse(window.localStorage.getItem("subscription_id")),
   };
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {

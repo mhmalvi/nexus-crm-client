@@ -66,7 +66,7 @@ const BillingMethod = ({
     <>
       {detailsClicked.screen === "default" ? (
         hasBillingDetails ? (
-          <div className="flex flex-wrap items-center justify-around gap-8">
+          <div className="flex flex-wrap items-center justify-around gap-8 overflow-y-scroll">
             {/* MAP BILLING DETAILS HERE */}
             {totalSavedCards.length > 0 &&
               totalSavedCards.map((items, index) => {
