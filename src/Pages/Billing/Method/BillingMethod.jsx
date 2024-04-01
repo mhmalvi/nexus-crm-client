@@ -182,7 +182,7 @@ const BillingMethod = ({
                       </h1>
                     </div>
                     <div className="w-full flex items-center justify-between mt-2">
-                      <div className="flex flex-col">
+                      {/* <div className="flex flex-col">
                         <h1
                           className={`m-0 p-0 uppercase 2xl:text-sm text-xs ${
                             colorMode ? "text-slate-300" : "text-gray-800"
@@ -197,7 +197,7 @@ const BillingMethod = ({
                         >
                           {items.name}
                         </h1>
-                      </div>
+                      </div> */}
                       <div className="flex flex-col">
                         <h1
                           className={`m-0 p-0 uppercase text-base ${
@@ -265,7 +265,7 @@ const BillingMethod = ({
         )
       ) : (
         <Elements stripe={stripePromise}>
-          <BillingForm setDetailsClicked={setDetailsClicked} />
+          <BillingForm setDetailsClicked={setDetailsClicked} totalSavedCards={totalSavedCards}/>
         </Elements>
       )}
     </>
