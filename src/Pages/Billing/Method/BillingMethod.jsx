@@ -73,7 +73,7 @@ const BillingMethod = ({
                 return (
                   <div
                     key={index}
-                    className={`relative w-[26vw] rounded-md h-1/3 border ${
+                    className={`relative w-[26vw] rounded-md border ${
                       colorMode
                         ? "hover:border-slate-300 bg-gradient-to-r from-black to-gray-900 border-slate-700"
                         : "hover:border-gray-800 bg-gradient-to-r from-sky-300 to-purple-300 border-slate-400"

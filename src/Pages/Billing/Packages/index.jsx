@@ -25,7 +25,7 @@ const Packages = () => {
 
   const subscribe = async (interval, package_name, price_id) => {
     const userInfo = JSON.parse(localStorage.getItem("user_info"));
-    const response = await createSubscription(interval, package_name, price_id);
+    const response = await createSubscription(interval, package_name, price_id, subscriptionId);
 
     userInfo.package = package_name;
     userInfo.interval = interval;

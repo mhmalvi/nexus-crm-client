@@ -168,6 +168,7 @@ const Login = () => {
           "cust_id",
           loginResponse?.data.data?.customer_id || loginResponse?.data.data
         );
+        console.log(loginResponse);
         dispatch(addUserDetails(loginResponse?.data.data));
         dispatch(setLoader(false));
         successNotification("Successfully logged in.");
@@ -185,7 +186,10 @@ const Login = () => {
           } else if (loginResponse.data.data.active === 2) {
             navigate("/select-package");
           } else {
-            warningNotification("Please check your email for a verification link.");
+            console.log(loginResponse);
+            warningNotification(
+              "Please check your email for a verification link."
+            );
           }
         } else {
           alert("No Token");

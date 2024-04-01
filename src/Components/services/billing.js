@@ -130,13 +130,19 @@ export const updateDefaultCard = async (defaultCard) => {
   }
 };
 
-export const createSubscription = async (interval, package_name, price_id) => {
+export const createSubscription = async (
+  interval,
+  package_name,
+  price_id,
+  subscriptionId
+) => {
   const data = {
     customer_id: JSON.parse(window.localStorage.getItem("cust_id")),
     interval: interval,
     package_name: package_name,
     price_id: price_id,
-    sub_id: JSON.parse(window.localStorage.getItem("subscription_id")),
+    sub_id: subscriptionId,
+    // sub_id: JSON.parse(window.localStorage.getItem("subscription_id")),
   };
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -169,6 +175,25 @@ export const getPriceList = async () => {
   };
   try {
     const result = await axios.get(`https://api.stripe.com/v1/prices`, config);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const getAllProducts = async (productID) => {
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const config = {
+    headers: {
+      // Accept: "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `https://api.stripe.com/v1/products`,
+      config
+    );
     return result.data;
   } catch (error) {
     return error.response;
