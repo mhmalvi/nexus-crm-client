@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import { createCard } from "../../../Components/services/billing";
+import { createCard, deleteCard } from "../../../Components/services/billing";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import { errorNotification } from "../../../Components/Shared/Toast";
+import {
+  errorNotification,
+  successNotification,
+} from "../../../Components/Shared/Toast";
 
-const BillingForm = ({ setDetailsClicked }) => {
+const BillingForm = ({ setDetailsClicked, totalSavedCards }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state.user);
   const stripe = useStripe();
@@ -35,10 +38,25 @@ const BillingForm = ({ setDetailsClicked }) => {
       }));
 
       // const response =  await saveCardDetails(paymentDetails);
-      const response = await createCard(stripeToken);
-      if (response.cvc_check === "pass") {
-        setSaveButtonClicked(false);
-        window.location.reload();
+      const createResponse = await createCard(stripeToken);
+
+      if (createResponse.cvc_check === "pass") {
+        successNotification("Found Card Details. Checking for Duplicates..");
+
+        let duplicateFound = false;
+        totalSavedCards.forEach((item) => {
+          if (item.fingerprint === createResponse.fingerprint) {
+            const response = deleteCard(createResponse.id);
+            if (response) {
+              errorNotification("You have a duplicate ");
+            }
+            duplicateFound = true;
+          }
+        });
+        if (!duplicateFound) {
+          setSaveButtonClicked(false);
+          window.location.reload();
+        }
       }
     } catch (error) {
       setSaveButtonClicked(false);
@@ -46,7 +64,7 @@ const BillingForm = ({ setDetailsClicked }) => {
       console.error("Error saving card details:", error);
     }
   };
-
+  console.log(totalSavedCards);
   return (
     <div className="flex flex-col gap-4 w-full h-full">
       <div
@@ -79,7 +97,6 @@ const BillingForm = ({ setDetailsClicked }) => {
               id="card-element"
               onChange={(e) => {
                 setCardInputComplete(e.complete);
-                console.log(e.complete);
               }}
             />
           </div>
