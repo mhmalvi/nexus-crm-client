@@ -83,7 +83,7 @@ const Login = () => {
     };
   }, []);
 
-  const handleLoginReq = async (e) => {
+  const handleLoginReq = async () => {
     try {
       setLoginClicked(true);
       dispatch(setLoader(true));
@@ -114,28 +114,27 @@ const Login = () => {
         dispatch(addUserDetails(loginResponse?.data.data));
         dispatch(setCompanyId(loginResponse?.data.data?.company?.id));
         setLoginClicked(false);
+        successNotification("Successfully logged in.");
         if (
           !bookMarkedAccounts.some((account) => account?._ue_ === data?.email)
         ) {
           setAddBookMarkOpen(true);
+        } else if (
+          loginResponse.data.data.verification_status === 2 &&
+          loginResponse.data.data.active === 1
+        ) {
+          navigate("/dashboard");
+        } else if (
+          loginResponse.data.data.verification_status === 1 &&
+          loginResponse.data.data.active === 1
+        ) {
+          navigate("/setup-your-profile");
+        } else if (loginResponse.data.data.active === 2) {
+          navigate("/select-package");
         } else {
-          if (
-            loginResponse.data.data.verification_status === 2 &&
-            loginResponse.data.data.active === 1
-          ) {
-            navigate("/dashboard");
-          } else if (
-            loginResponse.data.data.verification_status === 1 &&
-            loginResponse.data.data.active === 1
-          ) {
-            navigate("/setup-your-profile");
-          } else if (loginResponse.data.data.active === 2) {
-            navigate("/select-package");
-          } else {
-            warningNotification(
-              "Please check your email for a verification link."
-            );
-          }
+          warningNotification(
+            "Please check your email for a verification link."
+          );
         }
       } else {
         setLoginClicked(false);
@@ -157,8 +156,13 @@ const Login = () => {
       loginFormData.append("password", credentials?._up_?.split("_")[0]);
       const loginResponse = await handleLogin(loginFormData);
 
-      if (loginResponse?.status === 200 && loginResponse?.data) {
+      if (
+        loginResponse?.data &&
+        loginResponse?.data.message === "Account not verified"
+      ) {
+        warningNotification("Please check your email for a verification link.");
         setLoginClicked(false);
+      } else if (loginResponse?.status === 200 && loginResponse?.data) {
         Storage.setItem("user_info", loginResponse?.data.data);
         Storage.setItem(
           "auth_tok",
@@ -168,41 +172,38 @@ const Login = () => {
           "cust_id",
           loginResponse?.data.data?.customer_id || loginResponse?.data.data
         );
-        console.log(loginResponse);
-        dispatch(addUserDetails(loginResponse?.data.data));
+        dispatch(updateBearerToken(loginResponse?.data.token));
         dispatch(setLoader(false));
+        dispatch(addUserDetails(loginResponse?.data.data));
+        dispatch(setCompanyId(loginResponse?.data.data?.company?.id));
+        setLoginClicked(false);
         successNotification("Successfully logged in.");
-        if (Storage.getItem("auth_tok")) {
-          if (
-            loginResponse.data.data.verification_status === 2 &&
-            loginResponse.data.data.active === 1
-          ) {
-            navigate("/dashboard");
-          } else if (
-            loginResponse.data.data.verification_status === 1 &&
-            loginResponse.data.data.active === 1
-          ) {
-            navigate("/setup-your-profile");
-          } else if (loginResponse.data.data.active === 2) {
-            navigate("/select-package");
-          } else {
-            console.log(loginResponse);
-            warningNotification(
-              "Please check your email for a verification link."
-            );
-          }
+        if (loginResponse?.data.data.role_id === 1) {
+          navigate("/dashboard");
+        } else if (
+          loginResponse.data.data.verification_status === 2 &&
+          loginResponse.data.data.active === 1
+        ) {
+          navigate("/dashboard");
+        } else if (
+          loginResponse.data.data.verification_status === 1 &&
+          loginResponse.data.data.active === 1
+        ) {
+          navigate("/setup-your-profile");
+        } else if (loginResponse.data.data.active === 2) {
+          navigate("/select-package");
         } else {
-          alert("No Token");
+          warningNotification(
+            "Please check your email for a verification link."
+          );
         }
       } else {
         setLoginClicked(false);
-        dispatch(setLoader(false));
         warningNotification("Oops! Wrong email or password.");
       }
     } catch (error) {
       console.error("Error during one-click login:", error);
       setLoginClicked(false);
-      dispatch(setLoader(false));
       errorNotification("An error occurred during login.");
     }
   };
@@ -357,7 +358,7 @@ const Login = () => {
                         htmlFor="email"
                         className="block mb-2 text-sm text-white"
                       >
-                        {role === 1 ? "ABN Number" : "Email"}
+                        Email
                       </label>
                       <Input
                         size="large"

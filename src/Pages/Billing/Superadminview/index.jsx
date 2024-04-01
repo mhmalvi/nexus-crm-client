@@ -8,15 +8,13 @@ const Superadminview = () => {
   const userDetails = useSelector((state) => state?.user);
   const [addMoreClicked, setAddMoreClicked] = useState(false);
   const [productList, setProductList] = useState(null);
-
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       const response = await getAllProducts();
       setProductList(response);
-    })();
-  }, []);
-
-  console.log(productList);
+    };
+    fetchData();
+  }, [productList]);
 
   return (
     <div className="flex flex flex-grow gap-4 w-full h-full mx-5 ">
@@ -44,13 +42,17 @@ const Superadminview = () => {
           </div>
         ) : (
           <div className="w-full h-full bg-brand-color rounded-b-md p-4">
-            {productList.data !== null ? (
-              productList?.data.map((item, index) => {
-                return <h1>{item.name}</h1>;
-              })
-            ) : (
-              <h1>No packages yet.</h1>
-            )}
+            {productList &&
+              productList.data.map((items, index) => {
+                return (
+                  <h1
+                    key={index}
+                    className="w-full px-4 py-2 flex items-center bg-slate-300 rounded-md text-center"
+                  >
+                    {items.name}
+                  </h1>
+                );
+              })}
           </div>
         )}
       </div>
