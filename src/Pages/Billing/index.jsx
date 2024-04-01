@@ -45,8 +45,8 @@ const Billing = () => {
 
   return (
     <div className="flex items-start justify-center w-full h-screen py-8">
-      {userDetails?.userInfo?.role_id === 1 ? (
-        <Superadminview/>
+      {userDetails.userInfo.role_id === 1 ? (
+        <Superadminview />
       ) : (
         <div className="flex flex-col flex-grow gap-4 w-full h-full mx-5 ">
           {/* MENU BAR */}
@@ -125,7 +125,7 @@ const Billing = () => {
                 customerDetails={customerDetails}
               />
             )}
-            {activeItem === "Billing History" && <BillingHistory/>}
+            {activeItem === "Billing History" && <BillingHistory />}
             {activeItem === "Packages" && <Packages />}
           </div>
         </div>

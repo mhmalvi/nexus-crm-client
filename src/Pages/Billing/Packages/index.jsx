@@ -43,6 +43,9 @@ const Packages = () => {
           interval +
           " package."
       );
+      setTimeout(()=>{
+        window.location.reload()
+      },[3000])
     } else if (response.status === 422) {
       setButtonClicked(null);
       successNotification("Cannot use the monthly subscription of this package");

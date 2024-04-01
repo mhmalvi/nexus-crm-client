@@ -141,8 +141,11 @@ export const createSubscription = async (
     interval: interval,
     package_name: package_name,
     price_id: price_id,
-    sub_id: subscriptionId,
-    // sub_id: JSON.parse(window.localStorage.getItem("subscription_id")),
+    sub_id:
+      subscriptionId ||
+      null ||
+      JSON.parse(window.localStorage.getItem("subscription_id")),
+    // sub_id: ,
   };
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -180,7 +183,7 @@ export const getPriceList = async () => {
     return error.response;
   }
 };
-export const getAllProducts = async (productID) => {
+export const getAllProducts = async () => {
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
   const config = {
     headers: {

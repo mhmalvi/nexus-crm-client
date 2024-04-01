@@ -58,9 +58,9 @@ const SuperAdminDashboard = () => {
   };
 
   return (
-    <div>
+    <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8 relative ">
       {/* <Companies /> */}
-      <div className="flex flex-col gap-8 h-[90vh] w-[92vw] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-4">
+      <div className="flex flex-col gap-8 h-[90vh] w-[92vw] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-scroll p-4">
         <div className="flex flex-wrap justify-between items-center">
           <h1
             className={`text-xl ${
@@ -88,33 +88,35 @@ const SuperAdminDashboard = () => {
           </div>
         </div>
 
-        {/* Loader */}
-        <div>
-          {loadingDetails && (
-            <div className="w-screen h-screen text-7xl absolute z-50 flex justify-center items-center bg-white bg-opacity-70">
-              <Loading />
-            </div>
-          )}
-        </div>
-
         {companies.length !== 0 ? (
-          <div className="flex flex-wrap gap-4 justify-center items-center">
+          <div className="w-full flex flex-wrap  gap-4 justify-center items-center">
             {companies?.map((company, i) => (
               <Link
                 key={i}
                 to={`company/${company?.id}`}
-                className={`border w-98 h-48 ${
+                className={`border w-1/4 flex flex-wrap flex-grow items-center justify- ${
                   colorMode ? "border-slate-300" : "border-gray-800"
-                } p-4 rounded-md cursor-pointer`}
+                } p-4 rounded-md cursor-pointer hover:scale-[0.98] ease-in duration-100`}
                 onClick={() => {
                   dispatch(setCompanyId(company?.id));
                 }}
               >
-                <div className="flex flex-col items-center justify-center h-full relative">
-                  <div className={`${colorMode?"fill-slate-300":"fill-gray-800"} w-28`}>
+                <div className="flex flex-col items-center justify-center h-full relative w-full">
+                  <div
+                    className={`${
+                      colorMode ? "fill-slate-300" : "fill-gray-800"
+                    } w-28`}
+                  >
                     <Icons.Buildings />
                   </div>
-                  <div>
+                  <h1
+                    className={`font-semibold text-base text-center m-0 p-0 ${
+                      colorMode ? " text-slate-300" : " text-gray-800"
+                    }`}
+                  >
+                    {company?.name}
+                  </h1>
+                  <div className="absolute top-0 right-0">
                     {company?.active === 1 ? (
                       <div
                         className={`absolute text-xs top-0 -right-1  cursor-pointer px-4 py-2 border font-semibold rounded-md ${
@@ -131,13 +133,6 @@ const SuperAdminDashboard = () => {
                       </div>
                     )}
                   </div>
-                  <h1
-                    className={`font-semibold text-base text-center m-0 p-0 ${
-                      colorMode ? " text-slate-300" : " text-gray-800"
-                    }`}
-                  >
-                    {company?.name}
-                  </h1>
                 </div>
               </Link>
             ))}
