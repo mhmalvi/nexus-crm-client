@@ -40,7 +40,6 @@ export const getCardDetails = async () => {
     return error.response;
   }
 };
-
 export const createCard = async (stripeToken) => {
   const custId = JSON.parse(window.localStorage.getItem("cust_id"));
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
@@ -88,26 +87,6 @@ export const deleteCard = async (cardId) => {
     return error.response;
   }
 };
-
-export const getCustomerDetails = async () => {
-  const custId = JSON.parse(window.localStorage.getItem("cust_id"));
-  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
-  const config = {
-    headers: {
-      // "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Bearer " + secretKey,
-    },
-  };
-  try {
-    const result = await axios.get(
-      `https://api.stripe.com/v1/customers/${custId}`,
-      config
-    );
-    return result;
-  } catch (error) {
-    return error.response;
-  }
-};
 export const updateDefaultCard = async (defaultCard) => {
   const custId = JSON.parse(window.localStorage.getItem("cust_id"));
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
@@ -129,6 +108,27 @@ export const updateDefaultCard = async (defaultCard) => {
     return error.response;
   }
 };
+
+export const getCustomerDetails = async () => {
+  const custId = JSON.parse(window.localStorage.getItem("cust_id"));
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const config = {
+    headers: {
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `https://api.stripe.com/v1/customers/${custId}`,
+      config
+    );
+    return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 
 export const createSubscription = async (
   interval,
@@ -183,6 +183,24 @@ export const getPriceList = async () => {
     return error.response;
   }
 };
+export const addPrice = async () => {
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  // const data = qs.stringify({ name: name });
+  const config = {
+    headers: {
+      // Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.post(`https://api.stripe.com/v1/prices`, config);
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const getAllProducts = async () => {
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
   const config = {
@@ -221,6 +239,66 @@ export const getProduct = async (productID) => {
     return error.response;
   }
 };
+export const createProduct = async (name) => {
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const data = qs.stringify({ name: name });
+  const config = {
+    headers: {
+      // Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.post(
+      `https://api.stripe.com/v1/products`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const updateProduct = async (data, productID) => {
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const config = {
+    headers: {
+      // Accept: "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `https://api.stripe.com/v1/products/${productID}`,
+      data,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const deleteProduct = async (productID) => {
+  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const config = {
+    headers: {
+      // Accept: "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + secretKey,
+    },
+  };
+  try {
+    const result = await axios.delete(
+      `https://api.stripe.com/v1/products/${productID}`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const getSubscriptionDetails = async (subID) => {
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
@@ -241,7 +319,6 @@ export const getSubscriptionDetails = async (subID) => {
     return error.response;
   }
 };
-
 export const getCustomerTransactions = async () => {
   const custId = JSON.parse(window.localStorage.getItem("cust_id"));
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
