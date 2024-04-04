@@ -865,7 +865,7 @@ const Sidebar = ({ active, setActive }) => {
                 defaultChecked
               />
             </div>
-            <div className="flex justify-center items-center">
+            {/* <div className="flex justify-center items-center">
               <button
                 onClick={toggleHelp}
                 className={`border ${
@@ -878,7 +878,7 @@ const Sidebar = ({ active, setActive }) => {
               >
                 Help
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 

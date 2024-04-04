@@ -67,8 +67,8 @@ function App() {
     Storage.removeItem("user_info");
     Storage.removeItem("fac_t");
     navigate("/login");
-    window.location.reload();
     setState("Idle");
+    window.location.reload();
   };
 
   const onActive = () => {

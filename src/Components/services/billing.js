@@ -129,7 +129,6 @@ export const getCustomerDetails = async () => {
   }
 };
 
-
 export const createSubscription = async (
   interval,
   package_name,
@@ -183,18 +182,41 @@ export const getPriceList = async () => {
     return error.response;
   }
 };
-export const addPrice = async () => {
+export const addPrice = async (priceDetails) => {
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
-  // const data = qs.stringify({ name: name });
   const config = {
     headers: {
-      // Accept: "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
       Authorization: "Bearer " + secretKey,
     },
   };
   try {
-    const result = await axios.post(`https://api.stripe.com/v1/prices`, config);
+    const result = await axios.post(
+      `https://crm-payment.queleadscrm.com/api/create-prices`,
+      priceDetails,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+export const getProductPrice = async (productId) => {
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const config = {
+    headers: {
+      Accept: "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  console.log(productId);
+  try {
+    const result = await axios.post(
+      `https://crm-payment.queleadscrm.com/api/prices`,
+      productId,
+      config
+    );
     return result.data;
   } catch (error) {
     return error.response;
@@ -202,20 +224,19 @@ export const addPrice = async () => {
 };
 
 export const getAllProducts = async () => {
-  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
-      // Accept: "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Bearer " + secretKey,
+      Accept: "application/json",
+      Authorization: "Bearer " + authToken,
     },
   };
   try {
     const result = await axios.get(
-      `https://api.stripe.com/v1/products`,
+      `https://crm-payment.queleadscrm.com/api/products`,
       config
     );
-    return result.data;
+    return result.data[0].data;
   } catch (error) {
     return error.response;
   }
