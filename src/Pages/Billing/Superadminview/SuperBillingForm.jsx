@@ -12,11 +12,13 @@ const SuperBillingForm = () => {
   const [packageName, setPackageName] = useState(null);
   const [checking, setChecking] = useState(false);
   const [packageInfo, setPackageInfo] = useState(null);
+  const [packageId, setPackageId] = useState(null);
 
   const handlePackageName = async () => {
     setChecking(true);
     const data = packageName;
     const response = await createProduct(data);
+    setPackageId(response);
     if (response.data?.error) {
       warningNotification(response.data.error.message);
       setChecking(false);
@@ -95,7 +97,7 @@ const SuperBillingForm = () => {
                 Price
               </label>
               <div className="w-full flex flex-col gap-8 h-full ">
-                <PriceForm />
+                {packageId && <PriceForm packageId={packageId} />}
               </div>
             </div>
           </div>
