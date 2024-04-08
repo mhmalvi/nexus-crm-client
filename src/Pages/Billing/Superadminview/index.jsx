@@ -223,7 +223,7 @@ const Superadminview = () => {
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
-                          Price: $ {items.unit_amount}
+                          Price: $ {items.unit_amount/100}
                         </h1>
                         <h1
                           className={` m-0 p-0 text-lg ${
