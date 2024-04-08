@@ -183,11 +183,11 @@ export const getPriceList = async () => {
   }
 };
 export const addPrice = async (priceDetails) => {
-  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
       Accept: "application/json",
-      Authorization: "Bearer " + secretKey,
+      Authorization: "Bearer " + authToken,
     },
   };
   try {
