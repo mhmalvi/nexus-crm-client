@@ -120,7 +120,7 @@ const Packages = () => {
                           colorMode ? "text-slate-300" : "text-gray-800"
                         }`}
                       >
-                        $ {items.unit_amount} / {items.recurring.interval}
+                        $ {items.unit_amount/100} / {items.recurring.interval}
                       </h1>
                       <button
                         onClick={() => {

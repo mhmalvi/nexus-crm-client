@@ -94,8 +94,8 @@ const AdminDashboard = () => {
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const subscription = userDetails.userInfo.package;
   const endDate =
-    subscription === "trial" &&
-    new Date(userDetails.userInfo.end_date.date || null);
+    subscription === "trial" && new Date(userDetails.userInfo.end_date || null);
+  var myDate = new Date(endDate * 1000);
 
   const handleViewed = async () => {
     try {
@@ -737,26 +737,9 @@ const AdminDashboard = () => {
             >
               Trial exprires on
             </h1>
-            <div className="flex gap-2 ">
-              <h1 className={`m-0 p-0 text-xs font-semibold text-slate-300`}>
-                Date:
-              </h1>
+            <div className="flex gap-2 px-4">
               <h1 className={`m-0 p-0 text-xs font-semibold text-red-300`}>
-                {endDate.getUTCFullYear() +
-                  "-" +
-                  endDate.getUTCMonth() +
-                  "-" +
-                  endDate.getDate()}
-              </h1>
-            </div>
-            <div className="flex gap-2 py-2 pr-4">
-              <h1 className={`m-0 p-0 text-xs font-semibold text-slate-300`}>
-                Time:
-              </h1>
-              <h1 className={`m-0 p-0 text-xs font-semibold text-red-300 `}>
-                {endDate.getHours() % 12 || 12}
-                <span className="animate-pulse text-slate-300"> : </span>
-                {endDate.getMinutes()} {endDate.getHours() < 12 ? "AM" : "PM"}
+                {myDate.toGMTString()}
               </h1>
             </div>
           </div>
