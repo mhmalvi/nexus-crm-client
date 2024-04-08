@@ -66,7 +66,7 @@ const BillingMethod = ({
     <>
       {detailsClicked.screen === "default" ? (
         hasBillingDetails ? (
-          <div className="flex flex-wrap items-center justify-around gap-8 overflow-y-scroll">
+          <div className="w-full flex flex-wrap items-start gap-8 overflow-y-scroll">
             {/* MAP BILLING DETAILS HERE */}
             {totalSavedCards.length > 0 &&
               totalSavedCards.map((items, index) => {
@@ -237,7 +237,7 @@ const BillingMethod = ({
 
             {/* ADD NEW CARD */}
             <div
-              className={`hover:border-brand-color flex justify-center items-center relative min-w-[25vw] h-1/3 rounded-md shadow-md cursor-pointer ease-in duration-200 border ring-inset ${
+              className={`hover:border-brand-color flex justify-center items-center relative w-[26vw] h-1/3 rounded-md shadow-md cursor-pointer ease-in duration-200 border ring-inset ${
                 colorMode ? "border-slate-300" : "border-gray-800"
               }`}
               onClick={() => {

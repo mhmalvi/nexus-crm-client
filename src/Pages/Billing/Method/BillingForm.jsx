@@ -64,7 +64,6 @@ const BillingForm = ({ setDetailsClicked, totalSavedCards }) => {
       console.error("Error saving card details:", error);
     }
   };
-  console.log(totalSavedCards);
   return (
     <div className="flex flex-col gap-4 w-full h-full">
       <div
