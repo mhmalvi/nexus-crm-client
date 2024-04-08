@@ -210,7 +210,6 @@ export const getProductPrice = async (productId) => {
       Authorization: "Bearer " + authToken,
     },
   };
-  console.log(productId);
   try {
     const result = await axios.post(
       `https://crm-payment.queleadscrm.com/api/prices`,
