@@ -76,14 +76,20 @@
   border-bottom: 0.5px solid #cbd5e1;
   color: #cbd5e1;
 }
-.reminderBodyWhite .rbc-month-row .rbc-day-bg {
+/* .reminderBodyWhite .rbc-month-row .rbc-day-bg {
   border: 0.5px solid #1f2937;
-}
+} */
 .reminderBodyWhite .rbc-month-row {
   border-top: none;
 }
 .reminderBodyDark .rbc-day-bg {
   border: 0.2px solid #1f2937;
+}
+.reminderBodyWhite .rbc-day-bg {
+  border: 0.1px solid #151c2520;
+}
+.rbc-today {
+  background-color: #7037ff;
 }
 .reminderBodyDark .rbc-month-row {
   border-top: none;
