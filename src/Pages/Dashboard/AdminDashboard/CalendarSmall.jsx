@@ -95,7 +95,7 @@ const CalendarSmall = ({
           }
           for (let i = start; i < end; i++) {
             monthOptions.push(
-              <Select.Option key={i} value={i} className="month-item">
+              <Select.Option key={i} value={i + 1} className="month-item">
                 {months[i]}
               </Select.Option>
             );

@@ -75,13 +75,14 @@ const EditCourseDetails = ({
       setLoading(true);
       const result = await getCourseDetailById(id);
       if (result) {
-        setTitle(result?.data?.course_title);
+        setTitle(result?.data?.data?.course_title);
         setLoading(false);
       } else {
         setLoading(true);
       }
     })();
   }, [id]);
+  console.log(title)
   return (
     <>
       <Modal
@@ -106,9 +107,10 @@ const EditCourseDetails = ({
               <Form.Item >
                 <h1 className="!text-slate-300">Course Title</h1>
                 <Input
-                  value={title}
+                  defaultValue={title}
                   required
                   onChange={(e) => setTitle(e.target.value)}
+                  className="!bg-transparent !rounded-md"
                 />
                 {!title && titleShow && (
                   <p className="text-[red]">Title field can not be empty!</p>
