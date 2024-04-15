@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import dayLocaleData from "dayjs/plugin/localeData";
 import { Calendar, Radio, Select } from "antd";
-import { useMediaQuery } from "react-responsive";
 import { useSelector } from "react-redux";
 dayjs.extend(dayLocaleData);
 const CalendarSmall = ({
@@ -73,7 +72,7 @@ const CalendarSmall = ({
   return (
     <div>
       <Calendar
-        className={colorMode ? "calendarBodyDark" : "calendarBodyWhite"}
+        className={colorMode ? "calendarBodyDark" : "calendarBodyLight"}
         fullscreen={false}
         locale={{
           lang: {
@@ -123,10 +122,10 @@ const CalendarSmall = ({
               </h1>
               <div
                 className={`${
-                  colorMode ? "calendarHeadDark" : "calendarHeadWhite"
+                  colorMode ? "calendarHeadDark" : "calendarHeadLight"
                 } flex flex-col items-center gap-2 border-b border-brand-color`}
               >
-                <div className="flex w-full justify-between ">
+                <div className="flex w-full calendarAction">
                   <Radio.Group
                     size="small"
                     onChange={(e) => {
@@ -141,7 +140,7 @@ const CalendarSmall = ({
                     className={
                       colorMode
                         ? "calendarDropHeadDark"
-                        : "calendarDropHeadWhite"
+                        : "calendarDropHeadLight"
                     }
                   >
                     <Select
@@ -162,7 +161,7 @@ const CalendarSmall = ({
                     className={
                       colorMode
                         ? "calendarDropHeadDark"
-                        : "calendarDropHeadWhite"
+                        : "calendarDropHeadLight"
                     }
                   >
                     <Select
