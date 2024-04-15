@@ -357,7 +357,7 @@ const Payment = () => {
             syncLeads={null}
           />
         </div>
-        <div className="flex flex-col justify-between items-center ">
+        <div className="flex flex-col gap-8 justify-start items-center ">
           <div className="w-full ">
             <NoticeForm layout="Payment" setSearchInput={setSearchInput} />
           </div>
