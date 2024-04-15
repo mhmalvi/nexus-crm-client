@@ -43,14 +43,12 @@ const CourseList = ({
     clearFilters();
     setSearchText("");
   };
-  //get data from localStorage to hide the edit button
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("user_info"));
     if (userDetails) {
       setUserData(userDetails);
     }
   }, []);
-  console.log("udata: ", userData);
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -143,14 +141,8 @@ const CourseList = ({
       dataIndex: "course_code",
       key: "course_code",
       render: (course_code, i) => (
-        <h4
-          key={i}
-          className="cursor-pointer uppercase"
-          style={{
-            textTransform: "uppercase",
-          }}
-        >
-          {course_code?.toUpperCase()}
+        <h4 key={i} className="cursor-pointer !uppercase !m-0 !p-0">
+          {course_code}
         </h4>
       ),
       ...getColumnSearchProps("course_code"),
@@ -161,7 +153,10 @@ const CourseList = ({
       key: "course_title",
       ...getColumnSearchProps("course_title"),
       render: (course_title, i) => (
-        <h4 key={i} className="cursor-pointer uppercase">
+        <h4
+          key={i}
+          className="cursor-pointer !uppercase !text-left"
+        >
           {course_title}
         </h4>
       ),
@@ -173,7 +168,6 @@ const CourseList = ({
       key: "course_title",
       align: "center",
       render: (_, record, i) => {
-        console.log("record", record);
         return (
           <div key={i} className="flex gap-2 justify-center">
             <Button
@@ -183,7 +177,7 @@ const CourseList = ({
                 setCourseDetailsOpen(true);
                 setSelectedCourse(record);
               }}
-              className="!rounded-md !bg-[#ffffff7f]"
+              className="!rounded-md !bg-[#ffffff7f] hover:!border-brand-color hover:!text-brand-color"
             ></Button>
             {userData?.role_id === 1 ||
               (userData?.role_id === 3 && (
@@ -194,7 +188,7 @@ const CourseList = ({
                     showModal();
                     setCourseId(record?.id);
                   }}
-                  className="!rounded-md !bg-[#ffffff7f]"
+                  className="!rounded-md !bg-[#ffffff7f] hover:!border-brand-color hover:!text-brand-color"
                 ></Button>
               ))}
           </div>
@@ -239,6 +233,7 @@ const CourseList = ({
           // loading={locale}
           columns={courseLinstTableHeaders}
           dataSource={courses}
+          align="left"
           pagination={{
             defaultPageSize: 20,
             onChange: (pageNum) => {
