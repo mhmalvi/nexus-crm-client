@@ -10,7 +10,7 @@ import { Spin } from "antd";
 import { successNotification } from "../../../Components/Shared/Toast";
 import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../../Components/services/auth";
-import {Storage} from "../../../Components/Shared/utils/store"
+import { Storage } from "../../../Components/Shared/utils/store";
 
 const Packages = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
@@ -138,14 +138,15 @@ const Packages = () => {
                             item.product.name,
                             items.id
                           );
-                          setButtonClicked(index);
+                          setButtonClicked(items);
                         }}
                         disabled={
-                          interval === items.recurring.interval || disableButton
+                          interval === items.recurring.interval &&
+                          userDetails.userInfo.package === item.product.name
                         }
                         className="disabled:opacity-20 disabled:hover:bg-brand-color disabled:hover:text-slate-300 disabled:cursor-not-allowed px-4 py-2 w-full bg-brand-color text-slate-300 rounded-md border border-brand-color hover:bg-slate-300 hover:text-brand-color ease-in duration-100"
                       >
-                        {buttonClicked === index ? (
+                        {buttonClicked === items ? (
                           <Spin
                             indicator={
                               <LoadingOutlined
