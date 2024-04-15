@@ -621,7 +621,7 @@ successNotification("Company details updated successfully.");
                 />
               )}
             </div>
-            <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300 w-full">
+            {/* <div className="font-normal flex items-center  border-[#ffffff55] text-slate-300 w-full">
               <span
                 className={`w-48 ${
                   colorMode ? "text-slate-300" : "text-gray-800"
@@ -675,7 +675,7 @@ successNotification("Company details updated successfully.");
                   No Package Yet
                 </h1>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
