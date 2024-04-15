@@ -17,8 +17,11 @@
   border: 1px solid #1f2937;
   color: #1f2937;
 }
+.rbc-month-row {
+  border: none;
+}
 .reminderBodyDark .rbc-toolbar button {
-  border: 1px solid #cbd5e1;
+  border: 0.5px solid #cbd5e1;
   color: #cbd5e1;
 }
 .reminderBodyWhite .rbc-toolbar button:focus {
@@ -49,7 +52,7 @@
 }
 .reminderBodyDark .rbc-time-view,
 .reminderBodyDark .rbc-month-view {
-  border: 1px solid #cbd5e1;
+  border: 0.5px solid #cbd5e1;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -68,9 +71,9 @@
   color: #1f2937;
 }
 .reminderBodyDark .rbc-header {
-  border-right: 1px solid #cbd5e1;
-  border-left: 1px solid #cbd5e1;
-  border-bottom: 1px solid #cbd5e1;
+  border-right: 0.5px solid #cbd5e1;
+  border-left: 0.5px solid #cbd5e1;
+  border-bottom: 0.5px solid #cbd5e1;
   color: #cbd5e1;
 }
 .reminderBodyWhite .rbc-month-row .rbc-day-bg {
@@ -80,7 +83,7 @@
   border-top: none;
 }
 .reminderBodyDark .rbc-day-bg {
-  border: 0.5px solid #cbd5e1;
+  border: 0.2px solid #1f2937;
 }
 .reminderBodyDark .rbc-month-row {
   border-top: none;

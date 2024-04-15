@@ -32,9 +32,6 @@
   margin: 0;
   text-align: center;
 }
-/* .courseTableDark .ant-table-container::after{
-  background-color: #1b0538;
-} */
 .courseTableDark th {
   padding: 18px 18px 18px 0;
   text-align: left;
@@ -52,10 +49,11 @@
 .courseTableDark .ant-table-tbody tr td {
   border-bottom: 1px solid #c0c0c02f !important;
   border-right: 1px solid #c0c0c02f !important;
+  text-align: left !important;
 }
 .courseTableDark .ant-table-thead tr th {
   border-right: 1px solid #c0c0c02f !important;
-  text-align: center;
+  text-align: left;
   font-weight: 600;
   backdrop-filter: blur(8px);
   /* background-color: #ffffffaf; */
@@ -284,4 +282,42 @@
 .ant-table-tbody > tr.ant-table-row:hover > td,
 .ant-table-tbody > tr > td.ant-table-cell-row-hover {
   background: #00000022;
+}
+
+.courseModal .ant-modal-content {
+  width: 100%;
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.courseModal .ant-modal-content button {
+  color: #cbd5e1;
+  border: none;
+  border-radius: 8px;
+}
+.courseModal .ant-modal-footer button:nth-child(1) {
+  background-color: #cbd5e1;
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+}
+.courseModal .ant-modal-footer button:nth-child(1):hover {
+  color: #7037ff;
+  border: none;
+  border-radius: 8px;
+}
+.courseModal .ant-modal-footer button:nth-child(2) {
+  background-color: #7037ff;
+  border: none;
+  border-radius: 8px;
+}
+.courseModal .ant-modal-footer button:nth-child(2):hover {
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
 }

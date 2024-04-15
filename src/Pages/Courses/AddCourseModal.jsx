@@ -69,7 +69,7 @@ const AddCourseModal = ({
         onOk={onAdd}
         okText={"Add"}
       >
-        <div className="flex flex-col gap-4 ">
+        <div className="flex flex-col gap-4">
           <h1 className="p-0 m-0 text-lg border-b border-brand-color text-slate-300">
             Add Course
           </h1>
@@ -79,6 +79,7 @@ const AddCourseModal = ({
               value={courseCode}
               onChange={(e) => setCourseCode(e.target.value)}
               placeholder="Enter course code"
+              className="!bg-transparent !rounded-md"
             />
           </div>
           <div className="courseInputs">
@@ -87,6 +88,7 @@ const AddCourseModal = ({
               value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
               placeholder="Enter course name"
+              className="!bg-transparent !rounded-md"
             />
           </div>
           <div className="courseInputs">
@@ -95,6 +97,7 @@ const AddCourseModal = ({
               value={courseDsc}
               onChange={(e) => setCourseDsc(e.target.value)}
               placeholder="Enter course description"
+              className="!bg-transparent !rounded-md"
             />
           </div>
         </div>
