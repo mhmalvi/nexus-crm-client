@@ -8,19 +8,22 @@ import {
 } from "../../../Components/services/billing";
 import { Spin } from "antd";
 import { successNotification } from "../../../Components/Shared/Toast";
+import { useNavigate } from "react-router-dom";
+import { handleLogout } from "../../../Components/services/auth";
+import {Storage} from "../../../Components/Shared/utils/store"
 
 const Packages = () => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user);
   const [productData, setProductData] = useState(null);
   const [buttonClicked, setButtonClicked] = useState(null);
-  const [subscriptionId, setSubscriptionId] = useState(
-    userDetails.userInfo.subscription_id
-  );
+  const subscriptionId = userDetails.userInfo.subscription_id;
   const interval = userDetails.userInfo.interval;
+  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
+  const navigate = useNavigate();
 
   const subscribe = async (interval, package_name, price_id) => {
-    const userInfo = JSON.parse(localStorage.getItem("user_info"));
+    // const userInfo = JSON.parse(localStorage.getItem("user_info"));
     const response = await createSubscription(
       interval,
       package_name,
@@ -28,31 +31,34 @@ const Packages = () => {
       subscriptionId
     );
 
-    userInfo.package = package_name;
-    userInfo.interval = interval;
-    userInfo.subscription_id = response.data?.data?.id;
-    let modifiedDataString = JSON.stringify(userInfo);
-    setSubscriptionId(userInfo.subscription_id);
-
     if (response.status === 200 || response.message === "success") {
+      Storage.removeItem("auth_tok");
+      Storage.removeItem("user_info");
+      Storage.removeItem("fac_t");
+      Storage.removeItem("cust_id");
       setButtonClicked(false);
-      localStorage.setItem("user_info", modifiedDataString);
+
       successNotification(
         "You have subscribed to the " +
           package_name.toUpperCase() +
           " " +
           interval +
-          " package."
+          " package. Please Login Again."
       );
-      setTimeout(() => {
-        window.location.reload();
-      }, [3000]);
+      navigate("/login");
+
+      await handleLogout({
+        user_id: userDetails.userInfo.user_id,
+        email: userDetails.userInfo.email,
+        token: authToken,
+      });
     } else if (response.status === 422) {
       successNotification(
         "Cannot use the monthly subscription of this package"
       );
       setButtonClicked(false);
     } else {
+      navigate("/login");
       successNotification("Subscription already available");
       setButtonClicked(false);
     }
@@ -105,14 +111,17 @@ const Packages = () => {
               </h1>
               <div className="w-full flex flex-col items-center gap-4 py-2 overflow-y-scroll">
                 {item.price.data.map((items, index) => {
+                  console.log(userDetails.userInfo.package);
                   const disableButton =
-                    (interval === "year" &&
+                    userDetails.userInfo.package === item.product.name &&
+                    ((interval === "year" &&
                       ["week", "month", "day"].includes(
                         items.recurring.interval
                       )) ||
-                    (interval === "month" &&
-                      ["week", "day"].includes(items.recurring.interval)) ||
-                    (interval === "week" && items.recurring.interval === "day");
+                      (interval === "month" &&
+                        ["week", "day"].includes(items.recurring.interval)) ||
+                      (interval === "week" &&
+                        items.recurring.interval === "day"));
                   return (
                     <div className="w-full flex flex-col items-center px-4 py-2">
                       <h1
@@ -120,7 +129,7 @@ const Packages = () => {
                           colorMode ? "text-slate-300" : "text-gray-800"
                         }`}
                       >
-                        $ {items.unit_amount/100} / {items.recurring.interval}
+                        $ {items.unit_amount / 100} / {items.recurring.interval}
                       </h1>
                       <button
                         onClick={() => {

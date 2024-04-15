@@ -83,8 +83,8 @@ const Superadminview = () => {
       warningNotification(response.data.error.message);
       setChecking(false);
     } else {
-      successNotification("Name available");
-
+      successNotification("Package Added");
+      window.location.reload();
       setChecking(false);
     }
   };
@@ -223,7 +223,7 @@ const Superadminview = () => {
                             colorMode ? "text-slate-300" : "text-gray-800"
                           }`}
                         >
-                          Price: $ {items.unit_amount/100}
+                          Price: $ {items.unit_amount / 100}
                         </h1>
                         <h1
                           className={` m-0 p-0 text-lg ${

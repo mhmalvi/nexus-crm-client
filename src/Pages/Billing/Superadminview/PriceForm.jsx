@@ -26,6 +26,7 @@ const PriceForm = ({ openPriceForm }) => {
     if (response.status === 201) {
       successNotification(response.message);
       setClicked(false);
+      window.location.reload();
     } else {
       warningNotification(response.message);
       setClicked(false);
