@@ -284,6 +284,18 @@
   background: #00000022;
 }
 
+.courseModal input {
+  color: #cbd5e1;
+}
+.courseModal input:hover {
+  color: #cbd5e1;
+  border: 0.5px solid #7037ff;
+}
+.courseModal input:focus {
+  outline: none;
+  border: 0.5px solid #7037ff;
+  color: #cbd5e1;
+}
 .courseModal .ant-modal-content {
   width: 100%;
   backdrop-filter: blur(8px);
@@ -321,3 +333,4 @@
   border: none;
   border-radius: 8px;
 }
+/* .courseModal */
