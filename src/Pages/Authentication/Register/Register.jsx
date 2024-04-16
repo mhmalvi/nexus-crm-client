@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/Shared/Loader";
 import { handleInitialRegistration } from "../../../Components/services/auth";
-import { Storage } from "../../../Components/Shared/utils/store";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import "./register.css";
-import { errorNotification, successNotification } from "../../../Components/Shared/Toast";
+import {
+  errorNotification,
+  successNotification,
+} from "../../../Components/Shared/Toast";
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 
 const Register = () => {
@@ -19,6 +21,8 @@ const Register = () => {
   const [registrationData, setRegistrationData] = useState({
     email: "",
     password: "",
+    package: "",
+    interval: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const userDetails = useSelector((state) => state?.user);
@@ -34,10 +38,22 @@ const Register = () => {
       } else {
         navigate("/dashboard");
       }
-    } else {
-      navigate("/register");
     }
   }, [navigate, userDetails]);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    const selectedPackage = params.get("selected-package");
+    const interval = params.get("interval");
+    if (selectedPackage) {
+      setRegistrationData({
+        ...registrationData,
+        package: selectedPackage,
+        interval: interval,
+      });
+    }
+    console.log(registrationData);
+  }, [registrationData?.package]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

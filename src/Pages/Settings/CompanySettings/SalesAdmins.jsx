@@ -84,7 +84,6 @@ const SalesAdmins = ({ clientId }) => {
       setCompanySalesEmployees(res?.data);
     }
   };
-
   useEffect(() => {
     dispatch(setLoader(true));
 
@@ -92,8 +91,6 @@ const SalesAdmins = ({ clientId }) => {
       const employeeResponse = await handleFetchCompanyEmployees(clientId);
 
       if (employeeResponse?.status === true) {
-        console.log("employee res:", employeeResponse?.data);
-
         if (employeeResponse?.data?.length) {
           const admins = (employeeResponse?.data).filter(
             (employee) => employee?.role_id === 4 && employee?.suspend === 0
@@ -130,7 +127,6 @@ const SalesAdmins = ({ clientId }) => {
 
   const handleRemoveUser = async (userId) => {
     const statusUpdateResponse = await handleUpdateUserStatus(userId, 0);
-    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       getSalesAdminsSync();
@@ -148,10 +144,9 @@ const SalesAdmins = ({ clientId }) => {
       successNotification("Employee reassigned successfully.");
     }
   };
-
+  console.log(companyAdvisorEmployees);
   const handleSuspendEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 1);
-    console.log(statusUpdateResponse);
 
     if (statusUpdateResponse?.data?.status === true) {
       successNotification("Employee suspended successfully.");
