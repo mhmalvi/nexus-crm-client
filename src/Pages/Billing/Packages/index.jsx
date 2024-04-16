@@ -9,7 +9,6 @@ import {
 import { Spin } from "antd";
 import { successNotification } from "../../../Components/Shared/Toast";
 import { useNavigate } from "react-router-dom";
-import { handleLogout } from "../../../Components/services/auth";
 import { Storage } from "../../../Components/Shared/utils/store";
 
 const Packages = () => {
@@ -19,11 +18,17 @@ const Packages = () => {
   const [buttonClicked, setButtonClicked] = useState(null);
   const subscriptionId = userDetails.userInfo.subscription_id;
   const interval = userDetails.userInfo.interval;
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const navigate = useNavigate();
 
+  const userInfo = localStorage.getItem("user_info");
   const subscribe = async (interval, package_name, price_id) => {
-    // const userInfo = JSON.parse(localStorage.getItem("user_info"));
+    const userInfoObject = JSON.parse(userInfo);
+
+    userInfoObject.interval = interval;
+    userInfoObject.package = package_name;
+
+    Storage.setItem("user_info", userInfoObject);
+
     const response = await createSubscription(
       interval,
       package_name,
@@ -31,11 +36,8 @@ const Packages = () => {
       subscriptionId
     );
 
+    console.log(response);
     if (response.status === 200 || response.message === "success") {
-      Storage.removeItem("auth_tok");
-      Storage.removeItem("user_info");
-      Storage.removeItem("fac_t");
-      Storage.removeItem("cust_id");
       setButtonClicked(false);
 
       successNotification(
@@ -45,13 +47,9 @@ const Packages = () => {
           interval +
           " package. Please Login Again."
       );
-      navigate("/login");
-
-      await handleLogout({
-        user_id: userDetails.userInfo.user_id,
-        email: userDetails.userInfo.email,
-        token: authToken,
-      });
+      setTimeout(() => {
+        window.location.reload();
+      }, [3000]);
     } else if (response.status === 422) {
       successNotification(
         "Cannot use the monthly subscription of this package"
@@ -111,7 +109,6 @@ const Packages = () => {
               </h1>
               <div className="w-full flex flex-col items-center gap-4 py-2 overflow-y-scroll">
                 {item.price.data.map((items, index) => {
-                  console.log(userDetails.userInfo.package);
                   const disableButton =
                     userDetails.userInfo.package === item.product.name &&
                     ((interval === "year" &&
@@ -141,8 +138,9 @@ const Packages = () => {
                           setButtonClicked(items);
                         }}
                         disabled={
-                          interval === items.recurring.interval &&
-                          userDetails.userInfo.package === item.product.name
+                          interval === items.recurring.interval || disableButton
+                          //   &&
+                          // userDetails.userInfo.package === item.product.name
                         }
                         className="disabled:opacity-20 disabled:hover:bg-brand-color disabled:hover:text-slate-300 disabled:cursor-not-allowed px-4 py-2 w-full bg-brand-color text-slate-300 rounded-md border border-brand-color hover:bg-slate-300 hover:text-brand-color ease-in duration-100"
                       >

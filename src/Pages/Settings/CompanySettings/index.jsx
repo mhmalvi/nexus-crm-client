@@ -173,7 +173,7 @@ successNotification("Company details updated successfully.");
           <div className="flex">
             <div className="flex border rounded-md p-4 shadow-md">
               <img
-                className="h-10 rounded-md"
+                className={`h-10 rounded-md ${colorMode ?"fill-orange" :""}`}
                 src={avatarPreviewer?.length ? avatarPreviewer : companyIcon}
                 alt=""
               />

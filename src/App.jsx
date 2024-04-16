@@ -28,6 +28,7 @@ import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Register from "./Pages/Authentication/Register/Register";
+// import RegisterPremium from "./Pages/Authentication/RegisterPremium/RegisterPremium";
 import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagement/CourseMangement";
 import PaySlip from "./Pages/PaySlip/PaySlip";
@@ -95,6 +96,7 @@ function App() {
       clearInterval(interval);
     };
   });
+
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const dispatch = useDispatch();
   return (
