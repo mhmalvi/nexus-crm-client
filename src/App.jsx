@@ -48,6 +48,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { TourProvider, useTour } from "@reactour/tour";
 import { Steps } from "./Components/Shared/Steps";
 import { setHelpModal } from "./features/user/userSlice";
+import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
@@ -99,6 +100,8 @@ function App() {
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const dispatch = useDispatch();
+
+  const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   return (
     <TourProvider
       className="tourSteps"
@@ -160,7 +163,7 @@ function App() {
           ) : (
             <Route path="select-package" element={<PackageDue />} />
           )}
-          <Route path="setup-your-profile" element={<MultipartForm />} />
+          <Route path="setup-your-profile" element={<MultipartForm stripePromise={stripePromise}/>} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="unsubscribe" element={<Unsubscribe />} />

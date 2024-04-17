@@ -11,6 +11,8 @@ import {
   errorNotification,
   successNotification,
 } from "../../../Components/Shared/Toast";
+import { Storage } from "../../../Components/Shared/utils/store";
+
 const companyLogo = require("../../../assets/Icons/Queleads_Logo.png");
 
 const Register = () => {
@@ -23,6 +25,7 @@ const Register = () => {
     password: "",
     package: "",
     interval: "",
+    priceId: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const userDetails = useSelector((state) => state?.user);
@@ -42,14 +45,17 @@ const Register = () => {
   }, [navigate, userDetails]);
   useEffect(() => {
     const url = new URL(window.location.href);
+    console.log(url);
     const params = new URLSearchParams(url.search);
     const selectedPackage = params.get("selected-package");
     const interval = params.get("interval");
+    const priceId = params.get("priceId");
     if (selectedPackage) {
       setRegistrationData({
         ...registrationData,
         package: selectedPackage,
         interval: interval,
+        priceId: priceId,
       });
     }
     console.log(registrationData);
@@ -59,27 +65,28 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
   const registerUser = async () => {
-    // setLoading(true);
+    setCreateButtonClicked(true);
     setUnprocessableContent("");
     if (registrationData.password !== confirmPassword) {
-      // setLoading(false);
       return errorNotification("Passwords do not match!");
     } else {
       const res = await handleInitialRegistration(registrationData);
-      console.log(res?.data);
       if (res?.status === 201) {
-        // setLoading(false);
+        setCreateButtonClicked(false);
         successNotification(
           `${res?.message}. Please check your email for verification code`
         );
-        navigate("/login");
+        setTimeout(() => {
+          navigate("/login");
+        }, [3000]);
       } else if (res.data.errors.email && res.data.errors.email[0] !== "") {
+        setCreateButtonClicked(false);
         setUnprocessableContent(res?.data.errors.email[0]);
       } else if (
         res.data.errors.password &&
         res?.data.errors.password[0] !== ""
       ) {
-        console.log(res?.data.errors.password[0]);
+        setCreateButtonClicked(false);
         setUnprocessableContent(res?.data.errors.password[0]);
       }
     }
