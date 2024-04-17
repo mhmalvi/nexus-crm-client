@@ -58,7 +58,7 @@ const BillingMethod = ({
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error deleting card:", error);
+      console.error("Error setting default card:", error);
     }
   };
 

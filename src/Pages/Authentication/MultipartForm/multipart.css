@@ -1,19 +1,78 @@
 .formBackground {
-    background: url("../../../assets/BackgroundPhotos/darkBG.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    backdrop-filter: blur(20px);
+  background: url("../../../assets/BackgroundPhotos/darkBG.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(20px);
+}
+.animateDiv {
+  animation: 1s linear fadeIn;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: opacity(0);
   }
-  .animateDiv{
-    animation: 1s linear fadeIn;
+  100% {
+    opacity: 1;
+    transform: opacity(1);
   }
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: opacity(0);
-    }
-    100% {
-      opacity: 1;
-      transform: opacity(1);
-    }
-  }
+}
+
+.paymentModal .ant-modal-header {
+  background-color: #1f2937;
+}
+.paymentModal .ant-modal-header .ant-modal-title {
+  color: #cbd5e1;
+}
+.paymentModal input {
+  color: #cbd5e1;
+}
+.paymentModal input:hover {
+  color: #cbd5e1;
+  border: 0.5px solid #7037ff;
+}
+.paymentModal input:focus {
+  outline: none;
+  border: 0.5px solid #7037ff;
+  color: #cbd5e1;
+}
+.paymentModal .ant-modal-content {
+  width: 100%;
+  backdrop-filter: blur(8px);
+  background-color: #1f2937;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  color: #cbd5e1;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.paymentModal .ant-modal-content .ant-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  border: none;
+  border-radius: 8px;
+}
+.paymentModal .ant-modal-footer button:nth-child(1) {
+  background-color: #cbd5e1;
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+}
+.paymentModal .ant-modal-footer button:nth-child(1):hover {
+  color: #7037ff;
+  border: none;
+  border-radius: 8px;
+}
+.paymentModal .ant-modal-footer button:nth-child(2) {
+  background-color: #7037ff;
+  border: none;
+  border-radius: 8px;
+}
+.paymentModal .ant-modal-footer button:nth-child(2):hover {
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+}

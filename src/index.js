@@ -12,8 +12,16 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      
-        <App />
+      <div>
+        <div className="m-0 p-0 lg:block hidden">
+          <App />
+        </div>
+        <div className="lg:hidden block w-full h-full flex items-center justify-center bg-orange-300">
+          <h1 className="text-gray-800">
+            Please use from a Desktop or Laptop.
+          </h1>
+        </div>
+      </div>
     </BrowserRouter>
   </Provider>
 );

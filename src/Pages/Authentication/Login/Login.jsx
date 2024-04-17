@@ -52,16 +52,6 @@ const Login = () => {
     }
   }, [syncBookMarked]);
 
-  // useEffect(() => {
-  //   const isBookmarkSet = !!Storage.getItem("__b__");
-  //   if (!isBookmarkSet) {
-  //     setAddBookMarkOpen(true);
-  //   }
-  // }, []);
-  // useEffect(() => {
-
-  // }, [navigate, userDetails]);
-
   const userData = (e) => {
     const userdata = { ...data };
     userdata[e.target.id] = e.target.value;

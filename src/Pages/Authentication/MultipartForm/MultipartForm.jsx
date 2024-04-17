@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icons from "../../../Components/Shared/Icons";
 import "./multipart.css";
-import { Select } from "antd";
+import { Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   handleLogout,
@@ -11,15 +11,28 @@ import { Storage } from "../../../Components/Shared/utils/store";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../../Components/Shared/Loader";
 import { addUserDetails } from "../../../features/user/userSlice";
-import { errorNotification, successNotification, warningNotification } from "../../../Components/Shared/Toast";
+import { Elements } from "@stripe/react-stripe-js";
+import {
+  getAllProducts,
+  getProductPrice,
+} from "../../../Components/services/billing";
+import {
+  errorNotification,
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast";
+import InstantPayment from "./InstantPayment";
 
-const MultipartForm = () => {
+const MultipartForm = ({ stripePromise }) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [screen, setScreen] = useState(0);
   const userDetails = useSelector((state) => state?.user);
   const [industriesList, setIndustriesList] = useState(["RTO"]);
+  const [productData, setProductData] = useState([]);
+  const [paymentModal, setPaymentModal] = useState();
+  const [paymentDone, setPaymentDone] = useState(0)
   const [data, setData] = useState({
     username: "",
     contact: "",
@@ -30,10 +43,20 @@ const MultipartForm = () => {
     website: "",
     abn: "",
     company_code: "",
+    package: "Trial",
   });
   const [submitClicked, setSubmitClicked] = useState(false);
   const handleChange = (value) => {
     setIndustriesList(value);
+  };
+  const handlePackageChange = (value) => {
+    setData((prevData) => ({
+      ...prevData,
+      package: value,
+    }));
+    if(value !== "Trial"){
+      setPaymentDone(1)
+    }
   };
   const logoutHandler = () => {
     handleLogout({
@@ -55,7 +78,7 @@ const MultipartForm = () => {
     setSubmitClicked(true);
     try {
       const res = await handleMultipartRegistration(data);
-      console.log(res)
+      console.log(res);
       if (res.status === 201) {
         Storage.setItem("user_info", res?.data);
         dispatch(addUserDetails(res.data));
@@ -71,8 +94,29 @@ const MultipartForm = () => {
       errorNotification(error.response);
     }
   };
- 
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsResponse = await getAllProducts();
+        const combinedDataArray = [];
+
+        if (productsResponse) {
+          for (const item of productsResponse) {
+            const priceResponse = await getProductPrice({ prod_id: item.id });
+            combinedDataArray.push({
+              product: item,
+              price: priceResponse,
+            });
+          }
+        }
+        setProductData(combinedDataArray);
+      } catch (error) {
+        console.error("Error occurred while fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="h-screen w-full flex flex-col gap-4 items-center justify-center formBackground font-poppins ">
       {submitClicked ? (
@@ -119,7 +163,7 @@ const MultipartForm = () => {
 
           {/* FORM Screen 1,2,3 */}
           <form
-            className={`2xl:w-1/5 lg:w-1/4 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
+            className={`2xl:w-1/5 lg:w-1/3 h-2/3 flex items-center justify-center shadow-md backdrop-blur-2xl bg-[#ffffff22] border-[0.5px] border-[#ffffff44] rounded-md p-8 ${
               screen === 0 || screen === 4 ? "hidden" : "block"
             }`}
           >
@@ -301,6 +345,30 @@ const MultipartForm = () => {
                     }}
                   />
                 </div>
+                <div className="w-full">
+                  <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
+                    Package
+                  </h1>
+                  {paymentDone === 2 ? <h1 className="m-0 px-4 py-2 text-xs text-slate-300 bg-brand-color rounded-md">You have availed the {data.package} package.</h1>:
+                  <Select
+                    id="companies"
+                    defaultValue={data.package}
+                    value={data.package}
+                    placeholder="Select package"
+                    className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
+                    onChange={handlePackageChange}
+                  >
+                    {productData &&
+                      productData?.map((item) => {
+                        return (
+                          <Option value={item.product.name}>
+                            {item.product.name}
+                          </Option>
+                        );
+                      })}
+                    <Option value={"Trial"}>Trial</Option>
+                  </Select>}
+                </div>
 
                 <div className="w-full flex items-center justify-between">
                   <button
@@ -311,13 +379,25 @@ const MultipartForm = () => {
                   >
                     ← Previous
                   </button>
-                  <button
-                    type="button"
-                    onClick={setupProfile}
-                    className="m-0 !text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
-                  >
-                    Submit
-                  </button>
+                  {data.package === "Trial" || paymentDone === 2 ? (
+                    <button
+                      type="button"
+                      onClick={setupProfile}
+                      className="m-0 !text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
+                    >
+                      Submit
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPaymentModal(true);
+                      }}
+                      className="m-0 !text-slate-300 hover:scale-95 border border-slate-300 hover:border-brand-color ease-in duration-100 bg-gradient-to-b from-[#8A7CFD] to-[#2596FB] px-4 rounded-md"
+                    >
+                      Add payment method
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -346,7 +426,19 @@ const MultipartForm = () => {
               ></div>
             </div>
           )}
-
+          <Modal
+            title="Add Payment Method"
+            visible={paymentModal}
+            onCancel={() => {
+              setPaymentModal(false);
+            }}
+            className="paymentModal"
+            okButtonProps={{ style: { display: "none" } }}
+          >
+            <Elements stripe={stripePromise}>
+              <InstantPayment setPaymentDone={setPaymentDone} setPaymentModal={setPaymentModal}/>
+            </Elements>
+          </Modal>
           <div
             className="absolute top-0 right-0 flex items-center justify-center text-base cursor-pointer my-4"
             onClick={logoutHandler}
