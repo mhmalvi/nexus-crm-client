@@ -59,7 +59,7 @@ const Overview = () => {
         client_id:
           userDetails?.userInfo?.role_id === 1
             ? activeCompany
-            : userDetails?.userInfo?.client_id,
+            : userDetails?.userInfo?.client_id || userDetails?.userInfo?.id,
       });
 
       if (leadsResponse?.data) {

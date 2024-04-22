@@ -50,7 +50,7 @@ const CampaignDetails = () => {
   useEffect(() => {
     (async () => {
       const response = await handleFetchLeads({
-        client_id: userDetails?.userInfo?.client_id,
+        client_id: userDetails?.userInfo?.client_id || userDetails?.id ,
       });
       if (response?.data) {
         dispatch(addLeads(response?.data));

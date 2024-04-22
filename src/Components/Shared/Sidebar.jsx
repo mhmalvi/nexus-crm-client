@@ -26,10 +26,13 @@ const Sidebar = ({ active, setActive }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
+  const subscription = userDetails.userInfo.package;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
   const helpModal = useSelector((state) => state?.user)?.helpModal;
-
+  const endDate =
+    subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
+  var myDate = new Date(endDate * 1000);
   const [companyDetails, setCompanyDetails] = useState({
     company_name: null,
     company_logo: null,
@@ -879,6 +882,27 @@ const Sidebar = ({ active, setActive }) => {
                 Help
               </button>
             </div> */}
+          </div>
+          <div
+            className={`w-full h-1/3 p-4 ${openSideBar ? "hidden" : "flex"}`}
+          >
+            {subscription === "Trial" ? (
+              <div
+                className={`flex duration-300 ease-in flex-col items-center justify-center bg-[#ffffff11] w-full h-full rounded-md backdrop-blur-2xl`}
+              >
+                <h1 className={`text-slate-400 m-0 p-0`}>Trial exprires on</h1>
+                <div className="flex gap-2 px-4 text-center">
+                  <h1 className={`m-0 p-0 text-xs font-semibold text-slate-400`}>
+                    {myDate.toGMTString()}
+                  </h1>
+                </div>
+                <Link to="/billing">
+                  <h1 className="m-0 p-0 text-brand-color">Update Now</h1>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 

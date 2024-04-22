@@ -94,7 +94,7 @@ const AdminDashboard = () => {
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const subscription = userDetails.userInfo.package;
   const endDate =
-    subscription === "trial" && new Date(userDetails.userInfo.end_date || null);
+    subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
   var myDate = new Date(endDate * 1000);
 
   const handleViewed = async () => {
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
   const memoizedFetchLeads = useMemo(
     () => async () => {
       const response = await handleFetchLeads({
-        client_id: userDetails?.userInfo?.client_id,
+        client_id: userDetails?.userInfo?.client_id || userDetails?.id,
         user_id: userDetails?.userInfo?.user_id,
         role_id: userDetails?.userInfo?.role_id,
       });
@@ -128,8 +128,15 @@ const AdminDashboard = () => {
 
       setLeadData(response.data);
     },
+    // [
+    //   dispatch,
+    //   userDetails?.userInfo?.client_id,
+    //   userDetails?.userInfo?.role_id,
+    //   userDetails?.userInfo?.user_id,
+    // ]
     [
       dispatch,
+      userDetails?.id,
       userDetails?.userInfo?.client_id,
       userDetails?.userInfo?.role_id,
       userDetails?.userInfo?.user_id,
@@ -199,7 +206,7 @@ const AdminDashboard = () => {
 
             // Fetch leads without updating the state
             const response = await handleFetchLeads({
-              client_id: userDetails?.userInfo?.client_id,
+              client_id: userDetails?.userInfo?.client_id || userDetails?.id,
               user_id: userDetails?.userInfo?.user_id,
               role_id: userDetails?.userInfo?.role_id,
             });
@@ -222,10 +229,15 @@ const AdminDashboard = () => {
       }
     },
     [
-      userDetails?.user_id,
+      // userDetails?.user_id,
+      // userDetails?.userInfo?.client_id,
+      // userDetails?.userInfo?.user_id,
+      // userDetails?.userInfo?.role_id,
+      userDetails?.id,
       userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.user_id,
       userDetails?.userInfo?.role_id,
+      userDetails?.userInfo?.user_id,
+      userDetails?.user_id,
     ]
   );
 
@@ -240,7 +252,7 @@ const AdminDashboard = () => {
         if (res?.status === 201) {
           successNotification("Removed Sales Successfully");
           const response = await handleFetchLeads({
-            client_id: userDetails?.userInfo?.client_id,
+            client_id: userDetails?.userInfo?.client_id || userDetails?.id,
             user_id: userDetails?.userInfo?.user_id,
             role_id: userDetails?.userInfo?.role_id,
           });
@@ -256,7 +268,13 @@ const AdminDashboard = () => {
         errorNotification("An error occurred while removing sales");
       }
     },
-    [userDetails?.userInfo, setLeadData]
+    // [userDetails?.userInfo, setLeadData]
+    [
+      userDetails?.id,
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.role_id,
+      userDetails?.userInfo?.user_id,
+    ]
   );
 
   const getColumnSearchProps = useMemo(
@@ -725,28 +743,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8 relative">
-      {subscription === "trial" ? (
-        <div className="absolute flex flex-col items-center justify-center z-40 top-0 w-full">
-          <div
-            className={`flex gap-4 items-center ${
-              colorMode ? "bg-brand-color" : "bg-gray-800"
-            } rounded-b-md`}
-          >
-            <h1
-              className={`m-0 py-2 px-4 border-r border-slate-300 text-xs font-semibold text-slate-300`}
-            >
-              Trial exprires on
-            </h1>
-            <div className="flex gap-2 px-4">
-              <h1 className={`m-0 p-0 text-xs font-semibold text-red-300`}>
-                {myDate.toGMTString()}
-              </h1>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
 
       <div className="w-full border-black rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
