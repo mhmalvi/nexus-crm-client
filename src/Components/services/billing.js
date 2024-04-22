@@ -132,14 +132,14 @@ export const getCustomerDetails = async () => {
 export const createSubscription = async (
   interval,
   package_name,
-  price_id,
+  priceId,
   subscriptionId
 ) => {
   const data = {
     customer_id: JSON.parse(window.localStorage.getItem("cust_id")),
     interval: interval,
     package_name: package_name,
-    price_id: price_id,
+    priceId: priceId,
     sub_id:
       subscriptionId ||
       null ||

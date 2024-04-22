@@ -16,8 +16,8 @@ root.render(
         <div className="m-0 p-0 lg:block hidden">
           <App />
         </div>
-        <div className="lg:hidden block w-full h-full flex items-center justify-center bg-orange-300">
-          <h1 className="text-gray-800">
+        <div className="lg:hidden block w-full h-screen flex items-center justify-center bg-gray-800">
+          <h1 className="text-brand-color text-2xl">
             Please use from a Desktop or Laptop.
           </h1>
         </div>

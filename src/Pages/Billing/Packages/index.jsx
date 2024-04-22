@@ -7,7 +7,10 @@ import {
   getProductPrice,
 } from "../../../Components/services/billing";
 import { Spin } from "antd";
-import { successNotification } from "../../../Components/Shared/Toast";
+import {
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast";
 // import { useNavigate } from "react-router-dom";
 import { Storage } from "../../../Components/Shared/utils/store";
 
@@ -18,25 +21,23 @@ const Packages = () => {
   const [buttonClicked, setButtonClicked] = useState(null);
   const subscriptionId = userDetails.userInfo.subscription_id;
   const interval = userDetails.userInfo.interval;
-  // const navigate = useNavigate();
 
   const userInfo = localStorage.getItem("user_info");
-  const subscribe = async (interval, package_name, price_id) => {
+  const subscribe = async (interval, package_name, priceId) => {
     const userInfoObject = JSON.parse(userInfo);
 
     userInfoObject.interval = interval;
     userInfoObject.package = package_name;
 
-    Storage.setItem("user_info", userInfoObject);
-
+    console.log("function", priceId);
     const response = await createSubscription(
       interval,
       package_name,
-      price_id,
+      priceId,
       subscriptionId
     );
-;
     if (response.status === 200 || response.message === "success") {
+      Storage.setItem("user_info", userInfoObject);
       setButtonClicked(false);
 
       successNotification(
@@ -55,7 +56,9 @@ const Packages = () => {
       );
       setButtonClicked(false);
     } else {
-      successNotification("Subscription already available");
+      warningNotification(
+        response.data.message || "Subscription already available"
+      );
       setButtonClicked(false);
     }
   };
@@ -91,6 +94,8 @@ const Packages = () => {
         <h1>No packages yet. Use for free.</h1>
       ) : (
         productData.map((item, index) => {
+          console.log(item);
+          console.log(userDetails);
           const disableButton =
             userDetails.userInfo.package === item.product.name &&
             ((interval === "year" &&
@@ -106,15 +111,18 @@ const Packages = () => {
           return (
             <div
               key={index}
-              // className={`flex flex-col border   w-1/4 h-5/6 rounded-md`}
               className={`flex flex-col border xl:w-1/4 ${
                 colorMode ? "border-slate-300" : "border-gray-800"
               } lg:w-1/3 w-full h-5/6 gap-8 rounded-md items-center justify-center px-4 py-16 bg-[#ffffff11] overflow-hidden shadow-md backdrop-blur-2xl ease-in duration-100`}
             >
               <div className="absolute h-8 w-40 bg-brand-color top-6 -right-10 rotate-45 flex items-center justify-center">
-                <h1 className="m-0 p-0">Save 25%</h1>
+                <h1 className={`m-0 p-0 text-slate-300`}>Save 25%</h1>
               </div>
-              <h1 className={`p-0 m-0 text-xl text-slate-300`}>
+              <h1
+                className={`p-0 m-0 text-xl ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
                 {item.product.name} Package
               </h1>
               <div className="w-full flex flex-col items-center gap-4 p-0">
@@ -122,12 +130,11 @@ const Packages = () => {
                   return (
                     <div className="w-full flex flex-col items-center p-0 m-0">
                       <h1
-                        // className={`w-full m-0 px-4 py-2 text-xl text-center `}
                         className={`w-full m-0 p-0 ${
                           colorMode ? "text-slate-300" : "text-gray-800"
-                        } text-xl text-center text-slate-300`}
+                        } text-xl text-center`}
                       >
-                        <span className="text-3xl">
+                        <span className="text-3xl ">
                           $ {items.unit_amount / 100} /
                         </span>{" "}
                         {items.recurring.interval}
@@ -141,13 +148,25 @@ const Packages = () => {
                       <div>
                         {item.product.name === "Premium" && (
                           <div className="flex flex-col items-center justify-center gap-4">
-                            <h1 className="m-0 p-0 text-slate-300">
+                            <h1
+                              className={`m-0 p-0 ${
+                                colorMode ? "text-slate-300" : "text-gray-800"
+                              }`}
+                            >
                               ✔ Post Campaigns
                             </h1>
-                            <h1 className="m-0 p-0 text-slate-300">
+                            <h1
+                              className={`m-0 p-0 ${
+                                colorMode ? "text-slate-300" : "text-gray-800"
+                              }`}
+                            >
                               ✔ Sales Automation
                             </h1>
-                            <h1 className="m-0 p-0 text-slate-300">
+                            <h1
+                              className={`m-0 p-0 ${
+                                colorMode ? "text-slate-300" : "text-gray-800"
+                              }`}
+                            >
                               ✔ High Quality SEO
                             </h1>
                           </div>
@@ -162,12 +181,12 @@ const Packages = () => {
                   subscribe(
                     item.price.data[0].recurring.interval,
                     item.product.name,
-                    item.id
+                    item.price.data[0].id
                   );
                   setButtonClicked(item);
                 }}
                 disabled={
-                  interval === item.price.data[0].recurring.interval ||
+                  item.product.name === userDetails.userInfo.package ||
                   disableButton
                   //   &&
                   // userDetails.userInfo.package === item.product.name

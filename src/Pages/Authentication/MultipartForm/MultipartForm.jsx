@@ -32,7 +32,7 @@ const MultipartForm = ({ stripePromise }) => {
   const [industriesList, setIndustriesList] = useState(["RTO"]);
   const [productData, setProductData] = useState([]);
   const [paymentModal, setPaymentModal] = useState();
-  const [paymentDone, setPaymentDone] = useState(0)
+  const [paymentDone, setPaymentDone] = useState(0);
   const [data, setData] = useState({
     username: "",
     contact: "",
@@ -44,18 +44,25 @@ const MultipartForm = ({ stripePromise }) => {
     abn: "",
     company_code: "",
     package: "Trial",
+    priceId: "",
+    interval:""
   });
+
+  console.log(data);
   const [submitClicked, setSubmitClicked] = useState(false);
   const handleChange = (value) => {
     setIndustriesList(value);
   };
-  const handlePackageChange = (value) => {
+  const handlePackageChange = (value, data) => {
     setData((prevData) => ({
       ...prevData,
       package: value,
+      priceId: data?.data?.price.data[0].id,
+      interval: data?.data?.price.data[0].recurring.interval,
     }));
-    if(value !== "Trial"){
-      setPaymentDone(1)
+
+    if (value !== "Trial") {
+      setPaymentDone(1);
     }
   };
   const logoutHandler = () => {
@@ -80,8 +87,12 @@ const MultipartForm = ({ stripePromise }) => {
       const res = await handleMultipartRegistration(data);
       console.log(res);
       if (res.status === 201) {
-        Storage.setItem("user_info", res?.data);
-        dispatch(addUserDetails(res.data));
+        const userData = {
+          ...res.data,
+          ...res.company,
+        };
+        Storage.setItem("user_info", userData && userData);
+        dispatch(addUserDetails(userData));
         setSubmitClicked(false);
         successNotification("You  have successfully created your profile.");
         navigate("/dashboard");
@@ -349,25 +360,30 @@ const MultipartForm = ({ stripePromise }) => {
                   <h1 className="m-0 w-full text-base !text-slate-300 font-normal">
                     Package
                   </h1>
-                  {paymentDone === 2 ? <h1 className="m-0 px-4 py-2 text-xs text-slate-300 bg-brand-color rounded-md">You have availed the {data.package} package.</h1>:
-                  <Select
-                    id="companies"
-                    defaultValue={data.package}
-                    value={data.package}
-                    placeholder="Select package"
-                    className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
-                    onChange={handlePackageChange}
-                  >
-                    {productData &&
-                      productData?.map((item) => {
-                        return (
-                          <Option value={item.product.name}>
-                            {item.product.name}
-                          </Option>
-                        );
-                      })}
-                    <Option value={"Trial"}>Trial</Option>
-                  </Select>}
+                  {paymentDone === 2 ? (
+                    <h1 className="m-0 px-4 text-xs text-slate-300 bg-brand-color rounded-md">
+                      You have availed the {data.package} package.
+                    </h1>
+                  ) : (
+                    <Select
+                      id="package"
+                      defaultValue={data.package}
+                      value={data.package}
+                      placeholder="Select package"
+                      className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
+                      onChange={handlePackageChange}
+                    >
+                      {productData &&
+                        productData?.map((item) => {
+                          return (
+                            <Option value={item.product.name} data={item}>
+                              {item.product.name}
+                            </Option>
+                          );
+                        })}
+                      <Option value={"Trial"}>Trial</Option>
+                    </Select>
+                  )}
                 </div>
 
                 <div className="w-full flex items-center justify-between">
@@ -436,7 +452,10 @@ const MultipartForm = ({ stripePromise }) => {
             okButtonProps={{ style: { display: "none" } }}
           >
             <Elements stripe={stripePromise}>
-              <InstantPayment setPaymentDone={setPaymentDone} setPaymentModal={setPaymentModal}/>
+              <InstantPayment
+                setPaymentDone={setPaymentDone}
+                setPaymentModal={setPaymentModal}
+              />
             </Elements>
           </Modal>
           <div
