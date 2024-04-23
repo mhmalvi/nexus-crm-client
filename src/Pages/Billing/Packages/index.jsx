@@ -38,7 +38,6 @@ const Packages = () => {
     );
     if (response.status === 200 || response.message === "success") {
       Storage.setItem("user_info", userInfoObject);
-      setButtonClicked(false);
 
       successNotification(
         "You have subscribed to the " +
@@ -59,7 +58,6 @@ const Packages = () => {
       warningNotification(
         response.data.message || "Subscription already available"
       );
-      setButtonClicked(false);
     }
   };
 
@@ -68,7 +66,6 @@ const Packages = () => {
       try {
         const productsResponse = await getAllProducts();
         const combinedDataArray = [];
-
         if (productsResponse) {
           for (const item of productsResponse) {
             const priceResponse = await getProductPrice({ prod_id: item.id });
@@ -78,13 +75,11 @@ const Packages = () => {
             });
           }
         }
-
         setProductData(combinedDataArray);
       } catch (error) {
         console.error("Error occurred while fetching data:", error);
       }
     };
-
     fetchData();
   }, [subscriptionId]);
 
@@ -94,8 +89,6 @@ const Packages = () => {
         <h1>No packages yet. Use for free.</h1>
       ) : (
         productData.map((item, index) => {
-          console.log(item);
-          console.log(userDetails);
           const disableButton =
             userDetails.userInfo.package === item.product.name &&
             ((interval === "year" &&
@@ -186,6 +179,7 @@ const Packages = () => {
                   setButtonClicked(item);
                 }}
                 disabled={
+                  buttonClicked ||
                   item.product.name === userDetails.userInfo.package ||
                   disableButton
                   //   &&
