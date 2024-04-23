@@ -45,7 +45,7 @@ const MultipartForm = ({ stripePromise }) => {
     company_code: "",
     package: "Trial",
     priceId: "",
-    interval:""
+    interval: "",
   });
 
   console.log(data);
@@ -187,6 +187,7 @@ const MultipartForm = ({ stripePromise }) => {
                   <input
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     placeholder="Username"
+                    type="text"
                     value={data.username}
                     onChange={(e) => {
                       setData((prevData) => ({
@@ -204,6 +205,10 @@ const MultipartForm = ({ stripePromise }) => {
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
                     placeholder="Contact Number"
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     value={data.contact}
                     onChange={(e) => {
                       setData((prevData) => ({
@@ -236,6 +241,7 @@ const MultipartForm = ({ stripePromise }) => {
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     value={data.company_name}
                     placeholder="Company Name"
+                    type="text"
                     onChange={(e) => {
                       setData((prevData) => ({
                         ...prevData,
@@ -252,6 +258,7 @@ const MultipartForm = ({ stripePromise }) => {
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300 "
                     placeholder="Company Address"
                     value={data.company_address}
+                    type="text"
                     onChange={(e) => {
                       setData((prevData) => ({
                         ...prevData,
@@ -269,7 +276,7 @@ const MultipartForm = ({ stripePromise }) => {
                     defaultValue={data.industry}
                     value={data.industry}
                     placeholder="Select an industry"
-                    className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
+                    className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 multipartDropdown"
                     onChange={handleChange}
                   >
                     {industriesList?.map((industry) => (
@@ -284,6 +291,7 @@ const MultipartForm = ({ stripePromise }) => {
                   <input
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
+                    type="text"
                     value={data.website}
                     placeholder="Website"
                     onChange={(e) => {
@@ -330,6 +338,7 @@ const MultipartForm = ({ stripePromise }) => {
                   <input
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     placeholder="ABN Number"
+                    type="number"
                     value={data.abn}
                     onChange={(e) => {
                       setData((prevData) => ({
@@ -346,6 +355,7 @@ const MultipartForm = ({ stripePromise }) => {
                   <input
                     className="m-0 px-4 py-2 w-full rounded-md bg-transparent border border-slate-300 !text-slate-300"
                     required
+                    type="number"
                     value={data.company_code}
                     placeholder="Company Code"
                     onChange={(e) => {
@@ -370,7 +380,7 @@ const MultipartForm = ({ stripePromise }) => {
                       defaultValue={data.package}
                       value={data.package}
                       placeholder="Select package"
-                      className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 "
+                      className="!m-0 !px-0 !py-0 !w-full rounded-md bg-transparent border border-slate-300 multipartDropdown"
                       onChange={handlePackageChange}
                     >
                       {productData &&

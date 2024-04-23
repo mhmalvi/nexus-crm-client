@@ -70,7 +70,7 @@ const Sidebar = ({ active, setActive }) => {
           companyLogo?.data?.document_name,
       });
     })();
-  }, [dispatch, userDetails]);
+  }, [dispatch, userDetails?.userInfo?.client_id]);
 
   const logoutHandler = () => {
     handleLogout({
@@ -890,9 +890,19 @@ const Sidebar = ({ active, setActive }) => {
               <div
                 className={`flex duration-300 ease-in flex-col items-center justify-center bg-[#ffffff11] w-full h-full rounded-md backdrop-blur-2xl`}
               >
-                <h1 className={`text-slate-400 m-0 p-0`}>Trial exprires on</h1>
+                <h1
+                  className={`${
+                    colorMode ? "text-slate-400" : "text-gray-800"
+                  } m-0 p-0`}
+                >
+                  Trial exprires on
+                </h1>
                 <div className="flex gap-2 px-4 text-center">
-                  <h1 className={`m-0 p-0 text-xs font-semibold text-slate-400`}>
+                  <h1
+                    className={`m-0 p-0 text-xs font-semibold ${
+                      colorMode ? "text-slate-400" : "text-gray-800"
+                    }`}
+                  >
                     {myDate.toGMTString()}
                   </h1>
                 </div>

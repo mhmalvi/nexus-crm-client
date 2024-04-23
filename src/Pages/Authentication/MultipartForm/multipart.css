@@ -76,3 +76,21 @@
   border: none;
   border-radius: 8px;
 }
+
+.multipartDropdown .ant-select-selector {
+  background-color: transparent !important;
+  border: none !important;
+  color: #cbd5e1;
+}
+.multipartDropdown .ant-select-arrow {
+  color: #cbd5e1;
+}
+.multipartDropdown
+  .ant-select-single
+  .ant-select-open
+  .ant-select-selection-item {
+  background-color: #7037ff !important;
+}
+input::placeholder {
+  color: #cbd5e15c !important;
+}
