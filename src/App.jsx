@@ -14,7 +14,6 @@ import CampaignDetails from "./Pages/Campaigns/CampaignDetails";
 import Dashboard from "./Pages/Dashboard";
 import CompanyDetails from "./Pages/Dashboard/SuperAdminDashboard/CompanyDetails";
 import CampaignInfo from "./Pages/Dashboard/SuperAdminDashboard/CompanyInfo/CampaignInfo";
-// import GmailModule from "./Pages/Gmail";
 import Layout from "./Pages/Layout";
 import LeadDetails from "./Pages/LeadDetails";
 import Analytics from "./Pages/Analytics";
@@ -28,7 +27,6 @@ import Settings from "./Pages/Settings";
 import EditProfile from "./Pages/Settings/Profile/EditProfile";
 import UserProfile from "./Pages/Settings/Profile/UserProfile";
 import Register from "./Pages/Authentication/Register/Register";
-// import RegisterPremium from "./Pages/Authentication/RegisterPremium/RegisterPremium";
 import MangeStudent from "./Pages/StudentManagement";
 import CourseMangemnet from "./Pages/CourseManagement/CourseMangement";
 import PaySlip from "./Pages/PaySlip/PaySlip";
@@ -45,9 +43,9 @@ import PackageDue from "./Pages/Billing/PackageDue";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { TourProvider, useTour } from "@reactour/tour";
-import { Steps } from "./Components/Shared/Steps";
-import { setHelpModal } from "./features/user/userSlice";
+// import { TourProvider, useTour } from "@reactour/tour";
+// import { Steps } from "./Components/Shared/Steps";
+// import { setHelpModal } from "./features/user/userSlice";
 import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
@@ -99,22 +97,22 @@ function App() {
   });
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   return (
-    <TourProvider
-      className="tourSteps"
-      steps={Steps}
-      onClickClose={(e) => {
-        dispatch(setHelpModal(false));
-        e.setIsOpen(false);
-      }}
-      onClickMask={(e) => {
-        dispatch(setHelpModal(false));
-        e.setIsOpen(false);
-      }}
-    >
+    // <TourProvider
+    //   className="tourSteps"
+    //   steps={Steps}
+    //   onClickClose={(e) => {
+    //     dispatch(setHelpModal(false));
+    //     e.setIsOpen(false);
+    //   }}
+    //   onClickMask={(e) => {
+    //     dispatch(setHelpModal(false));
+    //     e.setIsOpen(false);
+    //   }}
+    // >
       <div className={`${colorMode ? "dark-background" : "light-background"}`}>
         <ToastContainer
           position="bottom-center"
@@ -180,7 +178,7 @@ function App() {
           />
         </Routes>
       </div>
-    </TourProvider>
+    // </TourProvider>
   );
 }
 

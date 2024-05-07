@@ -92,10 +92,10 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
-  const subscription = userDetails.userInfo.package;
-  const endDate =
-    subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
-  var myDate = new Date(endDate * 1000);
+  // const subscription = userDetails.userInfo.package;
+  // const endDate =
+  //   subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
+  // var myDate = new Date(endDate * 1000);
 
   const handleViewed = async () => {
     try {
@@ -136,10 +136,11 @@ const AdminDashboard = () => {
     // ]
     [
       dispatch,
-      userDetails?.id,
-      userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.role_id,
-      userDetails?.userInfo?.user_id,
+      userDetails
+      // userDetails?.id,
+      // userDetails?.userInfo?.client_id,
+      // userDetails?.userInfo?.role_id,
+      // userDetails?.userInfo?.user_id,
     ]
   );
 
@@ -185,7 +186,7 @@ const AdminDashboard = () => {
         setSalesOptions(data);
       }
     })();
-  }, [userDetails?.userInfo?.client_id]);
+  }, [userDetails]);
 
   const onAssignLead = useCallback(
     async (lid, sid) => {
@@ -233,11 +234,13 @@ const AdminDashboard = () => {
       // userDetails?.userInfo?.client_id,
       // userDetails?.userInfo?.user_id,
       // userDetails?.userInfo?.role_id,
-      userDetails?.id,
-      userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.role_id,
-      userDetails?.userInfo?.user_id,
-      userDetails?.user_id,
+      // 
+      userDetails
+      // userDetails?.id,
+      // userDetails?.userInfo?.client_id,
+      // userDetails?.userInfo?.role_id,
+      // userDetails?.userInfo?.user_id,
+      // userDetails?.user_id,
     ]
   );
 
@@ -611,7 +614,7 @@ const AdminDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     companyEmployeeList,
-    userDetails?.userInfo,
+    userDetails,
     assignLoading,
     onAssignLead,
     onRemoveSales,
@@ -739,7 +742,7 @@ const AdminDashboard = () => {
       socket.off("message");
       socket.disconnect();
     };
-  }, [dispatch, socket, userDetails.userInfo.id, setViewedData]);
+  }, [dispatch, socket, userDetails, setViewedData]);
 
   return (
     <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8 relative">
