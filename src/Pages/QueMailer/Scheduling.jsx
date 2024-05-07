@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { getScheduledJobs, getScheduledJobsDetails } from "../../Components/services/que-mail";
 import "./quemailer.css";
 import Loading from "../../Components/Shared/Loader";
-import Icons from "../../Components/Shared/Icons";
 import "./quemailer.css";
 
 const Scheduling = () => {
@@ -253,10 +252,9 @@ const Scheduling = () => {
               onChange: (pageNum, pageSize) => {
                 setCurrentInner(pageNum)
                 setPerPage(pageSize);
-                // setClicked(true);
               },
               current: currentInner,
-              // total: countInfo?.total,
+              total: totalInner,
             }}
           />
         </div>

@@ -262,7 +262,7 @@ const MailDashboard = ({
         }
         const res = await scheduleEmail(formData);
 
-        if (res?.status === 200) {
+        if (res?.status === 201) {
           successNotification(res?.message);
           setSuccessMail("success");
         } else if (res?.status === 504) {
@@ -452,8 +452,8 @@ const MailDashboard = ({
                 />
               </div>
             </div>
-            <div className="flex flex-col w-1/4 bg-orange-400">
-              <h1 className="m-0 p-0 text-end text-sm">Action Buttons</h1>
+            <div className="flex flex-col w-1/4 gap-2">
+              <h1 className={`m-0 p-0 text-end text-sm ${colorMode?"text-slate-300":"text-gray-800"}`}>Action Buttons</h1>
               <Select
                 defaultValue="Copy dynamic header"
                 style={{ width: "100%" }}
@@ -470,7 +470,7 @@ const MailDashboard = ({
                   }))
                 }
               />
-              <h1>Unsubscribe</h1>
+              <div className={`text-end text-sm ${colorMode?"text-slate-300":"text-gray-800"}`}>Unsubscribe</div>
             </div>
             {selectedData.length > 0 ? (
               <ul className="flex">
