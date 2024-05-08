@@ -21,12 +21,9 @@ const UserDashboard = () => {
         student_id: userDetails?.userInfo?.user_id,
       });
 
-      console.log("response", response);
 
       if (response?.status === 200) {
-        console.log("res enterd: ", response);
         if (response?.data) {
-          console.log("res data: ", response?.data);
           setLeadData(response?.data);
           dispatch(addLeads(response?.data));
         }
@@ -34,7 +31,6 @@ const UserDashboard = () => {
     })();
   }, [dispatch, userDetails?.userInfo?.user_id]);
 
-  console.log("l data: ", leadData);
 
   return (
     <>
@@ -46,7 +42,6 @@ const UserDashboard = () => {
         </div>
         <div className="grid grid-cols-2 2lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-7.5 mr-1">
           {leadData?.map((leadDetails, i) => {
-            console.log("lead details: ", leadDetails);
             return <AppliedCampaign key={i} leadDetails={leadDetails} />;
           })}
         </div>

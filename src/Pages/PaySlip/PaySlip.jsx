@@ -101,7 +101,6 @@ const PaySlip = () => {
       key: "",
       align: "center",
       render: (_, record, idx) => {
-        console.log("record student id");
         return (
           <>
             <div>

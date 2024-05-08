@@ -19,7 +19,6 @@ const Table = ({
   handleSyncLeadsReq,
   companyEmployeeList,
 }) => {
-  console.log(companyEmployeeList);
 
   const userDetails = useSelector((state) => state?.user?.userInfo);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
@@ -58,7 +57,6 @@ const Table = ({
         )
       );
     }
-    console.log(data);
   }, [data, searchInput, activeFilter, userDetails?.role_id]);
 
   const handleNavigate = (id) => {
@@ -67,10 +65,10 @@ const Table = ({
 
   const handleNavigateInvoiceDetails = (e, id) => {
     e.stopPropagation();
-    console.log(list.id);
     navigate(`/invoice/${id}`);
   };
 
+  
   return (
     <div className="mt-0.5">
       <div className="border rounded-md px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">

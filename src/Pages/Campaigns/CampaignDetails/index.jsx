@@ -287,20 +287,15 @@ const CampaignDetails = () => {
   }, [companyEmployeeList, userDetails?.userInfo]);
 
   const handleFilterLeadList = (filterId) => {
-    console.log("filterId....", filterId);
 
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
       (async () => {
-        // const response = await handleFetchLeads(
-        //   userDetails?.userInfo?.client_id
-        // );
         setLeadData(
           leadList?.filter(
             (lead) => parseInt(lead.campaign_id) === parseInt(id)
           )
         );
-        // dispatch(addLeads(response.data));
       })();
     } else if (filterId === 8) {
       setLeadData(
@@ -455,7 +450,6 @@ const CampaignDetails = () => {
         text
       ),
   });
-  console.log(leadList);
   return (
     <div className="flex items-center justify-center w-full h-screen gap-4">
       <div className="flex flex-col justify-start gap-8 w-full mx-5 h-[90vh] rounded-md shadow-md backdrop-blur-2xl bg-[#ffffff11] p-8 overflow-y-scroll">

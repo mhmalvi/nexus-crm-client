@@ -48,7 +48,6 @@ const Scheduling = () => {
           job_id: openMailCount.job_id
         };
         const res = await getScheduledJobsDetails(data, current);
-        console.log(res)
         setScheduledItemsInner(res.data);
         setTotalInner(res.data.total);
       } catch (error) {
@@ -56,7 +55,6 @@ const Scheduling = () => {
       }
     })();
   }, [current, openMailCount.job_id, perPage, userDetails?.userInfo.id]);
-  // console.log("Inner",scheduledItemsInner)
   
   const mainTableColumns = [
     {

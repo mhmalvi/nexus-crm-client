@@ -9,10 +9,14 @@ import {
   handleCompanyList,
   handleCompanyWiseLeadList,
 } from "../../../Components/services/utils";
+import { handleSyncLeads } from "../../../Components/services/leads";
 
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import "./dashboard.css";
-import { successNotification, warningNotification } from "../../../Components/Shared/Toast";
+import {
+  successNotification,
+  warningNotification,
+} from "../../../Components/Shared/Toast";
 const UpdatedTable = ({
   table_title,
   tableHeaders,
@@ -23,11 +27,11 @@ const UpdatedTable = ({
   activeFilter,
   setIsAddLeadFormOpen,
   searchInput,
-  handleSyncLeadsReq,
   salesOptions,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const userDetails = useSelector((state) => state?.user?.userInfo);
+  const leadList = useSelector((state) => state.leads)?.leads;
   const dispatch = useDispatch();
 
   const [list, setList] = useState([]);
@@ -84,14 +88,14 @@ const UpdatedTable = ({
       const leadFileUploadResp = await handleUploadLeadFile(fileData);
 
       if (leadFileUploadResp?.status === 200) {
-        successNotification("Lead uploaded successfully")
+        successNotification("Lead uploaded successfully");
         setSyncLeads(!syncLeads);
       } else if (leadFileUploadResp?.status === 403) {
-        warningNotification("Data already exists")
+        warningNotification("Data already exists");
       } else if (leadFileUploadResp?.status === 400) {
-        warningNotification("Please reformat excel sheet columns")
+        warningNotification("Please reformat excel sheet columns");
       } else {
-        warningNotification("Something went wrong. Please try again")
+        warningNotification("Something went wrong. Please try again");
       }
     },
     [userDetails?.client_id, setSyncLeads, syncLeads]
@@ -130,6 +134,7 @@ const UpdatedTable = ({
       }
     })();
   }, [dispatch, selectedCompany?.value, userDetails?.user_id]);
+
   const [loadingTime, setLoadingTime] = useState(true);
 
   useEffect(() => {
@@ -153,6 +158,19 @@ const UpdatedTable = ({
       </>
     ),
   };
+
+  const handleSyncLeadsReq = async () => {
+    successNotification("Sync in progress...");
+    const syncResponse = await handleSyncLeads(
+      userDetails?.client_id,
+      userDetails?.ac_k
+    );
+    if (syncResponse) {
+      setSyncLeads(!syncLeads);
+      window.location.reload();
+    }
+  };
+
   return (
     <div className={`!rounded-md py-4`}>
       <div className="flex justify-between items-center">

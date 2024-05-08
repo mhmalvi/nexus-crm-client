@@ -43,9 +43,6 @@ function AccountantDashboard() {
       const userDetailResponse = await handleProfileDetails(
         ProfileDetails?.user_id
       );
-
-      console.log("userDetailResponse", userDetailResponse);
-
       if (userDetailResponse?.data) {
         const user = userDetailResponse?.data;
         setUserDetails(user);
@@ -78,7 +75,6 @@ function AccountantDashboard() {
         const data = []
         setDashboardLoading(false);
         res?.data?.forEach((item,idx)=>{
-          console.log("grph item: ", item)
           data.push({name: item?.monthname, paid: item?.count})
         })
         setDashboardGraphData(data);
@@ -88,10 +84,6 @@ function AccountantDashboard() {
     })()
   },[])
 
-  const EditSettings = () => {
-    navigate("/edit-profile");
-  };
-  console.log("graph data: ", dashboardGraphData)
 
   const data = [
     {

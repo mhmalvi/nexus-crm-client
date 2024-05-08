@@ -21,7 +21,6 @@ const SuperAdminDashboard = () => {
     (async () => {
       const companiesResponse = await handleFetchCompanies();
 
-      console.log("companiesResponse", companiesResponse);
 
       if (companiesResponse?.status === true) {
         if (companiesResponse) {
@@ -44,7 +43,6 @@ const SuperAdminDashboard = () => {
   }, [dispatch]);
 
   const handleChange = (input) => {
-    console.log(input);
 
     if (input?.length === 0) {
       setCompanies(storecompanies);

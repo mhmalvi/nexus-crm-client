@@ -27,7 +27,6 @@ function PasswordResetForm() {
         newPassword.toString()
       );
 
-      console.log("passwordChangeResponse", passwordChangeResponse);
 
       if (passwordChangeResponse?.status === 205) {
         successNotification("Password changed successfully.");

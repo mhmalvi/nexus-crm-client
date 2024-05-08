@@ -28,7 +28,6 @@ const CheckList = ({ leadDetails }) => {
         student_id: userDetails?.userInfo?.user_id,
         course_id: leadDetails?.course_id,
       });
-      console.log("documentResponse?.data", documentResponse?.data);
 
       if (documentResponse?.data) {
         documentResponse?.data.map(async (doc) => {

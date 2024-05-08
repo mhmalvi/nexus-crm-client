@@ -11,8 +11,6 @@ export const leadsSlice = createSlice({
     },
   },
 });
+export const { addLeads } = leadsSlice.actions;
 
 export default leadsSlice.reducer;
-
-// Action creators are generated for each case reducer function
-export const { addLeads } = leadsSlice.actions;

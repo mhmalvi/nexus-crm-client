@@ -24,7 +24,6 @@ const EditCourseDetails = ({
   const [titleShow, setTitleShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
-  console.log("modal record: ", id);
   const handleUpdate = async () => {
     setUpdating(true);
     let res;
@@ -53,7 +52,6 @@ const EditCourseDetails = ({
           setCourseListLoading(false);
         }
       } else {
-        console.log("auth msg: ", res);
         warningNotification(res ? res?.data?.message : "Something went wrong");
         setConfirmLoading(false);
         setUpdating(false);
@@ -71,7 +69,6 @@ const EditCourseDetails = ({
 
   useEffect(() => {
     (async () => {
-      console.log("rId: ", id);
       setLoading(true);
       const result = await getCourseDetailById(id);
       if (result) {
@@ -82,7 +79,6 @@ const EditCourseDetails = ({
       }
     })();
   }, [id]);
-  console.log(title)
   return (
     <>
       <Modal

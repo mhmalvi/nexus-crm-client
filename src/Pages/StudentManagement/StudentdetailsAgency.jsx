@@ -54,7 +54,6 @@ const StudentdetailsAgency = () => {
       dataIndex: "invoice",
       key: "invoice",
       render: (_, record, idx) => {
-        console.log("invoice has: ", record);
         return (
           <>
             {record?.invoice ? (

@@ -1,17 +1,5 @@
 import axios from "axios";
 import { payment_dev } from "./environment";
-const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-export const handleCreateCompany = async (companyDetails) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/company/create`,
-      companyDetails
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
 
 export const handleUpdateCompany = async (companyDetails) => {
   
@@ -159,18 +147,6 @@ export const handleFetchPackages = async () => {
   }
 };
 
-export const handleCreateCompanyRequisition = async (requisitionData) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_COMPANY_URL}/api/store/requisition`,
-      requisitionData
-    );
-    return result;
-  } catch (error) {
-    return error.response;
-  }
-};
-
 export const handleCompanyStatusUpdate = async (companyId, status) => {
   try {
     const result = await axios.post(
@@ -261,7 +237,6 @@ export const handleFetchClientsInvoiceHistory = async (companyId) => {
 };
 
 export const handleFetchInvoiceDetails = async (invoiceId) => {
-  console.log("invoiceId", invoiceId);
   try {
     const result = await axios.post(
       `${payment_dev}/api/invoice/list`,

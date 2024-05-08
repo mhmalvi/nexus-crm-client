@@ -27,12 +27,10 @@ const Emails = () => {
       })();
     }, []);
     
-    console.log("for each", emailDetails);
 
   const showModal = (id) => {
     setIsModalOpen(true);
     setSelectedEmailId(id);
-    console.log("selected email id", selectedEmailId);
   };
   const handleOk = () => {
     setIsModalOpen(false);

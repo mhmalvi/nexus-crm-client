@@ -1,7 +1,6 @@
 import React from "react";
 
 const EmployeeHistory = ({ employeeList }) => {
-  console.log(employeeList);
   return (
     <div>
       <div>

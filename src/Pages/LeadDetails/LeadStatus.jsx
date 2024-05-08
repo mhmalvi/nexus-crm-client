@@ -188,8 +188,6 @@ const LeadStatus = (props) => {
 
     const statusUpdateResponse = await handleLeadStatusUpdate(data);
 
-    console.log("statusUpdateResponse", statusUpdateResponse);
-    console.log("leadDetails ......", leadDetails);
 
     if (statusUpdateResponse?.status === 201) {
       successNotification("Status updated successfully.")
@@ -200,7 +198,6 @@ const LeadStatus = (props) => {
           (status) => status?.lead_status === parseInt(key) + 1
         )?.length
       ) {
-        console.log("Already Sent");
         return;
       } else {
         const sendMailResponse = await handleLeadStatusChangeEmail({
@@ -394,7 +391,6 @@ const LeadStatus = (props) => {
   const handleDeletePaymentHistoryReq = async (phId) => {
     const deleteHistoryResp = await handleDeletePaymentHistory(phId);
 
-    console.log("deleteHistoryResp", deleteHistoryResp);
 
     if (deleteHistoryResp?.status === 200) {
       successNotification("History deleted successfully.");

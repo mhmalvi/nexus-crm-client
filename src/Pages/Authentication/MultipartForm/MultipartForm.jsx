@@ -48,7 +48,6 @@ const MultipartForm = ({ stripePromise }) => {
     interval: "",
   });
 
-  console.log(data);
   const [submitClicked, setSubmitClicked] = useState(false);
   const handleChange = (value) => {
     setIndustriesList(value);
@@ -85,7 +84,6 @@ const MultipartForm = ({ stripePromise }) => {
     setSubmitClicked(true);
     try {
       const res = await handleMultipartRegistration(data);
-      console.log(res);
       if (res.status === 201) {
         const userData = {
           ...res.data,

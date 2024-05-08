@@ -25,13 +25,12 @@ const SalesEmployees = ({
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
 
   useEffect(() => {
-    dispatch(setLoader(true));
+    // dispatch(setLoader(true));
 
     (async () => {
       const employeeResponse = await handleFetchCompanyEmployees(
         userDetails?.userInfo?.client_id
       );
-
 
       if (employeeResponse?.status === true) {
 
@@ -48,24 +47,12 @@ const SalesEmployees = ({
 
           setCompanySalesEmployees(unAssignedEmployee);
         }
-        dispatch(setLoader(false));
-      } else {
-        setTimeout(() => {
-          dispatch(setLoader(false));
-        }, 3000);
-      }
+      } 
     })();
-  }, [
-    dispatch,
-    leadDetails?.leadSalesEmployeeHistory,
-    userDetails?.userInfo?.client_id,
-  ]);
+  }, [leadDetails?.leadSalesEmployeeHistory, userDetails?.userInfo?.client_id]);
 
-  console.log(leadDetails?.leadDetails);
-  console.log(companySalesEmployees.length);
 
   const handleLeadAssignReq = async (id) => {
-    console.log(id);
 
     const assignEmployeeResponse = await handleLeadAssign(
       leadDetails?.leadDetails?.lead_id,

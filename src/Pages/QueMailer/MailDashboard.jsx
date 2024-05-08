@@ -108,7 +108,6 @@ const MailDashboard = ({
     }
     setAttachment(files);
   };
-  console.log(data);
   const handleSendMail = async () => {
     if (!data || !tData || !mailSubject) {
       if (!data) {
@@ -166,7 +165,6 @@ const MailDashboard = ({
         if (bounced.length) {
           bounced.forEach((data) => {
             formData.append("bounced_email[]", data);
-            console.log(data);
           });
         }
         const res = await sendEmail(formData);
@@ -257,7 +255,6 @@ const MailDashboard = ({
         if (bounced.length) {
           bounced.forEach((data) => {
             formData.append("bounced_email[]", data);
-            console.log(data);
           });
         }
         const res = await scheduleEmail(formData);
@@ -708,7 +705,6 @@ const MailDashboard = ({
               ("0" + e._d.getUTCSeconds()).slice(-2);
 
             setScheduleTime(formattedDateString);
-            console.log(formattedDateString);
           }}
           showTime
           needConfirm={false}

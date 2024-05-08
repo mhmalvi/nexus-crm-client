@@ -43,7 +43,6 @@ function ManagerDashboard() {
         ProfileDetails?.user_id
       );
 
-      console.log("userDetailResponse", userDetailResponse);
 
       if (userDetailResponse?.data) {
         const user = userDetailResponse?.data;

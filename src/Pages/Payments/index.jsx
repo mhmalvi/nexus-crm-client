@@ -180,7 +180,6 @@ const Payment = () => {
           userDetails?.client_id
         );
 
-        console.log("paymentHistoryResponse", paymentHistoryResponse);
 
         if (paymentHistoryResponse?.status === true) {
           setPaymentData(paymentHistoryResponse?.data);
@@ -199,7 +198,6 @@ const Payment = () => {
           userDetails?.client_id
         );
 
-        console.log("invoiceHistoryResponse", invoiceHistoryResponse);
 
         if (invoiceHistoryResponse?.status === true) {
           setInvoiceHistory(invoiceHistoryResponse?.data);
@@ -210,7 +208,6 @@ const Payment = () => {
           userDetails?.user_id
         );
 
-        console.log("invoiceHistoryResponse", invoiceHistoryResponse);
 
         if (invoiceHistoryResponse?.status === true) {
           setInvoiceHistory(invoiceHistoryResponse?.data);
@@ -325,7 +322,6 @@ const Payment = () => {
   useEffect(() => {
     const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
 
-    console.log("seletedDate", seletedDate);
 
     if (selectedDay && selectedMonth && selectedYear) {
       setPaymentData(

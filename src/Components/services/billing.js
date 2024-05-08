@@ -1,25 +1,6 @@
 import axios from "axios";
 import qs from "qs";
 
-export const getAllSubscriptionList = async () => {
-  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
-  const config = {
-    headers: {
-      // Accept: "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Bearer " + secretKey,
-    },
-  };
-  try {
-    const result = await axios.get(
-      `https://api.stripe.com/v1/subscriptions`,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
 export const getCardDetails = async () => {
   const custId = JSON.parse(window.localStorage.getItem("cust_id"));
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
@@ -280,26 +261,7 @@ export const createProduct = async (name) => {
     return error.response;
   }
 };
-export const updateProduct = async (data, productID) => {
-  const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
-  const config = {
-    headers: {
-      // Accept: "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Bearer " + secretKey,
-    },
-  };
-  try {
-    const result = await axios.get(
-      `https://api.stripe.com/v1/products/${productID}`,
-      data,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 export const deleteProduct = async (productID) => {
   const secretKey = process.env.REACT_APP_ZULKER_SP_SEC_KEY;
   const config = {

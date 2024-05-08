@@ -13,7 +13,6 @@ const PackageUpdate = ({
   setSyncPackages,
   syncPackages,
 }) => {
-  console.log(updatePackageDate);
 
   const getPackageTypeLimit = (typeLimit) => {
     if (typeLimit === 30) {
@@ -83,7 +82,6 @@ const PackageUpdate = ({
   };
 
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     setData({ ...Data, [e.target.name]: e.target.value });
   };
 
@@ -91,7 +89,6 @@ const PackageUpdate = ({
     e.preventDefault();
     const packageUpdateResponse = await handleUpdatePackage(Data);
 
-    console.log("packageCreateResponse", packageUpdateResponse);
 
     if (packageUpdateResponse?.status === 201) {
       setSyncPackages(!syncPackages);
@@ -119,7 +116,6 @@ const PackageUpdate = ({
     document.getElementById("price").value = updatePackageDate.price;
   }, [updatePackageDate]);
 
-  console.log("Data", Data);
 
   return (
     <>

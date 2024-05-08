@@ -24,7 +24,6 @@ const CompanyCampaigns = ({ clientId }) => {
 
       const response = await handleFetchCampaigns(clientId);
 
-      console.log("response", response);
 
       if (response?.data) {
         dispatch(addCampaigns(response?.data));

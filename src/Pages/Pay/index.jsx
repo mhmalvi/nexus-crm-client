@@ -14,17 +14,13 @@ import Loading from "../../Components/Shared/Loader";
 const Pay = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userDetails = useSelector((state) => state.user)?.userInfo;
   const loadingDetails = useSelector((state) => state.user)?.loading;
   const [amount, setAmount] = useState();
-  const [searchParams] = useSearchParams();
 
   const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );
 
-  console.log(userDetails);
-  console.log(searchParams.get("AccessCode"));
 
   const [transactionsMethod, setTransactionsMethod] = useState(0);
   const [requestedLeadDetails, setRequestedLeadDetails] = useState();

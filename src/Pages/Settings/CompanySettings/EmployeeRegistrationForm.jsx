@@ -20,7 +20,6 @@ const EmployeeRegistrationForm = ({
   setActiveAddStudentAccountants,
   flag,
 }) => {
-  console.log("flag: ", flag);
   const dispatch = useDispatch();
   const [showLoader, setShowLoader] = useState(false);
   const [employeeDetails, setEmployeeDetails] = useState({

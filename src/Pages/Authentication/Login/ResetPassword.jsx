@@ -34,17 +34,14 @@ const ResetPassword = () => {
     if (data.newPassword !== "" && data.confirmPassword !== "") {
       if (data.newPassword === data.confirmPassword) {
         setPasswordMatch(passwordCheckMsg[1]);
-        console.log(passwordMatch);
       } else {
         setPasswordMatch(passwordCheckMsg[2]);
-        console.log(passwordMatch);
       }
     } else if (
       data.newPassword.length === 0 &&
       data.confirmPassword.length === 0
     ) {
       setPasswordMatch(passwordCheckMsg[0]);
-      console.log(passwordMatch);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

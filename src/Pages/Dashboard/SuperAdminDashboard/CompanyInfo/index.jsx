@@ -4,7 +4,6 @@ import CompanyCampaigns from "./CompanyCampaigns";
 import CompanyLeads from "./CompanyLeads";
 
 const CompanyInfo = ({ clientId }) => {
-  console.log(clientId);
 
   const [activeTabs, setActiveTabs] = useState(0);
 

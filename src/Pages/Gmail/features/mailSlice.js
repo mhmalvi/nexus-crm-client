@@ -9,19 +9,15 @@ export const mailSlice = createSlice({
     reducers: {
         openMessageBox: (state) => {
             state.sendMessageIsOpen = true;
-            console.log("Top State", state);
         },
         closeMessageBox: (state) => {
             state.sendMessageIsOpen = false;
-            console.log("Bottom State", state);
         },
         expandMailSidebar: (state) => {
             state.mailSidebarIsOpen = true;
-            console.log("sidebar State", state);
         },
         ContractMailSidebar: (state) => {
             state.mailSidebarIsOpen = false;
-            console.log("sidebar State", state);
         },
     }
 });

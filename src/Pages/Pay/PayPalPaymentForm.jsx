@@ -2,9 +2,6 @@ import React, { useState } from "react";
 
 export default function PayPalPaymentForm() {
   const [amount, setAmount] = useState(0);
-  console.log(setAmount);
-
-  console.log(amount);
 
 
   return (

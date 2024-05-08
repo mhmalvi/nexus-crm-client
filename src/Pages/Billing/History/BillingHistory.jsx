@@ -12,7 +12,6 @@ const BillingHistory = () => {
     (async () => {
       const response = await getCustomerTransactions();
       setBillDetails(response.data.data);
-      console.log(response.data.data);
     })();
   }, []);
   const columns = [

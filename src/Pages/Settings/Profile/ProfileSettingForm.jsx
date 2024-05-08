@@ -32,9 +32,6 @@ function ProfileSettingForm() {
       const userDetailResponse = await handleProfileDetails(
         ProfileDetails?.user_id
       );
-
-      console.log("Onpage", userDetailResponse);
-
       if (userDetailResponse?.status === true) {
         const user = userDetailResponse?.data;
 
@@ -49,7 +46,6 @@ function ProfileSettingForm() {
 
   const userData = (e) => {
     const data = { ...profileData };
-    console.log("data", data);
     data[e.target.id] = e.target.value;
     setProfileData(data);
   };
@@ -60,8 +56,6 @@ function ProfileSettingForm() {
       user_id: ProfileDetails?.user_id,
       ...profileData,
     });
-
-    console.log("UpdateResponse", updateResponse);
 
     if (updateResponse?.data?.status === true) {
       setToggleEditDetails(false);

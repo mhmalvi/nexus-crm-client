@@ -23,23 +23,19 @@ const CourseMangemnet = () => {
     shallowEqual
   );
   const [form] = useForm();
-  const [inputFields, setInputFields] = useState([{ value: "" }]);
   const [file, setFile] = useState(false);
   const [fileName, setFileName] = useState("");
   const [courseId, setCourseId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [editCourseDetails, setEditCourseDetails] = useState();
   const [data, setData] = useState([]);
   const [isCourseListLoading, setIsCourseListLoading] = useState(false);
   const [courseCode, setCourseCode] = useState("");
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDesc, setCourseDesc] = useState("");
-  const [checklistItem,setCheckListItem] = useState("");
   function handleFile(event) {
     setFile(event.target.files[0]);
-    console.log("fdatas: ", event?.target?.files[0]);
     setFileName(event?.target?.files[0]?.name);
   }
 
@@ -62,7 +58,6 @@ const CourseMangemnet = () => {
     }
     if (res?.status === 200 || res?.status === 201) {
       form.resetFields();
-      setInputFields([{ value: "" }]);
       setFile(false);
       setFileName("");
       successNotification("Saved");
@@ -74,7 +69,6 @@ const CourseMangemnet = () => {
       } else {
         setIsCourseListLoading(false);
       }
-      setEditCourseDetails({});
       setIsLoading(false);
       setIsCreate(false);
       setIsUpdate(false);
@@ -89,12 +83,10 @@ const CourseMangemnet = () => {
 
   const onCancle = () => {
     form.resetFields();
-    setInputFields([{ value: "" }]);
     setFile(false);
     setFileName("");
     setIsCreate(false);
     setIsUpdate(false);
-    setEditCourseDetails({});
     setCourseCode("");
     setCourseTitle("");
     setCourseDesc("");
@@ -135,12 +127,9 @@ const CourseMangemnet = () => {
       setCourseCode(res?.data?.course_code);
       setCourseTitle(res?.data?.course_title);
       setCourseDesc(res?.data?.course_description);
-      setCheckListItem(res?.data?.checklist_path)
-      setEditCourseDetails(res?.data);
     }
   };
 
-  console.log("edit course detail: ", editCourseDetails);
   const column = [
     {
       title: "Course Code",
@@ -210,7 +199,6 @@ const CourseMangemnet = () => {
       },
     },
   ];
-  console.log("course_code show:", courseCode);
   return (
     <>
       <div className=" md:px-40 mt-20">

@@ -26,7 +26,6 @@ const EditDetails = ({
 
     (async () => {
       const courseResponse = await handleFetchCourses();
-      console.log("courseResponse", courseResponse);
 
       if (courseResponse?.status) {
         courseResponse?.data?.forEach((course) => {

@@ -29,7 +29,6 @@ const PackageForm = ({
   );
 
   const handlePackageTypeChange = (value) => {
-    console.log(value);
     setPackageLimit(packageTypeData[value]);
     setSecondPackageLimit(packageTypeData[value][0]);
 
@@ -82,7 +81,6 @@ const PackageForm = ({
     }
   };
 
-  console.log(Data);
 
   return (
     <>

@@ -15,9 +15,7 @@ function UpdateDialog({ user_id, onDialog }) {
     const editUserData = async () => {
       await Axios.get(`http://192.168.0.126/api/edit/package/${user_id}`).then(
         (res) => {
-          console.log(res);
           setData(res.data.package);
-          console.log(Data);
         }
       );
     };
