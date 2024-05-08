@@ -150,6 +150,7 @@ const EmailHistory = ({
       </>
     ),
   };
+  console.log("countinfo", countInfo.total);
   return (
     <>
       <Table
@@ -197,7 +198,7 @@ const EmailHistory = ({
               total: countInfo?.total,
             }}
             columns={innerTableColumns}
-            dataSource={countInfo?.data}
+            dataSource={countInfo.data}
           />
         </div>
       </Modal>
