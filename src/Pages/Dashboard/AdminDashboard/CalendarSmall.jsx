@@ -57,15 +57,6 @@ const CalendarSmall = ({
     setSelectedMonth(currentDate.month());
   };
 
-  const handlePanelChange = (value, mode) => {
-    if (mode === "year" && value.month) {
-      const selectedYear = value.format("YYYY");
-      const selectedMonth = value.month() + 1;
-      console.log(
-        `Selected Year: ${selectedYear}, Selected Month: ${selectedMonth}`
-      );
-    }
-  };
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
@@ -191,7 +182,7 @@ const CalendarSmall = ({
             </div>
           );
         }}
-        onPanelChange={handlePanelChange}
+       
         onChange={(value) => {
           const date = value.date();
           setSelectedDay(date < 10 ? `0${date}` : `${date}`);

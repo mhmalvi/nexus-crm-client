@@ -57,21 +57,12 @@ const Courses = () => {
 
   const handleAddCheckList = async () => {
     if (checklistTitle.length) {
-      console.log(
-        userDetails?.userInfo?.client_id,
-        userDetails?.userInfo?.id,
-        courseId,
-        checklistTitle
-      );
-
       const addChecklistResponse = await handleCreateChecklist(
         userDetails?.userInfo?.client_id,
         userDetails?.userInfo?.id,
         courseId,
         checklistTitle
       );
-
-      console.log("addChecklistResponse", addChecklistResponse);
 
       if (addChecklistResponse?.status) {
         const courseCheckList = await handleFetchCourseCheckList(courseId);

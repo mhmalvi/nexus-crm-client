@@ -7,13 +7,11 @@ const EmailDetail = ({ selectedEmailId }) => {
   const [details, setDetails] = useState([]);
   const [messagePart, setMessagePart] = useState();
   const [weekdayNum, setWeekweekdayNum] = useState();
-  console.log("in details", selectedEmailId);
 
   useEffect(() => {
     (async () => {
       const fetchmailDetails = await handleFetchEmailDetails(selectedEmailId);
       setDetails(fetchmailDetails);
-      console.log("single", details);
     })();
 
   }, [details, selectedEmailId]);
@@ -25,7 +23,6 @@ const EmailDetail = ({ selectedEmailId }) => {
     const convertableDate = new Date(date);
     const weekday = convertableDate.getDay();
     setWeekweekdayNum(weekday);
-    console.log("weekday", weekdayNum);
   }, [details, weekdayNum]);
   
 
@@ -33,7 +30,6 @@ const EmailDetail = ({ selectedEmailId }) => {
     if (details?.payload?.parts.find((s) => s.mimeType === "text/html")) {
       const base64EncodedString = details?.payload?.parts[1]?.body?.data;
       const decodedString = Base64.decode(base64EncodedString);
-      console.log("covertedBody", decodedString);
       setMessagePart(decodedString);
     }else{
     setMessagePart();

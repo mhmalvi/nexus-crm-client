@@ -11,7 +11,6 @@ import LeftSide from "./LeftSide";
 
 const GmailModule = () => {
   const isMessageOpen = useSelector(selectSendMessageIsOpen);
-  console.log(useSelector(selectSendMessageIsOpen));
   const user = useSelector(selectMailUser);
   return (
     <>

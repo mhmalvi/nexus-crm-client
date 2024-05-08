@@ -53,22 +53,22 @@ export const handleFetchFile = async (fileId) => {
 };
 
 // Fetch Sales Employees
-export const handleFetchSales = async (cid) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.get(
-      `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${cid}`,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleFetchSales = async (cid) => {
+//   const config = {
+//     headers: {
+//       Authorization: "Bearer " + authToken,
+//     },
+//   };
+//   try {
+//     const result = await axios.get(
+//       `${process.env?.REACT_APP_LEAD_URL}/api/sales-list/${cid}`,
+//       config
+//     );
+//     return result.data;
+//   } catch (error) {
+//     return error.response;
+//   }
+// };
 // Fetch Leqds data by id of sales employee
 
 export const handleFetchLeadsBySalesId = async (id) => {
@@ -264,6 +264,16 @@ export const handleSendStudentDetails = async (data) => {
     return error.response;
   }
 };
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// ekhane PROBLEM
 // Admission requests
 export const handleGetStudentAdmissionRequests = async () => {
   const config = {
@@ -278,6 +288,7 @@ export const handleGetStudentAdmissionRequests = async () => {
     return error.response;
   }
 };
+// ekhane PROBLEM
 // Student admission request details
 export const handleGetStudentAdmissionRequestsDetails = async (id) => {
   const config = {
@@ -295,6 +306,7 @@ export const handleGetStudentAdmissionRequestsDetails = async (id) => {
     return error.response;
   }
 };
+// ekhane PROBLEM
 export const handleGetStudentAdmissionDetailsAgency = async (aid, sid) => {
   const config = {
     headers: {
@@ -311,7 +323,7 @@ export const handleGetStudentAdmissionDetailsAgency = async (aid, sid) => {
     return error.response;
   }
 };
-// Change status admission complete
+// ekhane PROBLEM
 export const handleAdmissionStatusChange = async (data) => {
   const config = {
     headers: {
@@ -346,6 +358,32 @@ export const handleGetStudentCompleteDetailsCheck = async (id) => {
     return error.response;
   }
 };
+// ekhane PROBLEM
+export const handleCourseCheckLists = async () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + authToken,
+    },
+  };
+  try {
+    const result = await axios.get(
+      `${environment_dev}/api/get-course-in-accountant`,
+      config
+    );
+    return result.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
 // Remove file
 export const handleRemoveFileAgencyCheck = async (id, rId, flag) => {
   const config = {
@@ -438,22 +476,7 @@ export const handleCourseCheckListInsert = async (data) => {
     return error.response;
   }
 };
-export const handleCourseCheckLists = async () => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.get(
-      `${environment_dev}/api/get-course-in-accountant`,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 // REMOVE SALES ADMIN
 export const handleRemoveTemplet = async (id) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));

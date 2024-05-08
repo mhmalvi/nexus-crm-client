@@ -136,7 +136,6 @@ const DueBillForm = ({ subscriptionClicked, setButtonClicked }) => {
               id="card-element"
               onChange={(e) => {
                 setCardInputComplete(e.complete);
-                console.log(e.complete);
               }}
             />
           </div>

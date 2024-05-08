@@ -29,7 +29,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
       setSelected1([plan]);
       const requisitionDetails = { ...data };
       requisitionDetails.packages_id = plan;
-      // console.log(requisitionDetails);
       setData(requisitionDetails);
     } else {
       let newSelected1 = selected1.filter((t) => t !== plan);
@@ -54,11 +53,6 @@ const Package = ({ setShowRequisitionForm, data, setData }) => {
 
     (async () => {
       const fetchPackages = await handleFetchPackages();
-
-      // dispatch(addPackages(fetchPackages?.packages));
-
-      console.log("fetchPackages", fetchPackages);
-
       if (fetchPackages?.packages.length) {
         setActivePackages(
           (fetchPackages?.packages).filter((pack) => pack.active)

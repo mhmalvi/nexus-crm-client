@@ -78,7 +78,6 @@ const QueMailer = () => {
         per_page: emailsPerPage,
       };
       const res = await getEmailDetailsCount(data, historyInnerPagination);
-      console.log("TOTAL_COUNT", res);
       setCountInfo(res?.data);
     }
     if (openCountModal || successMail) {

@@ -17,7 +17,6 @@ import { addCampaigns } from "../../../../features/Leads/campaignSlice";
 
 const CampaignInfo = () => {
   const { id } = useParams();
-  console.log(id);
   const clientId = id?.split("_")?.[0];
   const campaignId = id?.split("_")?.[1];
 
@@ -44,7 +43,6 @@ const CampaignInfo = () => {
         client_id: clientId,
       });
 
-      console.log("response", response);
 
       if (response?.data) {
         dispatch(addLeads(response?.data));
@@ -61,7 +59,6 @@ const CampaignInfo = () => {
 
     (async () => {
       const response = await handleFetchCampaigns(clientId);
-      console.log(response.data);
       if (response?.data) {
         dispatch(addCampaigns(response?.data));
       }
@@ -86,7 +83,6 @@ const CampaignInfo = () => {
     }
   }, [campaignId, leadList, selectedDay, selectedMonth, selectedYear]);
 
-  console.log("leadData >>>>>>>", leadData);
 
   useEffect(() => {
     setCampaignDetails(
@@ -133,27 +129,18 @@ const CampaignInfo = () => {
     }
   }, [campaignId, campaignList, filterDate, leadList]);
 
-  console.log("campaignCourses", campaignCourses);
 
-  // useEffect(() => {
-  //   setCampaignCourses(leadList.filter(lead=>lead.campaign_id===campaignId));
-  // }, [input]);
 
   const handleFilterLeadList = (filterId) => {
-    console.log("filterId....", filterId);
 
     setActiveFilter(filterId);
     if (filterId === 0 || filterId === 7) {
       (async () => {
-        // const response = await handleFetchLeads(
-        //   userDetails?.userInfo?.client_id
-        // );
         setLeadData(
           leadList?.filter(
             (lead) => parseInt(lead.campaign_id) === parseInt(campaignId)
           )
         );
-        // dispatch(addLeads(response.data));
       })();
     } else if (filterId === 8) {
       setLeadData(
@@ -186,12 +173,6 @@ const CampaignInfo = () => {
   };
 
   const handleCourseWiseLeads = (course) => {
-    // console.log("course", course.length);
-    // console.log(
-    //   leadList
-    //     ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
-    //     ?.filter((lead) => lead.course_description === course)
-    // );
     setLeadData(
       leadList
         ?.filter((lead) => parseInt(lead.campaign_id) === parseInt(campaignId))
@@ -199,7 +180,6 @@ const CampaignInfo = () => {
     );
   };
 
-  console.log("campaignCourses", campaignCourses?.length);
 
   return (
     <div className="bg-white mt-18 2xl:mt-25 pt-1 mx-6 font-poppins">

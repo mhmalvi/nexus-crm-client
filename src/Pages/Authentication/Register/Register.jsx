@@ -45,7 +45,6 @@ const Register = () => {
   }, [navigate, userDetails]);
   useEffect(() => {
     const url = new URL(window.location.href);
-    console.log(url);
     const params = new URLSearchParams(url.search);
     const selectedPackage = params.get("selected-package");
     const interval = params.get("interval");
@@ -58,8 +57,7 @@ const Register = () => {
         priceId: priceId,
       });
     }
-    console.log(registrationData);
-  }, [registrationData?.package]);
+  }, [registrationData, registrationData.package]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

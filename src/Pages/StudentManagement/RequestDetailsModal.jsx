@@ -62,7 +62,6 @@ const RequestDetailsModal = ({
     (async () => {
       const res = await handleGetStudentAdmissionRequestsDetails(rId);
       setLoading(true);
-      console.log("agency :", res);
       if (res?.status === 200) {
         setLoading(false);
 
@@ -76,7 +75,6 @@ const RequestDetailsModal = ({
       }
     })();
   }, [rId]);
-  console.log("addmission details: ", AdmissionDetails);
   const SyncRefresh = async () => {
     const res = await handleGetStudentAdmissionRequestsDetails(rId);
     setIsRefreshing(true);

@@ -21,7 +21,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
   const [courseList, setCourseList] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
 
-  console.log("userDetails", userDetails);
 
   const [leadData, setLeadData] = useState({
     full_name: "",
@@ -75,7 +74,6 @@ const AddLeadForm = ({ setIsAddLeadFormOpen }) => {
     setLeadData(data);
   };
 
-  console.log("leadData", leadData);
 
   const handleAddLeadReq = async () => {
     const details = { ...leadData };

@@ -43,14 +43,11 @@ const AttachModal = ({
     }, 500);
   };
   const handleCheckListFile = (e) => {
-    console.log("I entered file");
 
     const files = Object.values(e?.target?.files);
     setFiles(files);
     setFileName(files);
-    console.log("fdatas: ", files);
   };
-  // console.log("all data: ", allCheckLists);
   const handleNewCheckListUpload = async () => {
     const formData = new FormData();
     files.forEach((file) => formData.append("checklist_file[]", file));

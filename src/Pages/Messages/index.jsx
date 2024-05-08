@@ -1,16 +1,12 @@
 import React from "react";
-import {  useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Message from "./Message";
 
 
 const Messages = () => {
   const navigate = useNavigate();
-  const userDetails = useSelector((state) => state?.user);
 
   const handleMessageNavigation = async (message) => {
-    console.log("userDetails", message);
-    console.log("userDetails.userInfo.userId", userDetails.userInfo.user_id);
 
 
     navigate(`/lead/${message?.room_id}`);

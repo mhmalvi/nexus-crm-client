@@ -3,30 +3,31 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import {
-  // handleCoursewiseSalesAssign,
   handleCreateChecklist,
   handleDeleteChecklist,
-  // handleDeleteCoursewiseSalesAssign,
   handleFetchCourseCheckList,
   handleFetchCoursewiseAssignedEmployees,
 } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 import { useEffect } from "react";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
-import { successNotification, warningNotification } from "../../Components/Shared/Toast";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const CourseDetails = ({ selectedCourse }) => {
   const [checklist, setChecklist] = useState([]);
   const [checklistTitle, setChecklistTitle] = useState("");
   const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
-  const [employeeList, setEmployeeList] = useState([]);
-  const [assignedEmployees, setAssignedEmployees] = useState([]);
-  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  // const [employeeList, setEmployeeList] = useState([]);
+  // const [assignedEmployees, setAssignedEmployees] = useState([]);
+  // const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const userDetails = useSelector((state) => state.user?.userInfo);
 
   useEffect(() => {
-    setSelectedEmployees([]);
+    // setSelectedEmployees([]);
     (async () => {
       const courseCheckList = await handleFetchCourseCheckList(
         selectedCourse?.id
@@ -58,7 +59,7 @@ const CourseDetails = ({ selectedCourse }) => {
         });
 
         setCompanyEmployeeList(options);
-        setEmployeeList(options);
+        // setEmployeeList(options);
       }
     })();
   }, [userDetails]);
@@ -79,16 +80,6 @@ const CourseDetails = ({ selectedCourse }) => {
           );
           assignedSalesEmployees.push(selectedCompanyEmployees);
         });
-
-        var uniqueEmployees = companyEmployeeList.filter(function (obj) {
-          return assignedSalesEmployees.indexOf(obj) === -1;
-        });
-
-        setEmployeeList(uniqueEmployees);
-        setAssignedEmployees(assignedSalesEmployees);
-      } else {
-        setAssignedEmployees([]);
-        setEmployeeList(companyEmployeeList);
       }
     })();
   }, [companyEmployeeList, selectedCourse, userDetails]);
@@ -108,8 +99,7 @@ const CourseDetails = ({ selectedCourse }) => {
           addChecklistResponse ? addChecklistResponse?.message : "Inserted"
         );
       } else {
-        console.log("auth check:", addChecklistResponse);
-       warningNotification(
+        warningNotification(
           addChecklistResponse
             ? addChecklistResponse?.data?.message
             : "Something went wrong"
@@ -138,11 +128,16 @@ const CourseDetails = ({ selectedCourse }) => {
       </h1>
 
       <div className="flex gap-4 flex-col justify-between">
-        <h1 className="m-0 p-0 text-base font-semibold text-slate-300">Check Lists</h1>
+        <h1 className="m-0 p-0 text-base font-semibold text-slate-300">
+          Check Lists
+        </h1>
         <div>
           {checklist.length ? (
             checklist?.map((list, i) => (
-              <div key={i} className="flex items-center gap-4 justify-between w-full border-b ">
+              <div
+                key={i}
+                className="flex items-center gap-4 justify-between w-full border-b "
+              >
                 <li className="list-disc ">{list?.title}</li>
                 <Icons.Cross
                   className="text-red-600 w-4 cursor-pointer"
@@ -168,7 +163,7 @@ const CourseDetails = ({ selectedCourse }) => {
             className="w-1/3 bg-brand-color text-white px-4 py-1.5 shadow rounded-md"
             onClick={handleAddCheckList}
           >
-            +{" "}Add
+            + Add
           </button>
         </div>
       </div>

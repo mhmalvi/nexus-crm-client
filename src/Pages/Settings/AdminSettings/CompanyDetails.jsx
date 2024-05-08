@@ -40,7 +40,6 @@ const CompanyDetails = () => {
 
     (async () => {
       const companyDetailsResponse = await handleFetchCompanyDetails(id);
-      console.log("COOL", companyDetailsResponse);
       if (companyDetailsResponse?.status) {
         setCompanyDetails(companyDetailsResponse?.data?.[0]);
 
@@ -65,7 +64,6 @@ const CompanyDetails = () => {
     })();
   }, [dispatch, id]);
 
-  console.log(companyDetails);
 
   const handleLoadCompanyDetails = (e) => {
     const data = { ...companyDetails };
@@ -139,8 +137,6 @@ const CompanyDetails = () => {
     const result = new Date().setDate(someDate.getDate() + 50);
     const finaldate = new Date(result);
     const futureDate = finaldate.toString().slice(0, 15);
-
-    console.log("refreshResponse", refreshResponse);
 
     if (refreshResponse?.status === true) {
       Storage.setItem("refresh_tok", futureDate);

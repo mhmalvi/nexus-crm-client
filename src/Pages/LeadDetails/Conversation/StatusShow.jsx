@@ -89,7 +89,6 @@ const StatusShow = ({ leadDetails }) => {
                         ? "text-violet-400"
                         : "text-black"
                     }`}
-                    FF9500
                   >
                     {(log?.lead_status === 1 && "New Lead") ||
                       (log?.lead_status === 2 && "Skilled") ||
@@ -143,15 +142,3 @@ const StatusShow = ({ leadDetails }) => {
 };
 
 export default StatusShow;
-const statusColor = [
-  {
-    lable: "Verified",
-    color: "#7037FF",
-    class: "color-violet",
-  },
-  {
-    lable: "Completed",
-    color: "#FF0000",
-    class: "color-red",
-  },
-];

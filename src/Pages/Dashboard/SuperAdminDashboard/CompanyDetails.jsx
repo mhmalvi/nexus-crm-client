@@ -170,7 +170,6 @@ const CompanyDetails = () => {
       status
     );
 
-    console.log("companiesResponse", companiesResponse);
 
     if (companiesResponse?.status === true) {
       setSyncDetails(!syncDetails);

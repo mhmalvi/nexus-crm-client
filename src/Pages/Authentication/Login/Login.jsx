@@ -264,7 +264,6 @@ const Login = () => {
     setTooglePasswordForget(true);
   };
   const handleRemoverBookmarkedAccount = (acoountDetials) => {
-    console.log(acoountDetials?._ue_);
     setBookMarkedAccounts(
       bookMarkedAccounts?.filter((acc) => acc?._ue_ !== acoountDetials?._ue_)
     );

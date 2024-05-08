@@ -29,7 +29,6 @@ const Packages = () => {
     userInfoObject.interval = interval;
     userInfoObject.package = package_name;
 
-    console.log("function", priceId);
     const response = await createSubscription(
       interval,
       package_name,

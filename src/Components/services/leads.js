@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// ekhane problem
 export const handleFetchLeads = async (details) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -92,7 +93,6 @@ export const handleUploadLeadFile = async (fileDetails) => {
       fileDetails,
       config
     );
-    console.log(result);
     return result.data;
   } catch (error) {
     return error.response;
@@ -119,17 +119,8 @@ export const handleUpdateLeadContact = async (leadId, updatedDetails) => {
   }
 };
 
-export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
-  try {
-    const result = await axios.put(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/${leadId}/update`,
-      { student_id: userId }
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleLeadStudentDetailsUpdate = async (leadId, userId) => {
+
 
 export const handleLeadStatusUpdate = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
@@ -265,19 +256,8 @@ export const handleAddAmount = async (leadId, amount) => {
   }
 };
 
-export const handleFetchChecklist = async (courseId) => {
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/lead/checklist`,
-      {
-        course_id: courseId,
-      }
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleFetchChecklist = async (courseId) => {
+
 
 export const handleChecklistDocumentUpload = async (documentDetails) => {
   try {
@@ -331,7 +311,6 @@ export const handleFetchCampaigns = async (clientId) => {
       { client_id: clientId },
       config
     );
-    console.log(result.data);
     return result.data;
   } catch (error) {
     return error.response;
@@ -380,46 +359,13 @@ export const handleClientwiseCourseDetails = async (clientId) => {
   }
 };
 
-export const handleCoursewiseSalesAssign = async (requestData) => {
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-  const config = {
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/assign-sales-to-lead`,
-      requestData,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleCommentsSubmitReq = async (remarks, leadId) => {
 
-export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-  const config = {
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/delete-sales-employee-by-user-id`,
-      requestData,
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+// export const handleCoursewiseSalesAssign = async (requestData) => {
 
+// export const handleDeleteCoursewiseSalesAssign = async (requestData) => {
+
+// ekhane problem
 export const handleFetchCourseCheckList = async (courseId) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
@@ -590,27 +536,7 @@ export const handleReviewRemarksSubmitReq = async (remarks, leadId) => {
   }
 };
 
-export const handleCommentsSubmitReq = async (remarks, leadId) => {
-  const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
-  const config = {
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + authToken,
-    },
-  };
-  try {
-    const result = await axios.post(
-      `${process.env?.REACT_APP_LEAD_URL}/api/multi-review/${leadId}`,
-      {
-        comments: remarks,
-      },
-      config
-    );
-    return result.data;
-  } catch (error) {
-    return error.response;
-  }
-};
+
 
 export const handleDeleteComment = async (commentId) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));

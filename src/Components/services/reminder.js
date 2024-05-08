@@ -8,7 +8,6 @@ export const handleAddFollowUp = async (followUpData) => {
       Accept: "application/json",
     },
   };
-  console.log("FollowUp", followUpData);
   try {
     const result = await axios.post(
       `https://crmnotification.queleadscrm.com/api/follow-up`,
@@ -64,7 +63,6 @@ export const handleDeleteFollowUp = async (followupID) => {
       Accept: "application/json",
     },
   };
-  console.log(followupID);
   try {
     const result = await axios.post(
       `https://crmnotification.queleadscrm.com/api/delete-notification`,

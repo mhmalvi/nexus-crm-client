@@ -9,13 +9,17 @@ import React, {
 import Icons from "../../../Components/Shared/Icons";
 import Notifications from "../../Notifications/index.jsx";
 import NotifyModal from "../../Notifications/NotifyModal.jsx";
-
+import {
+  adminFilterOptions,
+  salesEmployeesFilterOptions,
+  ratings,
+  statusColor,
+} from "./staticData.jsx";
 import { handleNotificationViewed } from "../../../Components/services/notification";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import {
   handleFetchLeads,
-  handleSyncLeads,
 } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import dayjs from "dayjs";
@@ -92,10 +96,10 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
-  // const subscription = userDetails.userInfo.package;
-  // const endDate =
-  //   subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
-  // var myDate = new Date(endDate * 1000);
+  const subscription = userDetails.userInfo.package;
+  const endDate =
+    subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
+  var myDate = new Date(endDate * 1000);
 
   const handleViewed = async () => {
     try {
@@ -136,11 +140,10 @@ const AdminDashboard = () => {
     // ]
     [
       dispatch,
-      userDetails
-      // userDetails?.id,
-      // userDetails?.userInfo?.client_id,
-      // userDetails?.userInfo?.role_id,
-      // userDetails?.userInfo?.user_id,
+      userDetails?.id,
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.role_id,
+      userDetails?.userInfo?.user_id,
     ]
   );
 
@@ -186,7 +189,7 @@ const AdminDashboard = () => {
         setSalesOptions(data);
       }
     })();
-  }, [userDetails]);
+  }, [userDetails?.userInfo?.client_id]);
 
   const onAssignLead = useCallback(
     async (lid, sid) => {
@@ -234,13 +237,11 @@ const AdminDashboard = () => {
       // userDetails?.userInfo?.client_id,
       // userDetails?.userInfo?.user_id,
       // userDetails?.userInfo?.role_id,
-      // 
-      userDetails
-      // userDetails?.id,
-      // userDetails?.userInfo?.client_id,
-      // userDetails?.userInfo?.role_id,
-      // userDetails?.userInfo?.user_id,
-      // userDetails?.user_id,
+      userDetails?.id,
+      userDetails?.userInfo?.client_id,
+      userDetails?.userInfo?.role_id,
+      userDetails?.userInfo?.user_id,
+      userDetails?.user_id,
     ]
   );
 
@@ -614,7 +615,7 @@ const AdminDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     companyEmployeeList,
-    userDetails,
+    userDetails?.userInfo,
     assignLoading,
     onAssignLead,
     onRemoveSales,
@@ -689,17 +690,6 @@ const AdminDashboard = () => {
     [leadList]
   );
 
-  const handleSyncLeadsReq = async () => {
-    successNotification("Sync in progress...");
-    const syncResponse = await handleSyncLeads(
-      userDetails?.userInfo?.client_id,
-      userDetails?.userInfo?.ac_k
-    );
-    if (syncResponse?.status) {
-      setSyncLeads(!syncLeads);
-      window.location.reload();
-    }
-  };
 
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {
@@ -742,11 +732,10 @@ const AdminDashboard = () => {
       socket.off("message");
       socket.disconnect();
     };
-  }, [dispatch, socket, userDetails, setViewedData]);
+  }, [dispatch, socket, userDetails.userInfo.id, setViewedData]);
 
   return (
     <div className="w-full h-screen flex flew-grow 2xl:gap-4 gap-2 py-8 relative">
-
       <div className="w-full border-black rounded-md p-4 shadow-md backdrop-blur-2xl bg-[#ffffff11] overflow-y-hidden">
         <Modal
           visible={isAddLeadFormOpen}
@@ -808,7 +797,6 @@ const AdminDashboard = () => {
               ratings={ratings}
               activeFilter={activeFilter}
               searchInput={searchInput}
-              handleSyncLeadsReq={handleSyncLeadsReq}
               setIsAddLeadFormOpen={setIsAddLeadFormOpen}
               setSyncLeads={setSyncLeads}
               syncLeads={syncLeads}
@@ -954,110 +942,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
-const adminFilterOptions = [
-  {
-    id: 0,
-    title: "All",
-  },
-  {
-    id: 1,
-    title: "New Lead",
-  },
-  {
-    id: 2,
-    title: "Skilled",
-  },
-  {
-    id: 3,
-    title: "Called",
-  },
-  {
-    id: 4,
-    title: "Paid",
-  },
-  {
-    id: 5,
-    title: "Verified",
-  },
-  {
-    id: 6,
-    title: "Completed",
-  },
-  {
-    id: 9,
-    title: "Suspended",
-  },
-];
-
-const salesEmployeesFilterOptions = [
-  {
-    id: 1,
-    title: "New Lead",
-  },
-  {
-    id: 8,
-    title: "My Leads",
-  },
-];
-
-const ratings = [
-  {
-    id: 10,
-    title: "1 Star",
-  },
-  {
-    id: 11,
-    title: "2 Stars",
-  },
-  {
-    id: 12,
-    title: "3 Stars",
-  },
-  {
-    id: 13,
-    title: "4 Stars",
-  },
-  {
-    id: 14,
-    title: "5 Stars",
-  },
-];
-
-const statusColor = [
-  {
-    id: 0,
-    title: "Suspended",
-    color: "bg-black",
-  },
-  {
-    id: 1,
-    title: "New Lead",
-    color: "bg-green-500",
-  },
-  {
-    id: 2,
-    title: "Skilled",
-    color: "bg-orange-500",
-  },
-  {
-    id: 3,
-    title: "Called",
-    color: "bg-blue-500",
-  },
-  {
-    id: 4,
-    title: "Paid",
-    color: "bg-teal-500",
-  },
-  {
-    id: 5,
-    title: "Verified",
-    color: "bg-violet-500",
-  },
-  {
-    id: 6,
-    title: "Completed",
-    color: "bg-red-500",
-  },
-];

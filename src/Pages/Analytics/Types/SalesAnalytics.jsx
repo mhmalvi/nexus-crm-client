@@ -34,8 +34,6 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
           ? userDetails?.userInfo?.client_id
           : activeCompany
       );
-
-      console.log("salesResponse", salesResponse?.data);
       setCompanySalesEmployees(salesResponse?.data);
     })();
   }, [
@@ -65,13 +63,6 @@ const SalesAnalytics = ({ activeCompany, fullscreen, setFullScreen }) => {
           let employees = [];
 
           sales?.forEach((employee) => {
-            console.log(
-              "FINDDD",
-              companySalesEmployees?.filter(
-                (salesEmployee) => salesEmployee?.sales === employee?.id
-              )
-            );
-
             employees?.push({
               id: employee?.user_id,
               name: employee?.full_name,

@@ -77,11 +77,9 @@ const SendStudentDetails = ({
     setData(userdata);
   };
   const handleCheckListFile = (e) => {
-    console.log("I entered file");
 
     const files = Object.values(e?.target?.files);
     setFiles(files);
-    console.log("fdatas: ", files);
   };
   function handlePhotoUpload(e) {
     setPhotoFIle(e.target.files[0]);
@@ -178,7 +176,6 @@ const SendStudentDetails = ({
       }
     }
   };
-  console.log("course lists: ", courseList);
   const selectFileOptions = [
     {
       value: "",

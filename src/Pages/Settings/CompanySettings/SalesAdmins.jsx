@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  handleFetchB2BUser,
   handleUpdateUserStatus,
   handleUserSuspendStatus,
 } from "../../../Components/services/auth";
@@ -43,33 +42,7 @@ const SalesAdmins = ({ clientId }) => {
   //   useState(false);
   // const [isRemovingSalesLoading, setIsRemovingSalesLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const status = isSuspandStatusStudentAdmin ? 1 : 0;
-      const res = await handleFetchB2BUser(7, status);
-      if (res?.status === 200) {
-        setAllStudentAdmin(res?.data);
-      }
-    })();
-  }, [clientId, isSuspandStatusStudentAdmin]);
-  useEffect(() => {
-    (async () => {
-      const status = isSuspandStatusAccountant ? 1 : 0;
-      const res = await handleFetchB2BUser(8, status);
-      if (res?.status === 200) {
-        setAllStudentAccountants(res?.data);
-      }
-    })();
-  }, [clientId, isSuspandStatusAccountant]);
-  useEffect(() => {
-    (async () => {
-      const status = isSuspandStatusAgency ? 1 : 0;
-      const res = await handleFetchB2BUser(9, status);
-      if (res?.status === 200) {
-        setAllStudentAgencys(res?.data);
-      }
-    })();
-  }, [clientId, isSuspandStatusAgency]);
+
   useEffect(() => {
     (async () => {
       const res = await handleGetSalesAdmin();
@@ -144,7 +117,6 @@ const SalesAdmins = ({ clientId }) => {
       successNotification("Employee reassigned successfully.");
     }
   };
-  console.log(companyAdvisorEmployees);
   const handleSuspendEmployee = async (userId) => {
     const statusUpdateResponse = await handleUserSuspendStatus(userId, 1);
 
@@ -154,45 +126,6 @@ const SalesAdmins = ({ clientId }) => {
       setSyncEmployees(!syncEmployees);
     }
   };
-  // const handleSuspendB2BEmployee = async (userId) => {
-  //   const status = isSuspandStatusStudentAdmin ? 0 : 1;
-  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-  //   // console.log(statusUpdateResponse);
-
-  //   if (statusUpdateResponse?.data?.status === true) {
-  //     const status = isSuspandStatusStudentAdmin ? 1 : 0;
-  //     const resep = await handleFetchB2BUser(7, status);
-  //     if (resep?.status === 200) {
-  //       setAllStudentAdmin(resep?.data);
-  //     }
-  //   }
-  // };
-  // const handleSuspendB2BEmployeeAccount = async (userId) => {
-  //   const status = isSuspandStatusAccountant ? 0 : 1;
-  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-  //   // console.log(statusUpdateResponse);
-
-  //   if (statusUpdateResponse?.data?.status === true) {
-  //     const status = isSuspandStatusAccountant ? 1 : 0;
-  //     const resep = await handleFetchB2BUser(8, status);
-  //     if (resep?.status === 200) {
-  //       setAllStudentAccountants(resep?.data);
-  //     }
-  //   }
-  // };
-  // const handleSuspendB2BEmployeeAgency = async (userId) => {
-  //   const status = isSuspandStatusAgency ? 0 : 1;
-  //   const statusUpdateResponse = await handleUserSuspendStatus(userId, status);
-
-  //   if (statusUpdateResponse?.data?.status === true) {
-  //     const status = isSuspandStatusAgency ? 1 : 0;
-  //     const resep = await handleFetchB2BUser(9, status);
-  //     if (resep?.status === 200) {
-  //       setAllStudentAgencys(resep?.data);
-  //     }
-  //   }
-  // };
-
   return (
     <div className="relative flex flex-col justify-start gap-4 w-full h-full">
       <div className="flex flex-col flex-grow gap-4 overflow-y-scroll w-full rounded-md p-5 shadow-md backdrop-blur-2xl bg-[#ffffff11]">
@@ -413,7 +346,6 @@ const SalesAdmins = ({ clientId }) => {
                           className="border border-red-500 px-1 py-0.5 text-xs rounded-md text-red-500 mt-3"
                           onClick={() => {
                             handleSuspendEmployee(employee?.user_id);
-                            console.log(employee?.user_id);
                           }}
                         >
                           Suspend

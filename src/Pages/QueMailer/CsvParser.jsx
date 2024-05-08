@@ -116,7 +116,6 @@ const CSVParser = ({
         setCSVFileName(file.name);
         const headerRow = parsedData.length > 0 ? parsedData[0] : [];
         setHeaderData(headerRow);
-        console.log(headerRow);
         const dataRows = parsedData.slice(1).filter((row) => {
           return row.some((cell) => {
             return typeof cell === "string" && cell.trim() !== "";
@@ -334,7 +333,6 @@ const CSVParser = ({
           <button
             onClick={() => {
               handleParse();
-              console.log(data);
             }}
             className={`py-2 px-4 rounded-md border text-xs hover:scale-95 ease-in duration-100 ${
               colorMode

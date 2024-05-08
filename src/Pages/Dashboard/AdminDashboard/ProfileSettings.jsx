@@ -52,7 +52,6 @@ const ProfileSettings = ({
   }, []);
   const userData = (e) => {
     const data = { ...profileData };
-    console.log("data", data);
     data[e.target.id] = e.target.value;
     setProfileData(data);
   };

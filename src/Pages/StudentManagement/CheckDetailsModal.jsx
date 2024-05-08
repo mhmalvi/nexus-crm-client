@@ -98,7 +98,6 @@ const CheckDetailsModal = ({
   };
   const handleCheckListFile = (e) => {
     e.preventDefault();
-    console.log("I entered file");
 
     const files = Object.values(e?.target?.files);
     setFiles(files);
@@ -632,7 +631,6 @@ const CheckDetailsModal = ({
       key: "action",
       align: "center",
       render: (_, record, idx) => {
-        console.log("main record: ", record);
         return (
           <>
             <div className="flex justify-center items-center gap-4">

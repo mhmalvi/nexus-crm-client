@@ -2,11 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const AppliedCampaign = ({ leadDetails }) => {
-  console.log("leadDetails", leadDetails);
-  console.log(
-    "leadDetailsssssssss",
-    status[parseInt(leadDetails?.lead_details_status) - 1]?.title
-  );
   return (
     <Link
       to={`/lead/${leadDetails?.lead_id}`}
