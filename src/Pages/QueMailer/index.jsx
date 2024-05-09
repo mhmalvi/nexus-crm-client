@@ -63,7 +63,7 @@ const QueMailer = () => {
           user_id: userDetails?.userInfo.id,
         };
         const res = await getEmailHistory(data, currentPage);
-        console.log("getEmailHistory: ", res);
+        console.log("getEmailHistory: ", res.data);
         setEmailSessionRow(res.data);
         setTotalEmail(res.data.total);
       } catch (error) {
@@ -221,7 +221,7 @@ const QueMailer = () => {
               Email Settings
             </button>
           </div>
-          <div>
+          {/* <div>
             <h1
               className={`m-0 px-4 py-0 m-0 text-xl ${
                 colorMode ? "text-slate-300" : "text-gray-800"
@@ -229,7 +229,7 @@ const QueMailer = () => {
             >
               Emails Remaining: {1000 - dailyCount}
             </h1>
-          </div>
+          </div> */}
         </div>
         {activeItem === "Email" &&
           (currentEmail?.status === 404 ||
@@ -313,6 +313,7 @@ const QueMailer = () => {
               countInfo={countInfo}
               setEmailId={setEmailId}
               setHistoryInnerPagination={setHistoryInnerPagination}
+              historyInnerPaginatio={historyInnerPagination}
               totalEmail={totalEmail}
               setEmailsPerPage={setEmailsPerPage}
               emailsPerPage={emailsPerPage}
