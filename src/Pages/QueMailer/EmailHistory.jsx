@@ -16,12 +16,15 @@ const EmailHistory = ({
   countInfo,
   setEmailId,
   setHistoryInnerPagination,
+  historyInnerPagination,
   totalEmail,
   setEmailsPerPage,
   emailsPerPage,
 }) => {
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [loadingTime, setLoadingTime] = useState(true);
+  console.log("Email Session Row: ", emailSessionRow);
+  console.log("CountInfo: ", countInfo);
   const mainTableColumns = [
     {
       title: "S/N",
@@ -193,7 +196,8 @@ const EmailHistory = ({
                 setEmailsPerPage(pageSize);
                 setClicked(true);
               },
-              current: currentPage,
+              defaultPageSize:10,
+              current: historyInnerPagination,
               total: countInfo?.total,
             }}
             columns={innerTableColumns}
