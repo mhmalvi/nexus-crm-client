@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal } from "antd";
 import { useSelector } from "react-redux";
-import { getScheduledJobs, getScheduledJobsDetails } from "../../Components/services/que-mail";
+import {
+  getScheduledJobs,
+  getScheduledJobsDetails,
+} from "../../Components/services/que-mail";
 import "./quemailer.css";
 import Loading from "../../Components/Shared/Loader";
 import "./quemailer.css";
@@ -14,10 +17,10 @@ const Scheduling = () => {
   const [perPage, setPerPage] = useState(20);
   const [scheduledItems, setScheduledItems] = useState(null);
   const [scheduledItemsInner, setScheduledItemsInner] = useState(null);
-  const [openMailCount,setOpenMailCount] = useState({
-    open:false,
-    job_id:null
-  })
+  const [openMailCount, setOpenMailCount] = useState({
+    open: false,
+    job_id: null,
+  });
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState(1);
   const [currentInner, setCurrentInner] = useState(1);
@@ -45,17 +48,18 @@ const Scheduling = () => {
         const data = {
           per_page: perPage,
           user_id: userDetails?.userInfo.id,
-          job_id: openMailCount.job_id
+          job_id: openMailCount.job_id,
         };
-        const res = await getScheduledJobsDetails(data, current);
+        const res = await getScheduledJobsDetails(data, currentInner);
         setScheduledItemsInner(res.data);
         setTotalInner(res.data.total);
       } catch (error) {
         console.error("Error fetching email history:", error);
       }
     })();
-  }, [current, openMailCount.job_id, perPage, userDetails?.userInfo.id]);
+  }, [current, currentInner, openMailCount.job_id, perPage, userDetails?.userInfo.id]);
   
+
   const mainTableColumns = [
     {
       title: "S/N",
@@ -89,9 +93,9 @@ const Scheduling = () => {
           className={`m-0 p-0 text-blue-500 underline underline-offset-2 cursor-pointer hover:text-blue-700`}
           onClick={() => {
             setOpenMailCount({
-              open:true,
-              job_id:record.id
-            })
+              open: true,
+              job_id: record.id,
+            });
           }}
         >
           {record?.number_of_mails}
@@ -127,17 +131,17 @@ const Scheduling = () => {
       },
     },
     {
-      title:"Email",
-      dataIndex:"email"
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title:"Bounce",
-      dataIndex:"bounce_status"
+      title: "Bounce",
+      dataIndex: "bounce_status",
     },
     {
-      title:"Delivery Status",
-      dataIndex:"delivery_status"
-    }
+      title: "Delivery Status",
+      dataIndex: "delivery_status",
+    },
     // {
     //   title: "Clicked",
     //   dataIndex: "click",
@@ -180,7 +184,7 @@ const Scheduling = () => {
     //   ),
     // },
   ];
-  
+
   const handleCancel = () => {
     setOpenMailCount(false);
   };
@@ -200,7 +204,13 @@ const Scheduling = () => {
           </div>
         ) : (
           <div className="min-h-[50vh] mt-24">
-            <h1 className={`m-0 p-0 ${colorMode ?"text-slate-300":"text-gray-800"}`}>No data</h1>
+            <h1
+              className={`m-0 p-0 ${
+                colorMode ? "text-slate-300" : "text-gray-800"
+              }`}
+            >
+              No data
+            </h1>
           </div>
         )}
       </>
@@ -243,12 +253,11 @@ const Scheduling = () => {
               x: "1000",
               y: "calc(75vh - 5em)",
             }}
-            
             dataSource={scheduledItemsInner?.data}
             columns={innerTableColumns}
             pagination={{
               onChange: (pageNum, pageSize) => {
-                setCurrentInner(pageNum)
+                setCurrentInner(pageNum);
                 setPerPage(pageSize);
               },
               current: currentInner,
