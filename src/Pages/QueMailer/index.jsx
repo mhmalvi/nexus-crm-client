@@ -41,7 +41,6 @@ const QueMailer = () => {
   const [openCountModal, setOpenCountModal] = useState(false);
   const [dailyCount, setDailyCount] = useState(null);
   const [historyInnerPagination, setHistoryInnerPagination] = useState(null);
-  const [historyEmailsPerPage, setHistoryEmailsPerPage] = useState(20);
   const [totalEmail, setTotalEmail] = useState(null);
   const [headerData, setHeaderData] = useState();
   const [categorizedData, setCategorizedData] = useState();
@@ -64,6 +63,7 @@ const QueMailer = () => {
           user_id: userDetails?.userInfo.id,
         };
         const res = await getEmailHistory(data, currentPage);
+        console.log("getEmailHistory: ", res);
         setEmailSessionRow(res.data);
         setTotalEmail(res.data.total);
       } catch (error) {
@@ -78,7 +78,7 @@ const QueMailer = () => {
         per_page: emailsPerPage,
       };
       const res = await getEmailDetailsCount(data, historyInnerPagination);
-      console.log("Inner history",res)
+      console.log("Inner history", res);
       setCountInfo(res?.data);
     }
     if (openCountModal || successMail) {
@@ -316,7 +316,6 @@ const QueMailer = () => {
               totalEmail={totalEmail}
               setEmailsPerPage={setEmailsPerPage}
               emailsPerPage={emailsPerPage}
-              setHistoryEmailsPerPage={setHistoryEmailsPerPage}
             />
           </div>
         )}

@@ -150,7 +150,6 @@ const EmailHistory = ({
       </>
     ),
   };
-  console.log("countinfo", countInfo.total);
   return (
     <>
       <Table
