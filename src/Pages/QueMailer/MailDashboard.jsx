@@ -240,12 +240,6 @@ const MailDashboard = ({
         formData.append("file_name", csvFileName);
         formData.append("schedule", dateTimeStamp);
         formData.append("user_id", userDetails?.id); 
-        emailTemplatePairs.forEach((data) => {
-          formData.append("email[]", data.email);
-          formData.append("template[]", data.templateContent);
-          formData.append("subject[]", data.subject);
-        });
-
         if (attachment.length) {
           attachment.forEach((file) => {
             formData.append("files[]", file);
@@ -256,6 +250,12 @@ const MailDashboard = ({
             formData.append("bounced_email[]", data);
           });
         }
+        emailTemplatePairs.forEach((data) => {
+          formData.append("email[]", data.email);
+          formData.append("template[]", data.templateContent);
+          formData.append("subject[]", data.subject);
+        });
+
         const res = await scheduleEmail(formData);
 
         if (res?.status === 201) {
