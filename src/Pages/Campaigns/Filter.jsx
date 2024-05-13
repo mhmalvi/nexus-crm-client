@@ -29,16 +29,16 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
         >
           Filters
         </h1>
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           {/* Filters */}
           {filterOptions.map((option) => (
             <div key={option.id} onClick={() => setActiveFilter(option.id)}>
               <h1
-                className={`text-base font-normal font-poppins px-3 p-2 cursor-pointer mr-2.5 ${
+                className={`text-sm font-normal font-poppins px-3 py-2 cursor-pointer ${
                   activeFilter === option.id
                     ? "text-white bg-brand-color"
-                    : "text-black bg-white"
-                }  rounded-md`}
+                    : ` ${colorMode ? "bg-slate-300 text-gray-800":"bg-gray-800 text-slate-300"} `
+                } rounded-md`}
               >
                 {option.title}
               </h1>
@@ -49,17 +49,14 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
 
       {/* Search Option */}
       <div className="">
-        <h1
-          className={`text-base ${
-            colorMode ? "text-slate-300" : "text-gray-800"
-          } font-normal font-poppins`}
-        >
-          Search Campaign
-        </h1>
         <div className="flex justify-between items-center rounded-md gap-x-5 pr-5 shadow-md backdrop-blur-2xl bg-[#ffffff44]">
           <div>
             <input
-              className="appearance-none active:outline-none focus:outline-none outline-none text-xs bg-transparent border-0 font-medium font-poppins ml-4"
+              className={`${
+                colorMode
+                  ? "placeholder:!text-slate-300"
+                  : "placeholder:!text-black"
+              } border-none focus:ring-0 text-xs bg-transparent font-medium font-poppins ml-4 `}
               type="search"
               name="search-code"
               id=""

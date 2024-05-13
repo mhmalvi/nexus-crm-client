@@ -237,15 +237,14 @@ const MailDashboard = ({
               subject: modifiedMailSubject,
             });
           });
-
+        formData.append("file_name", csvFileName);
+        formData.append("schedule", dateTimeStamp);
+        formData.append("user_id", userDetails?.id); 
         emailTemplatePairs.forEach((data) => {
           formData.append("email[]", data.email);
           formData.append("template[]", data.templateContent);
           formData.append("subject[]", data.subject);
         });
-        formData.append("file_name", csvFileName);
-        formData.append("schedule", dateTimeStamp);
-        formData.append("user_id", userDetails?.id);
 
         if (attachment.length) {
           attachment.forEach((file) => {
@@ -450,7 +449,13 @@ const MailDashboard = ({
               </div>
             </div>
             <div className="flex flex-col w-1/4 gap-2">
-              <h1 className={`m-0 p-0 text-end text-sm ${colorMode?"text-slate-300":"text-gray-800"}`}>Action Buttons</h1>
+              <h1
+                className={`m-0 p-0 text-end text-sm ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                Action Buttons
+              </h1>
               <Select
                 defaultValue="Copy dynamic header"
                 style={{ width: "100%" }}
@@ -467,7 +472,13 @@ const MailDashboard = ({
                   }))
                 }
               />
-              <div className={`text-end text-sm ${colorMode?"text-slate-300":"text-gray-800"}`}>Unsubscribe</div>
+              <div
+                className={`text-end text-sm ${
+                  colorMode ? "text-slate-300" : "text-gray-800"
+                }`}
+              >
+                Unsubscribe
+              </div>
             </div>
             {selectedData.length > 0 ? (
               <ul className="flex">
@@ -519,7 +530,7 @@ const MailDashboard = ({
                       "code",
                       "style",
                     ],
-                    theme_advanced_buttons3_add : "styleprops",
+                    theme_advanced_buttons3_add: "styleprops",
                     toolbar:
                       "undo redo | casechange blocks | fontfamily | fontsize | fontsizeinput | forecolor | bold italic backcolor | image link |" +
                       "alignleft aligncenter alignright alignjustify |" +
