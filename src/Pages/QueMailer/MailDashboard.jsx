@@ -213,7 +213,6 @@ const MailDashboard = ({
       try {
         const formData = new FormData();
         const emailTemplatePairs = [];
-
         categorizedData &&
           categorizedData.forEach((data, index) => {
             let modifiedTemplateContent =
@@ -238,36 +237,45 @@ const MailDashboard = ({
             });
           });
 
-        emailTemplatePairs.forEach((data) => {
-          formData.append("email[]", data.email);
-          formData.append("template[]", data.templateContent);
-          formData.append("subject[]", data.subject);
+        const chunkSize = 100;
+        for (let i = 0; i < emailTemplatePairs.length; i += chunkSize) {
+          const chunk = emailTemplatePairs.slice(i, i + chunkSize);
+          formData.delete("email[]");
+          formData.delete("template[]");
+          formData.delete("subject[]");
+
+          chunk.forEach((data) => {
+            formData.append("email[]", data.email);
+            formData.append("template[]", data.templateContent);
+            formData.append("subject[]", data.subject);
+          });
+
           formData.append("file_name", csvFileName);
           formData.append("schedule", dateTimeStamp);
           formData.append("user_id", userDetails?.id);
-        });
 
-        if (attachment.length) {
-          attachment.forEach((file) => {
-            formData.append("files[]", file);
-          });
-        }
-        if (bounced.length) {
-          bounced.forEach((data) => {
-            formData.append("bounced_email[]", data);
-          });
-        }
-        const res = await scheduleEmail(formData);
+          if (attachment.length) {
+            attachment.forEach((file) => {
+              formData.append("files[]", file);
+            });
+          }
+          if (bounced.length) {
+            bounced.forEach((data) => {
+              formData.append("bounced_email[]", data);
+            });
+          }
 
-        if (res?.status === 201) {
-          successNotification(res?.message);
-          setSuccessMail("success");
-        } else if (res?.status === 504) {
-          successNotification("All mail has been sent !");
-          setSuccessMail("success");
-        } else {
-          warningNotification(res?.message);
-          setSuccessMail("failed");
+          const res = await scheduleEmail(formData);
+          if (res?.status === 201) {
+            successNotification(res?.message);
+            setSuccessMail("success");
+          } else if (res?.status === 504) {
+            successNotification("All mail has been sent !");
+            setSuccessMail("success");
+          } else {
+            warningNotification(res?.message);
+            setSuccessMail("failed");
+          }
         }
       } catch (error) {
         // setSuccessMail("success");
@@ -275,6 +283,7 @@ const MailDashboard = ({
       }
     }
   };
+
   useEffect(() => {
     async function onSelectTemp() {
       let res = await fetchEmailTemplateList();
