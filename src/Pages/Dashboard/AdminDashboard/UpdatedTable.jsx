@@ -372,10 +372,7 @@ const UpdatedTable = ({
           }}
           scroll={{
             x: 2000,
-            y:
-              table_title === "Lead List"
-                ? `calc(55vh - 4em)`
-                : `calc(70vh - 5em)`,
+            y: table_title === "Lead List" ? `calc(55vh - 4em)` : `calc(71vh)`,
           }}
           rowClassName={(record) => {
             if (
