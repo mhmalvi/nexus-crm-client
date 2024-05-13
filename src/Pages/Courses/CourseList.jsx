@@ -153,10 +153,7 @@ const CourseList = ({
       key: "course_title",
       ...getColumnSearchProps("course_title"),
       render: (course_title, i) => (
-        <h4
-          key={i}
-          className="cursor-pointer !uppercase !text-left"
-        >
+        <h4 key={i} className="cursor-pointer !uppercase !text-left">
           {course_title}
         </h4>
       ),
@@ -213,17 +210,17 @@ const CourseList = ({
         >
           All Courses
         </div>
-        <Button
-          type="primary"
+        <button
+          type="button"
           onClick={() => setAddCourseOpen(true)}
-          className={` !rounded focus:ring-brand-color ${
+          className={` !rounded-md px-3 py-2 ${
             colorMode
               ? "!bg-slate-300 !text-gray-800"
               : "!bg-gray-800 !text-slate-300"
           }`}
         >
           Add Course
-        </Button>
+        </button>
       </div>
       {/* Courses */}
       <div>

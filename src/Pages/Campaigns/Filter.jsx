@@ -20,10 +20,10 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
   ];
 
   return (
-    <div className="flex justify-between items-center mb-5">
-      <div>
+    <div className="flex justify-between items-center ">
+      <div className="flex items-center justify-center gap-4">
         <h1
-          className={`text-2xl ${
+          className={`text-2xl m-0 p-0 ${
             colorMode ? "text-slate-300" : "text-gray-800"
           } font-poppins`}
         >
@@ -34,10 +34,14 @@ const Filter = ({ activeFilter, setActiveFilter, setSearchCampaign }) => {
           {filterOptions.map((option) => (
             <div key={option.id} onClick={() => setActiveFilter(option.id)}>
               <h1
-                className={`text-sm font-normal font-poppins px-3 py-2 cursor-pointer ${
+                className={`text-sm font-normal font-poppins px-3 py-1 cursor-pointer ${
                   activeFilter === option.id
                     ? "text-white bg-brand-color"
-                    : ` ${colorMode ? "bg-slate-300 text-gray-800":"bg-gray-800 text-slate-300"} `
+                    : ` ${
+                        colorMode
+                          ? "bg-slate-300 text-gray-800"
+                          : "bg-gray-800 text-slate-300"
+                      } `
                 } rounded-md`}
               >
                 {option.title}

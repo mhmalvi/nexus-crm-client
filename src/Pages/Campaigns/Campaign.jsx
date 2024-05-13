@@ -8,7 +8,7 @@ const Campaign = ({ campaign }) => {
   return (
     <Link
       to={`${campaign?.campaign_id}`}
-      className="ease-in transition-all hover:scale-95 mx-auto w-64 h-92  flex flex-col items-center shadow cursor-pointer overflow-hidden rounded-md"
+      className="ease-in transition-all hover:scale-[0.98] mx-auto w-64 h-92  flex flex-col items-center shadow cursor-pointer overflow-hidden rounded-md"
     >
       {fbCampaignCover && (
         <>
