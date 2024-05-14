@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { handleProfileDetails } from "../../../Components/services/auth";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
-import { curveCardinal } from "d3-shape";
 import { handleGetAgencyDashboardData } from "../../../Components/services/utils";
 
 function AgencyDashboard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userDetails, setUserDetails] = useState();
   const [dashboardData, setDashboardData] = useState({});
-  const [loading, setLoading] = useState(false);
   const loadingDetails = useSelector((state) => state?.user?.loading);
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -26,38 +20,13 @@ function AgencyDashboard() {
   }, [dispatch, ProfileDetails?.userInfo]);
 
   useEffect(() => {
-    dispatch(setLoader(true));
-
     (async () => {
-      const userDetailResponse = await handleProfileDetails(
-        ProfileDetails?.user_id
-      );
-
-
-      if (userDetailResponse?.data) {
-        const user = userDetailResponse?.data;
-        setUserDetails(user);
-        dispatch(setLoader(false));
-      } else {
-        setTimeout(() => {
-          dispatch(setLoader(false));
-        }, 3000);
-      }
-    })();
-  }, [dispatch, ProfileDetails]);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
       const res = await handleGetAgencyDashboardData(ProfileDetails?.user_id);
       if (res?.status === 200) {
-        setLoading(false);
         setDashboardData(res?.data);
-      } else {
-        setLoading(false);
       }
     })();
-  }, []);
+  }, [ProfileDetails?.user_id]);
 
   return (
     <div className="m-0">
