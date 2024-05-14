@@ -1,14 +1,19 @@
 import { Input, Modal } from "antd";
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useSelector } from "react-redux";
 import {
   AddNewTemplateList,
   handleImageUpload,
 } from "../../Components/services/que-mail";
 import "./quemailer.css";
-import { successNotification, warningNotification } from "../../Components/Shared/Toast";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 
 const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
+  const userDetails = useSelector((state) => state.user);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [templateTitle, setTemplateTitle] = useState("");
   const editorRef = useRef(null);
@@ -16,6 +21,7 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
     let data = {
       name: templateTitle,
       template: editorRef?.current && editorRef?.current?.getContent(),
+      client_id: userDetails.userInfo.client_id,
     };
 
     setStaticTempListData({
@@ -70,7 +76,11 @@ const AddNewTemplate = ({ setStaticTempListData, tempOpen, setTempOpen }) => {
                 placeholder="Enter the name of Template"
               />
             </div>
-            <h1 className={`bg-gray-800 text-slate-300 rounded-md m-0 px-2 py-2 text-base`}>Press (Shift + CTRL/CMD + F) for fullscreen</h1>
+            <h1
+              className={`bg-gray-800 text-slate-300 rounded-md m-0 px-2 py-2 text-base`}
+            >
+              Press (Shift + CTRL/CMD + F) for fullscreen
+            </h1>
           </div>
           <Editor
             apiKey="krvc4ctq1jqcu2wv0emw6vjgh8lit9tujxyfh0bi791s4t3r"

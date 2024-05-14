@@ -286,7 +286,10 @@ const MailDashboard = ({
 
   useEffect(() => {
     async function onSelectTemp() {
-      let res = await fetchEmailTemplateList();
+      const client_id = userDetails.client_id;
+      let res = await fetchEmailTemplateList({
+        client_id: client_id,
+      });
       let res2 = await handleGetAllImage();
       let galleryList = [];
       let tempList = [];

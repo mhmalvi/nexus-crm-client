@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchEmailTemplateList = async () => {
+export const fetchEmailTemplateList = async (data) => {
   const authToken = JSON.parse(window.localStorage.getItem("auth_tok"));
   const config = {
     headers: {
@@ -9,8 +9,9 @@ export const fetchEmailTemplateList = async () => {
     },
   };
   try {
-    const result = await axios.get(
+    const result = await axios.post(
       `https://emailmarketing.queleadscrm.com/api/get-template`,
+      data ,
       config
     );
     return result.data;
