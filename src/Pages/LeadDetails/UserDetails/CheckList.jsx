@@ -15,7 +15,6 @@ import Icons from "../../../Components/Shared/Icons";
 import { successNotification } from "../../../Components/Shared/Toast";
 
 const CheckList = ({ leadDetails }) => {
-  const [fileList, setFileList] = useState([]);
   const [documentList, setDocumentList] = useState([]);
   const [syncDocumentList, setSyncDocumentList] = useState(false);
 
@@ -107,7 +106,6 @@ const CheckList = ({ leadDetails }) => {
                   <Upload
                     onChange={(e) => handleChange(e, document?.checklist_id)}
                     id={document?.id}
-                    fileList={fileList}
                   >
                     <div className="flex items-center">
                       <Icons.Clip className="w-3 mr-1.5" />

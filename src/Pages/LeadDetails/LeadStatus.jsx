@@ -60,7 +60,6 @@ const LeadStatus = (props) => {
   const userDetails = useSelector((state) => state?.user);
   const companyDetails = useSelector((state) => state?.company.companyDetails);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const [fileList, setFileList] = useState([]);
   const [activeStatusTitle, setActiveStatusTitle] = useState();
   const [leadStatusColor, setLeadStatusColor] = useState("color-green");
   const [callStart, setCallStart] = useState("Start Time");
@@ -1382,7 +1381,6 @@ const LeadStatus = (props) => {
                         <div className="bg-gray-100 px-2 py-0.5 shadow rounded-lg">
                           <Upload
                             onChange={handleCertificateFileChange}
-                            fileList={fileList}
                           >
                             <div className="flex items-center">
                               <Icons.PDF />

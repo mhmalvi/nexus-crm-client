@@ -7,7 +7,6 @@ import {
   handleFetchClientsInvoiceHistory,
   handleFetchClientsPaymentHistory,
   handleFetchCompanyEmployees,
-  handleFetchStudentsInvoiceHistory,
   handleFetchStudentsPaymentHistory,
 } from "../../Components/services/company";
 import { setLoader } from "../../features/user/userSlice";
@@ -23,10 +22,8 @@ const Payment = () => {
 
   const [allPayments, setAllPayments] = useState([]);
   const [paymentData, setPaymentData] = useState([]);
-  const [invoiceHistory, setInvoiceHistory] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filterDate, setFilterDate] = useState("");
-  const [toggleTabs, setToggleTabs] = useState("payment");
   const [tableHeaders, setTableHeaders] = useState([]);
   const [companyEmployeeList, setCompanyEmployeeList] = useState([]);
 
@@ -200,17 +197,8 @@ const Payment = () => {
 
 
         if (invoiceHistoryResponse?.status === true) {
-          setInvoiceHistory(invoiceHistoryResponse?.data);
+        
           dispatch(setLoader(false));
-        }
-      } else if (userDetails?.role_id === 6) {
-        const invoiceHistoryResponse = await handleFetchStudentsInvoiceHistory(
-          userDetails?.user_id
-        );
-
-
-        if (invoiceHistoryResponse?.status === true) {
-          setInvoiceHistory(invoiceHistoryResponse?.data);
         }
       } else {
         return;

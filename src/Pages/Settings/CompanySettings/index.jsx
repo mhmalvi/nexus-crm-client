@@ -25,7 +25,6 @@ const CompanySettings = () => {
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
   const [toggleFacebookCredential, setToggleFacebookCredential] =
     useState(false);
-  const [fileList, setFileList] = useState([]);
   const [fileId, setFileId] = useState();
   const [avatarPreviewer, setAvatarPreviewer] = useState();
   const [toggleFacebookSecret, setToggleFacebookSecret] = useState(false);
@@ -184,7 +183,6 @@ successNotification("Company details updated successfully.");
                 onChange={(e) => handleChangeAvatar(e)}
                 id="avatar"
                 accept="image/png, image/jpeg, image/jpg"
-                fileList={fileList}
               >
                 <div className="w-6 h-6 bg-brand-color cursor-pointer font-semibold flex justify-center items-center rounded-full shadow-md">
                   <Icons.AddImage className="w-4 text-slate-300" />
