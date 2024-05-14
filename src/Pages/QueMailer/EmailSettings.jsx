@@ -167,7 +167,11 @@ const EmailSettings = ({ currentEmail }) => {
             </div>
           </>
         )}
-        <div className={`w-full flex ${editEmailData ? "justify-end": "justify-center"} items-center`}>
+        <div
+          className={`w-full flex ${
+            editEmailData ? "justify-end" : "justify-center"
+          } items-center`}
+        >
           {editEmailData ? (
             <div className="flex gap-4">
               <button
@@ -198,7 +202,9 @@ const EmailSettings = ({ currentEmail }) => {
             </div>
           ) : (
             <div
-              className={`${editEmailData ? "px-4 py-2" : "px-8 py-2 text-xl animate-bounce"}  ${
+              className={`${
+                editEmailData ? "px-4 py-2" : "px-8 py-2 text-xl animate-bounce"
+              }  ${
                 colorMode
                   ? "bg-slate-300 text-gray-800"
                   : "bg-gray-800 text-slate-300"
