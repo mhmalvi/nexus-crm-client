@@ -32,12 +32,12 @@ import PaySlip from "./Pages/PaySlip/PaySlip";
 import EmailSetting from "./Pages/EmailSetting/EmailSetting";
 import QueMailer from "./Pages/QueMailer";
 import Billing from "./Pages/Billing";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useIdleTimer } from "react-idle-timer/legacy";
 import Unsubscribe from "./Pages/QueMailer/Unsubscribe/Unsubscribe";
 import MultipartForm from "./Pages/Authentication/MultipartForm/MultipartForm";
 import PackageDue from "./Pages/Billing/PackageDue";
+
 
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -96,7 +96,6 @@ function App() {
   });
 
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  // const dispatch = useDispatch();
 
   const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   return (

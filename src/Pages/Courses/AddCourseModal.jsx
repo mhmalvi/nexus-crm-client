@@ -18,10 +18,8 @@ const AddCourseModal = ({
   const [courseCode, setCourseCode] = useState("");
   const [courseName, setCourseName] = useState("");
   const [courseDsc, setCourseDsc] = useState("");
-  const [isAddingCourse, setIsAddingCourse] = useState(false);
   const userDetails = useSelector((state) => state.user?.userInfo);
   const onAdd = async () => {
-    setIsAddingCourse(true);
 
     if (!courseCode && !courseName && !courseDsc) {
       warningNotification("Course Code || Course Name || Course Description required");
@@ -34,7 +32,6 @@ const AddCourseModal = ({
       };
       const res = await handleAddCourse(data);
       if (res?.status === 201) {
-        setIsAddingCourse(false);
         successNotification("Course added successfully");
         setCourseCode("");
         setCourseName("");
@@ -51,7 +48,6 @@ const AddCourseModal = ({
           setCourseListLoading(false);
         }
       } else {
-        setIsAddingCourse(false);
         warningNotification("Something went wrong try again");
       }
     }

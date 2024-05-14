@@ -14,7 +14,6 @@ const Campaigns = () => {
 
   const [campaignList, setCampaignList] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
-  const [activeSection, setActiveSection] = useState(0);
   const [searchCampaign, setSearchCampaign] = useState("");
   const [toggleCourses, setToggleCourses] = useState(false);
 
@@ -89,7 +88,6 @@ const Campaigns = () => {
 
   const handleCancelCourseModal = () => {
     setToggleCourses(false);
-    setActiveSection(0);
   };
 
   return (

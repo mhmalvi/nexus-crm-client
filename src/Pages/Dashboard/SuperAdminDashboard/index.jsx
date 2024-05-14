@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import companyIcon from "../../../assets/Images/company_icon.png";
 import { handleFetchCompanies } from "../../../Components/services/company";
 import Icons from "../../../Components/Shared/Icons";
-import Loading from "../../../Components/Shared/Loader";
 import { setLoader, setCompanyId } from "../../../features/user/userSlice";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
-  const loadingDetails = useSelector((state) => state?.user)?.loading;
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const [storecompanies, setStoreCompanies] = useState([]);
@@ -20,7 +17,6 @@ const SuperAdminDashboard = () => {
 
     (async () => {
       const companiesResponse = await handleFetchCompanies();
-
 
       if (companiesResponse?.status === true) {
         if (companiesResponse) {
@@ -43,7 +39,6 @@ const SuperAdminDashboard = () => {
   }, [dispatch]);
 
   const handleChange = (input) => {
-
     if (input?.length === 0) {
       setCompanies(storecompanies);
     } else {

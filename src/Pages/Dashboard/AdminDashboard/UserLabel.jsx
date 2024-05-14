@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Avatar from "react-avatar";
 const UserLabel = ({ setOpenProfile, openProfile }) => {
   const userDetails = useSelector((state) => state?.user);
-  const colorMode = useSelector((state) => state?.user)?.colorMode;
   return (
     <div
       className={` rounded-md p-1 shadow-md cursor-pointer hover:scale-95 shadow-md bg-gradient-to-b from-[#8B7CFD] via-[#8B7CFD] to-[#159AFB]`}

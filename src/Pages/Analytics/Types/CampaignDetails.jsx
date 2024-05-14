@@ -19,7 +19,6 @@ const CampaignDetails = ({ fullscreen, setFullScreen }) => {
   const leads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
   const [loading, setLoading] = useState(true);
-  const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
 
   const campaignsDetails = useMemo(() => {
     const details = [];
@@ -42,12 +41,6 @@ const CampaignDetails = ({ fullscreen, setFullScreen }) => {
     return details;
   }, [campaigns, leads]);
 
-  useEffect(() => {
-    const curYearCampaign = campaigns?.filter((cam) =>
-      cam?.start_time?.toString().includes(new Date().getFullYear())
-    );
-    setCurrentYearCampaign(curYearCampaign);
-  }, [campaigns]);
 
   useEffect(() => {
     if (campaigns && leads) {

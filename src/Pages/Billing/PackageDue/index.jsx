@@ -7,7 +7,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import {
-  createSubscription,
   getPriceList,
   getProduct,
   getSubscriptionDetails,
@@ -15,7 +14,6 @@ import {
 import { handleLogout } from "./../../../Components/services/auth";
 import { Spin } from "antd";
 import { successNotification } from "../../../Components/Shared/Toast";
-import BillingForm from "../Method/BillingForm";
 import DueBillForm from "./DueBillForm";
 
 const PackageDue = () => {
@@ -27,9 +25,8 @@ const PackageDue = () => {
   const [priceDetails, setPriceDetails] = useState(null);
   const [productData, setProductData] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(null);
-  const [subscriptionId, setSubscriptionId] = useState(
-    userDetails.userInfo.subscription_id
-  );
+  const subscriptionId = userDetails.userInfo.subscription_id;
+
   const [subscriptionDetails, setSubscriptionDetails] = useState(null);
   const [subscriptionClicked, setSubscriptionClicked] = useState(false);
 
@@ -69,8 +66,7 @@ const PackageDue = () => {
     navigate("/login");
     window.location.reload();
   };
-  
-  
+
   const [hoverLogout, setHoverLogout] = useState(false);
   const stripePromise = loadStripe(process.env.REACT_APP_ZULKER_SP_KEY);
   return (

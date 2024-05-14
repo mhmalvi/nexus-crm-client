@@ -18,9 +18,7 @@ import {
 import { handleNotificationViewed } from "../../../Components/services/notification";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
-import {
-  handleFetchLeads,
-} from "../../../Components/services/leads";
+import { handleFetchLeads } from "../../../Components/services/leads";
 import { addLeads } from "../../../features/Leads/leadsSlice";
 import dayjs from "dayjs";
 import Filters from "./Filters";
@@ -96,10 +94,6 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [toggleNotification, setToggleNotification] = useState(false);
   const [toggleEditDetails, setToggleEditDetails] = useState(false);
-  const subscription = userDetails.userInfo.package;
-  const endDate =
-    subscription === "Trial" && new Date(userDetails.userInfo.end_date || null);
-  var myDate = new Date(endDate * 1000);
 
   const handleViewed = async () => {
     try {
@@ -385,7 +379,7 @@ const AdminDashboard = () => {
         return (
           <>
             <button
-              loading={assignLoading}
+              // loading={assignLoading}
               type="primary"
               size="small"
               onClick={() => {
@@ -689,7 +683,6 @@ const AdminDashboard = () => {
     },
     [leadList]
   );
-
 
   const handleFilterAssignedEmployee = useCallback(
     (userName) => {

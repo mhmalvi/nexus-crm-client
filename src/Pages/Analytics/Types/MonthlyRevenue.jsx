@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ResponsiveContainer,
@@ -18,12 +18,9 @@ import { Modal } from "antd";
 const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user?.userInfo);
-  const campaigns = useSelector((state) => state.campaigns?.campaigns);
-  const getleads = useSelector((state) => state.leads?.leads);
   const colorMode = useSelector((state) => state.user?.colorMode);
 
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
-  const [leads, setLeads] = useState([]);
 
   useEffect(() => {
     dispatch(setLoader(true));
@@ -38,32 +35,6 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
     };
     fetchData();
   }, [activeCompany, userDetails, dispatch]);
-
-  useEffect(() => {
-    if (getleads?.length) {
-      setLeads(getleads);
-    }
-  }, [getleads]);
-
-  const campaignRatio = useMemo(() => {
-    if (!campaigns || !leads.length) return [];
-    return campaigns.map((campaign) => ({
-      campaign_name: campaign.campaign_name,
-      campaign: "Jan",
-      rate:
-        leads.filter((lead) => lead.campaign_id === campaign.campaign_id)
-          .length > 0
-          ? (
-              leads
-                .filter((lead) => lead.campaign_id === campaign.campaign_id)
-                .filter((filteredCampaign) => filteredCampaign.lead_details_status === 6)
-                .length /
-              leads.filter((lead) => lead.campaign_id === campaign.campaign_id)
-                .length
-            ).toFixed(2) * 100
-          : 0,
-    }));
-  }, [campaigns, leads]);
 
   const handleFullScreen = () => {
     setFullScreen("MonthlyRevenue");
@@ -130,9 +101,11 @@ const MonthlyRevenue = ({ activeCompany, fullscreen, setFullScreen }) => {
         onCancel={handleMinimizeScreen}
         width={"70%"}
         height={"80%"}
-        closeIcon={<div className="flex items-center justify-center h-full w-full hover:scale-110">
-        <Icons.Minimize />
-      </div>}
+        closeIcon={
+          <div className="flex items-center justify-center h-full w-full hover:scale-110">
+            <Icons.Minimize />
+          </div>
+        }
       >
         {fullscreen === "MonthlyRevenue" && (
           <div className="h-[70vh]">

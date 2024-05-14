@@ -91,7 +91,6 @@ const CalendarSmall = ({
             );
           }
           const year = value.year();
-          const month = value.month();
           const yearOptions = [];
           for (let i = year - 10; i < year + 10; i += 1) {
             yearOptions.push(

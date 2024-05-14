@@ -8,7 +8,6 @@ import {
 } from "../../../Components/Shared/Toast";
 const ForgotPassword = (props) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [emailCheckResponse, setEmailCheckResponse] = useState();
   const modalText = "A Verification mail will be sent to the designated email.";
   const [emailData, setEmailData] = useState("");
 
@@ -30,13 +29,11 @@ const ForgotPassword = (props) => {
           config
         )
           .then((res) => {
-            setEmailCheckResponse(res.data);
             successNotification(
               "Verfication mail has been sent to the designated email."
             );
           })
           .catch((err) => {
-            setEmailCheckResponse(err.response.data);
             warningNotification("Please enter a valid email address.");
           });
       } else {

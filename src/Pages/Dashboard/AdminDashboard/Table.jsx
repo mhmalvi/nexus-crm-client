@@ -71,7 +71,7 @@ const Table = ({
   
   return (
     <div className="mt-0.5">
-      <div className="border rounded-md px-4 xl:px-6 2xl:px-10  py-4 xl:py-6 2xl:py-7.5 mt-5">
+      <div className="border rounded-md px-4 xl:px-6 2xl:px-10 h-96 overflow-hidden py-4 xl:py-6 2xl:py-7.5 mt-5">
         <div className="flex justify-between items-center">
           <div className="flex items-start">
             <div>
@@ -110,7 +110,7 @@ const Table = ({
             userDetails?.role_id === 3 ||
             userDetails?.role_id === 4) &&
             title === "Lead List" && (
-              <div className="mr-12">
+              <div className="">
                 <button
                   id="sync_leads"
                   className={`cursor-pointer px-3 py-1 rounded-lg shadow-md bg-[#a57cff] text-white`}
@@ -131,12 +131,12 @@ const Table = ({
         </div>
 
         <div className="tbl-header">
-          <table cellPadding="0" cellSpacing="0" border="0">
+          <table cellPadding="0" cellSpacing="0" border="0" >
             <thead>
               <tr>
                 {tableHeaders?.map((header, i) =>
                   header === "Location" ? (
-                    <th className="w-22" key={i}>
+                    <th key={i}>
                       {header}
                     </th>
                   ) : (
@@ -153,10 +153,10 @@ const Table = ({
             <Loading />
           </div>
         ) : (
-          <div className="tbl-content">
+          <div className="tbl-content overflow-y-scroll h-80">
             {data?.length ? (
               <table
-                className="custom-table"
+                className="custom-table "
                 cellPadding="0"
                 cellSpacing="0"
                 border="0"
@@ -165,11 +165,11 @@ const Table = ({
                   <tbody>
                     {list?.map((list, i) => (
                       <tr
-                        className="relative"
+                      
                         key={i}
                         onClick={() => handleNavigate(list.lead_id)}
                       >
-                        <td>
+                        <td >
                           {list.lead_id ? (
                             list.lead_id
                           ) : (
@@ -305,46 +305,47 @@ const Table = ({
                   <tbody>
                     {list?.map((list, idx) => (
                       <tr
-                        className="relative"
+                      className="relative "
                         key={list.lead_id}
                         onClick={() => handleNavigate(list.lead_id)}
                       >
-                        <td>
+                        <td className="text-center">
                           {list.lead_id ? (
                             list.lead_id
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td>
+                        <td className="text-center">
                           {list.lead_apply_date ? (
                             new Date(list.lead_apply_date)?.toLocaleString()
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td className="w-36 mr-auto">
+                        <td className="text-center">
                           {list.course_code ? (
                             list.course_code
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td>
+                        
+                        <td className="text-center">
                           {list.full_name ? (
                             list.full_name
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td className="uppercase w-16">
+                        <td className="uppercase text-center">
                           {list.work_location ? (
                             list.work_location
                           ) : (
                             <Skeleton width={"100px"} color="#F0EFEF" />
                           )}
                         </td>
-                        <td>
+                        <td className="text-center">
                           {list.campaign_id ? (
                             list.campaign_id
                           ) : (
@@ -355,7 +356,7 @@ const Table = ({
                         {statusColor.find(
                           (status) => status.id === list?.lead_details_status
                         ) ? (
-                          <td className="flex items-center">
+                          <td className="flex items-center justify-center text-center">
                             {statusColor
                               .filter(
                                 (status) =>
@@ -393,7 +394,7 @@ const Table = ({
                             ) : null}
                           </td>
                         ) : (
-                          <td>{list?.payment_via}</td>
+                            <td className="text-center">{list?.payment_via}</td>
                         )}
                       </tr>
                     ))}

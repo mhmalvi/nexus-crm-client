@@ -1,8 +1,6 @@
-import dayjs from "dayjs";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect} from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createFileName, useScreenshot } from "use-react-screenshot";
 import { handleFetchCompanyEmployees } from "../../Components/services/company";
 import {
   handleFetchCampaigns,
@@ -11,7 +9,6 @@ import {
 import { addCampaigns } from "../../features/Leads/campaignSlice";
 import { addLeads } from "../../features/Leads/leadsSlice";
 import { setLoader } from "../../features/user/userSlice";
-import { useNavigate } from "react-router-dom";
 import Summary from "./Summary";
 import IncomePerDay from "./Types/IncomePerDay";
 import SalesAnalytics from "./Types/SalesAnalytics";
@@ -27,10 +24,7 @@ import Loading from "../../Components/Shared/Loader";
 const Overview = () => {
   document.title = "Overview | Queleads CRM";
 
-  const pdfRef = useRef(null);
-  const [, takeScreenShot] = useScreenshot();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
   const openSideBar = useSelector((state) => state?.user)?.openSideBar;
   const [showAnalytics, setShowAnalytics] = useState(true);
