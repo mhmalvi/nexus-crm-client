@@ -14,7 +14,6 @@ import activeImg from "../../../assets/Images/active.png";
 import inactiveImg from "../../../assets/Images/inactive.png";
 import { addCampaigns } from "../../../features/Leads/campaignSlice";
 import { addLeads } from "../../../features/Leads/leadsSlice";
-import CalendarSmall from "../../Dashboard/AdminDashboard/CalendarSmall";
 import Filters from "../../Dashboard/AdminDashboard/Filters";
 import UpdatedTable from "../../Dashboard/AdminDashboard/UpdatedTable";
 import data from "../../Dashboard/AdminDashboard/leadData.json";
@@ -43,9 +42,9 @@ const CampaignDetails = () => {
   const tableSearchInput = useRef(null);
 
   // For Yearwise Filter
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  // const [selectedDay, setSelectedDay] = useState("");
+  // const [selectedMonth, setSelectedMonth] = useState("");
+  // const [selectedYear, setSelectedYear] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -76,21 +75,21 @@ const CampaignDetails = () => {
     })();
   }, [dispatch, id, userDetails?.userInfo?.client_id]);
 
-  useEffect(() => {
-    const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
+  // useEffect(() => {
+  //   const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
 
-    if (selectedDay && selectedMonth && selectedYear) {
-      setLeadData(
-        leadList
-          .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
-          .filter((lead) => lead.lead_apply_date.slice(0, 10) === seletedDate)
-      );
-    } else {
-      setLeadData(
-        leadList?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
-      );
-    }
-  }, [id, leadList, selectedDay, selectedMonth, selectedYear]);
+  //   if (selectedDay && selectedMonth && selectedYear) {
+  //     setLeadData(
+  //       leadList
+  //         .filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+  //         .filter((lead) => lead.lead_apply_date.slice(0, 10) === seletedDate)
+  //     );
+  //   } else {
+  //     setLeadData(
+  //       leadList?.filter((lead) => parseInt(lead.campaign_id) === parseInt(id))
+  //     );
+  //   }
+  // }, [id, leadList, selectedDay, selectedMonth, selectedYear]);
 
   useEffect(() => {
     setCampaignDetails(
@@ -600,18 +599,6 @@ const CampaignDetails = () => {
               </div>
             ) : null}
           </div>
-          {/* <div className="col-span-1 flex items-center justify-center">
-            <CalendarSmall
-              filterDate={filterDate}
-              setFilterDate={setFilterDate}
-              selectedDay={selectedDay}
-              setSelectedDay={setSelectedDay}
-              selectedMonth={selectedMonth}
-              setSelectedMonth={setSelectedMonth}
-              selectedYear={selectedYear}
-              setSelectedYear={setSelectedYear}
-            />
-          </div> */}
         </div>
         <div className="">
           <UpdatedTable

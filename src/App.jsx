@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import { handleLogout } from "./Components/services/auth";
 import { Storage } from "./Components/Shared/utils/store";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+
 import "./App.css";
 
 import Login from "./Pages/Authentication/Login/Login";

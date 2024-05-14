@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import fbCampaignCover from "../../assets/Images/facebook-campaign.svg";
+import fbCampaignCover from "../../assets/Images/facebook-campaign.png";
 import { useSelector } from "react-redux";
 
 const Campaign = ({ campaign }) => {
