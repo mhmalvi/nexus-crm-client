@@ -5,25 +5,16 @@ import { useEffect } from "react";
 import { handleGetSalesAdmin } from "../../Components/services/utils";
 import SalesModal from "./SalesModal";
 import { shallowEqual, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import "./salesEmployee.css";
 import Loading from "../../Components/Shared/Loader";
 
 const Sales = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [salesData, setSalesData] = useState([]);
   const [userData, setUserData] = useState({});
   const [openSalesModel, setOpenSalesModel] = useState(false);
   const [salesEmployeeId, setSalesEmployeeId] = useState();
-  // const [isLoading, setIsLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState();
-  const [searchName, setSearchName] = useState(
-    searchParams.get("salesEmployeeName") || ""
-  );
-  const [searchEmail, setSearchEmail] = useState(
-    searchParams.get("salesEmployeeEmail") || ""
-  );
 
   const showSalesModal = () => {
     setOpenSalesModel(true);
@@ -55,13 +46,6 @@ const Sales = () => {
       setUserData(userDetails);
     }
   }, []);
-
-  // Search Features
-  useEffect(() => {
-    searchParams.set("salesEmployeeName", searchName || "");
-    searchParams.set("salesEmployeeEmail", searchEmail || "");
-    setSearchParams(searchParams);
-  }, [searchEmail, searchName, searchParams, setSearchParams]);
 
   let salesColumn = [
     {

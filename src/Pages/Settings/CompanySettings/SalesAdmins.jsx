@@ -29,18 +29,6 @@ const SalesAdmins = ({ clientId }) => {
   const [inactiveAdminEmployees, setInactiveAdminEmployees] = useState([]);
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
   const [inactiveSalesEmployees, setInactiveSalesEmployees] = useState([]);
-  const [allStudnetAdmin, setAllStudentAdmin] = useState([]);
-  const [allStudnetAccountants, setAllStudentAccountants] = useState([]);
-  const [allStudnetAgencys, setAllStudentAgencys] = useState([]);
-  const [isSuspandStatusStudentAdmin, setIsSuspandStatusStudentAdmin] =
-    useState(false);
-  const [isSuspandStatusAccountant, setIsSuspandStatusStudentAccountant] =
-    useState(false);
-  const [isSuspandStatusAgency, setIsSuspandStatusStudentAgency] =
-    useState(false);
-  // const [isFeatingSalesAdminLoading, setIsFeatingSalesAdminLoading] =
-  //   useState(false);
-  // const [isRemovingSalesLoading, setIsRemovingSalesLoading] = useState(false);
 
 
   useEffect(() => {

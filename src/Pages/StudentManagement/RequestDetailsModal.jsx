@@ -30,8 +30,11 @@ import {
 } from "@ant-design/icons";
 import paidPhoto from "../../assets/PNGS/paid.svg";
 import { shallowEqual, useSelector } from "react-redux";
-import "./checkDetailsModal.css"
-import { successNotification, warningNotification } from "../../Components/Shared/Toast";
+import "./checkDetailsModal.css";
+import {
+  successNotification,
+  warningNotification,
+} from "../../Components/Shared/Toast";
 const RequestDetailsModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -43,7 +46,7 @@ const RequestDetailsModal = ({
   const [fileList, setFileList] = useState([]);
   const [mendetroyfileList, setMendetoryFileList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  // const [isRefreshing, setIsRefreshing] = useState(false);
   const [res, setRes] = useState({});
   const [subject, setSubject] = useState("");
   const [email, setEmail] = useState("");
@@ -77,17 +80,17 @@ const RequestDetailsModal = ({
   }, [rId]);
   const SyncRefresh = async () => {
     const res = await handleGetStudentAdmissionRequestsDetails(rId);
-    setIsRefreshing(true);
+    // setIsRefreshing(true);
     setLoading(true);
     if (res?.status === 200) {
       setLoading(false);
-      setIsRefreshing(false);
+      // setIsRefreshing(false);
       setAdmissionDetails(res?.data);
       setFileList(res?.data?.files);
       setMendetoryFileList(res?.data?.mandatory_files);
     } else {
       setLoading(false);
-      setIsRefreshing(false);
+      // setIsRefreshing(false);
     }
   };
   const handleChangeStatus = async (fid, s, f) => {
@@ -190,7 +193,7 @@ const RequestDetailsModal = ({
     if (res?.status === 201) {
       setComment("");
       onGetCommnets(fid);
-successNotification("Comment sent successfully.");
+      successNotification("Comment sent successfully.");
       // scrollToBottom();
     } else {
       warningNotification(res?.data?.message || "Failed.");
@@ -221,7 +224,7 @@ successNotification("Comment sent successfully.");
         e.target.files[0] = null;
       } else {
         setUploadCertificateLoading(false);
-warningNotification(res?.data?.message || "Failed.");
+        warningNotification(res?.data?.message || "Failed.");
         e.target.files[0] = null;
         setCetificate({});
       }
@@ -230,15 +233,15 @@ warningNotification(res?.data?.message || "Failed.");
 
   const columns = [
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Name</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Name</h1>;
       },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Status</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Status</h1>;
       },
       dataIndex: "status",
       key: "status",
@@ -246,12 +249,22 @@ warningNotification(res?.data?.message || "Failed.");
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>}
+              {record?.status === 2 && (
+                <Tag color="cyan" className="!text-[17px] animate-pulse">
+                  Pending
+                </Tag>
+              )}
+              {record?.status === 1 && (
+                <Tag color="green" className="!text-[17px] animate-pulse">
+                  Complete
+                </Tag>
+              )}
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">
+                      Incomplete
+                    </Tag>
                   </div>
 
                   <Popconfirm
@@ -420,27 +433,29 @@ warningNotification(res?.data?.message || "Failed.");
   ];
   const mcolumns = [
     {
-      title: ()=>{
-        return <h1 className=" text-[20px] font-bold">File Type</h1>
+      title: () => {
+        return <h1 className=" text-[20px] font-bold">File Type</h1>;
       },
       dataIndex: "file_type",
       key: "file_type",
-      render:(_,record,idx)=>{
-        return(
-          <h1 key={idx} className="text-[17px] font-bold">{record?.file_type}</h1>
-        )
-      }
+      render: (_, record, idx) => {
+        return (
+          <h1 key={idx} className="text-[17px] font-bold">
+            {record?.file_type}
+          </h1>
+        );
+      },
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Name</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Name</h1>;
       },
       dataIndex: "file_name",
       key: "file_name",
     },
     {
-      title: ()=>{
-        return <h1 className="text-[20px] font-bold">File Status</h1>
+      title: () => {
+        return <h1 className="text-[20px] font-bold">File Status</h1>;
       },
       dataIndex: "status",
       key: "status",
@@ -448,13 +463,23 @@ warningNotification(res?.data?.message || "Failed.");
         return (
           <>
             <div>
-              {record?.status === 2 && <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>}
-              {record?.status === 1 && <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>}
+              {record?.status === 2 && (
+                <Tag color="cyan" className="!text-[17px] animate-pulse">
+                  Pending
+                </Tag>
+              )}
+              {record?.status === 1 && (
+                <Tag color="green" className="!text-[17px] animate-pulse">
+                  Complete
+                </Tag>
+              )}
 
               {record?.status === 0 && (
                 <div className="">
                   <div>
-                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">
+                      Incomplete
+                    </Tag>
                   </div>
 
                   <Popconfirm
@@ -472,7 +497,6 @@ warningNotification(res?.data?.message || "Failed.");
                           className=" max-h-[300px] overflow-y-auto crm-scroll-none mb-2"
                           ref={messageBoxRef}
                         >
-
                           <div className="">
                             {commentsData?.map((comment, i) => {
                               return (
@@ -648,7 +672,7 @@ warningNotification(res?.data?.message || "Failed.");
                 </span>
                 <h1 className="text-[18px] font-bold m-0">{res?.agency}</h1>
               </div>
-              <hr className=" translate-y-[-1px]"/>
+              <hr className=" translate-y-[-1px]" />
               <div className="flex items-center gap-4 my-4">
                 <span className="text-[20px] text-gray-600 m-0 p-0">
                   Student Name:{" "}
@@ -657,7 +681,7 @@ warningNotification(res?.data?.message || "Failed.");
                   {AdmissionDetails?.student_name}
                 </h1>
               </div>
-              <hr className=" translate-y-[-9px]"/>
+              <hr className=" translate-y-[-9px]" />
               <div className="flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">
                   Course Name:{" "}
@@ -666,31 +690,32 @@ warningNotification(res?.data?.message || "Failed.");
                   {AdmissionDetails?.course_name}
                 </h1>
               </div>
-              <hr className=" translate-y-[6px]"/>
+              <hr className=" translate-y-[6px]" />
               <div className="mt-4 flex items-center gap-4">
                 <span className="text-[20px] text-gray-600 ">Status: </span>
                 <h1 className="text-[18px] font-bold m-0 p-0">
                   {AdmissionDetails?.status === 2 && (
-                    <Tag color="cyan" className="!text-[17px] animate-pulse">Pending</Tag>
+                    <Tag color="cyan" className="!text-[17px] animate-pulse">
+                      Pending
+                    </Tag>
                   )}
                   {AdmissionDetails?.status === 1 && (
-                    <Tag color="green" className="!text-[17px] animate-pulse">Complete</Tag>
+                    <Tag color="green" className="!text-[17px] animate-pulse">
+                      Complete
+                    </Tag>
                   )}
                   {AdmissionDetails?.status === 0 && (
-                    <Tag color="red" className="!text-[17px] animate-pulse">Incomplete</Tag>
+                    <Tag color="red" className="!text-[17px] animate-pulse">
+                      Incomplete
+                    </Tag>
                   )}
                 </h1>
               </div>
-              <hr className=" translate-y-[6px]"/>
+              <hr className=" translate-y-[6px]" />
             </div>
             {AdmissionDetails?.pay_slip_status === 1 && (
               <div className="md:w-[39%]">
-                <img
-                  className=" mx-auto  w-1/2"
-                  src={paidPhoto}
-                  alt=""
-                 
-                />
+                <img className=" mx-auto  w-1/2" src={paidPhoto} alt="" />
               </div>
             )}
           </div>
@@ -757,7 +782,12 @@ warningNotification(res?.data?.message || "Failed.");
                 </>
               }
             >
-              <button disabled={AdmissionDetails?.status !== 1} className="sendMailButton">Send Mail</button>
+              <button
+                disabled={AdmissionDetails?.status !== 1}
+                className="sendMailButton"
+              >
+                Send Mail
+              </button>
             </Popconfirm>
             <Popconfirm
               icon=""
@@ -810,7 +840,13 @@ warningNotification(res?.data?.message || "Failed.");
               >
                 Generate Invoice
               </Button> */}
-              <button disabled={AdmissionDetails?.status !== 1} className="generateInvoiceButton" role="button">Generate Invoice</button>
+              <button
+                type="button"
+                disabled={AdmissionDetails?.status !== 1}
+                className="generateInvoiceButton"
+              >
+                Generate Invoice
+              </button>
             </Popconfirm>
             {AdmissionDetails?.pay_slip_status === 1 && (
               <div className="">

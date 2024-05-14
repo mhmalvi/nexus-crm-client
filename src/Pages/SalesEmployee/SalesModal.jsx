@@ -9,29 +9,21 @@ import {
   handleSalesRemoveLead,
 } from "../../Components/services/utils";
 import { shallowEqual, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import ViewLeadCallDetails from "../../Pages/Dashboard/AdminDashboard/ViewLeadCallDetails";
 import Loading from "../../Components/Shared/Loader";
 import "./salesEmployee.css";
-import { errorNotification, successNotification } from "../../Components/Shared/Toast";
+import {
+  errorNotification,
+  successNotification,
+} from "../../Components/Shared/Toast";
 
 const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [leadsData, setLeadsData] = useState([]);
   const [notAssignedLeadsData, setNotAssignedLeadsData] = useState([]);
   const [isByMe, setIsByMe] = useState(true);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
-  const [searchName, setSearchName] = useState(
-    searchParams.get("Search_Lead_Name") || ""
-  );
-  const [searchId, setSearchId] = useState(
-    searchParams.get("Search_Lead_Id") || ""
-  );
-  const [searchCourse, setSearchCourse] = useState(
-    searchParams.get("Search_Lead_Course") || ""
-  );
+  const [assignedByLeadsDataId, setAssignedByLeadsDataId] = useState(false);
   const [openCallCountDetailsModal, setOpenCallCountDetailsModal] =
     useState(false);
   const [clickedLeadId, setClickedLeadId] = useState();
@@ -52,41 +44,25 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     setIsByMe(true);
   };
 
-  // leads data by sales employee id
-  const assignedByLeadsDataId = async () => {
-    setIsLoading(true);
-    const res = await handleFetchLeadsBySalesId(salesEmployeeId);
-    setLeadsData(res ? (res?.data ? res?.data : []) : []);
-    setIsLoading(false);
-  };
-  // leads data these are not assigned by anybody
-  const notAssignedLeadsDataId = async () => {
-    setIsLoading(true);
-    const res = await handleFetchUnassignedLeadList(
-      companyId || user?.client_id
-    );
-    setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
-    setIsLoading(false);
-  };
   useEffect(() => {
-    if (salesEmployeeId) {
-      assignedByLeadsDataId();
+    if (salesEmployeeId || assignedByLeadsDataId) {
+      (async () => {
+        const res = await handleFetchLeadsBySalesId(salesEmployeeId);
+        setLeadsData(res ? (res?.data ? res?.data : []) : []);
+      })();
+      return setAssignedByLeadsDataId(false);
     }
-  }, [salesEmployeeId]);
+  }, [assignedByLeadsDataId, salesEmployeeId]);
 
   useEffect(() => {
-    notAssignedLeadsDataId();
-  }, [salesEmployeeId]);
+    (async () => {
+      const res = await handleFetchUnassignedLeadList(
+        companyId || user?.client_id
+      );
+      setNotAssignedLeadsData(res ? (res?.data ? res?.data : []) : []);
+    })();
+  }, [companyId, user?.client_id]);
 
-  // search features
-  useEffect(() => {
-    searchParams.set("Search_Lead_Name", searchName || "");
-    searchParams.set("Search_Lead_Id", searchId || "");
-    searchParams.set("Search_Lead_Course", searchCourse || "");
-    setSearchParams(searchParams);
-  }, [searchCourse, searchId, searchName, searchParams, setSearchParams]);
-
-  //assigned leads by sales employee
   const LeadAssign = async (leadId) => {
     const data = {
       lead_id: leadId,
@@ -96,14 +72,14 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     let res = await handleSalesAssignLead(data);
     if (res?.status === 201) {
       successNotification(res?.message);
-      assignedByLeadsDataId();
+
+      setAssignedByLeadsDataId(true);
       setIsByMe(true);
     } else {
       errorNotification(res?.message);
     }
   };
 
-  // delete leads from selected employees
   const LeadRemove = async (leadId) => {
     const data = {
       lead_id: leadId,
@@ -112,7 +88,7 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
     let res = await handleSalesRemoveLead(data);
     if (res?.status === 201) {
       successNotification(res?.message);
-      assignedByLeadsDataId();
+      setAssignedByLeadsDataId(true);
     } else {
       errorNotification(res?.message);
     }
@@ -275,12 +251,9 @@ const SalesModal = ({ openSalesModel, setOpenSalesModel, salesEmployeeId }) => {
               </Button>
             </div>
           </div>
-          {/* Search section */}
           <Table
             locale={locale}
-            className={`${
-              colorMode ? "updatedTableDark" : "updatedTableDark"
-            }`}
+            className={`${colorMode ? "updatedTableDark" : "updatedTableDark"}`}
             columns={leadColumn || []}
             dataSource={
               isByMe
