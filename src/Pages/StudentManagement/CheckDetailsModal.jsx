@@ -77,7 +77,7 @@ const CheckDetailsModal = ({
         setLoading(false);
       }
     })();
-  }, [rId]);
+  }, [rId, userDetails?.user_id]);
   const SyncRefresh = async () => {
     const res = await handleGetStudentAdmissionDetailsAgency(
       userDetails?.user_id,
