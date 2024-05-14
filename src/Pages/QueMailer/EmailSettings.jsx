@@ -59,9 +59,14 @@ const EmailSettings = ({ currentEmail }) => {
   };
 
   const handleDeleteMail = async () => {
-    const res = deleteEmailSettings({ id: currentEmail.id });
-    if (res.status === 201) {
-      window.location.reload();
+    try {
+      const res = await deleteEmailSettings({ id: currentEmail.id });
+      console.log(res);
+      if (res?.status === 201) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   const handleInputChange = (fieldName, value) => {
@@ -203,7 +208,7 @@ const EmailSettings = ({ currentEmail }) => {
           ) : (
             <div
               className={`${
-                editEmailData ? "px-4 py-2" : "px-8 py-2 text-xl animate-bounce"
+                editEmailData ? "px-4 py-2" : "px-8 py-2 text-xl"
               }  ${
                 colorMode
                   ? "bg-slate-300 text-gray-800"
