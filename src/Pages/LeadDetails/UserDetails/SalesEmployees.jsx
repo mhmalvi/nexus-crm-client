@@ -2,12 +2,11 @@ import { Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { handleFetchCompanyEmployees } from "../../../Components/services/company";
 import { handleLeadAssign } from "../../../Components/services/leads";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
-import { setLoader } from "../../../features/user/userSlice";
 import { successNotification } from "../../../Components/Shared/Toast";
 
 const SalesEmployees = ({
@@ -18,14 +17,12 @@ const SalesEmployees = ({
   syncDetails,
   setSyncDetails,
 }) => {
-  const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
   const loadingDetails = useSelector((state) => state?.user)?.loading;
 
   const [companySalesEmployees, setCompanySalesEmployees] = useState([]);
 
   useEffect(() => {
-    // dispatch(setLoader(true));
 
     (async () => {
       const employeeResponse = await handleFetchCompanyEmployees(

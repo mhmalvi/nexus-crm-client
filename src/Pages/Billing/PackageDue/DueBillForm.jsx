@@ -30,9 +30,7 @@ const DueBillForm = ({ subscriptionClicked, setButtonClicked }) => {
   });
   const [cardInputComplete, setCardInputComplete] = useState(false);
   const [saveButtonClicked, setSaveButtonClicked] = useState(false);
-  const [subscriptionId, setSubscriptionId] = useState(
-    userDetails.userInfo.subscription_id
-  );
+
 
   const SaveCardDetails = async () => {
     setSaveButtonClicked(true);
@@ -94,7 +92,6 @@ const DueBillForm = ({ subscriptionClicked, setButtonClicked }) => {
     userInfo.interval = interval;
     userInfo.subscription_id = response.data?.data?.id;
     let modifiedDataString = JSON.stringify(userInfo);
-    setSubscriptionId(userInfo.subscription_id);
 
     if (response.status === 200 || response.message === "success") {
       localStorage.setItem("user_info", modifiedDataString);

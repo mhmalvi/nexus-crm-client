@@ -13,16 +13,17 @@ import {
   Tooltip,
 } from "recharts";
 import { curveCardinal } from "d3-shape";
-import { PieChart, Pie,  Cell } from "recharts";
-import { handleGetStudentAdminDashboardData, handleGetStudentAdminDashboardDataGraph } from "../../../Components/services/utils";
+import { PieChart, Pie, Cell } from "recharts";
+import {
+  handleGetStudentAdminDashboardData,
+  handleGetStudentAdminDashboardDataGraph,
+} from "../../../Components/services/utils";
 
 function ManagerDashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userDetails, setUserDetails] = useState();
   const [dashboardData, setDashboardData] = useState({});
-  const [dashboardDataGraph, setDashboardDataGraph] = useState([])
-  const [dashboardLoading, setDashboardLoading] = useState(false);
+  const [dashboardDataGraph, setDashboardDataGraph] = useState([]);
   const loadingDetails = useSelector((state) => state?.user?.loading);
   const ProfileDetails = useSelector((state) => state?.user?.userInfo);
 
@@ -43,10 +44,7 @@ function ManagerDashboard() {
         ProfileDetails?.user_id
       );
 
-
       if (userDetailResponse?.data) {
-        const user = userDetailResponse?.data;
-        setUserDetails(user);
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {
@@ -56,42 +54,30 @@ function ManagerDashboard() {
     })();
   }, [dispatch, ProfileDetails]);
 
-  const EditSettings = () => {
-    navigate("/edit-profile");
-  };
-
   useEffect(() => {
     (async () => {
-      setDashboardLoading(true);
       const res = await handleGetStudentAdminDashboardData();
       if (res?.status === 200) {
-        const data = [];
-        setDashboardLoading(false);
         setDashboardData(res?.data);
-      } else {
-        setDashboardLoading(false);
       }
     })();
   }, []);
-  useEffect(()=>{
-    (async()=>{
-      setDashboardLoading(true);
+  useEffect(() => {
+    (async () => {
       const res = await handleGetStudentAdminDashboardDataGraph();
       if (res?.status === 200) {
         const data = [];
-        setDashboardLoading(false);
-        res?.data?.forEach((item,idx)=>{
+
+        res?.data?.forEach((item, idx) => {
           data.push({
             name: item?.monthname,
-            certified: item?.count
-          })
-        })
+            certified: item?.count,
+          });
+        });
         setDashboardDataGraph(data);
-      } else {
-        setDashboardLoading(false);
       }
-    })()
-  },[])
+    })();
+  }, []);
 
   const data = [
     {

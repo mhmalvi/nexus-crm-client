@@ -79,7 +79,7 @@ const UserDetails = ({
 
       if (relevantFormData) {
         const unprocessedData = relevantFormData.values[0];
-        const sanitizedString = unprocessedData.replace(/[_\+]/g, " ");
+        const sanitizedString = unprocessedData.replace(/[_+]/g, " ");
         setExperience(sanitizedString);
       }
 

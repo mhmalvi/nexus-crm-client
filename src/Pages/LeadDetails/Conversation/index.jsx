@@ -1,8 +1,6 @@
 import "antd/dist/antd.css";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import mailLogo from "../../../assets/Images/gmail.png";
 import whatsappLogo from "../../../assets/Images/whatsapp.png";
 import MailModal from "./MailModal";

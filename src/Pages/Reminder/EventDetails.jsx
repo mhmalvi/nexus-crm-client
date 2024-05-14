@@ -26,7 +26,6 @@ const EventDetails = ({
 
   fetchingReminders,
 }) => {
-  const [selectedPriority, setSelectedPriority] = useState(priorityList[0]);
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
   const [notifyTime, setNotifyTime] = useState("");
@@ -34,10 +33,7 @@ const EventDetails = ({
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
   useEffect(() => {
-    setSelectedPriority(
-      priorityList.find((priority) => priority?.key === eventDetails?.priority)
-    );
-
+   
     const eventDetailsData = { ...eventDetails };
 
     eventDetailsData.start =
@@ -311,25 +307,3 @@ const EventDetails = ({
 
 export default EventDetails;
 
-const priorityList = [
-  {
-    key: 1,
-    lable: "Important",
-    className: "text-red-600",
-  },
-  {
-    key: 2,
-    lable: "Average",
-    className: "text-orange-600",
-  },
-  {
-    key: 3,
-    lable: "Low",
-    className: "text-violet-600",
-  },
-  {
-    key: 4,
-    lable: "Very Low",
-    className: "text-yellow-600",
-  },
-];

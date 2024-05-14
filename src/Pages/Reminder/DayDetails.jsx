@@ -26,11 +26,6 @@ const DayDetails = ({
   const [notifyDate, setNotiFyDate] = useState("");
   const [isSaveDisable, setIsSaveDisable] = useState(false);
 
-  // error handling
-  const [titleError, setTitleError] = useState("");
-  const [endError, setEndError] = useState("");
-  const [startError, setStartError] = useState("");
-  const [notifyError, setNotifyError] = useState("");
 
   useEffect(() => {
     setCurrentDayEvents(
@@ -90,18 +85,6 @@ const DayDetails = ({
   };
   const onReminderDateChange = (value, dateString) => {
     const utcDate = new Date(dateString).toISOString().slice(0, 19).replace("T", " ");
-    // const formattedDateString =
-    //   utcDate.getFullYear() +
-    //   "-" +
-    //   ("0" + (utcDate.getMonth() + 1)).slice(-2) +
-    //   "-" +
-    //   ("0" + utcDate.getDate()).slice(-2) +
-    //   " " +
-    //   ("0" + utcDate.getHours()).slice(-2) +
-    //   ":" +
-    //   ("0" + utcDate.getMinutes()).slice(-2) +
-    //   ":" +
-    //   ("0" + utcDate.getSeconds()).slice(-2);
     setNotiFyDate(utcDate);
   };
 
@@ -139,20 +122,7 @@ const DayDetails = ({
       handleOpenDayDetailsCancel();
     } else {
       setIsSaveDisable(false);
-      if (addFollowUpRes.response.data.errors.end[0]) {
-        setEndError(addFollowUpRes.response.data.errors.end[0]);
-      }
-      if (addFollowUpRes.response.data.errors.title[0]) {
-        setTitleError(addFollowUpRes.response.data.errors.title[0]);
-      }
-      if (addFollowUpRes.response.data.errors.notification_time[0]) {
-        setNotifyError(
-          addFollowUpRes.response.data.errors.notification_time[0]
-        );
-      }
-      if (addFollowUpRes.response.data.errors.start[0] !== "") {
-        setStartError(addFollowUpRes.response.data.errors.start[0]);
-      }
+     
     }
   };
 

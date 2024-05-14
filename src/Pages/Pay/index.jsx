@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { handleLeadDetails } from "../../Components/services/leads";
 import Icons from "../../Components/Shared/Icons";
 import { Storage } from "../../Components/Shared/utils/store";
 import BankPaymentForm from "./BankPaymentForm";
 import CardPaymentForm from "./CardPaymentForm";
-import PayPalPaymentForm from "./PayPalPaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Loading from "../../Components/Shared/Loader";
@@ -51,11 +50,6 @@ const Pay = () => {
           />
         </Elements>
       ),
-    },
-    {
-      id: 1,
-      title: "PayPal",
-      component: <PayPalPaymentForm />,
     },
     {
       id: 2,

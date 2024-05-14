@@ -14,7 +14,6 @@ import { errorNotification, successNotification, warningNotification } from "../
 const MailModal = ({ leadDetails, openMailModal, setOpenMailModal }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  // const [fileName, setFileName] = useState("");
   const [tData, setTData] = useState("");
   const [templateList, setTemplateList] = useState([]);
   const [tempOpen, setTempOpen] = useState(false);

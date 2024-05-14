@@ -5,20 +5,15 @@ import { useSelector } from "react-redux";
 
 const StatusShow = ({ leadDetails }) => {
   const [statusLogs, setStatusLogs] = useState([]);
-  const [statusLogLoading, setStatusLogloading] = useState(false);
   const colorMode = useSelector((state) => state?.user)?.colorMode;
 
   const getStatusLogs = async () => {
     const data = {
       lid: leadDetails?.leadDetails?.lead_id,
     };
-    setStatusLogloading(true);
     const res = await handleShowStatusLogs(data);
     if (res?.status === 200) {
       setStatusLogs(res?.data);
-      setStatusLogloading(false);
-    } else {
-      setStatusLogloading(false);
     }
   };
   useEffect(() => {
@@ -26,13 +21,9 @@ const StatusShow = ({ leadDetails }) => {
       const data = {
         lid: leadDetails?.leadDetails?.lead_id,
       };
-      setStatusLogloading(true);
       const res = await handleShowStatusLogs(data);
       if (res?.status === 200) {
         setStatusLogs(res?.data);
-        setStatusLogloading(false);
-      } else {
-        setStatusLogloading(false);
       }
     })();
   }, [leadDetails?.leadDetails?.lead_id]);
