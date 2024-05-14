@@ -41,6 +41,7 @@ const EmailHistory = ({
           </>
         );
       },
+      dataIndex: "sn",
     },
     {
       title: "Campaign ID",
@@ -158,6 +159,7 @@ const EmailHistory = ({
       <Table
         locale={locale}
         className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
+        rowKey={(record) => record.id}
         columns={mainTableColumns}
         dataSource={emailSessionRow?.data}
         scroll={{
@@ -186,6 +188,7 @@ const EmailHistory = ({
           <Table
             locale={locale}
             className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
+            rowKey={(record) => record.id}
             scroll={{
               x: "1000",
               y: "calc(75vh - 5em)",
@@ -196,7 +199,7 @@ const EmailHistory = ({
                 setEmailsPerPage(pageSize);
                 setClicked(true);
               },
-              defaultPageSize:10,
+              defaultPageSize: 10,
               current: historyInnerPagination,
               total: countInfo?.total,
             }}

@@ -1,25 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import {
-  errorNotification,
-} from "../../../Components/Shared/Toast";
+import { errorNotification } from "../../../Components/Shared/Toast";
 import { createCard } from "../../../Components/services/billing";
 
-const InstantPayment = ({setPaymentDone, setPaymentModal}) => {
-  const userDetails = useSelector((state) => state.user);
+const InstantPayment = ({ setPaymentDone, setPaymentModal }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [paymentDetails, setPaymentDetails] = useState({
-    name: "",
-    user_id: userDetails?.userInfo?.user_id,
-    client_id: userDetails?.userInfo?.client_id,
-    type: "card",
-    email: userDetails?.userInfo?.email,
-    tokenStripe: "",
-  });
+
   const [cardInputComplete, setCardInputComplete] = useState(false);
   const [saveButtonClicked, setSaveButtonClicked] = useState(false);
   const SaveCardDetails = async () => {
@@ -30,17 +19,12 @@ const InstantPayment = ({setPaymentDone, setPaymentModal}) => {
       );
       const stripeToken = stripeTokenResponse.token.id;
 
-      setPaymentDetails((prevData) => ({
-        ...prevData,
-        tokenStripe: stripeToken,
-      }));
-
       const createResponse = await createCard(stripeToken);
 
       if (createResponse.cvc_check === "pass") {
         setSaveButtonClicked(false);
-        setPaymentDone(2)
-        setPaymentModal(false)
+        setPaymentDone(2);
+        setPaymentModal(false);
       }
     } catch (error) {
       setSaveButtonClicked(false);
@@ -61,11 +45,7 @@ const InstantPayment = ({setPaymentDone, setPaymentModal}) => {
       <button
         onClick={SaveCardDetails}
         type="button"
-        disabled={
-             cardInputComplete === false
-            ? true
-            : false
-        }
+        disabled={cardInputComplete === false ? true : false}
         className={`ease-in duration-300 w-full px-4 py-2 rounded-md bg-brand-color text-slate-300 disabled:bg-gray-500 disabled:cursor-not-allowed`}
       >
         {saveButtonClicked ? (

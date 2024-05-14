@@ -1,7 +1,7 @@
 import { Input, Modal, Tooltip } from "antd";
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Avatar from "react-avatar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Icons from "../../../Components/Shared/Icons";
 import Loading from "../../../Components/Shared/Loader";
@@ -26,14 +26,12 @@ const Login = () => {
   document.title = "Login";
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state?.user);
   const [loginClicked, setLoginClicked] = useState(false);
   const [tooglePasswordForget, setTooglePasswordForget] = useState(false);
   const [bookMarkOpen, setBookMarkOpen] = useState(false);
   const [addBookMarkOpen, setAddBookMarkOpen] = useState(false);
   const [syncBookMarked, setSyncBookMarked] = useState(false);
   const [bookMarkedAccounts, setBookMarkedAccounts] = useState([]);
-  const [role, setRole] = useState(0);
 
   const [data, setData] = useState({
     email: "",

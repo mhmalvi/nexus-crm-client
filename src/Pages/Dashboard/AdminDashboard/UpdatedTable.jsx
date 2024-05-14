@@ -355,6 +355,7 @@ const UpdatedTable = ({
         <Table
           locale={locale}
           columns={tableHeaders}
+          rowKey={(record) => record.id}
           className={`${colorMode ? "updatedTableDark" : "updatedTableLight"}`}
           dataSource={Array.isArray(list) ? list : ""}
           pagination={{

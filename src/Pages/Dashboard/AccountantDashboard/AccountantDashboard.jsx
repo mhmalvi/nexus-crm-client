@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { handleProfileDetails } from "../../../Components/services/auth";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
@@ -18,9 +17,7 @@ import { handleGetDashboardDataAccountant, handleGetDashboardDataGraph } from ".
 import { Skeleton } from "antd";
 
 function AccountantDashboard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userDetails, setUserDetails] = useState();
   const [dashboardData, setDashboardData] = useState({});
   const [dashboardGraphData, setDashboardGraphData] = useState([]);
   const [dashboardLoading, setDashboardLoading] = useState(true);
@@ -44,8 +41,6 @@ function AccountantDashboard() {
         ProfileDetails?.user_id
       );
       if (userDetailResponse?.data) {
-        const user = userDetailResponse?.data;
-        setUserDetails(user);
         dispatch(setLoader(false));
       } else {
         setTimeout(() => {

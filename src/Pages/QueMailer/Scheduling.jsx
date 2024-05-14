@@ -57,8 +57,13 @@ const Scheduling = () => {
         console.error("Error fetching email history:", error);
       }
     })();
-  }, [current, currentInner, openMailCount.job_id, perPage, userDetails?.userInfo.id]);
-  
+  }, [
+    current,
+    currentInner,
+    openMailCount.job_id,
+    perPage,
+    userDetails?.userInfo.id,
+  ]);
 
   const mainTableColumns = [
     {
@@ -142,47 +147,6 @@ const Scheduling = () => {
       title: "Delivery Status",
       dataIndex: "delivery_status",
     },
-    // {
-    //   title: "Clicked",
-    //   dataIndex: "click",
-    //   render: (_, record, idx) => (
-    //     <div className="w-full flex items-center justify-center">
-    //       {record?.click === 1 ? <Icons.Tick /> : "No clicks yet"}
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   title: "Opened",
-    //   dataIndex: "open",
-    //   render: (_, record, idx) => (
-    //     <div className="w-full flex items-center justify-center">
-    //       {record?.open === 1 ? <Icons.Tick /> : "Not opened yet"}
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   title: "Sending Time",
-    //   dataIndex: "created_at",
-    //   render: (created_at) => {
-    //     const date = new Date(created_at);
-    //     const formattedDate = date.toLocaleDateString();
-    //     const formattedTime = date.toLocaleTimeString();
-    //     return `${formattedDate} ${formattedTime}`;
-    //   },
-    // },
-    // {
-    //   title: "Subscriber",
-    //   dataIndex: "subscribed_or_unsubscribed",
-    //   render: (_, record, idx) => (
-    //     <div className="w-full flex items-center justify-center">
-    //       {record?.subscribed_or_unsubscribed === 1 ? (
-    //         <Icons.Tick />
-    //       ) : (
-    //         "Unsubscribed"
-    //       )}
-    //     </div>
-    //   ),
-    // },
   ];
 
   const handleCancel = () => {
@@ -223,6 +187,7 @@ const Scheduling = () => {
         locale={locale}
         className={`${colorMode ? "emailTableDark" : "emailTableLight"}`}
         columns={mainTableColumns}
+        rowKey={(record) => record.id}
         dataSource={scheduledItems?.data}
         scroll={{
           y: "calc(65vh - 5em)",

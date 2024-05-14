@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { handleProfileDetails } from "../../../Components/services/auth";
 import Loading from "../../../Components/Shared/Loader";
 import { setLoader } from "../../../features/user/userSlice";
@@ -20,7 +19,6 @@ import {
 } from "../../../Components/services/utils";
 
 function ManagerDashboard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dashboardData, setDashboardData] = useState({});
   const [dashboardDataGraph, setDashboardDataGraph] = useState([]);

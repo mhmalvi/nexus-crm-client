@@ -59,9 +59,6 @@ const Register = () => {
     }
   }, [registrationData, registrationData.package]);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
   const registerUser = async () => {
     setCreateButtonClicked(true);
     setUnprocessableContent("");

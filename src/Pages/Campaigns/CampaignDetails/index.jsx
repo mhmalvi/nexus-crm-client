@@ -73,7 +73,7 @@ const CampaignDetails = () => {
         // setCampaignList(response?.data);
       }
     })();
-  }, [dispatch, id, userDetails?.userInfo?.client_id]);
+  }, [dispatch, id, userDetails?.id, userDetails?.userInfo?.client_id]);
 
   // useEffect(() => {
   //   const seletedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;

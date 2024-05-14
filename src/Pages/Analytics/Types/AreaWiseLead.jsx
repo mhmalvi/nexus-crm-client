@@ -19,7 +19,6 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
   const { Option } = Select;
   const [activeCampaign, setActiveCampaign] = useState();
   const [areawiseLeads, setAreawiseLeads] = useState([]);
-  const [activeCampaignSummary, setActiveCampaignSummary] = useState();
   const [currentYearCampaign, setCurrentYearCampaign] = useState([]);
   const [leads, setLeads] = useState([]);
 
@@ -50,7 +49,6 @@ const AreaWiseLead = ({ activeCompany, fullscreen, setFullScreen }) => {
 
   useEffect(() => {
     setActiveCampaign(currentYearCampaign?.[0]?.campaign_id);
-    setActiveCampaignSummary(currentYearCampaign?.[0]?.campaign_id);
   }, [currentYearCampaign]);
 
   useEffect(() => {
