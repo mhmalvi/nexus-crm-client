@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# Nexus CRM Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The primary frontend dashboard for the **Nexus CRM** microservices platform. This React-based application provides a comprehensive interface for managing leads, sales teams, payments, analytics, and day-to-day CRM operations.
+
+## Features
+
+- **Dashboard & Analytics** — Real-time overview of lead pipelines, sales performance, and campaign metrics with interactive charts
+- **Lead Management** — Full lead lifecycle tracking including assignment, status updates, quality scoring, and communication history
+- **Sales Team Management** — Assign and manage sales employees, track individual performance, and monitor workloads
+- **Campaign Tracking** — Create and monitor marketing campaigns with lead attribution and conversion analytics
+- **Payment & Billing** — Integrated Stripe payment processing, invoice generation, and subscription management
+- **Email & Communication** — Built-in email composer with customizable templates and mail merge capabilities
+- **Student & Course Management** — Specialized modules for education-sector CRM workflows
+- **Calendar & Reminders** — Schedule follow-ups and track appointments with calendar integration
+- **Notifications** — Real-time push notifications via WebSocket integration
+- **Reporting** — Export data to CSV/Excel and generate PDF reports
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 |
+| State Management | Redux Toolkit |
+| UI Library | Ant Design 4 |
+| Styling | Tailwind CSS 3 |
+| HTTP Client | Axios |
+| Charts | Recharts |
+| Payments | Stripe.js / React Stripe |
+| Real-time | Socket.IO |
+| Rich Text Editor | TinyMCE |
+| Authentication | Firebase |
+| PDF Generation | jsPDF + html2canvas |
+| Routing | React Router 6 |
+| Guided Tours | Reactour |
+
+## Prerequisites
+
+- Node.js >= 16
+- npm or Yarn
+
+## Getting Started
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/mhmalvi/nexus-crm-client.git
+   cd nexus-crm-client
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Configure environment variables**
+
+   ```bash
+   cp .env.example .env.development.local
+   ```
+
+   Update the `.env.development.local` file with your API endpoints and service keys.
+
+4. **Start the development server**
+
+   ```bash
+   npm start
+   ```
+
+   The application will be available at `http://localhost:3000`.
 
 ## Available Scripts
 
-In the project directory, you can run:
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start local development server |
+| `npm run start-prod` | Start with production environment |
+| `npm run build-local` | Build for local/staging deployment |
+| `npm run build-prod` | Build for production deployment |
+| `npm test` | Run the test suite |
 
-### `yarn start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+src/
+├── Components/       # Reusable UI components
+├── Pages/            # Route-level page components
+│   ├── Analytics/
+│   ├── Authentication/
+│   ├── Billing/
+│   ├── Campaigns/
+│   ├── Dashboard/
+│   ├── LeadDetails/
+│   ├── Messages/
+│   ├── Notifications/
+│   ├── Payments/
+│   ├── SalesEmployee/
+│   ├── Settings/
+│   └── ...
+├── app/              # Redux store configuration
+├── assets/           # Static assets
+└── features/         # Redux slices and feature logic
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Microservices Integration
 
-### `yarn test`
+This frontend communicates with the following Nexus CRM backend services:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Service | Purpose |
+|---------|---------|
+| nexus-crm-users | Authentication, user profiles, and role management |
+| nexus-crm-leads | Lead CRUD, assignment, and pipeline operations |
+| nexus-crm-payments | Payment processing, invoices, and subscriptions |
+| nexus-crm-orgs | Company/organization management and team structure |
+| nexus-crm-alerts | Real-time notifications and follow-up reminders |
+| nexus-crm-b2b | B2B student and agency management |
 
-### `yarn build`
+## License
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is proprietary software. All rights reserved.
