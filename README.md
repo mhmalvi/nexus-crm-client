@@ -1,6 +1,8 @@
 <!-- repo-card -->
 ![nexus-crm-client](docs/assets/social-card.png)
 
+![nexus-crm-client — architecture](docs/assets/architecture.png)
+
 # Nexus CRM Client
 
 The primary frontend dashboard for the **Nexus CRM** microservices platform. This React-based application provides a comprehensive interface for managing leads, sales teams, payments, analytics, and day-to-day CRM operations.
